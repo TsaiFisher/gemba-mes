@@ -1250,7 +1250,7 @@ Mobile 模組種子等客製），所以合併 Core 時 **Core 那一行 `AddSco
 ## 13. 程式碼層慣例（未採用的 SPA 方案，已封存）
 
 > ⚠️ 原 §13（Vue 3 + Pinia + Workbox 完整程式碼）為**未採用方案**，已抽出至附錄
-> [archive/mobile-pwa-appendix-unused-spa.md](./archive/mobile-pwa-appendix-unused-spa.md)，避免被誤抄進原生 JS 實作。
+> archive/mobile-pwa-appendix-unused-spa.md（內部文件，未公開），避免被誤抄進原生 JS 實作。
 > 定案前端＝原生 JS + Cookie（見頂部架構決策、§9 Phase E1、§11.4）。
 > 框架無關、仍需實作的概念：應用層離線佇列（IndexedDB）+ `online` 事件主動同步 + 後端 `clientId`/`clientTimestamp` 去重；Service Worker 只做讀取快取、不重放寫入。
 

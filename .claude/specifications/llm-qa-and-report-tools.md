@@ -23,37 +23,37 @@
 > S3 提示詞契約與生成品質評測已完成、S3 對話畫面 S-7 尚未開始但先決條件已解除
 > ——對話型畫面契約已補入 `new-screen-projectz.md` §12，見 §16.3）
 >
-> **修訂紀錄**（2026-08-01～08-25）已封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md) 開頭。
+> **修訂紀錄**（2026-08-01～08-25）已封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開） 開頭。
 
 ---
 
 ## 一、背景與需求分類
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 
 ---
 
 ## 二、整體架構分層
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 
 ---
 
 ## 三、選用功能（Optional Module）設計
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 
 ---
 
 ## 四、模型與硬體資源估算
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 
 ---
 
 ## 五、Phase 0：工具層契約設計
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 >
 > 封存的子節：
 > - 5.1 介面
@@ -67,7 +67,7 @@
 
 ## 六、現有報表資產盤點（依 `management-reports.md` 查證，2026-07-16 全數實作完成）
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 >
 > 封存的子節：
 > - 6.1 建置優先順序
@@ -76,7 +76,7 @@
 
 ## 七、排程整合與常用查詢
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 >
 > 封存的子節：
 > - 7.0 一張表、兩種用途
@@ -95,7 +95,7 @@
 
 ## 八、資料權限與機密資料邊界（**新增章節**）
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 >
 > 封存的子節：
 > - 8.1 破口一：報表畫面的權限動詞不一致（**須先於工具化處理**）
@@ -110,7 +110,7 @@
 
 ## 九、NL 入口的安全邊界
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 >
 > 封存的子節：
 > - 9.1 運作方式
@@ -123,7 +123,7 @@
 
 ## 十、Phase 1：手冊 RAG 設計細節（**新增章節**）
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 >
 > 封存的子節：
 > - 10.1 手冊現況（2026-08-03 查證）
@@ -144,7 +144,7 @@
 
 ## 十一、Phase 2：工具選取、參數解析與並發（**新增章節**）
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 >
 > 封存的子節：
 > - 11.1 工具選取：檢索優於分類路由
@@ -155,7 +155,7 @@
 
 ## 十二、外部案例參考（Cerebras "How We Built Our Knowledge Base"）
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 
 ---
 
@@ -163,7 +163,7 @@
 
 | 階段 | 內容 | 前置條件 |
 |---|---|---|
-| **Phase 0-A0（零風險盤點，最先做）** ✅ **已完成 2026-08-03** | 把報表畫面的現行閘門動詞、對應模組矩陣、各角色實際可見範圍列成一張表，交業務端裁決機密等級。**本步不改任何程式**，且是 0-A 其餘兩項的輸入。→ 產出：[`report-permission-inventory.md`](report-permission-inventory.md)（52 支母體、需裁決 28 張、另抓到 2 支無閘門） | 無 |
+| **Phase 0-A0（零風險盤點，最先做）** ✅ **已完成 2026-08-03** | 把報表畫面的現行閘門動詞、對應模組矩陣、各角色實際可見範圍列成一張表，交業務端裁決機密等級。**本步不改任何程式**，且是 0-A 其餘兩項的輸入。→ 產出：`report-permission-inventory.md`（內部文件，未公開）（52 支母體、需裁決 28 張、另抓到 2 支無閘門） | 無 |
 | **Phase 0-A（與 LLM 無關）** ✅ **主體已完成 2026-08-04** | ~~依 0-A0 結果修正報表畫面權限動詞~~ → **已完成**（12 支動詞統一＋機密分級一次性校正；ContributionMargin／MarginAnalysis 的既有暴露一併解除）。~~排程基礎設施定案~~ → 已定案（方案 A）。**剩餘**：歷史資料 `OrganizationUnitPath` 回填（§8.3，待決 #3／#11） | Phase 0-A0 |
 | **Phase 0-B** ✅ **常用查詢段已完成 2026-08-05** | 特徵測試（§6.1-2）✅ → 六支報表抽 `IReportTool`（§五、§六）✅ → `RelativePeriod` 解算器（§5.2.1）✅ → `ReportToolCatalog`（含權限動詞對齊守門）✅ → `ReportDefinition` 表 ✅ → **常用查詢（§7.9 L2）✅**。**剩餘**：排程與 `ReportRun`（§七，含 §7.8 權限時效）、`ReportRecipient` 子表（§7.0.1-b，與派工器一起做才有意義）。**所有新畫面依 §十六 的規格產生** | Phase 0-A。**兩個註**：① §7.1 排程基礎設施決策只阻擋排程那一段，`IReportTool` 抽取與常用查詢可先行；② **常用查詢是 Phase 0 最早能讓使用者有感的產出**，建議排在排程之前 |
 | **Phase 1** | 手冊 Q&A（RAG），走 §三 選用模組開關；設計細節見 §十。**分 S1／S2／S3 三步（§10.9）**：S1（解析／切塊／雙語拆分／雙字切詞／詞彙檢索／L1 權限過濾）**不需要任何模型、WSL 磁碟增量 0**，S2 起才接 Ollama。~~需要 pgvector~~ → **Phase 1 不引入**（§10.6） | 無（可與 Phase 0 並行；S1 完全無外部相依） |
@@ -245,7 +245,7 @@
 **A. 業務裁決——✅ 2026-08-04 全數裁決完畢，Phase 0-A 的阻擋已解除**
 
 原本卡在此的 #2／#18／#19 已定案並實作，見 §14.1 與
-[`report-permission-inventory.md`](report-permission-inventory.md) §四之二。**本組目前為空。**
+`report-permission-inventory.md`（內部文件，未公開） §四之二。**本組目前為空。**
 
 **B. 技術決定——可由開發端決定，但需你知情**
 
@@ -260,7 +260,7 @@
 | ~~**20**~~ | ✅ **2026-08-31 結案：已實作於 `scripts/backup-db.sh`**（`REPORTS_PATH` ＋ `UPLOADS_PATH` 收進同一個 `-files.tar.gz`，與 DB dump 共用時間戳；加密／異地／保留期沿用既有開關；三種目錄組合已實跑驗過）。**剩下的是佈署動作不是程式**：正式區要把 `REPORTS_PATH` 與 `RETENTION_DAYS` 寫進 crontab，且後者須與 `Reports:RetentionDays` 一致，否則線上清掉了備份裡還躺著。⚠️ 與 `deploy/file-backup.md` 原文有一處刻意偏離（兩個產物而非一個壓縮包），理由記在該文件與腳本標頭。以下為原始敘述留存：**報表檔的備份策略**（§7.5、§17.9 P2-a）：檔案系統＋擴充備份腳本／存進 DB `bytea`／不備份 | **擴充 `backup-db.sh` 為「DB ＋ 報表目錄同一次打包」**——還原天然對齊同一時點，備份保留期與 `Reports:RetentionDays` 一致。專案今天**沒有任何檔案備份機制** | **P2 檔位的安裝前置** |
 | 3 | 歷史資料 `OrganizationUnitPath` 回填範圍與時程（§8.3） | 先盤點筆數再定；未回填前機密工具顯式排除空值。**2026-08-13：盤點與回填腳本＋作業程序已交付**（`scripts/orgpath-inventory.sql`／`scripts/orgpath-backfill.sql`／[`deploy/orgpath-backfill.md`](../../deploy/orgpath-backfill.md)），**範圍即「盤點跑出來的 `fillable`」、時程與待決 #20 同為 P2 開燈前**。開發區不執行 | Phase 0-A |
 | 11 | §8.3 走路徑 A（資料回填／工具內排除，零 Core 改動）或路徑 B（改 Core 過濾器）（§15.6） | **路徑 A**；2026-08-13 進一步在 A① 回填與 A② 工具內排除之間選定 **A①**——A② 每支新報表都得記得加，漏一支就破功，且歷史金額直接從報表消失會讓總計對不上帳 | Phase 0-A |
-| ~~10~~ | ~~是否為報表項目顯式宣告 `SupportedActions = ["Read","Print"]`（§15.5-3）~~ | ✅ **2026-08-14 裁決：宣告**（52 支，逐支對齊 Controller 實際檢查的動詞，見 [`report-permission-inventory.md` §四之三](report-permission-inventory.md)）。⚠️ 原本寫的「需搭配一次性校正腳本」是**錯的框法**：宣告動詞不會改寫任何既有 `MenuPermission` 列，沒有新舊分歧要校正。真正的風險在反方向——**少宣告**一個動詞會讓勾選框消失，該權限既不能授予也不能撤銷，且**下次儲存任何角色時被寫成 `false`**（靜默撤權）。所以守門點是「宣告 ＝ 實際閘門」的逐支比對測試，不是校正腳本 | Phase 0-A |
+| ~~10~~ | ~~是否為報表項目顯式宣告 `SupportedActions = ["Read","Print"]`（§15.5-3）~~ | ✅ **2026-08-14 裁決：宣告**（52 支，逐支對齊 Controller 實際檢查的動詞，見 `report-permission-inventory.md` §四之三（內部文件，未公開））。⚠️ 原本寫的「需搭配一次性校正腳本」是**錯的框法**：宣告動詞不會改寫任何既有 `MenuPermission` 列，沒有新舊分歧要校正。真正的風險在反方向——**少宣告**一個動詞會讓勾選框消失，該權限既不能授予也不能撤銷，且**下次儲存任何角色時被寫成 `false`**（靜默撤權）。所以守門點是「宣告 ＝ 實際閘門」的逐支比對測試，不是校正腳本 | Phase 0-A |
 | ~~**50**~~ | ✅ **2026-08-27 結案。** 第五批即收口批（缺口帶扣掉永久排除的 QA 桶之後的全部），匯入已實跑進檢索（`SmartFactoryMES_QaBench`，manifest 250 份／1288 段／過期 0），**待審 0**。本項最後的兩輪處置分別記在〈語意近重複掃描〉與 §10.11.14：語料**最終為 1288 段：核可 1070、退回 218、待審 0**（本列以下敘述中的 1088／200 是第五批當時的快照，刻意不改寫）。⚠️ **結案不使兩個已知漏洞消失，它們只是不再有承接的項目**——① 提示詞第 7 條的反面案例漏洞（累計 6 次，三則全在 `xmin` 並發註解上）、② 「X 必須 Y，否則 Z」只擷到 Z 那半段（累計 3 次；旗標做出來了但**只涵蓋後果是災害詞的那一半**，見 §10.11.13）。兩者都只有人審擋得住，故**日後若再開任何一批擷取，這兩條要先讀過再開工**。以下為決策脈絡留存：**程式碼來源的審核與後續批次**（§10.11.13）。第一批 66 支／177 則已審完（核可 171、退回 6）。**第二批 42 支／140 則也已審完**：去重退 5 → 使用者逐則裁決 12 則（退 7、改文字後核可 5）→ 其餘 **123 則整批核可**。語料 774 段：核可 590、退回 184、**待審 0**。| **下一步是讓它們真的進得了檢索**：匯入走 `DocIndexBackgroundService` 的啟動流程（匯入排在補嵌入之前，同一輪拿到向量），所以**要重啟一次 app**；沒進去的症狀是「規則類問題答不出來」，與「手冊裡本來就沒寫」在使用者眼中完全一樣，故務必看那則 Error log。⚠️ 那 123 則是**整批核可、非逐則讀過**，把關強度與第一批不同（見 `DECISIONS.md`〈尚未審核〉的註記）。第 7 條的反面案例漏洞第二批出現三次，仍然只有人審擋得住 | Phase 1（不阻擋任何已上線功能） |　📊 **剩餘盤點（2026-08-25，缺口帶 0.45–0.65）**：已收 108 支／250 單位，**未收 542 單位／178 支**——BAS・INV・PUR・ORD・簽核・權限六桶**已收乾淨**，FIN 只剩 1 支（`IErpSyncDocument.cs`）。剩下的量在 **MFG 162 單位／62 支**（`SchedulingEngine` 24、`MrpEngine` 21 最大）、**QA 158／36**、**RPS 79／27**、**Core 其他 74／24**、**ACT 23／11**（10 個在 `DataAuditService`）、**QCR 15／7**、`_Shared` 15／5。⚠️ 這些數字來自 `~/.cache/qa-code-gap/scored.jsonl`，而它在全域用註解雜湊去重（`harvest.py:79`），**複製貼上的註解只算一次，故一律低估**。⚠️ **QA 桶建議整桶不收**：那是助理自己的實作（檢索管線、匯入器、閘門），使用者不會拿它問業務問題，而它的註解密度高會讓它在缺口帶排第二，**排名高不等於該收**。　🆕 **2026-08-26：語料已匯入並開第三批。** 匯入實跑（`DocIndexBackgroundService` 啟動流程，庫 `SmartFactoryMES_QaBench`）：manifest 118 份、寫入 **774 段／已核可 590 段／過期 0 段**。⚠️ **`scrub()` 改過措辭的那些段落連帶讓向量失效**——`ContentHash` 變了就重寫，`EmbeddingModel` 沒變也沒用，於是 774 段擷取物＋85 塊手冊全部重嵌。**這是每次語料變更的固定成本，不是這次的意外**，實測約 10 段／分鐘（CPU）。第三批（MFG 62 支＋FIN 收尾 1 支，缺口帶 163 單位）已列進 `code-sources.txt`，**QA 桶 158 單位／36 支永久排除**（理由見 §10.11.13）。收完這批之後剩 RPS 79／27、Core 其他 74／24、ACT 23／11、QCR 15／7、`_Shared` 15／5。
 | ⏸ 6 | §六 以外、未被 `management-reports.md` 涵蓋的既有查詢邏輯（QCR／CST 統計等）是否納入工具化 | 先做 §六 清單，其餘依 §7.9 常用查詢的實際使用數據決定 | 影響 0-B 工作量 |
 
@@ -300,7 +300,7 @@
 
 ## 十五、Phase 0 導入影響評估與 Core 邊界（2026-08-03 實測）
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 >
 > 封存的子節：
 > - 15.1 影響總覽
@@ -317,7 +317,7 @@
 
 ## 十六、新增畫面的規範遵循（**強制，不得自創樣板**）
 
-> 📦 **已完成，全文封存於 [`archive/llm-qa-and-report-tools-archive.md`](archive/llm-qa-and-report-tools-archive.md)**（2026-09-30；章節編號不變，需要時開啟參考）。
+> 📦 **已完成，全文封存於 `archive/llm-qa-and-report-tools-archive.md`（內部文件，未公開）**（2026-09-30；章節編號不變，需要時開啟參考）。
 >
 > 封存的子節：
 > - 16.1 畫面清單與適用規格
@@ -336,7 +336,7 @@
 
 | 項目 | 狀態 | 查證方式（2026-08-05 更新；後三列見 2026-08-31 校正） |
 |---|---|---|
-| Phase 0-A0 盤點 | ✅ 完成 | [`report-permission-inventory.md`](report-permission-inventory.md)；四輪閘門稽核（R23–R26）已修畢並守門 |
+| Phase 0-A0 盤點 | ✅ 完成 | `report-permission-inventory.md`（內部文件，未公開）；四輪閘門稽核（R23–R26）已修畢並守門 |
 | Phase 0-A 權限動詞裁決 | ✅ **主體完成**（2026-08-04） | 待決 #2 已裁決（含金額＝機密，28 支）；12 支報表 controller 動詞統一 `CanRead`、AP/AR 帳齡 `Export` 改 `CanPrint`、`RolePermissionSeeder` 步驟 3c 一次性校正；單元 3052／整合 237 全綠 |
 | Phase 0-B 工具層／排程／常用查詢 | ~~❌ **一行程式都還沒有**~~ → ✅ **已完成**（2026-08-31 查證：`Modules/RPS` 35 檔、`Modules/QA` 56 檔已進版控；`IReportTool`／`ReportDefinition`／`ReportToolCatalog` 皆存在。排程段見 STATUS 2026-08-13 條、常用查詢見 §7.9） | 全庫 `grep` 查無 `IReportTool`／`ReportDefinition`／`ReportToolCatalog`；`Modules/RPS`、`Modules/QAA` 目錄不存在 |
 | 功能開關基礎 | ~~❌ 不存在~~ → ✅ **已存在**（2026-08-31 查證：`ReportToolsFeature.ConfigKey = "Features:ReportTools:Enabled"`（預設 `false`）、`appsettings.json` 有 `Features:QaAssistant`） | ~~`appsettings*.json` 查無 `Features` 區塊~~ ⚠️ 註：`Features:ReportTools` **只在程式碼有預設值、沒寫進 `appsettings.json`**，所以照原本那個查證方式（只 grep json）今天仍會查成「不存在」——**查證方式本身也過期了** |

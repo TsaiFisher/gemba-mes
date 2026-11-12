@@ -5,7 +5,7 @@
 > （`test-hardening-plan.md`、`llm-qa-and-report-tools.md`、`report-permission-inventory.md`、
 > `user-manual-tutor.md`）。這四份漏登了將近一個月，正是本表〈使用建議〉最後一條在講的事。
 > **2026-10-08 整理**：補登 `erp-bridge-handover.md`；`security-m3-2fa-design.md`、`mobile-pwa-appendix-unused-spa.md` 移入 `archive/`；
-> 三列過長的備註（llm-qa／plant-scoped／manual-test-plan）精簡為現況，原文移到 [`archive/STATUS-history.md`](archive/STATUS-history.md)。
+> 三列過長的備註（llm-qa／plant-scoped／manual-test-plan）精簡為現況，原文移到 `archive/STATUS-history.md`（內部文件，未公開）。
 > **用法**：之後要確認某份規格是否已完成，先查本表，不需重新整份重讀；
 > 只有「部分完成」或「有未完成項」的檔案才需要點進去看細節。若又新增/修改規格文件，記得回來更新本表。
 
@@ -24,20 +24,15 @@
 | `currency.md` | ✅ | §11 方向一致性歷程 5 項確認屬實 |
 | `management-reports.md` | ✅⚠️ | Phase 1（6 張）＋Phase 2（18 張）＋Phase 3（3 張）全數實作完成；2026-07-16 逐張對照 Controller/View/選單登錄查證屬實，文件過期的「Phase 2-3 未做」已修正並補上規格 ID↔Controller 對照（規格用縮寫 ID，程式用語意化名稱如 O3→SalesTrend、O4→DeliveryRate、M7→MachineDowntime、F3→MarginAnalysis） |
 | `mobile-pwa.md` | ✅⚠️ | 核心（Phase E1-E3，原生 JS+Cookie）已完成；§14 IPQC/FPI 手機流程 2026-07-16 查證＋補齊完成——後端與 IPQC 前端原已實作，本次補 FPI 首件執行頁（沿用 ipqc-process 加 orderType）＋mfg 頁入口＋i18n＋整合測試（MobileFpiInspectionTests），文件過期的「Phase H 未做」已改為實作對照表 |
-| `archive/mobile-pwa-appendix-unused-spa.md` | 📦 | 文件自陳「未採用方案」，純封存參考，不比對完成度。**2026-10-08 移入 `archive/`** |
 | `business_data_flow_reconciliation.md` | ✅ | §3 DataAuditService 稽核、§4.2 排程與儀表板皆已落地；D1-A/D2-A/D3 已實作；§3.10-5 金額恆等式（`WIP_IDENTITY_DRIFT`）2026-07-16 隨 D4 啟用 |
 | `reconciliation-decisions.md` | 🟡 | **決策紀錄**：D1–D4 全部定案並已實作（D4＝期初快照結轉法，2026-07-16，P-1 收口）；2026-10-08 頂部加註定案狀態、「待決策」標題改為定案紀錄。**僅剩 P-4 ERP 雙向核對**（外部依賴），見下方。刻意不併入 `business_data_flow_reconciliation.md`（QA 擷取排除檔＋程式註解以檔名引用） |
 | `erp-bridge-handover.md` | 📦 | 2026-09-07 撰，**2026-10-08 補登**。給後續顧問的交接說明：本系統刻意不實作 ERP 拋轉（狀態機與服務層就位、無呼叫端）。§3.5 是 `ERP_SYNC_LAG` 閾值的等待條件（`manual-test-plan.md` §11 #4 ⏸），與 P-4 同一外部相依 |
 | `roadmap-fin-cst-sub.md` | ✅ | 與程式碼高度同步（第 0 節 2026-06-11 已重新校準） |
 | `consistency-framework.md` | ✅ | 規則索引 R0–R41＋Cx1–8（R0 守門：新規則必須補進〈規則索引〉否則 build 紅）。2026-07-16 稽核時為 R0–R14／Cx1–8 全綠（28 案）、R9 baseline 文字更新為 9 檔 |
-| `security-assessment-and-plan.md` | 🟡 | 歷史資安評估與部署／維運項目；2026-11 本次修正尚未全部合併／部署／驗收，最新進度見 security-review-20261105.md |
-| `security-review-20261105.md` | 🟡 | 本次檢視與安全修正進度：Core #68 已合併；ProjectZ #246～#251 已合併並於 11/9 發布 7054（正式環境未部署）；推播已於 11/11 以新版重測通過；#6 其餘四項 11/11 已驗收、6 項體驗缺陷修正中；專屬候選與待驗收清單見 §5 |
-| `archive/security-m3-2fa-design.md` | 📦 | 整份過期（撰寫於實作前），2FA 已全部完成並移植 Core。**2026-10-08 移入 `archive/`** |
 | `test-hardening-plan.md` | ✅ | 2026-07-29 建立、07-31 覆核 Phase 0–8 全數完成；文末〈5. 殘留待辦〉4 項已於 2026-08-03 全數收口（其中第 3、4 項原「現況（實查）」描述失準，收口時一併更正） |
-| `report-permission-inventory.md` | ✅ | Phase 0-A0 交付物（52 支母體／需裁決 28 張）。四輪閘門稽核 R23–R26 已修畢並守門；裁決結果已由 Phase 0-A 實作 |
-| `llm-qa-and-report-tools.md` | 🟢 | **Phase 0-A／0-B／1（S1–S3）／2／3 的程式工作全部完成**（最後一段 2026-08-24）。剩下的都不是寫程式：待決 #48 刻意延後、「產品功能要不要接外部」待業務裁決、#20／#3／#11 是正式區開燈前的作業，見下方〈真正未完成〉。G3（`IsModuleLicensed`）屬 Core 權限層設計，與本規格無關。逐階段交付歷程已移至 [`archive/STATUS-history.md`](archive/STATUS-history.md) |
-| `plant-scoped-system-params.md` | ✅ | 2026-08-17 建立，**P0／P1／P2／P4 已落地**（P3 依 §7.1 裁決不做），§7 待決 #1–#8 全數收口。可廠別化的參數以 `Modules/BAS/Models/PlantParamCatalog.cs` 為單一事實來源（之後陸續有新增，勿以本表數字為準）。廠別主檔面板的兩個檔留在 ProjectZ 就地漂移、已登錄 baseline。逐日交付歷程已移至 [`archive/STATUS-history.md`](archive/STATUS-history.md) |
-| `manual-test-plan.md` | 📦 | 人工驗收作業書（Wave 0–5、Wave S、§10.3 時區），非開發規劃，不比對程式完成度。§11 待決除 #4（⏸ 等上線數據，與 P-4 同一外部相依）外全部收口；自動化覆蓋 45 ✅／1 🟡／1 👤（§13）。剩下的人工項：**5-4 PWA 實機**（安裝／離線冷啟動／版本更新／推播，§8.4a，**2026-10-08 已依 #192／#229 改寫離線預期**）與 **5-9 列印**；未完成項依「誰能動它」分類在 §12。逐日歷程已移至 [`archive/STATUS-history.md`](archive/STATUS-history.md) |
+| `llm-qa-and-report-tools.md` | 🟢 | **Phase 0-A／0-B／1（S1–S3）／2／3 的程式工作全部完成**（最後一段 2026-08-24）。剩下的都不是寫程式：待決 #48 刻意延後、「產品功能要不要接外部」待業務裁決、#20／#3／#11 是正式區開燈前的作業，見下方〈真正未完成〉。G3（`IsModuleLicensed`）屬 Core 權限層設計，與本規格無關。逐階段交付歷程已移至 `archive/STATUS-history.md`（內部文件，未公開） |
+| `plant-scoped-system-params.md` | ✅ | 2026-08-17 建立，**P0／P1／P2／P4 已落地**（P3 依 §7.1 裁決不做），§7 待決 #1–#8 全數收口。可廠別化的參數以 `Modules/BAS/Models/PlantParamCatalog.cs` 為單一事實來源（之後陸續有新增，勿以本表數字為準）。廠別主檔面板的兩個檔留在 ProjectZ 就地漂移、已登錄 baseline。逐日交付歷程已移至 `archive/STATUS-history.md`（內部文件，未公開） |
+| `manual-test-plan.md` | 📦 | 人工驗收作業書（Wave 0–5、Wave S、§10.3 時區），非開發規劃，不比對程式完成度。§11 待決除 #4（⏸ 等上線數據，與 P-4 同一外部相依）外全部收口；自動化覆蓋 45 ✅／1 🟡／1 👤（§13）。剩下的人工項：**5-4 PWA 實機**（安裝／離線冷啟動／版本更新／推播，§8.4a，**2026-10-08 已依 #192／#229 改寫離線預期**）與 **5-9 列印**；未完成項依「誰能動它」分類在 §12。逐日歷程已移至 `archive/STATUS-history.md`（內部文件，未公開） |
 | `user-manual-tutor.md` | 🟡⚠️ | **文件頂部「討論中，尚未實作」已過期**——教學系統於 2026-08-12 隨 PR #91 落地（`wwwroot/docs/user/tutor/`、`TutorCourseFacts`／`UserManualTutorTests`／`HotspotSelectorTests`）。§9〈待裁決〉7 項中 #3／#5／#6 已結案、#2／#7 已於 2026-08-12 裁決（見該節註記）、#4 兩支死檔已於 `a0641be` 隨手機雙語一併刪除，**只剩 #1（閘門數字不理想時的處理方式），且那是流程確認不是程式工作** |
 | `container-tracking.md` | 📦 | 2026-10-30 建立。2026-11-02 裁決先做 **L1＋L1+**（報工容器下拉與記錄、完工入庫分箱一箱一批號＋箱標籤，§8.5 已實作）；L3 容器個體追蹤（§3–§6）保留為有客戶需求才啟動，觸發條件見 §8.3。2026-11-03 新增 §9 箱子重複使用＋固定 QR 評估（建議分 0～4 期；前置缺口同廠調撥不支援批號已於同日修正＝第 0 期；第 1 期箱子主檔、完工入庫綁箱、調撥掃箱號已實作 §9.7，手機庫存查詢可掃箱號）|
 
@@ -55,10 +50,6 @@
 > 「L1 過濾本體要 P2 才實作，屆時一次做對即可」），機器只負責對帳，散文還是人寫。
 > 收錄規則見 [`LOCAL_RULES.md`](../LOCAL_RULES.md)〈待決項的收錄規則〉。
 
-- **security-review-20261105 #6**：瀏覽器與實機驗收：推播 ✅ 2026-11-11 以含 #248 的新版（`01791a75`）重測通過，中英文介面皆收得到；角色撤銷復原、跨廠表單、離線重送、中英契約 11/11 已驗收，防護成立，另發現 6 項使用體驗缺陷（廠別失效提示、英文 Access denied 頁、頂端廠別假顯示、跨廠擋下後內容遺失、跨裝置切廠不即時、英文介面時間為中文），修正於 Core `fix/plant-invalid-ux-1112`／ProjectZ `fix/acceptance-1111`，合併發布後重做這幾步即可結案。詳見 [`security-review-20261105.md` §5](security-review-20261105.md)。
-- **security-review-20261105 #7**：部署前代理、容器與登入流量驗收：實際代理 IP、TLS／Cookie、DB 埠、NAT 尖峰及祕密設定。詳見 [`security-review-20261105.md` §5](security-review-20261105.md)。
-- **security-review-20261105 #8**：7054 已於 2026-11-09 發布 main `01791a75`（備份與回復方案已備）；新版推播已於 11/11 重測通過；正式環境尚未部署。詳見 [`security-review-20261105.md` §5](security-review-20261105.md)。
-- **security-review-20261105 #9**：動態資安及主機維運：完整掃描、金鑰保護、日誌／告警、備份還原等仍待驗收。詳見 [`security-review-20261105.md` §5](security-review-20261105.md)。
 
 - ~~**往來廠商的「發票開立方式」沒有作用**（2026-10-02 參照欄位盤點中發現）~~：✅ **同日處理完畢**（使用者裁決移除）。
   客戶設「月結彙總／不用開立」，出貨確認仍一律自動開一張應收發票，全系統沒有任何邏輯讀這個設定，ERP 同步也不帶它；
@@ -316,7 +307,7 @@
   `ReportSupportedActionsTests` 三支守門逐支比對。同批一併裁決了兩件事：
   7 支報表閘門 `CanCreate` → `CanRead`（**推翻 §8.1-終**，是刻意放寬），
   以及「`Read` 是其他動詞的前置條件」寫進 `ComputePermissions`。
-  詳見 [`report-permission-inventory.md` §四之三](report-permission-inventory.md)。
+  詳見 `report-permission-inventory.md` §四之三（內部文件，未公開）。
   ⚠️ 本條原本寫的「需搭配一次性校正腳本」**是錯的框法**：宣告動詞不改寫任何既有
   `MenuPermission` 列，沒有新舊分歧要校正；真正的風險在反方向（少宣告會讓權限
   既不能授予也不能撤銷，且下次存檔靜默寫成 `false`），守門點因此是比對測試而非腳本

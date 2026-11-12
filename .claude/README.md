@@ -25,10 +25,8 @@ ProjectZ 的 AI 開發指引與業務規格存放在本目錄下：
 | `reconciliation-decisions.md` | P-1/P-2/P-3 前置的會計語意決策（材料成本/傳票工單維度/ERP拋轉範圍） |
 | `roadmap-fin-cst-sub.md` | FIN / CST / SUB 模組路線圖 |
 | `consistency-framework.md` | 一致性框架規則索引（R0–R41 + Cx1–8；新規則必補〈規則索引〉，否則 R0 讓 build 紅） |
-| `security-assessment-and-plan.md` | 資安評估與改善計畫 |
 | `plant-scoped-system-params.md` | 系統參數廠別化設計與盤點（逐項裁決、`PlantParam` 覆寫表、三層 fallback、Core 上送邊界） |
 | `llm-qa-and-report-tools.md` | LLM 問答（S1–S3 檢索／擷取物語料）＋報表工具（常用查詢、報表排程）規格 |
-| `report-permission-inventory.md` | 報表權限盤點（Phase 0-A0 交付物，R23–R26 守門的依據） |
 | `test-hardening-plan.md` | 測試強化計畫（Phase 0–8，已全數完成） |
 | `user-manual-tutor.md` | 使用手冊教學系統（截圖模擬演示）的設計 |
 | `manual-test-plan.md` | 人工驗收測試作業書（Wave 0–5、Wave S、PWA 實機 §8.4a） |
