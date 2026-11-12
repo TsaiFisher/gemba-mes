@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>委外價格分析</value></data>
+  <data name="MethodHint" xml:space="preserve"><value>比對的是委外收貨的實際加工費單價與該筆收貨當日應適用的委外報價（依廠商＋品號＋途程＋工序四層特殊度查價）。月趨勢的平均單價一律換算成本幣並以收貨量加權，因此跨幣別的委外廠可以放在同一張圖上看。查詢期間留白時預設為近 30 天。</value></data>
+  <data name="FromDate" xml:space="preserve"><value>收貨日（起）</value></data>
+  <data name="ToDate" xml:space="preserve"><value>收貨日（迄）</value></data>
+  <data name="Supplier" xml:space="preserve"><value>委外廠商</value></data>
+  <data name="AllSuppliers" xml:space="preserve"><value>所有委外廠商</value></data>
+  <data name="Product" xml:space="preserve"><value>品號</value></data>
+  <data name="AllProducts" xml:space="preserve"><value>所有品號</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchFirst" xml:space="preserve"><value>請設定查詢條件後按查詢</value></data>
+  <data name="NoData" xml:space="preserve"><value>查詢期間無委外收貨明細</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>匯出明細</value></data>
+  <data name="ExportMonthly" xml:space="preserve"><value>匯出月趨勢</value></data>
+  <data name="ResultTitle" xml:space="preserve"><value>委外加工費比價</value></data>
+  <data name="Lines" xml:space="preserve"><value>筆明細</value></data>
+  <data name="NotComparable" xml:space="preserve"><value>筆無法比價</value></data>
+  <data name="NotComparableHint" xml:space="preserve"><value>查無適用報價，或報價幣別與收貨幣別不同。兩者都不會顯示為差異 0。</value></data>
+  <data name="MonthlyTrend" xml:space="preserve"><value>加工費月趨勢（本幣加權平均）</value></data>
+  <data name="MonthlyTable" xml:space="preserve"><value>月趨勢</value></data>
+  <data name="DetailTable" xml:space="preserve"><value>比價明細</value></data>
+  <data name="YearMonth" xml:space="preserve"><value>年月</value></data>
+  <data name="ReceiptLines" xml:space="preserve"><value>收貨明細數</value></data>
+  <data name="AvgUnitPrice" xml:space="preserve"><value>加權平均單價</value></data>
+  <data name="MinUnitPrice" xml:space="preserve"><value>最低單價</value></data>
+  <data name="MaxUnitPrice" xml:space="preserve"><value>最高單價</value></data>
+  <data name="ReceiptDate" xml:space="preserve"><value>收貨日</value></data>
+  <data name="ReceiptId" xml:space="preserve"><value>收貨單號</value></data>
+  <data name="ActualUnitPrice" xml:space="preserve"><value>實際單價</value></data>
+  <data name="QuotedUnitPrice" xml:space="preserve"><value>報價單價</value></data>
+  <data name="NoQuotation" xml:space="preserve"><value>查無報價</value></data>
+  <data name="PriceDiff" xml:space="preserve"><value>差異</value></data>
+  <data name="PriceDiffPct" xml:space="preserve"><value>差異%</value></data>
+</root>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>班別維護</value></data>
+  <data name="AddEntry" xml:space="preserve"><value>新增班別</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>代號 / 名稱查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>查詢班別代號或名稱</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入查詢條件後按「查詢」</value></data>
+  <data name="ShiftCode" xml:space="preserve"><value>班別代號</value></data>
+  <data name="ShiftName" xml:space="preserve"><value>班別名稱</value></data>
+  <data name="StartTime" xml:space="preserve"><value>上班時間</value></data>
+  <data name="EndTime" xml:space="preserve"><value>下班時間</value></data>
+  <data name="BreakStart" xml:space="preserve"><value>休息開始</value></data>
+  <data name="BreakEnd" xml:space="preserve"><value>休息結束</value></data>
+  <data name="BreakHint" xml:space="preserve"><value>午休時段（選填）。供未來甘特圖以實際時鐘呈現時跳過此區間；工作分鐘為扣除休息後的淨工時。</value></data>
+  <data name="WorkMinutes" xml:space="preserve"><value>工作分鐘</value></data>
+  <data name="WorkMinutesAutoHint" xml:space="preserve"><value>由上下班時間自動扣除午休推算，無需手動輸入。</value></data>
+  <data name="IsActive" xml:space="preserve"><value>啟用</value></data>
+  <data name="Active" xml:space="preserve"><value>啟用</value></data>
+  <data name="Inactive" xml:space="preserve"><value>停用</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Print" xml:space="preserve"><value>列印</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>匯出 Excel</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>匯出 CSV</value></data>
+  <data name="ExportJson" xml:space="preserve"><value>匯出 JSON</value></data>
+  <data name="ShiftCodePlaceholder" xml:space="preserve"><value>例：DAY</value></data>
+  <data name="ShiftCodeReadonlyHint" xml:space="preserve"><value>班別代號建立後無法修改</value></data>
+</root>

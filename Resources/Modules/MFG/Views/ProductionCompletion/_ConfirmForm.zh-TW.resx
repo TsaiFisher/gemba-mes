@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="WorkOrderId" xml:space="preserve"><value>工單號</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="QtyDone" xml:space="preserve"><value>完工量</value></data>
+  <data name="WhCode" xml:space="preserve"><value>目標倉庫</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>目標儲位</value></data>
+  <data name="LocationCodePlaceholder" xml:space="preserve"><value>輸入儲位代號</value></data>
+  <data name="LotNo" xml:space="preserve"><value>批號</value></data>
+  <data name="LotNoPlaceholder" xml:space="preserve"><value>輸入批號（可留空）</value></data>
+  <data name="BackflushNote" xml:space="preserve"><value>入庫時將自動後沖後沖用料（Backflush），並回寫實際材料成本。</value></data>
+  <data name="Confirm" xml:space="preserve"><value>確認入庫</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="PackByBox" xml:space="preserve"><value>分箱入庫（一箱一個批號）</value></data>
+  <data name="PackByBoxHint" xml:space="preserve"><value>完工量依每箱數量拆成多箱，每箱一個批號＝批號前綴加箱序（例：前綴-01、前綴-02），最後一箱裝餘數。批號留空時以工單號為前綴。入庫後可列印箱標籤，標籤上的 QR 即批號。</value></data>
+  <data name="Container" xml:space="preserve"><value>容器</value></data>
+  <data name="BoxQty" xml:space="preserve"><value>每箱數量</value></data>
+  <data name="BoxPreview" xml:space="preserve"><value>共 {0} 箱，最後一箱 {1}</value></data>
+  <data name="LotPrefix" xml:space="preserve"><value>批號前綴</value></data>
+  <data name="CompletedTitle" xml:space="preserve"><value>完工入庫完成</value></data>
+  <data name="PrintBoxLabels" xml:space="preserve"><value>列印箱標籤</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="BoxUnits" xml:space="preserve"><value>箱號（選填）</value></data>
+  <data name="BoxUnitsHint" xml:space="preserve"><value>箱子有貼固定 QR 時，依序掃入要裝的箱號（一行一個，數量須等於箱數）；入庫時第 1 箱的批號綁到第 1 個箱號，依此類推。留空＝不綁箱子。</value></data>
+  <data name="FillEmptyBoxes" xml:space="preserve"><value>帶入空箱</value></data>
+  <data name="EmptyBoxesShort" xml:space="preserve"><value>只找到 {0} 個空箱，這次需要 {1} 個。請先建立箱子或改每箱數量。</value></data>
+</root>

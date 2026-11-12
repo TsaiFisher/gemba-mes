@@ -1,0 +1,250 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.WorkCenter
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    string action = isEdit ? "Edit" : "Create";
+    var deptOptions       = (ViewBag.DeptOptions       as System.Collections.IEnumerable) ?? Enumerable.Empty<object>();
+    var shiftGroupOptions = (ViewBag.ShiftGroupOptions as System.Collections.IEnumerable) ?? Enumerable.Empty<object>();
+    var existingMachines  = Model.Machines ?? new List<WorkCenterMachine>();
+    var warehouseOptions  = (ViewBag.WarehouseOptions as System.Collections.IEnumerable) ?? Enumerable.Empty<object>();
+    var locationOptions   = (ViewBag.LocationOptions  as System.Collections.IEnumerable) ?? Enumerable.Empty<object>();
+    // 編輯既有資料時，儲位下拉要先依已選倉庫過濾（未選倉庫則列全部），
+    // 否則存檔後重開面板會看到不屬於該倉的儲位。
+    var stagingLocOptions = string.IsNullOrEmpty(Model.StagingWhCode)
+        ? locationOptions.Cast<dynamic>()
+        : locationOptions.Cast<dynamic>().Where(l => (string)l.WhCode == Model.StagingWhCode);
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyStep = baseDp <= 0 ? "1" : "0." + new string('0', baseDp - 1) + "1";
+}
+
+<!-- Tab Navigation -->
+<ul class="nav nav-tabs px-3 pt-2" id="workCenterTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="wcBasicTab" data-bs-toggle="tab" data-bs-target="#wcBasicPane"
+                type="button" role="tab">
+            <i class="bi bi-building-gear me-1"></i>@Localizer["BasicInfo"]
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="wcMachineTab"
+                data-bs-toggle="tab" data-bs-target="#wcMachinePane"
+                type="button" role="tab">
+            <i class="bi bi-gear me-1"></i><span id="wcMachineTabLabel">@(Model.IsProductionLine ? Localizer["LinesSection"].Value : Localizer["MachinesSection"].Value)</span>
+        </button>
+    </li>
+</ul>
+
+<form method="post" asp-action="@action" asp-controller="WorkCenter" asp-route-workCenterCode="@(isEdit ? Model.WorkCenterCode : null)"
+      data-ajax="true" id="workCenterForm" novalidate>
+    @Html.AntiForgeryToken()
+
+    <div class="tab-content p-3">
+        <!-- Tab 1: Basic Info -->
+        <div class="tab-pane fade show active" id="wcBasicPane" role="tabpanel">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">@Localizer["WorkCenterCode"] <span class="text-danger">*</span></label>
+                @if (isEdit)
+                {
+                    <input type="text" class="form-control bg-light" value="@Model.WorkCenterCode" readonly />
+                    <input type="hidden" asp-for="WorkCenterCode" />
+                    <div class="form-text text-muted">@Localizer["WorkCenterCodeReadonlyHint"]</div>
+                }
+                else
+                {
+                    <input asp-for="WorkCenterCode" class="form-control u-text-transform-uppercase" placeholder="@Localizer["WorkCenterCodePlaceholder"]"
+                           />
+                }
+                <span asp-validation-for="WorkCenterCode" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">@Localizer["WorkCenterName"] <span class="text-danger">*</span></label>
+                <input asp-for="WorkCenterName" class="form-control" />
+                <span asp-validation-for="WorkCenterName" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">@Localizer["DepartmentId"]</label>
+                <select asp-for="DepartmentId" class="form-select">
+                    <option value="">-- @Localizer["DepartmentId"] --</option>
+                    @foreach (var item in deptOptions)
+                    {
+                        var id   = item.GetType().GetProperty("Id")?.GetValue(item)?.ToString();
+                        var name = item.GetType().GetProperty("Name")?.GetValue(item)?.ToString();
+                        <option value="@id" selected="@(Model.DepartmentId == id ? "selected" : null)">@name</option>
+                    }
+                </select>
+                <span asp-validation-for="DepartmentId" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">@Localizer["ShiftGroupCode"]</label>
+                <select asp-for="ShiftGroupCode" class="form-select">
+                    <option value="">-- @Localizer["ShiftGroupCode"] --</option>
+                    @foreach (var item in shiftGroupOptions)
+                    {
+                        var code = item.GetType().GetProperty("GroupCode")?.GetValue(item)?.ToString();
+                        var name = item.GetType().GetProperty("GroupName")?.GetValue(item)?.ToString();
+                        <option value="@code" selected="@(Model.ShiftGroupCode == code ? "selected" : null)">@name</option>
+                    }
+                </select>
+                <span asp-validation-for="ShiftGroupCode" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <div class="form-check">
+                    <input type="checkbox" asp-for="IsProductionLine" class="form-check-input" id="wcIsProductionLine" />
+                    <label class="form-check-label fw-semibold" for="wcIsProductionLine">@Localizer["IsProductionLine"]</label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">@Localizer["AdditionalRate"]</label>
+                <input asp-for="AdditionalRate" type="number" step="0.0001" class="form-control" />
+                <span asp-validation-for="AdditionalRate" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">@Localizer["StandardLaborCost"]</label>
+                <input asp-for="StandardLaborCost" type="number" step="@moneyStep" class="form-control" />
+                <span asp-validation-for="StandardLaborCost" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">@Localizer["MachineHourlyRate"]</label>
+                <input asp-for="MachineHourlyRate" type="number" step="@moneyStep" class="form-control" />
+                <span asp-validation-for="MachineHourlyRate" class="text-danger small"></span>
+            </div>
+
+            @* 預設備料倉／儲位：本工作中心的派工開備料單時的預設值。
+               儲位清單以 data-locations 隨面板一起送出（BAS 面板走 DOMPurify，內嵌 <script> 會被剝掉，
+               連動邏輯放在 Index.cshtml 的 bindStagingWarehouse()）。 *@
+            <div class="mb-3" id="wcStagingSection"
+                 data-locations="@(ViewBag.LocationsJson as string ?? "[]")">
+                <label class="form-label fw-semibold">@Localizer["StagingWhCode"]</label>
+                <select asp-for="StagingWhCode" class="form-select" id="wcStagingWh">
+                    <option value=""></option>
+                    @foreach (dynamic w in warehouseOptions)
+                    {
+                        <option value="@w.WhCode" selected="@(Model.StagingWhCode == (string)w.WhCode)">
+                            @w.WhCode — @w.WhName@(w.IsStaging ? " ★" : "")
+                        </option>
+                    }
+                </select>
+                <span asp-validation-for="StagingWhCode" class="text-danger small"></span>
+                <div class="form-text text-muted">@Localizer["StagingWhHint"]</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">@Localizer["StagingLocationCode"]</label>
+                <select asp-for="StagingLocationCode" class="form-select" id="wcStagingLoc">
+                    <option value=""></option>
+                    @foreach (dynamic l in stagingLocOptions)
+                    {
+                        <option value="@l.LocationCode" selected="@(Model.StagingLocationCode == (string)l.LocationCode)">
+                            @l.LocationCode@(string.IsNullOrEmpty((string?)l.LocationName) ? "" : " — " + (string)l.LocationName)
+                        </option>
+                    }
+                </select>
+                <span asp-validation-for="StagingLocationCode" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <div class="form-check">
+                    <input type="checkbox" asp-for="IsActive" class="form-check-input" id="workCenterIsActive" />
+                    <label class="form-check-label fw-semibold" for="workCenterIsActive">@Localizer["IsActive"]</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Machines（一般工作中心）／生產線別（IsProductionLine，每筆＝一條線，排程視為平行資源） -->
+        <div class="tab-pane fade" id="wcMachinePane" role="tabpanel">
+            <div id="machinesSection"
+                 data-label-machines-section="@Localizer["MachinesSection"]"
+                 data-label-lines-section="@Localizer["LinesSection"]"
+                 data-label-add-machine="@Localizer["AddMachine"]"
+                 data-label-add-line="@Localizer["AddLine"]"
+                 data-label-machine-code="@Localizer["MachineCode"]"
+                 data-label-line-code="@Localizer["LineCode"]"
+                 data-label-machine-name="@Localizer["MachineName"]"
+                 data-label-line-name="@Localizer["LineName"]"
+                 data-label-available="@Localizer["MachineStatusAvailable"]"
+                 data-label-standby="@Localizer["MachineStatusStandby"]"
+                 data-label-externalrepair="@Localizer["MachineStatusExternalRepair"]"
+                 data-label-breakdown="@Localizer["MachineStatusBreakDown"]"
+                 data-label-modification="@Localizer["MachineStatusModification"]"
+                 data-label-loaned="@Localizer["MachineStatusLoaned"]"
+                 data-label-retired="@Localizer["MachineStatusRetired"]"
+                 data-label-maintenance="@Localizer["MachineStatusMaintenance"]">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-semibold text-muted small" id="machinesSectionLabel">@(Model.IsProductionLine ? Localizer["LinesSection"].Value : Localizer["MachinesSection"].Value)</span>
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="btnAddMachine">
+                        <i class="bi bi-plus-lg me-1"></i><span id="btnAddMachineLabel">@(Model.IsProductionLine ? Localizer["AddLine"].Value : Localizer["AddMachine"].Value)</span>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered align-middle mb-0" id="machineTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="u-min-width-100px"><span id="machineCodeHeaderLabel">@(Model.IsProductionLine ? Localizer["LineCode"].Value : Localizer["MachineCode"].Value)</span> <span class="text-danger">*</span></th>
+                                <th class="u-min-width-140px"><span id="machineNameHeaderLabel">@(Model.IsProductionLine ? Localizer["LineName"].Value : Localizer["MachineName"].Value)</span> <span class="text-danger">*</span></th>
+                                <th class="u-min-width-110px">@Localizer["MachineStatus"]</th>
+                                <th>@Localizer["Remarks"]</th>
+                                <th class="u-width-40px"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="machineRows">
+                            @{ int mi = 0; }
+                            @foreach (var m in existingMachines)
+                            {
+                                <tr>
+                                    @* 既有機台：代號不可改（改代號＝刪除再新增，會讓派工掛空）；狀態唯讀，經「機台狀態異動」才會處理派工 *@
+                                    <td><input type="text" class="form-control form-control-sm u-text-transform-uppercase" name="machines[@mi].MachineCode" value="@m.MachineCode" readonly required /></td>
+                                    <td><input type="text" class="form-control form-control-sm" name="machines[@mi].MachineName" value="@m.MachineName" required /></td>
+                                    <td>
+                                        <input type="hidden" name="machines[@mi].MachineStatus" value="@m.MachineStatus" />
+                                        <select class="form-select form-select-sm" disabled title="@Localizer["MachineStatusReadonlyHint"]">
+                                            <option value="@MachineStatus.Available"      selected="@(m.MachineStatus == MachineStatus.Available)">@Localizer["MachineStatusAvailable"]</option>
+                                            <option value="@MachineStatus.Standby"        selected="@(m.MachineStatus == MachineStatus.Standby)">@Localizer["MachineStatusStandby"]</option>
+                                            <option value="@MachineStatus.ExternalRepair" selected="@(m.MachineStatus == MachineStatus.ExternalRepair)">@Localizer["MachineStatusExternalRepair"]</option>
+                                            <option value="@MachineStatus.BreakDown"      selected="@(m.MachineStatus == MachineStatus.BreakDown)">@Localizer["MachineStatusBreakDown"]</option>
+                                            <option value="@MachineStatus.Modification"   selected="@(m.MachineStatus == MachineStatus.Modification)">@Localizer["MachineStatusModification"]</option>
+                                            <option value="@MachineStatus.Loaned"         selected="@(m.MachineStatus == MachineStatus.Loaned)">@Localizer["MachineStatusLoaned"]</option>
+                                            <option value="@MachineStatus.Retired"        selected="@(m.MachineStatus == MachineStatus.Retired)">@Localizer["MachineStatusRetired"]</option>
+                                            <option value="@MachineStatus.Maintenance"    selected="@(m.MachineStatus == MachineStatus.Maintenance)">@Localizer["MachineStatusMaintenance"]</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="text" class="form-control form-control-sm" name="machines[@mi].Remarks" value="@m.Remarks" /></td>
+                                    <td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger btn-remove-machine"><i class="bi bi-trash"></i> @Localizer["Delete"]</button></td>
+                                </tr>
+                                mi++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (isEdit)
+                {
+                    <div class="form-text">@Localizer["MachineStatusReadonlyHint"]</div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2 px-3 pb-2">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+            @Localizer["Cancel"]
+        </button>
+    </div>
+</form>

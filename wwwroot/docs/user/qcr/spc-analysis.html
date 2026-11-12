@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="SPC Process Capability — QCR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SPC 製程能力分析 — QCR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">QCR 目錄</span><span lang="en">QCR contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">QCR 畫面</span><span lang="en">QCR screens</span></div>
+    <a href="defect-code.html" class="nav-link"><span lang="zh">不良項目代碼</span><span lang="en">Defect Codes</span></a>
+    <a href="inspection-spec.html" class="nav-link"><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></a>
+    <a href="inspection-order.html" class="nav-link"><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></a>
+    <a href="ncr.html" class="nav-link"><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></a>
+    <a href="instrument.html" class="nav-link"><span lang="zh">檢驗儀器</span><span lang="en">Inspection Instruments</span></a>
+    <a href="spc-analysis.html" class="nav-link active"><span lang="zh">SPC 製程能力分析</span><span lang="en">SPC Process Capability</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-graph-up-arrow me-2 text-primary"></i><span lang="zh">SPC 製程能力分析</span><span lang="en">SPC Process Capability</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/SpcAnalysis &nbsp;|&nbsp; Cp/Cpk 製程能力與管制圖</span><span lang="en">Route: /SpcAnalysis &nbsp;|&nbsp; Cp/Cpk process capability and control charts</span></div>
+    </div>
+
+    <p><span lang="zh">彙整檢驗單的量測值，計算製程能力指標（Cp、Cpk、σ、UCL/LCL）與超規率，單一品號檢視時附管制圖趨勢，及早發現製程漂移。</span><span lang="en">Gathers the measured values from inspection orders and works out the process capability indices (Cp, Cpk, σ, UCL/LCL) and the out-of-spec rate; viewing a single item adds a control chart trend, so drift is spotted early.</span></p>
+    <img class="screen-shot" src="img/spc-analysis.png" data-src-en="img/en/spc-analysis.png" alt="SPC 製程能力分析畫面截圖" data-alt-en="SPC process capability screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">SPC 製程能力分析畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">SPC process capability screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">選擇品號與檢驗項目、期間後產生分析；Cpk &lt; 1.33 建議列入改善。</span><span lang="en">Choose the item, the inspection item and the period to produce the analysis; Cpk &lt; 1.33 should be flagged for improvement.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號 / 品名</span><span lang="en">Product</span></td><td><span lang="zh">關鍵字模糊比對</span><span lang="en">Keyword (partial match)</span></td></tr>
+        <tr><td><span lang="zh">量測起日 / 量測迄日</span><span lang="en">Measured from / to</span></td><td><span lang="zh">納入統計的量測資料期間；樣本需足夠才具統計意義</span><span lang="en">Period of measurement data included; the sample has to be big enough to be statistically meaningful</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號 / 品名</span><span lang="en">Product</span></td><td><span lang="zh">受分析的料件</span><span lang="en">Item being analysed</span></td></tr>
+        <tr><td><span lang="zh">檢驗特性</span><span lang="en">Characteristic</span></td><td><span lang="zh">被量測的品質特性，對應檢驗規範的量測項目</span><span lang="en">The quality characteristic being measured, matching the measurement item in the inspection spec</span></td></tr>
+        <tr><td><span lang="zh">樣本數</span><span lang="en">Sample size</span></td><td><span lang="zh">納入計算的量測筆數；樣本過少時 Cp／Cpk 參考性低</span><span lang="en">Number of measurements in the calculation; with too few, Cp and Cpk mean little</span></td></tr>
+        <tr><td><span lang="zh">平均 / 標準差</span><span lang="en">Mean / Standard deviation</span></td><td><span lang="zh">量測值的集中趨勢與離散程度</span><span lang="en">The central tendency and the spread of the measured values</span></td></tr>
+        <tr><td><span lang="zh">規格下限 / 目標值 / 規格上限</span><span lang="en">LSL / Target / USL</span></td><td><span lang="zh">取自檢驗規範的 LSL／Target／USL</span><span lang="en">LSL, target and USL taken from the inspection spec</span></td></tr>
+        <tr><td>Cp</td><td><span lang="zh">製程精密度＝(USL － LSL) ÷ (6σ)，只看離散程度、不管有沒有偏移</span><span lang="en">Process precision = (USL − LSL) ÷ 6σ; it looks only at spread and ignores any shift off centre</span></td></tr>
+        <tr><td>Cpk</td><td><span lang="zh">製程能力指數，同時考慮離散與中心偏移；Cpk 明顯低於 Cp 表示製程中心偏離目標值</span><span lang="en">The process capability index, which allows for both spread and centring; a Cpk well below Cp means the process is off target</span></td></tr>
+        <tr><td><span lang="zh">製程能力</span><span lang="en">Capability</span></td><td><span lang="zh">依 Cpk 級距給出的判讀（如足夠／需改善／不足）</span><span lang="en">An interpretation based on the Cpk band (adequate / needs improvement / inadequate)</span></td></tr>
+        <tr><td><span lang="zh">超規率</span><span lang="en">OOS %</span></td><td><span lang="zh">量測值落在規格界限外的比率，是實際不良風險的直接指標</span><span lang="en">Proportion of measurements outside the specification limits, a direct measure of the real risk of defects</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="inspection-spec.html"><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></a>、<a href="../mfg/defect-rate.html"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,993 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    var plantId = ViewBag.PlantId as string ?? "";
+    var dateTo  = ViewBag.DateTo as string ?? "";
+    var rule    = ViewBag.Rule as string ?? "Priority";
+    var rules   = ViewBag.Rules as string[] ?? Array.Empty<string>();
+    var stale   = ViewBag.Staleness as SmartFactory.MES.Modules.MFG.Controllers.ScheduleStaleness;
+}
+
+<!-- timelines-chart 執行期注入的 <style> 在 CSP style-src 'self' 下會被擋，改以靜態 <link> 載入其樣式 -->
+<link rel="stylesheet" href="~/lib/timelines-chart/timelines-chart.css" />
+@* 本專案的覆蓋（相鄰 bar 描邊）。刻意不改上面那份 vendored 副本，升級時才能整份重抄比對。 *@
+<link rel="stylesheet" href="~/css/gantt-overrides.css" />
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+
+    @* 篩選列 *@
+    <div class="card mb-3">
+        <div class="card-body py-2">
+            <div class="row g-2 align-items-end">
+                <div class="col-auto">
+                    <label class="form-label mb-0">@Localizer["LabelDateTo"]</label>
+                    <input id="inputDateTo" type="date" class="form-control form-control-sm u-width-150px"
+                           value="@dateTo" />
+                </div>
+                <div class="col-auto">
+                    <label class="form-label mb-0">@Localizer["LabelRule"]</label>
+                    <select id="selectRule" class="form-select form-select-sm u-width-160px">
+                        @foreach (var r in rules)
+                        {
+                            <option value="@r" selected="@(r == rule)">@Localizer[$"Rule_{r}"]</option>
+                        }
+                    </select>
+                </div>
+                @* 著色依據：顏色只有一個通道（TimelinesChart 只吃 zColorScale(val)），
+                   狀態與批號無法同時表達，故做成使用者可切換。 *@
+                <div class="col-auto" id="colorByWrap">
+                    <label class="form-label mb-0">@Localizer["LabelColorBy"]</label>
+                    <select id="selectColorBy" class="form-select form-select-sm u-width-160px">
+                        <option value="status" selected>@Localizer["ColorByStatus"]</option>
+                        <option value="batch">@Localizer["ColorByBatch"]</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button id="btnLoad" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-arrow-clockwise"></i> @Localizer["BtnLoad"]
+                    </button>
+                </div>
+                @if (ViewBag.CanCreate == true)
+                {
+                    <div class="col-auto ms-2">
+                        <button id="btnRun" class="btn btn-sm btn-primary">
+                            <i class="bi bi-play-circle"></i> @Localizer["BtnRunSchedule"]
+                        </button>
+                    </div>
+                }
+                <div class="col-auto ms-auto text-muted small" id="lastRefresh"></div>
+            </div>
+        </div>
+    </div>
+
+    @* 過時提示：由資料推導是否過時（上次排程後有無投產、完工、取消、機台狀態、日曆／停機等異動），
+       加上上次排程時間與觸發方式、本廠自動重排設定。 *@
+    @if (stale != null)
+    {
+        var f = stale.Fresh;
+        var st = stale.Settings;
+        <div class="alert @(f.IsStale ? "alert-warning" : "alert-light border") py-2 mb-2 small" id="scheduleStaleness">
+            <i class="bi @(f.IsStale ? "bi-exclamation-triangle" : "bi-check2-circle") me-1"></i>
+            @if (f.IsStale)
+            {
+                <span class="fw-semibold">@Localizer["StaleIsStale"]</span>
+                @if (f.FirstChangeAt is { } since)
+                {
+                    <span>@Localizer["StaleSince", DateTimeSvc.ToLocalTime(since).ToString("MM/dd HH:mm")]</span>
+                }
+                else if (f.CalendarChanged)
+                {
+                    <span>@Localizer["StaleCalendarChanged"]</span>
+                }
+            }
+            else
+            {
+                <span>@Localizer["StaleUpToDate"]</span>
+            }
+            <span class="ms-3">
+                @if (f.LastRunAt is { } lastRun)
+                {
+                    @Localizer["StaleLastRun", DateTimeSvc.ToLocalTime(lastRun).ToString("yyyy-MM-dd HH:mm")]
+                    @switch (f.LastTrigger)
+                    {
+                        case "Manual":         <span>@Localizer["StaleTriggerFmt", Localizer["Trigger_Manual"].Value]</span> break;
+                        case "OnChange":       <span>@Localizer["StaleTriggerFmt", Localizer["Trigger_OnChange"].Value]</span> break;
+                        case "BeforeDispatch": <span>@Localizer["StaleTriggerFmt", Localizer["Trigger_BeforeDispatch"].Value]</span> break;
+                        case "Daily":          <span>@Localizer["StaleTriggerFmt", Localizer["Trigger_Daily"].Value]</span> break;
+                    }
+                }
+                else
+                {
+                    @Localizer["StaleNeverRun"]
+                }
+            </span>
+            <span class="ms-3">@Localizer["StalePending", f.PendingCount]</span>
+            @if (f.OnHoldCount > 0)
+            {
+                <span class="ms-3 text-danger">@Localizer["StaleOnHold", f.OnHoldCount]</span>
+            }
+            <div class="mt-1 text-muted">
+                @if (st.AnyEnabled)
+                {
+                    <span>@Localizer["AutoOnLabel"]</span>
+                    @if (st.OnChange) { <span class="badge bg-info text-dark ms-1">@Localizer["AutoOnChange"]</span> }
+                    @if (st.BeforeDispatch) { <span class="badge bg-info text-dark ms-1">@Localizer["AutoBeforeDispatch"]</span> }
+                    @if (st.DailyTime is { } dt) { <span class="badge bg-info text-dark ms-1">@Localizer["AutoDaily", dt.ToString("HH:mm")]</span> }
+                    <span class="badge bg-light text-dark border ms-1">@Localizer["AutoRule", Localizer[$"Rule_{st.Rule}"].Value]</span>
+                    @if (st.FreezeHours is { } fh) { <span class="badge bg-light text-dark border ms-1">@Localizer["AutoFreeze", fh.ToString("0.##")]</span> }
+                }
+                else
+                {
+                    <span>@Localizer["AutoOff"]</span>
+                }
+            </div>
+        </div>
+    }
+
+    @* 執行結果訊息 *@
+    <div id="runResultAlert" class="alert d-none mb-2" role="alert"></div>
+
+    @* Tab 切換 *@
+    <ul class="nav nav-tabs mb-3" id="scheduleTabs">
+        <li class="nav-item">
+            <button class="nav-link active" data-tab="gantt">
+                <i class="bi bi-bar-chart-steps"></i> @Localizer["TabGantt"]
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-tab="load">
+                <i class="bi bi-speedometer2"></i> @Localizer["TabMachineLoad"]
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-tab="prep">
+                <i class="bi bi-list-check"></i> @Localizer["TabPreparation"]
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-tab="history">
+                <i class="bi bi-clock-history"></i> @Localizer["TabHistory"]
+            </button>
+        </li>
+    </ul>
+
+    @* 圖例說明 *@
+    <div id="legendBar" class="d-flex gap-3 flex-wrap mb-2 small">
+        <span><span class="badge u-background-198754">&#9632;</span> @Localizer["LegendInProgress"]</span>
+        <span><span class="badge u-background-dc3545">&#9632;</span> @Localizer["LegendLate"]</span>
+        <span><span class="badge u-background-6f42c1">&#9632;</span> @Localizer["LegendToolingConflict"]</span>
+        <span><span class="badge u-background-fd7e14">&#9632;</span> @Localizer["LegendMaterialRisk"]</span>
+        <span><span class="badge u-background-0dcaf0">&#9632;</span> @Localizer["LegendActual"]</span>
+        @* 計畫色刻意不用灰（bg-secondary）——會跟産能列的灰階撞在一起，分不出哪條是產能哪條是派工 *@
+        <span><span class="badge u-background-4a7ba7">&#9632;</span> @Localizer["LegendPlanned"]</span>
+        <span><span class="badge u-background-c5ccd4 u-color-212529">&#9632;</span> @Localizer["LegendCapacity"]</span>
+        <span class="text-muted">· @Localizer["LegendClickHint"]</span>
+        <span class="text-muted" id="legendBatchHint">· @Localizer["LegendBatchModeHint"]</span>
+    </div>
+
+    @* Tab 1：甘特 *@
+    <div id="tabGantt" class="tab-panel">
+        <div id="gantt-container" class="border rounded bg-white u-min-height-400px u-overflow-x-auto">
+            @* gantt-loading 與 gantt-chart-area 分開兩個子元素——loadGantt() 每次重繪只清空
+               gantt-chart-area，gantt-loading 維持常駐，不會被 innerHTML='' 連帶銷毀，
+               否則同一頁面內第二次呼叫 loadGantt()（再按一次「重新載入」或 45 秒輪詢）
+               會找不到 gantt-loading 而噴 TypeError。 *@
+            <div id="gantt-loading" class="text-center text-muted p-5">
+                <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                @Localizer["Loading"]
+            </div>
+            <div id="gantt-chart-area"></div>
+        </div>
+    </div>
+
+    @* Tab 2：機台負荷 *@
+    <div id="tabLoad" class="tab-panel d-none">
+        <div class="row mb-2 align-items-end">
+            <div class="col-auto">
+                <label class="form-label mb-0">@Localizer["LabelWeekOf"]</label>
+                <input id="inputWeekOf" type="date" class="form-control form-control-sm u-width-150px"
+                       value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            </div>
+            <div class="col-auto">
+                <button id="btnLoadLoad" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-arrow-clockwise"></i> @Localizer["BtnLoad"]
+                </button>
+            </div>
+        </div>
+        <div id="loadTable">
+            <div class="text-center text-muted p-4">
+                <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                @Localizer["Loading"]
+            </div>
+        </div>
+    </div>
+
+    @* Tab 3：生產準備看板 *@
+    <div id="tabPrep" class="tab-panel d-none">
+        <div class="row mb-2 align-items-end">
+            <div class="col-auto">
+                <label class="form-label mb-0">@Localizer["LabelPrepDate"]</label>
+                <input id="inputPrepDate" type="date" class="form-control form-control-sm u-width-150px" />
+            </div>
+            <div class="col-auto">
+                <button id="btnLoadPrep" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-arrow-clockwise"></i> @Localizer["BtnLoad"]
+                </button>
+            </div>
+        </div>
+        <div id="prepTable">
+            <div class="text-center text-muted p-4">
+                <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                @Localizer["Loading"]
+            </div>
+        </div>
+    </div>
+
+    @* Tab 4：排程紀錄（每次全量排程一列，點列看派工異動明細；保留 60 天） *@
+    <div id="tabHistory" class="tab-panel d-none">
+        <div class="row mb-2 align-items-end">
+            <div class="col-auto">
+                <button id="btnLoadHistory" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-arrow-clockwise"></i> @Localizer["BtnLoad"]
+                </button>
+            </div>
+            <div class="col text-muted small">@Localizer["HistoryHint"]</div>
+        </div>
+        <div id="historyTable"></div>
+        <div id="historyChanges" class="mt-3"></div>
+    </div>
+</div>
+
+@* ── 派工調整 Offcanvas 側板 ─────────────────────────────────────────────────── *@
+<div class="offcanvas offcanvas-end u-width-380px" tabindex="-1" id="dispatchOffcanvas">
+    <div class="offcanvas-header border-bottom py-2">
+        <h6 class="offcanvas-title" id="sidePanelLabel">@Localizer["PanelTitle"]</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="dispatchPanelBody">
+        <div class="text-center text-muted p-5">
+            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+            @Localizer["Loading"]
+        </div>
+    </div>
+    <div class="offcanvas-footer border-top p-2 d-flex justify-content-between">
+        <button class="btn btn-sm btn-outline-secondary" data-bs-dismiss="offcanvas">@Localizer["BtnClose"]</button>
+        <div id="panelActionFeedback" class="small text-muted align-self-center"></div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/lib/timelines-chart/timelines-chart.min.js" asp-append-version="true"></script>
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    const plantId = '@Html.Raw(plantId)';
+    let chart = null;
+    let pollTimer = null;
+
+    // TimelinesChart（底層 d3-tip）的提示框掛在 document.body、靠 hover 的
+    // <rect class="series-segment"> 觸發 mouseover/mouseout 顯隱。重繪圖表時
+    // （45 秒輪詢或手動重新載入）舊 rect 會被直接移除，滑鼠若正停在上面就等不到
+    // mouseout、提示框卡住不消失。改用滑鼠位置主動追蹤：每次移動都檢查目前是否
+    // 真的停在某個 segment 上，不是的話強制隱藏（與 d3-tip .hide() 同款式），
+    // 不依賴會被打斷的 mouseout 事件，滑鼠移開即時消失。
+    document.addEventListener('mousemove', (e) => {
+        const tips = document.querySelectorAll('body > .chart-tooltip');
+        if (tips.length === 0) return;
+        const overSegment = e.target.closest && e.target.closest('rect.series-segment');
+        if (!overSegment) {
+            tips.forEach(el => { el.style.opacity = '0'; el.style.pointerEvents = 'none'; });
+        }
+    });
+    const csrfToken = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+
+    // ── Tab 切換 ──────────────────────────────────────────────────────────────
+    document.querySelectorAll('#scheduleTabs .nav-link').forEach(btn => {
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('#scheduleTabs .nav-link').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const tab = this.dataset.tab;
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('d-none'));
+            document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('d-none');
+            // 圖例與「著色依據」都只對甘特有意義，切到其他 tab 一起收起來
+            ['legendBar', 'colorByWrap'].forEach(id =>
+                document.getElementById(id).classList.toggle('d-none', tab !== 'gantt'));
+            if (tab === 'load') loadMachineLoad();
+            if (tab === 'prep') loadPreparation();
+            if (tab === 'history') loadHistory();
+        });
+    });
+
+    // ── 甘特 ─────────────────────────────────────────────────────────────────
+    // TimelinesChart 畫 bar 顏色只吃 zColorScale(val)（查了 timelines-chart 原始碼確認，
+    // 不支援逐 segment 的自訂色）。
+    // ✅ 2026-08-13 升級 2.14.3 時重新查證：`state.zColorScale(d.val)` 仍是唯一入口，未變。
+    //
+    // ⚠️ 因此**顏色只有一個通道**：val 拿去表狀態，就不能同時表批號。這是「著色依據」
+    //    下拉存在的原因——兩種語意各自有用，但只能二選一，交給使用者當下決定。
+    //
+    // 舊做法是 val=批號、以字串雜湊映射到 360 個色相。兩個問題：只看一個批時整片同色
+    // （看不出任何狀況），批一多時又是彩虹（雜湊撞色也無從避免）；而且色相是雜湊值，
+    // 沒有語意——紅色不代表延遲，只代表這個批號剛好雜湊到 0 度。
+    //
+    // 現在預設走**例外著色**：只有需要注意的狀態跳色，一般已排程一律同一個中性色，
+    // 所以畫面上大多數 bar 是安靜的，例外才會跳出來。
+    //
+    // 色表以後端送的**穩定代碼 cat 為鍵**，不以顯示字串為鍵——顯示字串（進行中/延遲…）
+    // 日後若在地化，顏色不會跟著壞。
+    const GANTT_CAT_COLORS = {
+        inProgress:    '#198754',   // 進行中
+        late:          '#dc3545',   // 延遲預測
+        toolConflict:  '#6f42c1',   // 模具衝突
+        matRisk:       '#fd7e14',   // 待料風險
+        planned:       '#4a7ba7',   // 一般已排程：中性鋼藍。刻意不用灰——會跟產能列灰階撞在一起
+        actual:        '#0dcaf0',   // ▶實際進度
+        // 産能列灰階刻意比派工列淡，但太淡（原 #e9ecef）在白底上幾乎看不出正班時段的邊界，
+        // 故加深到 gray-400/gray-600 一階；兩者仍維持明顯落差以區分正班/加班。
+        shiftRegular:  '#c5ccd4',
+        shiftOvertime: '#7b848d',
+    };
+
+    // 狀態類別的顯示字串在 View 端產生（resx 已有這六個鍵，中英齊全）。
+    // 後端只送穩定代碼 cat，字面留給前端——圖例與 tooltip 因此會跟著 UI 語系走，
+    // 不像列標籤（`{機台}産能`、`委外`）那樣硬編中文。
+    const GANTT_CAT_LABELS = {
+        inProgress:   '@Localizer["LegendInProgress"]',
+        late:         '@Localizer["LegendLate"]',
+        toolConflict: '@Localizer["LegendToolingConflict"]',
+        matRisk:      '@Localizer["LegendMaterialRisk"]',
+        planned:      '@Localizer["LegendPlanned"]',
+        // 產能列與實際進度列的字面同樣來自後端的中文常數，一樣要換掉——
+        // 少了這三個鍵，英文介面的圖例會混著「正班」「加班」「▶實際」三個中文詞。
+        shiftRegular:  '@Localizer["LegendShiftRegular"]',
+        shiftOvertime: '@Localizer["LegendShiftOvertime"]',
+        actual:        '@Localizer["LegendActual"]',
+    };
+
+    // 批號著色用的固定順序調色盤（取代舊的隨機 HSL）：色相散得開、明度一致，
+    // 相鄰批號不會撞成幾乎一樣的顏色。超過 8 批就循環——批號本來就是無上限的維度，
+    // 循環比繼續增生色相誠實（也正是為什麼預設不是這一檔）。
+    const GANTT_BATCH_PALETTE = [
+        '#4a7ba7', '#e8833a', '#4f9d69', '#b5546f',
+        '#8264b8', '#3f9fa8', '#a8823f', '#6b7280',
+    ];
+
+    // val → 顏色。資料載入時依 cat 建表（見 buildColorMap），故 scale 本身只查表。
+    let ganttValColors = {};
+    function ganttColorScale(val) {
+        return ganttValColors[val] || GANTT_CAT_COLORS.planned;
+    }
+    // ⚠️ 這一行修的是**既有缺陷**，不是升級帶來的（2.12.1／2.14.3 實測皆會發生）：
+    //    timelines-chart 的色階圖例（底層 d3-color-legend）會對 zColorScale 呼叫 `.domain()`，
+    //    而我們傳的是純函式 → 每次繪製都會拋一次
+    //    `TypeError: t.scale.domain is not a function`。
+    //    它一直沒被發現，是因為錯誤發生在 kapsule 的 digest 裡（非同步）：**bar 照樣畫得出來**，
+    //    而畫面 loadGantt 的 `.catch` 在另一條路徑上、也接不到它。2026-08-13 新增的
+    //    ScheduleGanttTests 掛 PageError 才第一次看見。
+    //    補上 domain() 讓它 duck-type 成 d3 scale。
+    //    值域＝本次資料實際出現過的 val（由 buildColorMap 填），這樣圖例只列真的畫得出來的
+    //    類別：沒有延遲的一天就不會硬塞一個「延遲」色塊，也不會在批號著色時列出 8 個空色相。
+    ganttColorScale.domain = () => Object.keys(ganttValColors);
+
+    // 依本次資料建立 val → 顏色 的對應，並回傳（可能已改寫 val 的）資料。
+    //   mode='status'：val 用後端的狀態顯示字串，顏色查 cat 代碼；
+    //   mode='batch' ：派工 bar 的 val 改成批號，顏色依批號在調色盤上循環取。
+    // 產能列與實際列**不受切換影響**——它們不是派工，兩種模式都保持原樣，
+    // 否則切到批號著色時灰帶會跟著變色，整張圖的底圖就不穩定了。
+    function buildColorMap(data, mode) {
+        ganttValColors = {};
+        const batchOrder = [];
+
+        for (const group of data) {
+            for (const series of (group.data || [])) {
+                for (const seg of (series.data || [])) {
+                    const cat = seg.cat;
+                    const isDispatch = cat != null && !['actual', 'shiftRegular', 'shiftOvertime'].includes(cat);
+
+                    if (mode === 'batch' && isDispatch && seg.batch) {
+                        // 切換一定伴隨重新抓資料（見 selectColorBy 的 change），seg 是全新物件，
+                        // 這裡直接覆寫 val 不會累積、也不需要還原原本的狀態字串。
+                        seg.val = seg.batch;
+                        if (!batchOrder.includes(seg.batch)) batchOrder.push(seg.batch);
+                        ganttValColors[seg.batch] =
+                            GANTT_BATCH_PALETTE[batchOrder.indexOf(seg.batch) % GANTT_BATCH_PALETTE.length];
+                    } else {
+                        // 狀態模式：把後端的中文字面換成在地化字串，再依 cat 查固定色表。
+                        // 產能列與實際進度列也要換——它們的 val 同樣是後端寫死的中文常數。
+                        seg.val = GANTT_CAT_LABELS[cat] || seg.val;
+                        ganttValColors[seg.val] = GANTT_CAT_COLORS[cat] || GANTT_CAT_COLORS.planned;
+                    }
+                }
+            }
+        }
+        return data;
+    }
+
+    function currentColorMode() {
+        const el = document.getElementById('selectColorBy');
+        return el ? el.value : 'status';
+    }
+
+    // 取後端塞在 segment 上的額外欄位（ww/wo/wh/done/qty/late/matRisk…）。
+    // ⚠️ 不可用 d.labelVal：TimelinesChart 攤平資料時寫的是
+    //    { group, label, timeRange, val, labelVal: seg.labelVal ?? seg.val, data: seg }，
+    //    後端並未送 labelVal，於是它退化成 val（一個字串），d.labelVal.wo 之類一律 undefined
+    //    ——tooltip 的工單/工時/進度/警示會整段消失，onSegmentClick 也因 lv.ww 為
+    //    undefined 而點不開派工面板。原始物件在 d.data。
+    //    ✅ 2026-08-13 升級 2.14.3 時重新查證：攤平的物件形狀一字未改，`d.data` 仍然正確。
+    function segExtras(d) {
+        return (d && typeof d.data === 'object' && d.data !== null) ? d.data : {};
+    }
+
+    function buildGanttUrl() {
+        const to   = document.getElementById('inputDateTo').value;
+        const r    = document.getElementById('selectRule').value;
+        return '/api/mfg/schedule?plantId=' + encodeURIComponent(plantId)
+             + '&dateTo=' + encodeURIComponent(to)
+             + '&rule='   + encodeURIComponent(r);
+    }
+
+    function loadGantt() {
+        const container = document.getElementById('gantt-chart-area');
+        document.getElementById('gantt-loading').classList.remove('d-none');
+        // TimelinesChart（底層用 d3-tip）的提示框是掛在 document.body，不在 container 裡；
+        // 45 秒自動輪詢或手動「重新載入」時若滑鼠正懸停在某個 bar 上，container.innerHTML
+        // 清空會把 bar 連同其 mouseout 綁定一起銷毀，提示框永遠等不到 mouseout 就卡住不消失。
+        // 每次重建圖表前先清掉殘留的提示框元素，避免卡死。
+        document.querySelectorAll('body > .chart-tooltip').forEach(el => el.remove());
+
+        // cache: 'no-store' — 避免瀏覽器把同網址（同「顯示至」/排序規則）的舊回應快取
+        // 吐回來，導致排程剛跑完或改了顯示日期後，畫面沒更新、要整頁重新整理才會反映。
+        fetch(buildGanttUrl(), { headers: { 'X-Requested-With': 'XMLHttpRequest' }, cache: 'no-store' })
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('gantt-loading').classList.add('d-none');
+
+                if (!data || data.length === 0) {
+                    chart = null;   // 容器被換成提示文字，舊圖表的 DOM 已不在，下次有資料要重建
+                    container.innerHTML = '<p class="text-muted p-4">@Localizer["NoData"]</p>';
+                    return;
+                }
+
+                // 建構語法刻意維持工廠寫法。2.14.0 的 release note 寫「switch to conventional
+                // class new」，但實測底層 kapsule 的 `KapsuleComp` 仍是**普通 function**，
+                // 用 `this instanceof KapsuleComp` 判斷模式——**兩種寫法在 2.14.3 都可用**，
+                // 而 `new TimelinesChart(el)` 在 2.12.1 會**靜默不綁定**（畫不出東西也不拋錯）。
+                // 因此工廠寫法是唯一對兩版都正確的寫法，換版時這一行不必動。
+                // 建色表必須在建構圖表**之前**：zColorScale 在綁定當下就會被呼叫，
+                // 表還沒填好的話第一次繪製會整片退回中性色。
+                data = buildColorMap(data, currentColorMode());
+                const zoom = [new Date(Date.now() - 86400000), new Date(document.getElementById('inputDateTo').value)];
+
+                // 已有圖表就只換資料，不要清掉容器重建（2026-10-15）：
+                // 圖表初始化時就建立下方的時間刷（overview brusher），它的 scale 要等主圖第一次 update 才設定，
+                // 兩邊的 update 都排在 1ms 計時器上、先後不定——刷子先跑就拋
+                // `TypeError: Cannot read properties of null (reading 'domain')`。每次重載都重建＝每次重抽這支籤，
+                // 「重新載入」、45 秒輪詢、側板動作後約一半機率在 console 報錯（DispatchExceptionUiTests 量到）。
+                // 沿用同一個實例就不會再建刷子。zColorScale 重設一次：著色方式可能剛換，色表已由 buildColorMap 重建。
+                if (chart) {
+                    chart.data(data).zoomX(zoom).zColorScale(ganttColorScale);
+                    const now = new Date();
+                    document.getElementById('lastRefresh').textContent =
+                        '@Localizer["LastRefresh"]: ' + now.toLocaleTimeString();
+                    return;
+                }
+
+                container.innerHTML = '';
+                chart = TimelinesChart()(container)
+                    .data(data)
+                    .zoomX(zoom)
+                    .timeFormat('%Y-%m-%d %H:%M')
+                    // 極短的派工 bar（分鐘級工序）原本會被壓成次像素寬而看不見、也點不到。
+                    // 2.13.0 新增的 minSegmentWidth 給了官方解法，取 3px：夠看得見與點得到，
+                    // 又不至於讓短工序在時間軸上「看起來比實際久」到會誤導排程判讀。
+                    .minSegmentWidth(3)
+                    // ⚠️ 必須在 zColorScale **之前**：zQualitative 的 onChange 會把 zColorScale
+                    //    重設成內建色階，順序顛倒會讓下面這行的自訂色被蓋掉。
+                    //    它只影響圖例形狀（改走 DiscreteLegend），不影響 bar 顏色。
+                    .zQualitative(true)
+                    .zColorScale(ganttColorScale)
+                    .segmentTooltipContent(d => {
+                        const s = d.timeRange[0].toLocaleString();
+                        const e = d.timeRange[1].toLocaleString();
+                        const lv = segExtras(d);
+                        // 標題＝生產批號 / 工單編號。
+                        // ⚠️ 不可用 d.val 當批號：狀態著色時 val 是「已排程／延遲…」，
+                        //    會顯示成「已排程 / WO-x」。批號一律讀 lv.batch（產能列沒有這個
+                        //    欄位，退回 d.val 顯示「正班／加班」仍然正確）。
+                        // 批號為 null 時後端的 batch 已 fallback 成工單號，這時不再重覆串一次
+                        // （否則顯示成「WO-x / WO-x」）。
+                        const title    = lv.batch ?? d.val;
+                        const woSuffix = (lv.wo && lv.wo !== title) ? ` / ${lv.wo}` : '';
+                        let tip = `<b>${title}${woSuffix}</b><br>${s} → ${e}`;
+                        // 狀態一律用文字寫出來：批號著色時色塊不再表狀態，這行就是唯一的來源。
+                        if (GANTT_CAT_LABELS[lv.cat]) tip += `<br>${GANTT_CAT_LABELS[lv.cat]}`;
+                        if (lv.wh)      tip += `<br>@Localizer["WorkHours"]: ${lv.wh} min`;
+                        if (lv.done != null && lv.qty)
+                            tip += `<br>@Localizer["Progress"]: ${lv.done}/${lv.qty}`;
+                        if (lv.late)    tip += `<br><span class="u-color-dc3545">⚠ @Localizer["LegendLate"]</span>`;
+                        if (lv.matRisk) tip += `<br><span class="u-color-fd7e14">⚠ @Localizer["LegendMaterialRisk"]</span>`;
+                        if (lv.ww)      tip += `<br><span class="text-info">@Localizer["TipClickToAdjust"]</span>`;
+                        return tip;
+                    })
+                    .onSegmentClick(d => {
+                        const lv = segExtras(d);
+                        if (lv.ww) openDispatchPanel(lv.ww);
+                    });
+
+                const now = new Date();
+                document.getElementById('lastRefresh').textContent =
+                    '@Localizer["LastRefresh"]: ' + now.toLocaleTimeString();
+            })
+            .catch(() => {
+                document.getElementById('gantt-loading').classList.add('d-none');
+                chart = null;
+                container.innerHTML = '<p class="text-danger p-4">@Localizer["LoadFail"]</p>';
+            });
+    }
+
+    document.getElementById('btnLoad').addEventListener('click', loadGantt);
+
+    // 切換著色依據＝重新抓資料再重繪。刻意不在前端就地改色：buildColorMap 會覆寫 seg.val，
+    // 重抓可保證每次都從乾淨的後端資料出發，不必處理「批號模式覆寫過的 val 要怎麼還原」。
+    document.getElementById('selectColorBy').addEventListener('change', loadGantt);
+
+    // 45 秒自動輪詢
+    function startPoll() {
+        if (pollTimer) clearInterval(pollTimer);
+        pollTimer = setInterval(() => {
+            const activeTab = document.querySelector('#scheduleTabs .nav-link.active')?.dataset?.tab;
+            if (activeTab === 'gantt') loadGantt();
+            else if (activeTab === 'prep') loadPreparation();
+        }, 45000);
+    }
+
+    // ── 執行排程 ─────────────────────────────────────────────────────────────
+    const btnRun = document.getElementById('btnRun');
+    if (btnRun) {
+        btnRun.addEventListener('click', async function () {
+            btnRun.disabled = true;
+            const r = document.getElementById('selectRule').value;
+            // 執行前提示會挪動多少筆已排派工（其中幾筆是明天的——現場可能已照準備提醒備料、備模）
+            try {
+                const pv = await fetch('@Url.Action("RunPreview")?plantId=' + encodeURIComponent(plantId),
+                    { headers: { 'X-Requested-With': 'XMLHttpRequest' } }).then(x => x.json());
+                if (pv && pv.scheduled > 0) {
+                    const msg = '@Localizer["RunConfirmFmt", "__N__", "__M__"]'
+                        .replace('__N__', pv.scheduled).replace('__M__', pv.tomorrow);
+                    if (!confirm(msg)) { btnRun.disabled = false; return; }
+                }
+            } catch (e) { /* 預覽失敗不擋執行 */ }
+            fetch('@Url.Action("Run")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'RequestVerificationToken': csrfToken
+                },
+                body: 'plantId=' + encodeURIComponent(plantId) + '&rule=' + encodeURIComponent(r)
+            })
+            .then(r => r.json())
+            .then(res => {
+                const alert = document.getElementById('runResultAlert');
+                alert.className = 'alert ' + (res.success ? 'alert-success' : 'alert-danger') + ' mb-2';
+                alert.textContent = res.message;
+                alert.classList.remove('d-none');
+                if (res.success) {
+                    // 頂端的過時提示是載入頁面當下的狀態，排完即不成立
+                    document.getElementById('scheduleStaleness')?.classList.add('d-none');
+                    loadGantt();
+                }
+            })
+            .catch(() => {
+                // 伺服器錯誤（回應不是 JSON）：原本沒有 catch，按了之後畫面毫無反應
+                const alert = document.getElementById('runResultAlert');
+                alert.className = 'alert alert-danger mb-2';
+                alert.textContent = '@Localizer["RunFailed"]';
+                alert.classList.remove('d-none');
+            })
+            .finally(() => { btnRun.disabled = false; });
+        });
+    }
+
+    // ── 機台負荷 ─────────────────────────────────────────────────────────────
+    function buildLoadUrl() {
+        const w = document.getElementById('inputWeekOf').value;
+        return '/api/mfg/machine-load?plantId=' + encodeURIComponent(plantId)
+             + '&weekOf=' + encodeURIComponent(w);
+    }
+
+    function loadMachineLoad() {
+        const container = document.getElementById('loadTable');
+        container.innerHTML = '<div class="text-center text-muted p-4"><div class="spinner-border spinner-border-sm me-2"></div>@Localizer["Loading"]</div>';
+
+        fetch(buildLoadUrl(), { headers: { 'X-Requested-With': 'XMLHttpRequest' }, cache: 'no-store' })
+            .then(r => r.json())
+            .then(rows => {
+                if (!rows || rows.length === 0) {
+                    container.innerHTML = '<p class="text-muted p-4">@Localizer["NoData"]</p>';
+                    return;
+                }
+
+                let html = `<table class="table table-sm table-bordered table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Localizer["ColMachine"]</th>
+                            <th>@Localizer["ColWorkCenter"]</th>
+                            <th>@Localizer["ColScheduledMin"]</th>
+                            <th>@Localizer["ColAvailableMin"]</th>
+                            <th>@Localizer["ColUtilization"]</th>
+                            <th>@Localizer["ColUnscheduled"]</th>
+                            <th>@Localizer["ColLate"]</th>
+                        </tr>
+                    </thead><tbody>`;
+
+                rows.forEach(r => {
+                    const overClass = r.overloaded ? 'table-danger' : (r.utilizationPct > 80 ? 'table-warning' : '');
+                    const pctTxt = r.availableMin === 0 && r.scheduledMin === 0
+                        ? '—'
+                        : r.utilizationPct.toFixed(1) + '%';
+                    const overIcon = r.overloaded ? ' <i class="bi bi-exclamation-triangle-fill text-danger" title="@Localizer["Overloaded"]"></i>' : '';
+
+                    html += `<tr class="${overClass}">
+                        <td>${r.machine}</td>
+                        <td>${r.workCenter || ''}</td>
+                        <td class="text-end">${r.scheduledMin}</td>
+                        <td class="text-end">${r.availableMin}</td>
+                        <td class="text-end fw-semibold">${pctTxt}${overIcon}</td>
+                        <td class="text-end">${r.unscheduledCount || 0}</td>
+                        <td class="text-end">${r.lateCount || 0}</td>
+                    </tr>`;
+                });
+
+                html += '</tbody></table>';
+                container.innerHTML = html;
+            })
+            .catch(() => {
+                container.innerHTML = '<p class="text-danger p-4">@Localizer["LoadFail"]</p>';
+            });
+    }
+
+    document.getElementById('btnLoadLoad').addEventListener('click', loadMachineLoad);
+
+    // ── 生產準備看板 ─────────────────────────────────────────────────────────
+    (function () {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('inputPrepDate').value = tomorrow.toISOString().slice(0, 10);
+    }());
+
+    function escHtml(s) {
+        return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function buildPrepUrl() {
+        const d = document.getElementById('inputPrepDate').value;
+        return '/api/mfg/preparation?plantId=' + encodeURIComponent(plantId)
+             + '&date=' + encodeURIComponent(d);
+    }
+
+    // ── 排程紀錄 ─────────────────────────────────────────────────────────────
+    const HISTORY_TRIGGER = {
+        Manual:         '@Localizer["Trigger_Manual"]',
+        OnChange:       '@Localizer["Trigger_OnChange"]',
+        BeforeDispatch: '@Localizer["Trigger_BeforeDispatch"]',
+        Daily:          '@Localizer["Trigger_Daily"]',
+    };
+    const HISTORY_RULE = {
+        Priority: '@Localizer["Rule_Priority"]', EDD: '@Localizer["Rule_EDD"]', SPT: '@Localizer["Rule_SPT"]',
+        FIFO: '@Localizer["Rule_FIFO"]', LIFO: '@Localizer["Rule_LIFO"]',
+    };
+    const CHANGE_KIND = {
+        NewlyScheduled: '<span class="badge bg-success">@Localizer["Change_NewlyScheduled"]</span>',
+        Moved:          '<span class="badge bg-info text-dark">@Localizer["Change_Moved"]</span>',
+        MachineChanged: '<span class="badge bg-primary">@Localizer["Change_MachineChanged"]</span>',
+        Unscheduled:    '<span class="badge bg-danger">@Localizer["Change_Unscheduled"]</span>',
+    };
+    // 後端送的是不帶時區的當地時間字串（見 GanttData 的 UTC 地雷），只取 MM-dd HH:mm 顯示
+    function fmtLocal(s) { return s ? s.substring(5, 16).replace('T', ' ') : '—'; }
+
+    function loadHistory() {
+        const container = document.getElementById('historyTable');
+        document.getElementById('historyChanges').innerHTML = '';
+        container.innerHTML = '<div class="text-center text-muted p-4"><div class="spinner-border spinner-border-sm me-2"></div>@Localizer["Loading"]</div>';
+
+        fetch('/Schedule/RunHistory?plantId=' + encodeURIComponent(plantId),
+              { headers: { 'X-Requested-With': 'XMLHttpRequest' }, cache: 'no-store' })
+            .then(r => { if (!r.ok) throw r.status; return r.json(); })
+            .then(data => {
+                if (!data.rows || data.rows.length === 0) {
+                    container.innerHTML = '<p class="text-muted p-4">@Localizer["HistoryEmpty"]</p>';
+                    return;
+                }
+                let html = `<table class="table table-sm table-bordered table-hover u-cursor-pointer">
+                    <thead class="table-light"><tr>
+                        <th>@Localizer["ColRunAt"]</th>
+                        <th>@Localizer["ColTrigger"]</th>
+                        <th>@Localizer["ColRule"]</th>
+                        <th class="text-end">@Localizer["ColScheduledCount"]</th>
+                        <th class="text-end">@Localizer["Change_NewlyScheduled"]</th>
+                        <th class="text-end">@Localizer["Change_Moved"]</th>
+                        <th class="text-end">@Localizer["Change_MachineChanged"]</th>
+                        <th class="text-end">@Localizer["Change_Unscheduled"]</th>
+                        <th class="text-end">@Localizer["ColTomorrowChanged"]</th>
+                        <th class="text-end">@Localizer["ColFenced"]</th>
+                    </tr></thead><tbody>`;
+                data.rows.forEach(r => {
+                    const who = r.runBy ? ` · ${escHtml(r.runBy)}` : '';
+                    const tomorrowCls = r.tomorrow > 0 ? ' class="text-end text-danger fw-semibold"' : ' class="text-end"';
+                    html += `<tr data-run-id="${r.id}">
+                        <td>${fmtLocal(r.startedAt)}</td>
+                        <td>${escHtml(HISTORY_TRIGGER[r.trigger] || r.trigger)}${who}</td>
+                        <td>${escHtml(HISTORY_RULE[r.rule] || r.rule)}</td>
+                        <td class="text-end">${r.scheduled}</td>
+                        <td class="text-end">${r.newly}</td>
+                        <td class="text-end">${r.moved}</td>
+                        <td class="text-end">${r.machine}</td>
+                        <td class="text-end">${r.unscheduled}</td>
+                        <td${tomorrowCls}>${r.tomorrow}</td>
+                        <td class="text-end">${r.freezeHours != null ? r.fenced : '—'}</td>
+                    </tr>`;
+                });
+                html += '</tbody></table>';
+                container.innerHTML = html;
+                container.querySelectorAll('tr[data-run-id]').forEach(tr =>
+                    tr.addEventListener('click', () => {
+                        container.querySelectorAll('tr.table-active').forEach(x => x.classList.remove('table-active'));
+                        tr.classList.add('table-active');
+                        loadRunChanges(tr.dataset.runId);
+                    }));
+            })
+            .catch(() => {
+                container.innerHTML = '<p class="text-danger p-4">@Localizer["LoadFailed"]</p>';
+            });
+    }
+
+    function loadRunChanges(runId) {
+        const container = document.getElementById('historyChanges');
+        container.innerHTML = '<div class="text-center text-muted p-4"><div class="spinner-border spinner-border-sm me-2"></div>@Localizer["Loading"]</div>';
+        fetch('/Schedule/RunChanges/' + encodeURIComponent(runId),
+              { headers: { 'X-Requested-With': 'XMLHttpRequest' }, cache: 'no-store' })
+            .then(r => { if (!r.ok) throw r.status; return r.json(); })
+            .then(data => {
+                if (!data.rows || data.rows.length === 0) {
+                    container.innerHTML = '<p class="text-muted p-3">@Localizer["HistoryNoChanges"]</p>';
+                    return;
+                }
+                let html = `<h6 class="mb-2">@Localizer["HistoryChangesTitle"]</h6>
+                    <table class="table table-sm table-bordered">
+                    <thead class="table-light"><tr>
+                        <th>@Localizer["ColChangeKind"]</th>
+                        <th>@Localizer["ColWorkOrder"]</th>
+                        <th>@Localizer["ColOperation"]</th>
+                        <th>@Localizer["ColBefore"]</th>
+                        <th>@Localizer["ColAfter"]</th>
+                    </tr></thead><tbody>`;
+                data.rows.forEach(c => {
+                    const before = c.oldStart ? `${escHtml(c.oldMachine || '—')} · ${fmtLocal(c.oldStart)}` : '—';
+                    const after  = c.newStart ? `${escHtml(c.newMachine || '—')} · ${fmtLocal(c.newStart)}` : '—';
+                    html += `<tr>
+                        <td>${CHANGE_KIND[c.kind] || escHtml(c.kind)}</td>
+                        <td>${escHtml(c.workOrderId)}</td>
+                        <td>${c.operationSeq}</td>
+                        <td>${before}</td>
+                        <td>${after}</td>
+                    </tr>`;
+                });
+                html += '</tbody></table>';
+                if (data.truncated) html += '<p class="text-muted small">@Localizer["HistoryTruncated"]</p>';
+                container.innerHTML = html;
+            })
+            .catch(() => {
+                container.innerHTML = '<p class="text-danger p-3">@Localizer["LoadFailed"]</p>';
+            });
+    }
+
+    function loadPreparation() {
+        const container = document.getElementById('prepTable');
+        container.innerHTML = '<div class="text-center text-muted p-4"><div class="spinner-border spinner-border-sm me-2"></div>@Localizer["Loading"]</div>';
+
+        fetch(buildPrepUrl(), { headers: { 'X-Requested-With': 'XMLHttpRequest' }, cache: 'no-store' })
+            .then(r => r.json())
+            .then(data => {
+                if (!data.rows || data.rows.length === 0) {
+                    container.innerHTML = '<p class="text-muted p-4">@Localizer["NoData"]</p>';
+                    return;
+                }
+
+                let html = `<table class="table table-sm table-bordered table-hover">
+                    <thead class="table-light"><tr>
+                        <th>@Localizer["ColMachine"]</th>
+                        <th>@Localizer["ColWorkOrder"]</th>
+                        <th>@Localizer["ColOperation"]</th>
+                        <th class="text-end">@Localizer["ColQty"]</th>
+                        <th>@Localizer["ColScheduledStart"]</th>
+                        <th>@Localizer["ColScheduledEnd"]</th>
+                        <th class="text-end">@Localizer["ColSetupMin"]</th>
+                        <th>@Localizer["ColTooling"]</th>
+                        <th>@Localizer["ColMaterialStatus"]</th>
+                    </tr></thead><tbody>`;
+
+                data.rows.forEach(r => {
+                    const rowStyle = r.toolingConflict ? ' u-background-f3eeff' : '';
+                    const conflictBadge = r.toolingConflict
+                        ? `<span class="badge me-1 u-background-6f42c1" title="@Localizer["ToolingConflictHint"]"><i class="bi bi-exclamation-triangle"></i></span>`
+                        : '';
+                    const toolingTxt = r.toolingCode ? `${conflictBadge}${escHtml(r.toolingCode)}` : '—';
+
+                    let stagingHtml = '—';
+                    if (r.materialCount > 0) {
+                        const statuses = r.stagingStatuses || [];
+                        const allStaged = statuses.length > 0 && statuses.every(s => s === 'Staged');
+                        const anyPending = statuses.some(s => s !== 'Staged');
+                        stagingHtml = allStaged
+                            ? `<span class="badge bg-success">@Localizer["StagingDone"]</span>`
+                            : anyPending
+                                ? `<span class="badge bg-warning text-dark">@Localizer["StagingPending"]</span>`
+                                : `<span class="badge bg-secondary">@Localizer["StagingNone"]</span>`;
+                    }
+
+                    const lateCls  = r.late          ? ' table-danger'  : '';
+                    const matCls   = r.materialRisk   ? ' table-warning' : '';
+                    const rowClass = r.toolingConflict ? '' : (lateCls || matCls);
+
+                    html += `<tr class="${rowClass}${rowStyle}">
+                        <td>${escHtml(r.machineCode)}</td>
+                        <td>${escHtml(r.workOrderId)}</td>
+                        <td>${escHtml(r.operationName || String(r.operationSeq))}</td>
+                        <td class="text-end">${r.qty}</td>
+                        <td>${r.scheduledStart ? new Date(r.scheduledStart).toLocaleString() : '—'}</td>
+                        <td>${r.scheduledEnd   ? new Date(r.scheduledEnd).toLocaleString()   : '—'}</td>
+                        <td class="text-end">${r.setupMin ?? 0}</td>
+                        <td>${toolingTxt}</td>
+                        <td>${stagingHtml}</td>
+                    </tr>`;
+                });
+
+                html += '</tbody></table>';
+                container.innerHTML = html;
+            })
+            .catch(() => {
+                container.innerHTML = '<p class="text-danger p-4">@Localizer["LoadFail"]</p>';
+            });
+    }
+
+    document.getElementById('btnLoadPrep').addEventListener('click', loadPreparation);
+    document.getElementById('btnLoadHistory').addEventListener('click', loadHistory);
+
+    // ── 派工側板（例外調度）─────────────────────────────────────────────────
+    const panelEl = document.getElementById('dispatchOffcanvas');
+    const panelBody = document.getElementById('dispatchPanelBody');
+    const panelFeedback = document.getElementById('panelActionFeedback');
+    const bsPanel = new bootstrap.Offcanvas(panelEl);
+
+    function openDispatchPanel(dispatchId) {
+        panelFeedback.textContent = '';
+        panelBody.innerHTML = '<div class="text-center text-muted p-5"><div class="spinner-border spinner-border-sm me-2" role="status"></div>@Localizer["Loading"]</div>';
+        bsPanel.show();
+
+        fetch('/Schedule/DispatchPanel/' + encodeURIComponent(dispatchId),
+              { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => { if (!r.ok) throw r.status; return r.text(); })
+            .then(html => { panelBody.innerHTML = html; })
+            .catch(s => {
+                panelBody.innerHTML = `<div class="alert alert-warning m-3">${s === 404 ? '@Localizer["PanelNotFound"]' : '@Localizer["LoadFail"]'}</div>`;
+            });
+    }
+
+    // 側板操作函數（由 _DispatchPanel.cshtml 呼叫）
+    window.panelUpdatePriority = function (e, el) {
+        const batchId = el.dataset.batchId;
+        const p = parseInt(document.getElementById('panelPriority')?.value);
+        if (!batchId || isNaN(p)) return;
+        postAction('/ProductionBatch/UpdatePriority', { id: batchId, priority: p },
+            msg => { panelFeedback.textContent = msg; });
+    };
+
+    window.panelReassign = function (e, el) {
+        const dispatchId = el.dataset.id;
+        const mc = document.getElementById('panelNewMachine')?.value;
+        if (!mc) return;
+        postAction('/Dispatch/ReassignMachine', { id: dispatchId, newMachineCode: mc },
+            msg => { panelFeedback.textContent = msg; loadGantt(); bsPanel.hide(); });
+    };
+
+    window.panelSplit = function (e, el) {
+        const dispatchId = el.dataset.id;
+        const totalQty = parseFloat(el.dataset.qty);
+        const rows = document.querySelectorAll('#splitRows .split-row');
+        const splits = [];
+        let sum = 0;
+        rows.forEach(row => {
+            const qty = parseFloat(row.querySelector('.split-qty')?.value) || 0;
+            const mc  = row.querySelector('.split-machine')?.value || '';
+            if (qty > 0) { splits.push({ qty, machineCode: mc }); sum += qty; }
+        });
+        if (splits.length < 2) { panelFeedback.textContent = '@Localizer["SplitMinTwo"]'; return; }
+        if (Math.abs(sum - totalQty) > 0.0001) {
+            panelFeedback.textContent = '@Localizer["SplitQtySumMismatch"]';
+            return;
+        }
+
+        fetch('/Dispatch/Split?id=' + encodeURIComponent(dispatchId), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'RequestVerificationToken': csrfToken
+            },
+            body: JSON.stringify(splits)
+        })
+        .then(r => r.json())
+        .then(res => {
+            panelFeedback.textContent = res.message;
+            if (res.success) { loadGantt(); bsPanel.hide(); }
+        });
+    };
+
+    window.panelToOutsource = function (e, el) {
+        const dispatchId = el.dataset.id;
+        if (!confirm('@Localizer["ToOutsourceConfirm"]')) return;
+        postAction('/Dispatch/ToOutsource', { id: dispatchId },
+            msg => { panelFeedback.textContent = msg; loadGantt(); bsPanel.hide(); });
+    };
+
+    // 取代動態列模板中移除整列的 inline 事件處理器（CSP 委派）。
+    window.removeSplitRow = function (e, el) {
+        const row = el.closest('.split-row');
+        if (row) row.remove();
+    };
+
+    window.addSplitRow = function () {
+        const container = document.getElementById('splitRows');
+        const opts = [...document.querySelectorAll('.split-machine-opt')]
+            .map(e => `<option value="${e.dataset.code}">${e.dataset.code}</option>`).join('');
+        const div = document.createElement('div');
+        div.className = 'row g-1 mb-1 split-row';
+        div.innerHTML = `
+            <div class="col"><input type="number" class="form-control form-control-sm split-qty"
+                placeholder="@Localizer["SplitQtyPlaceholder"]" min="0.000001" step="any"></div>
+            <div class="col">
+                <div class="input-group input-group-sm">
+                    <select class="form-select form-select-sm split-machine">
+                        <option value="">—</option>${opts}
+                    </select>
+                    <button class="btn btn-outline-danger" type="button"
+                            data-action="removeSplitRow">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+            </div>`;
+        container.appendChild(div);
+        // R6c 合規：動態列含 input/select，通知 unobtrusive 驗證重新解析
+        if (typeof armValidation === 'function') armValidation(div);
+    };
+
+    function postAction(url, params, onSuccess) {
+        const body = Object.entries(params).map(([k, v]) =>
+            encodeURIComponent(k) + '=' + encodeURIComponent(v)).join('&');
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest',
+                'RequestVerificationToken': csrfToken
+            },
+            body
+        })
+        .then(r => r.json())
+        .then(res => { if (onSuccess) onSuccess(res.message); });
+    }
+
+    // ── 初始載入 ─────────────────────────────────────────────────────────────
+    loadGantt();
+    startPoll();
+}());
+</script>
+@Html.AntiForgeryToken()
+}

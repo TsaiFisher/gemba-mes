@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Incoming Inspection (IQC) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>進料檢驗 IQC — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link active"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-shield-check me-2 text-primary"></i><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/inv/iqc.html &nbsp;|&nbsp; 供應商來料的抽樣檢驗</span><span lang="en">Path: /mobile/inv/iqc.html &nbsp;|&nbsp; Sampling inspection of incoming supplier material</span></div>
+    </div>
+
+    <p><span lang="zh">列出待 IQC 的進料單。桌機確認進貨單後，需檢驗的品號會產生檢驗單並出現在這裡；檢驗合格後該批才會出現在入庫上架的待入庫清單。同樣採 MIL-STD-1916 Ac=0，發現任何不良品即全批拒收。</span><span lang="en">Lists the receipts awaiting IQC. When a goods receipt is confirmed on the desktop, products that need inspecting raise an inspection order and appear here; the lot reaches the put-away list only once it passes. It also uses MIL-STD-1916 with Ac=0, so any defect rejects the whole lot.</span></p>
+
+    <img class="screen-shot" src="img/iqc.png" data-src-en="img/en/iqc.png" alt="進料檢驗畫面截圖" data-alt-en="Incoming inspection screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">進料檢驗畫面（已選擇一張進料單，顯示應抽樣數與判定）</span><span lang="en">Incoming inspection screen (a receipt selected, showing the sample size and the verdict)</span></div>
+
+    <p><span lang="zh">一般進貨在確認後、以及已上架到待驗倉但還沒檢驗時都會列出；合格後轉入進貨單記錄的倉儲，沒有就用品號類別的預設倉儲，兩者都沒有時判合格會被擋下。清單除了一般進貨，也列出<strong>委外收貨</strong>的收回品（標「委外」）。委外收回品合格後會自動轉入一般倉（收貨單記錄的倉儲，沒有就用品號類別的預設倉儲），並累計到委外派工的完工量；不合格的留在待驗倉待處置。兩者都沒有時判合格會被擋下並說明、不會記錄這筆檢驗——先到<a href="../bas/product-category.html">產品類別</a>設定預設倉儲再驗。</span><span lang="en">Purchase receipts are listed once confirmed, and also after they have been put away into quarantine but not yet inspected; on acceptance they move to the warehouse on the receipt, or the item category's default when there is none, and acceptance is refused if neither is set. Besides ordinary purchase receipts, the list also shows goods returned on <strong>outsource receipts</strong> (marked "Outsource"). When they pass they are moved to a normal warehouse automatically (the warehouse on the receipt, otherwise the product category default) and added to the outsourced dispatch's completed quantity; failed quantities stay in quarantine awaiting disposition. If there is neither, a pass is refused with an explanation and the inspection is not recorded — set a default warehouse under <a href="../bas/product-category.html">Product Categories</a> and inspect again.</span></p>
+
+    <h2 id="steps"><i class="bi bi-list-ol me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">用查詢列輸入單號或品號找到要檢驗的進料單並點選；點<strong>「重選」</strong>可換一張。</span><span lang="en">Find the receipt with the search bar and tap it; <strong>"Back"</strong> switches to another one.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">確認帶出的<strong>「到貨量」</strong>與品號無誤。</span><span lang="en">Check the <strong>"Received"</strong> and the product carried over.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">選<strong>「驗證等級（VL）」</strong>，畫面即依到貨量算出<strong>「計算應抽樣數（n）」</strong>，並固定顯示<strong>「允收數 Ac」</strong>為 0、<strong>「拒收數 Re」</strong>為 1。</span><span lang="en">Choose the <strong>"Verification Level (VL)"</strong> and the screen works out the <strong>"Required Sample n"</strong> from the received quantity; <strong>"Accept Ac"</strong> is always 0 and <strong>"Reject Re"</strong> always 1.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">填<strong>「實際抽取數」</strong>（建議不小於應抽樣數）與<strong>「不良數（發現即拒批）」</strong>。</span><span lang="en">Enter the <strong>"Actual Sample Qty"</strong> (ideally not less than the required sample) and the <strong>"NG Qty (any NG = reject lot)"</strong>.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh">確認<strong>「判定結果」</strong>無誤，填寫備註後點<strong>「送出檢驗結果」</strong>。</span><span lang="en">Check the <strong>"Result"</strong>, add remarks and tap <strong>"Submit IQC Result"</strong>.</span></div></div>
+
+    <p class="text-muted small"><span lang="zh">實際抽取數必須大於 0，否則會提示「抽樣數量必須大於 0」。</span><span lang="en">The actual sample quantity has to be greater than zero, otherwise it warns that it must be.</span></p>
+
+    <h2 id="vl"><i class="bi bi-rulers me-2 text-primary"></i><span lang="zh">驗證等級（VL）怎麼選</span><span lang="en">Choosing the verification level</span></h2>
+
+    <p><span lang="zh">驗證等級決定抽樣數：等級越高抽得越多，適用於越關鍵的零件。</span><span lang="en">The verification level decides how many pieces you sample: the higher the level the larger the sample, for the more critical parts.</span></p>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-12pct"><span lang="zh">等級</span><span lang="en">Level</span></th><th><span lang="zh">適用</span><span lang="en">Use for</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">VL-I</span><span lang="en">VL-I</span></td><td><span lang="zh">最寬鬆，樣本最少。</span><span lang="en">The least strict, with the smallest sample.</span></td></tr>
+    <tr><td><span lang="zh">VL-IV</span><span lang="en">VL-IV</span></td><td><span lang="zh">一般 IQC 的建議值，未特別指定時用這一級。</span><span lang="en">The recommended default for ordinary IQC; use this unless told otherwise.</span></td></tr>
+    <tr><td><span lang="zh">VL-VI</span><span lang="en">VL-VI</span></td><td><span lang="zh">關鍵零組件。</span><span lang="en">Critical components.</span></td></tr>
+    <tr><td><span lang="zh">VL-VII</span><span lang="en">VL-VII</span></td><td><span lang="zh">安全件，抽樣最嚴格。</span><span lang="en">Safety-critical parts, with the strictest sampling.</span></td></tr>
+    </tbody>
+    </table>
+
+    <p class="text-muted small"><span lang="zh">VL-II、VL-III、VL-V 亦可選用，強度介於上表之間。</span><span lang="en">VL-II, VL-III and VL-V are also available, with strictness between those above.</span></p>
+
+    <h2 id="result"><i class="bi bi-check2-square me-2 text-primary"></i><span lang="zh">判定結果</span><span lang="en">The verdict</span></h2>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-20pct"><span lang="zh">結果</span><span lang="en">Result</span></th><th><span lang="zh">後續</span><span lang="en">What happens next</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">合格</span><span lang="en">Pass</span></td><td><span lang="zh">該批放行，出現在入庫上架的待入庫清單，可以上架進良品倉。</span><span lang="en">The lot is released and appears in the put-away list, ready to go into the good-stock warehouse.</span></td></tr>
+    <tr><td><span lang="zh">不合格</span><span lang="en">Fail</span></td><td><span lang="zh">全批拒收，不會進入待入庫清單。後續的不合格品處置（退貨、特採、重工）由品保在桌機的 NCR 畫面處理。</span><span lang="en">The whole lot is rejected and never reaches the put-away list. What happens to it next — return, concession or rework — is decided by QA on the NCR screen on the desktop.</span></td></tr>
+    </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh">Ac=0 沒有「不良率在多少以內可接受」這回事：抽樣中只要出現一個不良品，整批就是拒收。若對批量有疑慮，正確做法是提高驗證等級多抽，而不是放寬判定。</span><span lang="en">With Ac=0 there is no acceptable defect rate: one defect in the sample rejects the whole lot. If you are unsure about a lot, the right response is to raise the verification level and sample more, not to loosen the verdict.</span></div>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,206 @@
+{
+  "sourcePath": "Modules/ACT/Services/DataAuditService.cs",
+  "sourceHash": "4897438beed9e4d233cb78fe8003a9c64a274944925b58e76f6698504877b082",
+  "entries": [
+    {
+      "slug": "code-act-dataauditservice-59aba7cc",
+      "lang": "zh",
+      "headingPath": "帳務 › 在外原料的讀取點",
+      "text": "讀取外來原料的來源判斷規則｜系統在讀取外來原料時，如果沒有特別指定資料來源，則會使用自建的版本作為預設值，其意義與注入版本相同。",
+      "approved": true,
+      "sourceSectionHash": "3e0dd0c23d4718a1f3c1644973c03d93dd37ccdb60ddc003e422d231c6963031"
+    },
+    {
+      "slug": "code-act-dataauditservice-831cf22f",
+      "lang": "zh",
+      "headingPath": "帳務 › ，共用建構式的參數會長到沒人看得懂",
+      "text": "參數處理與錯誤訊息的生成規則｜系統會將所有傳入的資訊組合成一個標準化的錯誤描述文字。為了確保資料的一致性，所有的數值和日期格式都會先轉換成字串，以避免不同語言環境導致同一筆資料在儲存時產生不同的字串表示。",
+      "approved": true,
+      "sourceSectionHash": "1d74f0da0f506fb073c22fbbc248c65a8547cbb73e0f2aa7d5767d9d77e81aea"
+    },
+    {
+      "slug": "code-act-dataauditservice-bb929981",
+      "lang": "zh",
+      "headingPath": "帳務 › §9 P-7：容忍值取系統參數，未設定/不合法時退回預設",
+      "text": "容忍值依系統參數決定｜當系統參數沒有設定或輸入的數值不是正數時，系統會使用預設的容忍值。",
+      "approved": true,
+      "sourceSectionHash": "a0abf23a55982b2fbaf9c29fede213470ea9a953a477c5c6d0851866ed20c1b9"
+    },
+    {
+      "slug": "code-act-dataauditservice-cd1eaceb",
+      "lang": "zh",
+      "headingPath": "帳務 › 退貨已過帳但來源發票已結清 → 應收／應付沒被回沖",
+      "text": "應收應付未回沖時無法關帳｜當貨物退回但來源發票已經結清的情況下，系統會阻止進行關帳作業，因為相關的應收或應付金額尚未被正確地沖銷。",
+      "approved": true,
+      "sourceSectionHash": "2dc208b07e6b206b1f61c94e66036f7d4fb192187ba00adb5550c27c11d4a3b8"
+    },
+    {
+      "slug": "code-act-dataauditservice-d4ea08cb",
+      "lang": "zh",
+      "headingPath": "帳務 › 孤兒過帳：唯讀盤查先行才掛進來",
+      "text": "盤查後才能進行過帳的限制｜系統在執行孤兒過帳時，如果發現有需要處理的孤兒單據，則會阻止關帳動作。",
+      "approved": true,
+      "sourceSectionHash": "b631bccba081fd81426148f584e039e40a0406ca3dc5eb54e7276ca45dea8b90"
+    },
+    {
+      "slug": "code-act-dataauditservice-590c8535",
+      "lang": "zh",
+      "headingPath": "帳務 › 掛在這裡＝沒清乾淨就不准關帳，理由與孤兒過帳同——數量型稽核與",
+      "text": "掛帳無法關帳的條件說明｜如果系統中存在未處理的掛帳資料，則不能執行關帳作業，否則會導致數量型稽核和借貸平衡的資料計算錯誤。",
+      "approved": true,
+      "sourceSectionHash": "bc0ad458b7315529ac8faf0c88025eeb529b25461ce1a11da970a0ae6dc25526"
+    },
+    {
+      "slug": "code-act-dataauditservice-af952579",
+      "lang": "zh",
+      "headingPath": "帳務 › 已過帳的採購退貨要從「暫估」側扣掉",
+      "text": "退貨金額計算依據說明｜已完成的採購退貨，其相關金額將會從「暫估」的帳務紀錄中扣除。",
+      "approved": true,
+      "sourceSectionHash": "d087cea8a278aff822a873f4d57e113fc291aaf8244d67ad4c69825c3e10ec79"
+    },
+    {
+      "slug": "code-act-dataauditservice-67fd5269",
+      "lang": "zh",
+      "headingPath": "帳務 › 期間治理的下界：該廠最早會計期間的起日",
+      "text": "開立單據需符合廠別最早會計期間起日｜系統會顯示該廠區最早的會計期間起始日期，但如果嘗試列出早於此日期的單據，僅以提示方式告知使用者，不會阻止關帳作業。",
+      "approved": true,
+      "sourceSectionHash": "00dec00751b8ef7cd255d86ba969600dea46e807c534c541dff553eb663c53dd"
+    },
+    {
+      "slug": "code-act-dataauditservice-3f4212bd",
+      "lang": "zh",
+      "headingPath": "帳務 › 期初前那句是整句而不是接在後面的片語：中文可以用",
+      "text": "期初前訊息的撰寫規則｜在系統開立單據前的檢查訊息中，如果內容是完整的句子，則應使用分號來連接多個中文敘述，避免將英文接上後造成語法錯誤。",
+      "approved": true,
+      "sourceSectionHash": "8d874705f743a0488af15a14f8e38cc81be83324b85f5d91daafa9fce2b5e998"
+    },
+    {
+      "slug": "code-act-dataauditservice-82d3a987",
+      "lang": "zh",
+      "headingPath": "帳務 › 沒有任何期間的廠不設下界",
+      "text": "廠別期間治理起日設定規則｜每個廠區的「期間治理起日」會以該廠區最早的一筆帳務紀錄的起始日期為準；如果某個廠區沒有任何期間紀錄，則不會設定下限。",
+      "approved": true,
+      "sourceSectionHash": "24a5c214bd49eb5b4823e11cf26a247f6674f27ea446348b65c234e9523f8cf9"
+    },
+    {
+      "slug": "code-act-dataauditservice-a64e473e",
+      "lang": "zh",
+      "headingPath": "帳務 › 本檢核以同公式回算比對",
+      "text": "回算比對用料計算方式｜系統會以已完成入庫的工單所使用的材料進行後沖量計算，此時計算的總量與是何時進行後沖（例如在完工時或報工時）無關。",
+      "approved": true,
+      "sourceSectionHash": "69ede55f84ed15d6d424986445ce5a82311d43d11465760fc0d75152d4b54c85"
+    },
+    {
+      "slug": "code-act-dataauditservice-cfc1b1bc",
+      "lang": "zh",
+      "headingPath": "帳務 › 少領多少不判——超領不設上限，少領同樣可能是正常的",
+      "text": "帳務單據的領用數量判定規則｜系統會判斷當實際領用的數量減去退回的數量小於等於零，但仍有需要領取的數量時，這屬於少領的情況，此類情況是正常的。",
+      "approved": true,
+      "sourceSectionHash": "5746577771f1699bb196f43e85ac7f2b6590d7f59aa02eaef6cdaa4f5fec2863"
+    },
+    {
+      "slug": "code-act-dataauditservice-6c66dbb9",
+      "lang": "zh",
+      "headingPath": "帳務 › 逐  比對——不是廠級彙總",
+      "text": "出庫比對依據儲位與批次資訊｜系統在進行出庫時的成本層檢查，是根據單一的「儲位加上批號」組合來判斷的。這代表即使總體數量看起來正確，但如果實際的出貨動作涉及了儲位或批次的變動，系統會依據這個更精細的資訊進行核對。",
+      "approved": true,
+      "sourceSectionHash": "defda16bf65b43004707fdc06cb4f9597ea6c3f63b8cdf180ac746cea0c52a81"
+    },
+    {
+      "slug": "code-act-dataauditservice-ed845a01",
+      "lang": "zh",
+      "headingPath": "帳務 › 客供異動落在不屬客供倉的儲位 → 客戶的料取得了成本",
+      "text": "客供料成本計算的依據與範圍｜當客戶提供的物料在不屬於客戶專用倉庫的位置，系統會將該批次物料的取得成本納入計算。這是因為計算平均成本時，系統會使用該品號全廠的庫存總量作為分母，並將新的平均單價寫回該品號所有庫存記錄，因此必須排除掉客戶提供的物料才能確保成本計算的準確性。",
+      "approved": true,
+      "sourceSectionHash": "12433e0211d4da357cf84349e7346d2765974113cbde1ef48820283694cd4178"
+    },
+    {
+      "slug": "code-act-dataauditservice-8f511dd2",
+      "lang": "zh",
+      "headingPath": "帳務 › ── 銷售側：銷退 vs 出貨的 AR 發票 ──",
+      "text": "銷退發票的數量計算規則｜應收帳款明細中的數量，是出貨總量減去已退回的數量。如果這個計算出來的數值大於預期的值，代表有部分退回的數量尚未從應收帳款中扣除。",
+      "approved": true,
+      "sourceSectionHash": "2eaf84fc150e08159062788f8e3dadce89cf43a21515dc0d71934e8669747157"
+    },
+    {
+      "slug": "code-act-dataauditservice-6271c523",
+      "lang": "zh",
+      "headingPath": "帳務 › 已由折讓單處理掉的量",
+      "text": "折讓單處理的數量限制說明｜此處計算的已由折讓單處理掉的數量，僅會認列已經結帳完成的單據資料。",
+      "approved": true,
+      "sourceSectionHash": "289f8558f671f49c78ec9c6eefa80134b73e21140a7a797e18c9a8b68efddfc9"
+    },
+    {
+      "slug": "code-act-dataauditservice-74051d92",
+      "lang": "zh",
+      "headingPath": "帳務 › 快照不得指向已非在製的工單",
+      "text": "快照指向的工單狀態限制｜系統只允許快照指向目前仍處於在製狀態的工單。如果工單已經完成或作廢，則不能被用來建立快照。",
+      "approved": true,
+      "sourceSectionHash": "bd20795daf3443398c1ade6df56c48a095e71760353390044047c7f01b44286e"
+    },
+    {
+      "slug": "code-act-dataauditservice-d6e22b29",
+      "lang": "zh",
+      "headingPath": "帳務 › 期間依廠別分開之後，這裡要找的是「被稽核的那個廠」的期間",
+      "text": "期間依廠別分開的稽核範圍說明｜若進行全公司範圍的稽核，則所有廠區的起訖日都是相同的，系統會取第一筆記錄作為該稽核期間。",
+      "approved": true,
+      "sourceSectionHash": "e8e6a63658d556de274c02b46e15dced525010a1c7f7ec9389605d791d4583d9"
+    },
+    {
+      "slug": "code-act-dataauditservice-03251364",
+      "lang": "zh",
+      "headingPath": "帳務 › ── 5 金額恆等式────",
+      "text": "金額計算需依據資料完整性判斷｜如果系統的基礎資料在某個時間點有缺失、已經過期或尚未結算完成時，則無法進行金額恆等式的計算。",
+      "approved": true,
+      "sourceSectionHash": "cc3fefb79c94f2a8646e57c55c91f8b46f343134b09f0ab0675b1e0371ec72e8"
+    },
+    {
+      "slug": "code-act-dataauditservice-484a76f4",
+      "lang": "zh",
+      "headingPath": "帳務 › 逐廠核 Σ期末快照 = Σ期初快照 + 本期發料淨值 + 本期部",
+      "text": "帳務核對的資產計算公式說明｜期末的在製品總額等於期初的在製品總額加上本期的發料淨值，再減去本期的部門人工與製費投入，最後再加上本期完工成本。此外，期初的在製品總額彙總時，會排除當期已經作廢的工單。",
+      "approved": true,
+      "sourceSectionHash": "a05e028965e5fb8dc57e92247314b51a401eec890ad4df4d50a7e5c86f696a8c"
+    },
+    {
+      "slug": "code-act-dataauditservice-803761ce",
+      "lang": "zh",
+      "headingPath": "帳務 › 人工/製費腿：吸收科目淨額",
+      "text": "吸收科目淨額的計算依據｜此處計算吸收科目的淨額時，會比較「完工吸收分錄」和「期末重估調整分錄」這兩筆來源的資料。最終的數值需要將這兩個來源的資訊都納入考量才能得出正確結果。",
+      "approved": true,
+      "sourceSectionHash": "83010e81e05d87b1b7be93fd4843098b6cd3f43c939e361ceb188ec08a335482"
+    },
+    {
+      "slug": "code-act-dataauditservice-695d000e",
+      "lang": "zh",
+      "headingPath": "帳務 › 後沖領料的異動單號是「工單號 + -BF」，",
+      "text": "單據編號的組成規則｜後沖領料的異動單號是「工單號」加上後綴「-BF」。",
+      "approved": true,
+      "sourceSectionHash": "cce6e7b44d11c1e054e6b9aa297aaf878120ba65aba7a274c0d701d0d3d70271"
+    },
+    {
+      "slug": "code-act-dataauditservice-ec066e1b",
+      "lang": "zh",
+      "headingPath": "帳務 › ③ AP/AR 發票：來源單據已不存在",
+      "text": "來源單據消失後無法產生發票｜當原始的進貨單、委外收貨或出貨單已經不存在時，系統不會提供刪除發票的功能，因為此類孤兒發票僅會因為來源單據被刪除而存在。",
+      "approved": true,
+      "sourceSectionHash": "e1122c2a2a29dc592130ac7523f23f004e16c50e72d28873f062d668ea82d8a9"
+    },
+    {
+      "slug": "code-act-dataauditservice-ca14820b",
+      "lang": "zh",
+      "headingPath": "帳務 › 已作廢的不算孤兒：本稽核的訊息就是叫人「一併作廢」，",
+      "text": "帳務作廢紀錄不會成為孤兒資料｜系統會將本稽核訊息視為需要一次性全部作廢，以避免在作廢後仍殘留在名單上並被忽略。",
+      "approved": true,
+      "sourceSectionHash": "910ca2b714644ed7036961c89f4d62a419a4cc62202d76a1abbc5b3154ce6804"
+    },
+    {
+      "slug": "code-act-dataauditservice-4d73118a",
+      "lang": "zh",
+      "headingPath": "帳務 › 載入所有可能成為過帳來源的單號",
+      "text": "跨廠單據不進行廠別篩選｜系統在載入所有可能用作過帳來源的單號時，不會根據廠別進行篩選，以確保即使異動發生在一個廠區，但單據主檔歸屬另一個廠區的情況下，正常資料也不會被誤判為無效。",
+      "approved": true,
+      "sourceSectionHash": "201d9f062643fa8d5d61e69a6ee1cee3dd4a8bd47c1b37e9b2b3cf8736aadbb0"
+    }
+  ]
+}

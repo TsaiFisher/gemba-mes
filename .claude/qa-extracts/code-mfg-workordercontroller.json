@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/WorkOrderController.cs",
+  "sourceHash": "0cc69c6428176eb392aa76fee5600d4ebe2f61e027c8b13ad9a0c09007d8697a",
+  "entries": [
+    {
+      "slug": "code-mfg-workordercontroller-7b8dde27",
+      "lang": "zh",
+      "headingPath": "生產製造 › 工單作廢：任何尚未開始生產的工單可作廢",
+      "text": "工單可作廢的條件與限制｜只有尚未開始生產的工單才能進行作廢，如果該工單已經有派工回報了實際完成的數量大於零，則不允許執行作廢操作。",
+      "approved": true,
+      "sourceSectionHash": "3587f293c4e646229dcac2ee1761662e25d92cbc56e2509c9dec24383240a1db"
+    },
+    {
+      "slug": "code-mfg-workordercontroller-2aad3db6",
+      "lang": "zh",
+      "headingPath": "生產製造 › 已領未退的料同樣擋住作廢",
+      "text": "擋住已領未退材料無法作廢｜當已經領出但尚未完成生產的材料，不能直接將工單作廢。因為一旦領料，庫存就會被扣除，即使沒有開始生產，系統也會記錄為已領出狀態，若貿然作廢，會導致該批材料在帳面上找不到去向，且後續的成本結算和工單結案流程也無法順利進行。因此，必須先透過退料單將材料退回，使實際領出的數量減至零後，才能執行作廢動作。",
+      "approved": true,
+      "sourceSectionHash": "ec77220068f069d24d2c595868a0cef501b85b01c2cda15cb0b3ff4f02b9dd96"
+    },
+    {
+      "slug": "code-mfg-workordercontroller-113817c3",
+      "lang": "zh",
+      "headingPath": "生產製造 › 工單作廢後，該工單備料單接手的預留同樣沒有存在意義，一併釋放",
+      "text": "工單作廢後相關預留會自動釋放｜當工單被作廢時，與該工單相關的備料單所建立的任何預留都會一併解除，並且系統只負責解除庫存鎖定，備料單本身的狀態由使用者決定是否需要退回原倉庫。",
+      "approved": true,
+      "sourceSectionHash": "cd9d74f04058a7d5942d0e32c6e0dc7d798f77cdb032d0d4afd4dd3b0b0ebb0a"
+    }
+  ]
+}

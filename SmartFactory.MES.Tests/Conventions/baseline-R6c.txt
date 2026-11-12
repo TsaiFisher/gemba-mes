@@ -1,0 +1,13 @@
+# R6c baseline — 既有違規清單（Phase F 回補時逐行刪除）。
+# 不在此清單的新違規會讓建置失敗。
+#
+# 已回補（動態列 append 後呼叫重註冊 API，自清單移除）：
+#   PUR×4（PurchaseOrder/PurchaseRequest/GoodsReceipt/GoodsReturn）— window.armValidation
+#   ORD×4（SalesOrder/SalesReturn/GoodsShipment/InternalOrder）— window.armValidation
+#   INV×8（CrossPlantTransfer/LoanDoc/OutsourceMaterial/ReworkMaterial/SampleDoc/ScrapDoc/StockAdjustment/StockTransfer）— window.armValidation
+#   BAS WorkCenter/Index — window.parseModuleValidation（BAS legacy 面板 #crudPanelBody + module-validation.js）
+#
+# 以下 1 筆為 won't-fix：
+# - WarehouseOps/Index：誤報——該檔唯一動態 append 是 toast 通知（document.body.appendChild(t)），
+#   非驗證表單列，無需重註冊。
+Modules/INV/Views/WarehouseOps/Index.cshtml

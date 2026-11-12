@@ -1,0 +1,70 @@
+{
+  "sourcePath": "Modules/INV/Controllers/InventoryCountController.cs",
+  "sourceHash": "742628db381af21ca1c3922859bb1555b30aafbb9a1ab84df713e181c05c287f",
+  "entries": [
+    {
+      "slug": "code-inv-inventorycountcontroller-8bfd5e42",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 漏設會讓它恆為 ，列表即使查詢過也永遠只顯示提示",
+      "text": "盤點清冊列表需先查詢｜盤點清冊的列表在執行查詢之前只顯示「請先查詢」的提示，查詢之後才會列出符合條件的盤點單。",
+      "approved": true,
+      "sourceSectionHash": "c1b23667a18016f2182f950d0c9a6746fd8e23cc443385648e7e826ea92065f8"
+    },
+    {
+      "slug": "code-inv-inventorycountcontroller-90144d9c",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 盤點在畫面上走不完",
+      "text": "結帳功能無法使用｜系統的「結帳」按鈕不會顯示出來，因為控制此按鈕是否可用的權限判斷只在準備索引權限時執行，其他相關畫面並未觸發該權限檢查。",
+      "approved": true,
+      "sourceSectionHash": "f04f6930b031c279de6b7b9b54d26aac6452f4bad34663370cb66261a3765619"
+    },
+    {
+      "slug": "code-inv-inventorycountcontroller-8843ca7e",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 還留在列上卻重新出現在待覆盤清單，職責分離的那一道等於白做",
+      "text": "覆盤後不得修改初次盤點資料｜一旦完成覆盤，就不能再更改最初的盤點紀錄。否則系統會將狀態寫回「已盤點」，導致先前進行的覆盤結果資訊無法被正確記錄或使用。",
+      "approved": true,
+      "sourceSectionHash": "88f93dd4db362acbd12ddd5eb08bb368006fbcdc3e4a2a3478c9c13a633cbac5"
+    },
+    {
+      "slug": "code-inv-inventorycountcontroller-76b820bf",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 已產出調整單者一律擋，且比狀態守門更早——狀態是可被改回去的人",
+      "text": "調整單據無法修改狀態｜已產出調整單據是系統判斷的既成事實，因此不能再更改其狀態。",
+      "approved": true,
+      "sourceSectionHash": "732b513fc344d950b88ea76ba12a18f32929f5ed076b9ed89adb467fa81afe03"
+    },
+    {
+      "slug": "code-inv-inventorycountcontroller-5c66c847",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 調整單**等到確定有差異才建**",
+      "text": "建檔時只在有差異時才建立｜系統現在的設計是，只有當庫存盤點結果與原資料確定有差異的時候，才會產生調整單據。這樣可以避免每次即使沒有任何差異，也會自動生成一張零明細的草稿調整單，以免佔用單號並讓使用者誤以為需要處理。",
+      "approved": true,
+      "sourceSectionHash": "2f0699f26424b2b1149720230c748d5fcfa36708e65b8cb3e9d5b819bd7837ea"
+    },
+    {
+      "slug": "code-inv-inventorycountcontroller-2ee36758",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 盤盈是入庫，而入庫要有單價",
+      "text": "盤盈入庫的成本基礎｜先進先出的品號盤盈入庫時需要單價，而盤點沒有進貨單也沒有供應商，所以成本取該品號現存成本層的加權平均——盤出來的多餘品項就是同一批貨。完全沒有成本層時不建立成本層，讓過帳的守門照常擋下；寧可擋住，也不要建出零元的成本層。",
+      "approved": true,
+      "sourceSectionHash": "38268c2b7e627b73c737449cbbdf831709545040d968df88520d7f828720998f"
+    },
+    {
+      "slug": "code-inv-inventorycountcontroller-46f61bec",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 與調整單在同一個交易內落地：回沖時兩者一起消失",
+      "text": "關聯單據一同清除以避免錯誤｜當進行回沖操作時，相關的調整單和原先的單據會同時被移除，這樣可以確保系統不會留下任何指向不存在單號的記錄。",
+      "approved": true,
+      "sourceSectionHash": "4cd48e0054d1c4f8de760419d6045ecfd3c821461a13de82aab4e8868ed70037"
+    },
+    {
+      "slug": "code-inv-inventorycountcontroller-918285d0",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 結帳＋建調整單＋過帳庫存差異為單一原子單元",
+      "text": "資料處理需確保流程完整性｜由於過帳的過程中包含日記帳自身的儲存動作，為了防止在執行過程中發生中途失敗導致「已經結帳但庫存尚未更新」的不一致狀態，因此必須將整個操作用一個明確的交易包裝起來。",
+      "approved": true,
+      "sourceSectionHash": "25d3d5678eb30f551ed4d2f6054056ba78121856e8ee6aac1aff342eb84920f5"
+    }
+  ]
+}

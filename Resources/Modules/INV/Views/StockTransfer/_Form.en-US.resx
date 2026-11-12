@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="StockTransferId" xml:space="preserve"><value>Doc No</value></data>
+  <data name="TransferDate" xml:space="preserve"><value>Transfer Date</value></data>
+  <data name="FromWhCode" xml:space="preserve"><value>From WH</value></data>
+  <data name="ToWhCode" xml:space="preserve"><value>To WH</value></data>
+  <data name="DefaultWhHint" xml:space="preserve"><value>Default, overridable per line</value></data>
+  <data name="Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>Approval</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>Lines</value></data>
+  <data name="AddLine" xml:space="preserve"><value>Add Line</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="SourceDoc" xml:space="preserve"><value>Source Doc</value></data>
+  <data name="Qty" xml:space="preserve"><value>Qty</value></data>
+  <data name="UomCode" xml:space="preserve"><value>UOM</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>Unit Price</value></data>
+  <data name="FromLocationCode" xml:space="preserve"><value>From Location</value></data>
+  <data name="ToLocationCode" xml:space="preserve"><value>To Location</value></data>
+  <data name="LotNo" xml:space="preserve"><value>Lot No.</value></data>
+  <data name="QtyPutAway" xml:space="preserve"><value>Put Away</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Submit" xml:space="preserve"><value>Submit</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>Withdraw</value></data>
+  <data name="Post" xml:space="preserve"><value>Post</value></data>
+  <data name="Void" xml:space="preserve"><value>Void</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>Submit for approval?</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>Withdraw approval request?</value></data>
+  <data name="ConfirmPost" xml:space="preserve"><value>Post this transfer? This will create both WP (issue) and WI (receive) movements.</value></data>
+  <data name="VoidReason" xml:space="preserve"><value>Enter void reason (optional)</value></data>
+  <data name="VoidAndReopen" xml:space="preserve"><value>Void &amp; Reopen</value></data>
+  <data name="SelectProduct" xml:space="preserve"><value>Select Product</value></data>
+  <data name="LookupSource" xml:space="preserve"><value>Select source</value></data>
+  <data name="LookupStock" xml:space="preserve"><value>Select stock</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>Remove line</value></data>
+  <data name="SelectProductFirst" xml:space="preserve"><value>Please select a product first</value></data>
+  <data name="StockQtyLabel" xml:space="preserve"><value>Stock</value></data>
+  <data name="LotScanHint" xml:space="preserve"><value>Enter a lot, or scan the fixed QR on a box (box number) to fill in that box's lot, item and source location</value></data>
+  <data name="ToLotNo" xml:space="preserve"><value>To lot</value></data>
+  <data name="ToLotSame" xml:space="preserve"><value>Same</value></data>
+  <data name="ToLotHint" xml:space="preserve"><value>Leave blank to keep the lot. Enter a new lot to relabel the stock (for example when packing existing stock into a box); quantity and cost carry over unchanged</value></data>
+</root>

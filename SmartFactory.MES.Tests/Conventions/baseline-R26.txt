@@ -1,0 +1,13 @@
+# R26 baseline — 空的，且應該維持是空的。
+#
+# 2026-08-03 全庫掃描「非寫入動詞卻在本體寫入」的 action，全庫只有一支：
+# Controllers/TwoFactorController.cs::RegenerateRecoveryCodes
+# （GET 卻會作廢使用者既有的 2FA 復原碼），已由 Core PR #16 改為
+# POST + [ValidateAntiForgeryToken]，故此處無存量可凍結。
+#
+# 新違規會直接讓建置失敗——這是刻意的：
+# 會改狀態的 GET 不會有任何徵兆，權限檢查也擋不住（受害者自己有權限，
+# 攻擊者只是讓他的瀏覽器發出那個請求），要靠 code review 事後發現非常困難。
+#
+# 修法一律是「改成 POST + AntiForgery，呼叫端 <a> 改表單按鈕」，
+# 不要往這個檔案加行——沒有「這支 GET 寫入是合理的」這種情況。

@@ -1,0 +1,54 @@
+{
+  "sourcePath": "Modules/ACT/StandardAccounts.cs",
+  "sourceHash": "574683a5f32fda4ce075d865ff5bcb1fb425700079feb0d43ebc0914441db4b6",
+  "entries": [
+    {
+      "slug": "code-act-standardaccounts-38adb571",
+      "lang": "zh",
+      "headingPath": "帳務 › 標準會計科目對應",
+      "text": "標準科目對應的資料結構說明｜本系統採用「管理日記帳」的設計，因此沒有獨立的科目主檔來維護會計科目的資訊。所有業務交易過帳時，都會在這個地方補列相關的科目代碼和名稱，以確保這些資料的一致性，方便彙總匯出給外部會計系統使用。",
+      "approved": true,
+      "sourceSectionHash": "3037908030a8727b27cb54813ea9016894fbb69716dcc10a6bc4fcfb271b1de0"
+    },
+    {
+      "slug": "code-act-standardaccounts-4c3027ab",
+      "lang": "zh",
+      "headingPath": "帳務 › 廠際調撥往來",
+      "text": "跨廠調撥的科目與總額平衡規則｜系統規定，所有廠區雖然共用一套帳務系統，但每個廠區的存貨科目必須等於該廠區的庫存明細帳。當進行跨廠調撥時，所涉及的價值必須同步移動，且全公司層級的往來餘額總和恆為零。",
+      "approved": true,
+      "sourceSectionHash": "93c79d1ec29d7c322c6922d6b406c4884219b87087cd248261ab638920302015"
+    },
+    {
+      "slug": "code-act-standardaccounts-72785a62",
+      "lang": "zh",
+      "headingPath": "帳務 › 借入物料的負債",
+      "text": "負債科目與實體移動的關聯性｜此處使用的負債科目，是為了處理沒有銷售事實的實物借出或歸還情況。若直接使用預計會被發票沖銷的科目，可能會產生帳務上不清楚、無法結清的虛假負債紀錄，並導致資產盤點稽核報出錯誤的異常項目。",
+      "approved": true,
+      "sourceSectionHash": "1454274ede7c920f9ae51b90ebcae128041163838975eab0b9456e209417c67a"
+    },
+    {
+      "slug": "code-act-standardaccounts-80850598",
+      "lang": "zh",
+      "headingPath": "帳務 › 存貨盤盈：盤點多出來的貨沒有供應商、沒有人會來請款",
+      "text": "盤盈貨品無法貸入特定應付帳款科目｜系統規定，盤點多出來的貨物不能貸記到「進貨暫估應付」這個科目，因為該科目是採購流程用來等待供應商確認後沖銷的，若直接掛入會產生一筆永遠不會被沖掉的虛假負債。",
+      "approved": true,
+      "sourceSectionHash": "7fcf4b9b2aca902e90eaea88886062eea7abe1a719bd73e6ea74585fe8775639"
+    },
+    {
+      "slug": "code-act-standardaccounts-397307d6",
+      "lang": "zh",
+      "headingPath": "帳務 › 存貨盤損：與報廢損失分開",
+      "text": "存貨損失與報廢處理區分｜系統將存貨盤損和報廢損失分開進行管理，因為報廢是主動確認特定批次因已知原因而處分的行為，而盤損則是帳面實體不符且原因不明時被動認列的差異。",
+      "approved": true,
+      "sourceSectionHash": "5469d2baa30805efe2eb526b8417e239b1a2222f225e99360fc61b0297c4622e"
+    },
+    {
+      "slug": "code-act-standardaccounts-cff2c454",
+      "lang": "zh",
+      "headingPath": "帳務 › 本檔宣告的所有系統科目",
+      "text": "科目資料的來源與維護方式｜系統會直接從程式碼中定義的成對常數來取得所有科目的代碼和名稱，而不是依賴一個獨立的清單。這樣做是為了確保資料的一致性，避免因為手動維護清單而導致資料不一致的問題。",
+      "approved": true,
+      "sourceSectionHash": "961f79793674e3961a48d2f05c79b0414a6297d0345e8bad0fd33441ca56c1e9"
+    }
+  ]
+}

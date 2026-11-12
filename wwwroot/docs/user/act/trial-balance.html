@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Trial Balance — ACT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>試算表 — 會計管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ACT 目錄</span><span lang="en">ACT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ACT 畫面</span><span lang="en">ACT screens</span></div>
+    <a href="accounting-period.html" class="nav-link"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a>
+    <a href="journal-entry.html" class="nav-link"><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></a>
+    <a href="trial-balance.html" class="nav-link active"><span lang="zh">試算表</span><span lang="en">Trial Balance</span></a>
+    <a href="month-end.html" class="nav-link"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>
+    <a href="department-actual-cost.html" class="nav-link"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></a>
+    <a href="nrv-assessment.html" class="nav-link"><span lang="zh">IAS 2 NRV 評估</span><span lang="en">IAS 2 NRV Assessment</span></a>
+    <a href="ecl.html" class="nav-link"><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></a>
+    <a href="bad-debt-provision.html" class="nav-link"><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關</span><span lang="en">Related</span></div>
+    <a href="../rpt/balance-sheet.html" class="nav-link"><span lang="zh">資產負債表（RPT）</span><span lang="en">Balance sheet (RPT)</span></a>
+    <a href="../rpt/data-audit.html" class="nav-link"><span lang="zh">資料稽核診斷（RPT）</span><span lang="en">Data audit diagnostics (RPT)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-list-columns me-2 text-primary"></i><span lang="zh">試算表</span><span lang="en">Trial Balance</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/TrialBalance &nbsp;|&nbsp; 關帳前的科目層級對帳</span><span lang="en">Route: /TrialBalance &nbsp;|&nbsp; Account-level reconciliation before closing</span></div>
+    </div>
+
+    <p><span lang="zh">列出每個科目的期初餘額、本期借貸發生額與期末餘額，並在最上方直接告訴你<strong>全表借方合計是否等於貸方合計</strong>。它的位置在「管理日記帳」之後、「月結作業」之前，因為它就是<strong>關帳前的最後一道檢查</strong>。</span><span lang="en">Lists the opening balance, period debits and credits, and closing balance of every account, and states at the top whether <strong>total debits equal total credits</strong>. It sits between "Management Journal" and "Month-end close" because that is what it is for: <strong>the last check before closing</strong>.</span></p>
+
+    <img class="screen-shot" src="img/trial-balance.png" data-src-en="img/en/trial-balance.png" alt="試算表畫面截圖" data-alt-en="Trial balance screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">試算表畫面截圖：最上方綠色橫幅顯示借貸方合計相等</span><span lang="en">Trial balance screenshot: the green banner at the top shows that total debits equal total credits</span></div>
+
+    <div class="note-box">
+      <div class="fw-semibold mb-1"><i class="bi bi-question-circle me-1"></i><span lang="zh">已經有借貸平衡稽核了，為什麼還要這張表？</span><span lang="en">There is already a balance audit — why this report?</span></div>
+      <p class="mb-0"><span lang="zh">資料稽核診斷驗的是<strong>逐傳票</strong>借貸平衡——每一張傳票自己借貸相等。但<strong>「每張傳票都平衡」不等於「科目餘額是對的」</strong>：漏過帳、重複過帳、科目代碼打錯，這三種在逐傳票那一層全部看不見，因為每一張單獨看都合規。試算表看的是<strong>科目層級</strong>的結果，也是把分錄匯出到外部會計系統之前唯一能整表對一次的地方。</span><span lang="en">The data audit checks <strong>per-voucher</strong> balance — each voucher debits equal credits. But <strong>"every voucher balances" is not "the account balances are right"</strong>: a missed posting, a duplicated posting, or a mistyped account code are all invisible at that level, because each voucher on its own is valid. The trial balance looks at the <strong>account level</strong>, and it is the only place to reconcile the whole set before exporting the entries to an external accounting system.</span></p>
+    </div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">開啟「會計管理 &gt; 試算表」。</span><span lang="en">Open "Accounting &gt; Trial Balance".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">選<strong>截止期間</strong>（必選）。<strong>起始期間</strong>留白代表「從有史以來」，此時期初餘額為 0、本期涵蓋全部。</span><span lang="en">Pick a <strong>closing period</strong> (required). Leaving <strong>from period</strong> blank means "since inception": the opening balance is then 0 and the period columns cover everything.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">預設不列出期初與本期皆為 0 的科目（那會是一整頁的零）。要看完整科目表時勾「顯示零餘額科目」。</span><span lang="en">Accounts whose opening and period figures are all zero are hidden by default — otherwise the page is mostly zeros. Tick "Show zero-balance accounts" for the full list.</span></div></div>
+
+    <h2 id="reading"><i class="bi bi-eyeglasses me-2 text-primary"></i><span lang="zh">怎麼看</span><span lang="en">How to read it</span></h2>
+
+    <div class="note-box">
+      <div class="fw-semibold mb-1"><i class="bi bi-check-circle me-1"></i><span lang="zh">最上面那一行是重點</span><span lang="en">The top line is the point</span></div>
+      <p class="mb-0"><span lang="zh">綠色＝借貸合計相等，這段期間的分錄整體平衡。紅色＝<strong>不平衡，不要關帳</strong>，並會列出差額。正常入口產生不出單邊分錄，但資料修補、匯入或過帳中途中斷都可能留下這種殘骸，而這張表就是用來看見它的。</span><span lang="en">Green means total debits equal total credits and the period balances as a whole. Red means <strong>the ledger is out of balance — do not close the period</strong>, and the amount it is out of balance by is shown. The normal entry paths cannot produce a one-sided entry, but data repairs, imports or a posting interrupted halfway can leave one behind, and this report is how you see it.</span></p>
+    </div>
+
+    <div class="tip-box">
+      <div class="fw-semibold mb-1"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh">損益科目的期初不會是 0，這不是錯誤</span><span lang="en">Profit and loss accounts have a non-zero opening balance — that is not an error</span></div>
+      <p class="mb-0"><span lang="zh">本系統<strong>刻意不做期末結轉</strong>：4xxx～8xxx 的損益科目不會在年度交界被歸零轉進保留盈餘。理由是帳務主體在外部會計系統，結轉屬於總帳的職責，這裡做了會與外部各出一套結轉分錄。所以跨年度查詢時，損益科目的期初是<strong>有史以來的累計</strong>。資產負債表上那張「本期損益（未結轉）」卡片表達的是同一件事。</span><span lang="en">This system <strong>deliberately does not perform period-end closing</strong>: accounts 4xxx–8xxx are not reset into retained earnings at the year boundary. The books of record live in an external accounting system, and closing is the general ledger's job — doing it here as well would produce two competing sets of closing entries. So across years, the opening balance of a profit and loss account is the <strong>cumulative total since inception</strong>. The "Net Profit (Unclosed)" card on the balance sheet reports the same thing.</span></p>
+    </div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">起始期間</span><span lang="en">From period</span></td><td><span lang="zh">留白＝從有史以來。此欄決定哪些分錄算「期初」、哪些算「本期」</span><span lang="en">Blank means since inception. This field decides which entries count as "opening" and which as "this period"</span></td></tr>
+        <tr><td><span lang="zh">截止期間</span><span lang="en">To period</span></td><td><span lang="zh"><strong>必選</strong>。期末餘額累計到這一期為止</span><span lang="en"><strong>Required.</strong> Closing balances are accumulated up to and including this period</span></td></tr>
+        <tr><td><span lang="zh">顯示零餘額科目</span><span lang="en">Show zero-balance accounts</span></td><td><span lang="zh">勾選後連期初與本期都是 0 的科目也列出來；核對完整科目表時才需要</span><span lang="en">Also lists accounts with no opening balance and no movement; only needed when checking the full chart of accounts</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">科目代碼 / 科目名稱</span><span lang="en">Account / Name</span></td><td><span lang="zh">取自分錄上的科目。科目主檔查不到時仍會列出（歷史分錄的科目可能已被刪除），不會靜默消失</span><span lang="en">Taken from the entries. Accounts missing from the master are still listed (a historical entry may reference a deleted account) rather than silently dropped</span></td></tr>
+        <tr><td><span lang="zh">期初餘額</span><span lang="en">Opening</span></td><td><span lang="zh">起期<strong>之前</strong>的累計，已依科目性質定正負號——資產借餘為正、負債與收入貸餘為正</span><span lang="en">Cumulative total <strong>before</strong> the start period, signed by account nature: assets are positive on the debit side, liabilities and revenue positive on the credit side</span></td></tr>
+        <tr><td><span lang="zh">本期借方 / 本期貸方</span><span lang="en">Debit / Credit</span></td><td><span lang="zh">區間內的發生額原始值，不帶正負號慣例。<strong>這兩欄的合計必須相等</strong></span><span lang="en">Raw movement amounts within the range, without the sign convention. <strong>The totals of these two columns must be equal</strong></span></td></tr>
+        <tr><td><span lang="zh">期末餘額</span><span lang="en">Closing</span></td><td><span lang="zh">期初 ± 本期發生。每一列都滿足「期初 ＋ 本期借 − 本期貸 ＝ 期末」（貸方為正的科目反向）</span><span lang="en">Opening ± movement. Every row satisfies "opening + debit − credit = closing" (reversed for credit-normal accounts)</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="saved-queries"><i class="bi bi-bookmark-star me-2 text-primary"></i><span lang="zh">存成常用查詢</span><span lang="en">Saving the query</span></h2>
+    <p><span lang="zh">查詢列上方有「我的常用查詢」與「儲存此查詢」。這張畫面吃的是<strong>會計期間</strong>，所以期間選項只有「本會計期間／上一會計期間」兩種——會計期間可以自訂起訖、與日曆月不同，存成「上個月」在自訂期間的廠別不會是你以為的那一期。用法見<a href="../rpt/saved-queries.html">常用查詢</a>。</span><span lang="en">"My saved queries" and "Save this query" appear above the search bar. This screen works on <strong>accounting periods</strong>, so the only period options are "this accounting period" and "last accounting period" — accounting periods can have custom start and end dates, and "last month" would not be the period you meant at a plant using custom periods. See <a href="../rpt/saved-queries.html">saved queries</a>.</span></p>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="journal-entry.html"><span lang="zh">管理日記帳</span><span lang="en">Management journal</span></a>、<a href="month-end.html"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>、<a href="../rpt/balance-sheet.html"><span lang="zh">資產負債表</span><span lang="en">Balance sheet</span></a>、<a href="../rpt/data-audit.html"><span lang="zh">資料稽核診斷</span><span lang="en">Data audit diagnostics</span></a></p>
+
+  </main>
+</div>
+</body>
+</html>

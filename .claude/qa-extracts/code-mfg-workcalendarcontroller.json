@@ -1,0 +1,62 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/WorkCalendarController.cs",
+  "sourceHash": "4a7e6f1dab14cbffd11d820df9a7ae40fe3ddbec511f3cc618feab1b8b46cadc",
+  "entries": [
+    {
+      "slug": "code-mfg-workcalendarcontroller-c32c33d9",
+      "lang": "zh",
+      "headingPath": "生產製造 › 含它會與唯一索引衝突",
+      "text": "重複檢查設備資訊是否已存在｜系統會檢查廠別、工位、機台代號和日期組合的資料是否已經存在，以確保資料的唯一性。",
+      "approved": true,
+      "sourceSectionHash": "d0d10c12ede7c02eb5cb8407685a46f8a9f9716125801a8c38cb90d5409d8974"
+    },
+    {
+      "slug": "code-mfg-workcalendarcontroller-a7a98953",
+      "lang": "zh",
+      "headingPath": "生產製造 › 先記下影響「可用時段」的舊值：改完要不要重建時段",
+      "text": "修改工作日曆後何時會重建可用時段｜班制、工作中心、機台、日期、加班時數這五項只要有任何一項變動，系統就會重建該月份的可用時段；日期或範圍搬動時，新舊兩邊都會重建。",
+      "approved": true,
+      "sourceSectionHash": "69736842d1dc9994df4fa1828b9ab3fc6166f346151e32586fb0c138d7dbde8c"
+    },
+    {
+      "slug": "code-mfg-workcalendarcontroller-17354c5b",
+      "lang": "zh",
+      "headingPath": "生產製造 › 可用時段自 2026-08-26 起含加班",
+      "text": "可用時段變更需重新建立排程｜當調整了包含加班的可用時段後，必須重新建構該時段，否則系統無法使用這次修改的資訊，且不會有任何錯誤訊息提示。此外，若移動了日期或範圍（班制、工作中心或機台），新舊兩邊的時段都需要進行重建。",
+      "approved": true,
+      "sourceSectionHash": "4aea4ea92b1e7e4df585f7041b23585b112b1bdd13a07cbe34ca18b55f36e6d4"
+    },
+    {
+      "slug": "code-mfg-workcalendarcontroller-e1d007dc",
+      "lang": "zh",
+      "headingPath": "生產製造 › 批次展開的本體",
+      "text": "批次展開的時段與加班處理規則｜可用時段從 2026 年 8 月 26 日開始包含加班，且使用者在畫面上修改了加班時數後，即使沒有重建時段，排程結果也會反映該變動，並且系統不會顯示任何錯誤訊息。",
+      "approved": false,
+      "sourceSectionHash": "ab46aa6fba570c806c6ee5ba820fe5583c8bc01cf1a64ac83b0a3754b45ddf4e"
+    },
+    {
+      "slug": "code-mfg-workcalendarcontroller-01a69660",
+      "lang": "zh",
+      "headingPath": "生產製造 › 否則 → 本廠預設班制",
+      "text": "班制規則的適用順序與範圍｜若沒有指定工作中心所屬的班制，系統會依循先檢查該工作中心是否有預設班制；如果仍未找到，則採用本廠設定的預設班制。所有查詢都會自動限制在當前所在的廠區內。",
+      "approved": true,
+      "sourceSectionHash": "140785d6f4cc540bea01111e97beb72d9e61e75f3991bfb6379c0cf73311bb87"
+    },
+    {
+      "slug": "code-mfg-workcalendarcontroller-992e2076",
+      "lang": "zh",
+      "headingPath": "生產製造 › 重產即覆蓋：先刪除範圍內同範圍既有列，再全部重建",
+      "text": "資料清除規則說明｜系統在處理此區塊時，會先刪除範圍內相同廠別、工作中心和機台的既有紀錄，然後再將所有資料重新建立。",
+      "approved": true,
+      "sourceSectionHash": "3bbab1fd40aae98d4d8fd69709d321d6e57d6f319b5e0f31aa57a5337c18ea13"
+    },
+    {
+      "slug": "code-mfg-workcalendarcontroller-3f3c70ca",
+      "lang": "zh",
+      "headingPath": "生產製造 › 在畫面上改過，重建時要以**現存的那個值**為準",
+      "text": "重建時保留已輸入的加班時數｜系統在執行重建時，會以使用者目前填寫的加班時數為準，不會用班制的預設值覆蓋掉使用者已經修改過的資料。",
+      "approved": true,
+      "sourceSectionHash": "412b6c2c4cefaa18527c2cae44df69d054e7110a3e86eee1f13794d30a407398"
+    }
+  ]
+}

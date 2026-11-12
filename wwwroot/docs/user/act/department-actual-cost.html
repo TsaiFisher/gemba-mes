@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Departmental Actual Costs — ACT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>部門實際費用 — ACT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ACT 目錄</span><span lang="en">ACT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ACT 畫面</span><span lang="en">ACT screens</span></div>
+    <a href="accounting-period.html" class="nav-link"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a>
+    <a href="journal-entry.html" class="nav-link"><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></a>
+    <a href="trial-balance.html" class="nav-link"><span lang="zh">試算表</span><span lang="en">Trial Balance</span></a>
+    <a href="month-end.html" class="nav-link"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>
+    <a href="department-actual-cost.html" class="nav-link active"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></a>
+    <a href="nrv-assessment.html" class="nav-link"><span lang="zh">IAS 2 NRV 評估</span><span lang="en">IAS 2 NRV Assessment</span></a>
+    <a href="ecl.html" class="nav-link"><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></a>
+    <a href="bad-debt-provision.html" class="nav-link"><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-cash-stack me-2 text-primary"></i><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/DepartmentActualCost &nbsp;|&nbsp; 部門月實際費用輸入（實際費率重估基礎）</span><span lang="en">Route: /DepartmentActualCost &nbsp;|&nbsp; Entering monthly departmental actual costs (the basis of the actual rate re-estimate)</span></div>
+    </div>
+
+    <p><span lang="zh">輸入各部門當月實際發生費用（人工/製費），系統以「實際費用 ÷ 實際報工工時」計算實際費率，月末重估回刷已完工工單與在製品成本並產生調整分錄（Preliminary → Final）。本畫面存的資料會自動帶進<a href="month-end.html">月結作業</a>步驟 4 的輸入框。</span><span lang="en">Enter each department's actual cost for the month (labour and overhead); the system works out the actual rate as actual cost ÷ actual reported hours, and the month-end re-estimate restates the cost of completed work orders and of WIP and creates the adjusting entries (preliminary → final). What you save here is pre-filled into the input box of step 4 on the <a href="month-end.html">Month-End Closing</a> screen.</span></p>
+    <img class="screen-shot" src="img/department-actual-cost.png" data-src-en="img/en/department-actual-cost.png" alt="部門實際費用畫面截圖" data-alt-en="Departmental actual cost screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">部門實際費用畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Departmental actual cost screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">輸入與重估</span><span lang="en">Entry and re-estimation</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">月結時點「新增」輸入各部門實際費用金額。</span><span lang="en">At month end, click "Add" and enter the actual cost of each department.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">到<a href="month-end.html">月結作業</a>步驟 4 按「執行批次」做實際費率重估：系統回刷當月工單成本與 WIP 快照並產生調整分錄。本期有報工或換線工時的工作中心都要有一筆費用，缺漏的會被擋下並列出；確實沒有費用請輸入 0。</span><span lang="en">On the <a href="month-end.html">Month-End Closing</a> screen, click "Run Batch" on step 4 to run the actual rate re-estimate: the system restates the month's work order costs and the WIP snapshot and creates the adjusting entries. Every work center with labour or setup hours this period needs a cost line; any that are missing are rejected and listed — enter 0 if a work center genuinely had no cost.</span></div></div>
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">會計期間</span><span lang="en">Accounting period</span></td><td><span lang="zh">要維護／查詢的期間（YYYYMM）</span><span lang="en">The period (YYYYMM) to maintain or query</span></td></tr>
+        <tr><td><span lang="zh">工作中心</span><span lang="en">Work Center</span></td><td><span lang="zh">費用歸屬的工作中心（部門）</span><span lang="en">Work center (department) the cost belongs to</span></td></tr>
+      </tbody>
+    </table>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">會計期間</span><span lang="en">Accounting period</span></td><td><span lang="zh">此筆實際費用所屬期間，與工作中心合併為唯一鍵</span><span lang="en">Period this actual cost belongs to; together with the work center it forms the unique key</span></td></tr>
+        <tr><td><span lang="zh">工作中心</span><span lang="en">Work Center</span></td><td><span lang="zh">費用歸屬的工作中心；一個期間內同一工作中心只能有一筆</span><span lang="en">Work center the cost belongs to; only one row per work center per period</span></td></tr>
+        <tr><td><span lang="zh">實際人工費用</span><span lang="en">Actual Labor Cost</span></td><td><span lang="zh">該期間該工作中心實際發生的直接人工費用總額（由會計實地歸集後輸入）</span><span lang="en">Total direct labour cost actually incurred at the work center in the period (collected by accounting and entered here)</span></td></tr>
+        <tr><td><span lang="zh">實際製造費用</span><span lang="en">Actual manufacturing overhead</span></td><td><span lang="zh">該期間該工作中心實際發生的製造費用總額（水電、折舊、間接人工等）</span><span lang="en">Total manufacturing overhead actually incurred at the work center in the period (utilities, depreciation, indirect labour …)</span></td></tr>
+        <tr><td><span lang="zh">更新時間</span><span lang="en">Updated At</span></td><td><span lang="zh">最後一次修改的時間戳，系統自動寫入</span><span lang="en">Timestamp of the last change, filled in by the system</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="../mfg/work-order-variance.html"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>、<a href="month-end.html"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,273 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model PaginatedList<WorkCalendar>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    var shiftGroups    = ViewBag.ShiftGroups as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var workCenters    = ViewBag.WorkCenters as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    string curWorkCenter = ViewBag.WorkCenterId as string ?? "";
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        @if (ViewBag.CanCreate)
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#batchModal">
+                    <i class="bi bi-calendar-range"></i> @Localizer["BatchGenerate"]
+                </button>
+                <button type="button" class="btn btn-primary ms-2"
+                        data-url="@Url.Action("Create")"
+                        data-label="@Localizer["AddEntry"]"
+                        data-action="openPanel">
+                    <i class="bi bi-plus-circle"></i> @Localizer["Add"]
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" action="@Url.Action("Index")" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["FromDate"]</label>
+                    <input type="date" name="fromDate" class="form-control" value="@ViewBag.FromDate" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["ToDate"]</label>
+                    <input type="date" name="toDate" class="form-control" value="@ViewBag.ToDate" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">@Localizer["WorkCenter"]</label>
+                    <select name="workCenterId" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllWorkCenters"]</option>
+                        @foreach (var wc in workCenters)
+                        {
+                            <option value="@wc.WorkCenterCode" selected="@(curWorkCenter == (string)wc.WorkCenterCode)">@wc.WorkCenterCode — @wc.WorkCenterName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+                <input type="hidden" name="searched" value="true" />
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>@Localizer["ColDate"]</th>
+                    <th>@Localizer["ColShift"]</th>
+                    <th>@Localizer["ColWorkCenter"]</th>
+                    <th>@Localizer["ColMachine"]</th>
+                    <th>@Localizer["ColStart"]</th>
+                    <th>@Localizer["ColEnd"]</th>
+                    <th>@Localizer["ColRegHours"]</th>
+                    <th>@Localizer["ColOtHours"]</th>
+                    <th>@Localizer["ColNote"]</th>
+                    <th>@Localizer["ColActions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null) @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@(item.ShiftGroupCode ?? "—")</td>
+                        <td>@(item.WorkCenterId ?? Localizer["AllPlant"].Value)</td>
+                        <td>@(item.MachineCode ?? "—")</td>
+                        <td>@(item.WorkStart?.ToString("HH:mm") ?? "—")</td>
+                        <td>@(item.WorkEnd?.ToString("HH:mm") ?? "—")</td>
+                        <td>@item.TM_WKS</td>
+                        <td>@item.TM_WKO</td>
+                        <td>@item.Note</td>
+                        <td>
+                            @if (ViewBag.CanUpdate)
+                            {
+                                <button type="button" class="btn btn-sm btn-warning"
+                                        data-url="@Url.Action("Edit", new { id = item.Id })"
+                                        data-label="@Localizer["EditTitle"]"
+                                        data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                            }
+                            @if (ViewBag.CanDelete)
+                            {
+                                <button type="button" class="btn btn-sm btn-danger"
+                                        data-action="deleteItem" data-url="@Url.Action("DeleteConfirmed")" data-id="@item.Id"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-info">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+@* 批次產生 Modal *@
+<div class="modal fade" id="batchModal" tabindex="-1" aria-labelledby="batchModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="batchModalLabel"><i class="bi bi-calendar-range"></i> @Localizer["BatchModalTitle"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["Year"] <span class="text-danger">*</span></label>
+                    <input type="number" id="batchYear" class="form-control" min="2000" max="2099" value="@DateTimeSvc.Now.Year" required />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["Month"]</label>
+                    <select id="batchMonth" class="form-select">
+                        <option value="">@Localizer["MonthAll"]</option>
+                        @for (int m = 1; m <= 12; m++)
+                        {
+                            <option value="@m">@Localizer["MonthFmt", m]</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["ShiftGroup"]</label>
+                    <select id="batchShiftGroup" class="form-select">
+                        <option value="">@Localizer["BatchShiftDefaultOpt"]</option>
+                        @foreach (dynamic sg in shiftGroups)
+                        {
+                            <option value="@sg.GroupCode">@sg.GroupCode — @sg.GroupName</option>
+                        }
+                    </select>
+                    <div class="form-text text-muted">@Localizer["BatchShiftDefaultHint"]</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["WorkCenterOpt"]</label>
+                    <select id="batchWorkCenter" class="form-select">
+                        <option value="">@Localizer["AllPlantOpt"]</option>
+                        @foreach (dynamic wc in workCenters)
+                        {
+                            <option value="@wc.WorkCenterCode">@wc.WorkCenterCode — @wc.WorkCenterName</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["MachineCode"]</label>
+                    <input type="text" id="batchMachineCode" class="form-control" maxlength="20" placeholder="@Localizer["MachinePh"]" />
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" id="batchOverwrite" class="form-check-input" />
+                    <label class="form-check-label" for="batchOverwrite">@Localizer["BatchOverwrite"]</label>
+                    <div class="form-text text-muted">@Localizer["BatchOverwriteHint"]</div>
+                </div>
+                <div id="batchResult" class="alert d-none mt-2"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Cancel"]</button>
+                <button type="button" class="btn btn-success" id="batchSubmitBtn" data-action="submitBatchGenerate">
+                    <i class="bi bi-play-fill"></i> @Localizer["RunGenerate"]
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end u-min-width-860px u-max-width-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+        var wcL = {
+            yearRequired: "@Localizer["JsYearRequired"]",
+            shiftRequired: "@Localizer["JsShiftRequired"]",
+            processing: "@Localizer["JsProcessing"]",
+            runFailed: "@Localizer["JsRunFailed"]",
+            runGenerate: "@Localizer["JsRunGenerate"]"
+        };
+        function submitBatchGenerate() {
+            const year = document.getElementById('batchYear').value;
+            const month = document.getElementById('batchMonth').value;
+            const shiftGroupCode = document.getElementById('batchShiftGroup').value;
+            const workCenterId = document.getElementById('batchWorkCenter').value;
+            const machineCode = document.getElementById('batchMachineCode').value;
+            const overwrite = document.getElementById('batchOverwrite').checked;
+            const resultDiv = document.getElementById('batchResult');
+            const btn = document.getElementById('batchSubmitBtn');
+
+            if (!year) { alert(wcL.yearRequired); return; }
+            // 班制未填＝由伺服端 fallback（WC 預設 → 本廠預設班制），故不再強制必填
+
+            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+
+            const fd = new FormData();
+            fd.append('year', year);
+            if (month) fd.append('month', month);
+            if (shiftGroupCode) fd.append('shiftGroupCode', shiftGroupCode);
+            if (workCenterId) fd.append('workCenterId', workCenterId);
+            if (machineCode) fd.append('machineCode', machineCode);
+            fd.append('overwrite', overwrite);
+            fd.append('__RequestVerificationToken', token);
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> ' + wcL.processing;
+            resultDiv.className = 'alert d-none mt-2';
+
+            fetch('@Url.Action("BatchGenerate")', {
+                method: 'post', body: fd,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+                .then(r => r.json())
+                .then(data => {
+                    resultDiv.className = 'alert mt-2 ' + (data.success ? 'alert-success' : 'alert-danger');
+                    resultDiv.textContent = data.message;
+                    if (data.success) {
+                        setTimeout(() => location.reload(), 1500);
+                    }
+                })
+                .catch(() => {
+                    resultDiv.className = 'alert alert-danger mt-2';
+                    resultDiv.textContent = wcL.runFailed;
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="bi bi-play-fill"></i> ' + wcL.runGenerate;
+                });
+        }
+    </script>
+}

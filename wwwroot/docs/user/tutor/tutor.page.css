@@ -1,0 +1,66 @@
+/* 教學系統頁樣式。前半段與各模組的 screen.page.css 完全相同（版面骨架必須一致，
+   否則同一個側欄／內容區在教學頁看起來會是另一套系統）；後半段是教學專用的元件。
+   CSP style-src 為 'self' 且沒有 nonce，所以一律靜態檔外部化，不用 <style> 也不用 style 屬性字串。 */
+  body{display:flex;flex-direction:column;min-height:100vh;font-size:.93rem}
+  .sidebar{width:230px;min-width:230px;background:#212529;min-height:calc(100vh - 56px);padding:1rem 0}
+  .sidebar .nav-link{color:rgba(255,255,255,.7);padding:.32rem 1.2rem;font-size:.84rem}
+  .sidebar .nav-link:hover,.sidebar .nav-link.active{color:#fff;background:rgba(255,255,255,.08);border-left:3px solid #0d6efd;padding-left:calc(1.2rem - 3px)}
+  .sidebar .sidebar-heading{color:rgba(255,255,255,.4);font-size:.69rem;text-transform:uppercase;letter-spacing:.08em;padding:.7rem 1.2rem .2rem;margin-top:.4rem}
+  .content{flex:1;padding:1.75rem 2.25rem;max-width:840px}
+  .doc-header{border-bottom:2px solid #0d6efd;padding-bottom:.65rem;margin-bottom:1.5rem}
+  h2{font-size:1.2rem;margin-top:1.75rem;color:#212529}
+  h3{font-size:1rem;margin-top:1.25rem;color:#495057}
+  .step-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#0d6efd;color:#fff;font-size:.72rem;font-weight:700;flex-shrink:0}
+  .step-row{display:flex;gap:.65rem;align-items:flex-start;margin-bottom:.5rem}
+  .note-box{background:#fff8e1;border-left:4px solid #ffc107;border-radius:4px;padding:.65rem 1rem;margin:.9rem 0;font-size:.87rem}
+  .tip-box{background:#e8f4fd;border-left:4px solid #0d6efd;border-radius:4px;padding:.65rem 1rem;margin:.9rem 0;font-size:.87rem}
+  .u-height-56px{height:56px !important}
+  .screen-shot{max-width:100%;display:block;border:1px solid #dee2e6;border-radius:8px;box-shadow:0 .1rem .4rem rgba(0,0,0,.08);margin:.9rem 0}
+  .screen-shot-caption{font-size:.78rem;color:#6c757d;margin:.2rem 0 1.3rem}
+
+/* ── 課程總覽 ─────────────────────────────────────────────── */
+  .tutor-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:.7rem;margin:.9rem 0 1.6rem}
+  .tutor-card{display:block;padding:.7rem .9rem;border:1px solid #dee2e6;border-radius:8px;text-decoration:none;color:inherit;background:#fff;transition:box-shadow .15s,border-color .15s}
+  .tutor-card:hover{border-color:#0d6efd;box-shadow:0 .25rem .75rem rgba(0,0,0,.1)}
+  /* 卡片整張是 <a>，但標題若是一般深色粗體字，不 hover 就看不出可點。
+     用連結色＋播放圖示把「這是可以點進去播的」講清楚。 */
+  .tutor-card-title{display:flex;align-items:center;gap:.4rem;font-weight:600;font-size:.93rem;color:#0d6efd;margin-bottom:.25rem}
+  .tutor-card-play{font-size:1.05rem;flex:0 0 auto;line-height:1}
+  .tutor-card:hover .tutor-card-title span{text-decoration:underline}
+  .tutor-card-chain{font-size:.79rem;color:#495057;line-height:1.5}
+  .tutor-card-meta{font-size:.72rem;color:#adb5bd;margin-top:.35rem}
+  .tutor-card-src{font-family:var(--bs-font-monospace)}
+
+/* ── 播放器 ───────────────────────────────────────────────── */
+  .tutor-stage{position:relative;border:1px solid #dee2e6;border-radius:8px;overflow:hidden;background:#f8f9fa;margin:.9rem 0}
+  .tutor-stage img{display:block;width:100%}
+
+  /* 手機畫面是直式的（390×844，以 2 倍截成 780×1688）。撐滿版面寬度的話一張圖就
+     一千多像素高，得捲動才看得完一格——mobile/screen.page.css 早就為手冊頁解過同一題。
+     **上限套在 stage 而不是 img**：熱點是 stage 內的絕對定位，座標以 img.clientWidth 換算，
+     只縮 img 會讓圖與 stage 不再重合，框就會整個偏掉。 */
+  /* 以**高度**為準而不是寬度：手冊頁只要能捲就好，播放器不行——
+     控制列在圖的下方，圖一超過一個螢幕就得先捲下去才按得到「下一步」。
+     300px 寬換算成 649px 高仍然過不了這關，所以直接綁高度。
+     625px 是實際看過之後定的：對齊桌機截圖的 480px 太保守，手機畫面上的字會小到看不清；
+     再往上則整格看不完（含步驟文字與控制列）。直式比橫式高一些是可以接受的，
+     控制列位置的落差還在一行以內。 */
+  .tutor-stage.is-portrait{width:fit-content;max-width:100%}
+  .tutor-stage.is-portrait img{width:auto;height:min(65vh,625px)}
+
+  /* 熱點是絕對定位的框；left/top/width/height 由 JS 以 CSSOM 屬性指派
+     （el.style.left = …），不受 style-src 管。這裡只放不隨畫面變動的外觀。 */
+  .tutor-hotspot{position:absolute;border:3px solid #ffc107;border-radius:6px;box-shadow:0 0 0 9999px rgba(0,0,0,.35);pointer-events:none}
+
+  .tutor-eventcard{border:2px dashed #adb5bd;border-radius:8px;background:#f8f9fa;padding:2.2rem 1.2rem;text-align:center;color:#6c757d;margin:.9rem 0}
+  .tutor-eventcard-title{font-size:1.05rem;font-weight:600;color:#495057;margin-bottom:.3rem}
+
+  .tutor-track{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center;margin:.6rem 0 1rem}
+  .tutor-track-stop{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .55rem;border:1px solid #dee2e6;border-radius:999px;font-size:.78rem;background:#fff;color:#495057}
+  .tutor-track-stop.is-current{border-color:#0d6efd;background:#e8f4fd;color:#0d6efd;font-weight:600}
+  .tutor-track-stop.is-event{border-style:dashed;color:#adb5bd}
+  .tutor-track-sep{color:#ced4da;font-size:.72rem}
+
+  .tutor-controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.9rem 0}
+  .tutor-stepline{font-size:.9rem;line-height:1.6;min-height:3.2rem}
+  .tutor-stepline-section{font-size:.75rem;color:#adb5bd;display:block}

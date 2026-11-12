@@ -1,0 +1,243 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Controllers
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.MFG.Controllers.WorkOrderVarianceRow>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool canPrint    = ViewBag.CanPrint == true;
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    int  curPageSize = ViewBag.CurrentPageSize as int? ?? 20;
+
+    var productOptions  = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    string searchProduct = ViewBag.SearchProduct as string ?? "";
+    decimal totalVarMat = ViewBag.TotalVarMaterial as decimal? ?? 0m;
+    decimal totalVarLab = ViewBag.TotalVarLabor     as decimal? ?? 0m;
+    decimal totalVarOvh = ViewBag.TotalVarOverhead  as decimal? ?? 0m;
+    decimal totalVar    = ViewBag.TotalVariance      as decimal? ?? 0m;
+    var curType         = ViewBag.WorkOrderType as WorkOrderType?;
+    int reworkCount         = ViewBag.ReworkCount       as int? ?? 0;
+    decimal reworkActual    = ViewBag.ReworkActualTotal as decimal? ?? 0m;
+    decimal reworkLossTotal = ViewBag.ReworkLossTotal   as decimal? ?? 0m;
+
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+    string varFmt = baseDp <= 0 ? "+0;-0;0" : $"+0.{new string('0', baseDp)};-0.{new string('0', baseDp)};0.{new string('0', baseDp)}";
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.SortOrder as string ?? "";
+        if (cur == col + "_asc")  return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+
+    string varBadge(decimal v) => v > 0 ? "text-danger" : v < 0 ? "text-success" : "text-muted";
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-graph-up-arrow me-2"></i>@Localizer["PageTitle"]</h1>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@Localizer["SearchProduct"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["SearchProduct"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-6 col-md-2">
+                    <label class="form-label small">@Localizer["DateFrom"]</label>
+                    <input type="date" name="dateFrom" class="form-control" value="@(ViewBag.DateFrom?.ToString("yyyy-MM-dd"))" />
+                </div>
+                <div class="col-6 col-md-2">
+                    <label class="form-label small">@Localizer["DateTo"]</label>
+                    <input type="date" name="dateTo" class="form-control" value="@(ViewBag.DateTo?.ToString("yyyy-MM-dd"))" />
+                </div>
+                <div class="col-6 col-md-2">
+                    <label class="form-label small">@Localizer["WorkOrderType"]</label>
+                    <select name="workOrderType" class="form-select">
+                        <option value="">@Localizer["All"]</option>
+                        @foreach (var t in Enum.GetValues<WorkOrderType>())
+                        {
+                            <option value="@t" selected="@(curType == t)">@MfgEnumDisplay.Text(L, t)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+                @if (canPrint)
+                {
+                    <div class="col-auto">
+                        <div class="btn-group">
+                            <a asp-action="Export" asp-route-searchProduct="@ViewBag.SearchProduct"
+                               asp-route-dateFrom="@ViewBag.DateFrom" asp-route-dateTo="@ViewBag.DateTo"
+                               asp-route-workOrderType="@curType"
+                               asp-route-sortOrder="@ViewBag.SortOrder" asp-route-format="xlsx"
+                               class="btn btn-outline-secondary">
+                                <i class="bi bi-file-earmark-excel me-1"></i>@Localizer["ExportExcel"]
+                            </a>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Export" asp-route-format="csv"
+                                       asp-route-searchProduct="@ViewBag.SearchProduct"
+                                       asp-route-dateFrom="@ViewBag.DateFrom" asp-route-dateTo="@ViewBag.DateTo"
+                                       asp-route-workOrderType="@curType">
+                                    <i class="bi bi-filetype-csv me-1"></i>@Localizer["ExportCsv"]</a></li>
+                                <li><a class="dropdown-item" asp-action="Export" asp-route-format="json"
+                                       asp-route-searchProduct="@ViewBag.SearchProduct"
+                                       asp-route-dateFrom="@ViewBag.DateFrom" asp-route-dateTo="@ViewBag.DateTo"
+                                       asp-route-workOrderType="@curType">
+                                    <i class="bi bi-filetype-json me-1"></i>@Localizer["ExportJson"]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th rowspan="2" class="align-middle">
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-searchProduct="@ViewBag.SearchProduct" asp-route-dateFrom="@ViewBag.DateFrom"
+                               asp-route-dateTo="@ViewBag.DateTo" asp-route-pageSize="@curPageSize" asp-route-workOrderType="@curType"
+                               asp-route-sortOrder="@ViewBag.ProductSort" class="text-decoration-none text-dark">
+                                @Localizer["WorkOrderId"] <i class="bi @sortIcon("product")"></i>
+                            </a>
+                        </th>
+                        <th rowspan="2" class="align-middle">@Localizer["ProductCode"]</th>
+                        <th rowspan="2" class="align-middle text-end">@Localizer["PlanQty"]</th>
+                        <th rowspan="2" class="align-middle">@Localizer["CostDate"]</th>
+                        <th colspan="3" class="text-center border-start">@Localizer["Material"]</th>
+                        <th colspan="3" class="text-center border-start">@Localizer["Labor"]</th>
+                        <th colspan="3" class="text-center border-start">@Localizer["Overhead"]</th>
+                        <th rowspan="2" class="align-middle text-end border-start">
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-searchProduct="@ViewBag.SearchProduct" asp-route-dateFrom="@ViewBag.DateFrom"
+                               asp-route-dateTo="@ViewBag.DateTo" asp-route-pageSize="@curPageSize" asp-route-workOrderType="@curType"
+                               asp-route-sortOrder="@ViewBag.VarSort" class="text-decoration-none text-dark">
+                                @Localizer["TotalVariance"] <i class="bi @sortIcon("var")"></i>
+                            </a>
+                        </th>
+                        <th rowspan="2" class="align-middle text-end">@Localizer["ReworkLoss"]</th>
+                        <th rowspan="2" class="align-middle">@Localizer["CostStatus"]</th>
+                    </tr>
+                    <tr>
+                        <th class="text-end small border-start">@Localizer["StdCost"]</th>
+                        <th class="text-end small">@Localizer["ActualCost"]</th>
+                        <th class="text-end small">@Localizer["Variance"]</th>
+                        <th class="text-end small border-start">@Localizer["StdCost"]</th>
+                        <th class="text-end small">@Localizer["ActualCost"]</th>
+                        <th class="text-end small">@Localizer["Variance"]</th>
+                        <th class="text-end small border-start">@Localizer["StdCost"]</th>
+                        <th class="text-end small">@Localizer["ActualCost"]</th>
+                        <th class="text-end small">@Localizer["Variance"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        <td>
+                            <code>@r.WorkOrderId</code>
+                            @* 工單類型只標重工／委外（一般工單不標）：另佔一欄會讓英文版在 1440 寬放不下、要橫捲 *@
+                            @if (r.WorkOrderType != WorkOrderType.Normal)
+                            {
+                                <br /><span class="badge @(r.WorkOrderType == WorkOrderType.Rework ? "bg-warning text-dark" : "bg-info text-dark")">@MfgEnumDisplay.Text(L, r.WorkOrderType)</span>
+                            }
+                        </td>
+                        <td>@r.ProductCode</td>
+                        <td class="text-end">@r.PlanQty.ToString(QtyFmt(r.UomCode))</td>
+                        <td>@r.CostDate.ToString("yyyy-MM-dd")</td>
+                        <td class="text-end border-start">@r.StdMaterial.ToString(moneyFmt)</td>
+                        <td class="text-end">@r.ActualMaterial.ToString(moneyFmt)</td>
+                        <td class="text-end fw-semibold @varBadge(r.VarMaterial)">@r.VarMaterial.ToString(varFmt)</td>
+                        <td class="text-end border-start">@r.StdLabor.ToString(moneyFmt)</td>
+                        <td class="text-end">@r.ActualLabor.ToString(moneyFmt)</td>
+                        <td class="text-end fw-semibold @varBadge(r.VarLabor)">@r.VarLabor.ToString(varFmt)</td>
+                        <td class="text-end border-start">@r.StdOverhead.ToString(moneyFmt)</td>
+                        <td class="text-end">@r.ActualOverhead.ToString(moneyFmt)</td>
+                        <td class="text-end fw-semibold @varBadge(r.VarOverhead)">@r.VarOverhead.ToString(varFmt)</td>
+                        <td class="text-end fw-bold border-start @varBadge(r.TotalVariance)">@r.TotalVariance.ToString(varFmt)</td>
+                        <td class="text-end">@(r.WorkOrderType == WorkOrderType.Rework ? r.ReworkLoss.ToString(moneyFmt) : "—")</td>
+                        <td><span class="badge @(r.CostStatus == CostStatus.Final ? "bg-success" : "bg-secondary")">@MfgEnumDisplay.Text(L, r.CostStatus)</span></td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot class="table-light fw-bold">
+                    <tr>
+                        <td colspan="6" class="text-end border-start">@Localizer["Subtotal"]</td>
+                        <td class="text-end @varBadge(totalVarMat)">@totalVarMat.ToString(varFmt)</td>
+                        <td colspan="2" class="border-start"></td>
+                        <td class="text-end @varBadge(totalVarLab)">@totalVarLab.ToString(varFmt)</td>
+                        <td colspan="2" class="border-start"></td>
+                        <td class="text-end @varBadge(totalVarOvh)">@totalVarOvh.ToString(varFmt)</td>
+                        <td class="text-end border-start @varBadge(totalVar)">@totalVar.ToString(varFmt)</td>
+                        <td class="text-end">@reworkLossTotal.ToString(moneyFmt)</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    @if (reworkCount > 0)
+    {
+        <div class="alert alert-warning mt-3 mb-0" id="reworkSummary">
+            <i class="bi bi-arrow-repeat me-1"></i>@string.Format(Localizer["ReworkSummaryFmt"].Value,
+                reworkCount, reworkActual.ToString(moneyFmt), reworkLossTotal.ToString(moneyFmt))
+        </div>
+    }
+
+    @await Html.PartialAsync("_Pagination", Model)
+    }
+
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

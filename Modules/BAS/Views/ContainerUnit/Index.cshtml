@@ -1,0 +1,236 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model PaginatedList<SmartFactory.MES.Modules.BAS.Controllers.ContainerUnitController.UnitRow>?
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool canCreate = ViewBag.CanCreate == true;
+    bool canPrint  = ViewBag.CanPrint == true;
+    bool canUpdate = ViewBag.CanUpdate == true;
+    var containers = ViewBag.ContainerOptions as List<Container> ?? new();
+    var names = containers.ToDictionary(c => c.ContainerCode, c => c.ContainerName);
+    string curStatus = ViewBag.Status as string ?? "";
+    string curType = ViewBag.ContainerCode as string ?? "";
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col"><h1><i class="bi bi-qr-code"></i> @ViewData["Title"]</h1></div>
+        @if (canUpdate)
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-outline-primary"
+                        data-url="@Url.Action("Pack")"
+                        data-label="@Localizer["PackTitle"]"
+                        data-action="openPanel">
+                    <i class="bi bi-box-seam"></i> @Localizer["Pack"]
+                </button>
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-outline-primary"
+                        data-url="@Url.Action("Recover")"
+                        data-label="@Localizer["RecoverTitle"]"
+                        data-action="openPanel">
+                    <i class="bi bi-box-arrow-in-down"></i> @Localizer["Recover"]
+                </button>
+            </div>
+        }
+        @if (canCreate)
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                        data-url="@Url.Action("Create")"
+                        data-label="@Localizer["AddTitle"]"
+                        data-action="openPanel">
+                    <i class="bi bi-plus-circle"></i> @Localizer["Add"]
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" action="@Url.Action("Index")" class="row g-3 align-items-end">
+                <input type="hidden" name="searched"  value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                <div class="col-md-4">
+                    <label class="form-label">@Localizer["SearchLabel"]</label>
+                    <input type="text" name="searchTerm" class="form-control" autofocus
+                           value="@ViewBag.SearchTerm" placeholder="@Localizer["SearchPlaceholder"]" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["ContainerCode"]</label>
+                    <select name="containerCode" class="form-select">
+                        <option value="">@Localizer["All"]</option>
+                        @foreach (var c in containers)
+                        {
+                            <option value="@c.ContainerCode" selected="@(curType == c.ContainerCode)">@c.ContainerCode — @c.ContainerName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">@Localizer["Status"]</label>
+                    <select name="status" class="form-select">
+                        <option value="">@Localizer["All"]</option>
+                        <option value="empty" selected="@(curStatus == "empty")">@Localizer["StatusEmpty"]</option>
+                        <option value="inuse" selected="@(curStatus == "inuse")">@Localizer["StatusInUse"]</option>
+                        <option value="wip" selected="@(curStatus == "wip")">@Localizer["StatusInWip"]</option>
+                        <option value="offsite" selected="@(curStatus == "offsite")">@Localizer["StatusOffsite"]</option>
+                        <option value="inactive" selected="@(curStatus == "inactive")">@Localizer["StatusInactive"]</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                    @if (canPrint && Model != null && Model.Any())
+                    {
+                        <a class="btn btn-outline-secondary ms-1" target="_blank"
+                           href="@Url.Action("Labels", new { ids = string.Join(",", Model.Select(r => r.ContainerUnitId)) })">
+                            <i class="bi bi-printer"></i> @Localizer["PrintPageLabels"]
+                        </a>
+                    }
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-info">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>
+                            <a href="@Url.Action("Index", new { sortOrder = ViewBag.CurrentSort == "id_desc" ? "id_asc" : "id_desc", searchTerm = ViewBag.SearchTerm, containerCode = curType, status = curStatus, searched = true })">
+                                @Localizer["ContainerUnitId"]
+                                @if (ViewBag.CurrentSort == "id_desc") { <i class="bi bi-sort-down"></i> } else { <i class="bi bi-sort-up"></i> }
+                            </a>
+                        </th>
+                        <th>@Localizer["ContainerCode"]</th>
+                        <th>@Localizer["Status"]</th>
+                        <th>@Localizer["ProductCode"]</th>
+                        <th>@Localizer["LotNo"]</th>
+                        <th>@Localizer["WorkOrderOp"]</th>
+                        <th>@Localizer["OutDocNo"]</th>
+                        <th class="text-end">@Localizer["Qty"]</th>
+                        <th>@Localizer["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model)
+                    {
+                        <tr>
+                            <td class="font-monospace fw-semibold">@r.ContainerUnitId</td>
+                            <td>@r.ContainerCode @(names.TryGetValue(r.ContainerCode, out var n) ? "— " + n : "")</td>
+                            <td>
+                                @if (!r.IsActive) { <span class="badge bg-secondary">@Localizer["StatusInactive"]</span> }
+                                else if (r.Qty > 0) { <span class="badge bg-primary">@Localizer["StatusInUse"]</span> }
+                                else if (r.InWip) { <span class="badge bg-warning text-dark">@Localizer["StatusInWip"]</span> }
+                                else if (r.Offsite) { <span class="badge bg-info text-dark">@Localizer["StatusOffsite"]</span> }
+                                else { <span class="badge bg-success">@Localizer["StatusEmpty"]</span> }
+                            </td>
+                            <td>@(r.Qty > 0 || r.InWip || r.Offsite ? r.ProductCode : "")</td>
+                            <td class="font-monospace">@(r.Qty > 0 || r.Offsite ? r.LotNo : "")</td>
+                            <td class="font-monospace">@(r.Qty <= 0 && r.InWip ? $"{r.WorkOrderId} / {r.OperationSeq}" : "")</td>
+                            <td class="font-monospace">@(r.Offsite ? r.OutDocNo : "")</td>
+                            <td class="text-end">@(r.Qty > 0 ? r.Qty.ToString("0.####") : r.InWip ? r.WipQty.ToString("0.####") : "")</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-url="@Url.Action("Details", new { id = r.ContainerUnitId })"
+                                        data-label="@r.ContainerUnitId"
+                                        data-action="openPanel"><i class="bi bi-eye"></i> @Localizer["Details"]</button>
+                                @if (canPrint)
+                                {
+                                    <a class="btn btn-sm btn-outline-secondary" target="_blank" title="@Localizer["PrintLabel"]" aria-label="@Localizer["PrintLabel"]"
+                                       href="@Url.Action("Labels", new { ids = r.ContainerUnitId })"><i class="bi bi-printer"></i></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel offcanvas -->
+<div class="offcanvas offcanvas-end u-min-width-480px u-max-width-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i><span id="successToastMsg">@Localizer["SaveSuccess"]</span></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+        // 裝箱面板（_PackForm）：品號 → 列出各儲位庫存；掃來源箱號（換箱）→ 帶出品號、儲位、批號、數量
+        let packRows = [];
+        function packEsc(s) {
+            return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+        function packSelect(idx) {
+            const r = packRows[idx];
+            document.getElementById('packLocation').value = r ? r.locationCode : '';
+            document.getElementById('packLot').value = r ? (r.lotNo || '') : '';
+            if (r) document.getElementById('packQty').value = r.qtyAvailable;
+        }
+        async function packLoadStock(productCode, pickLot, pickLoc) {
+            const tbody = document.getElementById('packStock');
+            packRows = [];
+            packSelect(-1);
+            if (!productCode) return;
+            const res = await fetch(`/api/warehouse/stock/${encodeURIComponent(productCode)}`);
+            packRows = res.ok ? (await res.json()).filter(r => r.qtyAvailable > 0) : [];
+            if (!packRows.length) { tbody.innerHTML = `<tr><td colspan="4" class="text-muted">@Localizer["PackNoStock"]</td></tr>`; return; }
+            tbody.innerHTML = packRows.map((r, i) => `
+                <tr><td><input type="radio" name="packPick" class="form-check-input" value="${i}" data-action-change="packPickRow"></td>
+                    <td>${packEsc(r.locationCode)}</td><td class="font-monospace">${packEsc(r.lotNo || '—')}</td>
+                    <td class="text-end">${r.qtyAvailable}</td></tr>`).join('');
+            const want = packRows.findIndex(r => (pickLot == null || (r.lotNo || '') === pickLot) && (pickLoc == null || r.locationCode === pickLoc));
+            const idx = want >= 0 ? want : (packRows.length === 1 ? 0 : -1);
+            if (idx >= 0) { tbody.querySelectorAll('input[name=packPick]')[idx].checked = true; packSelect(idx); }
+        }
+        window.packProductChanged = (e, inp) => packLoadStock(inp.value.trim());
+        window.packPickRow = (e, radio) => packSelect(parseInt(radio.value));
+        window.packSourceBoxChanged = async (e, inp) => {
+            const code = inp.value.trim();
+            // 同一個箱號已帶出過就不重查：重查會先清空儲位／批號再等回應，
+            // 掃完箱號直接點「送出」時，失焦觸發的第二次 change 會在按下與放開之間把欄位清掉，
+            // 送出去的就是空儲位／空批號（2026-11-07 nightly ContainerPackFlowTests）。
+            if (!code || code === inp.dataset.loadedCode) return;
+            inp.dataset.loadedCode = code;
+            const r = await fetch(`/api/warehouse/container-unit/${encodeURIComponent(code)}`);
+            if (!r.ok) { delete inp.dataset.loadedCode; window.toastError && window.toastError('@Localizer["PackSourceNotBox", "{0}"]'.replace('{0}', code)); return; }
+            const box = await r.json();
+            document.getElementById('packProduct').value = box.productCode;
+            await packLoadStock(box.productCode, box.lotNo, box.locations.length === 1 ? box.locations[0].locationCode : null);
+        };
+    </script>
+}

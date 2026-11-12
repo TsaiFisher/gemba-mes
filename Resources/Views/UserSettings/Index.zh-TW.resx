@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="UserSettings" xml:space="preserve">
+    <value>個人設定</value>
+  </data>
+  <data name="SwitchActiveRole" xml:space="preserve">
+    <value>切換目前身份 (Active Role)</value>
+  </data>
+  <data name="SwitchRoleDescription" xml:space="preserve">
+    <value>請選擇您目前要使用的角色，切換後系統功能的權限與組織視窗將隨之改變。</value>
+  </data>
+  <data name="SystemRole" xml:space="preserve">
+    <value>系統角色</value>
+  </data>
+  <data name="InUse" xml:space="preserve">
+    <value>使用中</value>
+  </data>
+  <data name="SwitchToThis" xml:space="preserve">
+    <value>切換此身份</value>
+  </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>帳號資訊</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>帳號名稱</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>電子郵件</value>
+  </data>
+  <data name="ActivePlant" xml:space="preserve">
+    <value>目前廠別</value>
+  </data>
+  <data name="SwitchActivePlant" xml:space="preserve">
+    <value>切換目前廠別 (Active Plant)</value>
+  </data>
+  <data name="SwitchPlantDescription" xml:space="preserve">
+    <value>請選擇您目前要操作的廠別，切換後系統資料將依廠別顯示。</value>
+  </data>
+  <data name="SwitchToThisPlant" xml:space="preserve">
+    <value>切換此廠別</value>
+  </data>
+  <data name="RolePlantRestrictionNotice" xml:space="preserve">
+    <value>目前角色已設定廠別限制，僅顯示允許的廠別。</value>
+  </data>
+  <data name="PersonalTimeZone" xml:space="preserve">
+    <value>個人時區</value>
+  </data>
+  <data name="PersonalTimeZoneDescription" xml:space="preserve">
+    <value>設定您個人的時區。此設定僅在「目前廠別」未指定時區時生效——廠別時區一律優先。未設定則跟隨廠別，廠別也未設定時使用系統預設（Asia/Taipei）。</value>
+  </data>
+  <data name="EffectiveTimeZone" xml:space="preserve">
+    <value>目前生效時區</value>
+  </data>
+  <data name="TimeZoneSourcePlant" xml:space="preserve">
+    <value>來自廠別設定</value>
+  </data>
+  <data name="TimeZoneSourcePersonal" xml:space="preserve">
+    <value>來自個人設定</value>
+  </data>
+  <data name="TimeZoneSourceFallback" xml:space="preserve">
+    <value>系統預設</value>
+  </data>
+  <data name="PersonalTimeZoneOverridden" xml:space="preserve">
+    <value>目前廠別已指定時區（{0}），因此您的個人時區設定暫不生效。切換到未指定時區的廠別後即會採用。</value>
+  </data>
+  <data name="FollowPlantTimeZone" xml:space="preserve">
+    <value>跟隨廠別時區</value>
+  </data>
+  <data name="SaveTimeZone" xml:space="preserve">
+    <value>儲存時區</value>
+  </data>
+  <data name="TimeZoneSaved" xml:space="preserve">
+    <value>個人時區已儲存。</value>
+  </data>
+  <data name="TimeZoneInvalid" xml:space="preserve">
+    <value>時區代碼無法解析，未儲存。請從清單中選擇。</value>
+  </data>
+</root>

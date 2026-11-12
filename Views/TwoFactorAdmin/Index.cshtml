@@ -1,0 +1,100 @@
+@using SmartFactory.MES.Services
+@model List<SmartFactory.MES.Controllers.TwoFactorAdminController.UserRow>
+@{
+    var isEn = System.Globalization.CultureInfo.CurrentUICulture.Name.StartsWith("en");
+    ViewData["Title"] = isEn ? "Two-Factor Reset" : "兩階段驗證重置";
+    Layout = "_Layout";
+    var search = ViewBag.Search as string;
+}
+
+<div class="container mt-4">
+    <h4 class="mb-3"><i class="bi bi-shield-lock"></i> @(isEn ? "Two-Factor Reset" : "兩階段驗證重置")</h4>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <p class="text-muted small">
+        @(isEn
+            ? "Reset a user's two-factor authentication if they lost their authenticator. They must re-enroll on next sign-in. Recovery codes are also invalidated."
+            : "當使用者遺失驗證器時，於此重置其兩階段驗證；重置後該使用者下次登入須重新綁定，原復原碼一併失效。")
+    </p>
+
+    <form method="get" class="row g-2 mb-3">
+        <div class="col-auto">
+            <input type="text" name="search" value="@search" class="form-control form-control-sm"
+                   placeholder="@(isEn ? "Account / email" : "帳號 / Email")" />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary btn-sm px-4"><i class="bi bi-search me-1"></i>@(isEn ? "Search" : "查詢")</button>
+        </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @if (ViewBag.Truncated == true)
+    {
+        <div class="alert alert-warning d-flex align-items-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <span>@(isEn
+                ? $"Only the first {ViewBag.RowCap} accounts are shown. Narrow the search to find others."
+                : $"僅顯示前 {ViewBag.RowCap} 筆帳號，其餘未列出。請縮小查詢條件。")</span>
+        </div>
+    }
+    <div class="table-responsive">
+        <table class="table table-sm table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>@(isEn ? "Account" : "帳號")</th>
+                    <th>Email</th>
+                    <th class="text-center">@(isEn ? "2FA" : "兩階段驗證")</th>
+                    <th class="text-end">@(isEn ? "Action" : "操作")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count == 0)
+                {
+                    <tr><td colspan="4" class="text-center text-muted">@(isEn ? "No users found." : "查無使用者。")</td></tr>
+                }
+                @{ var paged = ReportPaging.Page(Model, ViewData, Context); }
+                @foreach (var u in paged)
+                {
+                    <tr>
+                        <td>@u.UserName</td>
+                        <td>@u.Email</td>
+                        <td class="text-center">
+                            @if (u.TwoFactorEnabled)
+                            {
+                                <span class="badge bg-success">@(isEn ? "Enabled" : "已啟用")</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@(isEn ? "Off" : "未啟用")</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            @if (u.TwoFactorEnabled)
+                            {
+                                <form method="post" asp-action="Reset" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="userId" value="@u.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-arrow-counterclockwise"></i> @(isEn ? "Reset" : "重置")
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">—</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @await Html.PartialAsync("_Pagination", paged)
+</div>

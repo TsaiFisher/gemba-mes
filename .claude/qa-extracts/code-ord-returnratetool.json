@@ -1,0 +1,46 @@
+{
+  "sourcePath": "Modules/ORD/Reporting/ReturnRateTool.cs",
+  "sourceHash": "bc4d4f3f5930822973e8f34cb96f25af2d4a337422645335c56ec62b25e92075",
+  "entries": [
+    {
+      "slug": "code-ord-returnratetool-2539b671",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 「照抄畫面」這條規則本身不變，變的是被照抄的那一端",
+      "text": "畫面權限的判斷標準已更新｜「照抄畫面」的功能本身規則不變，但決定是否能讀取或建立資料的權限檢查，現在是根據「可閱讀」的權限來判定的。",
+      "approved": false,
+      "sourceSectionHash": "65cbc18f421fda0296f9700a94e9a27845f2f5a28486d36a55bbab444a5f4b38"
+    },
+    {
+      "slug": "code-ord-returnratetool-0bb81059",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 不含金額→ 屬 §八「內部」級，可進自然語言目錄",
+      "text": "不含金額的報表僅顯示數量資訊｜此報表只會呈現出貨量、退貨量和退貨率等數量相關數據，不會包含任何金錢數值的計算或展示。",
+      "approved": true,
+      "sourceSectionHash": "54bb48a342cdc596b65fa04db65e7a54abfdb9ab5d16a50cd1a4ef5c505a9001"
+    },
+    {
+      "slug": "code-ord-returnratetool-aae93d4f",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 取聯集：只有退貨、查無對應出貨的組合也會列出",
+      "text": "聯集計算的資料範圍限制｜系統會列出退貨或沒有對應出貨紀錄的組合，此時計算出的退貨率為 0%。",
+      "approved": true,
+      "sourceSectionHash": "7009f04b60f214589ce254d33ae3ea226eb70d1cd53708ef60c8ca906eae97c9"
+    },
+    {
+      "slug": "code-ord-returnratetool-183f9a7d",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 逐欄照抄該報表畫面現行的匯出輸出**，不增不刪不改順序：",
+      "text": "報表資料匯出欄位與畫面一致｜系統匯出的欄位順序和內容會完全依照該報表畫面上目前顯示的順序，不進行任何增減或調整。",
+      "approved": true,
+      "sourceSectionHash": "09aa7a58a264588802c9dfa524d02a5c2fbea9033a23c2dcdfe8375f6716ac1e"
+    },
+    {
+      "slug": "code-ord-returnratetool-bc4a41ef",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 百分比在畫面匯出是帶 % 的字串，不是數值——照抄",
+      "text": "匯出百分比的格式與資料型別｜系統在畫面匯出的百分比，是以帶有「%」符號的字串形式呈現，而非純數值。這是為了確保與既有的檔案格式一致性。",
+      "approved": true,
+      "sourceSectionHash": "5fd2fca2d6c8f223cd6b2acc3997169740cd4f6b943786f092444a7cd42044d2"
+    }
+  ]
+}

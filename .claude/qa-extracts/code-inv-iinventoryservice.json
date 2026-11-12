@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/INV/Services/IInventoryService.cs",
+  "sourceHash": "0d173f082d2943639d885c3cba5a70c981faab151db563f539af6a647407626f",
+  "entries": [
+    {
+      "slug": "code-inv-iinventoryservice-bee58798",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 更新庫存數量",
+      "text": "庫存數量更新規則說明｜入庫時，增加庫存數量；出庫時，減少庫存數量。如果該產品的庫存記錄不存在，系統會自動建立紀錄來進行更新。",
+      "approved": true,
+      "sourceSectionHash": "203a70fb6fcfb61562f07db0e936826049d1ab5e15b05b87814a08390d895835"
+    },
+    {
+      "slug": "code-inv-iinventoryservice-4f86aa1f",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 更新移動加權平均成本",
+      "text": "成本計算規則說明｜新的平均成本是根據舊的庫存數量和價格，加上本次入庫的數量和單價後，再重新計算出來的。",
+      "approved": true,
+      "sourceSectionHash": "19e58cbdc7b89640732496b5964d3f656c29a24cc6367869a915a035d290d705"
+    },
+    {
+      "slug": "code-inv-iinventoryservice-4975ce12",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 反向更新移動加權平均成本",
+      "text": "成本計算規則說明｜當作廢一筆入庫紀錄時，系統會根據以下公式重新計算平均成本：新的平均成本等於（原有的總價值減去沖銷數量乘以該筆入庫的單價）除以（原有庫存量減去沖銷數量）。此計算必須在扣回數量之前執行。",
+      "approved": true,
+      "sourceSectionHash": "1830a743ad7afd2d07bd26ecd2a5470449cbec7af56bb0305393f18ca23b62dc"
+    },
+    {
+      "slug": "code-inv-iinventoryservice-c38c5417",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 該儲位是否屬客供倉",
+      "text": "儲位是否為客戶提供的倉庫｜如果某個儲位屬於客戶提供的倉庫，則該庫存不會參與系統的存貨計價計算，也不會被用於移動平均成本的計算或建立先進先出（FIFO）的成本層級，且其單價永遠顯示為零。",
+      "approved": true,
+      "sourceSectionHash": "680855ec111cc3d6f593ef072323cb8d436754934d6ece9ffe995b2fe3cd0373"
+    }
+  ]
+}

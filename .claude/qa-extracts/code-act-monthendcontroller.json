@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/ACT/Controllers/MonthEndController.cs",
+  "sourceHash": "f726b4e85512857e57a67450d3b849ba3c39f957bf2eea14f7a1075344b1f0fc",
+  "entries": [
+    {
+      "slug": "code-act-monthendcontroller-10fb30ff",
+      "lang": "zh",
+      "headingPath": "帳務 › 於是「有讀取權、沒有建立權」的角色**看得到選單",
+      "text": "列表檢視只需讀取權｜列表是讀取動作，只要具備該畫面的讀取權限就能開啟，不需要建立權。選單本身也是以讀取權過濾的，兩邊採同一個判準，才不會出現「選單上看得到、點進去卻被擋下」的情況。",
+      "approved": true,
+      "sourceSectionHash": "fb577336b488969c43b75ca7b4c324ed10891632ff38b9664efb46664ed4614f"
+    },
+    {
+      "slug": "code-act-monthendcontroller-a3b5a7ed",
+      "lang": "zh",
+      "headingPath": "帳務 › 期間的真實狀態要給畫面：〈取消月結〉原本綁在清單步驟 8 已完",
+      "text": "月結狀態判斷依據的變更｜系統判斷是否可取消月結時，會參考當前所處的會計期間資料，而非僅看清單步驟 8 是否已完成。",
+      "approved": true,
+      "sourceSectionHash": "83690403b0becf2a333218e5d9383ae500a6a09e2075cba999c1188c5afb5bd3"
+    },
+    {
+      "slug": "code-act-monthendcontroller-3507f6a0",
+      "lang": "zh",
+      "headingPath": "帳務 › 步驟 4 的部門費用輸入框預先帶入「部門實際費用」畫面已存的本期",
+      "text": "部門費用預設帶入本期已存資料｜系統在輸入部門費用時，會自動將「部門實際費用」畫面上已經儲存的本期資料填入對應的欄位中。",
+      "approved": true,
+      "sourceSectionHash": "e19404a98d71c83a217e99131a317c07207ea789c3e498bb209450ac22212f6d"
+    },
+    {
+      "slug": "code-act-monthendcontroller-bc81aa12",
+      "lang": "zh",
+      "headingPath": "帳務 › 會把整批減損算到錯的期間",
+      "text": "結帳作業基準日需以廠別當地日期為準｜系統在進行結帳作業時，計算的基準日必須是該廠區所在地的當地日期。如果使用的是期末科目，且時間跨越了不同時區（如 UTC 與當地日），則會將整批減損計算到該期的期末日，而非當天實際日期。",
+      "approved": true,
+      "sourceSectionHash": "190661741b4ea9acffec88ae0256b18b3f157cc4046828209859dc1f8481ffe0"
+    }
+  ]
+}

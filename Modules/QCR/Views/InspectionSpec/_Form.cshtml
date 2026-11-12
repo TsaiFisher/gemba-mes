@@ -1,0 +1,327 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@inject IViewLocalizer Localizer
+@model InspectionSpec
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isNew = string.IsNullOrEmpty(Model.SpecId);
+    var items = (Model.Items ?? new List<InspectionSpecItem>()).OrderBy(i => i.SeqNo).ToList();
+    var products   = ViewBag.ProductOptions   as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var suppliers  = ViewBag.SupplierOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var instruments = ViewBag.InstrumentOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<form id="sideForm" method="post" action="@Url.Action(isNew ? "Create" : "Edit")"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    @if (!isNew) { <input type="hidden" name="id" value="@Model.SpecId" /> }
+
+    <div asp-validation-summary="ModelOnly" class="text-danger small px-3 pt-2 mb-0"></div>
+
+    <div class="offcanvas-body u-overflow-y-auto">
+
+        <!-- ── 主檔 ──────────────────────────────────────────────── -->
+        <h6 class="fw-semibold mb-2">@Localizer["BasicSettings"]</h6>
+        <div class="row g-2 mb-3">
+            <div class="col-5">
+                <label class="form-label">@Localizer["SpecCode"] <span class="text-danger">*</span></label>
+                @if (isNew)
+                {
+                    <input asp-for="SpecCode" class="form-control font-monospace text-uppercase" maxlength="30" />
+                    <span asp-validation-for="SpecCode" class="text-danger small d-block"></span>
+                }
+                else
+                {
+                    <input type="hidden" asp-for="SpecCode" />
+                    <input class="form-control bg-light font-monospace" value="@Model.SpecCode" readonly />
+                }
+            </div>
+            <div class="col-7">
+                <label class="form-label">@Localizer["SpecName"] <span class="text-danger">*</span></label>
+                <input asp-for="SpecName" class="form-control" maxlength="100" />
+                <span asp-validation-for="SpecName" class="text-danger small d-block"></span>
+            </div>
+            <div class="col-6">
+                <label class="form-label">@Localizer["ProductLabel"]</label>
+                <select asp-for="ProductCode" class="form-select select2-enable">
+                    <option value="">@Localizer["NoRestriction"]</option>
+                    @foreach (var p in products)
+                    {
+                        <option value="@p.ProductCode">@p.ProductCode — @p.ProductName</option>
+                    }
+                </select>
+                <span asp-validation-for="ProductCode" class="text-danger small d-block"></span>
+            </div>
+            <div class="col-6">
+                <label class="form-label">@Localizer["SupplierLabel"]</label>
+                <select asp-for="SupplierCode" class="form-select select2-enable">
+                    <option value="">@Localizer["NoRestriction"]</option>
+                    @foreach (var s in suppliers)
+                    {
+                        <option value="@s.CompanyCode">@s.CompanyCode — @s.CompanyName</option>
+                    }
+                </select>
+                <span asp-validation-for="SupplierCode" class="text-danger small d-block"></span>
+            </div>
+        </div>
+
+        <!-- ── VL 切換規則 ────────────────────────────────────────── -->
+        <h6 class="fw-semibold mb-2 mt-3">@Localizer["VlSwitchTitle"]</h6>
+        <div class="row g-2 mb-2">
+            <div class="col-4">
+                <label class="form-label small">@Localizer["NormalVlLabel"]</label>
+                <select asp-for="NormalVl" class="form-select form-select-sm">
+                    @for (int v = 1; v <= 7; v++) { <option value="@v">VL-@v</option> }
+                </select>
+                <span asp-validation-for="NormalVl" class="text-danger small d-block"></span>
+            </div>
+            <div class="col-4">
+                <label class="form-label small">@Localizer["TightenedVlLabel"]</label>
+                <select asp-for="TightenedVl" class="form-select form-select-sm">
+                    @for (int v = 1; v <= 7; v++) { <option value="@v">VL-@v</option> }
+                </select>
+                <span asp-validation-for="TightenedVl" class="text-danger small d-block"></span>
+            </div>
+            <div class="col-4">
+                <label class="form-label small">@Localizer["ReducedVlLabel"]</label>
+                <select asp-for="ReducedVl" class="form-select form-select-sm">
+                    @for (int v = 1; v <= 7; v++) { <option value="@v">VL-@v</option> }
+                </select>
+                <span asp-validation-for="ReducedVl" class="text-danger small d-block"></span>
+            </div>
+            <div class="col-4">
+                <label class="form-label small">@Localizer["PassesToReduceLabel"]</label>
+                <input asp-for="PassesToReduce" type="number" class="form-control form-control-sm" min="1" />
+                <span asp-validation-for="PassesToReduce" class="text-danger small d-block"></span>
+            </div>
+            <div class="col-4">
+                <label class="form-label small">@Localizer["PassesToNormalLabel"]</label>
+                <input asp-for="PassesToNormal" type="number" class="form-control form-control-sm" min="1" />
+                <span asp-validation-for="PassesToNormal" class="text-danger small d-block"></span>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <div class="form-check form-switch">
+                <input type="checkbox" asp-for="SkipLotEnabled" class="form-check-input" data-action-change="toggleSkipLot" />
+                <label for="SkipLotEnabled" class="form-check-label">@Localizer["SkipLotLabel"]</label>
+            </div>
+        </div>
+        <div id="skipLotFields" class="row g-2 mb-3 @(Model.SkipLotEnabled ? "d-flex" : "d-none")">
+            <div class="col-6">
+                <label class="form-label small">@Localizer["SkipLotFreqLabel"]</label>
+                <input asp-for="SkipLotFrequency" type="number" class="form-control form-control-sm" min="2" />
+                <span asp-validation-for="SkipLotFrequency" class="text-danger small d-block"></span>
+            </div>
+            <div class="col-6">
+                <label class="form-label small">@Localizer["PassesToSkipLotLabel"]</label>
+                <input asp-for="PassesToSkipLot" type="number" class="form-control form-control-sm" min="1" />
+                <span asp-validation-for="PassesToSkipLot" class="text-danger small d-block"></span>
+            </div>
+        </div>
+
+        <!-- ── 閘控旗標 ────────────────────────────────────────────── -->
+        <h6 class="fw-semibold mb-2 mt-3">@Localizer["GateTitle"]</h6>
+        <div class="d-flex gap-4 mb-3">
+            <div class="form-check">
+                <input type="checkbox" asp-for="RequiresFQC" class="form-check-input" />
+                <label for="RequiresFQC" class="form-check-label">@Localizer["RequiresFQCLabel"]</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" asp-for="RequiresRQC" class="form-check-input" />
+                <label for="RequiresRQC" class="form-check-label">@Localizer["RequiresRQCLabel"]</label>
+            </div>
+        </div>
+
+        <!-- ── 其他設定 ────────────────────────────────────────────── -->
+        <div class="row g-2 mb-3">
+            <div class="col-6">
+                <label class="form-label small">@Localizer["SamplingTypeLabel"]</label>
+                <select asp-for="SamplingType" class="form-select form-select-sm">
+                    <option value="Attribute">@Localizer["SamplingAttribute"]</option>
+                    <option value="Variable">@Localizer["SamplingVariable"]</option>
+                </select>
+                <span asp-validation-for="SamplingType" class="text-danger small d-block"></span>
+            </div>
+            <div class="col-6">
+                <label class="form-label small">@Localizer["TriggerModeLabel"]</label>
+                <select asp-for="TriggerMode" class="form-select form-select-sm">
+                    <option value="Always">@Localizer["TriggerAlways"]</option>
+                    <option value="Periodic">@Localizer["TriggerPeriodic"]</option>
+                    <option value="OnDemand">@Localizer["TriggerOnDemand"]</option>
+                </select>
+                <span asp-validation-for="TriggerMode" class="text-danger small d-block"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 form-check form-switch">
+            <input type="checkbox" asp-for="IsActive" class="form-check-input" />
+            <label for="IsActive" class="form-check-label">@Localizer["IsActive"]</label>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">@Localizer["RemarksLabel"]</label>
+            <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+            <span asp-validation-for="Remarks" class="text-danger small d-block"></span>
+        </div>
+
+        <!-- ── 量測項目（Items）────────────────────────────────────── -->
+        <h6 class="fw-semibold mb-2 d-flex justify-content-between align-items-center">
+            @Localizer["ItemsTitle"]
+            <button type="button" class="btn btn-sm btn-outline-primary" data-action="addItemRow">
+                <i class="bi bi-plus me-1"></i>@Localizer["AddItem"]
+            </button>
+        </h6>
+        <div class="table-responsive mb-3">
+            <table class="table table-sm table-bordered" id="itemsTable">
+                <thead class="table-light">
+                    <tr>
+                        <th class="u-width-30px">#</th>
+                        <th class="u-col-soft">@Localizer["ItemNameHeader"]</th>
+                        <th class="u-width-55px">@Localizer["UomHeader"]</th>
+                        <th class="u-width-72px">LSL</th>
+                        <th class="u-width-72px">Target</th>
+                        <th class="u-width-72px">USL</th>
+                        <th class="u-width-95px">@Localizer["Instrument1Header"]</th>
+                        <th class="u-width-95px">@Localizer["Instrument2Header"]</th>
+                        <th class="u-width-95px">@Localizer["Instrument3Header"]</th>
+                        <th class="u-width-30px"></th>
+                    </tr>
+                </thead>
+                <tbody id="itemsBody">
+                    @for (int i = 0; i < items.Count; i++)
+                    {
+                        var it = items[i];
+                        <tr>
+                            <td class="text-center seq">@(i+1)</td>
+                            <td><input type="text" name="Items[@i].ItemName" class="form-control form-control-sm"
+                                       value="@it.ItemName" /></td>
+                            <td><input type="text" name="Items[@i].UomCode" class="form-control form-control-sm"
+                                       value="@it.UomCode" maxlength="20" /></td>
+                            <td><input type="number" name="Items[@i].LowerSpec" class="form-control form-control-sm"
+                                       value="@it.LowerSpec" step="any" /></td>
+                            <td><input type="number" name="Items[@i].TargetValue" class="form-control form-control-sm"
+                                       value="@it.TargetValue" step="any" /></td>
+                            <td><input type="number" name="Items[@i].UpperSpec" class="form-control form-control-sm"
+                                       value="@it.UpperSpec" step="any" /></td>
+                            <td>
+                                <select name="Items[@i].InstrumentCode1" class="form-select form-select-sm">
+                                    <option value="">—</option>
+                                    @foreach (var inst in instruments)
+                                    {
+                                        <option value="@inst.InstrumentCode"
+                                                selected="@(it.InstrumentCode1 == (string)inst.InstrumentCode)">@inst.InstrumentCode</option>
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <select name="Items[@i].InstrumentCode2" class="form-select form-select-sm">
+                                    <option value="">—</option>
+                                    @foreach (var inst in instruments)
+                                    {
+                                        <option value="@inst.InstrumentCode"
+                                                selected="@(it.InstrumentCode2 == (string)inst.InstrumentCode)">@inst.InstrumentCode</option>
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <select name="Items[@i].InstrumentCode3" class="form-select form-select-sm">
+                                    <option value="">—</option>
+                                    @foreach (var inst in instruments)
+                                    {
+                                        <option value="@inst.InstrumentCode"
+                                                selected="@(it.InstrumentCode3 == (string)inst.InstrumentCode)">@inst.InstrumentCode</option>
+                                    }
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <input type="hidden" name="Items[@i].IsActive" value="true" />
+                                <button type="button" class="btn btn-sm btn-link text-danger p-0"
+                                        data-action="removeRow" title="@SL["Delete"]">×</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="offcanvas-footer border-top p-3 d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-secondary" data-action="closeSidePanel">@Localizer["Close"]</button>
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    let _rowIdx = @items.Count;
+
+    const _instrumentOpts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+        instruments.Select(i => new { code = (string)i.InstrumentCode })
+    ));
+
+    document.addEventListener('DOMContentLoaded', function () {
+        if (window.initSelect2) {
+            document.querySelectorAll('.select2-enable').forEach(el => window.initSelect2(el));
+        }
+    });
+
+    // 🚨 顯示／隱藏一律 classList 切，禁用 style.display（R14）。
+    //    skipLotFields 的初始狀態是 class 上直接渲染的（d-flex / d-none，兩者都帶
+    //    !important），inline 的 display 蓋不過去——原本的 style.display='flex'
+    //    在 SkipLotEnabled=false 的單子上**永遠打不開跳批欄位**，而且不報錯。
+    //    d-flex 與 d-none 要一起切，只拿掉 d-none 的話 display 會退回 div 的 block。
+    function toggleSkipLot(e, cb) {
+        const fields = document.getElementById('skipLotFields');
+        if (!fields) return;
+        fields.classList.toggle('d-none', !cb.checked);
+        fields.classList.toggle('d-flex', cb.checked);
+    }
+
+    function buildInstOptions(selectedCode) {
+        let html = '<option value="">—</option>';
+        for (const inst of _instrumentOpts) {
+            const sel = inst.code === selectedCode ? ' selected' : '';
+            html += `<option value="${inst.code}"${sel}>${inst.code}</option>`;
+        }
+        return html;
+    }
+
+    function addItemRow() {
+        const tbody = document.getElementById('itemsBody');
+        const i = _rowIdx++;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="text-center seq">${tbody.rows.length + 1}</td>
+            <td><input type="text" name="Items[${i}].ItemName" class="form-control form-control-sm" /></td>
+            <td><input type="text" name="Items[${i}].UomCode" class="form-control form-control-sm" maxlength="20" /></td>
+            <td><input type="number" name="Items[${i}].LowerSpec" class="form-control form-control-sm" step="any" /></td>
+            <td><input type="number" name="Items[${i}].TargetValue" class="form-control form-control-sm" step="any" /></td>
+            <td><input type="number" name="Items[${i}].UpperSpec" class="form-control form-control-sm" step="any" /></td>
+            <td><select name="Items[${i}].InstrumentCode1" class="form-select form-select-sm">${buildInstOptions('')}</select></td>
+            <td><select name="Items[${i}].InstrumentCode2" class="form-select form-select-sm">${buildInstOptions('')}</select></td>
+            <td><select name="Items[${i}].InstrumentCode3" class="form-select form-select-sm">${buildInstOptions('')}</select></td>
+            <td class="text-center">
+                <input type="hidden" name="Items[${i}].IsActive" value="true" />
+                <button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeRow" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-trash"></i></button>
+            </td>`;
+        tbody.appendChild(tr);
+        window.armValidation(document.getElementById('sideForm'));
+        tr.querySelector('input[type=text]').focus();
+    }
+
+    function removeRow(e, btn) {
+        btn.closest('tr').remove();
+        reseqRows();
+    }
+
+    function reseqRows() {
+        document.querySelectorAll('#itemsBody tr').forEach((tr, i) => {
+            const seq = tr.querySelector('.seq');
+            if (seq) seq.textContent = i + 1;
+        });
+    }
+</script>

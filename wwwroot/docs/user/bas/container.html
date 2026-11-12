@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Container Master — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>容器主檔 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="container.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link active"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-box me-2 text-primary"></i><span lang="zh">容器主檔</span><span lang="en">Container Master</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/Container &nbsp;|&nbsp; 物料容器/包裝規格代碼維護</span><span lang="en">Route: /BAS/Container &nbsp;|&nbsp; Material container and packaging type codes</span></div>
+    </div>
+    <p><span lang="zh">容器主檔定義物料存放或搬運所使用的容器<strong>種類</strong>（例如棧板、週轉箱、料袋），不是一個個實體箱子。目前用在三處：<a href="../mfg/routing.html">途程</a>工序的開工／完工容器（定量轉移時以容量帶出每批數量）、<a href="../mfg/dispatch.html">報工</a>選擇容器、<a href="../mfg/production-completion.html#boxing">完工入庫的分箱入庫</a>（以容量作為每箱數量預設）。一個一個實體箱子（固定 QR 標籤、重複使用）在<a href="container-unit.html">箱子（容器個體）</a>畫面管理。</span><span lang="en">The container master defines the container <strong>types</strong> used to hold or move material (pallets, tote boxes, material bags), not individual physical boxes. It is used in three places today: the input and output containers of a <a href="../mfg/routing.html">routing</a> operation (with fixed-quantity transfer, the capacity fills in the batch quantity), choosing a container when <a href="../mfg/dispatch.html">reporting production</a>, and <a href="../mfg/production-completion.html#boxing">receiving by box in production completion</a> (the capacity is the default quantity per box). Individual physical boxes (fixed QR labels, reused) are managed on the <a href="container-unit.html">Boxes (Container Units)</a> screen.</span></p>
+    <img class="screen-shot" src="img/container.png" data-src-en="img/en/container.png" alt="容器畫面截圖" data-alt-en="Container screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">容器畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Container screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-30pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">容器代碼</span><span lang="en">Container</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">唯一識別碼，最多 30 字（例：PALLET、TRAY、BAG）</span><span lang="en">Unique code, up to 30 characters (e.g. PALLET, TRAY, BAG)</span></td></tr>
+        <tr><td><span lang="zh">容器名稱</span><span lang="en">Container Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">完整名稱（例：棧板、周轉箱、料袋）</span><span lang="en">Full name (e.g. pallet, tote box, material bag)</span></td></tr>
+        <tr><td><span lang="zh">規格</span><span lang="en">Spec</span></td><td></td><td><span lang="zh">尺寸、材質等說明</span><span lang="en">Size, material and similar details</span></td></tr>
+        <tr><td><span lang="zh">最大容量</span><span lang="en">Max Capacity</span></td><td></td><td><span lang="zh">一個容器裝幾個（以品號的庫存單位計）；途程定量轉移與完工入庫分箱以它作為預設數量</span><span lang="en">How many one container holds (in the item's stock unit); routings and receiving by box use it as the prefilled quantity</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後不會出現在報工與完工入庫的容器選單中</span><span lang="en">Once inactive, it no longer appears in the container lists for production reports and production completion</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進入「基本資料 &gt; 容器主檔」，點「新增」。</span><span lang="en">Go to "Basic Data &gt; Container Master" and click "Add".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">填入容器代碼（如 PALLET）與名稱（如 棧板）。</span><span lang="en">Enter the container code (e.g. PALLET) and name (e.g. Pallet).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點「儲存」即完成。</span><span lang="en">Click "Save" and you are done.</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">容器代碼建議使用易辨識的英文縮寫（PALLET / BOX / TRAY / BAG），方便倉庫人員在盤點與揀貨時快速辨識。</span><span lang="en">Use easily recognizable abbreviations for container codes (PALLET / BOX / TRAY / BAG) so warehouse staff can identify them quickly when counting and picking.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

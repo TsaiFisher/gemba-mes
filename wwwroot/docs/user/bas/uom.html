@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Unit of Measure — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>計量單位 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="uom.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link active"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-rulers me-2 text-primary"></i><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/Uom &nbsp;|&nbsp; 計量單位代碼與單位換算率維護</span><span lang="en">Route: /BAS/Uom &nbsp;|&nbsp; Unit of measure codes and conversion ratios</span></div>
+    </div>
+
+    <p><span lang="zh">計量單位（Unit of Measure）定義系統中所有數量欄位的量測基準，例如件（PCS）、公斤（KG）、箱（BOX）。不同單位間可設定換算率，供採購/銷售以不同單位下單時自動換算庫存數量。</span><span lang="en">Units of measure define the basis of every quantity field in the system — piece (PCS), kilogram (KG), box (BOX) and so on. Conversion ratios between units let the system convert stock quantities automatically when purchasing or selling in a different unit.</span></p>
+    <img class="screen-shot" src="img/uom.png" data-src-en="img/en/uom.png" alt="計量單位畫面截圖" data-alt-en="Unit of measure screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">計量單位畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Unit of measure screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">計量單位代碼</span><span lang="en">UOM Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">唯一識別碼（例：PCS、KG、BOX、M）</span><span lang="en">Unique code (e.g. PCS, KG, BOX, M)</span></td></tr>
+        <tr><td><span lang="zh">計量單位名稱</span><span lang="en">UOM Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">完整名稱（例：件、公斤、箱、公尺）</span><span lang="en">Full name (e.g. piece, kilogram, box, metre)</span></td></tr>
+        <tr><td><span lang="zh">小數位數</span><span lang="en">Decimal Places</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">數量欄位允許的小數位數（PCS 通常填 0，KG 可填 3）</span><span lang="en">Decimal places allowed in quantity fields (usually 0 for PCS, 3 for KG)</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td></td><td><span lang="zh">補充說明</span><span lang="en">Notes</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後不可在新產品或單據中選取</span><span lang="en">Once inactive, cannot be selected on new products or documents</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="conversion-setup"><i class="bi bi-arrow-left-right me-2 text-primary"></i><span lang="zh">換算率設定</span><span lang="en">Conversion setup</span></h2>
+    <p><span lang="zh">編輯計量單位後，切換至「換算率」分頁，可設定此單位與其他單位的換算比例。</span><span lang="en">After opening a unit of measure, switch to the "Conversion" tab to set the conversion ratio to other units.</span><br>
+    <span lang="zh">換算公式：</span><span lang="en">Conversion formula: </span><code><span lang="zh">目標單位數量 = 來源數量 × 分子 ÷ 分母</span><span lang="en">Target quantity = source quantity × numerator ÷ denominator</span></code></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">目標計量單位</span><span lang="en">Target UOM</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">換算的目標單位（例：BOX → PCS 中的 PCS）</span><span lang="en">Target unit of the conversion (the PCS in BOX → PCS)</span></td></tr>
+        <tr><td><span lang="zh">分子（Numerator）</span><span lang="en">Numerator</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">換算比例的分子（例：1 BOX = 12 PCS，分子填 12）</span><span lang="en">Numerator of the conversion ratio (1 BOX = 12 PCS, so enter 12)</span></td></tr>
+        <tr><td><span lang="zh">分母（Denominator）</span><span lang="en">Denominator</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">換算比例的分母（大部分情況填 1）</span><span lang="en">Denominator of the conversion ratio (usually 1)</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">換算率範例</span><span lang="en">Conversion examples</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th><span lang="zh">來源單位</span><span lang="en">From UOM</span></th><th><span lang="zh">目標單位</span><span lang="en">To UOM</span></th><th><span lang="zh">分子</span><span lang="en">Numerator</span></th><th><span lang="zh">分母</span><span lang="en">Denominator</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td>BOX</td><td>PCS</td><td>12</td><td>1</td><td><span lang="zh">1 箱 = 12 件</span><span lang="en">1 box = 12 pcs</span></td></tr>
+        <tr><td>KG</td><td>G</td><td>1000</td><td>1</td><td><span lang="zh">1 公斤 = 1000 克</span><span lang="en">1 kg = 1000 g</span></td></tr>
+        <tr><td>M</td><td>CM</td><td>100</td><td>1</td><td><span lang="zh">1 公尺 = 100 公分</span><span lang="en">1 metre = 100 cm</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">新增計量單位</span><span lang="en">Adding a unit of measure</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進入「基本資料 &gt; 計量單位」，點「新增」。</span><span lang="en">Go to "Basic Data &gt; Unit of Measure" and click "Add".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">填入代碼（如 PCS）、名稱（如 件）、小數位數。</span><span lang="en">Enter the code (e.g. PCS), name (e.g. Piece) and decimal places.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點「儲存」完成新增。</span><span lang="en">Click "Save" to finish.</span></div></div>
+
+    <h3><span lang="zh">設定換算率</span><span lang="en">Setting conversion ratios</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點擊計量單位列表中的代碼，開啟編輯側欄。</span><span lang="en">Click a code in the unit of measure list to open the edit panel.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">切換至「換算率」分頁，點「新增換算」。</span><span lang="en">Switch to the "Conversion" tab and click "Add Conversion".</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">選擇目標單位，填入分子與分母後點「儲存」。</span><span lang="en">Pick the target unit, enter the numerator and denominator, then click "Save".</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">採購時以「箱（BOX）」為單位，庫存以「件（PCS）」管理，需設定 BOX→PCS 換算率，系統才能自動計算進庫數量。</span><span lang="en">When you buy in boxes (BOX) but hold stock in pieces (PCS), set a BOX→PCS conversion so the system can calculate the received quantity automatically.</span>
+    </div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">小數位數設定後若修改，可能影響已有庫存數量的顯示精度，請在系統上線前確認完畢。</span><span lang="en"> Changing the decimal places later may affect the display precision of existing stock quantities, so settle this before go-live.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

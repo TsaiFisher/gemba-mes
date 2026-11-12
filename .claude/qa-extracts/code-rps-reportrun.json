@@ -1,0 +1,34 @@
+{
+  "sourcePath": "Modules/RPS/Models/ReportRun.cs",
+  "sourceHash": "933980cc47d84470b870ef34e9a1b62ec30459e0902de8db7bf1b858207e36d0",
+  "entries": [
+    {
+      "slug": "code-rps-reportrun-a964f586",
+      "lang": "zh",
+      "headingPath": "報表 › 混在一起會讓管理者在一堆權限異動裡找不到真正的故障",
+      "text": "權限失效與系統錯誤分開顯示｜當某人的權限因為人事變動而失效時，這屬於正常的流程結果，不應與系統發生故障的紀錄混在一起，這樣能幫助管理者更清楚地判斷問題的真正原因。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportrun-2dc042f6",
+      "lang": "zh",
+      "headingPath": "報表 › 報表排程的執行紀錄",
+      "text": "報表排程執行紀錄的用途與限制｜此記錄是系統必須保留的資料，主要用於追蹤稽核需求、了解排程停止的原因，以及確保接收者能確認報告所涵蓋的時間區間。此外，若一次排程的收件人同時使用中文和英文兩種語言，系統會為每種語言產生一個獨立的紀錄。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportrun-eda5bca3",
+      "lang": "zh",
+      "headingPath": "報表 › 在畫面上看起來像資料壞掉",
+      "text": "期間區間的顯示規則｜如果系統沒有設定特定的時間範圍概念，則該欄位會顯示為空值，否則會根據計算出的實際區間來顯示資料。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportrun-32feb8eb",
+      "lang": "zh",
+      "headingPath": "報表 › 產出檔的相對路徑",
+      "text": "檔案儲存路徑規則說明｜系統產出的檔案路徑是相對於一個預設的資料夾位置，這樣做是為了確保當系統部署到不同的電腦或掛載點時，所有檔案都能正確找到。",
+      "approved": true
+    }
+  ]
+}

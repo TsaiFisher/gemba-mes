@@ -1,0 +1,12 @@
+# 每日 12:30 備份（2026-10-21 使用者指定：這台 WSL 半夜通常沒開機，中午一定在用）。Persistent=true：WSL 在那個時間沒開著時（常見），下次開機後補跑一次——
+# 沒有這一行的話，關機的那天就整天沒有備份，而且不會有任何訊息（同 project-daily-jobs-never-run-catchup 那類失效）。
+[Unit]
+Description=SmartFactory MES 每日資料庫備份
+
+[Timer]
+OnCalendar=*-*-* 12:30:00
+Persistent=true
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target

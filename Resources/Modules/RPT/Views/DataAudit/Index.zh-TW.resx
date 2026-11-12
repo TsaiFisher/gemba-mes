@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>資料稽核診斷</value></data>
+  <data name="RunNow" xml:space="preserve"><value>立即執行稽核</value></data>
+  <data name="MethodHint" xml:space="preserve"><value>每日 02:00 自動執行全部資料一致性檢核（採購超收、GR/IR、委外平衡、傳票平衡、庫存滾動、後沖消耗、累計欄位漂移、ERP 拋轉…），此處呈現最近一次結果與趨勢；相同檢核於月結關帳時擋關。</value></data>
+  <data name="NoRunsYet" xml:space="preserve"><value>尚無稽核執行紀錄；每日 02:00 自動執行，或按「立即執行稽核」。</value></data>
+  <data name="LatestRunAt" xml:space="preserve"><value>最近執行時間</value></data>
+  <data name="TriggerManual" xml:space="preserve"><value>手動觸發</value></data>
+  <data name="TriggerScheduled" xml:space="preserve"><value>每日排程</value></data>
+  <data name="FailureCount" xml:space="preserve"><value>異常筆數</value></data>
+  <data name="AuditTypeCount" xml:space="preserve"><value>異常類型數</value></data>
+  <data name="Duration" xml:space="preserve"><value>執行耗時</value></data>
+  <data name="TrendTitle" xml:space="preserve"><value>近期異常筆數趨勢</value></data>
+  <data name="Findings" xml:space="preserve"><value>異常明細</value></data>
+  <data name="Severity" xml:space="preserve"><value>嚴重度</value></data>
+  <data name="SeverityBlocking" xml:space="preserve"><value>擋關帳</value></data>
+  <data name="SeverityAdvisory" xml:space="preserve"><value>僅提示</value></data>
+  <data name="AuditType" xml:space="preserve"><value>稽核類型</value></data>
+  <data name="AllTypes" xml:space="preserve"><value>全部類型</value></data>
+  <data name="Apply" xml:space="preserve"><value>套用</value></data>
+  <data name="NoFindings" xml:space="preserve"><value>本次稽核無異常</value></data>
+  <data name="DocId" xml:space="preserve"><value>單據 / 聚合鍵</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="Plant" xml:space="preserve"><value>廠別</value></data>
+  <data name="Difference" xml:space="preserve"><value>差額</value></data>
+  <data name="Description" xml:space="preserve"><value>說明</value></data>
+  <data name="AuditType_PO_OVER_RECEIPT" xml:space="preserve"><value>採購超收</value></data>
+  <data name="AuditType_GRIR_OVER_INVOICE" xml:space="preserve"><value>發票超過應認列量</value></data>
+  <data name="AuditType_GRIR_AGING" xml:space="preserve"><value>GR/IR 暫估掛帳過久</value></data>
+  <data name="AuditType_OUTSOURCE_NEG_BALANCE" xml:space="preserve"><value>委外在外餘量為負</value></data>
+  <data name="AuditType_JOURNAL_UNBALANCED" xml:space="preserve"><value>傳票借貸不平</value></data>
+  <data name="AuditType_JOURNAL_DUPLICATE" xml:space="preserve"><value>同來源重複傳票</value></data>
+  <data name="AuditType_INV_ROLLFORWARD" xml:space="preserve"><value>庫存異動與帳面不符</value></data>
+  <data name="AuditType_SO_OVER_SHIPMENT" xml:space="preserve"><value>訂單超出貨</value></data>
+  <data name="AuditType_GS_NO_AR_INVOICE" xml:space="preserve"><value>出貨未開立應收發票</value></data>
+  <data name="AuditType_BACKFLUSH_MISMATCH" xml:space="preserve"><value>後沖消耗與標準不符</value></data>
+  <data name="AuditType_WO_MATERIAL_NOT_ISSUED" xml:space="preserve"><value>工單完工但未發料</value></data>
+  <data name="AuditType_SALES_RETURN_COST_DRIFT" xml:space="preserve"><value>銷退成本與原出貨不符</value></data>
+  <data name="AuditType_RETURN_SUBLEDGER_UNREVERSED" xml:space="preserve"><value>退貨子帳未回沖</value></data>
+  <data name="AuditType_PO_RECEIVED_DRIFT" xml:space="preserve"><value>採購累計進貨量漂移</value></data>
+  <data name="AuditType_SO_SHIPPED_DRIFT" xml:space="preserve"><value>訂單累計出貨量漂移</value></data>
+  <data name="AuditType_WIP_COST_NOT_FINAL" xml:space="preserve"><value>完工成本仍為初步</value></data>
+  <data name="AuditType_WIP_SNAPSHOT_MISSING" xml:space="preserve"><value>在製工單缺 WIP 快照</value></data>
+  <data name="AuditType_WIP_SNAPSHOT_STALE" xml:space="preserve"><value>WIP 快照已過時</value></data>
+  <data name="AuditType_WIP_SNAPSHOT_NEGATIVE" xml:space="preserve"><value>WIP 快照含負值</value></data>
+  <data name="AuditType_WIP_VOID_LEAKAGE" xml:space="preserve"><value>期初在製作廢無出口</value></data>
+  <data name="AuditType_WIP_IDENTITY_DRIFT" xml:space="preserve"><value>在製恆等式不成立</value></data>
+  <data name="AuditType_ERP_SYNC_LAG" xml:space="preserve"><value>ERP 拋轉逾時未完成</value></data>
+  <data name="AuditType_WO_COST_JOURNAL_DRIFT" xml:space="preserve"><value>工單成本與子帳不符</value></data>
+  <data name="AuditType_ORPHAN_STOCK_MOVEMENT" xml:space="preserve"><value>庫存異動來源單已消失</value></data>
+  <data name="AuditType_ORPHAN_JOURNAL_ENTRY" xml:space="preserve"><value>傳票來源單已消失</value></data>
+  <data name="AuditType_ORPHAN_INVOICE" xml:space="preserve"><value>發票來源單已消失</value></data>
+  <data name="RepairTitle" xml:space="preserve"><value>可自動修正的累計欄位</value></data>
+  <data name="RepairHint" xml:space="preserve"><value>這些是單據上的進度欄位，應為值完全由來源單據決定（採購已收＝未作廢進貨單加總；訂單已出＝未作廢出貨單加總），修正不會動到任何帳。勾選後按「修正勾選項目」；送出時系統會重新計算一次，每筆的前後值與修正者都記在稽核紀錄。傳票、庫存與成本的差異不在這裡，請依下方明細追查原因。</value></data>
+  <data name="RepairApply" xml:space="preserve"><value>修正勾選項目</value></data>
+  <data name="RepairConfirm" xml:space="preserve"><value>確定依來源單據重新計算並寫回勾選的欄位？每筆修正都會留下稽核紀錄。</value></data>
+  <data name="RepairSelectAll" xml:space="preserve"><value>全選</value></data>
+  <data name="RepairType" xml:space="preserve"><value>欄位</value></data>
+  <data name="RepairCurrent" xml:space="preserve"><value>現值</value></data>
+  <data name="RepairExpected" xml:space="preserve"><value>應為</value></data>
+  <data name="RepairType_PO_RECEIVED_QTY" xml:space="preserve"><value>採購明細已收數量</value></data>
+  <data name="RepairType_SO_SHIPPED_QTY" xml:space="preserve"><value>訂單明細已出數量</value></data>
+  <data name="AuditType_INV_GL_SUBLEDGER" xml:space="preserve"><value>總帳存貨與明細帳不符</value></data>
+  <data name="AuditType_INV_GL_DOC_DIFF" xml:space="preserve"><value>單據總帳與異動價值不符</value></data>
+  <data name="AuditType_INV_GL_WIP_NEGATIVE" xml:space="preserve"><value>工單在製為負</value></data>
+  <data name="AuditType_INV_GL_WIP_CLOSED" xml:space="preserve"><value>結案工單仍留在製</value></data>
+</root>

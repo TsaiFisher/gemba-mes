@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Order Management (ORD) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>訂單管理（ORD）— SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">ORD 畫面</span><span lang="en">ORD Screens</span></div>
+    <a href="sales-order.html" class="nav-link"><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></a>
+    <a href="goods-shipment.html" class="nav-link"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></a>
+    <a href="sales-return.html" class="nav-link"><span lang="zh">銷退單</span><span lang="en">Sales Return</span></a>
+    <a href="internal-order.html" class="nav-link"><span lang="zh">內部訂單</span><span lang="en">Internal Order</span></a>
+    <a href="order-overdue.html" class="nav-link"><span lang="zh">訂單逾期跟催</span><span lang="en">Overdue Sales Orders</span></a>
+    <a href="sales-ranking.html" class="nav-link"><span lang="zh">銷售排名</span><span lang="en">Sales Ranking</span></a>
+    <a href="sales-trend.html" class="nav-link"><span lang="zh">銷售趨勢</span><span lang="en">Sales Trend</span></a>
+    <a href="delivery-rate.html" class="nav-link"><span lang="zh">交期達成率</span><span lang="en">Delivery Rate</span></a>
+    <a href="return-rate.html" class="nav-link"><span lang="zh">退貨率分析</span><span lang="en">Return Rate</span></a>
+    <a href="sales-forecast.html" class="nav-link"><span lang="zh">銷售預測</span><span lang="en">Sales Forecast</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-cart-check me-2 text-primary"></i><span lang="zh">訂單管理（ORD）</span><span lang="en">Order Management (ORD)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">銷售訂單 → 出貨 → 銷退的訂單履行流程與銷售分析</span><span lang="en">The order fulfilment flow — sales order → shipment → sales return — and the sales analytics around it</span></div>
+    </div>
+    <p><span lang="zh">ORD（Order）模組管理客戶訂單履行：銷售訂單承接客戶需求並驅動 MRP 生產，出貨單揀貨出庫並自動產生應收發票（FIN），品質或商務退回以銷退單處理；內部訂單支援廠內/關係企業需求。另提供逾期跟催、銷售排名/趨勢、交期達成率、退貨率與銷售預測分析。</span><span lang="en">The ORD (Order) module manages fulfilment of customer orders: sales orders capture customer demand and drive MRP production, shipments pick and issue stock and create the AR invoice (FIN) automatically, and quality or commercial returns are handled with a sales return; internal orders cover in-house and affiliate demand. It also provides overdue follow-up, sales ranking and trend, delivery rate, return rate and sales forecast analysis.</span></p>
+
+    <h2 id="core-flow"><i class="bi bi-signpost-2 me-2 text-primary"></i><span lang="zh">核心流程</span><span lang="en">Core flow</span></h2>
+    <div class="tip-box">
+      <strong><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></strong><span lang="zh">（→ MRP → 生產）→</span><span lang="en"> (→ MRP → production) →</span> <strong><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></strong><span lang="zh">（揀貨出庫）→ 應收發票（FIN）→ 收款</span><span lang="en"> (picking and issue) → AR invoice (FIN) → collection</span><br>
+      <span lang="zh">退回：</span><span lang="en">Return: </span><strong><span lang="zh">銷退單</span><span lang="en">Sales Return</span></strong> <span lang="zh">→ 退貨入庫 → 沖減應收</span><span lang="en">→ return into stock → reduce AR</span>
+    </div>
+    <h2 id="flow"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></h2>
+    <p class="small text-muted mb-2"><span lang="zh">依作業先後順序排列，點擊方塊可開啟該畫面的操作說明。</span><span lang="en">Arranged in the order the work is done; click a box to open the instructions for that screen. </span><strong><span lang="zh">虛線外框</span><span lang="en">A dashed outline</span></strong><span lang="zh">為其他模組的作業（以顏色區分模組）。</span><span lang="en"> marks a step in another module (colour-coded by module).</span></p>
+    <div class="flow">
+      <div class="flow-legend">
+        <span class="flow-legend-item m-ord"><i class="flow-dot"></i><span lang="zh">ORD 訂單（本模組）</span><span lang="en">ORD Orders (this module)</span></span>
+        <span class="flow-legend-item m-mfg"><i class="flow-dot"></i><span lang="zh">MFG 製造</span><span lang="en">MFG Manufacturing</span></span>
+        <span class="flow-legend-item m-pur"><i class="flow-dot"></i><span lang="zh">PUR 採購</span><span lang="en">PUR Purchasing</span></span>
+        <span class="flow-legend-item m-inv"><i class="flow-dot"></i><span lang="zh">INV 庫存</span><span lang="en">INV Inventory</span></span>
+        <span class="flow-legend-item m-fin"><i class="flow-dot"></i><span lang="zh">FIN 財務</span><span lang="en">FIN Finance</span></span>
+        <span class="flow-legend-item"><i class="flow-dot flow-dot-ext"></i><span lang="zh">虛線＝其他模組作業</span><span lang="en">Dashed = a step in another module</span></span>
+      </div>
+
+      <div class="flow-row" id="flow-ord-order-to-stock">
+        <div class="flow-row-label"><span lang="zh">接單備貨</span><span lang="en">Order to stock</span></div>
+        <div class="flow-steps">
+          <span class="flow-node m-ext evt"><span class="flow-mod"><span lang="zh">外部</span><span lang="en">External</span></span><span class="flow-name"><span lang="zh">客戶需求</span><span lang="en">Customer demand</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-ord" href="sales-order.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg ext" href="../mfg/mrp-run.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg ext" href="../mfg/work-order.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">工單生產</span><span lang="en">Work order production</span></span></a>
+          <span class="flow-plus">／</span>
+          <a class="flow-node m-pur ext" href="../pur/purchase-order.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">採購進貨</span><span lang="en">PO Receipts</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/inventory-balance.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">成品庫存</span><span lang="en">Finished goods stock</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-ord-shipment-and-collection">
+        <div class="flow-row-label"><span lang="zh">出貨收款</span><span lang="en">Shipment and collection</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-ord" href="goods-shipment.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">倉庫作業揀貨出庫</span><span lang="en">Warehouse picking and issue</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin ext" href="../fin/ar-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應收發票</span><span lang="en">AR invoice</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin ext" href="../fin/ar-receipt.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">收款作業（核銷）</span><span lang="en">Receipts (allocation)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin ext" href="../fin/ar-aging.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應收帳齡</span><span lang="en">AR aging</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-ord-return">
+        <div class="flow-row-label"><span lang="zh">退貨</span><span lang="en">Return</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-ord" href="sales-return.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">銷退單</span><span lang="en">Sales Return</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">退貨入庫</span><span lang="en">Return into stock</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin ext" href="../fin/ar-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應收沖減</span><span lang="en">AR offset</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-ord" href="return-rate.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">退貨率分析</span><span lang="en">Return Rate</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-ord-internal-demand">
+        <div class="flow-row-label"><span lang="zh">內部需求</span><span lang="en">Internal demand</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-ord" href="internal-order.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">內部訂單</span><span lang="en">Internal Order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg ext" href="../mfg/mrp-run.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></span></a>
+          <span class="flow-plus">／</span>
+          <a class="flow-node m-inv ext" href="../inv/cross-plant-transfer.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">跨廠調撥</span><span lang="en">Cross-plant transfer</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-ord-preparation">
+        <div class="flow-row-label"><span lang="zh">事前準備</span><span lang="en">Preparation</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-bas ext" href="../bas/company.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">客戶主檔</span><span lang="en">Customer master</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-bas ext" href="../bas/product.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-ord" href="sales-forecast.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">銷售預測（供 MRP 需求）</span><span lang="en">Sales forecast (as MRP demand)</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-ord-tracking-and-analysis">
+        <div class="flow-row-label"><span lang="zh">追蹤分析</span><span lang="en">Tracking and analysis</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-ord" href="order-overdue.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">訂單逾期跟催</span><span lang="en">Overdue Sales Orders</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-ord" href="delivery-rate.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">交期達成率</span><span lang="en">Delivery Rate</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-ord" href="sales-ranking.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">銷售排名</span><span lang="en">Sales Ranking</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-ord" href="sales-trend.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">銷售趨勢</span><span lang="en">Sales Trend</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt ext" href="../rpt/margin-analysis.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">毛利分析</span><span lang="en">Gross Margin Analysis</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-foot">
+        <i class="bi bi-info-circle me-1"></i><span lang="zh">出貨以「儲位可用量」（在庫 − 預留）檢核，不足時擋單；出貨確認後自動產生應收發票，作廢時一併回沖分錄。啟用「庫存簡化模式」時，出貨確認即直接出庫，不經倉庫作業揀貨。</span><span lang="en">Shipments are checked against the available quantity of the location (on hand − reserved) and blocked when it is insufficient; confirming a shipment creates the AR invoice automatically, and voiding it reverses the journal entry as well. With "Simplified Inventory Mode" enabled, confirming a shipment issues the stock directly, without warehouse picking.</span>
+      </div>
+    </div>
+
+    <h2 id="screen-list"><i class="bi bi-grid me-2 text-primary"></i><span lang="zh">畫面清單</span><span lang="en">Screen list</span></h2>
+    <div class="row g-3">
+      <div class="col-md-6"><a href="sales-order.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-file-earmark-text me-1 text-primary"></i><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></h6>
+        <div class="text-muted small"><span lang="zh">客戶訂單建立與需求驅動</span><span lang="en">Customer order entry and demand generation</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="goods-shipment.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-truck me-1 text-primary"></i><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></h6>
+        <div class="text-muted small"><span lang="zh">銷售出貨與應收發票產生</span><span lang="en">Sales shipment and AR invoice creation</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="sales-return.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-arrow-return-left me-1 text-primary"></i><span lang="zh">銷退單</span><span lang="en">Sales Return</span></h6>
+        <div class="text-muted small"><span lang="zh">銷售退回入庫與應收沖減</span><span lang="en">Sales returns into stock and AR reduction</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="internal-order.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box-seam me-1 text-primary"></i><span lang="zh">內部訂單</span><span lang="en">Internal Order</span></h6>
+        <div class="text-muted small"><span lang="zh">廠內/關係企業內部需求單</span><span lang="en">Internal demand within the plant or between affiliates</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="order-overdue.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-exclamation-triangle me-1 text-primary"></i><span lang="zh">訂單逾期跟催</span><span lang="en">Overdue Sales Orders</span></h6>
+        <div class="text-muted small"><span lang="zh">逾交期未出貨訂單行列表</span><span lang="en">Order lines past their delivery date and not yet shipped</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="sales-ranking.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-trophy me-1 text-primary"></i><span lang="zh">銷售排名</span><span lang="en">Sales Ranking</span></h6>
+        <div class="text-muted small"><span lang="zh">客戶/品號銷售金額排名</span><span lang="en">Sales amount ranking by customer and product</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="sales-trend.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-graph-up me-1 text-primary"></i><span lang="zh">銷售趨勢</span><span lang="en">Sales Trend</span></h6>
+        <div class="text-muted small"><span lang="zh">銷售金額期間趨勢</span><span lang="en">Sales amount trend over time</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="delivery-rate.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-truck-check me-1 text-primary"></i><span lang="zh">交期達成率</span><span lang="en">Delivery Rate</span></h6>
+        <div class="text-muted small"><span lang="zh">訂單準時出貨率統計</span><span lang="en">On-time shipment statistics per order</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="return-rate.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-arrow-return-left me-1 text-primary"></i><span lang="zh">退貨率分析</span><span lang="en">Return Rate</span></h6>
+        <div class="text-muted small"><span lang="zh">銷退占出貨比率分析</span><span lang="en">Sales returns as a percentage of shipments</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="sales-forecast.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-graph-up-arrow me-1 text-primary"></i><span lang="zh">銷售預測</span><span lang="en">Sales Forecast</span></h6>
+        <div class="text-muted small"><span lang="zh">依歷史出貨的銷售預測</span><span lang="en">Sales forecast from historical shipments</span></div></div></div></a></div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

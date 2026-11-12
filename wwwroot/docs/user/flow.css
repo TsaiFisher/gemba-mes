@@ -1,0 +1,61 @@
+/* 作業流程圖共用樣式（使用手冊）
+   - CSP style-src 'self'：不得使用 inline style / <style>，一律走此外部檔。
+   - 模組色由 .m-{module} 設定 CSS 變數 --fc（主色）/ --fbg（節點底色），
+     節點、圖例色塊、模組標籤共用同一組變數，新增模組只需新增一組 .m-xxx。 */
+
+/* ── 模組色票 ── */
+.m-bas { --fc: #6f42c1; --fbg: #f3eefc; }  /* 基本資料 */
+.m-mfg { --fc: #d9480f; --fbg: #fdece2; }  /* 製造執行 */
+.m-pur { --fc: #0d6efd; --fbg: #e7f0ff; }  /* 採購 */
+.m-ord { --fc: #0b7285; --fbg: #e2f3f6; }  /* 訂單 */
+.m-qcr { --fc: #c92a2a; --fbg: #fdeaea; }  /* 品質 */
+.m-inv { --fc: #2b8a3e; --fbg: #e8f6ec; }  /* 庫存 */
+.m-fin { --fc: #a61e4d; --fbg: #fceaf1; }  /* 財務 */
+.m-act { --fc: #495057; --fbg: #edeff1; }  /* 結帳/IFRS */
+.m-osp { --fc: #7d5a3c; --fbg: #f4ece5; }  /* 委外管理 */
+.m-rpt { --fc: #856404; --fbg: #fbf3dc; }  /* 管理報表 */
+.m-sys { --fc: #5f3dc4; --fbg: #eeeafb; }  /* 系統管理 */
+.m-ext { --fc: #868e96; --fbg: #f4f5f6; }  /* 系統外事件（廠商交貨、客戶需求等） */
+
+/* ── 容器 ── */
+.flow { border: 1px solid #dee2e6; border-radius: 8px; padding: .95rem 1.05rem .8rem; margin: .9rem 0 1.2rem; background: #fcfdfe; overflow-x: auto; }
+.flow-title { font-size: .8rem; font-weight: 700; color: #495057; margin-bottom: .55rem; }
+
+/* ── 圖例 ── */
+.flow-legend { display: flex; flex-wrap: wrap; gap: .3rem .9rem; font-size: .74rem; color: #495057; margin-bottom: .8rem; padding-bottom: .6rem; border-bottom: 1px dashed #dee2e6; }
+.flow-legend-item { display: inline-flex; align-items: center; gap: .3rem; }
+.flow-dot { width: .72rem; height: .72rem; border-radius: 2px; background: var(--fc); display: inline-block; }
+.flow-dot-ext { background: #fff; border: 1px dashed #868e96; }
+
+/* ── 流程列（可多列表示分支/子流程） ── */
+.flow-row { display: flex; align-items: flex-start; gap: .55rem; margin-bottom: .55rem; }
+.flow-row:last-child { margin-bottom: 0; }
+.flow-row-label { flex: 0 0 4.6rem; font-size: .74rem; color: #6c757d; text-align: right; padding-top: .5rem; line-height: 1.2; }
+.flow-steps { display: flex; flex-wrap: wrap; align-items: center; gap: .28rem; flex: 1 1 auto; min-width: 0; }
+
+/* 替代路徑（例如簡化模式）：與主流程並存的另一條走法 */
+.flow-row.alt { background: #fffbf0; border: 1px dashed #f0c36d; border-radius: 6px; padding: .4rem .5rem; margin-left: -.5rem; }
+.flow-row.alt .flow-row-label { color: #8a6d1d; font-weight: 600; }
+
+/* ── 節點 ── */
+.flow-node { display: inline-flex; flex-direction: column; gap: .05rem; min-width: 5.6rem; max-width: 12rem; padding: .34rem .55rem; border: 1px solid #dee2e6; border-left: 4px solid var(--fc); border-radius: 6px; background: var(--fbg); color: #212529; text-decoration: none; font-size: .81rem; line-height: 1.25; }
+a.flow-node:hover { color: #000; box-shadow: 0 .15rem .5rem rgba(0, 0, 0, .13); }
+.flow-node .flow-mod { font-size: .63rem; font-weight: 700; letter-spacing: .04em; color: var(--fc); }
+.flow-node .flow-name { font-weight: 600; }
+/* 其他模組的作業：虛線外框（顏色以外的第二重區別，供色覺障礙辨識） */
+.flow-node.ext { border-top-style: dashed; border-right-style: dashed; border-bottom-style: dashed; background: #fff; }
+/* 系統外事件（非本系統畫面） */
+.flow-node.evt { font-style: italic; color: #495057; }
+
+/* ── 箭頭與條件標籤 ── */
+.flow-arrow { color: #adb5bd; font-size: .95rem; flex: 0 0 auto; }
+.flow-cond { font-size: .7rem; color: #6c757d; background: #fff; border: 1px solid #e9ecef; border-radius: 10px; padding: 0 .4rem; flex: 0 0 auto; }
+.flow-plus { color: #adb5bd; font-size: .8rem; flex: 0 0 auto; }
+
+/* ── 說明 ── */
+.flow-foot { font-size: .76rem; color: #6c757d; margin-top: .6rem; padding-top: .55rem; border-top: 1px dashed #dee2e6; }
+
+@media (max-width: 640px) {
+  .flow-row { flex-direction: column; gap: .25rem; }
+  .flow-row-label { text-align: left; padding-top: 0; flex: none; font-weight: 600; }
+}

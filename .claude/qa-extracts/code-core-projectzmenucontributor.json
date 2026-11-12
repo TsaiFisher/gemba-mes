@@ -1,0 +1,94 @@
+{
+  "sourcePath": "Services/ProjectZMenuContributor.cs",
+  "sourceHash": "c7de97c586adcdf275cda45e7fc2b4f4f4db3627b9c636708986c0084aa519bf",
+  "entries": [
+    {
+      "slug": "code-core-projectzmenucontributor-7ce05de4",
+      "lang": "zh",
+      "headingPath": "系統共用 › 2026-07-28 補遷",
+      "text": "委外進度追蹤資料來源與顯示範圍｜此功能所使用的委外進度追蹤資訊，是從委外採購訂單和委外收貨的紀錄中取得，其資料來源與一般採購流程（如採購單或收貨）的稽催路徑不同。",
+      "approved": false,
+      "sourceSectionHash": "0c43a60f2bdf87e5c35e631bd2b3087f7d2ea6c8261e29026897f4f9afde4717"
+    },
+    {
+      "slug": "code-core-projectzmenucontributor-1ef48cce",
+      "lang": "zh",
+      "headingPath": "系統共用 › 委外價格分析",
+      "text": "委外價格分析功能入口說明｜此功能在系統選單中提供一個專門的入口，用於進行委外價格的分析。",
+      "approved": true,
+      "sourceSectionHash": "ed82c6c6ffec7bf79c3a0e8083c1a989ad7f90823c24faed828484b062eaefdf"
+    },
+    {
+      "slug": "code-core-projectzmenucontributor-5bbe291f",
+      "lang": "zh",
+      "headingPath": "系統共用 › 後果是側邊欄與權限矩陣各出現兩筆，而權限矩陣的兩列會共用同一個",
+      "text": "側邊欄與權限矩陣的顯示規則｜系統在展示選單時，如果某個項目被重複登錄了兩次，那麼這個項目會在側邊欄和權限矩陣中各出現兩筆記錄。此外，這兩個位置的權限設定會共用同一個值，修改其中一處會影響到另一處。",
+      "approved": true,
+      "sourceSectionHash": "73241dcac2ed7bf6da79949705624d75668804a6fbe903429ddc68eec23b7c58"
+    },
+    {
+      "slug": "code-core-projectzmenucontributor-85d0fba1",
+      "lang": "zh",
+      "headingPath": "系統共用 › 主檔排在交易單據之前",
+      "text": "科目表位置變動與權限影響｜會計科目的顯示順序已調整，現在它會排在所有交易單據的資料之前。",
+      "approved": true,
+      "sourceSectionHash": "81a9f90af08c6dcd8686690e8afe632d2a97e5b7a1fdfdd149ebdf296db16733"
+    },
+    {
+      "slug": "code-core-projectzmenucontributor-012f6918",
+      "lang": "zh",
+      "headingPath": "系統共用 › 手冊 Q&A 助理的擷取物一覽",
+      "text": "權限控制與介面顯示規則｜此功能模組的啟用狀態決定了使用者是否能在選單中看到相關選項。如果該功能未被啟用，則系統不會在選單中顯示任何相關項目。",
+      "approved": true,
+      "sourceSectionHash": "1a7d4b3b9798b077a4fd5a2dd39b66568b29147a8fa6f9fc4fbfa8fbcd64dc72"
+    },
+    {
+      "slug": "code-core-projectzmenucontributor-4f334b9b",
+      "lang": "zh",
+      "headingPath": "系統共用 › 群組決定權限矩陣，而助理是給人用的、擷取物一覽是給維護者看的，",
+      "text": "權限群組區分用途的對象｜系統中，「群組決定權限矩陣」是設計給一般使用者使用的，而「擷取物一覽」則是專門提供給維護人員查看的，兩者的使用對象和目的不同，因此不能將它們放在同一個權限設定的地方。",
+      "approved": true,
+      "sourceSectionHash": "2f2a28189e0f9fffa7f70a198bf6aa934bae788b92a7eb8617828880f6118138"
+    },
+    {
+      "slug": "code-core-projectzmenucontributor-4c5e184e",
+      "lang": "zh",
+      "headingPath": "系統共用 › 開關關閉時**連選單都不出現**——",
+      "text": "功能啟用狀態決定選單顯示與存取權限｜如果某個功能被設定為關閉，使用者將無法看到相關的選單選項，且直接透過網址進入該功能的頁面也會被系統阻擋。",
+      "approved": true,
+      "sourceSectionHash": "0aeddc34f7a2249d1938fb12bd95787f6b2e2f069ff3bed94620337cb12b4f3d"
+    },
+    {
+      "slug": "code-core-projectzmenucontributor-e5d04bee",
+      "lang": "zh",
+      "headingPath": "系統共用 › 收件匣與執行紀錄是唯讀畫面",
+      "text": "系統功能限制說明｜收件匣與執行紀錄的資料是無法修改的，只能查看。",
+      "approved": true,
+      "sourceSectionHash": "8d12fb0c85df00b181ce23c2f4353f8977a04a9c5d0899937684b897b73bbad6"
+    },
+    {
+      "slug": "code-core-projectzmenucontributor-e5a88dbd",
+      "lang": "zh",
+      "headingPath": "系統共用 › ── 報表／查詢畫面的動詞宣告─────────────────",
+      "text": "權限判斷依據與報表功能限制｜報表只能被檢視或列印，無法執行新增、修改或刪除等動作。此外，若系統需要根據特定條件篩選資料的範圍，則必須同時設定「可讀取」的權限，否則相關的功能按鈕將不會顯示。",
+      "approved": true,
+      "sourceSectionHash": "e319f3ac7aa158e2fb067d98d22ffc8ec48ece23b5c39f7eb3722e04886778c9"
+    },
+    {
+      "slug": "code-core-projectzmenucontributor-ae23133b",
+      "lang": "zh",
+      "headingPath": "系統共用 › 2026-09-21 起這支不只是報表：手動傳票畫面掛在它底下",
+      "text": "新增功能後權限與儲存規則｜此介面現在可以透過「CanCreate」的權限來控制是否能建立新的傳票紀錄。如果沒有宣告這個權限，則無法將該權限授給使用者，且下次儲存時系統會自動將其設定為不允許建立。",
+      "approved": true,
+      "sourceSectionHash": "52aed8875ec22b7355de075556d68e3b99fd84516492302ebc6a566ca8aec717"
+    },
+    {
+      "slug": "code-core-projectzmenucontributor-6092b315",
+      "lang": "zh",
+      "headingPath": "系統共用 › 把  套到選單樹上",
+      "text": "選單功能預設行為說明｜如果系統找不到對應的按鈕選項，則會維持所有五個動詞都可用的預設狀態。",
+      "approved": true,
+      "sourceSectionHash": "9a6c208dd62e0f17d03da6a0fcca7e8fd1b8b771bedc978da9168aea5c5e0371"
+    }
+  ]
+}

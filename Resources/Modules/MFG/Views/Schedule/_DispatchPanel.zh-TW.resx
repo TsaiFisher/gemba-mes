@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="xml:space" use="optional" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter</value></resheader>
+  <data name="PanelDispatchId" xml:space="preserve"><value>派工單號</value></data>
+  <data name="PanelWorkOrder" xml:space="preserve"><value>工單</value></data>
+  <data name="PanelBatch" xml:space="preserve"><value>生產批</value></data>
+  <data name="PanelOperation" xml:space="preserve"><value>工序</value></data>
+  <data name="PanelStatus" xml:space="preserve"><value>狀態</value></data>
+  <data name="PanelMachine" xml:space="preserve"><value>機台</value></data>
+  <data name="PanelProgress" xml:space="preserve"><value>完成量</value></data>
+  <data name="PanelScheduled" xml:space="preserve"><value>排程時段</value></data>
+  <data name="BadgeOutsource" xml:space="preserve"><value>委外</value></data>
+  <data name="BadgeMaterialRisk" xml:space="preserve"><value>待料</value></data>
+  <data name="PanelNoAdjust" xml:space="preserve"><value>此派工目前狀態無法調整（僅 Pending/Scheduled 可操作）。</value></data>
+  <data name="PanelPrioritySection" xml:space="preserve"><value>優先序（插單）</value></data>
+  <data name="BtnUpdatePriority" xml:space="preserve"><value>更新</value></data>
+  <data name="PanelPriorityHint" xml:space="preserve"><value>數字越小越優先；更新後請重新執行排程使其生效。</value></data>
+  <data name="PanelReassignSection" xml:space="preserve"><value>換機台</value></data>
+  <data name="BtnReassign" xml:space="preserve"><value>確認換台</value></data>
+  <data name="PanelReassignHint" xml:space="preserve"><value>換台後時段釋放，需重新排程。</value></data>
+  <data name="PanelSplitSection" xml:space="preserve"><value>拆分派工（多機生產）</value></data>
+  <data name="SplitQtyPlaceholder" xml:space="preserve"><value>數量</value></data>
+  <data name="SplitMachinePlaceholder" xml:space="preserve"><value>機台</value></data>
+  <data name="BtnAddSplitRow" xml:space="preserve"><value>加一份</value></data>
+  <data name="BtnSplit" xml:space="preserve"><value>確認拆分</value></data>
+  <data name="PanelSplitHint" xml:space="preserve"><value>各份數量加總須等於原派工數量 {0}，各份可分配不同機台。</value></data>
+  <data name="PanelOutsourceSection" xml:space="preserve"><value>轉委外</value></data>
+  <data name="PanelOutsourceHint" xml:space="preserve"><value>將此工序改為委外生產，機台時段釋放。轉換後至採購模組建立委外採購單。</value></data>
+  <data name="BtnToOutsource" xml:space="preserve"><value>轉為委外</value></data>
+  <data name="StatusPending" xml:space="preserve"><value>待排程</value></data>
+  <data name="StatusScheduled" xml:space="preserve"><value>已排程</value></data>
+  <data name="StatusSetupInProgress" xml:space="preserve"><value>備料中</value></data>
+  <data name="StatusReadyToStart" xml:space="preserve"><value>可開工</value></data>
+  <data name="StatusInProgress" xml:space="preserve"><value>生產中</value></data>
+  <data name="StatusClosed" xml:space="preserve"><value>已完工</value></data>
+  <data name="StatusOnHold" xml:space="preserve"><value>暫停</value></data>
+  <data name="StatusPendingFPI" xml:space="preserve"><value>待首件檢驗</value></data>
+  <data name="StatusCancelled" xml:space="preserve"><value>已取消</value></data>
+  <data name="PanelOnHoldHint" xml:space="preserve"><value>此派工暫停中（不參與重排）。恢復、換機續做或剩餘量結案請至「派工作業」按「暫停處理」。</value></data>
+</root>

@@ -1,0 +1,150 @@
+{
+  "sourcePath": "Data/ApplicationDbContextExtensions.cs",
+  "sourceHash": "e3c056e577ea564cc83beed3cea74416315d62e776864bd8387471d3657e1c3d",
+  "entries": [
+    {
+      "slug": "code-core-applicationdbcontextextensions-8e3aa5d2",
+      "lang": "zh",
+      "headingPath": "系統共用 › 廠別參數覆寫：一鍵一廠一列",
+      "text": "廠別參數只能針對特定廠區設定｜系統設計上，無法讓一個設定畫面同時編輯所有廠區的參數。因此，當套用全域過濾時，使用者將無法讀取到其他廠區所設定的覆寫值。",
+      "approved": true,
+      "sourceSectionHash": "1b9480f38c2c8f41f0592210bad88aa2b2ceeddd8afa7850753301b1a0acf9d4"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-3af29f49",
+      "lang": "zh",
+      "headingPath": "系統共用 › 會計期間：一期一廠一列",
+      "text": "會計期間的關帳範圍限制｜系統的會計期間設定是依據單一廠別來進行，因此一個廠區完成結帳後，代表該廠區的帳務已經封閉。",
+      "approved": true,
+      "sourceSectionHash": "de05761c847f34e81de422f12076d4513dc31175f4d922bb2a5052e2d8671bb8"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-7f089a19",
+      "lang": "zh",
+      "headingPath": "系統共用 › 唯一鍵刻意「不含 」：本實體不是廠別實體",
+      "text": "唯一鍵不包含廠別資訊｜此資料結構的設計考量是，它不是用來區分不同廠別的實體，因此在設定唯一的識別碼時，不會納入廠別的資訊。這樣做是為了避免同一位使用者在不同廠別建立相同名稱的查詢定義時，系統會誤認為這是兩個不同的記錄。",
+      "approved": true,
+      "sourceSectionHash": "186b2e8b49909d3994fc2184a84f62cd925226d3aa1e0960cead9cf9698add3c"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-979ad8f5",
+      "lang": "zh",
+      "headingPath": "系統共用 › 同一份定義同一個人只能有一列——重複列會讓語系去重分出兩組，",
+      "text": "同一位收件人只能設定一次｜同一份報表定義底下，同一位收件人只能有一筆設定，重複設定不會被接受——因為那會讓同一個人收到兩份內容完全相同的檔案。",
+      "approved": true,
+      "sourceSectionHash": "40fbb81e374c7b218f4ac58f805ef92bf03a99a0ef1226c32c8ac0ddffc9ea83"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-8e4d8ee1",
+      "lang": "zh",
+      "headingPath": "系統共用 › 刪定義時一併刪收件人：留著的孤兒列會被日後的權限稽核當成還在寄",
+      "text": "資料刪除時，相關接收者紀錄也會一同清除｜如果刪除了某個定義，系統會一併移除所有與之關聯的收件人紀錄，否則這些孤立的紀錄可能會被未來的權限稽核工具誤判為仍有寄送狀態。",
+      "approved": true,
+      "sourceSectionHash": "c1389398901720579997eb9ae6749895116dab030ef3a4a1ad53f7e4f0b1254e"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-16deddc8",
+      "lang": "zh",
+      "headingPath": "系統共用 › 收件匣與執行紀錄畫面都是「某份定義的最近幾筆」",
+      "text": "資料顯示規則限制｜系統會顯示一份定義的最近幾筆記錄，這兩個區塊需要同時查詢才能利用到最佳化索引。",
+      "approved": true,
+      "sourceSectionHash": "ad2c6b46ef669e608d68fecb41ba9a474368040edfac97f8b98a2eade605d2a9"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-be429e23",
+      "lang": "zh",
+      "headingPath": "系統共用 › 樂觀並發 系統欄位，無",
+      "text": "並發操作會自動處理重複繳庫的狀況｜當兩個流程同時嘗試完成入庫作業時，系統會透過版本號碼來判斷，後到達的流程將無法成功更新資料，整個交易也會因此回滾。",
+      "approved": true,
+      "sourceSectionHash": "56ec96dd1c941122b9ced85df498606f6828a6b754476fa5f3f46d8cd989f2e4"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-202340a0",
+      "lang": "zh",
+      "headingPath": "系統共用 › 抽樣狀態就地存於本實體",
+      "text": "檢驗規格的抽樣狀態與同時修改｜抽樣的進度（目前的抽樣狀態、連續合格次數、批次計數）直接記在檢驗規格上，隨著每次檢驗結果累加。兩個人同時修改同一張檢驗規格時，後存的那一位會被擋下並看到提示，重新開啟之後再改一次即可。",
+      "approved": true,
+      "sourceSectionHash": "528770044a81cb04a6ce92d45ba175377ceb74b837872b24acee81cc5c95de59"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-0c36a7dd",
+      "lang": "zh",
+      "headingPath": "系統共用 › 一張盤盈虧調整單只能屬於一張清冊——把結帳冪等釘在 DB 層，",
+      "text": "單據關聯與重複處理限制｜一張盤盈虧調整單只能屬於一張清冊，系統會確保資料庫層面防止同一筆交易被重複結帳或扣減兩次庫存。",
+      "approved": true,
+      "sourceSectionHash": "3e0e1cdb4b59dc0dc47fe972b09d71f3a728401f1e7c08d15ace59174673d9cd"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-166c8d45",
+      "lang": "zh",
+      "headingPath": "系統共用 › 乾淨部署只要盤出任何差異",
+      "text": "盤點盈虧的異動類別｜盤點結帳會以「盤點盈虧」這個異動類別過帳，該類別隨系統基礎資料一併建立。少了它，乾淨部署只要盤出任何差異，過帳第一行就會找不到異動類別而整張清冊結不了帳。盈虧方向由每一行自己決定，盤盈為正、盤虧為負。",
+      "approved": true,
+      "sourceSectionHash": "5fead1f4cbad8cfc9c0992680854137d878db13af69f56396a09036bf2426d5d"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-874b8800",
+      "lang": "zh",
+      "headingPath": "系統共用 › 於應用層為必填，但 DB 欄位維持可為",
+      "text": "於應用層為必填，但 DB 欄位維持可為｜單位必須在系統介面輸入，但在後端資料庫中允許留空。雖然使用者在操作時需要填寫商品單位，但為了能與現有的資料保持相容性，系統的底層資料儲存機制仍然允許此欄位為空白。",
+      "approved": false,
+      "sourceSectionHash": "a0d0a00c470e0d192b80cff91953d788ca3e2487f8a7234cd33fd9930a2cac06"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-d520ffc5",
+      "lang": "zh",
+      "headingPath": "系統共用 › 會計科目主檔",
+      "text": "會計科目適用範圍說明｜此系統使用的會計科目是全公司共用的，不區分任何廠別的設定。",
+      "approved": true,
+      "sourceSectionHash": "ea6a8a5ade04c9472ad1031a8464980a3395378ba231e1761beafe370cd23774"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-3644b2c6",
+      "lang": "zh",
+      "headingPath": "系統共用 › 已有「仍被換算引用就不准刪」的顯式檢查，本表一併納入該檢查即可",
+      "text": "單位轉換資料無法單獨刪除｜此類單位轉換的記錄是例外資料，不能因為停用了某個單位就自動刪除所有相關的品號換算紀錄。",
+      "approved": true,
+      "sourceSectionHash": "f471d8c5b4b22fb748f65f1637dee9e98412cc8d9f335045c909d4e5f65f7310"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-e6db4437",
+      "lang": "zh",
+      "headingPath": "系統共用 › 複合主鍵",
+      "text": "主鍵設定說明｜系統會使用單據類型和一個固定的範圍編號作為唯一識別碼。如果沒有指定範圍編號，則預設不依據任何特定廠區進行篩選。",
+      "approved": true,
+      "sourceSectionHash": "adbaf73d658a5b9fab66561e48aeed6d86fb3df96c431fd4bd244dd29f723387"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-67b790ff",
+      "lang": "zh",
+      "headingPath": "系統共用 › 廠商 FK + 查詢索引",
+      "text": "資料重複性與查詢限制說明｜廠商的評估紀錄會以「廠別」、「年份」和「季度」組合進行檢查。由於系統設計上無法透過單一索引完全防止年度評核的重複，因此在該處沒有設定唯一性約束來阻止重複的記錄產生。",
+      "approved": true,
+      "sourceSectionHash": "5276eb32200011f83d06f40deef17dc5e1ea2e08953d15a1ffb9920cffc6a08e"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-198998f2",
+      "lang": "zh",
+      "headingPath": "系統共用 › 層被刪除時消耗紀錄一併消失層目前不會被刪，僅扣到 0",
+      "text": "資料層無法直接移除｜該層目前的設計是不能被刪除的，系統會將其餘額度歸零處理。",
+      "approved": true,
+      "sourceSectionHash": "1a46e7c9fd81483874579e7da3550c138bc4361081c7dcab5cb763e37f4f55e8"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-35f990e4",
+      "lang": "zh",
+      "headingPath": "系統共用 › 並發過帳雙重扣帳",
+      "text": "防止重複處理同一單據的規則｜當進行並發過帳時，系統會使用一個機制來確保同一個單據不會被多次處理，以避免發生重複扣帳的情況。",
+      "approved": true,
+      "sourceSectionHash": "c3eddc90349fcc799f9158e89213ae4a2324ac78dccb8c9fcecc74e75dd8cd69"
+    },
+    {
+      "slug": "code-core-applicationdbcontextextensions-158be705",
+      "lang": "zh",
+      "headingPath": "系統共用 › 一張退貨單只會產生一張折讓單",
+      "text": "單據生成限制與唯一性檢查｜每張退貨單只能產生一張折讓單，這是為了防止因為重複嘗試或多個入口呼叫而產生過多的草稿資料。",
+      "approved": true,
+      "sourceSectionHash": "73638aecc4377c460abe5c43546ba15c5cbc0522afb0ea68b18b726db49d46c0"
+    }
+  ]
+}

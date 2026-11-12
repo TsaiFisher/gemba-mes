@@ -1,0 +1,326 @@
+{
+  "sourcePath": ".claude/specifications/ord-module.md",
+  "sourceHash": "9239e9fa8f29f48a52b90d272bf3017abf41df2fcd7e1573c0d8db030ef1f3dd",
+  "entries": [
+    {
+      "slug": "ord-module-b29c4441",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 1. 模組定位",
+      "text": "模組功能範圍說明｜此系統的銷售相關流程，包含訂單建立、出貨作業、銷退以及內部物料調撥，都屬於「銷售管理」範疇。採購相關的流程，則涵蓋了從提出需求到實際收貨及退回的整個環節，這些活動皆歸類在「採購管理」範圍內。",
+      "approved": true,
+      "sourceSectionHash": "7503914687d945a7c13525e8136b2cad31d6df9d8e3ea654d70ea519c3c11e55"
+    },
+    {
+      "slug": "ord-module-e58b0995",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.1 共同規則",
+      "text": "資料範圍與結構規則說明｜所有屬於特定工廠的作業單據，都必須包含該工廠的識別資訊。此外，詳細記錄的唯一識別是依據主件和行號組合來判定的，並且在計算數量、單價或匯率時，系統會保留一定的精確度進行後續計算。",
+      "approved": true,
+      "sourceSectionHash": "28eebafb59650179ac1417f9d445ce2bc56a63e37442ae7eff620708ffbd8080"
+    },
+    {
+      "slug": "ord-module-aac0b1e9",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.2 ORD 模組 Entities › SalesOrder（銷售訂單）",
+      "text": "銷售訂單的基本資料結構說明｜每張銷售訂單都會自動產生一個唯一的單據編號。該筆訂單必須指定公司代碼，並且會記錄訂單的日期、預設的訂單類型、以及客戶提供的訂單編號等資訊。此外，系統也會計算並儲存總金額，並追蹤訂單目前的核准狀態，例如草稿、待審核、已核准或已駁回。",
+      "approved": true,
+      "sourceSectionHash": "7129556f27af27479764a7b9ec7bbd120010e537cc4bc889f1179dc0a39a87b6"
+    },
+    {
+      "slug": "ord-module-643d1033",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.2 ORD 模組 Entities › SalesOrderLine（訂單明細）",
+      "text": "訂單明細的資料結構規則｜每筆訂單明細必須包含產品代碼，並且會記錄預計交貨日期、訂購數量、使用的單位和計算後的庫存單位量。此外，系統也會記錄該項目的單價、幣別以及匯率資訊，並計算出該明細的總金額及稅金相關數值。已出貨的數量和退回的數量會由後續的出貨或退貨流程自動累加，且這些累積的數量無法直接修改。",
+      "approved": true,
+      "sourceSectionHash": "f47b36421acb36ca97f75a68a99efbc6e338ad6e0b186106e3cc3164c251fc4c"
+    },
+    {
+      "slug": "ord-module-3739fac5",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.2 ORD 模組 Entities › GoodsShipment（出貨單）",
+      "text": "出貨單的狀態與結構說明｜出貨單的資料包含兩個獨立的狀態判斷，一個是代表簽核流程的狀態，另一個則是文件本身的生命週期狀態。此外，建立出貨單時可以選擇不直接連結到任何銷售訂單。在系統內部，出貨單的類型預設為特定代碼，且其結構由主出貨單、包含多個品項明細的層級，以及每個品項具體的庫存位置詳情所組成。",
+      "approved": true,
+      "sourceSectionHash": "5442b51a8744d9b2493c15b4098e8ad2e5a3e59b179fbc8a4b593ba0595d344b"
+    },
+    {
+      "slug": "ord-module-83c04695",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.2 ORD 模組 Entities › GoodsShipmentLine 追蹤欄位",
+      "text": "追蹤出貨明細的數量計算規則｜此出貨明細記錄會顯示來源訂單的資訊，並追蹤已經沖銷到該訂單的數量。此外，它也會彙總所有地點詳細資料中累積的數量，以及已經被退回的總數量。",
+      "approved": true,
+      "sourceSectionHash": "ad941e76b70c940ac5c74c188c748e24fdb3f9cc402480d57f37286136a13d4c"
+    },
+    {
+      "slug": "ord-module-da3a264b",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.2 ORD 模組 Entities › GoodsShipmentLocationDetail（第三層，儲位明細）",
+      "text": "儲位明細的資料關聯性與組成｜此儲位明細的記錄，其主鍵是唯一的識別碼。它會依附於某個出貨單據的特定行目，如果該出貨單據的相關紀錄被刪除，則此儲位明細的紀錄也會一併刪除。此外，此明細包含了存放地點代號、倉庫代號（由地點代號決定）、批次號數、數量以及備註等資訊。",
+      "approved": true,
+      "sourceSectionHash": "a027c433f913420eb0f8749ca9695dcd739811088e03a96f9b7cae675c993d94"
+    },
+    {
+      "slug": "ord-module-91c74f81",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.2 ORD 模組 Entities › SalesReturn（銷退單）",
+      "text": "銷售退回的資料結構與出貨單相同｜銷退單的資料結構和出貨單一樣，並且可以追蹤到原始的出貨單編號。如果需要知道這個銷退單是基於哪一筆出貨紀錄產生的，系統會記錄相關的來源出貨單編號以及該出貨單上的行目序號。",
+      "approved": true,
+      "sourceSectionHash": "278cbaf13e95a86f36f555e4de33eb6bae930bd3393de5f96677e83cd50a3d47"
+    },
+    {
+      "slug": "ord-module-8a016046",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.2 ORD 模組 Entities › InternalOrder（內部訂單）",
+      "text": "內部訂單的狀態與出入庫類型｜此筆內部訂單同時包含「核准狀態」和「流程狀態」兩個層級的判斷。此外，系統會根據交易的性質來區分是進行物料的出貨（減少庫存）還是退回物料（增加庫存）。在記錄物料明細時，如果需要指定到特定的儲存位置，則必須提供該倉庫代碼、具體存放位置以及批號資訊。",
+      "approved": true,
+      "sourceSectionHash": "5522d435f21aa1c652c70fbbc9bab56cbde0d2262d528a5308b89d5841f1c052"
+    },
+    {
+      "slug": "ord-module-2c11fa78",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.3 PUR 模組 Entities › PurchaseRequest（請購單）",
+      "text": "購買申請的狀態與數量追蹤規則｜此申請單沒有獨立的「文件狀態」欄位，其流程進度僅由「核准狀態」來決定。此外，在記錄每一項請購品項時，系統會追蹤已轉為採購訂單的數量，並且會標記該筆品項是否已經關閉或完成處理。",
+      "approved": true,
+      "sourceSectionHash": "23e26fa769845e49486619f77bfdd79aff929e9e0f9b1d3e73a1e1d2c340f77d"
+    },
+    {
+      "slug": "ord-module-215399eb",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.3 PUR 模組 Entities › PurchaseOrder（採購單）",
+      "text": "採購單的來源與狀態追蹤｜每張採購單都必須連結到一個供應商。此外，系統會記錄該筆採購單是從哪個需求單建立的，以及在需求單中的行號資訊。同時，系統也會追蹤實際收到的數量，並且會標記這筆採購單是否已經結案。",
+      "approved": true,
+      "sourceSectionHash": "36289f6e994b66bff84b12af86f139a4fb23244d9c41d17367e5be067a3064be"
+    },
+    {
+      "slug": "ord-module-c96cd226",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.3 PUR 模組 Entities › GoodsReceipt（進貨單）",
+      "text": "文件類型與狀態的判斷規則｜單據的種類和目前的處理階段，會由兩個獨立的資訊來決定。其中一個資訊用來區分這筆單據是標準的進貨還是委外進貨；另一個資訊則用來顯示目前單據所處的審核或流程狀態。",
+      "approved": true,
+      "sourceSectionHash": "f75795a1fa298304859461bc71722effba6b5d19e527567872a26607a0c6f739"
+    },
+    {
+      "slug": "ord-module-f3088d0d",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 3. Entity 結構 › 3.3 PUR 模組 Entities › GoodsReturn（進貨退出）",
+      "text": "單據類型與結構的區分｜此類型的退回單據在系統中會維持兩種不同的狀態。其資料結構與收貨入庫時的退回單據是相同的，並且根據單據的來源，會明確標示為「進貨退出」或「委外進貨退出」。",
+      "approved": true,
+      "sourceSectionHash": "0b7d4463047d62f69efc77ec724af32a94416365b5acabb7a6573c7cad867e45"
+    },
+    {
+      "slug": "ord-module-f9dabfb9",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 4. 業務流程狀態機 › 4.2 雙狀態文件（ApprovalStatus + DocStatus）",
+      "text": "文件狀態的轉換規則說明｜當文件從已確認狀態取消時，必須是尚未進行庫存上架作業的情況。否則無法執行此操作。",
+      "approved": true,
+      "sourceSectionHash": "7d4316405ed94f4294648f1c004aaf01ad5c972322b0099233f87b0f9857df21"
+    },
+    {
+      "slug": "ord-module-165d1977",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 4. 業務流程狀態機 › 4.3 各 DocType 的累計欄位",
+      "text": "累積數量變動的規則說明｜當出貨單結案時，會將實際出貨的數量加到訂單明細的已出貨數量上。若取消出貨單，則會從已出貨數量中減去對應的數量。此外，銷售退回時，會增加相關的退回數量；進貨入庫時，會累計至採購訂單明細的收貨數量。當發生進貨退出時，會反向扣減採購訂單明細的收貨數量。若儲存了採購訂單，則會累積到採購需求明細中。最後，內部工單結案後，不會在任何來源欄位累計數值，而是根據類型觸發庫存移動紀錄。",
+      "approved": true,
+      "sourceSectionHash": "bc02820835096fe856f16564bf36bbd1b9f2ecfe600c4403c8aa60d143734dac"
+    },
+    {
+      "slug": "ord-module-1e6f36e3",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 6. View 慣例",
+      "text": "單據單位與貨幣的顯示慣例｜本章節僅紀錄了採購訂單模組特有的結構規則，關於單位和貨幣的相關寫法細節，請參考專案資料中的權威來源文件以了解詳情。",
+      "approved": false,
+      "sourceSectionHash": "ad4c6ccc0c5a200546b05976a0d535e506e5417624ba07deac5546656ec15f81"
+    },
+    {
+      "slug": "ord-module-52c2cd5c",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 7. 命名慣例 › 7.1 Action 命名對照",
+      "text": "動作名稱的用途與功能說明｜系統中，不同的操作類型會對應到特定的動作名稱。當您需要查看資料清單時，系統使用「列表」的動作；若要新增資料，則使用「新增表單」的動作；若要修改現有資料，則使用「編輯表單」的動作。此外，如果只需要檢視不允許修改的詳細資訊，會使用「唯讀詳情」的動作。當您完成資料輸入並希望儲存時，系統會執行「儲存」的動作。",
+      "approved": false,
+      "sourceSectionHash": "bc922bfd8e782dbfbdf381284a8771ac017c3de3d5b848a98d5c348802a1ad5e"
+    },
+    {
+      "slug": "ord-module-45a770af",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 7. 命名慣例 › 7.2 ViewBag Key 命名",
+      "text": "選項與資料顯示的命名規則｜下拉式選單的選項，其鍵值會以「實體名稱」加上「Options」來命名；用於代碼維護的選項，則會使用「類型名稱」（並移除開頭的 PZ）加上「Options」來命名。此外，系統也會根據不同的用途，分別儲存單位精度的資訊、貨幣精度的資訊，以及本位幣的小數點位數。",
+      "approved": false,
+      "sourceSectionHash": "147a11676096a43b2ac3fb2c5a43a699ce4b5d2086145d658dc032532a3358e5"
+    },
+    {
+      "slug": "ord-module-da78b0a2",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 8. 多語資源檔必有 Key › 8.1 Index.cshtml",
+      "text": "頁面標題與常用文字的顯示規則｜系統在不同語言介面的頁面標題和一些常用的按鈕、選項文字，例如「新增」、「搜尋」或「全部」，都會使用預先定義好的資源檔中的關鍵字來決定顯示內容。這樣做是為了確保當系統需要支援多種語言時，可以統一管理這些文字的翻譯與切換，讓使用者在不同語言介面下看到正確的說明文字。",
+      "approved": false,
+      "sourceSectionHash": "f952a533ef697a39d9f3beedb4919d1267cd2b98bd6421e0ceace8bff46319da"
+    },
+    {
+      "slug": "ord-module-9587558c",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 9. 整合登錄 SOP（快速版）",
+      "text": "登錄流程的快速參考說明｜此處僅提供一個簡化的登錄點速查，完整的十步驟登錄流程請參閱其他文件。使用者無需關注這些技術層面的細節，只需了解這是系統中新增了相關的選單項目、資源文字和資料庫結構來支援新的功能。",
+      "approved": false,
+      "sourceSectionHash": "2b4a0f45eae4034ae719aae4a55474aacd96a5172d41e06a8cc8ae3faa60e72a"
+    },
+    {
+      "slug": "ord-module-06985a18",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 10. MFG 模組開發時的對應關係",
+      "text": "關聯的單據與工序對應關係｜銷售訂單會對應到工單，而銷售訂單上的每一項品項則分別對應到工序或用料。當貨物出庫時，其狀態的變動也會反映在派工的業務狀態上。此外，提交和撤回的操作邏輯是相同的；確認和結案的動作，則會對應到釋出工單或開工的流程。",
+      "approved": true,
+      "sourceSectionHash": "0aedb6c28e886fdd73b5ba9838cb7a956ba5b1c7441ba161c8c0cd48ba7dd718"
+    },
+    {
+      "slug": "ord-module-b9b0ff8e",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 10. MFG 模組開發時的對應關係 › 不含金額的 MFG 主檔畫面",
+      "text": "主檔資料的單位與貨幣處理規則｜此類型的主檔資訊在顯示和計算時，不會根據系統設定自動套用特定貨幣或單位的小數點位數。如果該主檔包含數量相關的欄位，則會依據單位的規格來決定其小數點位數的呈現方式。",
+      "approved": false,
+      "sourceSectionHash": "4413965d9b04b53fa45dc768102662a20613537f88a7d84fd85a62d0299a5bbf"
+    },
+    {
+      "slug": "ord-module-3def7946",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 10. MFG 模組開發時的對應關係 › MRP 執行畫面的差異",
+      "text": "批次作業的執行與查看方式｜此功能是透過「執行」來觸發批次的作業，而不是用來新增或修改資料。當作業完成後，系統會將其狀態更新為已執行，並且使用者可以從一個清單中看到所有展開後的批次作業明細。",
+      "approved": false,
+      "sourceSectionHash": "28376263d51ae9b2a8d6cec02900d88f4fe66c384ff1d126ad94b8416ee008be"
+    },
+    {
+      "slug": "ord-module-61b0a469",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 10. MFG 模組開發時的對應關係 › 手機 API 的差異",
+      "text": "手機資料傳輸的格式與機制差異｜系統在處理來自行動裝置的資料時，會使用統一的回應格式。此外，為了確保離線操作後資料的唯一性，系統會檢查傳送資料時包含的客戶識別碼和時間戳記資訊。所有透過行動裝置進行的資料交換都必須是純文字的 JSON 格式。",
+      "approved": false,
+      "sourceSectionHash": "418d4071e4dfe7b5192889551bd3dc123af9d3e69b6b09a567ad21e4ef35b659"
+    },
+    {
+      "slug": "ord-module-c5e99a80",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃",
+      "text": "系統測試範圍與層級說明｜本系統的測試會包含三個層面：針對個別功能邏輯的單獨測試、資料庫和介接點之間的整合性測試，以及模擬使用者實際操作流程的端到端介面測試。所有這些測試都會依照統一的規格來執行。",
+      "approved": false,
+      "sourceSectionHash": "56f68138f25bf1499f11db13f4accfeca510ce6aac87aed31e92ea1aa3fa56fd"
+    },
+    {
+      "slug": "ord-module-3bc11e79",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.1 單元測試（xUnit，純邏輯無 DB）",
+      "text": "測試規則說明｜產品單位和貨幣計算的準確性要求系統會自動檢查不同單位之間的轉換是否正確，例如從銷售使用的單位到庫存管理的單位。此外，在計算總金額時，會使用匯率來計算，並採用特定的四捨五入方式確保精確度。稅金的計算流程也必須遵循固定的順序和準確的稅率套用。同時，系統會檢查已出貨數量加上任何累計的數量不能超過訂購的總數量，退回的數量也會反向扣減，並且在同一個廠別、同一天建立的單據，如果設定了唯一識別規則，則不能重複建立。",
+      "approved": false,
+      "sourceSectionHash": "f32f2435bcb401713297bed494686cdd0eb28b5668bc43840cdd1afa4f99a51b"
+    },
+    {
+      "slug": "ord-module-17c8f8ac",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.2 整合測試（TestServer + 測試 DB） › 資料模型層",
+      "text": "銷售訂單與採購流程的資料規則｜銷售訂單的狀態轉換是從草稿到待審核，再到已核准；如果被拒絕，可以回到草稿進行修改。在出貨時，需要確認兩個獨立的狀態都已經確認了才能完成後續處理。收貨記錄會正確累加先前所有已入庫的數量，不會重複計算。此外，當刪除出貨單據的某個細項時，相關的庫存地點明細也會自動被移除。每位使用者只能看到自己所屬廠別的單據資料，無法查看其他廠別的記錄。在單據處於待審核狀態時，禁止對其進行任何修改或刪除操作。",
+      "approved": true,
+      "sourceSectionHash": "31c1a736c6d72bf5065f06de9051fbaed5358ebc8ca99a5c30e0d47da60d43ba"
+    },
+    {
+      "slug": "ord-module-f4d7cf71",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.2 整合測試（TestServer + 測試 DB） › API 層",
+      "text": "銷售訂單與出貨流程規則說明｜新增的銷售訂單會自動產生一個識別碼。如果重複提交相同的資料，系統會回傳錯誤訊息。當訂單從草稿狀態送審時，狀態會變為待核准；已經簽核的訂單是不能再進行送審動作的。出貨確認後，若庫存入庫數量仍為零，則無法完成此流程。此外，如果銷售訂單已經結案處理過，就不能再次執行出貨作業。",
+      "approved": true,
+      "sourceSectionHash": "2b55b6b2d45a5ab6924710a49a67e25513917eedf1a925ef6f26957bd4a9cdfa"
+    },
+    {
+      "slug": "ord-module-c9dd0b85",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.2 整合測試（TestServer + 測試 DB） › 業務流程層",
+      "text": "銷售與採購流程的資料流動規則｜在完成完整的銷售流程時，系統會依序建立訂單、核准、出貨及結帳，並且會累積記錄已出貨的數量。若發生銷退的情況，系統會從原始的出貨紀錄中扣減退回的數量，並將此數額累加到原訂單上。採購流程也遵循類似的順序，從需求建立到核准、建檔、進貨及結帳，過程中也會累積記錄已收到的數量。此外，內部出料或退料時，系統會確保庫存移動的方向是正確的，並且在多幣別計價的情況下，總金額會根據匯率進行計算並準確累加。",
+      "approved": true,
+      "sourceSectionHash": "88d6261738242f55a505d7760286f337610140674ee5968c95c0bed837e31439"
+    },
+    {
+      "slug": "ord-module-d3d4f743",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.2 整合測試（TestServer + 測試 DB） › 權限與簽核層",
+      "text": "權限與單據狀態的自動判斷規則｜當系統嘗試儲存資料時，如果使用者沒有新增相關權限，系統會阻止儲存。此外，根據單據的金額大小來決定其預設狀態：若超過了規定的金額門檻，該單據會自動進入待人核准的狀態；反之，若低於門檻，則會直接被視為已核准。如果需要進行簽核或退回操作，系統會依賴核心服務的正常介接來判斷後續流程：成功核准後，相關工單才能投入生產使用；而若被退回，其狀態將變更為已駁回。最後，對於處於待人核准狀態的資料，使用者有權利將其撤回到草稿狀態。",
+      "approved": false,
+      "sourceSectionHash": "362b07662d61cc8c13e371844280698ead0332bf3c476f5c077716fe63ccce1a"
+    },
+    {
+      "slug": "ord-module-5d2affb1",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.3 E2E UI 測試（Playwright）",
+      "text": "系統測試的參考規範｜所有關於訂單和採購模組的端到端使用者介面測試，都必須依照專門的網頁應用程式測試規格來執行。",
+      "approved": false,
+      "sourceSectionHash": "997135a4ec7c0361c8d02c28484b4301fa5c30a3b71cb8a5e10d07f92fd98b40"
+    },
+    {
+      "slug": "ord-module-8eb44b95",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.3 E2E UI 測試（Playwright） › 銷售訂單",
+      "text": "銷售訂單的生命週期流程說明｜當建立新的訂單時，系統會將其顯示為草稿狀態。若要送審並核准，必須透過指定按鈕進入簽核頁面完成核准後，才會在列表上顯示為已核准狀態；如果該訂單支援撤回，則可以從已核准的狀態回到草稿狀態。此外，當訂單處於待審核狀態時，系統會禁用刪除功能。若要修改訂單明細，必須先進入草稿狀態才能進行增加、修改或刪除行項目；同時，品號選擇後，如果需要轉換單位或幣別，數量和匯率將會自動更新。",
+      "approved": false,
+      "sourceSectionHash": "a959e66c8745e914ffeaf2fcbad75b15efc7cc5bda315f028afc13917a350e6f"
+    },
+    {
+      "slug": "ord-module-f6851ad3",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.3 E2E UI 測試（Playwright） › 出貨單",
+      "text": "出貨單的流程與數量追蹤規則｜當建立出貨單時，系統會自動帶入待出貨的品項行，使用者需要輸入實際要出貨的數量。完成後儲存為草稿狀態；若確認了出貨單，其狀態會變更為已確認，且在沒有下架的情況下可以反向取消確認。當進行過帳出貨時，系統會將狀態變更為已結案，並且會累加記錄到原始訂單的已出貨數量上。如果需要作廢出貨，則需點擊相關按鈕並確認對話框，狀態會變為已作廢，且會反向扣減原始訂單的已出貨數量。若同一筆訂單需要分多次出貨，所有次數都完成過帳後，累計的出貨數量必須等於原始訂單的總需求數量。",
+      "approved": false,
+      "sourceSectionHash": "a6cb9a551b2fa8ad279d58d5192b4cfa2fbe572bb462ef8274d6da8f5b406d74"
+    },
+    {
+      "slug": "ord-module-cfc1a6a6",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.3 E2E UI 測試（Playwright） › 採購單",
+      "text": "採購單的資料自動帶入與調整規則｜當從已核准的採購需求建立採購單時，系統會自動將相關物料行和金額帶入。此外，如果進行進貨確認後，若需要退回進貨，則會在採購單上反向扣減已記錄的收貨數量。",
+      "approved": true,
+      "sourceSectionHash": "61a10dd31033cfdef32e5fccf5ac4c6a7ad692c25cd8dee9a6f0b695758b2e25"
+    },
+    {
+      "slug": "ord-module-2e7e1819",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.3 E2E UI 測試（Playwright） › 內部訂單",
+      "text": "出入庫訂單的類型與動作差異｜當需要將物料從倉庫領出時，系統會以「出料」的方式處理，並完成庫存的出庫作業。若需將物料退回倉庫，則必須使用「退料」的方式進行，此操作會導致庫存增加進庫紀錄。",
+      "approved": true,
+      "sourceSectionHash": "d4a1befa758f5e267d8f35830d4a4aa604f7afa2ab48f4e43ad6a91d9993b99f"
+    },
+    {
+      "slug": "ord-module-1df86fa0",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.3 E2E UI 測試（Playwright） › 多語與設定",
+      "text": "多語切換與廠別篩選規則｜登入系統後，若變更了使用的語言設定，頁面上的所有文字內容，包括表單的欄位標籤、按鈕名稱和資料表的標題，都會依照新的語言進行顯示。此外，當您切換不同的廠別時，系統會重新載入資料，此時您在列表上看到的單據僅限於您目前選擇的該廠別的記錄。",
+      "approved": false,
+      "sourceSectionHash": "d41eca4edd5f7371fab906aa0b18284f4b78ce5716e9b4a61bed1162e4681e2a"
+    },
+    {
+      "slug": "ord-module-22da9d8b",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 11. 自動測試規劃 › 11.5 測試運行配置 › 測試覆蓋率目標",
+      "text": "測試覆蓋率目標與要求｜系統的單元測試必須達到邏輯密集型服務至少百分之八十的覆蓋率；整合測試針對介面端點，則需達到至少百分之七十的覆蓋率。此外，從頭到尾使用者介面的測試，需要涵蓋完整流程中每一個實體（例如從建立訂單到出貨的整個過程）。",
+      "approved": false,
+      "sourceSectionHash": "2709f929916158d269d379308d919be203f69475af0ec644bef5e18a87c8043e"
+    },
+    {
+      "slug": "ord-module-276a7f7e",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 12. 整合登錄完整 SOP（含測試層）",
+      "text": "系統開發結構與測試驗收標準｜本模組的資料結構和業務邏輯，必須依照既定的分層架構來建置。在完成後，需要透過單元測試、整合測試以及端到端的冒煙測試，確保所有主要流程都能正常運作，並且權限和不同廠區之間的資料是互相隔離的。",
+      "approved": false,
+      "sourceSectionHash": "fbda2840e7b37f904c66418ff5252cc3963e019672cc4eceb543793cbcbed6d8"
+    },
+    {
+      "slug": "ord-module-49e48513",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 13. 並發控制規範（樂觀鎖，PostgreSQL xmin）",
+      "text": "並發作業的資料更新控制規則｜由於交易單據會有多人同時進行操作，系統必須確保後續儲存的資料不會覆蓋掉先前已經完成的有效變更。因此，系統會自動使用一個內建的機制來追蹤和保護這些資料，以防止多人同時修改導致資料不一致的問題發生。",
+      "approved": false,
+      "sourceSectionHash": "6c15ffc12ca9b8399653e666ee29443c8b05809810fd1b7cc89c0ec1b446c3ff"
+    },
+    {
+      "slug": "ord-module-b252c381",
+      "lang": "zh",
+      "headingPath": "ORD + PUR 模組實作慣例（ord-module.md） › 13. 並發控制規範（樂觀鎖，PostgreSQL xmin） › 13.5 注意事項",
+      "text": "資料修改時的同步控制規則｜當系統偵測到您嘗試修改的資料已經被其他人更改後，系統會提示「資料已被他人修改」，並且會顯示最新版本的資料供您參考，但系統不會自動強制覆蓋您的修改內容。此外，為了確保不同廠區之間的資料是相互隔離的，所有操作都會受到廠別的限制。",
+      "approved": true,
+      "sourceSectionHash": "d3f826d4632d036ae78c536cc8b82662dee37b562cb8fa674b6fb500b3eb5901"
+    }
+  ]
+}

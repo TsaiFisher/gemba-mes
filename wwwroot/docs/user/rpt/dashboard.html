@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Management Dashboard — RPT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>管理儀表板 — RPT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">RPT 目錄</span><span lang="en">RPT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">RPT 畫面</span><span lang="en">RPT screens</span></div>
+    <a href="dashboard.html" class="nav-link active"><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></a>
+    <a href="profit-loss.html" class="nav-link"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a>
+    <a href="gross-margin.html" class="nav-link"><span lang="zh">毛利分析</span><span lang="en">Gross Margin Analysis</span></a>
+    <a href="margin-analysis.html" class="nav-link"><span lang="zh">多維度銷售毛利分析</span><span lang="en">Multi-dimensional sales margin analysis</span></a>
+    <a href="contribution-margin.html" class="nav-link"><span lang="zh">產品邊際貢獻分析</span><span lang="en">Product Contribution Margin</span></a>
+    <a href="balance-sheet.html" class="nav-link"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></a>
+    <a href="consolidated-statement.html" class="nav-link"><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></a>
+    <a href="outsource-performance.html" class="nav-link"><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></a>
+    <a href="data-audit.html" class="nav-link"><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></a>
+    <a href="field-telemetry.html" class="nav-link"><span lang="zh">現場遙測</span><span lang="en">Field Telemetry</span></a>
+    <a href="saved-queries.html" class="nav-link"><span lang="zh">常用查詢</span><span lang="en">Saved Queries</span></a>
+    <a href="report-schedule.html" class="nav-link"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>
+    <a href="report-inbox.html" class="nav-link"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a>
+    <a href="report-run-history.html" class="nav-link"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-speedometer2 me-2 text-primary"></i><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/Dashboard &nbsp;|&nbsp; 營運 KPI 總覽</span><span lang="en">Route: /Dashboard &nbsp;|&nbsp; Operating KPI overview</span></div>
+    </div>
+
+    <p><span lang="zh">彙整銷售、生產、庫存、財務關鍵指標於單一畫面（圖表化），供管理層每日掌握營運狀態。</span><span lang="en">Brings the key sales, production, inventory and finance indicators together on one screen as charts, so management can see how the business is running each day.</span></p>
+    <img class="screen-shot" src="img/dashboard.png" data-src-en="img/en/dashboard.png" alt="管理儀表板畫面截圖" data-alt-en="Management dashboard screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">管理儀表板畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Management dashboard screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">卡片/圖表點擊可連到對應明細報表。</span><span lang="en">Clicking a card or a chart opens the matching detail report.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">指標卡</span><span lang="en">Indicator cards</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">指標</span><span lang="en">Indicator</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">本月營收</span><span lang="en">Monthly Revenue</span></td><td><span lang="zh">當月銷貨金額合計（本位幣）</span><span lang="en">Total sales this month (local currency)</span></td></tr>
+        <tr><td><span lang="zh">本月採購</span><span lang="en">Monthly Purchase</span></td><td><span lang="zh">當月進貨金額合計（本位幣）</span><span lang="en">Total purchases this month (local currency)</span></td></tr>
+        <tr><td><span lang="zh">庫存金額</span><span lang="en">Inventory Value</span></td><td><span lang="zh">目前庫存的帳面總值（依 AVCO 均價評估）</span><span lang="en">Total book value of the stock now (valued at the AVCO average)</span></td></tr>
+        <tr><td><span lang="zh">工單準時率</span><span lang="en">Work Order On-Time Rate</span></td><td><span lang="zh">已完工工單中，實際完工日未晚於計畫完工日的比率</span><span lang="en">The proportion of completed work orders whose actual completion date was no later than planned</span></td></tr>
+        <tr><td><span lang="zh">未結工單數</span><span lang="en">Open Work Orders</span></td><td><span lang="zh">尚未完工結案的工單張數，反映在製負荷</span><span lang="en">Number of work orders not yet completed and closed, a measure of the WIP load</span></td></tr>
+        <tr><td><span lang="zh">逾期應付</span><span lang="en">Overdue AP</span></td><td><span lang="zh">已逾到期日仍未付款的應付帳款金額；大於 0 時卡片以警示色呈現</span><span lang="en">Payables past their due date and still unpaid; the card turns a warning colour when it is above 0</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">「本月」與「今年」一律依<strong>目前作用廠別所在時區的當地日期</strong>計算（例如台北的廠從當地 1 日 0 時起算），不是伺服器或 UTC 時間；所以月初、年初的頭幾個小時，數字會歸在新的月份。</span><span lang="en">"This month" and "this year" always follow the <strong>local date in the time zone of your active plant</strong> (a Taipei plant starts the month at 00:00 local time on the 1st), not server or UTC time, so the first hours of a new month or year are counted in the new period.</span></p>
+    <h3><span lang="zh">趨勢圖</span><span lang="en">Trend chart</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">圖表</span><span lang="en">Charts</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">營收趨勢</span><span lang="en">Revenue trend</span></td><td><span lang="zh">近期各月的銷貨金額走勢</span><span lang="en">The trend of monthly sales</span></td></tr>
+        <tr><td><span lang="zh">採購趨勢</span><span lang="en">Purchasing trend</span></td><td><span lang="zh">近期各月的進貨金額走勢，與營收對照可觀察備料節奏是否合理</span><span lang="en">The trend of monthly purchases; set against revenue it shows whether the buying rhythm makes sense</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="profit-loss.html"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

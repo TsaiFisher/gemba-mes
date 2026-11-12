@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="GoodsShipmentId" xml:space="preserve"><value>出貨單號</value></data>
+  <data name="ShipDate" xml:space="preserve"><value>出貨日期</value></data>
+  <data name="Customer" xml:space="preserve"><value>客戶</value></data>
+  <data name="SelectCustomer" xml:space="preserve"><value>請選擇客戶</value></data>
+  <data name="SalesOrderId" xml:space="preserve"><value>銷售訂單</value></data>
+  <data name="ShipAddress" xml:space="preserve"><value>出貨地址</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>出貨明細</value></data>
+  <data name="AddLine" xml:space="preserve"><value>新增明細</value></data>
+  <data name="Import" xml:space="preserve"><value>匯入</value></data>
+  <data name="ImportFromSO" xml:space="preserve"><value>從銷售訂單匯入</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>銷售訂單號</value></data>
+  <data name="SoRef" xml:space="preserve"><value>來源銷售訂單</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="ShipQty" xml:space="preserve"><value>出貨數量</value></data>
+  <data name="UomCode" xml:space="preserve"><value>單位</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>單價</value></data>
+  <data name="CurrencyCode" xml:space="preserve"><value>幣別</value></data>
+  <data name="TaxCode" xml:space="preserve"><value>稅別</value></data>
+  <data name="LineAmount" xml:space="preserve"><value>金額</value></data>
+  <data name="TaxAmount" xml:space="preserve"><value>稅額</value></data>
+  <data name="TotalAmount" xml:space="preserve"><value>含稅金額</value></data>
+  <data name="AmountLocal" xml:space="preserve"><value>本幣金額</value></data>
+  <data name="WhCode" xml:space="preserve"><value>倉庫</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>儲位</value></data>
+  <data name="LotNo" xml:space="preserve"><value>批號</value></data>
+  <data name="QtyPutAway" xml:space="preserve"><value>已下架量</value></data>
+  <data name="RemainingQty" xml:space="preserve"><value>剩餘可出量</value></data>
+  <data name="Submit" xml:space="preserve"><value>送審</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>撤回</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>確定要送審此出貨單嗎？</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>確定要撤回此出貨單嗎？</value></data>
+  <data name="Confirm" xml:space="preserve"><value>確認出貨</value></data>
+  <data name="ConfirmSimplified" xml:space="preserve"><value>確認出貨</value></data>
+  <data name="ConfirmWarehouse" xml:space="preserve"><value>確認</value></data>
+  <data name="ConfirmConfirm" xml:space="preserve"><value>確定要確認此出貨單並產生庫存出庫記錄嗎？</value></data>
+  <data name="ConfirmConfirmSimplified" xml:space="preserve"><value>確定要確認此出貨單？庫存將立即扣減。</value></data>
+  <data name="ConfirmConfirmWarehouse" xml:space="preserve"><value>確定要確認此出貨單？確認後請至【倉庫作業 → 出庫下架】完成下架以更新庫存。</value></data>
+  <data name="CancelConfirm" xml:space="preserve"><value>取消確認</value></data>
+  <data name="ConfirmCancelConfirm" xml:space="preserve"><value>確定要取消此出貨單的確認狀態嗎？</value></data>
+  <data name="Void" xml:space="preserve"><value>作廢</value></data>
+  <data name="VoidReason" xml:space="preserve"><value>請輸入作廢原因：</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="ConfirmCustomerChange" xml:space="preserve"><value>更改客戶將清除所有已輸入的明細，確定要繼續嗎？</value></data>
+  <data name="SelectCustomerBeforeImportSo" xml:space="preserve"><value>請先選擇客戶，再匯入銷售訂單。</value></data>
+  <data name="QtyExceedShippable" xml:space="preserve"><value>本次數量不可大於可出貨數量</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>移除此列</value></data>
+</root>

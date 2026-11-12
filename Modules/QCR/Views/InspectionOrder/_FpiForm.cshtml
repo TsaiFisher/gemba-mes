@@ -1,0 +1,83 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.QCR.Controllers.FpiSubmitVm
+
+@{
+    int recommended = ViewBag.RecommendedSampleSize as int? ?? 0;
+    string samplingState = ViewBag.SamplingState as string ?? "";
+}
+
+<form id="sideForm" method="post" action="@Url.Action("SubmitFpi")"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="DispatchId" />
+    <input type="hidden" asp-for="WorkOrderId" />
+    <input type="hidden" asp-for="OperationSeq" />
+    <input type="hidden" asp-for="ProductCode" />
+    <input type="hidden" asp-for="LotSize" />
+
+    <div class="offcanvas-body">
+        <div class="row g-2 mb-3">
+            <div class="col-6">
+                <label class="form-label small text-muted">@Localizer["DispatchId"]</label>
+                <div class="fw-semibold font-monospace">@Model.DispatchId</div>
+            </div>
+            <div class="col-6">
+                <label class="form-label small text-muted">@Localizer["ProductCode"]</label>
+                <div class="fw-semibold">@Model.ProductCode</div>
+            </div>
+            <div class="col-6">
+                <label class="form-label small text-muted">@Localizer["LotSize"]</label>
+                <div>@Model.LotSize.ToString("N0")</div>
+            </div>
+            <div class="col-6">
+                <label class="form-label small text-muted">@Localizer["SamplingState"]</label>
+                <div><span class="badge bg-secondary">@samplingState</span></div>
+            </div>
+        </div>
+
+        <div class="alert alert-light border small py-2">
+            <i class="bi bi-info-circle me-1"></i>@Localizer["FpiHint"]
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["VerificationLevel"] <span class="text-danger">*</span></label>
+            <select asp-for="VerificationLevel" class="form-select">
+                @for (int v = 1; v <= 7; v++)
+                {
+                    <option value="@v" selected="@(Model.VerificationLevel == v)">VL-@v</option>
+                }
+            </select>
+            <span asp-validation-for="VerificationLevel" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["ActualSampleQty"] <span class="text-danger">*</span></label>
+            <input asp-for="SampleQty" type="number" step="1" min="1" class="form-control" required />
+            <div class="form-text">@Localizer["RecommendedSampleSize"]：@recommended</div>
+            <span asp-validation-for="SampleQty" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["FailQty"] <span class="text-danger">*</span></label>
+            <input asp-for="FailQty" type="number" step="1" min="0" class="form-control" required />
+            <div class="form-text">@Localizer["AcZeroHint"]</div>
+            <span asp-validation-for="FailQty" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["Remarks"]</label>
+            <textarea asp-for="Remarks" class="form-control" rows="2" maxlength="500"></textarea>
+            <span asp-validation-for="Remarks" class="text-danger small"></span>
+        </div>
+    </div>
+
+    <div class="offcanvas-footer border-top p-3 d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle me-1"></i>@Localizer["SubmitInspection"]
+        </button>
+        <button type="button" class="btn btn-secondary" data-action="closeSidePanel">
+            @Localizer["Close"]
+        </button>
+    </div>
+</form>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Machine" xml:space="preserve"><value>機台</value></data>
+  <data name="SelectMachine" xml:space="preserve"><value>請選擇機台</value></data>
+  <data name="EventType" xml:space="preserve"><value>事件類型</value></data>
+  <data name="SelectEvent" xml:space="preserve"><value>請選擇事件</value></data>
+  <data name="SourceDocId" xml:space="preserve"><value>來源單號</value></data>
+  <data name="SourceDocIdPlaceholder" xml:space="preserve"><value>輸入維修單/保養工單號（可留空）</value></data>
+  <data name="Note" xml:space="preserve"><value>備註</value></data>
+  <data name="NotePlaceholder" xml:space="preserve"><value>輸入備註（可留空）</value></data>
+  <data name="Submit" xml:space="preserve"><value>送出異動</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="EventCI" xml:space="preserve"><value>恢復正常</value></data>
+  <data name="EventII" xml:space="preserve"><value>設為待機</value></data>
+  <data name="EventDI" xml:space="preserve"><value>故障停機</value></data>
+  <data name="EventDO" xml:space="preserve"><value>故障排除</value></data>
+  <data name="EventHI" xml:space="preserve"><value>開始保養</value></data>
+  <data name="EventHO" xml:space="preserve"><value>保養完成</value></data>
+  <data name="EventEO" xml:space="preserve"><value>進入改良</value></data>
+  <data name="EventFO" xml:space="preserve"><value>外借出廠</value></data>
+  <data name="EventFI" xml:space="preserve"><value>外借回廠</value></data>
+  <data name="EventGO" xml:space="preserve"><value>除役廢棄</value></data>
+  <data name="EventCO" xml:space="preserve"><value>送出外修</value></data>
+  <data name="CurrentStatusFmt" xml:space="preserve"><value>（目前：{0}）</value></data>
+</root>

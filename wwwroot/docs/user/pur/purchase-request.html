@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Purchase Request — PUR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>請購單 — PUR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">PUR 目錄</span><span lang="en">PUR Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">PUR 畫面</span><span lang="en">PUR Screens</span></div>
+    <a href="purchase-request.html" class="nav-link active"><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></a>
+    <a href="purchase-order.html" class="nav-link"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></a>
+    <a href="goods-receipt.html" class="nav-link"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></a>
+    <a href="goods-return.html" class="nav-link"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></a>
+    <a href="../osp/outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="../osp/outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="vendor-price-list.html" class="nav-link"><span lang="zh">廠商單價目錄</span><span lang="en">Vendor Price List</span></a>
+    <a href="vendor-evaluation.html" class="nav-link"><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></a>
+    <a href="purchase-overdue.html" class="nav-link"><span lang="zh">採購逾期跟催</span><span lang="en">Overdue Purchase Orders</span></a>
+    <a href="supplier-delivery-rate.html" class="nav-link"><span lang="zh">供應商交期達成率</span><span lang="en">Supplier Delivery Rate</span></a>
+    <a href="purchase-amount.html" class="nav-link"><span lang="zh">採購金額比較</span><span lang="en">Purchase Amount</span></a>
+    <a href="purchase-price.html" class="nav-link"><span lang="zh">採購價格比較</span><span lang="en">Purchase Price</span></a>
+    <a href="../osp/outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-file-earmark-text me-2 text-primary"></i><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/PurchaseRequest &nbsp;|&nbsp; 採購需求彙整與簽核</span><span lang="en">Route: /PurchaseRequest &nbsp;|&nbsp; Collecting demand and approval</span></div>
+    </div>
+
+    <p><span lang="zh">使用單位或 MRP 產生的採購需求先立請購單，經簽核核准後由採購人員轉開採購單。請購行會追蹤已轉採購量，全數轉單後自動結案。</span><span lang="en">Demand from user departments or from MRP is first raised as a purchase request; once approved, buyers turn it into a purchase order. Request lines track the quantity already ordered and close automatically when fully ordered.</span></p>
+    <img class="screen-shot" src="img/purchase-request.png" data-src-en="img/en/purchase-request.png" alt="請購單畫面截圖" data-alt-en="Purchase request screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">請購單畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Purchase request screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">草稿 Draft</span><span lang="en">Draft</span></span></td><td><span lang="zh">已建立未生效，可自由編輯、刪除；需簽核者於此狀態送審。</span><span lang="en">Created but not yet effective; can be freely edited or deleted, and submitted for approval from this status.</span></td></tr><tr><td><span class='badge bg-info'><span lang="zh">待審核</span><span lang="en">Pending approval</span></span></td><td><span lang="zh">已送審等待簽核，不可編輯；可撤回改回草稿。</span><span lang="en">Submitted and waiting for approval; it cannot be edited, but it can be withdrawn back to draft.</span></td></tr><tr><td><span class='badge bg-primary'><span lang="zh">已確認 Confirmed</span><span lang="en">Confirmed</span></span></td><td><span lang="zh">簽核核准（或免簽核直接確認）後生效，等待後續作業/過帳。</span><span lang="en">Effective once approved (or confirmed directly when no approval is required), waiting for the next step or for posting.</span></td></tr><tr><td><span class='badge bg-success'><span lang="zh">已過帳 Posted</span><span lang="en">Posted</span></span></td><td><span lang="zh">庫存/帳務已入帳，單據不可再修改。</span><span lang="en">Stock and accounting have been posted; the document can no longer be changed.</span></td></tr><tr><td><span class='badge bg-danger'><span lang="zh">已作廢 Void</span><span lang="en">Void</span></span></td><td><span lang="zh">反向沖銷已過帳內容；作廢原因需留存，不可復原。</span><span lang="en">Reverses what was posted; the void reason is kept and the action cannot be undone.</span></td></tr></tbody>
+    </table>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">建立請購單</span><span lang="en">Creating a purchase request</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」開啟側欄，填寫請購單表頭與明細行後儲存（草稿）。</span><span lang="en">Click "Add" to open the panel, fill in the purchase request header and lines, then save (as a draft).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「送審」進入簽核流程；核准後單據自動轉「已確認」。若免簽核，直接點「確認」。</span><span lang="en">Click "Submit" to start the approval flow; the document turns to "Confirmed" once approved. Where no approval is required, click "Confirm" directly.</span></div></div>
+    <h3><span lang="zh">後續作業</span><span lang="en">Follow-up actions</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">已確認/已過帳單據可點「列印」產生含 QR Code 的正式表單（新分頁開啟）。</span><span lang="en">Confirmed and posted documents can be printed with "Print", producing the official form with a QR code in a new tab.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">已過帳單據如需沖銷，點「作廢」並填寫原因；系統產生反向庫存/帳務異動。</span><span lang="en">To reverse a posted document, click "Void" and enter a reason; the system creates the reversing stock and accounting entries.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">表頭</span><span lang="en">Header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">請購單號</span><span lang="en">PR No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">請購日期</span><span lang="en">Request Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">提出請購的日期</span><span lang="en">Date the request was raised</span></td></tr>
+        <tr><td><span lang="zh">請購人</span><span lang="en">Requested By</span></td><td><span lang="zh">提出請購的使用者，系統自動帶入</span><span lang="en">User raising the request, filled in automatically</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">整張請購單的補充說明</span><span lang="en">Notes for the whole purchase request</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">明細</span><span lang="en">Lines</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">序號</span><span lang="en">Seq</span></td><td><span lang="zh">明細行序</span><span lang="en">Line seq</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">要採購的料件</span><span lang="en">Item to be purchased</span></td></tr>
+        <tr><td><span lang="zh">預交日期</span><span lang="en">Delivery Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">希望到貨的日期；MRP 產生的請購以需求日減前置天數推得</span><span lang="en">The date the material is needed; MRP-generated requests derive it from the demand date minus the lead time</span></td></tr>
+        <tr><td><span lang="zh">請購數量 / 採購單位</span><span lang="en">Req. Qty / Purchase UOM</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">請購數量與採購計量單位（可與庫存單位不同）。選了品號後，單位只列該品號可用的單位（庫存單位與查得到換算的單位，預設採購單位）。</span><span lang="en">Requested quantity and purchase unit of measure (which may differ from the stock unit). Once a product is chosen, the unit list shows only the units usable for it (its stock unit and units that convert to it; purchase unit preselected).</span></td></tr>
+        <tr><td><span lang="zh">結案</span><span lang="en">Close</span></td><td><span lang="zh">勾選後該行不再等待轉採購單；未結案且未轉完者持續列為待處理</span><span lang="en">Once checked, the line no longer waits to be turned into a purchase order; open lines that are not fully ordered stay in the pending list</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">由 MRP 展開產生的請購單會記錄來源 MRP 執行單號，重跑時據此去重，不會重複開單。</span><span lang="en">A purchase request generated by MRP records the MRP run number it came from, which is used to de-duplicate on a re-run so the request is never raised twice.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="purchase-order.html"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></a></p>
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">MRP 展開的外購建議可直接轉成請購單，來源訂單以 pegging 可追溯。</span><span lang="en">Buy suggestions from an MRP run can be turned into purchase requests directly, with the source order traceable through pegging.</span>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

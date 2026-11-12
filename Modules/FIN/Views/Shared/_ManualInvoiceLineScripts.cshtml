@@ -1,0 +1,40 @@
+@*
+    手動發票（AP／AR）明細列的增刪。兩邊共用一份，不各抄一份——
+    「刪列後要重編索引」這種規則抄兩份就會慢慢分岔，而分岔的症狀是靜默的（見下）。
+
+    刻意寫成 form-agnostic：從按鈕往上找 <form>，不寫死 form id，
+    所以 AP 的 #manualApInvoiceForm 與 AR 的 #manualArInvoiceForm 都適用。
+*@
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    // 新列的 name 索引必須連號：ASP.NET 的集合模型繫結遇到索引斷號會**在斷點截斷**，
+    // 後面的行安靜地不見——沒有錯誤訊息，只有少掉的分錄。所以刪列後一律重編。
+    function reindexManualLines(table) {
+        table.querySelectorAll('tbody tr').forEach(function (tr, i) {
+            tr.querySelectorAll('[name^="Lines["]').forEach(function (el) {
+                el.name = el.name.replace(/^Lines\[\d+\]/, 'Lines[' + i + ']');
+            });
+        });
+    }
+
+    window.addManualLine = function (e, el) {
+        var table = el.closest('form').querySelector('#manualLineTable');
+        var tbody = table && table.tBodies[0];
+        if (!tbody || !tbody.rows.length) return;
+        var clone = tbody.rows[0].cloneNode(true);
+        clone.querySelectorAll('input').forEach(function (i) { i.value = ''; });
+        clone.querySelectorAll('select').forEach(function (s) { s.selectedIndex = 0; });
+        tbody.appendChild(clone);
+        reindexManualLines(table);
+        // 新列的 data-val-* 不會被 unobtrusive 自動 parse——不重註冊就沒有即時前端驗證
+        // （伺服端仍會擋，但使用者要按下儲存才知道）。R6c 守著這件事。
+        if (window.armValidation) window.armValidation(el.closest('form'));
+    };
+
+    window.removeManualLine = function (e, el) {
+        var table = el.closest('form').querySelector('#manualLineTable');
+        var tbody = table && table.tBodies[0];
+        if (!tbody || tbody.rows.length <= 1) return;   // 至少留一列，否則沒有可複製的樣板
+        el.closest('tr').remove();
+        reindexManualLines(table);
+    };
+</script>

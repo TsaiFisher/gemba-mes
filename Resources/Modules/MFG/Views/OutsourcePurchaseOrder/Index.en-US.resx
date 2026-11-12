@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Outsource PO</value></data>
+  <data name="ConvertEntry" xml:space="preserve"><value>Convert to Outsource</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>PO No. / Supplier</value></data>
+  <data name="StatusFilter" xml:space="preserve"><value>Status</value></data>
+  <data name="StatusAll" xml:space="preserve"><value>All</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="OutsourcePoId" xml:space="preserve"><value>PO No.</value></data>
+  <data name="Supplier" xml:space="preserve"><value>Supplier</value></data>
+  <data name="OrderDate" xml:space="preserve"><value>Order Date</value></data>
+  <data name="ExpectedDate" xml:space="preserve"><value>Expected</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="LineCount" xml:space="preserve"><value>Items</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="ViewTitle" xml:space="preserve"><value>Outsource PO {0}</value></data>
+  <data name="NoData" xml:space="preserve"><value>No data</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>Enter conditions and click Search</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>Operation successful</value></data>
+  <data name="StatusDraft" xml:space="preserve"><value>Draft</value></data>
+  <data name="StatusConfirmed" xml:space="preserve"><value>Confirmed</value></data>
+  <data name="StatusVoid" xml:space="preserve"><value>Void</value></data>
+  <data name="ConfirmConfirm" xml:space="preserve"><value>Confirm this outsource PO (send to supplier)?</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="Void" xml:space="preserve"><value>Void</value></data>
+  <data name="VoidConfirm" xml:space="preserve"><value>Void this outsource purchase order? Only allowed before any receipt and once all materials sent to the vendor are returned; the outsource demand can then be converted again.</value></data>
+  <data name="View" xml:space="preserve"><value>View</value></data>
+</root>

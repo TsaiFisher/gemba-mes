@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/OutsourceQuotationController.cs",
+  "sourceHash": "b844063efa4c6ea519d80e8a9a7abba7a2d6968900007d67d129d3490142ceed",
+  "entries": [
+    {
+      "slug": "code-mfg-outsourcequotationcontroller-3416230e",
+      "lang": "zh",
+      "headingPath": "生產製造 › 委外報價主檔— 全域主檔，建立委外採購單時自動帶入單價",
+      "text": "自動帶入單價的條件與層級限制｜建立委外採購單時，系統會根據不同的組合條件來決定是否自動帶入單價，支援的查詢層級包含廠商、品號、工藝、工序；或僅到廠商、品號、工藝；或是僅到廠商、品號；最基礎的層級為只依據廠商。",
+      "approved": false,
+      "sourceSectionHash": "4554b26bd38450c6e07d21f08d315876f0c9869fae1ba8fa6669254db321172e"
+    },
+    {
+      "slug": "code-mfg-outsourcequotationcontroller-7056e242",
+      "lang": "zh",
+      "headingPath": "生產製造 › 是否為空判斷，不受此移除影響",
+      "text": "單號採番與資料驗證規則｜新增的報價單據編號是由系統後端自動產生的，因此在表單介面中不會顯示該編號的輸入欄位。即使前端嘗試移除此編號的驗證限制，系統仍會依據該編號是否為空來判斷新舊資料狀態。",
+      "approved": true,
+      "sourceSectionHash": "bad35fba5c5a4430ac1c672233b4249e16eef8ab17d9be3a570e4c8a0a14f046"
+    },
+    {
+      "slug": "code-mfg-outsourcequotationcontroller-a06f1932",
+      "lang": "zh",
+      "headingPath": "生產製造 › 逐欄位手抄的路徑漏一欄不會有任何錯誤——合約允收損耗率漏抄的話，",
+      "text": "路徑手動輸入與報價狀態規則｜如果手動填寫的路徑有遺漏，系統不會產生任何錯誤訊息；若在合約中未填寫允許的損耗率，則編輯過的報價會自動變回「未約定」狀態，之後產生的單據將不會扣款。",
+      "approved": true,
+      "sourceSectionHash": "7858541c70935da7ed3052ae3c580c52bf3b0dcd5259a9bca6905bf7e7ad5648"
+    },
+    {
+      "slug": "code-mfg-outsourcequotationcontroller-03fe767f",
+      "lang": "zh",
+      "headingPath": "生產製造 › 這裡原本只排序不過濾，於是候選裡沒有任何一筆適用時仍會回傳第一筆",
+      "text": "委外報價的查詢優先序｜帶出委外加工單價時，先篩掉不適用的報價，再依「廠商＋品號＋途程＋工序」由精確到概略的順序取用。候選裡沒有任何一筆適用時就不帶值，不會退而拿一筆別的品號或途程的加工費。",
+      "approved": true,
+      "sourceSectionHash": "338eb8c7e1b13648cc29574f7b45efb8725d1af1c7178765a68ab9f1534d7f84"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Production Preparation Board — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>生產準備看板 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link active"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/PreparationBoard &nbsp;|&nbsp; T-1 日生產前置準備清單（料/模具/程式）</span><span lang="en">Route: /PreparationBoard &nbsp;|&nbsp; T-1 production preparation checklist (material / tooling / programs)</span></div>
+    </div>
+
+    <p><span lang="zh">依排程順序列出近期開工派工的準備需求：物料齊套狀況、模具需求與同時段模具衝突、前置警示（背景服務自動產生）。供現場課長每日開工前確認。</span><span lang="en">Lists the preparation needed for dispatches starting soon, in schedule order: kitting status, tooling required and tooling conflicts in the same period, plus advance warnings (generated automatically by a background service). Supervisors check it before work starts each day.</span></p>
+    <img class="screen-shot" src="img/preparation-board.png" data-src-en="img/en/preparation-board.png" alt="生產準備看板畫面截圖" data-alt-en="Production preparation board screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">生產準備看板畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Production preparation board screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">預設顯示明日開工清單，可切換日期。</span><span lang="en">Tomorrow's start list is shown by default; the date can be changed.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">準備日期</span><span lang="en">Preparation date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">要檢視的生產日；看板列出當天開工的派工，以及前一天開工、跨到當天仍在進行的派工（標「延續」，已完工的不列）</span><span lang="en">Production day to view; the board lists dispatches starting that day, plus dispatches that started earlier and are still running into it (marked "Continued from earlier"; finished ones are left out)</span></td></tr>
+        <tr><td><span lang="zh">工作中心</span><span lang="en">Work Center</span></td><td><span lang="zh">只看單一工作中心；預設為全部工作中心</span><span lang="en">One work center only; all work centers by default</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">統計卡欄位</span><span lang="en">Statistics card fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">總派工數</span><span lang="en">Total Dispatches</span></td><td><span lang="zh">該日已排程的派工單總數</span><span lang="en">Total dispatches scheduled that day</span></td></tr>
+        <tr><td><span lang="zh">模具衝突</span><span lang="en">Tooling conflict</span></td><td><span lang="zh">同一時段同一模具被多張派工佔用的件數，需先調整排程</span><span lang="en">Number of cases where the same tooling is claimed by more than one dispatch in the same period; the schedule has to be adjusted first</span></td></tr>
+        <tr><td><span lang="zh">待料風險</span><span lang="en">Material risk</span></td><td><span lang="zh">排程開始前料件尚未備齊的派工數</span><span lang="en">Number of dispatches whose material is not yet staged before the scheduled start</span></td></tr>
+        <tr><td><span lang="zh">換模分鐘數（合計）</span><span lang="en">Total Setup Min</span></td><td><span lang="zh">該日所有派工的準備時間合計，可作為換模順序優化的依據</span><span lang="en">Total setup time of all the dispatches that day, useful for optimising the changeover order</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">看板標示</span><span lang="en">Board markings</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">標示</span><span lang="en">Marks</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">模具衝突（紫）</span><span lang="en">Tooling conflict (purple)</span></td><td><span lang="zh">該派工使用的模具在同時段被其他派工佔用</span><span lang="en">The tooling this dispatch uses is claimed by another dispatch in the same period</span></td></tr>
+        <tr><td><span lang="zh">待料風險（黃）</span><span lang="en">Material risk (yellow)</span></td><td><span lang="zh">料件尚未備齊，開工前需先完成備料</span><span lang="en">The material is not fully staged; staging has to be finished before work starts</span></td></tr>
+        <tr><td><span lang="zh">延續（藍）</span><span lang="en">Continued (blue)</span></td><td><span lang="zh">前一天開工、跨到當天還在做；機台當天被佔用，但不需要再備料或換模</span><span lang="en">Started on an earlier day and still running; the machine is busy that day, but no new staging or changeover is needed</span></td></tr>
+        <tr><td><span lang="zh">預測延遲（紅）</span><span lang="en">Forecast late (red)</span></td><td><span lang="zh">依目前排程推算，完工時間將晚於須完成日</span><span lang="en">On the current schedule, completion will fall after the required completion date</span></td></tr>
+        <tr><td><span lang="zh">備料已就緒（綠）／尚未備料（灰）</span><span lang="en">Staged and ready (green) / not yet staged (grey)</span></td><td><span lang="zh">該派工的備料進度；備料中為部分備妥</span><span lang="en">Staging progress of the dispatch; "staging" means partly ready</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-arrow-repeat me-1"></i><span lang="zh">若本廠開啟「派工前自動重排排程」，打開時排程已過時會先自動重排，約數秒後才顯示，看到的就是最新的明日計畫（見</span><span lang="en">If the plant has "Reschedule automatically before dispatch" turned on and the schedule is out of date when you open this board, it is re-run first and the board appears a few seconds later showing the latest plan (see </span><a href="schedule.html#auto-schedule"><span lang="zh">自動重排排程</span><span lang="en">Automatic rescheduling</span></a><span lang="zh">）。</span><span lang="en">).</span></div>
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="schedule.html"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>、<a href="material-slip-progress.html"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

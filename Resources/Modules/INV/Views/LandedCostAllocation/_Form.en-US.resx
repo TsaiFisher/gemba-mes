@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="LandedCostAllocationId" xml:space="preserve"><value>Doc No.</value></data>
+  <data name="DocDate" xml:space="preserve"><value>Doc Date</value></data>
+  <data name="Basis" xml:space="preserve"><value>Allocation Basis</value></data>
+  <data name="Basis_Amount" xml:space="preserve"><value>Purchase Amount</value></data>
+  <data name="Basis_Quantity" xml:space="preserve"><value>Purchase Qty</value></data>
+  <data name="Basis_Weight" xml:space="preserve"><value>Weight</value></data>
+  <data name="CostType" xml:space="preserve"><value>Cost Type</value></data>
+  <data name="SelectCostType" xml:space="preserve"><value>Select cost type</value></data>
+  <data name="CurrencyCode" xml:space="preserve"><value>Currency</value></data>
+  <data name="TotalLandedCost" xml:space="preserve"><value>Total Landed Cost</value></data>
+  <data name="Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>Allocation Lines</value></data>
+  <data name="PickGrLines" xml:space="preserve"><value>Pick GR Lines</value></data>
+  <data name="GoodsReceiptId" xml:space="preserve"><value>GR No.</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>Location</value></data>
+  <data name="ReceiptQty" xml:space="preserve"><value>Receipt Qty</value></data>
+  <data name="PurchaseAmount" xml:space="preserve"><value>Purchase Amount</value></data>
+  <data name="Weight" xml:space="preserve"><value>Weight</value></data>
+  <data name="OriginalUnitCost" xml:space="preserve"><value>Original Unit Cost</value></data>
+  <data name="AllocatedCost" xml:space="preserve"><value>Allocated Cost</value></data>
+  <data name="CapitalizedCost" xml:space="preserve"><value>Capitalized</value></data>
+  <data name="ExpensedCost" xml:space="preserve"><value>Expensed</value></data>
+  <data name="NewUnitCost" xml:space="preserve"><value>New Unit Cost</value></data>
+  <data name="AllocationHint" xml:space="preserve"><value>On confirm, costs are allocated per the chosen basis; the on-hand portion is capitalized into the inventory average, the issued portion is expensed.</value></data>
+  <data name="Status" xml:space="preserve"><value>Doc</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>Approval</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Submit" xml:space="preserve"><value>Submit</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>Withdraw</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>Submit this allocation for approval?</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>Withdraw this allocation?</value></data>
+  <data name="ConfirmConfirm" xml:space="preserve"><value>Confirming will update inventory cost. Continue?</value></data>
+  <data name="GrSearchPlaceholder" xml:space="preserve"><value>GR No. or product</value></data>
+  <data name="GrSearchPrompt" xml:space="preserve"><value>Enter criteria then press Search</value></data>
+  <data name="AddSelected" xml:space="preserve"><value>Add Selected</value></data>
+  <data name="NoResults" xml:space="preserve"><value>No data found</value></data>
+  <data name="ActionFailed" xml:space="preserve"><value>Action failed, please retry.</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>Remove line</value></data>
+  <data name="Void" xml:space="preserve"><value>Void</value></data>
+  <data name="VoidPrompt" xml:space="preserve"><value>Voiding posts a reversing journal entry and takes the allocated cost back out of inventory (not possible once the stock has been issued). Enter the reason for voiding:</value></data>
+</root>

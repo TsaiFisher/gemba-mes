@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Report Schedules — RPT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>報表排程 — RPT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">RPT 目錄</span><span lang="en">RPT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">RPT 畫面</span><span lang="en">RPT screens</span></div>
+    <a href="dashboard.html" class="nav-link"><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></a>
+    <a href="profit-loss.html" class="nav-link"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a>
+    <a href="gross-margin.html" class="nav-link"><span lang="zh">毛利分析</span><span lang="en">Gross Margin Analysis</span></a>
+    <a href="margin-analysis.html" class="nav-link"><span lang="zh">多維度銷售毛利分析</span><span lang="en">Multi-dimensional sales margin analysis</span></a>
+    <a href="contribution-margin.html" class="nav-link"><span lang="zh">產品邊際貢獻分析</span><span lang="en">Product Contribution Margin</span></a>
+    <a href="balance-sheet.html" class="nav-link"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></a>
+    <a href="consolidated-statement.html" class="nav-link"><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></a>
+    <a href="outsource-performance.html" class="nav-link"><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></a>
+    <a href="data-audit.html" class="nav-link"><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></a>
+    <a href="field-telemetry.html" class="nav-link"><span lang="zh">現場遙測</span><span lang="en">Field Telemetry</span></a>
+    <a href="report-schedule.html" class="nav-link active"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>
+    <a href="report-inbox.html" class="nav-link"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a>
+    <a href="report-run-history.html" class="nav-link"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-calendar-check me-2 text-primary"></i><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/ReportSchedule &nbsp;|&nbsp; 自動產生例行報表並送進收件匣</span><span lang="en">Route: /ReportSchedule &nbsp;|&nbsp; Produce routine reports automatically and deliver them to the inbox</span></div>
+    </div>
+
+    <p><span lang="zh">把一份報表設定成每日／每週／每月自動產生，產生後放進指定收件人的「報表收件匣」。系統不寄送電子郵件——報表留在系統內，收件人下載時會重新檢查權限，離職或調職的人不會再拿得到檔案。</span><span lang="en">Set a report to be produced automatically every day, week or month, and delivered to the Report Inbox of the people you nominate. The system sends no email — the report stays inside the system, and permission is re-checked when the recipient downloads it, so people who have left or changed jobs can no longer get the file.</span></p>
+    <img class="screen-shot" src="img/report-schedule.png" data-src-en="img/en/report-schedule.png" alt="報表排程畫面截圖" data-alt-en="Report schedules screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">報表排程畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Report schedules screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="how-to-use-it"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">How to use it</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">按「新增排程」開啟右側面板，填寫排程名稱，並選擇要自動產生的報表。下拉只會列出您目前有權限執行的報表。選好報表後，若該報表需要期間，下方會出現「查詢期間」欄位，請選一個滾動期間（例如「上月」）；不需要期間的報表（例如庫存評估表看的是當下快照）不會出現這個欄位。</span><span lang="en">Click Add Schedule to open the side panel, give the schedule a name and pick the report to produce. The dropdown only lists reports you are currently authorized to run. Once a report is chosen, a Period field appears below it if that report needs one; pick a rolling period such as "Last month". Reports that need no period — stock valuation, for instance, which shows the position as it stands — do not show the field.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">選擇執行週期：每日只需設定時分；每週另選星期幾；每月另設每月第幾日。</span><span lang="en">Choose the frequency: daily needs only a time; weekly also needs a day of the week; monthly also needs a day of the month.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">選擇輸出格式（Excel 或 CSV）與收件人。收件人可以是多位，系統會依各人的介面語系分別產生檔案，不會讓英文使用者收到中文報表。</span><span lang="en">Choose the output format (Excel or CSV) and the recipients. There can be several; the system produces one file per language used by the recipients, so English users do not receive a Chinese report.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">按「儲存」。畫面會顯示下一次執行時刻（以廠別時區顯示與計算）；要立刻驗證設定是否正確，按「立即執行」，報表會在約一分鐘內產生。</span><span lang="en">Click Save. The screen shows the next run time, displayed and calculated in the plant time zone. To verify the setting immediately, click Run Now and the report will be produced within about a minute.</span></div></div>
+
+    <h2 id="points-to-note"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">注意事項</span><span lang="en">Points to note</span></h2>
+
+    <p><span lang="zh">排程只在「報表工具」功能開啟的環境才會執行；未開啟時排程不會執行，啟動記錄會明確寫出受影響的筆數。停機期間錯過的排程不會補跑——補跑「上個月」結果相同，補跑「昨天」卻會取到錯誤的一天，因此系統一律不補。執行時會重新檢查擁有者對該報表的權限，若權限已失效，系統會自動停用該排程並在執行紀錄留下原因，不會靜默停止。報表只查排程所屬廠別的資料：執行成功卻是 0 筆時，先確認清單上的「廠別」是不是資料所在的廠別。</span><span lang="en">Schedules only run where the Report Tools feature is switched on; when it is off they do not run and the startup log states how many are affected. Runs missed during downtime are not caught up — re-running "last month" gives the same answer, but re-running "yesterday" would pick the wrong day, so nothing is caught up. At run time the owner's permission for the report is checked again; if it has been revoked the schedule is disabled automatically and the reason is recorded in the run history, never silently stopped. A report covers only the data of the schedule's plant: if a run succeeds with 0 rows, first check that the Plant column shows the plant where the data lives.</span></p>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">排程名稱</span><span lang="en">Schedule Name</span></td><td><span lang="zh">以名稱關鍵字篩選</span><span lang="en">Filters by keyword in the name</span></td></tr>
+        <tr><td><span lang="zh">報表</span><span lang="en">Report</span></td><td><span lang="zh">只看某一支報表的排程</span><span lang="en">Shows schedules for one report only</span></td></tr>
+        <tr><td><span lang="zh">廠別</span><span lang="en">Plant</span></td><td><span lang="zh">預設只列目前所在廠別的排程；選「全部廠別」可看所有廠別的排程</span><span lang="en">Lists only the current plant's schedules by default; choose All plants to see every plant's schedules</span></td></tr>
+        <tr><td><span lang="zh">只看啟用中</span><span lang="en">Active only</span></td><td><span lang="zh">勾選後隱藏已停用的排程</span><span lang="en">Hides disabled schedules when ticked</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">設定欄位</span><span lang="en">Setting fields</span></h3>
+
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">對象廠別</span><span lang="en">Target plant</span></td><td><span lang="zh">唯讀。新增時是目前所在的廠別，編輯時是排程原本的廠別。報表只查這個廠別的資料，查詢期間與執行時刻也依它的時區計算；要建立其他廠別的排程，請先切換到該廠別</span><span lang="en">Read-only. When adding, it is the plant you are currently in; when editing, the plant the schedule was created for. The report covers this plant's data only, and the period and run time follow its time zone. To schedule for another plant, switch to that plant first</span></td></tr>
+        <tr><td><span lang="zh">排程名稱</span><span lang="en">Schedule Name</span></td><td><span lang="zh">同一人不得重複；名稱也會成為下載檔名的一部分</span><span lang="en">Must be unique per person; it also forms part of the downloaded file name</span></td></tr>
+        <tr><td><span lang="zh">報表</span><span lang="en">Report</span></td><td><span lang="zh">要自動產生的報表；只列出您有權限執行的</span><span lang="en">The report to produce; only those you may run are listed</span></td></tr>
+        <tr><td><span lang="zh">查詢期間</span><span lang="en">Period</span></td><td><span lang="zh">存的是</span><span lang="en">What is stored is a </span><b><span lang="zh">滾動期間</span><span lang="en">rolling period</span></b><span lang="zh">（例如「上月」「昨天」），每次執行都重新解算成當下的日期，不是固定的那一段日期；只有需要期間的報表才會出現這個欄位，出現時必填</span><span lang="en"> such as "Last month" or "Yesterday", resolved into actual dates on every run rather than a fixed date range. The field appears only for reports that need a period, and is compulsory when it does</span></td></tr>
+        <tr><td><span lang="zh">執行週期</span><span lang="en">Frequency</span></td><td><span lang="zh">每日／每週／每月，僅此三種</span><span lang="en">Daily, weekly or monthly — these three only</span></td></tr>
+        <tr><td><span lang="zh">星期</span><span lang="en">Day of Week</span></td><td><span lang="zh">每週時適用</span><span lang="en">Applies to weekly schedules</span></td></tr>
+        <tr><td><span lang="zh">每月第幾日</span><span lang="en">Day of Month</span></td><td><span lang="zh">每月時適用；設 29～31 遇天數不足的月份順延至該月最後一日</span><span lang="en">Applies to monthly schedules; 29–31 falls back to the last day in shorter months</span></td></tr>
+        <tr><td><span lang="zh">時／分</span><span lang="en">Hour / Minute</span></td><td><span lang="zh">執行時刻</span><span lang="en">Time of day the schedule runs</span></td></tr>
+        <tr><td><span lang="zh">輸出格式</span><span lang="en">Output Format</span></td><td><span lang="zh">Excel 保留欄位格式；CSV 適合再匯入其他系統</span><span lang="en">Excel keeps column formatting; CSV is easier to import elsewhere</span></td></tr>
+        <tr><td><span lang="zh">收件人</span><span lang="en">Recipients</span></td><td><span lang="zh">報表送進其收件匣；下載時各自重新檢查權限</span><span lang="en">The report lands in their inbox; each download re-checks their permission</span></td></tr>
+        <tr><td><span lang="zh">啟用此排程</span><span lang="en">Enable this schedule</span></td><td><span lang="zh">停用後不再自動執行</span><span lang="en">Disabled schedules no longer run automatically</span></td></tr>
+        <tr><td><span lang="zh">下次執行</span><span lang="en">Next Run</span></td><td><span lang="zh">系統依週期自動計算，設定一改即重算；以排程所屬廠別的時區顯示，並在時刻下方標出時區</span><span lang="en">Calculated from the frequency and recalculated whenever the setting changes; shown in the time zone of the schedule's plant, with the zone printed below the time</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+
+    <p><a href="report-inbox.html"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a>、<a href="report-run-history.html"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a></p>
+  </main>
+</div>
+</body>
+</html>

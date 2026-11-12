@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ResultTitle" xml:space="preserve"><value>MRP Run {0} expanded</value></data>
+  <data name="BatchCount" xml:space="preserve"><value>Batches</value></data>
+  <data name="WorkOrderCount" xml:space="preserve"><value>Work Orders</value></data>
+  <data name="DispatchCount" xml:space="preserve"><value>Dispatches</value></data>
+  <data name="PredictedLate" xml:space="preserve"><value>Predicted-late batches</value></data>
+  <data name="PurchaseDemands" xml:space="preserve"><value>Purchase Demands</value></data>
+  <data name="OutsourceDemands" xml:space="preserve"><value>Outsource Suggestions</value></data>
+  <data name="Shortages" xml:space="preserve"><value>Shortages</value></data>
+  <data name="Warnings" xml:space="preserve"><value>Warnings</value></data>
+  <data name="DemandProduct" xml:space="preserve"><value>Product</value></data>
+  <data name="DemandQty" xml:space="preserve"><value>Qty</value></data>
+  <data name="DemandDate" xml:space="preserve"><value>Required Date</value></data>
+  <data name="DemandReason" xml:space="preserve"><value>Note</value></data>
+  <data name="DoneRefresh" xml:space="preserve"><value>Done</value></data>
+  <data name="SkippedLines" xml:space="preserve"><value>Skipped Demand Lines</value></data>
+  <data name="SkippedHint" xml:space="preserve"><value>The lines below failed the pre-check due to missing master data and were skipped; fix the master data, rebuild the demand lines and re-run.</value></data>
+  <data name="SkLineSeq" xml:space="preserve"><value>Line</value></data>
+  <data name="SkError" xml:space="preserve"><value>Error</value></data>
+  <data name="CreatedPr" xml:space="preserve"><value>Purchase request {0} created automatically (convert to PO in the PR-to-PO batch screen).</value></data>
+  <data name="PurchaseVariances" xml:space="preserve"><value>Purchase Reconciliation Variances</value></data>
+  <data name="PurchaseVariancesHint" xml:space="preserve"><value>Differences between this expansion's purchase demands and the existing purchase request lines. Approved purchase requests are not re-quantified automatically; follow the notes below.</value></data>
+  <data name="VarKind" xml:space="preserve"><value>Kind</value></data>
+  <data name="VarPrevQty" xml:space="preserve"><value>Previous Qty</value></data>
+  <data name="VarCurQty" xml:space="preserve"><value>Current Qty</value></data>
+  <data name="VarDisposition" xml:space="preserve"><value>Disposition</value></data>
+  <data name="VarDescription" xml:space="preserve"><value>Detail</value></data>
+  <data name="VarKindAdded" xml:space="preserve"><value>Added</value></data>
+  <data name="VarKindIncreased" xml:space="preserve"><value>Increased</value></data>
+  <data name="VarKindDecreased" xml:space="preserve"><value>Decreased</value></data>
+  <data name="VarKindModeChanged" xml:space="preserve"><value>Switched to make/outsource</value></data>
+  <data name="VarKindRemoved" xml:space="preserve"><value>Demand removed</value></data>
+  <data name="VarDispAutoClosed" xml:space="preserve"><value>Auto-closed</value></data>
+  <data name="VarDispPendingClose" xml:space="preserve"><value>Can be closed</value></data>
+  <data name="VarDispManualRequired" xml:space="preserve"><value>Manual handling required</value></data>
+  <data name="VarDispInformational" xml:space="preserve"><value>Informational</value></data>
+</root>

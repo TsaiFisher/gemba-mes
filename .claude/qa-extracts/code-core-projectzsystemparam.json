@@ -1,0 +1,62 @@
+{
+  "sourcePath": "Models/ProjectZSystemParam.cs",
+  "sourceHash": "7bcfaa40ea8799af3cfa6fb475f00aa065c307cfe21f9bb81ff8607e2677d2f5",
+  "entries": [
+    {
+      "slug": "code-core-projectzsystemparam-6aee3992",
+      "lang": "zh",
+      "headingPath": "系統共用 › §25：製造簡化模式",
+      "text": "製造模式決定工單的自動化程度｜如果開啟了此模式，系統會在物料需求規劃後直接將工單投入生產；否則，工單會停留在待人工投產的狀態。這兩種設定是獨立判斷的。",
+      "approved": true,
+      "sourceSectionHash": "f9c271781fcf71a307e4f25b21978697d36ea02f90fe8edb80fa60b9426535c8"
+    },
+    {
+      "slug": "code-core-projectzsystemparam-a129ab9d",
+      "lang": "zh",
+      "headingPath": "系統共用 › ️ 本參數是**全系統單一值，沒有廠別隔離**",
+      "text": "全系統機台待機排程規則｜此設定值是全公司統一的，所有廠別都共用這一個數值來決定機台在待機狀態下是否可以被排程。",
+      "approved": true,
+      "sourceSectionHash": "7e1303b83c4fef1daa187e541bcbdb1cf8377b318ac1af833e5b4afe178265d0"
+    },
+    {
+      "slug": "code-core-projectzsystemparam-c16f4453",
+      "lang": "zh",
+      "headingPath": "系統共用 › ️ 下面兩個存的是**倉庫／儲位代碼**，而  主鍵是  單欄",
+      "text": "倉庫儲位代碼的唯一性與廠別限制｜系統在處理完工入庫時，會使用一個預設的成品倉倉庫代號。這個代號是全域唯一的，並且每個代號都只屬於某一個特定的廠區。當系統讀取此代號時，會根據目前的廠區資訊來判斷，如果無法確認該代號是否適用於當前廠區，則視為未設定任何值。",
+      "approved": true,
+      "sourceSectionHash": "cf38e5d23f0a83e7a3cb744e2da2cc73bc95c85c1b022c82981d7bc6b160d73e"
+    },
+    {
+      "slug": "code-core-projectzsystemparam-9d173806",
+      "lang": "zh",
+      "headingPath": "系統共用 › ️ 全域單值，**不是**廠別設定",
+      "text": "全域單值不依據廠別設定｜此處的預設發料方式是系統共用的，與任何特定廠別的設定無關。目前僅為宣告用途，若要根據不同廠別來決定發料方式，需要參考其他相關文件進行實作。",
+      "approved": true,
+      "sourceSectionHash": "f8e510b8178504a6be3e3fd205ecc033eea4a4841e1436e88da8beb545b73b89"
+    },
+    {
+      "slug": "code-core-projectzsystemparam-c86041f2",
+      "lang": "zh",
+      "headingPath": "系統共用 › 開工機台狀態閘口 ：機台不在可排程狀態時",
+      "text": "機台狀態決定是否可排程｜當機台處於非可排程的狀態，系統會進行擋下或警示開工。此判斷是根據包含製造待命排程資訊的機台可用性來決定的。",
+      "approved": true,
+      "sourceSectionHash": "546905ccdc7adbabc9dc16b364be4491fb713790041791d3302cd9287e0c1284"
+    },
+    {
+      "slug": "code-core-projectzsystemparam-5e48c694",
+      "lang": "zh",
+      "headingPath": "系統共用 › 備料倉預設值",
+      "text": "備料倉預設值設定規則｜系統在解析備料單的備料倉和儲位時，會依序檢查使用者當下指定的、工作中心參數中的以及系統共用的三個層級來決定使用哪個值。",
+      "approved": true,
+      "sourceSectionHash": "0eba0c69e71316f50542d6719b4a7a0abb6f1375c724c417f0907b273b171d97"
+    },
+    {
+      "slug": "code-core-projectzsystemparam-249685b8",
+      "lang": "zh",
+      "headingPath": "系統共用 › 是否自動結案退場",
+      "text": "自動結案規則說明｜如果物料需求規劃重跑後，原有的請購單明細若已沒有需求且尚未轉為採購，系統會根據設定值決定是否自動將其標記為已結案。如果設定為是，則會自動結案；否則，僅會在差異項目中提示需要人工處理。",
+      "approved": true,
+      "sourceSectionHash": "6ce4c2424a1961f8a5811ae01cae4cd8f930c4eaec6eed3a0934d0ecd9bdcca3"
+    }
+  ]
+}

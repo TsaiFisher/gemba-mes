@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="System Parameters — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>系統參數 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理</span><span lang="en">Admin Management</span></div>
+    <a href="system-param.html" class="nav-link active"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+    <a href="../mfg/index.html" class="nav-link"><span lang="zh">製造執行（MFG）</span><span lang="en">Manufacturing (MFG)</span></a>
+    <a href="../inv/index.html" class="nav-link"><span lang="zh">庫存管理（INV）</span><span lang="en">Inventory Management (INV)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-sliders text-primary me-2"></i><span lang="zh">系統參數</span><span lang="en">System Parameters</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：系統管理 → 系統參數 &nbsp;|&nbsp; 權限：讀取／修改</span><span lang="en">Menu: System Administration → System Parameters &nbsp;|&nbsp; Permissions: read / change</span></div>
+    </div>
+
+    <p><span lang="zh">系統參數是</span><span lang="en">System parameters are </span><b><span lang="zh">全公司共用</span><span lang="en">shared company-wide</span></b><span lang="zh">的整體設定，不分廠別。修改後</span><span lang="en"> settings for the whole company, not per plant. Once changed, </span><b><span lang="zh">立即生效</span><span lang="en">takes effect immediately</span></b><span lang="zh">（不需重新啟動），
+      但影響範圍廣及所有模組，請由系統管理員統一維護。</span><span lang="en"> (no restart needed),
+      but because it reaches every module, it should be maintained centrally by the system administrator.</span></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">參數只影響</span><span lang="en"> The parameter only affects </span><b><span lang="zh">修改之後</span><span lang="en">after it is changed</span></b><span lang="zh">新產生的單據，</span><span lang="en"> newly created documents </span><b><span lang="zh">不會回頭改寫既有單據</span><span lang="en">does not go back and rewrite existing documents</span></b><span lang="zh">。
+      例如把製造簡化模式打開，先前已經展開、還停在「計劃中」的工單不會自動變成「已投產」。</span><span lang="en">.
+      Turning on simplified manufacturing mode, for example, does not turn work orders that were already exploded and are still "planned" into "released".</span>
+    </div>
+
+    <img class="screen-shot" src="img/system-param.png" data-src-en="img/en/system-param.png" alt="系統參數畫面截圖" data-alt-en="System parameter screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">系統參數畫面截圖（示意，實際區塊/選項依版本與權限而異）</span><span lang="en">System parameter screenshot (illustrative; the actual sections and options vary by version and permission)</span></div>
+
+    <h2 id="inventory-settings"><i class="bi bi-box-seam me-2 text-primary"></i><span lang="zh">庫存設定</span><span lang="en">Inventory Settings</span></h2>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">參數</span><span lang="en">Parameter</span></th><th class="u-width-12pct"><span lang="zh">預設</span><span lang="en">Default</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span lang="zh">庫存簡化模式</span><span lang="en">Simplified inventory mode</span></td>
+          <td><span lang="zh">關閉</span><span lang="en">Close</span></td>
+          <td><span lang="zh">控制</span><span lang="en">controls </span><b><span lang="zh">過帳時機</span><span lang="en">When posting happens</span></b><span lang="zh">。開啟後庫存單據建立／核准即直接過帳，不再走「建單 → 過帳」兩階段。
+              適合不需要單據覆核的小型倉庫。</span><span lang="en">. With it on, an inventory document posts as soon as it is created or approved, instead of going through the two stages of creating and then posting.
+              It suits small warehouses that do not need documents to be reviewed.</span></td>
+        </tr>
+        <tr>
+          <td><span lang="zh">預設計價方式</span><span lang="en">Default costing method</span></td>
+          <td><span lang="zh">移動平均（MA）</span><span lang="en">Moving average (MA)</span></td>
+          <td><span lang="zh">全系統存貨計價方式，可選移動平均或先進先出（FIFO）。</span><span lang="en">The inventory costing method for the whole system: moving average or first-in first-out (FIFO).</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="manufacturing-settings"><i class="bi bi-gear-wide-connected me-2 text-primary"></i><span lang="zh">製造設定</span><span lang="en">Manufacturing Settings</span></h2>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">參數</span><span lang="en">Parameter</span></th><th class="u-width-12pct"><span lang="zh">預設</span><span lang="en">Default</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span lang="zh">製造簡化模式</span><span lang="en">Simplified Manufacturing Mode</span></td>
+          <td><span lang="zh">關閉</span><span lang="en">Close</span></td>
+          <td><span lang="zh">控制</span><span lang="en">controls </span><b><span lang="zh">流程關卡</span><span lang="en">Process gates</span></b><span lang="zh">。開啟後 MRP 展開完成，工單直接進入「已投產」，
+              不需要人工到工單／生產批畫面按「投產」。</span><span lang="en">. With it on, work orders go straight to "released" as soon as the MRP run finishes,
+              with no need to go to the work order or production batch screen and click "Release".</span></td>
+        </tr>
+        <tr>
+          <td><span lang="zh">異動後自動重排排程</span><span lang="en">Reschedule automatically after changes</span></td>
+          <td><span lang="zh">關閉</span><span lang="en">Off</span></td>
+          <td><span lang="zh">投產、拆分、換機、完工、取消、機台狀態、工作日曆或計劃停機有異動後，安靜 90 秒（持續有異動時最多等 10 分鐘）自動重排。</span><span lang="en">After a release, split, machine switch, completion, cancellation, machine status change, work calendar change or planned downtime change, the schedule is re-run once things have been quiet for 90 seconds (at most 10 minutes while changes keep coming).</span></td>
+        </tr>
+        <tr>
+          <td><span lang="zh">派工前自動重排排程</span><span lang="en">Reschedule automatically before dispatch</span></td>
+          <td><span lang="zh">關閉</span><span lang="en">Off</span></td>
+          <td><span lang="zh">開啟派工作業、手機派工清單、生產準備看板、生產排程，以及 17:00 生產準備提醒送出前，若排程已過時先重排（約數秒）。</span><span lang="en">If the schedule is out of date, it is re-run (a few seconds) before Dispatch Operations, the mobile dispatch list, the Preparation Board or Production Schedule opens, and before the 17:00 preparation alert is sent.</span></td>
+        </tr>
+        <tr>
+          <td><span lang="zh">每日自動重排時刻（HH:mm）</span><span lang="en">Daily automatic rescheduling time (HH:mm)</span></td>
+          <td><span lang="zh">不使用</span><span lang="en">Not used</span></td>
+          <td><span lang="zh">每天此時刻全量重排一次，建議早於 17:00 準備提醒，例如 16:00。錯過時刻（例如伺服器停機）時當天之內補跑，同一天不重跑。</span><span lang="en">A full re-run once a day at this time; set it before the 17:00 preparation alert, for example 16:00. If the time is missed (for example the server was off) it runs later the same day, and never twice on one day.</span></td>
+        </tr>
+        <tr>
+          <td><span lang="zh">自動重排的排序規則</span><span lang="en">Sequencing rule for automatic runs</span></td>
+          <td><span lang="zh">未設定（優先順序）</span><span lang="en">Not set (Priority)</span></td>
+          <td><span lang="zh">自動重排依此規則排序生產批（優先順序、最早到期日、最短工時、先進先出、後進先出），也是生產排程頁規則下拉的預設；手動執行排程時仍可另選。</span><span lang="en">Automatic runs sequence production batches by this rule (Priority, Earliest Due Date, Shortest Process Time, FIFO, LIFO). It is also the default rule on the Production Schedule screen; a manual run can still pick another.</span></td>
+        </tr>
+        <tr>
+          <td><span lang="zh">凍結時界（小時）</span><span lang="en">Freeze window (hours)</span></td>
+          <td><span lang="zh">不使用</span><span lang="en">Not used</span></td>
+          <td><span lang="zh">自動重排時，已排且在此時數內開工的派工保留原機台與時段，例如設 24 表示明天這個時候以前要開工的派工不會被自動重排搬動。留空或 0＝不使用，上限 168。手動執行排程不套用。</span><span lang="en">In automatic runs, scheduled dispatches starting within this many hours keep their machine and time slot — 24, for example, means nothing due to start before this time tomorrow is moved by an automatic run. Blank or 0 turns it off; at most 168. Manual runs ignore it.</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p><span lang="zh">三種自動重排可以並用，以上五項各廠都可在</span><span lang="en">The three kinds of automatic rescheduling can be combined, and each plant can override all five settings above on the parameter tab of </span><a href="plant.html"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a><span lang="zh">的參數頁籤覆寫。運作方式見</span><span lang="en">. How it works is described under </span><a href="../mfg/schedule.html#auto-schedule"><span lang="zh">生產排程 → 自動重排排程</span><span lang="en">Production Schedule → Automatic rescheduling</span></a><span lang="zh">。</span><span lang="en">.</span></p>
+
+    <h3><span lang="zh">製造簡化模式開啟後有什麼不同</span><span lang="en">What changes when simplified manufacturing mode is on</span></h3>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">步驟</span><span lang="en">Step</span></th><th class="u-width-28pct"><span lang="zh">關閉（預設）</span><span lang="en">Off (default)</span></th><th><span lang="zh">開啟</span><span lang="en">On</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">MRP 執行單</span><span lang="en">MRP Run</span></td><td><span lang="zh">人工建立、挑選要展開的訂單明細，再按「執行 MRP」</span><span lang="en">Create it by hand, pick the order lines to explode and click "Run MRP"</span></td><td><b><span lang="zh">訂單核准後自動建立並執行</span><span lang="en">Created and run automatically once the order is approved</span></b><span lang="zh">；存檔後的提示訊息會告訴您產生的執行單號</span><span lang="en">; the message shown after saving tells you the run number that was created</span></td></tr>
+        <tr><td><span lang="zh">MRP 展開</span><span lang="en">MRP run</span></td><td><span lang="zh">產生生產批與工單，工單狀態＝</span><span lang="en">creates the production batch and the work orders, with a work order status of </span><b><span lang="zh">計劃中</span><span lang="en">Planned</span></b></td><td><span lang="zh">相同，但展開後接續自動投產</span><span lang="en">the same, except that the run is followed by an automatic release</span></td></tr>
+        <tr><td><span lang="zh">投產</span><span lang="en">Release</span></td><td><span lang="zh">人工到工單或生產批畫面按「投產」，系統重算需求量、檢查缺料，缺料</span><span lang="en">Someone goes to the work order or production batch screen and clicks "Release"; the system recalculates the demand and checks for shortages, and a shortage </span><b><span lang="zh">擋住不給投</span><span lang="en">blocks the release</span></b></td><td><b><span lang="zh">此步驟消失</span><span lang="en">this step disappears</span></b><span lang="zh">；數量沿用展開時的計劃量，缺料</span><span lang="en">; the quantity is the planned quantity from the run, and a shortage </span><b><span lang="zh">不擋單</span><span lang="en">does not block the document</span></b></td></tr>
+        <tr><td><span lang="zh">簽核</span><span lang="en">Approval</span></td><td><span lang="zh">依簽核設定可能需要送審</span><span lang="en">may need to be submitted for approval, depending on the approval settings</span></td><td><b><span lang="zh">視同已核准</span><span lang="en">treated as approved</span></b><span lang="zh">，不送審。例外：該廠有工單簽核流程，且<strong>明確設了金額門檻</strong>（成本超過者）或開了強制送審條件（委外／重工／延期）時，符合的工單仍會送審，核准後才能開工</span><span lang="en">, without approval. Exception: if the plant has a work order approval flow and has <strong>explicitly set an amount threshold</strong> (for orders above it) or turned on a mandatory approval condition (outsourced / rework / delayed), matching work orders are still submitted and can be started only after approval</span></td></tr>
+        <tr><td><span lang="zh">領料單</span><span lang="en">Material Requisitions</span></td><td><span lang="zh">投產核准時自動產生（推式用料）</span><span lang="en">Created automatically when the release is approved (push material)</span></td><td><span lang="zh">相同，自動產生</span><span lang="en">the same, generated automatically</span></td></tr>
+        <tr><td><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></td><td><span lang="zh">委外工單投產時自動建立</span><span lang="en">Created automatically when an outsource work order is released</span></td><td><span lang="zh">相同，自動建立</span><span lang="en">the same, created automatically</span></td></tr>
+        <tr><td><span lang="zh">排程</span><span lang="en">Scheduling</span></td><td><span lang="zh">需先排程，派工由「待排程」推進到「已排定」才能開工</span><span lang="en">It has to be scheduled first: the dispatch has to move from "to be scheduled" to "scheduled" before work can start</span></td><td><b><span lang="zh">此步驟可略過</span><span lang="en">this step can be skipped</span></b><span lang="zh">；派工停在「待排程」也能直接開工，現場待辦清單一併顯示這些派工</span><span lang="en">; work can start even while the dispatch is still "to be scheduled", and such dispatches appear in the shop-floor to-do list</span></td></tr>
+        <tr><td><span lang="zh">開工／完工／報工</span><span lang="en">Start / finish / report</span></td><td><span lang="zh">照常操作</span><span lang="en">works as usual</span></td><td><b><span lang="zh">操作方式相同</span><span lang="en">the way it works is the same</span></b><span lang="zh">；另加一道工序順序檢查（見下）</span><span lang="en">; plus an operation sequence check (see below)</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-diagram-3 me-1 text-warning"></i>
+      <strong><span lang="zh">工序順序檢查（僅簡化模式）：</span><span lang="en">Operation sequence check (simplified mode only):</span></strong><span lang="zh">不排程就沒有東西保證前工序先做，
+      因此報工時系統會檢查——本工序的累計完成量</span><span lang="en"> without a schedule there is nothing to guarantee that earlier operations are done first,
+      so when production is reported the system checks that this operation's cumulative completed quantity </span><b><span lang="zh">不得超過前一工序</span><span lang="en">cannot exceed the previous operation</span></b><span lang="zh">的完成量，超過即拒絕報工
+      （避免出現「後製程做得比前製程多」的不可能數字）。第一道工序不受此限。
+      關閉簡化模式時</span><span lang="en"> of the previous operation, and rejects the report if it goes over
+      (so you never get the impossible figure of a later process producing more than an earlier one). The first operation is exempt.
+      With simplified mode off, </span><b><span lang="zh">不做</span><span lang="en">Not done</span></b><span lang="zh">這項檢查，維持既有排程保證順序的做法。</span><span lang="en"> this check, keeping the existing approach of letting the schedule guarantee the order.</span>
+    </div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">缺料不再擋單：</span><span lang="en">Shortages no longer block the document:</span></strong><span lang="zh">開啟後缺料的工單一樣會投產，只是工單的料況顯示為「缺料」，
+      MRP 執行結果畫面也會列出提示訊息。缺料的把關往後移到</span><span lang="en"> With it on, a work order short of material is still released; its material status simply shows "short",
+      and the MRP result screen lists a message. The check on shortages moves to </span><b><span lang="zh">開工</span><span lang="en">Start work</span></b><span lang="zh">時的料況檢查
+      （由「開工物料備齊閘口」參數決定是提醒還是擋住）。請確認現場流程可以承受這個改變再開啟。</span><span lang="en">, the material check at that point
+      (the "material ready gate at start" parameter decides whether it warns or blocks). Make sure the shop floor can live with the change before turning it on.</span>
+    </div>
+
+    <div class="note-box"><i class="bi bi-arrow-repeat me-1 text-warning"></i>
+      <strong><span lang="zh">自動展開只補「還沒展開的量」：</span><span lang="en">An automatic run only covers the quantity not yet exploded:</span></strong><span lang="zh">系統以「訂單量 − 已展開量」判斷，
+      同一張訂單重複存檔</span><span lang="en"> The system works on order quantity minus the quantity already exploded,
+      so saving the same order again </span><b><span lang="zh">不會</span><span lang="en">does not</span></b><span lang="zh">重複展開。訂單後來</span><span lang="en"> exploding it twice. If the order later </span><b><span lang="zh">加量</span><span lang="en">Increase</span></b><span lang="zh">時，下次核准只會補展增加的部分。
+      訂單</span><span lang="en">, the next approval only explodes the additional quantity.
+      An order </span><b><span lang="zh">修改</span><span lang="en">Update</span></b><span lang="zh">（改量、改交期）維持既有做法——只標記關聯的 MRP 執行單需要重跑，</span><span lang="en"> (changing the quantity or the delivery date) works as before — it simply marks the related MRP run as needing a re-run,</span>
+      <b><span lang="zh">不自動重跑</span><span lang="en">is not re-run automatically</span></b><span lang="zh">，因為重跑會影響已投產的工單與已收貨的採購單，須由人工判斷。</span><span lang="en">, because a re-run would affect released work orders and received purchase orders, so someone has to decide.</span>
+      <br><span lang="zh">另請注意：若貴公司的訂單有設定</span><span lang="en">Also note: if your orders have </span><b><span lang="zh">簽核流程</span><span lang="en">Approval flow</span></b><span lang="zh">、且核准動作是在「待我簽核」畫面完成的，
+      該張訂單會等到下一次有訂單核准時才一併展開；簡化模式的建議用法是訂單不設簽核流程。</span><span lang="en"> and the approval is given on the "Pending my approval" screen,
+      that order waits for the next order approval before it is exploded; with simplified mode the recommendation is not to put an approval flow on orders at all.</span>
+    </div>
+
+    <div class="tip-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <strong><span lang="zh">兩個「簡化模式」不一樣：</span><span lang="en">The two "simplified modes" are not the same:</span></strong><span lang="zh">庫存簡化模式管的是</span><span lang="en"> Simplified inventory mode governs </span><b><span lang="zh">過帳時機</span><span lang="en">When posting happens</span></b><span lang="zh">（要不要兩階段過帳），
+      製造簡化模式管的是</span><span lang="en"> (whether posting takes two stages),
+      while simplified manufacturing mode governs </span><b><span lang="zh">流程關卡</span><span lang="en">Process gates</span></b><span lang="zh">（要不要人工投產）。兩者各自獨立，
+      可以只開其中一個；開啟庫存簡化模式</span><span lang="en"> (whether release has to be done by hand). The two are independent and
+      either can be turned on alone; turning on simplified inventory mode </span><b><span lang="zh">不會</span><span lang="en">does not</span></b><span lang="zh">連帶開啟製造簡化模式。</span><span lang="en"> also turn on simplified manufacturing mode.</span>
+    </div>
+
+    <h2 id="finance-settings"><i class="bi bi-cash-coin me-2 text-primary"></i><span lang="zh">財務設定</span><span lang="en">Finance Settings</span></h2>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">參數</span><span lang="en">Parameter</span></th><th class="u-width-12pct"><span lang="zh">預設</span><span lang="en">Default</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span lang="zh">本位幣</span><span lang="en">Local Amount</span></td>
+          <td><span lang="zh">未設定</span><span lang="en">Not set</span></td>
+          <td><span lang="zh">公司帳務的記帳幣別，作為所有匯率換算的基準。下拉只列出</span><span lang="en">The currency the company's books are kept in, the basis of every conversion. The dropdown only lists </span><b><span lang="zh">啟用中</span><span lang="en">Active</span></b><span lang="zh">的幣別，
+              請先在「幣別 / 匯率」建立後再回來設定。</span><span lang="en"> currencies;
+              create it under "Currency Maintenance" first and then come back to set it.</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="purchasing-supplier-scorecard-settings"><i class="bi bi-star-half me-2 text-primary"></i><span lang="zh">採購（供應商評分卡）設定</span><span lang="en">Purchasing (supplier scorecard) settings</span></h2>
+    <p><span lang="zh">供應商總分的加權權重，四項合計不必剛好 100，系統會依比例換算。留空即回到預設值。</span><span lang="en">Weight of this item in the supplier's total score; the four weights do not have to add up to exactly 100, as the system scales them proportionally. Leave it blank to go back to the default.</span></p>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">參數</span><span lang="en">Parameter</span></th><th class="u-width-12pct"><span lang="zh">預設</span><span lang="en">Default</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品質權重</span><span lang="en">Quality weight</span></td><td>30</td><td><span lang="zh">進料檢驗合格率等品質面向的比重</span><span lang="en">Weight given to quality aspects such as the incoming inspection pass rate</span></td></tr>
+        <tr><td><span lang="zh">交期權重</span><span lang="en">Delivery weight</span></td><td>30</td><td><span lang="zh">準時交貨率的比重</span><span lang="en">Weight given to the on-time delivery rate</span></td></tr>
+        <tr><td><span lang="zh">價格權重</span><span lang="en">Price weight</span></td><td>20</td><td><span lang="zh">報價競爭力的比重</span><span lang="en">Weight given to how competitive the quotes are</span></td></tr>
+        <tr><td><span lang="zh">服務權重</span><span lang="en">Service weight</span></td><td>20</td><td><span lang="zh">配合度、回應速度等的比重</span><span lang="en">Weight given to cooperativeness, responsiveness and the like</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-shield-exclamation me-1 text-warning"></i>
+      <strong><span lang="zh">輸入限制：</span><span lang="en">Input limits:</span></strong><span lang="zh">權重只接受</span><span lang="en"> The weight only accepts </span><b><span lang="zh">0 或正數</span><span lang="en">0 or a positive number</span></b><span lang="zh">。輸入負數或非數字時該欄位</span><span lang="en">. If a negative or non-numeric value is entered, the field </span><b><span lang="zh">不會被儲存</span><span lang="en">is not saved</span></b><span lang="zh">，
+      維持原本的值——存檔後請確認畫面顯示的是您預期的數字。</span><span lang="en">,
+      and keeps its original value — after saving, check that the figure on the screen is the one you meant.</span>
+    </div>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="../bas/currency.html"><span lang="zh">幣別 / 匯率</span><span lang="en">Currency / Exchange Rate</span></a>、<a href="../mfg/mrp-run.html"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>、
+       <a href="../mfg/work-order.html"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>、<a href="../mfg/batch-release.html"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>、
+       <a href="../mfg/dispatch.html"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a></p>
+  </main>
+</div>
+</body>
+</html>

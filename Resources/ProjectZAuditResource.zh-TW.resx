@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PoOverReceipt" xml:space="preserve"><value>累計有效收料 {0} 超過採購量 {1}（超收 {2}）</value></data>
+  <data name="GrIrOverInvoice" xml:space="preserve"><value>發票累計數量 {0} 超過應認列數量 {1}（收料 {2} − 已退 {3}）</value></data>
+  <data name="GrIrAging" xml:space="preserve"><value>收料日 {0} 超過 {1} 天，暫估 {2} 僅核銷 {3}（掛帳 {4}）</value></data>
+  <data name="OutsourceNegBalance" xml:space="preserve"><value>委外在外餘量為負：淨發料 {0} − 理論消耗 {1}（收貨×單位用量 {2}）= {3}（超產或發退料資料錯誤）</value></data>
+  <data name="JournalUnbalanced" xml:space="preserve"><value>傳票借方 {0} ≠ 貸方 {1}（差額 {2}）</value></data>
+  <data name="JournalDuplicate" xml:space="preserve"><value>來源單據 {0} {1} 產生 {2} 張自動傳票（應為 1 張，疑似重複過帳）</value></data>
+  <data name="InvRollforward" xml:space="preserve"><value>異動淨額 {0} ≠ 帳面庫存 {1}（差額 {2}；儲位 {3}、批號 {4}）</value></data>
+  <data name="InvRollforwardNoLot" xml:space="preserve"><value>異動淨額 {0} ≠ 帳面庫存 {1}（差額 {2}；儲位 {3}、無批號）</value></data>
+  <data name="SoOverShipment" xml:space="preserve"><value>累計有效出貨 {0} 超過訂單量 {1}（超出 {2}）</value></data>
+  <data name="GsNoArInvoice" xml:space="preserve"><value>出貨單 {0}（出貨日 {1}）已確認但尚無有效 AR 發票</value></data>
+  <data name="GsNoArInvoicePreOpen" xml:space="preserve"><value>出貨單 {0}（出貨日 {1}）已確認但尚無有效 AR 發票；出貨日早於本廠最早會計期間起日 {2}，屬期初前資料，僅提示不擋關帳</value></data>
+  <data name="BackflushMismatch" xml:space="preserve"><value>後沖實際消耗 {0} ≠ 標準用量×完工比例 {1}（差額 {2}）</value></data>
+  <data name="WoMaterialNotIssued" xml:space="preserve"><value>工單已入庫，但 {0} 用料 {1} 一顆都沒領（應領 {2}）——成品成本不含這項材料</value></data>
+  <data name="SalesReturnCostBasis" xml:space="preserve"><value>銷退入庫單位成本 {0} ≠ 來源出貨 {1} 的 {2}（{3} 個，差額 {4}）——存貨與銷貨成本一起偏離，且移動平均已被帶偏</value></data>
+  <data name="FifoLayerMismatch" xml:space="preserve"><value>儲位 {0} 的 FIFO 成本層總量 {1} ≠ 在手量 {2}（差 {3}）——出庫會扣到不存在的層或用到早該消失的舊層單價；數量型稽核與借貸平衡都看不到這個差異，兩個儲位一多一少時連廠級總量也是平的</value></data>
+  <data name="CustomerSuppliedWrongLocation" xml:space="preserve"><value>客供異動 {0} 落在儲位 {1}，而該儲位不屬客供倉（倉別類型 CustomerSupplied）——客供料屬客戶財產，落在一般倉會被算進移動平均的分母而壓低自有料單價，並擴散到之後每一張出貨的銷貨成本。過帳守門上線後不會再新增，這些是遺留資料：請把該批庫存調撥到客供倉</value></data>
+  <data name="ArInvoiceUnreversed" xml:space="preserve"><value>出貨 {0} 第 {1} 行已退回 {2}，但應收發票仍掛著 {3} 未沖（金額 {4}）——發票狀態 {5}，已結清的發票不自動沖銷；退貨過帳時已產生折讓單草稿，確認過帳後本筆即消失</value></data>
+  <data name="ApInvoiceUnreversed" xml:space="preserve"><value>進貨 {0} 第 {1} 行已退回 {2}，但應付發票仍掛著 {3} 未沖（金額 {4}）——發票狀態 {5}，已結清的發票不自動沖銷；退貨過帳時已產生折讓單草稿，確認過帳後本筆即消失</value></data>
+  <data name="PoReceivedDrift" xml:space="preserve"><value>PO 明細累計進貨 {0} ≠ 有效進貨單彙總 {1}（差額 {2}）</value></data>
+  <data name="PoReceivedOrphan" xml:space="preserve"><value>進貨明細彙總 {0} 指向不存在的 PO 明細</value></data>
+  <data name="SoShippedDrift" xml:space="preserve"><value>SO 明細累計出貨 {0} ≠ 有效出貨單彙總 {1}（差額 {2}）</value></data>
+  <data name="SoShippedOrphan" xml:space="preserve"><value>出貨明細彙總 {0} 指向不存在的 SO 明細</value></data>
+  <data name="WipCostNotFinal" xml:space="preserve"><value>工單 {0} 本期完工成本仍為 Preliminary（期末實際費率重估未跑，或重估後又有完工，請重跑重估）</value></data>
+  <data name="WipSnapshotMissing" xml:space="preserve"><value>在製工單 {0} 無本期（{1}）WIP 快照（期末重估未跑，或重估後才投產，請重跑重估）</value></data>
+  <data name="WipSnapshotStale" xml:space="preserve"><value>WIP 快照指向已非在製的工單 {0}（重估後完工/作廢），請重跑重估</value></data>
+  <data name="WipSnapshotNegative" xml:space="preserve"><value>WIP 快照含負分量（材料 {0}、人工 {1}、製費 {2}、在製量 {3}）</value></data>
+  <data name="WipVoidLeakage" xml:space="preserve"><value>前期在製工單 {0} 本期作廢，期初 WIP {1} 無成本出口（發料應先退回再作廢），已自恆等式期初調節</value></data>
+  <data name="WipIssuedNegative" xml:space="preserve"><value>本期發料淨值為負（{0}）——退料超過發料，資料異常，恆等式不評估</value></data>
+  <data name="WipIdentityDrift" xml:space="preserve"><value>WIP 金額恆等式失衡 {0}：期末 {1} ≠ 期初 {2} + 發料淨值 {3} + 部門人工/製費 {4} − 完工成本 {5}（= {6}）。常見原因：工作中心有當月費用但無工時（費用無處吸收）、重估後又有發料/完工未重跑、跨期結轉缺前期快照</value></data>
+  <data name="ErpSyncLagAp" xml:space="preserve"><value>AP 發票建立於 {0} 已逾 {1} 小時未拋轉（狀態 {2}、重試 {3} 次）</value></data>
+  <data name="ErpSyncLagApWithError" xml:space="preserve"><value>AP 發票建立於 {0} 已逾 {1} 小時未拋轉（狀態 {2}、重試 {3} 次、錯誤：{4}）</value></data>
+  <data name="ErpSyncLagAr" xml:space="preserve"><value>AR 發票建立於 {0} 已逾 {1} 小時未拋轉（狀態 {2}、重試 {3} 次）</value></data>
+  <data name="ErpSyncLagArWithError" xml:space="preserve"><value>AR 發票建立於 {0} 已逾 {1} 小時未拋轉（狀態 {2}、重試 {3} 次、錯誤：{4}）</value></data>
+  <data name="WoCostMaterialLeg" xml:space="preserve"><value>材料腿：成本記錄 ActualMaterial {0} vs 庫存異動子帳（後沖＋發退料）淨成本 {1}，差 {2}</value></data>
+  <data name="WoCostConversionLeg" xml:space="preserve"><value>人工/製費腿：成本記錄 Labor+Overhead {0} vs 吸收分錄（完工＋重估調整）淨額 {1}，差 {2}</value></data>
+  <data name="OrphanStockMovement" xml:space="preserve"><value>庫存異動 {0}（類別 {1}，{2} 筆，淨量 {3}）的來源單據已不存在——單據被刪除但過帳未一併回沖</value></data>
+  <data name="OrphanJournalEntry" xml:space="preserve"><value>傳票 {0} 的來源單據 {1} {2} 已不存在——單據被刪除但總帳分錄未回沖</value></data>
+  <data name="OrphanInvoiceAp" xml:space="preserve"><value>應付發票 {0} 的來源單據 {1} {2} 已不存在——來源單被刪除但發票未一併作廢</value></data>
+  <data name="OrphanInvoiceAr" xml:space="preserve"><value>應收發票 {0} 的來源單據 {1} {2} 已不存在——來源單被刪除但發票未一併作廢</value></data>
+  <data name="InvGlSubledgerResidual" xml:space="preserve"><value>總帳存貨科目 {0} − 明細帳價值 {1} − 在製 {2} − 客供料 {3} − 借出在外 {4} ＝ 殘差 {5}——有異動漏開傳票、或傳票金額與異動不同；數量型稽核與借貸平衡都看不到這個差異。請看同廠「單據總帳與異動價值不符」的明細找來源</value></data>
+  <data name="InvGlDocDiff" xml:space="preserve"><value>單據 {0}（異動類別 {1}）的總帳存貨科目淨額 {2} ≠ 庫存異動價值 {3}（差 {4}）</value></data>
+  <data name="InvGlWipNegative" xml:space="preserve"><value>工單 {0} 留在總帳存貨科目的在製為負數 {1}——回到倉庫的價值比發出去的多（例如退料超過廠內實際發料、委外收回未入加工費）</value></data>
+  <data name="InvGlWipClosed" xml:space="preserve"><value>工單 {0} 已結案，但總帳存貨科目仍留著在製 {1}——發出去的料沒有算進成品，也沒有退回倉庫</value></data>
+  <data name="InvGlWipVoided" xml:space="preserve"><value>工單 {0} 已作廢，但總帳存貨科目仍留著在製 {1}——發出去的料沒有退回倉庫</value></data>
+</root>

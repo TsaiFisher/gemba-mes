@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Inventory (INV) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>庫存管理（INV）— SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">INV 畫面</span><span lang="en">INV Screens</span></div>
+    <a href="inventory-balance.html" class="nav-link"><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></a>
+    <a href="stock-movement.html" class="nav-link"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a>
+    <a href="stock-ledger.html" class="nav-link"><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></a>
+    <a href="warehouse-ops.html" class="nav-link"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a>
+    <a href="material-staging.html" class="nav-link"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a>
+    <a href="scrap-doc.html" class="nav-link"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></a>
+    <a href="loan-doc.html" class="nav-link"><span lang="zh">借入借出單</span><span lang="en">Loan Document</span></a>
+    <a href="sample-doc.html" class="nav-link"><span lang="zh">樣品/客供單</span><span lang="en">Sample/Consignment Docs</span></a>
+    <a href="inventory-count.html" class="nav-link"><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></a>
+    <a href="stock-adjustment.html" class="nav-link"><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></a>
+    <a href="../osp/outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="rework-material.html" class="nav-link"><span lang="zh">重工發退料單</span><span lang="en">Rework Material</span></a>
+    <a href="stock-transfer.html" class="nav-link"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a>
+    <a href="cross-plant-transfer.html" class="nav-link"><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></a>
+    <a href="inventory-valuation.html" class="nav-link"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a>
+    <a href="landed-cost-allocation.html" class="nav-link"><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></a>
+    <a href="stock-shortage.html" class="nav-link"><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></a>
+    <a href="slow-moving-inventory.html" class="nav-link"><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></a>
+    <a href="inventory-aging.html" class="nav-link"><span lang="zh">存貨庫齡分析</span><span lang="en">Inventory Aging Analysis</span></a>
+    <a href="inventory-value.html" class="nav-link"><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></a>
+    <a href="inventory-turnover.html" class="nav-link"><span lang="zh">庫存周轉率</span><span lang="en">Inventory Turnover</span></a>
+    <a href="stock-variance.html" class="nav-link"><span lang="zh">盤差分析</span><span lang="en">Stock Variance</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-boxes me-2 text-primary"></i><span lang="zh">庫存管理（INV）</span><span lang="en">Inventory Management (INV)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">倉儲三層結構（倉庫/儲位/批號）、各式庫存單據、倉庫作業與庫存分析</span><span lang="en">The three-level storage structure (warehouse / location / lot), the inventory documents, warehouse operations and inventory analysis</span></div>
+    </div>
+    <p><span lang="zh">INV（Inventory）模組是全系統庫存帳的核心：所有進出異動皆以「單據 → 倉庫作業 → 過帳」產生庫存異動（StockMovement）並即時更新庫存餘額與移動平均成本（AVCO；批號管制品可用 FIFO 成本層）。單據採三層結構（表頭/明細行/儲位明細），業務確認與倉庫執行分權：倉庫在「倉庫作業」逐儲位執行，全部完成後單據自動過帳。模組亦涵蓋調撥、盤點、報廢、借出、樣品、委外/重工發退料、跨廠調撥與多種庫存分析報表。</span><span lang="en">The INV (Inventory) module is the core of the stock ledger: every movement is produced through "document → warehouse operation → posting", which writes a stock movement and updates the balance and moving average cost (AVCO; lot-controlled items can use FIFO cost layers) immediately. Documents have three levels (header / line / location detail), separating business confirmation from warehouse execution: the warehouse works location by location under Warehouse Operations, and the document posts automatically once everything is done. The module also covers transfers, stock counts, scrap, loans, samples, outsource and rework material, cross-plant transfers and a range of inventory analysis reports.</span></p>
+
+    <h2 id="common-document-flow-full-mode"><i class="bi bi-signpost-2 me-2 text-primary"></i><span lang="zh">單據共同流程（完整模式）</span><span lang="en">Common document flow (full mode)</span></h2>
+    <div class="tip-box">
+      <span lang="zh">業務</span><span lang="en">Sales rep </span><strong><span lang="zh">建單</span><span lang="en">Create</span></strong><span lang="zh">（草稿）→</span><span lang="en"> (draft) →</span> <strong><span lang="zh">送審</span><span lang="en">Submit</span></strong><span lang="zh">/確認 → 倉庫於「</span><span lang="en"> / confirm → the warehouse then uses " </span><strong><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></strong><span lang="zh">」逐儲位執行
+      → 每次執行即寫庫存異動 → 全部完成單據自動</span><span lang="en"> " location by location → every execution writes a stock movement → once all of them are done the document automatically becomes </span><strong><span lang="zh">過帳</span><span lang="en">Post</span></strong> <span lang="zh">→ 需沖銷時</span><span lang="en">→ when a reversal is needed </span><strong><span lang="zh">作廢</span><span lang="en">Void</span></strong><span lang="zh">（反向異動）</span><span lang="en"> (reverse movement)</span>
+    </div>
+    <h2 id="flow"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></h2>
+    <p class="small text-muted mb-2"><span lang="zh">依作業先後順序排列，點擊方塊可開啟該畫面的操作說明。</span><span lang="en">Arranged in the order the work is done; click a box to open the instructions for that screen. </span><strong><span lang="zh">虛線外框</span><span lang="en">A dashed outline</span></strong><span lang="zh">為其他模組的作業（以顏色區分模組）。</span><span lang="en"> marks a step in another module (colour-coded by module).</span></p>
+    <div class="flow">
+      <div class="flow-legend">
+        <span class="flow-legend-item m-inv"><i class="flow-dot"></i><span lang="zh">INV 庫存（本模組）</span><span lang="en">INV Inventory (this module)</span></span>
+        <span class="flow-legend-item m-pur"><i class="flow-dot"></i><span lang="zh">PUR 採購</span><span lang="en">PUR Purchasing</span></span>
+        <span class="flow-legend-item m-mfg"><i class="flow-dot"></i><span lang="zh">MFG 製造</span><span lang="en">MFG Manufacturing</span></span>
+        <span class="flow-legend-item m-ord"><i class="flow-dot"></i><span lang="zh">ORD 訂單</span><span lang="en">ORD Orders</span></span>
+        <span class="flow-legend-item m-qcr"><i class="flow-dot"></i><span lang="zh">QCR 品質</span><span lang="en">QCR Quality</span></span>
+        <span class="flow-legend-item m-act"><i class="flow-dot"></i><span lang="zh">ACT 結帳</span><span lang="en">ACT Closing</span></span>
+        <span class="flow-legend-item m-osp"><i class="flow-dot"></i><span lang="zh">OSP 委外</span><span lang="en">OSP Outsource</span></span>
+        <span class="flow-legend-item"><i class="flow-dot flow-dot-ext"></i><span lang="zh">虛線＝其他模組作業</span><span lang="en">Dashed = a step in another module</span></span>
+      </div>
+
+      <div class="flow-row" id="flow-inv-document-life-cycle">
+        <div class="flow-row-label"><span lang="zh">單據生命週期</span><span lang="en">Document life cycle</span></div>
+        <div class="flow-steps">
+          <span class="flow-node m-inv evt"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">建單（草稿）</span><span lang="en">Create (draft)</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <span class="flow-node m-inv evt"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">送審／確認</span><span lang="en">Submit / Confirm</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">倉庫作業（逐儲位執行）</span><span lang="en">Warehouse operations (location by location)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="stock-movement.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存異動</span><span lang="en">Inventory Movement</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <span class="flow-node m-inv evt"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">全部完成自動過帳</span><span lang="en">Posts automatically once everything is done</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act ext" href="../act/journal-entry.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">日記帳分錄</span><span lang="en">Journal entry</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row alt" id="flow-inv-simplified-mode">
+        <div class="flow-row-label"><span lang="zh">簡化模式</span><span lang="en">Simplified Mode</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-sys ext" href="../sys/system-param.html"><span class="flow-mod">SYS</span><span class="flow-name"><span lang="zh">系統參數：庫存簡化模式</span><span lang="en">System parameter: Simplified Inventory Mode</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <span class="flow-node m-inv evt"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">建單（草稿）</span><span lang="en">Create (draft)</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <span class="flow-node m-inv evt"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">確認即直接過帳</span><span lang="en">Confirming posts it directly</span></span></span>
+          <span class="flow-cond"><span lang="zh">跳過倉庫作業</span><span lang="en">Warehouse operations skipped</span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="stock-movement.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存異動</span><span lang="en">Inventory Movement</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act ext" href="../act/journal-entry.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">日記帳分錄</span><span lang="en">Journal entry</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-inv-receipt-source">
+        <div class="flow-row-label"><span lang="zh">入庫來源</span><span lang="en">Receipt source</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-pur ext" href="../pur/goods-receipt.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-osp ext" href="../osp/outsource-receipt.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-mfg ext" href="../mfg/production-completion.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-ord ext" href="../ord/sales-return.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">銷退單</span><span lang="en">Sales Return</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">上架入庫</span><span lang="en">Put-away into stock</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="inventory-balance.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存餘額</span><span lang="en">Inventory Balance</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-inv-issue-destination">
+        <div class="flow-row-label"><span lang="zh">出庫去向</span><span lang="en">Issue destination</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-mfg ext" href="../mfg/material-slip.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">領料單</span><span lang="en">Material Requisitions</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-ord ext" href="../ord/goods-shipment.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv" href="scrap-doc.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv" href="loan-doc.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">借出單</span><span lang="en">Lend-out document</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv" href="sample-doc.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">樣品單</span><span lang="en">Sample doc</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="material-staging.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">備料揀貨</span><span lang="en">Staging pick</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">揀貨出庫</span><span lang="en">Picking and issue</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-inv-movement-within-the-plant">
+        <div class="flow-row-label"><span lang="zh">廠內異動</span><span lang="en">Movement within the plant</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-inv" href="stock-transfer.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存調撥</span><span lang="en">Stock transfer</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv" href="cross-plant-transfer.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">跨廠調撥</span><span lang="en">Cross-plant transfer</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv" href="inventory-count.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">盤點單</span><span lang="en">Count sheet</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="stock-adjustment.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存調整（盤盈虧）</span><span lang="en">Stock adjustment (count gains and losses)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="stock-variance.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">盤點差異分析</span><span lang="en">Count variance analysis</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-inv-outsourcing-osp-rework">
+        <div class="flow-row-label"><span lang="zh">委外（OSP）／重工</span><span lang="en">Outsourcing (OSP) / rework</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-osp ext" href="../osp/outsource-purchase-order.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp ext" href="../osp/outsource-material.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外發／退料</span><span lang="en">Outsource issue / return</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp ext" href="../osp/outsource-receipt.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></span></a>
+          <span class="flow-plus">／</span>
+          <a class="flow-node m-qcr ext" href="../qcr/ncr.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">NCR 重工</span><span lang="en">NCR rework</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="rework-material.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">重工發／退料</span><span lang="en">Rework issue / return</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-inv-valuation-and-analysis">
+        <div class="flow-row-label"><span lang="zh">評價與分析</span><span lang="en">Valuation and analysis</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-inv" href="stock-ledger.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存帳（進銷存）</span><span lang="en">Stock ledger (in, out and balance)</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv" href="landed-cost-allocation.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">進口費用分攤</span><span lang="en">Landed Cost Allocation</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="inventory-valuation.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存評價</span><span lang="en">Inventory valuation</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act ext" href="../act/nrv-assessment.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">NRV 存貨減損</span><span lang="en">NRV inventory impairment</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-inv-inventory-health">
+        <div class="flow-row-label"><span lang="zh">庫存健康度</span><span lang="en">Inventory health</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-inv" href="stock-shortage.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">缺料分析</span><span lang="en">Shortage analysis</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv" href="inventory-aging.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫齡分析</span><span lang="en">Aging analysis</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv" href="slow-moving-inventory.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">呆滯料分析</span><span lang="en">Slow-moving analysis</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv" href="inventory-turnover.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存週轉率</span><span lang="en">Inventory Turnover</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv" href="inventory-value.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存金額分析</span><span lang="en">Inventory value analysis</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-foot">
+        <i class="bi bi-info-circle me-1"></i><span lang="zh">簡化模式（黃底列）由系統參數切換，適合不需逐儲位管理的現場；即使簡化，庫存異動、成本與帳務分錄仍照常產生。
+        已產生庫存異動的單據不可撤回，只能作廢（反向異動並回沖分錄）。</span><span lang="en">Simplified mode (rows on a yellow background) is switched on by a system parameter and suits sites that do not need location-level control; even when simplified, stock movements, cost and journal entries are still produced.
+        A document that has already generated stock movements cannot be withdrawn, only voided (which reverses the movement and the journal entry).</span>
+      </div>
+    </div>
+
+    <h2 id="points-to-note"><i class="bi bi-list-ol me-2 text-primary"></i><span lang="zh">使用注意</span><span lang="en">Points to note</span></h2>
+    <ol class="lh-lg">
+      <li><span lang="zh">出庫以「儲位可用量」檢核（在庫 − 預留），不足擋單。</span><span lang="en">Issues are checked against the available quantity of the location (on hand − reserved) and blocked when it is insufficient.</span></li>
+      <li><span lang="zh">過帳受「會計期間鎖」管制，已關帳期間的異動會被擋下。</span><span lang="en">Posting is subject to the accounting period lock; movements in a closed period are blocked.</span></li>
+      <li><span lang="zh">已有庫存異動的單據不可業務撤回，只能作廢沖銷。</span><span lang="en">A document that has already moved stock cannot be withdrawn by the business side; it can only be voided and reversed.</span></li>
+      <li><span lang="zh"><strong>入庫單的貨已被後續出庫用掉時，不能直接作廢</strong>（2026-10-21 起）：FIFO 料是那一批已被扣用；移動平均料是作廢後剛好收光、但帳上剩的價值與要收回的對不上。請先作廢用掉它的出庫單，或改用進貨退出／庫存調整。直接作廢會讓總帳存貨與庫存明細帳的金額從此對不上。</span><span lang="en"><strong>A receipt whose goods have already been used by later issues cannot be voided directly</strong> (from 21 October 2026): for FIFO items, that batch has been consumed; for moving-average items, the void would empty the stock while the value left on the books does not match what would be reversed. Void the issues that used it first, or use a purchase return or stock adjustment instead. Voiding it directly would leave the general-ledger inventory and the stock ledger permanently out of step.</span></li>
+      <li><span lang="zh">同一張單已作廢過時再按一次作廢，不會有任何變動。</span><span lang="en">Voiding a document that has already been voided changes nothing.</span></li>
+    </ol>
+    <h2 id="screen-list"><i class="bi bi-grid me-2 text-primary"></i><span lang="zh">畫面清單</span><span lang="en">Screen list</span></h2>
+    <div class="row g-3">
+      <div class="col-md-6"><a href="inventory-balance.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-clipboard-data me-1 text-primary"></i><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></h6>
+        <div class="text-muted small"><span lang="zh">即時庫存量（在庫/預留/可用）查詢</span><span lang="en">Live stock enquiry (on hand / reserved / available)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="stock-movement.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-arrow-left-right me-1 text-primary"></i><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></h6>
+        <div class="text-muted small"><span lang="zh">所有進出異動流水</span><span lang="en">All stock movements</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="stock-ledger.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-journal-text me-1 text-primary"></i><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></h6>
+        <div class="text-muted small"><span lang="zh">品號別期初/進/出/期末帳</span><span lang="en">Opening, in, out and closing ledger per product</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="warehouse-ops.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box-arrow-in-down me-1 text-primary"></i><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></h6>
+        <div class="text-muted small"><span lang="zh">倉管人員統一執行台（上架/揀貨）</span><span lang="en">One execution desk for warehouse staff (put-away / picking)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="material-staging.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box2-heart me-1 text-primary"></i><span lang="zh">備料單</span><span lang="en">Material Staging</span></h6>
+        <div class="text-muted small"><span lang="zh">工單備料暫存與齊套確認</span><span lang="en">Work order staging and completeness confirmation</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="scrap-doc.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-trash3 me-1 text-primary"></i><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></h6>
+        <div class="text-muted small"><span lang="zh">不堪用存貨報廢出庫</span><span lang="en">Scrapping unusable stock out of inventory</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="loan-doc.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-arrow-left-right me-1 text-primary"></i><span lang="zh">借入借出單</span><span lang="en">Loan Document</span></h6>
+        <div class="text-muted small"><span lang="zh">物料借出/借入與歸還追蹤</span><span lang="en">Material loan out / in and return tracking</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="sample-doc.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box-seam me-1 text-primary"></i><span lang="zh">樣品/客供單</span><span lang="en">Sample/Consignment Docs</span></h6>
+        <div class="text-muted small"><span lang="zh">樣品寄送與客供料收發</span><span lang="en">Sample shipment and customer-supplied material receipt/issue</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="inventory-count.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-clipboard2-check me-1 text-primary"></i><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></h6>
+        <div class="text-muted small"><span lang="zh">盤點計畫、盤點輸入與盤盈虧調整</span><span lang="en">Count planning, count entry and gain/loss adjustment</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="stock-adjustment.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-pencil-square me-1 text-primary"></i><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></h6>
+        <div class="text-muted small"><span lang="zh">數量/成本調整（盤盈虧、雜項出入）</span><span lang="en">Quantity and cost adjustments (count gain/loss, miscellaneous in/out)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="../osp/outsource-material.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-truck me-1 text-primary"></i><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></h6>
+        <div class="text-muted small"><span lang="zh">委外加工發料（OO）與退料（OR）</span><span lang="en">Outsource material issue (OO) and return (OR)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="rework-material.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-arrow-repeat me-1 text-primary"></i><span lang="zh">重工發退料單</span><span lang="en">Rework Material</span></h6>
+        <div class="text-muted small"><span lang="zh">重工工單發料/退料</span><span lang="en">Rework work order material issue and return</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="stock-transfer.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-arrow-left-right me-1 text-primary"></i><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></h6>
+        <div class="text-muted small"><span lang="zh">同廠倉間/儲位間移轉</span><span lang="en">Move between warehouses or locations in the same plant</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="cross-plant-transfer.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-arrow-left-right me-1 text-primary"></i><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></h6>
+        <div class="text-muted small"><span lang="zh">跨廠移轉（五階段：出庫 → 在途 → 入庫）</span><span lang="en">Cross-plant transfer (five stages: issue → in transit → receipt)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="inventory-valuation.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-bar-chart-line me-1 text-primary"></i><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></h6>
+        <div class="text-muted small"><span lang="zh">存貨評價金額報表</span><span lang="en">Inventory valuation report</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="landed-cost-allocation.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-truck-flatbed me-1 text-primary"></i><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></h6>
+        <div class="text-muted small"><span lang="zh">運費/關稅等進口費用分攤入成本</span><span lang="en">Allocating freight, duty and other import costs into inventory cost</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="stock-shortage.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box-seam me-1 text-primary"></i><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></h6>
+        <div class="text-muted small"><span lang="zh">低於安全庫存/需求缺口清單</span><span lang="en">List of items below safety stock or short against demand</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="slow-moving-inventory.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-clock-history me-1 text-primary"></i><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></h6>
+        <div class="text-muted small"><span lang="zh">久未異動存貨清單</span><span lang="en">List of stock with no movement for a long time</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="inventory-aging.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-hourglass-split me-1 text-primary"></i><span lang="zh">存貨庫齡分析</span><span lang="en">Inventory Aging Analysis</span></h6>
+        <div class="text-muted small"><span lang="zh">庫齡分桶（0-30/31-60/61-90/90+）</span><span lang="en">Aging buckets (0-30 / 31-60 / 61-90 / 90+)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="inventory-value.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-bar-chart me-1 text-primary"></i><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></h6>
+        <div class="text-muted small"><span lang="zh">庫存金額結構與趨勢</span><span lang="en">Structure and trend of inventory value</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="inventory-turnover.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-arrow-repeat me-1 text-primary"></i><span lang="zh">庫存周轉率</span><span lang="en">Inventory Turnover</span></h6>
+        <div class="text-muted small"><span lang="zh">周轉率與周轉天數</span><span lang="en">Turnover rate and turnover days</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="stock-variance.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-exclamation-circle me-1 text-primary"></i><span lang="zh">盤差分析</span><span lang="en">Stock Variance</span></h6>
+        <div class="text-muted small"><span lang="zh">盤點差異與調整原因統計</span><span lang="en">Count variance and adjustment reason statistics</span></div></div></div></a></div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

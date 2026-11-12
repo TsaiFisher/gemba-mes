@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Modules/MFG/Services/LineStatusAnalyticsService.cs",
+  "sourceHash": "0c6aaf42d893e3f65851a7ecd295d82d011bf3beb0bde635d79536d4cfcd168a",
+  "entries": [
+    {
+      "slug": "code-mfg-linestatusanalyticsservice-e7eb7d23",
+      "lang": "zh",
+      "headingPath": "生產製造 › 「產線即時看板」聚合查詢",
+      "text": "看板功能說明：只能看到當下的實際運行狀況｜此查詢提供的是設備在某一瞬間的即時畫面，因此不能使用預先儲存或計算好的數據來顯示，否則可能會讓使用者看到已經過期的狀態資訊。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-linestatusanalyticsservice-602899d2",
+      "lang": "zh",
+      "headingPath": "生產製造 › 只有真正落在某條線別上時才回傳線別代號，看板才需要分組顯示",
+      "text": "設備資訊的呈現規則｜系統只會回傳實際分配到特定生產線上的設備代號，因此在看板上才會依據此進行分組顯示。",
+      "approved": true
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ContainerUnitId" xml:space="preserve"><value>Box No.</value></data>
+  <data name="ContainerCode" xml:space="preserve"><value>Container Type</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="StatusEmpty" xml:space="preserve"><value>Empty</value></data>
+  <data name="StatusInUse" xml:space="preserve"><value>In use</value></data>
+  <data name="StatusInactive" xml:space="preserve"><value>Inactive</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Item</value></data>
+  <data name="LotNo" xml:space="preserve"><value>Lot No.</value></data>
+  <data name="Qty" xml:space="preserve"><value>Qty</value></data>
+  <data name="PrintLabel" xml:space="preserve"><value>Print label</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>Boxes (Container Units)</value></data>
+  <data name="Add" xml:space="preserve"><value>Create Boxes</value></data>
+  <data name="AddTitle" xml:space="preserve"><value>Create Boxes in Bulk</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>Box / Lot / Item</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Scan the QR code on the box</value></data>
+  <data name="All" xml:space="preserve"><value>All</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="PrintPageLabels" xml:space="preserve"><value>Print labels on this page</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>Enter criteria and search</value></data>
+  <data name="NoData" xml:space="preserve"><value>No data</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="Details" xml:space="preserve"><value>Details</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>Saved</value></data>
+  <data name="StatusInWip" xml:space="preserve"><value>In process</value></data>
+  <data name="WorkOrderOp" xml:space="preserve"><value>Work order / Op</value></data>
+  <data name="StatusOffsite" xml:space="preserve"><value>Off-site</value></data>
+  <data name="OutDocNo" xml:space="preserve"><value>Left with</value></data>
+  <data name="Recover" xml:space="preserve"><value>Recover</value></data>
+  <data name="RecoverTitle" xml:space="preserve"><value>Recover boxes</value></data>
+  <data name="Pack" xml:space="preserve"><value>Pack</value></data>
+  <data name="PackTitle" xml:space="preserve"><value>Pack existing stock</value></data>
+  <data name="PackNoStock" xml:space="preserve"><value>This item has no available stock</value></data>
+  <data name="PackSourceNotBox" xml:space="preserve"><value>{0} is not a box with stock in it</value></data>
+</root>

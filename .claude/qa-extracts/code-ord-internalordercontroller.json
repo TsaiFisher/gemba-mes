@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/ORD/Controllers/InternalOrderController.cs",
+  "sourceHash": "84f7dd888ee9580bfbf6b591fbe3cb7460f4a6e6f09da812685d7b048c19469e",
+  "entries": [
+    {
+      "slug": "code-ord-internalordercontroller-8b08559c",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 服務以狀態判定，非簡化模式或無未展開需求時不做事",
+      "text": "訂單核准後自動展開物料需求計畫｜當訂單進入「已核准」狀態，如果系統不是在簡化模式下操作，或者沒有未展開的需求時，則不會執行自動展開物料需求計畫的動作。",
+      "approved": true,
+      "sourceSectionHash": "10efc060493b483b0e0e6d599348ddb8e6a878c566d35ed9fe11fdfa39cb68d3"
+    },
+    {
+      "slug": "code-ord-internalordercontroller-a60a2fbe",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 唯讀面板上的「取消確認」依此顯示",
+      "text": "權限控制與操作介面顯示｜系統會根據使用者的權限來決定是否在「取消確認」按鈕上顯示該功能。",
+      "approved": false,
+      "sourceSectionHash": "357d260da53e662963427c9477a6feecf590766006e3512caab3ccc54eefcf8d"
+    },
+    {
+      "slug": "code-ord-internalordercontroller-33761d95",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 實際發料統一在「倉庫作業」完成",
+      "text": "出貨狀態變更規則說明｜當單據被核准後，其狀態會直接變為已確認（待倉庫作業領料）。內部訂單僅代表需求，若發生缺料的情況，系統會走物料需求規劃流程。實際的發料動作，無論是涉及倉庫、儲位或批號的扣庫存及回寫數量，都必須在「倉庫作業」這個環節完成。",
+      "approved": true,
+      "sourceSectionHash": "452cd85ac404a070ef2fd37171ed47ec811f7220170a98ed3b51a685c66fc5ac"
+    },
+    {
+      "slug": "code-ord-internalordercontroller-ab453ef3",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › §21.2：查詢此內部訂單是否已匯入 ，以及是否有投產中的工單",
+      "text": "內部訂單的修改限制與警示規則｜如果此內部訂單已經有正在進行的工單，則無法修改；如果該訂單已匯入生產排程資料，但沒有正在進行的工單，系統會發出警示。",
+      "approved": true,
+      "sourceSectionHash": "2922e457ce711bdc827629ff1edfb2aa481bb6f71981e6d89b5e1ec025cbbfc6"
+    }
+  ]
+}

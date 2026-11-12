@@ -1,0 +1,141 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using SmartFactory.MES.Services
+@model List<SmartFactory.MES.Modules.MFG.ViewModels.MaterialSlipProgressRowVm>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SharedL
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = L["PageTitle"].Value;
+    bool searched        = ViewBag.Searched == true;
+    bool canPrint        = ViewBag.CanPrint == true;
+    var rows             = Model ?? new();
+    var statusGroups     = rows.GroupBy(r => r.Status).OrderBy(g => g.Key).ToList();
+    string curWorkOrder  = ViewBag.SearchWorkOrder as string ?? "";
+    var workOrderOptions = ViewBag.WorkOrderOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+}
+
+<div class="container-fluid py-3">
+    <h4 class="mb-3">@L["PageTitle"]</h4>
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-2">
+                <label class="form-label">@L["FromDate"]</label>
+                <input type="date" name="fromDate" class="form-control" value="@ViewBag.FromDate" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">@L["ToDate"]</label>
+                <input type="date" name="toDate" class="form-control" value="@ViewBag.ToDate" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">@L["StatusFilter"]</label>
+                <select name="statusFilter" class="form-select">
+                    <option value="">@L["AllStatuses"]</option>
+                    @foreach (MaterialSlipStatus s in Enum.GetValues<MaterialSlipStatus>())
+                    { <option value="@s" selected="@(ViewBag.StatusFilter?.ToString() == s.ToString())">@MfgEnumDisplay.Text(SharedL, s)</option> }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">@L["WorkOrder"]</label>
+                <select name="searchWorkOrder" class="form-select select2-enable w-100"
+                        data-placeholder="@L["WorkOrderPlaceholder"]" data-allow-clear="true">
+                    <option value=""></option>
+                    @foreach (var wo in workOrderOptions)
+                    {
+                        <option value="@wo" selected="@(curWorkOrder == wo)">@wo</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" name="searched" value="true" class="btn btn-primary w-100 px-4">
+                    <i class="bi bi-search"></i> @L["Search"]
+                </button>
+            </div>
+        </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @if (!searched)
+    {
+        <div class="alert alert-info">@L["SearchFirst"]</div>
+    }
+    else if (!rows.Any())
+    {
+        <div class="alert alert-warning">@L["NoData"]</div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <strong>@L["ResultTitle"]</strong>
+                <span class="text-muted ms-1">@rows.Count @L["Items"]</span>
+                @foreach (var sg in statusGroups)
+                {
+                    var badgeCls = sg.Key switch {
+                        MaterialSlipStatus.Posted    => "bg-success",
+                        MaterialSlipStatus.Approved  => "bg-primary",
+                        MaterialSlipStatus.Pending   => "bg-warning text-dark",
+                        MaterialSlipStatus.Cancelled => "bg-secondary",
+                        _                            => "bg-light text-dark border"
+                    };
+                    <span class="badge @badgeCls ms-1">@MfgEnumDisplay.Text(SharedL, sg.Key): @sg.Count()</span>
+                }
+            </div>
+            @if (canPrint)
+            {
+                <a asp-action="Export"
+                   asp-route-fromDate="@ViewBag.FromDate" asp-route-toDate="@ViewBag.ToDate"
+                   asp-route-statusFilter="@ViewBag.StatusFilter" asp-route-searchWorkOrder="@ViewBag.SearchWorkOrder"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @L["ExportExcel"]
+                </a>
+            }
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["SlipId"]</th>
+                        <th>@L["SlipNo"]</th>
+                        <th>@L["Status"]</th>
+                        <th>@L["SlipDate"]</th>
+                        <th>@L["WorkOrder"]</th>
+                        <th class="text-end">@L["LineCount"]</th>
+                        <th class="text-end">@L["FulfillRate"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                    @foreach (var r in paged)
+                    {
+                        var statusBadge = r.Status switch {
+                            MaterialSlipStatus.Posted    => "bg-success",
+                            MaterialSlipStatus.Approved  => "bg-primary",
+                            MaterialSlipStatus.Pending   => "bg-warning text-dark",
+                            MaterialSlipStatus.Cancelled => "bg-secondary",
+                            _                            => "bg-light text-dark border"
+                        };
+                        <tr>
+                            <td>@r.SlipId</td>
+                            <td>@r.SlipNo</td>
+                            <td><span class="badge @statusBadge">@MfgEnumDisplay.Text(SharedL, r.Status)</span></td>
+                            <td>@r.SlipDate.ToString("yyyy-MM-dd")</td>
+                            <td>@r.SourceDocId</td>
+                            <td class="text-end">@r.LineCount</td>
+                            <td class="text-end">
+                                <span class="badge @(r.FulfillRate >= 100 ? "bg-success" : r.FulfillRate >= 80 ? "bg-warning text-dark" : "bg-danger")">
+                                    @r.FulfillRate%
+                                </span>
+                                <div class="text-muted small mt-1" title="@L["MixedUomHint"]">
+                                    @r.TotalConfirmedQty.ToString(moneyFmt) / @r.TotalRequestedQty.ToString(moneyFmt)
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @await Html.PartialAsync("_Pagination", paged)
+    }
+</div>

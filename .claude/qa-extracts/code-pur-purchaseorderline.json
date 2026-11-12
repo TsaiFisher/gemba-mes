@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Modules/PUR/Models/PurchaseOrderLine.cs",
+  "sourceHash": "f5321029fff864412ffd8219a48d444f60771e8e62c293c8df7f924b4775c3d2",
+  "entries": [
+    {
+      "slug": "code-pur-purchaseorderline-13b00333",
+      "lang": "zh",
+      "headingPath": "採購 › 已進貨數量，單位為本行的",
+      "text": "進貨數量計算的單位與規則說明｜此數值是以本行的單位為準，因為進貨單據上的單位可能與採購單據的單位不同，所以在累加之前會先將其換算回本行單位。此外，系統在判斷超量時不會參考此欄位，而是以另一個專門記錄收到的數量來做判斷。",
+      "approved": true
+    },
+    {
+      "slug": "code-pur-purchaseorderline-62ed6ad2",
+      "lang": "zh",
+      "headingPath": "採購 › 已進貨數量的庫存基準單位累計",
+      "text": "庫存數量累計計算方式｜此欄位記錄的已進貨數量是直接加總到該行的庫存數量，不會經過單位換算，因此不會產生捨入誤差。",
+      "approved": true
+    }
+  ]
+}

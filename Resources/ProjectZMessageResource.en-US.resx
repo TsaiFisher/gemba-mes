@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Inv_TransferNotFound" xml:space="preserve"><value>Transfer not found.</value></data>
+  <data name="Inv_OnlySourcePlantCanEdit" xml:space="preserve"><value>Only the source plant can edit this document.</value></data>
+  <data name="Inv_OnlyDraftEditable" xml:space="preserve"><value>Only drafts can be edited.</value></data>
+  <data name="Inv_LandedCostNotFound" xml:space="preserve"><value>Landed cost allocation not found.</value></data>
+  <data name="Inv_LoanDocNotFound" xml:space="preserve"><value>Loan document not found.</value></data>
+  <data name="Inv_WarehouseWorkStarted" xml:space="preserve"><value>The warehouse has already processed part of this document, so it cannot be edited.</value></data>
+  <data name="Inv_StagingNotFound" xml:space="preserve"><value>Material staging order not found.</value></data>
+  <data name="Inv_StagingOnlyDraftEditable" xml:space="preserve"><value>Only draft staging orders can be edited.</value></data>
+  <data name="Inv_OutsourceMaterialNotFound" xml:space="preserve"><value>Outsource material issue/return not found.</value></data>
+  <data name="Inv_ReworkMaterialNotFound" xml:space="preserve"><value>Rework material issue/return not found.</value></data>
+  <data name="Inv_SampleDocNotFound" xml:space="preserve"><value>Sample document not found.</value></data>
+  <data name="Inv_ScrapDocNotFound" xml:space="preserve"><value>Scrap document not found.</value></data>
+  <data name="Inv_AdjustmentNotFound" xml:space="preserve"><value>Stock adjustment not found.</value></data>
+  <data name="Inv_PartiallyPosted" xml:space="preserve"><value>Already partially posted, so it cannot be edited.</value></data>
+  <data name="Inv_SlowMovingScanTooLargeFmt" xml:space="preserve"><value>The slow-moving inventory scan exceeds the safety limit ({0} rows), so the report cannot be produced. Narrow the scope by product code in the schedule parameters and run it again.</value></data>
+  <data name="Inv_FifoLayersInsufficientFmt" xml:space="preserve"><value>Not enough FIFO cost layers to consume. Shortfall: {0}</value></data>
+  <data name="Inv_VoidFifoInsufficientFmt" xml:space="preserve"><value>Void failed: not enough FIFO cost layers for product {0} to reverse (shortfall {1}).</value></data>
+  <data name="Inv_VoidFifoConsumedFmt" xml:space="preserve"><value>Void failed: {3} of product {1} received by document {0} (location {2}) has already been used by later issues, so it cannot be voided directly. Void the issues that used it first, or handle it with a purchase return or stock adjustment.</value></data>
+  <data name="Inv_VoidMovingAvgResidualFmt" xml:space="preserve"><value>Void failed: this receipt of product {0} ({1} × {2}) was averaged together with other receipts and then used by later issues, so the value left on the books ({3} × {4}) does not match what would be reversed. Void the issues that used it first, or handle it with a purchase return or stock adjustment.</value></data>
+  <data name="Inv_TxnTypeNotFoundFmt" xml:space="preserve"><value>Transaction type {0} not found.</value></data>
+  <data name="Inv_ProductNotFoundFmt" xml:space="preserve"><value>Product {0} not found.</value></data>
+  <data name="Inv_ProductCategoryMissingFmt" xml:space="preserve"><value>Product {0} has no product category.</value></data>
+  <data name="Inv_LotRequiredFmt" xml:space="preserve"><value>Product {0} is lot-controlled. Enter a lot number.</value></data>
+  <data name="Inv_CustomerSuppliedWrongWarehouseFmt" xml:space="preserve"><value>Location {1} for customer-supplied transaction ({0}) is not in a customer-supplied warehouse (WarehouseType.CustomerSupplied). Customer-supplied material belongs to the customer; in a normal warehouse it would be counted in the moving average and lower your own material cost. Document {2}.</value></data>
+  <data name="Inv_InsufficientAtLocationFmt" xml:space="preserve"><value>Not enough available stock of {1} at location {0} (need {2}, available {3}).</value></data>
+  <data name="Inv_NegativeInboundPriceFmt" xml:space="preserve"><value>Inbound unit price cannot be negative (product {0}, UnitPrice = {1}).</value></data>
+  <data name="Inv_InboundPriceMissingFmt" xml:space="preserve"><value>Inbound line has no unit price, so a FIFO cost layer cannot be created (document {0}, product {1}).</value></data>
+  <data name="Inv_LineAlreadyPostedFmt" xml:space="preserve"><value>Line {1} of document {0} is already posted and cannot be posted again.</value></data>
+  <data name="Inv_VoidInsufficientFmt" xml:space="preserve"><value>Void failed: not enough available stock of {1} at location {0}.</value></data>
+  <data name="Inv_InsufficientProductAtLocationFmt" xml:space="preserve"><value>Not enough available stock of {0} at location {1} (need {2}, available {3}).</value></data>
+  <data name="Inv_MovingAvgNegativeInFmt" xml:space="preserve"><value>Moving average error: inbound unit cost cannot be negative (inUnitCost={0}).</value></data>
+  <data name="Inv_VoidMovingAvgNegativeFmt" xml:space="preserve"><value>Reversing this void would make the moving average negative (product {0}, reverse {1} × {2}, on hand {3} × {4}). Check whether the stock unit cost was changed elsewhere.</value></data>
+  <data name="Inv_LandedCostNegativeFmt" xml:space="preserve"><value>Total landed cost cannot be negative. Received: {0}</value></data>
+  <data name="Inv_ReceiptLinesEmpty" xml:space="preserve"><value>Receipt lines cannot be empty.</value></data>
+  <data name="Inv_AllocationWeightZeroFmt" xml:space="preserve"><value>The weights for allocation basis ({0}) add up to {1}, so costs cannot be allocated. Choose another basis or check the lines.</value></data>
+  <data name="Inv_UnknownAllocationBasis" xml:space="preserve"><value>Unknown allocation basis.</value></data>
+  <data name="Inv_LandedCostRateMissingFmt" xml:space="preserve"><value>No buying rate for currency {0} on or before the document date {1}. Maintain the exchange rate first.</value></data>
+  <data name="Inv_LandedCostVoidConfirmedOnly" xml:space="preserve"><value>Only confirmed allocations can be voided.</value></data>
+  <data name="Inv_LandedCostVoidStockMovedFmt" xml:space="preserve"><value>Item {0} (location {1}) has been issued or moved since this allocation was confirmed, so part of the allocated cost has already left with that stock and the allocation cannot be voided as a whole. Create a negative allocation or a stock adjustment instead.</value></data>
+  <data name="Inv_LandedCostNotFoundFmt" xml:space="preserve"><value>Landed cost allocation {0} not found.</value></data>
+  <data name="Inv_OnlyDraftConfirmable" xml:space="preserve"><value>Only drafts can be confirmed.</value></data>
+  <data name="Inv_NoLinesCannotConfirm" xml:space="preserve"><value>There are no lines, so it cannot be confirmed.</value></data>
+  <data name="Inv_StagingCannotConfirmFmt" xml:space="preserve"><value>Staging order {0} is {1} and cannot be confirmed.</value></data>
+  <data name="Inv_StagingNoPlantFmt" xml:space="preserve"><value>Staging order {0} has no plant.</value></data>
+  <data name="Inv_StagingNoLinesConfirmFmt" xml:space="preserve"><value>Staging order {0} has no lines and cannot be confirmed.</value></data>
+  <data name="Inv_StagingInsufficientFmt" xml:space="preserve"><value>Staging order {0}: not enough available stock of {1} (required {2}, available {3}).</value></data>
+  <data name="Inv_StagingPickNotConfirmedFmt" xml:space="preserve"><value>Staging order {0} is {1}. Only confirmed staging orders can be picked into the staging warehouse.</value></data>
+  <data name="Inv_StagingNoLocationFmt" xml:space="preserve"><value>Staging order {0} has no staging location, so it cannot be moved into the staging warehouse.</value></data>
+  <data name="Inv_StagingNoLinesPickFmt" xml:space="preserve"><value>Staging order {0} has no lines and cannot be picked.</value></data>
+  <data name="Inv_StagingLinesNoSourceFmt" xml:space="preserve"><value>Staging order {0}: line(s) {1} have no source location.</value></data>
+  <data name="Inv_StagingCannotVoidFmt" xml:space="preserve"><value>Staging order {0} is {1} and cannot be voided.</value></data>
+  <data name="Inv_StockNegativeFmt" xml:space="preserve"><value>Insufficient stock: product {1} at location {0}{2} would go negative ({3}).</value></data>
+  <data name="Inv_LotSuffixFmt" xml:space="preserve"><value> (lot {0})</value></data>
+  <data name="Inv_ExportHeaders_Balance" xml:space="preserve"><value>Product|Product Name|Warehouse|Location|Lot|On Hand|Unit Cost</value></data>
+  <data name="Inv_ExportHeaders_Ledger" xml:space="preserve"><value>Date|Summary|Doc No.|Source Doc No.|In Qty|Out Qty|Balance|Handled By|Remarks</value></data>
+  <data name="Inv_Ledger_Opening" xml:space="preserve"><value>Opening balance</value></data>
+  <data name="Inv_Ledger_Closing" xml:space="preserve"><value>Closing balance</value></data>
+  <data name="Inv_ExportHeaders_Movement" xml:space="preserve"><value>Date|Type|Direction|Doc No.|Line|Product|Product Name|Location|Lot|Qty|UoM|Stock Qty|Stock UoM|Unit Cost|Amount|Remarks</value></data>
+  <data name="Common_ListSeparator" xml:space="preserve"><value>, </value></data>
+  <data name="Fin_NoteNotFoundFmt" xml:space="preserve"><value>Credit/debit note {0} not found.</value></data>
+  <data name="Fin_NoteNotDraftFmt" xml:space="preserve"><value>Credit/debit note {0} is not a draft and cannot be confirmed.</value></data>
+  <data name="Fin_NoteLineInvoiceLineMissingFmt" xml:space="preserve"><value>Line {1} of note {0} refers to invoice line {2}#{3}, which does not exist.</value></data>
+  <data name="Fin_NoteQtyExceedsInvoiceFmt" xml:space="preserve"><value>Credit quantity {0} exceeds the invoiced quantity {3} on line {2} of invoice {1}.</value></data>
+  <data name="Fin_NoteInvoiceMissingFmt" xml:space="preserve"><value>Invoice {1} referenced by note {0} does not exist.</value></data>
+  <data name="Fin_GoodsReceiptNotFoundFmt" xml:space="preserve"><value>Goods receipt {0} not found.</value></data>
+  <data name="Fin_ReceiptExceedsOrderFmt" xml:space="preserve"><value>Receipt line {0}: cumulative received quantity ({3}) for purchase order {1} line {2} exceeds the ordered quantity ({4}). The invoice cannot be issued.</value></data>
+  <data name="Fin_AccrualQtyMustBePositive" xml:space="preserve"><value>The accrued quantity must be greater than 0.</value></data>
+  <data name="Fin_ReceiptLineMissingFmt" xml:space="preserve"><value>Goods receipt {0} has no line {1}.</value></data>
+  <data name="Fin_APInvoiceNoMoreAccrualFmt" xml:space="preserve"><value>AP invoice {0} is {1}; no more accruals can be added.</value></data>
+  <data name="Fin_OutsourceReceiptNotFoundFmt" xml:space="preserve"><value>Outsource receipt {0} not found.</value></data>
+  <data name="Fin_InvoiceLineQtyPositiveFmt" xml:space="preserve"><value>Invoice line {0}: quantity must be greater than 0 (received {1}).</value></data>
+  <data name="Fin_InvoiceLinePriceNegativeFmt" xml:space="preserve"><value>Invoice line {0}: unit price cannot be negative (received {1}).</value></data>
+  <data name="Fin_APLineNoAccountFmt" xml:space="preserve"><value>Invoice line {0} has no expense account. Every line of a manual invoice needs an account; create accounts in Invoice Account Maintenance first.</value></data>
+  <data name="Fin_APLineAccountInvalidFmt" xml:space="preserve"><value>Invoice line {0}: no active expense account {1}. Check the code, active status and usage (must be Expense) in Invoice Account Maintenance.</value></data>
+  <data name="Fin_InvoiceNotFound" xml:space="preserve"><value>Invoice not found.</value></data>
+  <data name="Fin_PaidInvoiceCannotVoid" xml:space="preserve"><value>A paid invoice cannot be voided. Reverse the payment first.</value></data>
+  <data name="Fin_ShipmentNotFoundFmt" xml:space="preserve"><value>Shipment {0} not found.</value></data>
+  <data name="Fin_ARLineQtyPriceFmt" xml:space="preserve"><value>AR invoice line {0}: quantity must be &gt; 0 and unit price ≥ 0.</value></data>
+  <data name="Fin_ARLineNoAccountFmt" xml:space="preserve"><value>AR invoice line {0} has no revenue account. Every line of a manual invoice needs an account; create accounts in Invoice Account Maintenance first.</value></data>
+  <data name="Fin_ARLineAccountInvalidFmt" xml:space="preserve"><value>AR invoice line {0}: no active revenue account {1}. Check the code, active status and usage (must be Revenue) in Invoice Account Maintenance.</value></data>
+  <data name="Fin_ReceivedInvoiceCannotVoid" xml:space="preserve"><value>An invoice with receipts cannot be voided. Reverse the receipt first.</value></data>
+  <data name="Fin_ErpAmountMismatchFmt" xml:space="preserve"><value>{0} {1} amount mismatch: MES={2}, ERP={3}, difference={4:F4}, exceeds the rounding tolerance {5}.</value></data>
+  <data name="Fin_ErpExcludedFmt" xml:space="preserve"><value>{0} {1} is excluded; its sync status cannot be updated.</value></data>
+  <data name="Fin_ErpDocNotFoundFmt" xml:space="preserve"><value>{0} {1} not found.</value></data>
+  <data name="Fin_RateNegativeFmt" xml:space="preserve"><value>Exchange rate cannot be negative (received {0}).</value></data>
+  <data name="Fin_PaymentNotFound" xml:space="preserve"><value>Payment not found.</value></data>
+  <data name="Fin_PaymentAlreadyConfirmed" xml:space="preserve"><value>Already paid; it cannot be confirmed again.</value></data>
+  <data name="Fin_VoidedPaymentCannotConfirm" xml:space="preserve"><value>A voided payment cannot be confirmed.</value></data>
+  <data name="Fin_InvoiceNotFoundFmt" xml:space="preserve"><value>Invoice {0} not found.</value></data>
+  <data name="Fin_BankAccountNotFound" xml:space="preserve"><value>Bank account not found.</value></data>
+  <data name="Fin_BankBalanceInsufficient" xml:space="preserve"><value>Insufficient bank account balance.</value></data>
+  <data name="Fin_OnlyPaidCanVoid" xml:space="preserve"><value>Only paid payments can be voided.</value></data>
+  <data name="Fin_ReceiptNotFound" xml:space="preserve"><value>Receipt not found.</value></data>
+  <data name="Fin_ReceiptAlreadyConfirmed" xml:space="preserve"><value>Already received; it cannot be confirmed again.</value></data>
+  <data name="Fin_VoidedReceiptCannotConfirm" xml:space="preserve"><value>A voided receipt cannot be confirmed.</value></data>
+  <data name="Fin_BankBalanceInsufficientRefund" xml:space="preserve"><value>Insufficient bank account balance for the refund.</value></data>
+  <data name="Fin_OnlyReceivedCanVoid" xml:space="preserve"><value>Only received receipts can be voided.</value></data>
+  <data name="Fin_AllocationRequired" xml:space="preserve"><value>At least one invoice allocation is required.</value></data>
+  <data name="Fin_AmountAllocationMismatchFmt" xml:space="preserve"><value>Amount {0:0.####} does not match the allocation total {1:0.####}.</value></data>
+  <data name="Fin_VoidedInvoiceCannotSettleFmt" xml:space="preserve"><value>Invoice {0} has been voided and cannot be settled.</value></data>
+  <data name="Fin_NoteInvoiceVoidedFmt" xml:space="preserve"><value>The source invoice {1} of credit/debit note {0} has been voided, so the note cannot be confirmed; void the note instead.</value></data>
+  <data name="Fin_VoidPaymentRefundFirstFmt" xml:space="preserve"><value>Invoice {0} has a refund of an overpayment; void that refund first, then void this payment.</value></data>
+  <data name="Fin_VoidReceiptRefundFirstFmt" xml:space="preserve"><value>Invoice {0} has a refund of an overreceipt; void that refund first, then void this receipt.</value></data>
+  <data name="Fin_InvoiceWithNotesCannotVoidFmt" xml:space="preserve"><value>Invoice {0} has confirmed credit/debit notes of {1}; void the notes before voiding the invoice.</value></data>
+  <data name="Fin_ReissueNotVoidFmt" xml:space="preserve"><value>Invoice {0} is not voided; only voided invoices can be reissued from their source.</value></data>
+  <data name="Fin_ReissueSourceNotSupportedFmt" xml:space="preserve"><value>Invoice {0} was not generated from a shipment or goods receipt and cannot be reissued from its source; create a manual invoice instead.</value></data>
+  <data name="Fin_ReissueSourceNotActiveFmt" xml:space="preserve"><value>Source document {0} does not exist, is not confirmed, or is voided, so the invoice cannot be reissued.</value></data>
+  <data name="Fin_ReissueLiveExistsFmt" xml:space="preserve"><value>Source document {0} already has active invoice {1}; there is nothing to reissue.</value></data>
+  <data name="Fin_ReissueReturnAfterVoidFmt" xml:space="preserve"><value>Purchase return {1} was posted after invoice {0} was voided, so the quantity to reissue cannot be worked out automatically; create a manual invoice or contact your administrator.</value></data>
+  <data name="Fin_ReissueNothingFmt" xml:space="preserve"><value>Invoice {0} has no quantity to reissue.</value></data>
+  <data name="Fin_AllocationZeroFmt" xml:space="preserve"><value>The allocation for invoice {0} cannot be 0.</value></data>
+  <data name="Fin_AllocationExceedsOutstandingFmt" xml:space="preserve"><value>The allocation for invoice {0} exceeds its outstanding balance (allocated {1:0.####}, outstanding {2:0.####}).</value></data>
+  <data name="Fin_NegativeAllocNoCreditFmt" xml:space="preserve"><value>Invoice {0} has no overpaid balance, so a negative allocation is not allowed.</value></data>
+  <data name="Fin_NegativeAllocExceedsCreditFmt" xml:space="preserve"><value>Negative allocation {1:0.####} for invoice {0} exceeds the overpaid balance {2:0.####}.</value></data>
+  <data name="Fin_ExportHeaders_APAging" xml:space="preserve"><value>Supplier|Not Due|1-30 Days|31-60 Days|61-90 Days|Over 90 Days|Total</value></data>
+  <data name="Fin_ExportHeaders_ARAging" xml:space="preserve"><value>Customer|Not Due|1-30 Days|31-60 Days|61-90 Days|Over 90 Days|Total</value></data>
+  <data name="Fin_APAgingTitle" xml:space="preserve"><value>AP_Aging</value></data>
+  <data name="Fin_ARAgingTitle" xml:space="preserve"><value>AR_Aging</value></data>
+  <data name="Pur_WarehouseWorkStarted" xml:space="preserve"><value>The warehouse has already processed some or all of this document (QtyPutAway &gt; 0), so its content cannot be changed.</value></data>
+  <data name="Pur_ReceiptHasReturns" xml:space="preserve"><value>This goods receipt has lines that were already returned, so it cannot be edited. Void the related returns first.</value></data>
+  <data name="Pur_LineNoLocationFmt" xml:space="preserve"><value>Line {0} (product {1}) has no location, and its product category has no default location.</value></data>
+  <data name="Pur_ReworkCostNegativeFmt" xml:space="preserve"><value>Rework cost cannot be negative. Received: {0}</value></data>
+  <data name="Pur_ReworkFeeNegativeFmt" xml:space="preserve"><value>Rework processing fee cannot be negative. Received: {0}</value></data>
+  <data name="Pur_SupplierShareRangeFmt" xml:space="preserve"><value>The supplier share must be between 0 and 100. Received: {0}</value></data>
+  <data name="Pur_IssuedQtyPositiveFmt" xml:space="preserve"><value>Issued quantity must be greater than 0. Received: {0}</value></data>
+  <data name="Pur_ReturnedFgQtyNegativeFmt" xml:space="preserve"><value>Returned finished quantity cannot be less than 0. Received: {0}</value></data>
+  <data name="Pur_NegativeScrapRateFmt" xml:space="preserve"><value>The actual scrap rate {0:P4} is negative: finished quantity ({1}) exceeds issued quantity ({2}). This is overproduction or a data error; check it before submitting.</value></data>
+  <data name="Pur_ReceivedFgQtyNegativeFmt" xml:space="preserve"><value>Received finished quantity cannot be less than 0. Received: {0}</value></data>
+  <data name="Pur_RequestNotFoundFmt" xml:space="preserve"><value>Purchase request not found: {0}</value></data>
+  <data name="Pur_RequestConvertedCannotDelete" xml:space="preserve"><value>Lines of this purchase request were already converted to purchase orders, so it cannot be deleted. Delete those purchase order lines first.</value></data>
+  <data name="Pur_OrderNotFoundFmt" xml:space="preserve"><value>Purchase order not found: {0}</value></data>
+  <data name="Pur_OrderReceivedCannotEditLines" xml:space="preserve"><value>This purchase order already has receipts, so its lines cannot be edited.</value></data>
+  <data name="Pur_OrderReceivedCannotDelete" xml:space="preserve"><value>This purchase order already has receipts, so it cannot be deleted. Delete those goods receipts first.</value></data>
+  <data name="Pur_ReceiptNotFoundFmt" xml:space="preserve"><value>Goods receipt not found: {0}</value></data>
+  <data name="Pur_ReceiptNotEditable" xml:space="preserve"><value>This goods receipt cannot be edited in its current status (drafts only).</value></data>
+  <data name="Pur_LineWarehouseWorkFmt" xml:space="preserve"><value>Line {0} already has warehouse activity ({1} processed) and cannot be deleted.</value></data>
+  <data name="Pur_LineQtyBelowProcessedFmt" xml:space="preserve"><value>Line {0}: stock quantity cannot be less than the processed quantity {1}.</value></data>
+  <data name="Pur_ReceiptNotDeletable" xml:space="preserve"><value>This goods receipt cannot be deleted in its current status (drafts only).</value></data>
+  <data name="Pur_ReceiptHasWarehouseWork" xml:space="preserve"><value>This goods receipt has lines with warehouse activity, so it cannot be deleted.</value></data>
+  <data name="Pur_ReturnNotFoundFmt" xml:space="preserve"><value>Purchase return not found: {0}</value></data>
+  <data name="Pur_ReturnNotEditable" xml:space="preserve"><value>This purchase return cannot be edited in its current status (drafts only).</value></data>
+  <data name="Pur_ReturnNotDeletable" xml:space="preserve"><value>This purchase return cannot be deleted in its current status (drafts only).</value></data>
+  <data name="Pur_ReturnHasWarehouseWork" xml:space="preserve"><value>This purchase return has lines with warehouse activity, so it cannot be deleted.</value></data>
+  <data name="Pur_RequestLineClosedFmt" xml:space="preserve"><value>Purchase request {0} line {1} is closed and cannot be converted to a purchase order.</value></data>
+  <data name="Pur_ConvertExceedsRequestFmt" xml:space="preserve"><value>Purchase request {0} line {1}: the converted quantity ({2:F4}) exceeds the requested quantity ({3:F4}). The purchase order cannot be created.</value></data>
+  <data name="Pur_ReceiptExceedsOrderFmt" xml:space="preserve"><value>Purchase order {0} line {1}: cumulative received quantity ({2:F4} {3}) exceeds the ordered quantity ({4:F4} {5}). The goods receipt cannot be created.</value></data>
+  <data name="Pur_ReturnExceedsReceiptFmt" xml:space="preserve"><value>Goods receipt {0} line {1}: cumulative returned quantity ({2:F4}) exceeds the received quantity ({3:F4}). The purchase return cannot be created.</value></data>
+  <data name="Pur_OrderNeedsLines" xml:space="preserve"><value>A purchase order needs at least one line.</value></data>
+  <data name="Pur_LineCurrencyRequiredFmt" xml:space="preserve"><value>Line {0}: a currency is required when there is an amount.</value></data>
+  <data name="Pur_LineTaxRequiredFmt" xml:space="preserve"><value>Line {0}: a tax code is required when there is an amount.</value></data>
+  <data name="Pur_LineUomRequiredFmt" xml:space="preserve"><value>Line {0}: a purchase unit is required when there is an amount.</value></data>
+  <data name="Pur_LinePriceNegativeFmt" xml:space="preserve"><value>Line {0}: unit price cannot be negative.</value></data>
+  <data name="Pur_PriceListValidToBeforeFrom" xml:space="preserve"><value>The end date cannot be earlier than the start date.</value></data>
+  <data name="Act_PeriodClosedNoPostFmt" xml:space="preserve"><value>Accounting period {1} of plant {0} is closed ({2:yyyy-MM-dd}, closed by {3}); posting is not allowed.</value></data>
+  <data name="Act_PeriodClosingNoPostFmt" xml:space="preserve"><value>Accounting period {1} of plant {0} is in month-end closing. Only adjusting entries are allowed; normal posting is paused.</value></data>
+  <data name="Act_PeriodNotFoundFmt" xml:space="preserve"><value>Period {1} of plant {0} not found.</value></data>
+  <data name="Act_PeriodCannotStartCloseFmt" xml:space="preserve"><value>Period {1} of plant {0} is {2}; month-end closing cannot start.</value></data>
+  <data name="Act_PeriodNotClosingFmt" xml:space="preserve"><value>Period {1} of plant {0} is not in month-end closing yet.</value></data>
+  <data name="Act_PreCloseAuditFailedFmt" xml:space="preserve"><value>Pre-close data audit for period {1} of plant {0} failed with {2} issue(s). First: [{3}] {4} — {5}. Resolve the issues before closing.</value></data>
+  <data name="Act_PeriodNotClosingCannotCancelFmt" xml:space="preserve"><value>Period {1} of plant {0} is {2}, not in month-end closing, so there is nothing to cancel.</value></data>
+  <data name="Act_PeriodNotClosedCannotReopenFmt" xml:space="preserve"><value>Period {1} of plant {0} is not closed, so it cannot be reopened.</value></data>
+  <data name="Act_PeriodClosedNoJournalFmt" xml:space="preserve"><value>Accounting period {0} is closed; journal entries cannot be created.</value></data>
+  <data name="Act_PeriodClosingAdjustOnlyFmt" xml:space="preserve"><value>Accounting period {0} is in month-end closing; only adjusting entries (Adjustment) are allowed.</value></data>
+  <data name="Act_JournalNeedsLines" xml:space="preserve"><value>A journal entry needs at least one line.</value></data>
+  <data name="Act_JournalUnbalancedFmt" xml:space="preserve"><value>The journal entry is unbalanced: debits {0}, credits {1} (source {2}/{3}).</value></data>
+  <data name="Act_StepNotFoundFmt" xml:space="preserve"><value>Step {0} not found.</value></data>
+  <data name="Act_ChecklistNotFound" xml:space="preserve"><value>Month-end checklist not found.</value></data>
+  <data name="Act_AccountingPeriodNotFoundFmt" xml:space="preserve"><value>Accounting period {1} of plant {0} not found.</value></data>
+  <data name="Act_PeriodClosedNoAdjustFmt" xml:space="preserve"><value>Period {1} of plant {0} is closed; period-end adjusting entries cannot be generated.</value></data>
+  <data name="Act_PeriodNotFoundNoPlantFmt" xml:space="preserve"><value>Period {0} not found.</value></data>
+  <data name="Act_StepsMustBeSequentialFmt" xml:space="preserve"><value>Month-end steps must run in order: steps {1} before step {0} are not finished.</value></data>
+  <data name="Ord_ShipmentNotFound" xml:space="preserve"><value>Shipment not found.</value></data>
+  <data name="Ord_ShipExceedsOrderFmt" xml:space="preserve"><value>Sales order {0} line {1}: cumulative shipped quantity ({2:F4} {3}) exceeds the ordered quantity ({4:F4} {5}). The shipment cannot be created.</value></data>
+  <data name="Ord_InternalOrderNotFound" xml:space="preserve"><value>Internal order not found.</value></data>
+  <data name="Ord_WorkOrderInProgress" xml:space="preserve"><value>A work order for this order is already in production. Pause the related work orders before editing.</value></data>
+  <data name="Ord_SalesOrderNotFound" xml:space="preserve"><value>Sales order not found.</value></data>
+  <data name="Ord_SalesOrderPendingApproval" xml:space="preserve"><value>The sales order is pending approval. Withdraw it before editing.</value></data>
+  <data name="Ord_HasShipmentsOrReturns" xml:space="preserve"><value>There are shipments or returns, so it cannot be edited. Void the related shipments/sales returns first.</value></data>
+  <data name="Ord_LineShippedCannotDeleteFmt" xml:space="preserve"><value>Line {0} has been shipped or returned and cannot be deleted.</value></data>
+  <data name="Ord_SalesReturnNotFound" xml:space="preserve"><value>Sales return not found.</value></data>
+  <data name="Ord_ReturnExceedsShipFmt" xml:space="preserve"><value>Shipment {0} line {1}: cumulative returned quantity ({2:F4}) exceeds the shipped quantity ({3:F4}). The sales return cannot be created.</value></data>
+  <data name="Mfg_PeriodClosedNoReestimateFmt" xml:space="preserve"><value>Period {1} of plant {0} is closed; work order costs cannot be re-estimated.</value></data>
+  <data name="Mfg_MissingDeptCostFmt" xml:space="preserve"><value>These work centers have reported or changeover hours this period but no actual department cost: {0}. Enter it in Department Actual Costs or here (enter 0 if there really is none), then run the re-estimate.</value></data>
+  <data name="Mfg_MrpAlreadyExpandedFmt" xml:space="preserve"><value>MRP run {0} is already expanded. Use re-run to expand it again.</value></data>
+  <data name="Mfg_MrpNotExpandedFmt" xml:space="preserve"><value>MRP run {0} has not been expanded yet. Run it before re-running.</value></data>
+  <data name="Mfg_MrpNotExpandedArchiveFmt" xml:space="preserve"><value>MRP run {0} is not expanded, so it cannot be archived.</value></data>
+  <data name="Mfg_MrpRunNotFoundFmt" xml:space="preserve"><value>MRP run not found: {0}</value></data>
+  <data name="Mfg_MrpRunNoPlantFmt" xml:space="preserve"><value>MRP run {0} has no plant.</value></data>
+  <data name="Mfg_WorkOrderNotFoundFmt" xml:space="preserve"><value>Work order {0} not found.</value></data>
+  <data name="Mfg_WorkOrderNotCompletedFmt" xml:space="preserve"><value>Work order {0} is {1}, not completed, so it cannot be received into stock.</value></data>
+  <data name="Mfg_CompletedQtyZero" xml:space="preserve"><value>The completed quantity is zero, so nothing can be received into stock.</value></data>
+  <data name="Mfg_BoxQtyRequired" xml:space="preserve"><value>The quantity per box must be greater than zero.</value></data>
+  <data name="Mfg_BoxCountTooManyFmt" xml:space="preserve"><value>{0} boxes exceeds the limit of {1}. Please check the quantity per box.</value></data>
+  <data name="Mfg_BoxLotTooLongFmt" xml:space="preserve"><value>Box lot "{0}" is longer than 50 characters. Please shorten the lot prefix.</value></data>
+  <data name="Mfg_BoxLotExistsFmt" xml:space="preserve"><value>Item {0} already has stock movements under lot "{1}". Each box needs a lot of its own, so use a different lot prefix.</value></data>
+  <data name="Mfg_NothingToStage" xml:space="preserve"><value>This source has no materials left to stage (they may all be issued or already on a staging order).</value></data>
+  <data name="Mfg_WipNetIssueNegative" xml:space="preserve"><value>Net issued material amount cannot be negative (returns exceeding issues indicate a data error).</value></data>
+  <data name="Mfg_WipLaborOverheadNegative" xml:space="preserve"><value>Labor and overhead cannot be negative.</value></data>
+  <data name="Mfg_WipCompletionCostNegative" xml:space="preserve"><value>Completion cost cannot be negative.</value></data>
+  <data name="Mfg_WipScrapNegative" xml:space="preserve"><value>Scrap amount cannot be negative.</value></data>
+  <data name="Mfg_OverReportBlockFmt" xml:space="preserve"><value>Cumulative good quantity {0} exceeds the dispatch quantity {1} (limit {2}, tolerance {3}%); the report cannot be saved.</value></data>
+  <data name="Mfg_OverReportNeedSupervisorFmt" xml:space="preserve"><value>Cumulative good quantity {0} exceeds the limit {2} for dispatch quantity {1} (tolerance {3}%); a supervisor with the over-quantity approval right must report it.</value></data>
+  <data name="Mfg_OverReceiptBlockFmt" xml:space="preserve"><value>Cumulative received quantity {0} exceeds the outsource order quantity {1} (limit {2}, tolerance {3}%); it cannot be received.</value></data>
+  <data name="Mfg_OverReceiptNeedSupervisorFmt" xml:space="preserve"><value>Cumulative received quantity {0} exceeds the limit {2} for outsource order quantity {1} (tolerance {3}%); a supervisor with the over-quantity approval right must confirm the receipt.</value></data>
+  <data name="Osr_OverReceiptNoFeeNoteFmt" xml:space="preserve"><value>No fee for the over-received part: contract price {0}, billed {1} of {2} received</value></data>
+  <data name="Qcr_IqcAutoReleaseRemarkFmt" xml:space="preserve"><value>Released automatically after IQC pass (source {0}, line {1})</value></data>
+  <data name="Mfg_OutsourceWoNoCompletionFmt" xml:space="preserve"><value>Work order {0} is fully outsourced: the finished goods were received into stock by the outsource receipt and the order closes automatically once they pass inspection, so it cannot go through production completion again.</value></data>
+  <data name="Inv_ShipReservedForOthersFmt" xml:space="preserve"><value>{0}: shipping {1}, but only {2} can be shipped — {3} is reserved for other orders or work orders (stock netted at release or produced by completion). Ship less, or resolve that reservation first.</value></data>
+  <data name="Qcr_GrReleaseTargetMissingFmt" xml:space="preserve"><value>Received item {0} passed inspection but has nowhere to go: the receipt has no warehouse and the item category has no default warehouse/location. Set a default warehouse on the product category first, then submit the result again.</value></data>
+  <data name="Osr_ReleaseTargetMissingFmt" xml:space="preserve"><value>Outsourced item {0} has nowhere to go once it passes inspection: the receipt has no warehouse/location and the product category has no default. Set a default warehouse/location on the product category (or enter one on the receipt) and submit again.</value></data>
+  <data name="Osr_AutoIssueNoLocationFmt" xml:space="preserve"><value>Send-out material {0} should be deducted automatically at receipt, but it has no default issuing location (the product category default warehouse/location). Set one, or issue it manually with an outsource issue slip.</value></data>
+  <data name="Osr_AutoIssueRemarkFmt" xml:space="preserve"><value>Send-out materials deducted automatically by outsource receipt {0}</value></data>
+  <data name="Osr_InspectedAtReceipt" xml:space="preserve"><value>Inspected at outsource receipt</value></data>
+  <data name="Opo_AutoCreatedOnRelease" xml:space="preserve"><value>Auto-created on release (outsource simplification), source work order {0}</value></data>
+  <data name="Osr_MixedOperationOutsource" xml:space="preserve"><value>One outsource receipt cannot mix outsourced operations with fully outsourced work orders; receive them separately.</value></data>
+  <data name="Osr_OperationFeeJournal" xml:space="preserve"><value>Outsourced operation fee (returned to production, charged to the work order)</value></data>
+  <data name="Mfg_SlipIssueFromStagingFirstFmt" xml:space="preserve"><value>Item {0} has been staged at {1}: this slip must take {2} from the staging location first (currently {3}); only the shortfall may come from other locations.</value></data>
+  <data name="Osr_NoQuarantineLocation" xml:space="preserve"><value>This plant has no quarantine warehouse (or it has no location), so rejected outsource goods have nowhere to go. Create a quarantine warehouse and location first.</value></data>
+  <data name="Mfg_PeriodClosedNoFinalizeFmt" xml:space="preserve"><value>Period {1} of plant {0} is closed; work order costs cannot be finalized.</value></data>
+  <data name="Mfg_ScheduleForwardFailFmt" xml:space="preserve"><value>Scheduling could not finish within {0} days ({1:F1} minutes still needed). Check that the work calendar is set up.</value></data>
+  <data name="Mfg_ScheduleBackwardFailFmt" xml:space="preserve"><value>Backward scheduling could not finish within {0} days ({1:F1} minutes still needed). Check that the work calendar is set up.</value></data>
+  <data name="Mfg_BomTooDeepFmt" xml:space="preserve"><value>Product {0}: BOM nesting exceeds {1} levels (possible circular material).</value></data>
+  <data name="Mfg_BomCycleFmt" xml:space="preserve"><value>Circular material: product {0} appears in its own BOM expansion.</value></data>
+  <data name="Mfg_NoValidRoutingFmt" xml:space="preserve"><value>Product {0}: made in-house but has no valid routing (RoutingId={1}).</value></data>
+  <data name="Mfg_RoutingNoOpsFmt" xml:space="preserve"><value>Routing {1} of product {0} has no operations.</value></data>
+  <data name="Mfg_OpMaterialMissingFmt" xml:space="preserve"><value>Material {2} of operation {1} of product {0} does not exist.</value></data>
+  <data name="Mfg_MaterialUomConversionMissingFmt" xml:space="preserve"><value>Material {0}: no unit conversion between issue unit {1} and stock unit {2}.</value></data>
+  <data name="Mfg_AutoReleaseIncompleteFmt" xml:space="preserve"><value>Automatic release of work order {0} did not complete ({1}).</value></data>
+  <data name="Mfg_AutoReleaseSubmittedFmt" xml:space="preserve"><value>Work order {0} was released automatically and submitted for approval (above the approval threshold or a mandatory approval condition applies); it can be started after approval.</value></data>
+  <data name="Mfg_ReleaseNoApprovalFlowFmt" xml:space="preserve"><value>Work order {0} is above the approval threshold or meets a mandatory approval condition, but this plant has no work order approval flow, so it was approved directly. Please check the approval settings.</value></data>
+  <data name="Mfg_AutoReleaseShortageFmt" xml:space="preserve"><value>Work order {0} was released automatically, but these materials are short: {1}.</value></data>
+  <data name="Mfg_WoHeaderWithoutOpsFmt" xml:space="preserve"><value>Product {0} is made in-house but has no valid routing (RoutingId={1}); work order header {2} was created without operations.</value></data>
+  <data name="Mfg_RerunWoStartedFmt" xml:space="preserve"><value>Work order {0} is already in production ({1}); released work orders cannot be overwritten.</value></data>
+  <data name="Mfg_RerunDispatchReportedFmt" xml:space="preserve"><value>Dispatch {0} has reported output {1}; it has physical output and cannot be cleared and rebuilt.</value></data>
+  <data name="Mfg_RerunDispatchStartedFmt" xml:space="preserve"><value>Dispatch {0} has clock-in/setup records and cannot be cleared and rebuilt.</value></data>
+  <data name="Mfg_RerunOutsourceOrderedFmt" xml:space="preserve"><value>Outsource demand {0} (work order {1}) is already on an outsource purchase order ({2}), which is an external commitment. Handle the outsource documents before re-running.</value></data>
+  <data name="Mfg_RerunOutsourceRebuildFmt" xml:space="preserve"><value>Outsource demand {0} (work order {1}) is not on an outsource purchase order yet; it will be deleted and rebuilt from the new expansion.</value></data>
+  <data name="Mfg_RerunPrConvertedFmt" xml:space="preserve"><value>Purchase request {0} already has lines converted to purchase orders ({1}). This re-run will not change it; compare the differences and handle them manually.</value></data>
+  <data name="Mfg_RerunPrPendingFmt" xml:space="preserve"><value>Purchase request {0} is pending approval and will not be changed by this re-run. If the demand changed, withdraw the approval first.</value></data>
+  <data name="Mfg_RerunPrApprovedFmt" xml:space="preserve"><value>Purchase request {0} is approved but not yet converted, and will not be changed by this re-run. If the product is now made in-house or the demand is gone, close the lines that are no longer needed.</value></data>
+  <data name="Mfg_ProductNotFoundFmt" xml:space="preserve"><value>Product {0} not found.</value></data>
+  <data name="Mfg_BomDepthExceededFmt" xml:space="preserve"><value>BOM expansion exceeded the safety limit of {0} levels (product {1}); there may be circular materials. Expansion stopped.</value></data>
+  <data name="Mfg_BomCycleStoppedFmt" xml:space="preserve"><value>Circular BOM: product {0} appears in its own expansion. Expansion stopped.</value></data>
+  <data name="Mfg_RerunBlockedWoStartedFmt" xml:space="preserve"><value>MRP re-run blocked ({0}): work order {1} is already in production ({2}); released work orders cannot be overwritten.</value></data>
+  <data name="Mfg_BomDepthTruncatedFmt" xml:space="preserve"><value>{0}: reached the expansion depth limit {1}; lower levels are truncated.</value></data>
+  <data name="Mfg_BomBranchCycleFmt" xml:space="preserve"><value>{0} → {1}: circular BOM reference; this branch is not expanded further.</value></data>
+  <data name="Qcr_ReturnOnlyForIqc" xml:space="preserve"><value>Returns apply only to nonconformance reports from incoming inspection (IQC).</value></data>
+  <data name="Qcr_SourceReceiptNotFound" xml:space="preserve"><value>The source goods receipt was not found, so the return cannot be created.</value></data>
+  <data name="Qcr_InspectionNotFound" xml:space="preserve"><value>Inspection order not found.</value></data>
+  <data name="Qcr_InspectionNotPending" xml:space="preserve"><value>The inspection order is not pending inspection.</value></data>
+  <data name="Qcr_ReceiptIdRequired" xml:space="preserve"><value>Goods receipt number is required.</value></data>
+  <data name="Qcr_SampleQtyPositive" xml:space="preserve"><value>Sample quantity must be greater than 0.</value></data>
+  <data name="Qcr_IqcAlreadyDone" xml:space="preserve"><value>IQC is already done for this receipt line.</value></data>
+  <data name="Rps_UnsupportedRelativePeriod" xml:space="preserve"><value>Unsupported relative period.</value></data>
+  <data name="Rps_PeriodBothSpecified" xml:space="preserve"><value>Period and AbsolutePeriod are mutually exclusive; specify only one.</value></data>
+  <data name="Rps_PeriodEndBeforeStartFmt" xml:space="preserve"><value>The period end is earlier than its start: {0}</value></data>
+  <data name="Rps_PeriodRequired" xml:space="preserve"><value>Specify either Period or AbsolutePeriod.</value></data>
+  <data name="Rps_NoPeriodCoveringFmt" xml:space="preserve"><value>No accounting period covers {0:yyyy-MM-dd}. Create the accounting period first; calendar months are deliberately not used, to avoid figures that disagree with the books.</value></data>
+  <data name="Rps_NoPriorPeriodFmt" xml:space="preserve"><value>No accounting period found {2} period(s) before {0}/{1:00}.</value></data>
+  <data name="Rps_UnknownScheduleFrequencyFmt" xml:space="preserve"><value>Unknown schedule frequency {0}.</value></data>
+  <data name="Rps_PlantNotCurrentFmt" xml:space="preserve"><value>a plant other than the current one ({0}) cannot be specified</value></data>
+  <data name="Rps_ToolGone" xml:space="preserve"><value>the report tool no longer exists</value></data>
+  <data name="Rps_ParamsEmpty" xml:space="preserve"><value>the parameters are empty</value></data>
+  <data name="Rps_ParamsInvalidFmt" xml:space="preserve"><value>The report definition's parameters are no longer valid ({0}): {1}. Open the report again and save this definition again.</value></data>
+  <data name="Qa_QuestionRequired" xml:space="preserve"><value>The question cannot be empty.</value></data>
+  <data name="Rpt_NoPeriodOverlapFmt" xml:space="preserve"><value>No accounting period overlaps {0}. Create accounting periods for that range first; calendar months are deliberately not used, to avoid figures that disagree with the books.</value></data>
+  <data name="Bas_RoutingProductMismatchFmt" xml:space="preserve"><value>Routing "{0}" belongs to product "{1}", not to this product "{2}".</value></data>
+  <data name="Bas_CodeInUse_CompanyPayment" xml:space="preserve"><value>used by companies (payment method)</value></data>
+  <data name="Bas_CodeInUse_CompanyGrade" xml:space="preserve"><value>used by companies (customer grade)</value></data>
+  <data name="Bas_CodeInUse_ProductStockMode" xml:space="preserve"><value>used by products (stock mode)</value></data>
+  <data name="Bas_CodeInUse_ProductMrpMode" xml:space="preserve"><value>used by products (production/sales mode)</value></data>
+  <data name="Bas_CodeInUse_ToolingType" xml:space="preserve"><value>used by tooling (type)</value></data>
+  <data name="Bas_CodeInUse_SpecialDay" xml:space="preserve"><value>used by special days (type)</value></data>
+  <data name="Bas_CodeInUse_LocationType" xml:space="preserve"><value>used by locations (type)</value></data>
+  <data name="Ord_SavedMrpExpandedFmt" xml:space="preserve"><value>Saved. MRP run {0} was expanded automatically.</value></data>
+  <data name="Ord_SavedMrpFailedFmt" xml:space="preserve"><value>Saved, but automatic MRP expansion failed: {0}. Handle {1} on the MRP run screen.</value></data>
+  <data name="Ord_SavedSuggestMrpRerun" xml:space="preserve"><value>Saved. This order is already in MRP; re-run it to pick up the changes.</value></data>
+  <data name="Mfg_RerunBlockedHeader" xml:space="preserve"><value>MRP re-run blocked:</value></data>
+  <data name="Mfg_MrpAbortedFmt" xml:space="preserve"><value>MRP {0} expansion stopped: {1} demand line(s) failed the feasibility check, so no production batches or work orders were created.</value></data>
+  <data name="Mfg_MrpAbortedLineFmt" xml:space="preserve"><value>Line {0} ({1}): {2}</value></data>
+  <data name="Bas_CompanyResubmitted" xml:space="preserve"><value>Company updated and resubmitted. It takes effect after a supervisor approves it.</value></data>
+  <data name="Bas_ProductResubmitted" xml:space="preserve"><value>Product updated and resubmitted. It takes effect after a supervisor approves it.</value></data>
+  <data name="Bas_ProductUpdated" xml:space="preserve"><value>Product updated.</value></data>
+  <data name="Bas_UomConversionNotFoundFmt" xml:space="preserve"><value>No unit conversion found: {0} → {1}{2}. Add the conversion on the Units of Measure screen, or create a product-specific conversion.</value></data>
+  <data name="Bas_UomProductSuffixFmt" xml:space="preserve"><value> (product {0})</value></data>
+  <data name="Mob_OccurredTooOldFmt" xml:space="preserve"><value>This entry was queued on the phone about {0} hours ago. Entries older than 24 hours cannot be resent (the actual time cannot be confirmed); enter it on the desktop instead.</value></data>
+  <data name="Mob_ConcurrencyReload" xml:space="preserve"><value>The data was changed by someone else. Reload and try again.</value></data>
+  <data name="Mob_OutsourceDispatchNoSlip" xml:space="preserve"><value>Materials of an outsourced dispatch go through outsource issue/return; they cannot be requested or returned on the shop floor.</value></data>
+  <data name="Mob_DispatchNotFound" xml:space="preserve"><value>Dispatch not found.</value></data>
+  <data name="Mob_SampleQtyInvalid" xml:space="preserve"><value>Sample quantity must be greater than 0, and the defect quantity cannot be negative or exceed the sample quantity.</value></data>
+  <data name="Mob_ForbiddenAction" xml:space="preserve"><value>Your role is not authorized for this action. Contact your system administrator.</value></data>
+  <data name="Mob_ForbiddenModule" xml:space="preserve"><value>Your role is not authorized to access this module. Contact your system administrator.</value></data>
+  <data name="Mob_RecountSubmittedFmt" xml:space="preserve"><value>Recount submitted: {0}/{1} lines.</value></data>
+  <data name="Mob_MachineUnavailableFmt" xml:space="preserve"><value>The machine is currently "{0}" and cannot start work. Check the machine status or use another machine.</value></data>
+  <data name="Mob_MachineStatusUpdatedFmt" xml:space="preserve"><value>Machine status updated to {0}.</value></data>
+  <data name="Mob_PushTestBodyFmt" xml:space="preserve"><value>Test notification succeeded! Time: {0:HH:mm:ss}</value></data>
+  <data name="Mob_PushTestSentFmt" xml:space="preserve"><value>Test notification sent to {0} device(s).</value></data>
+  <data name="Mob_CountSubmittedFmt" xml:space="preserve"><value>Count submitted: {0}/{1} lines.</value></data>
+  <data name="Mob_UnsupportedEventFmt" xml:space="preserve"><value>Unsupported event type: {0}</value></data>
+  <data name="Mob_ClockInMachineWarnFmt" xml:space="preserve"><value>Clocked in. Note: the machine is currently "{0}". Check whether its status needs updating.</value></data>
+  <data name="Mob_IpqcFailDefectsFmt" xml:space="preserve"><value>IPQC failed (Ac=0, {0} defect(s) found). The dispatch is paused; contact QC.</value></data>
+  <data name="Mob_IpqcFailOutOfSpec" xml:space="preserve"><value>IPQC failed (measurement out of specification). The dispatch is paused; contact QC.</value></data>
+  <data name="Mob_IpqcPass" xml:space="preserve"><value>IPQC passed. Continue production.</value></data>
+  <data name="Mob_FpiPassed" xml:space="preserve"><value>First-piece inspection passed. The dispatch is unlocked.</value></data>
+  <data name="Mob_ReportOverQty" xml:space="preserve"><value>Over-reporting: the cumulative good quantity would exceed the dispatch quantity.</value></data>
+  <data name="Mob_Subscribed" xml:space="preserve"><value>Subscribed.</value></data>
+  <data name="Mob_RecounterSameAsCounter" xml:space="preserve"><value>The recounter cannot be the same person as the first counter.</value></data>
+  <data name="Mob_InProcessInspectionPassed" xml:space="preserve"><value>In-process inspection passed.</value></data>
+  <data name="Mob_SubscriptionFieldsMissing" xml:space="preserve"><value>Subscription fields are missing.</value></data>
+  <data name="Mob_LineIdMissing" xml:space="preserve"><value>The line ID is missing.</value></data>
+  <data name="Mob_ProductOrLocationMissing" xml:space="preserve"><value>The product code or location is missing.</value></data>
+  <data name="Mob_EndpointMissing" xml:space="preserve"><value>The endpoint is missing.</value></data>
+  <data name="Mob_SheetNotCounting" xml:space="preserve"><value>The count sheet is no longer in counting status.</value></data>
+  <data name="Mob_DispatchCannotStart" xml:space="preserve"><value>The dispatch status does not allow starting work.</value></data>
+  <data name="Mob_WorkOrderNotApproved" xml:space="preserve"><value>The work order is pending approval or was rejected; production cannot start.</value></data>
+  <data name="Mob_WorkOrderNotReleased" xml:space="preserve"><value>The work order is not released or in production (it may have been withdrawn or rejected); production cannot start.</value></data>
+  <data name="Mob_DispatchCannotSetup" xml:space="preserve"><value>The dispatch status does not allow starting setup.</value></data>
+  <data name="Mob_DispatchNotInProduction" xml:space="preserve"><value>The dispatch is not in production.</value></data>
+  <data name="Mob_DispatchNotInSetup" xml:space="preserve"><value>The dispatch is not in setup.</value></data>
+  <data name="Mob_NoRecountData" xml:space="preserve"><value>There is no recount data to submit.</value></data>
+  <data name="Mob_NoCountData" xml:space="preserve"><value>There is no count data to submit.</value></data>
+  <data name="Mob_SubscriptionOwnedByOther" xml:space="preserve"><value>This device's subscription belongs to another account. Unsubscribe from that account first or register for notifications again.</value></data>
+  <data name="Mob_NoPendingInspection" xml:space="preserve"><value>This dispatch has no pending inspection.</value></data>
+  <data name="Mob_AwaitingFpi" xml:space="preserve"><value>This dispatch is waiting for first-piece inspection. QC must complete the FPI first.</value></data>
+  <data name="Mob_MachineNotInWorkCenter" xml:space="preserve"><value>This machine does not belong to the dispatch's work center.</value></data>
+  <data name="Mob_LineCannotRecount" xml:space="preserve"><value>This line cannot be recounted now.</value></data>
+  <data name="Mob_LineRecountedLocked" xml:space="preserve"><value>This line has been recounted; the first count can no longer be changed.</value></data>
+  <data name="Mob_NotSubscribed" xml:space="preserve"><value>This account is not subscribed to notifications. Tap the bell on the home page to subscribe.</value></data>
+  <data name="Mob_SessionAlreadyClosed" xml:space="preserve"><value>This work session has already been clocked out.</value></data>
+  <data name="Mob_InspectionFailedPaused" xml:space="preserve"><value>Inspection failed. The dispatch is paused.</value></data>
+  <data name="Mob_ToolingMismatch" xml:space="preserve"><value>The tooling differs from the one scheduled.</value></data>
+  <data name="Mob_SetupNotFound" xml:space="preserve"><value>No setup in progress was found.</value></data>
+  <data name="Mob_CountSheetNotFound" xml:space="preserve"><value>Count sheet not found.</value></data>
+  <data name="Mob_MachineNotFound" xml:space="preserve"><value>Machine not found.</value></data>
+  <data name="Mob_LineNotFound" xml:space="preserve"><value>Line not found.</value></data>
+  <data name="Mob_SessionNotFound" xml:space="preserve"><value>Work session not found.</value></data>
+  <data name="Mob_LotSizePositive" xml:space="preserve"><value>Lot size must be greater than 0.</value></data>
+  <data name="Mob_ProductCodeRequired" xml:space="preserve"><value>A product code is required.</value></data>
+  <data name="Mob_AlreadyProcessed" xml:space="preserve"><value>Already processed.</value></data>
+  <data name="Mob_SetupAlreadyOpen" xml:space="preserve"><value>A setup is already in progress.</value></data>
+  <data name="Mob_SessionAlreadyOpen" xml:space="preserve"><value>A work session is already in progress.</value></data>
+  <data name="Mob_Unsubscribed" xml:space="preserve"><value>Unsubscribed.</value></data>
+  <data name="Mob_CompleteOk" xml:space="preserve"><value>Completed.</value></data>
+  <data name="Mob_ReportOk" xml:space="preserve"><value>Production reported.</value></data>
+  <data name="Mob_QtyNegative" xml:space="preserve"><value>Good and defect quantities cannot be negative.</value></data>
+  <data name="Mob_QtyRequired" xml:space="preserve"><value>Enter a value greater than 0 for the good or defect quantity.</value></data>
+  <data name="Mob_OperatorMismatch" xml:space="preserve"><value>You can only clock in or set up as yourself.</value></data>
+  <data name="Mob_PrevOpInsufficient" xml:space="preserve"><value>The previous operation has not completed enough quantity to report.</value></data>
+  <data name="Mob_SetupStarted" xml:space="preserve"><value>Setup started.</value></data>
+  <data name="Mob_SetupDoneAwaitFpi" xml:space="preserve"><value>Setup complete. Waiting for first-piece inspection.</value></data>
+  <data name="Mob_SetupDone" xml:space="preserve"><value>Setup complete.</value></data>
+  <data name="Mob_StagingCreated" xml:space="preserve"><value>Staging order created.</value></data>
+  <data name="Mob_ClockOutOk" xml:space="preserve"><value>Clocked out.</value></data>
+  <data name="Mob_ClockInOk" xml:space="preserve"><value>Clocked in.</value></data>
+  <data name="Mob_CategoryRequired" xml:space="preserve"><value>category is required.</value></data>
+  <data name="Mob_VlRange" xml:space="preserve"><value>VL must be between 1 and 7.</value></data>
+  <data name="Mob_PushTestTitle" xml:space="preserve"><value>SmartFactory MES test notification</value></data>
+  <data name="Mob_MachineStatus_Available" xml:space="preserve"><value>Available</value></data>
+  <data name="Mob_MachineStatus_Standby" xml:space="preserve"><value>Standby</value></data>
+  <data name="Mob_MachineStatus_ExternalRepair" xml:space="preserve"><value>External repair</value></data>
+  <data name="Mob_MachineStatus_BreakDown" xml:space="preserve"><value>Breakdown</value></data>
+  <data name="Mob_MachineStatus_Modification" xml:space="preserve"><value>Under modification</value></data>
+  <data name="Mob_MachineStatus_Loaned" xml:space="preserve"><value>On loan</value></data>
+  <data name="Mob_MachineStatus_Retired" xml:space="preserve"><value>Retired</value></data>
+  <data name="Mob_MachineStatus_Maintenance" xml:space="preserve"><value>Under maintenance</value></data>
+  <data name="Mfg_GanttCat_InProgress" xml:space="preserve"><value>In progress</value></data>
+  <data name="Mfg_GanttCat_Late" xml:space="preserve"><value>Late</value></data>
+  <data name="Mfg_GanttCat_ToolConflict" xml:space="preserve"><value>Tooling conflict</value></data>
+  <data name="Mfg_GanttCat_MatRisk" xml:space="preserve"><value>Material risk</value></data>
+  <data name="Mfg_GanttCat_Planned" xml:space="preserve"><value>Scheduled</value></data>
+  <data name="Mfg_GanttRegularShift" xml:space="preserve"><value>Regular shift</value></data>
+  <data name="Mfg_GanttOvertime" xml:space="preserve"><value>Overtime</value></data>
+  <data name="Inv_DocStatus_Draft" xml:space="preserve"><value>Draft</value></data>
+  <data name="Inv_DocStatus_Confirmed" xml:space="preserve"><value>Confirmed</value></data>
+  <data name="Inv_DocStatus_InTransit" xml:space="preserve"><value>In Transit</value></data>
+  <data name="Inv_DocStatus_Posted" xml:space="preserve"><value>Posted</value></data>
+  <data name="Inv_DocStatus_Void" xml:space="preserve"><value>Void</value></data>
+  <data name="Inv_ApprovalStatus_Draft" xml:space="preserve"><value>Draft</value></data>
+  <data name="Inv_ApprovalStatus_Pending" xml:space="preserve"><value>Pending</value></data>
+  <data name="Inv_ApprovalStatus_Approved" xml:space="preserve"><value>Approved</value></data>
+  <data name="Inv_ApprovalStatus_Rejected" xml:space="preserve"><value>Rejected</value></data>
+  <data name="Qcr_VlDesc_1" xml:space="preserve"><value>Loosest (fewest samples; low-risk general materials)</value></data>
+  <data name="Qcr_VlDesc_2" xml:space="preserve"><value>Looser</value></data>
+  <data name="Qcr_VlDesc_3" xml:space="preserve"><value>Standard, slightly loose</value></data>
+  <data name="Qcr_VlDesc_4" xml:space="preserve"><value>Recommended for general IQC (default)</value></data>
+  <data name="Qcr_VlDesc_5" xml:space="preserve"><value>Standard, slightly strict</value></data>
+  <data name="Qcr_VlDesc_6" xml:space="preserve"><value>Stricter (critical components)</value></data>
+  <data name="Qcr_VlDesc_7" xml:space="preserve"><value>Strictest (safety, military and medical parts)</value></data>
+  <data name="Bas_DocNumberConfigNotFoundFmt" xml:space="preserve"><value>No document number setting found: DocType='{0}' (plant '{1}' has no specific rule and there is no default rule). Add one under BAS → Document Number Settings.</value></data>
+  <data name="Push_ApprovalPendingTitle" xml:space="preserve"><value>Approval request</value></data>
+  <data name="Push_ApprovalPendingBodyFmt" xml:space="preserve"><value>{0} {1} is waiting for your approval.</value></data>
+  <data name="Push_ApprovalApproved" xml:space="preserve"><value>approved</value></data>
+  <data name="Push_ApprovalRejected" xml:space="preserve"><value>rejected</value></data>
+  <data name="Push_ApprovalReturned" xml:space="preserve"><value>returned for revision</value></data>
+  <data name="Push_ApprovalResultTitle" xml:space="preserve"><value>Approval result</value></data>
+  <data name="Push_ApprovalResultBodyFmt" xml:space="preserve"><value>{0} {1} {2}</value></data>
+  <data name="Push_LateAlertTitleFmt" xml:space="preserve"><value>[{0}] Schedule delay alert</value></data>
+  <data name="Push_LateAlertOneFmt" xml:space="preserve"><value>Production batch {0} is predicted to be late (planned completion {1:MM/dd}).</value></data>
+  <data name="Push_LateAlertManyFmt" xml:space="preserve"><value>{0} production batches are predicted to be late; the earliest is {1:MM/dd}.</value></data>
+  <data name="Push_PrepToolConflictFmt" xml:space="preserve"><value>{0} tooling conflict(s)</value></data>
+  <data name="Push_PrepMatRiskFmt" xml:space="preserve"><value>{0} material risk(s)</value></data>
+  <data name="Push_PrepTitleFmt" xml:space="preserve"><value>[{0}] Production preparation for tomorrow</value></data>
+  <data name="Push_PrepBodyFmt" xml:space="preserve"><value>Schedule for {0:MM/dd}: {1}. Please handle them early.</value></data>
+  <data name="Push_NextDispatchTitleFmt" xml:space="preserve"><value>[{0}] Next dispatch</value></data>
+  <data name="Push_NextDispatchBodyFmt" xml:space="preserve"><value>{0} is expected to start at {1}.</value></data>
+  <data name="Push_BatchLateTitleFmt" xml:space="preserve"><value>⚠ Production delay: {0}</value></data>
+  <data name="Push_BatchLateBodyFmt" xml:space="preserve"><value>Due {0}, ETA {1} (+{2} days)</value></data>
+  <data name="Mob_RecordNotFound" xml:space="preserve"><value>Document not found.</value></data>
+  <data name="Mob_SlipPosted" xml:space="preserve"><value>Posted.</value></data>
+  <data name="Mob_RequisitionSubmitted" xml:space="preserve"><value>Requisition {0} submitted; awaiting warehouse approval.</value></data>
+  <data name="Mob_ReturnSlipCreated" xml:space="preserve"><value>Return slip {0} created. Hand the material to the warehouse.</value></data>
+  <data name="Mob_StagingNotDraft" xml:space="preserve"><value>Only draft staging orders can be confirmed.</value></data>
+  <data name="Mob_StagingNeedApproval" xml:space="preserve"><value>The staging order is not approved yet.</value></data>
+  <data name="Mob_StagingConfirmed" xml:space="preserve"><value>Confirmed; stock is now reserved.</value></data>
+  <data name="Mob_StagingStaged" xml:space="preserve"><value>Moved into the staging area.</value></data>
+  <data name="Mob_OutsourceReceivedPosted" xml:space="preserve"><value>Receipt {0} confirmed and stocked.</value></data>
+  <data name="Mob_OutsourceReceivedAwaitPutAway" xml:space="preserve"><value>Receipt {0} confirmed. Put it away under "Put-away".</value></data>
+  <data name="Mob_OutsourceReceivedPendingApproval" xml:space="preserve"><value>Receipt {0} sent for approval; confirm it under "Outsource receiving" once approved.</value></data>
+  <data name="Act_JournalNotFoundFmt" xml:space="preserve"><value>Journal entry {0} not found.</value></data>
+  <data name="Act_JournalReverseManualOnlyFmt" xml:space="preserve"><value>Journal entry {0} is not a manual entry and cannot be reversed here; reverse automatic entries from their source document.</value></data>
+  <data name="Act_JournalIsReversalFmt" xml:space="preserve"><value>Journal entry {0} is itself a reversal and cannot be reversed.</value></data>
+  <data name="Act_JournalAlreadyReversedFmt" xml:space="preserve"><value>Journal entry {0} has already been reversed by {1}.</value></data>
+  <data name="Act_JournalReversalDescFmt" xml:space="preserve"><value>Reversal of {0}</value></data>
+  <data name="RefVal_NotFound" xml:space="preserve"><value>{0} "{1}" does not exist</value></data>
+  <data name="RefVal_OtherPlant" xml:space="preserve"><value>{0} "{1}" does not belong to this plant</value></data>
+  <data name="RefVal_Inactive" xml:space="preserve"><value>{0} "{1}" is inactive or retired</value></data>
+  <data name="RefMaster_Product" xml:space="preserve"><value>Product</value></data>
+  <data name="RefMaster_Company" xml:space="preserve"><value>Business partner</value></data>
+  <data name="RefMaster_Uom" xml:space="preserve"><value>Unit</value></data>
+  <data name="RefMaster_Currency" xml:space="preserve"><value>Currency</value></data>
+  <data name="RefMaster_Tax" xml:space="preserve"><value>Tax</value></data>
+  <data name="RefMaster_Container" xml:space="preserve"><value>Container</value></data>
+  <data name="RefMaster_Instrument" xml:space="preserve"><value>Instrument</value></data>
+  <data name="RefMaster_Warehouse" xml:space="preserve"><value>Warehouse</value></data>
+  <data name="RefMaster_StorageLocation" xml:space="preserve"><value>Location</value></data>
+  <data name="RefMaster_WorkCenter" xml:space="preserve"><value>Work center</value></data>
+  <data name="RefMaster_Machine" xml:space="preserve"><value>Machine</value></data>
+  <data name="RefMaster_MachineOrLine" xml:space="preserve"><value>Machine / line</value></data>
+  <data name="RefMaster_Tooling" xml:space="preserve"><value>Tooling</value></data>
+  <data name="RefMaster_Routing" xml:space="preserve"><value>Routing</value></data>
+  <data name="RefMaster_ShiftGroup" xml:space="preserve"><value>Shift group</value></data>
+  <data name="RefMaster_AccountingPeriod" xml:space="preserve"><value>Accounting period</value></data>
+  <data name="RefMaster_CodeEntry" xml:space="preserve"><value>Code</value></data>
+  <data name="RefMaster_Shift" xml:space="preserve"><value>Shift</value></data>
+  <data name="RefMaster_ProductCategory" xml:space="preserve"><value>Product category</value></data>
+  <data name="RefMaster_Organization" xml:space="preserve"><value>Department</value></data>
+  <data name="RefMaster_Plant" xml:space="preserve"><value>Plant</value></data>
+  <data name="RefMaster_DefectCode" xml:space="preserve"><value>Defect code</value></data>
+  <data name="RefMaster_ChartOfAccount" xml:space="preserve"><value>Account</value></data>
+  <data name="RefMaster_BankAccount" xml:space="preserve"><value>Bank account</value></data>
+  <data name="RefMaster_User" xml:space="preserve"><value>User</value></data>
+  <data name="Push_ScheduleChangedTitleFmt" xml:space="preserve"><value>[{0}] Tomorrow's dispatches changed</value></data>
+  <data name="Push_ScheduleChangedBodyFmt" xml:space="preserve"><value>After automatic rescheduling, {1} dispatches on {0:MM/dd} have a new machine or time slot (after the preparation alert was sent). Check staging and setup on the Preparation Board.</value></data>
+  <data name="Bas_ContainerUnitPrefixInvalid" xml:space="preserve"><value>The box number prefix must be 1 to 10 letters or digits.</value></data>
+  <data name="Bas_ContainerUnitCountRangeFmt" xml:space="preserve"><value>The number of boxes to create must be between 1 and {0}.</value></data>
+  <data name="Bas_ContainerTypeNotFoundFmt" xml:space="preserve"><value>Container type {0} does not exist or is inactive.</value></data>
+  <data name="Bas_ContainerUnitNotFoundFmt" xml:space="preserve"><value>Box {0} does not exist (or does not belong to this plant).</value></data>
+  <data name="Bas_ContainerUnitInactiveFmt" xml:space="preserve"><value>Box {0} is inactive and cannot be filled.</value></data>
+  <data name="Bas_ContainerUnitTypeMismatchFmt" xml:space="preserve"><value>Box {0} is container type {1}, not the {2} chosen here.</value></data>
+  <data name="Bas_ContainerUnitOccupiedFmt" xml:space="preserve"><value>Box {0} still holds item {1}, lot {2} ({3} on hand). Issue it out or clear the box on the Boxes screen before refilling.</value></data>
+  <data name="Bas_ContainerUnitInWipFmt" xml:space="preserve"><value>Box {0} holds work in process for work order {1}, operation {2}; boxes cannot be mixed. Use another box, or clear this one on the Boxes screen first.</value></data>
+  <data name="Mob_BoxNotLoadedFmt" xml:space="preserve"><value>{0} The box was not loaded: {1}</value></data>
+  <data name="Bas_ContainerUnitOffsiteFmt" xml:space="preserve"><value>Box {0} is off-site (it left with document {1}). Recover it on the Boxes screen before filling it.</value></data>
+  <data name="Bas_ContainerUnitNotOffsiteFmt" xml:space="preserve"><value>Box {0} is not off-site, so there is nothing to recover.</value></data>
+  <data name="Bas_ContainerUnitConcurrencyFmt" xml:space="preserve"><value>Box {0} was just changed by someone else. Refresh and try again.</value></data>
+  <data name="Bas_ContainerUnitLotUsedFmt" xml:space="preserve"><value>Lot {0} has been used before. Filling box {1} needs a new lot; leave the lot blank and the system creates one.</value></data>
+  <data name="Inv_PutawayBoxedFmt" xml:space="preserve"><value>{0} Filled box {1}, lot {2}.</value></data>
+  <data name="Bas_ContainerPackNoPlant" xml:space="preserve"><value>No current plant, so nothing can be packed.</value></data>
+  <data name="Bas_ContainerPackProductNotFoundFmt" xml:space="preserve"><value>Item {0} was not found.</value></data>
+  <data name="Bas_ContainerPackQtyRequired" xml:space="preserve"><value>The quantity to pack must be greater than 0.</value></data>
+  <data name="Bas_ContainerPackLocationNotFoundFmt" xml:space="preserve"><value>This plant has no location {0}.</value></data>
+  <data name="Bas_ContainerPackRemarkFmt" xml:space="preserve"><value>Packed into box {0} (new lot; quantity and cost unchanged)</value></data>
+  <data name="Bas_ContainerUnitDuplicateFmt" xml:space="preserve"><value>Box {0} was scanned more than once.</value></data>
+  <data name="Mfg_BoxUnitCountMismatchFmt" xml:space="preserve"><value>This receipt splits into {0} boxes but {1} box numbers were given; add or remove box numbers before receiving.</value></data>
+</root>

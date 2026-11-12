@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/INV/Services/InventoryReservationService.cs",
+  "sourceHash": "4a63d8b519bf511b0cdad6163141c96c5aa54314a3bd819b22de3b924c4a9104",
+  "entries": [
+    {
+      "slug": "code-inv-inventoryreservationservice-ae9c90a1",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 廠級自由可用量＝− 有效的在手預留，下限 0",
+      "text": "廠級可用量計算規則說明｜廠別的自由可用數量是根據在手庫存減去待驗倉，再減去有效的預留數量後計算得出，且此數值不會低於零。當有多個客戶提供客供料時，系統會將所有客戶提供的客供料加總到同一個品項的可用量中，這可能導致為第二個客戶產生的工單在需求計算時，誤用第一個客戶提供的材料進行抵銷，造成該材料未被採購。",
+      "approved": true,
+      "sourceSectionHash": "c8d35f55339816311f8bec718f948793bafc2c11ff29cb879427843b620f925b"
+    },
+    {
+      "slug": "code-inv-inventoryreservationservice-d0d2c254",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 該工單的備料單",
+      "text": "備料單計算需依工單分開處理｜因為一筆備料單可能跨越多個工單，所以必須逐行檢查每個工單的用量，否則會錯誤地將其他工單的預留數量計入成本工單已備妥的庫存，導致判斷有誤。",
+      "approved": true,
+      "sourceSectionHash": "52bd49f49a6058087e344ae58232ff532306c1102ab66de4ef9d8d32f9594276"
+    },
+    {
+      "slug": "code-inv-inventoryreservationservice-086a43a3",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 該工單相關的備料單",
+      "text": "備料單依工單關聯規則說明｜此備料單的資料會依照開立順序進行消耗，且若整張備料單是為特定工單開立的，即使明細行沒有填寫舊版系統的工單編號，也會被視為該工單所使用的。但如果這筆備料單是從生產批次來源產生的，則只有明確標示了相關工單編號的明細行才會被計算到。",
+      "approved": true,
+      "sourceSectionHash": "d12a76c56cade622c5686b85e2cbb6d0b10cadb9995813b822aaf2b41d8cff71"
+    },
+    {
+      "slug": "code-inv-inventoryreservationservice-e187b7f9",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 差別是多一層行號過濾，避免生產批備料單把別張工單的同品號鎖量一起",
+      "text": "備料單的庫存扣減規則說明｜此功能會根據指定工單，逐筆將備料單明細中屬於該工單的品項預留數量歸零。這樣設計是為了避免生產批備料單在處理時，誤將同一品號但來自不同工單的預留數量一起扣除。",
+      "approved": true,
+      "sourceSectionHash": "48a9ec3ab601975677adbfd1da7f9a7b614ac7598c961a8ec857264f690895a9"
+    }
+  ]
+}

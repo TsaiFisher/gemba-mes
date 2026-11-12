@@ -1,0 +1,180 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Services
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.MFG.Services.MrpRunResult
+
+@functions {
+    // R1：Localizer 鍵一律靜態字面值，不以列舉名動態串接。
+    string KindLabel(MrpPurchaseVarianceKind kind) => kind switch
+    {
+        MrpPurchaseVarianceKind.Added       => Localizer["VarKindAdded"].Value,
+        MrpPurchaseVarianceKind.Increased   => Localizer["VarKindIncreased"].Value,
+        MrpPurchaseVarianceKind.Decreased   => Localizer["VarKindDecreased"].Value,
+        MrpPurchaseVarianceKind.ModeChanged => Localizer["VarKindModeChanged"].Value,
+        _                                   => Localizer["VarKindRemoved"].Value
+    };
+
+    string DispositionLabel(MrpPurchaseVarianceDisposition disposition) => disposition switch
+    {
+        MrpPurchaseVarianceDisposition.AutoClosed     => Localizer["VarDispAutoClosed"].Value,
+        MrpPurchaseVarianceDisposition.PendingClose   => Localizer["VarDispPendingClose"].Value,
+        MrpPurchaseVarianceDisposition.ManualRequired => Localizer["VarDispManualRequired"].Value,
+        _                                             => Localizer["VarDispInformational"].Value
+    };
+}
+
+<div class="mrp-execute-result">
+    <div class="alert alert-success d-flex align-items-center">
+        <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+        <div>@Localizer["ResultTitle", Model.MrpRunId]</div>
+    </div>
+
+    <div class="row text-center mb-3">
+        <div class="col">
+            <div class="border rounded py-2">
+                <div class="fs-4 fw-bold">@Model.BatchCount</div>
+                <div class="text-muted small">@Localizer["BatchCount"]</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="border rounded py-2">
+                <div class="fs-4 fw-bold">@Model.WorkOrderCount</div>
+                <div class="text-muted small">@Localizer["WorkOrderCount"]</div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="border rounded py-2">
+                <div class="fs-4 fw-bold">@Model.DispatchCount</div>
+                <div class="text-muted small">@Localizer["DispatchCount"]</div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.PredictedLateBatchIds.Count > 0)
+    {
+        <div class="alert alert-warning py-2">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>@Localizer["PredictedLate"]</strong>：@string.Join("、", Model.PredictedLateBatchIds)
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.CreatedPurchaseRequestId))
+    {
+        <div class="alert alert-info py-2">
+            <i class="bi bi-file-earmark-text me-1"></i>@Localizer["CreatedPr", Model.CreatedPurchaseRequestId]
+        </div>
+    }
+
+    @if (Model.PurchaseDemands.Count > 0)
+    {
+        <h6 class="fw-bold mt-3">@Localizer["PurchaseDemands"] <span class="badge bg-info">@Model.PurchaseDemands.Count</span></h6>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead class="table-light"><tr>
+                    <th>@Localizer["DemandProduct"]</th><th class="text-end">@Localizer["DemandQty"]</th>
+                    <th>@Localizer["DemandDate"]</th><th>@Localizer["DemandReason"]</th>
+                </tr></thead>
+                <tbody>
+                    @foreach (var d in Model.PurchaseDemands)
+                    {
+                        <tr><td>@d.ProductCode</td><td class="text-end">@d.Qty</td><td>@d.RequiredDate.ToString("yyyy-MM-dd")</td><td class="small">@d.Reason</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    @if (Model.OutsourceDemands.Count > 0)
+    {
+        <h6 class="fw-bold mt-3">@Localizer["OutsourceDemands"] <span class="badge bg-info">@Model.OutsourceDemands.Count</span></h6>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead class="table-light"><tr>
+                    <th>@Localizer["DemandProduct"]</th><th class="text-end">@Localizer["DemandQty"]</th>
+                    <th>@Localizer["DemandDate"]</th><th>@Localizer["DemandReason"]</th>
+                </tr></thead>
+                <tbody>
+                    @foreach (var d in Model.OutsourceDemands)
+                    {
+                        <tr><td>@d.ProductCode</td><td class="text-end">@d.Qty</td><td>@d.RequiredDate.ToString("yyyy-MM-dd")</td><td class="small">@d.Reason</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    @if (Model.Shortages.Count > 0)
+    {
+        <h6 class="fw-bold mt-3 text-danger">@Localizer["Shortages"] <span class="badge bg-danger">@Model.Shortages.Count</span></h6>
+        <ul class="small">
+            @foreach (var s in Model.Shortages)
+            {
+                <li>@s.ProductCode — @s.Qty（@s.Reason）</li>
+            }
+        </ul>
+    }
+
+    @if (Model.PurchaseVariances.Count > 0)
+    {
+        <h6 class="fw-bold mt-3 text-warning">
+            @Localizer["PurchaseVariances"] <span class="badge bg-warning text-dark">@Model.PurchaseVariances.Count</span>
+        </h6>
+        <div class="text-muted small mb-1">@Localizer["PurchaseVariancesHint"]</div>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead class="table-light"><tr>
+                    <th>@Localizer["VarKind"]</th><th>@Localizer["DemandProduct"]</th>
+                    <th class="text-end">@Localizer["VarPrevQty"]</th><th class="text-end">@Localizer["VarCurQty"]</th>
+                    <th>@Localizer["VarDisposition"]</th><th>@Localizer["VarDescription"]</th>
+                </tr></thead>
+                <tbody>
+                    @foreach (var v in Model.PurchaseVariances)
+                    {
+                        <tr>
+                            <td>@KindLabel(v.Kind)</td>
+                            <td>@v.ProductCode</td>
+                            <td class="text-end">@v.PreviousQty</td>
+                            <td class="text-end">@v.CurrentQty</td>
+                            <td>@DispositionLabel(v.Disposition)</td>
+                            <td class="small">@v.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    @if (Model.Warnings.Count > 0)
+    {
+        <h6 class="fw-bold mt-3 text-warning">@Localizer["Warnings"] <span class="badge bg-warning text-dark">@Model.Warnings.Count</span></h6>
+        <ul class="small">
+            @foreach (var w in Model.Warnings)
+            {
+                <li>@w</li>
+            }
+        </ul>
+    }
+
+    @if (Model.SkippedLines.Count > 0)
+    {
+        <h6 class="fw-bold mt-3 text-danger">@Localizer["SkippedLines"] <span class="badge bg-danger">@Model.SkippedLines.Count</span></h6>
+        <div class="text-muted small mb-1">@Localizer["SkippedHint"]</div>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead class="table-light"><tr>
+                    <th>@Localizer["SkLineSeq"]</th><th>@Localizer["DemandProduct"]</th><th>@Localizer["SkError"]</th>
+                </tr></thead>
+                <tbody>
+                    @foreach (var s in Model.SkippedLines)
+                    {
+                        <tr class="table-danger"><td>@s.LineSeq</td><td>@s.ProductCode</td><td class="small">@s.Error</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-action="refreshList">@Localizer["DoneRefresh"]</button>
+    </div>
+</div>

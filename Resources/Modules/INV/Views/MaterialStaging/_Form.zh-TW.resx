@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true"/>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+  <data name="StagingId"><value>備料單號</value></data>
+  <data name="SourceType"><value>來源類型</value></data>
+  <data name="SourceId"><value>來源單號</value></data>
+  <data name="StagingWhCode"><value>備料倉庫</value></data>
+  <data name="StagingLocationCode"><value>備料儲位</value></data>
+  <data name="Remarks"><value>備註</value></data>
+  <data name="Lines"><value>備料明細</value></data>
+  <data name="AddLine"><value>新增明細</value></data>
+  <data name="ProductCode"><value>品號</value></data>
+  <data name="UomCode"><value>單位</value></data>
+  <data name="RequiredQty"><value>需求量</value></data>
+  <data name="PickedQty"><value>已備量</value></data>
+  <data name="Save"><value>儲存</value></data>
+  <data name="Close"><value>關閉</value></data>
+  <data name="SubmitForApproval"><value>送審</value></data>
+  <data name="Withdraw"><value>撤回</value></data>
+  <data name="Confirm"><value>確認(鎖庫存)</value></data>
+  <data name="Void"><value>作廢</value></data>
+  <data name="SelectWarehouse"><value>選擇倉庫</value></data>
+  <data name="SelectLocation"><value>選擇儲位</value></data>
+  <data name="Manual"><value>手動</value></data>
+  <data name="WorkOrder"><value>工單</value></data>
+  <data name="SalesOrder"><value>銷售訂單</value></data>
+  <data name="RequestFailed"><value>操作失敗，請重試</value></data>
+  <data name="ProductionBatch" xml:space="preserve"><value>生產批</value></data>
+  <data name="Dispatch" xml:space="preserve"><value>派工單</value></data>
+  <data name="LoadSourceLines" xml:space="preserve"><value>帶入用料</value></data>
+  <data name="LoadSourceLinesHint" xml:space="preserve"><value>依所選來源帶出尚待備料的用料（已扣除既有發料與既有備料單鎖量）。</value></data>
+  <data name="LoadSourceLinesNoSource" xml:space="preserve"><value>請先選擇來源單號。</value></data>
+  <data name="LoadSourceLinesConfirm" xml:space="preserve"><value>帶入用料會覆蓋目前的明細，確定繼續？</value></data>
+  <data name="LoadSourceLinesEmpty" xml:space="preserve"><value>此來源已無待備料的用料。</value></data>
+  <data name="LoadSourceLinesFail" xml:space="preserve"><value>帶入用料失敗，請重試。</value></data>
+  <data name="FromLocationCode" xml:space="preserve"><value>揀料來源倉／儲位</value></data>
+  <data name="SourceWorkOrderId" xml:space="preserve"><value>來源工單</value></data>
+  <data name="StageToStagingWh" xml:space="preserve"><value>揀料完成（移入備料倉）</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>移除此列</value></data>
+  <data name="SelectProductFirst" xml:space="preserve"><value>請先選擇品號</value></data>
+  <data name="LookupStock" xml:space="preserve"><value>選擇庫存</value></data>
+</root>

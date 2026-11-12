@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Modules/RPS/Contracts/LegacyQueryPeriod.cs",
+  "sourceHash": "2149b72c8e6d151e8b1845ab82843c9f08e9f1e946d5d85d332824fec241ccc6",
+  "entries": [
+    {
+      "slug": "code-rps-legacyqueryperiod-172f7672",
+      "lang": "zh",
+      "headingPath": "報表 › 既有報表畫面「字串日期」的解析語意，**原樣保留**在這一個地方",
+      "text": "報表日期解析規則說明｜當使用者在報表上留空「起日」時，系統會將其視為不限制起始日期；若留空「迄日」，則僅能查詢到今天及以前的單據，未來日期的單據將不會顯示。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-legacyqueryperiod-aa6e8620",
+      "lang": "zh",
+      "headingPath": "報表 › 迄日解析失敗時採用的日期",
+      "text": "日期解析失敗的備用日期設定｜當系統無法從輸入的日期範圍計算出正確的日期時，會使用此參數指定的日期作為預設值。",
+      "approved": true
+    }
+  ]
+}

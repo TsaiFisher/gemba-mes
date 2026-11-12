@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ResultTitle" xml:space="preserve"><value>MRP 執行單 {0} 展開完成</value></data>
+  <data name="BatchCount" xml:space="preserve"><value>生產批</value></data>
+  <data name="WorkOrderCount" xml:space="preserve"><value>工單</value></data>
+  <data name="DispatchCount" xml:space="preserve"><value>派工</value></data>
+  <data name="PredictedLate" xml:space="preserve"><value>預計延遲的生產批</value></data>
+  <data name="PurchaseDemands" xml:space="preserve"><value>採購需求</value></data>
+  <data name="OutsourceDemands" xml:space="preserve"><value>委外建議</value></data>
+  <data name="Shortages" xml:space="preserve"><value>缺料</value></data>
+  <data name="Warnings" xml:space="preserve"><value>警示</value></data>
+  <data name="DemandProduct" xml:space="preserve"><value>品號</value></data>
+  <data name="DemandQty" xml:space="preserve"><value>數量</value></data>
+  <data name="DemandDate" xml:space="preserve"><value>需求日</value></data>
+  <data name="DemandReason" xml:space="preserve"><value>說明</value></data>
+  <data name="DoneRefresh" xml:space="preserve"><value>完成</value></data>
+  <data name="SkippedLines" xml:space="preserve"><value>跳過未展開的需求列</value></data>
+  <data name="SkippedHint" xml:space="preserve"><value>下列需求列因基本資料缺漏未通過預檢，已跳過；請修正主檔後重建需求列重跑。</value></data>
+  <data name="SkLineSeq" xml:space="preserve"><value>列</value></data>
+  <data name="SkError" xml:space="preserve"><value>錯誤</value></data>
+  <data name="CreatedPr" xml:space="preserve"><value>已自動建立請購單 {0}（可至「請購轉採購」批次轉採購單）。</value></data>
+  <data name="PurchaseVariances" xml:space="preserve"><value>採購對帳差異</value></data>
+  <data name="PurchaseVariancesHint" xml:space="preserve"><value>本次展開的採購需求與既有請購單明細的差異；已核准的請購單不會被自動改量，請依說明處理。</value></data>
+  <data name="VarKind" xml:space="preserve"><value>差異類型</value></data>
+  <data name="VarPrevQty" xml:space="preserve"><value>原數量</value></data>
+  <data name="VarCurQty" xml:space="preserve"><value>本次數量</value></data>
+  <data name="VarDisposition" xml:space="preserve"><value>處置</value></data>
+  <data name="VarDescription" xml:space="preserve"><value>說明</value></data>
+  <data name="VarKindAdded" xml:space="preserve"><value>新增</value></data>
+  <data name="VarKindIncreased" xml:space="preserve"><value>增量</value></data>
+  <data name="VarKindDecreased" xml:space="preserve"><value>減量</value></data>
+  <data name="VarKindModeChanged" xml:space="preserve"><value>改自製／委外</value></data>
+  <data name="VarKindRemoved" xml:space="preserve"><value>需求消失</value></data>
+  <data name="VarDispAutoClosed" xml:space="preserve"><value>已自動結案</value></data>
+  <data name="VarDispPendingClose" xml:space="preserve"><value>可結案退場</value></data>
+  <data name="VarDispManualRequired" xml:space="preserve"><value>需人工處理</value></data>
+  <data name="VarDispInformational" xml:space="preserve"><value>僅提示</value></data>
+</root>

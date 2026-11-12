@@ -1,0 +1,166 @@
+{
+  "sourcePath": "Modules/FIN/Services/APInvoiceService.cs",
+  "sourceHash": "62091aebf37dc9ace237b0fac6278516c4b809678c34469bae6e6edf3c709469",
+  "entries": [
+    {
+      "slug": "code-fin-apinvoiceservice-0e6043e5",
+      "lang": "zh",
+      "headingPath": "財務會計 › 開票量要扣掉開票前就已經**過帳**的退貨量——理由與為何",
+      "text": "開票時需扣除已過帳退貨量｜系統在計算應開立的數量時，會自動減去那些已經完成過帳的退貨數量。",
+      "approved": true,
+      "sourceSectionHash": "caf9cffde77823f7f4b292d787110801069a4916af29142044a0759903409a8b"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-1fc2ecd8",
+      "lang": "zh",
+      "headingPath": "財務會計 › 已進入付款/作廢狀態的發票不可再追加認列",
+      "text": "已進入付款/作廢狀態的發票不可再追加認列｜無法修改已完成支付或作廢的發票，因為這樣做會導致記錄的總額與已經結算的金額產生差異。",
+      "approved": true,
+      "sourceSectionHash": "9e254166608831f8fd509f5bda7eab701d5bfea158cea3ef5eaa24f82fffa3f5"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-4484f11c",
+      "lang": "zh",
+      "headingPath": "財務會計 › 累計認列量不得超過該進貨明細的「應認列量」＝收貨量 − 已過帳退",
+      "text": "認列量不得超過應認列總量｜系統計算的累積認列數量，不能超過該進貨明細所計算出的「應認列量」，這個應認列量是根據收貨量減去已過帳退貨量計算得出的。",
+      "approved": true,
+      "sourceSectionHash": "de1630ff6fb851a3dcd7e0d586a50cf3637dbed5e11c50d14aa64befa6167f75"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-35c7ab5d",
+      "lang": "zh",
+      "headingPath": "財務會計 › 自動日記帳：本次認列增量 借 GR/IR 暫估應付 + 進項稅額",
+      "text": "帳款認列增量計算方式說明｜借記「GR/IR 暫估應付 + 進項稅額」時，其金額不會重新計算，而是會使用當初單據上架時實際貸記的金額。這樣做是為了確保差異能夠正確歸屬為進料差異（屬於當期費用），而不是留在清算科目中造成結帳上的誤差。",
+      "approved": true,
+      "sourceSectionHash": "79b44b23440cf56b86df69148d64529e9a9f0c7c70e44fa70485ef3900b52edb"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-a2c1655e",
+      "lang": "zh",
+      "headingPath": "財務會計 › 本張發票已借記 2152 的淨額",
+      "text": "發票借記計算需考慮退貨回沖｜在計算已借記的淨額時，必須同時計算出所有相關的暫估金額，以確保退貨回沖後不會導致下一批認列誤判，從而產生不正確的假性進料價差。",
+      "approved": true,
+      "sourceSectionHash": "c9436a4b47b9fc71f69b13ca49a2a53366fcb09e0689c065930a4168b9161097"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-221d8471",
+      "lang": "zh",
+      "headingPath": "財務會計 › 該進貨明細上架時實際貸記 2152 的總額，",
+      "text": "進貨明細貸記總額與數量必須一致｜系統計算入庫成本時，所使用的總金額和對應的數量必須是來源一致的數值，否則在進行比例換算時，可能會錯誤地使用已上架的總金額去匹配整張收貨單的總數量。",
+      "approved": true,
+      "sourceSectionHash": "ab407fdcb27df2f4c7e25e3cfe82821677bda1b1a9cc035d435147d41e9c2c39"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-e2b36fe6",
+      "lang": "zh",
+      "headingPath": "財務會計 › 查無該進貨明細的入庫異動",
+      "text": "查無該進貨明細的入庫異動｜無法查到入庫異動的明細時，系統不會將應付淨額直接視為價差沖銷。當找不到該進貨明細的入庫變動紀錄時，系統會避免將整筆金額誤判成價差並計入差異科目，以確保正常的認列單看起來正確。",
+      "approved": true,
+      "sourceSectionHash": "7c084759e4cac10fe09cd6b67d452957abd3039498dd61127f2e68b2bea7c0b6"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-787215cf",
+      "lang": "zh",
+      "headingPath": "財務會計 › ️ 明細查找**必須在狀態守門之前**",
+      "text": "付款時計算未沖銷金額的依據｜在查詢明細資料時，若已完成付款，系統會根據明細的量價來計算尚未沖銷的金額。",
+      "approved": true,
+      "sourceSectionHash": "a0e46de5f920e431502d1b3b5226ce8964c1f4858c775361f4c45bfd845234b3"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-ab5cc2d8",
+      "lang": "zh",
+      "headingPath": "財務會計 › 回沖金額在分錄之外先算好：它同時是分錄金額與回傳值，",
+      "text": "回沖金額的計算與使用說明｜此回沖金額會同時作為分錄的金額和系統傳回的值。",
+      "approved": true,
+      "sourceSectionHash": "dd10e59b49e9d89484ac19d1053dee6a7d8b8a069406105bc80e6e306088ff00"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-01d4fa95",
+      "lang": "zh",
+      "headingPath": "財務會計 › 委外超耗扣款：作為發票負項直接扣減應付加工費，不另開折讓單",
+      "text": "扣款方式與幣別說明｜超耗扣款的金額會直接從應付加工費中扣減，此時不會另外開立折讓單。該筆扣款的金額會以與發票相同的貨幣計算，且不涉及稅務課徵。此外，這筆扣款的來源記錄會追溯到收貨明細。",
+      "approved": true,
+      "sourceSectionHash": "33941357fe65a0ed3f818af5a13b6d3fd356e541fee3a352b3e7529c0d8c2d26"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-1d8d6cbf",
+      "lang": "zh",
+      "headingPath": "財務會計 › 查無入庫傳票→ 沒有暫估可沖，",
+      "text": "無法進行暫估沖銷的條件說明｜當收貨傳票尚未完成過帳時，系統不會提供可供沖銷的暫估紀錄，以避免金額判斷錯誤。",
+      "approved": true,
+      "sourceSectionHash": "960476f98045ccc01e1eac9b81fc6f6608a22b3aef474f5de7859e5d88c31b96"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-bff3ecb4",
+      "lang": "zh",
+      "headingPath": "財務會計 › 建立當下的簽核狀態，**由呼叫端解析**",
+      "text": "簽核狀態由呼叫端決定｜系統在建立單據時，其簽核的狀態是由呼叫該功能的外部程式來判斷和傳入的。如果沒有提供此參數，則代表不需要進行線上簽核，系統會直接將單據視為已核准並立即記帳到總帳。",
+      "approved": true,
+      "sourceSectionHash": "59e00fcfbaf6b385691116dd79e01016afcf2d5baca60931fe845b63c59f4034"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-6e087594",
+      "lang": "zh",
+      "headingPath": "財務會計 › 手動發票是**全系統唯一能憑空產生應付的路徑**——沒有採購單",
+      "text": "手動發票的產生路徑說明｜本系統中，若要建立應付帳款而沒有依據採購單或進貨單等文件時，只能透過此手動發票功能來操作。",
+      "approved": true,
+      "sourceSectionHash": "e3cbc49446449485ebc10b39020a36d6bd3ffe8dfec16187ef361b9dce433afd"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-2d5e2229",
+      "lang": "zh",
+      "headingPath": "財務會計 › 科目要在寫入之前先解出來：解不出就整張擋下",
+      "text": "科目資料必須完整才能寫入｜系統要求所有要記錄的科目資訊都必須能夠成功解出，如果無法解出相關科目資料，則會阻止整個發票的寫入作業。",
+      "approved": true,
+      "sourceSectionHash": "28a8700dd2704b98b967e4eb95d203e400878c45e50d3ed4024b125cf6b467db"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-7e550db9",
+      "lang": "zh",
+      "headingPath": "財務會計 › 未核准不進總帳：一張還沒人簽的發票掛上應付",
+      "text": "未核准不進總帳的處理規則｜發票在尚未經過正式簽核前，掛到應付帳款時，其狀態僅是流程上的呈現，實際入帳仍需等待後續的系統補結動作。",
+      "approved": true,
+      "sourceSectionHash": "b755bfb651c92e69481928f88b2382ad8fa60368a3169ffa59a0e33ed431e088"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-1b60acde",
+      "lang": "zh",
+      "headingPath": "財務會計 › 核准後補開手動發票的認列分錄",
+      "text": "手動發票分錄的處理規則｜此功能只會處理由手動方式建立的發票所產生的應付帳款分錄，不會處理從進貨單產生、在收貨時就已開立的分錄。此外，如果該筆發票已經有相關分錄記錄，系統會直接返回，以避免重複產生相同的應付帳款紀錄。",
+      "approved": true,
+      "sourceSectionHash": "e8f0fcb9f8c61ae7ddd58ce1264ece9ebd02c5e497fd4eb2caa36de2b68603d1"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-334048cf",
+      "lang": "zh",
+      "headingPath": "財務會計 › 手動 AP 發票的認列分錄",
+      "text": "手動分錄的科目與應付金額計算規則｜費用科目的來源必須是明細指定的，系統不會自行判斷或預設任何科目。應付方總金額的計算方式是將所有費用的科目和進項稅額加總後得出，以確保該筆傳票本身會保持平衡。",
+      "approved": true,
+      "sourceSectionHash": "fb7bcd34452be8b4569ab984fbcc008e30a60333ed03e768aabc095ec46dadf0"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-6c3f68a2",
+      "lang": "zh",
+      "headingPath": "財務會計 › 作廢沖銷認列分錄：把本張發票原本的自動分錄「借貸對調」寫一筆反向",
+      "text": "作廢沖銷需反轉原始分錄的借貸關係｜系統在處理作廢時，會將原本自動產生的分錄進行「借貸對調」，寫入一筆相反方向的分錄。這樣做是為了確保能精準地讓帳務科目歸零，因為原先的認列過程是逐次累加的，如果重新計算金額，無法還原每次增加時稅額的細部分配。",
+      "approved": true,
+      "sourceSectionHash": "d8ab022dd83d50dd3279cb87a1bae2307e5749b635b411e58ede02c8712fd761"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-b89c27d3",
+      "lang": "zh",
+      "headingPath": "財務會計 › 同時納入退貨回沖分錄：對調「認列＋已回沖」的全部行，",
+      "text": "規則說明｜帳單分錄中，「認列」和「已回沖」的全部項目，其淨額才會恰好歸零；如果只對調了「認列」的項目，會導致退貨已經沖掉的部分被再次沖銷。",
+      "approved": true,
+      "sourceSectionHash": "0686d54b9438eb1725f4f4495e7f0276c5dfe886a8a2712beee13767979cd224"
+    },
+    {
+      "slug": "code-fin-apinvoiceservice-f08d6c86",
+      "lang": "zh",
+      "headingPath": "財務會計 › 應付認列分錄的來源單別",
+      "text": "來源單別定義與區分｜此處定義了用於應付認列分錄的來源單別，並為反向分錄設立獨立的單別，以避免在後續作廢時發生重複對調的情況。",
+      "approved": true,
+      "sourceSectionHash": "ad9545a07030ac6b8eb28dc97561cc25cd0a3eb50358f28865286de402c2a7aa"
+    }
+  ]
+}

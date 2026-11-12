@@ -1,0 +1,46 @@
+{
+  "sourcePath": "Modules/MFG/Services/ToolingShotService.cs",
+  "sourceHash": "ecbee453c275112dad406c6f9cc8b4a02e3444003bc7b156907609a7bda36cd4",
+  "entries": [
+    {
+      "slug": "code-mfg-toolingshotservice-13284860",
+      "lang": "zh",
+      "headingPath": "生產製造 › 報工回寫打次： +=",
+      "text": "報工回寫打次計算與停機單建立規則｜當累積的使用次數超過了預設的保養間隔門檻時，系統會自動建立一次設備維護停機單。如果沒有設定夾治具代碼、沒有穴數或沒有設定保養間隔，則只會累計數據或跳過此動作，不會觸發建立停機單。",
+      "approved": true,
+      "sourceSectionHash": "95e7a4473cb97e36b3d6a40a663d2a2aa29ac980090fb4ed61a714b28f8914c7"
+    },
+    {
+      "slug": "code-mfg-toolingshotservice-ca95a3a2",
+      "lang": "zh",
+      "headingPath": "生產製造 › 歸零，開始下一個保養週期",
+      "text": "保養完成重置的條件與動作｜當發生「HO」類型的事件，並且來源單據的代號是模具代號時，系統會將該模具累積的次數歸零，並開始計算下一個保養週期。其他任何類型的事件都不會執行任何操作。",
+      "approved": true,
+      "sourceSectionHash": "241471fa7b3188962217cdb0d145047c3008e3b3f6e0c4d5e221c293d2f6903c"
+    },
+    {
+      "slug": "code-mfg-toolingshotservice-ee10372b",
+      "lang": "zh",
+      "headingPath": "生產製造 › 只在「本次回寫首次跨越門檻」時觸發一次",
+      "text": "規則觸發條件與限制｜系統只會在本次回寫時首次超過門檻的情況下執行一次；如果設備已經逾期且未進行保養，則不會重複開立單據。",
+      "approved": true,
+      "sourceSectionHash": "36309aecde639ffed324bbb0ce783f8820c1663e068c4fc7b0152f5b98e8819b"
+    },
+    {
+      "slug": "code-mfg-toolingshotservice-4edc552c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 廠別取自派工，不是取自使用者情境：",
+      "text": "廠別依據派工單決定而非使用者當前位置｜系統判斷的廠別是根據所關聯的派工單來決定，而不是依照目前操作人員所在的廠區。這樣設計確保了即使呼叫此流程的人不在該廠區，產出的結果依然會正確地指向派工單指定的廠區。",
+      "approved": true,
+      "sourceSectionHash": "0f48b95ad3adb4bda058d97d1bb32d9ad0dc9ed35f075ca2248acb9afefe5877"
+    },
+    {
+      "slug": "code-mfg-toolingshotservice-629598d7",
+      "lang": "zh",
+      "headingPath": "生產製造 › §13.4 排程副作用：已排退回待排",
+      "text": "模具到期會讓機台轉為保養｜模具打數到期時，系統會建立一筆機台狀態異動，把機台轉為「保養」：該機台已排定的派工退回待排，已投入的派工（包括觸發這次到期的那張）轉為暫停。保養完成、機台恢復可用時，這些因停機而暫停的派工會自動恢復。",
+      "approved": true,
+      "sourceSectionHash": "36c8489c755b358cf15556edd31444312b6fe8f331789ff8bd36213a16c38cf5"
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+@using SmartFactory.MES.Services
+@using System.Text.Json
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.QCR.Models.SpcAnalysisReport
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched   = ViewBag.Searched as bool? ?? false;
+    bool   canPrint      = ViewBag.CanPrint == true;
+    string searchProduct = ViewBag.SearchProduct as string ?? "";
+    var    dateFrom      = ViewBag.DateFrom as DateOnly? ?? DateOnly.FromDateTime(DateTime.Today).AddDays(-90);
+    var    dateTo        = ViewBag.DateTo   as DateOnly? ?? DateOnly.FromDateTime(DateTime.Today);
+    var    productOptions = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+
+    var rows    = Model?.Rows ?? new();
+    bool hasData = rows.Count > 0;
+
+    string CpkClass(decimal? cpk) => cpk is null ? "text-muted"
+        : cpk >= 1.33m ? "text-success fw-bold"
+        : cpk >= 1.00m ? "text-warning fw-bold"
+                       : "text-danger fw-bold";
+    string CapBadge(string level) => level switch
+    {
+        "Excellent"    => "bg-success",
+        "Good"         => "bg-success",
+        "Adequate"     => "bg-warning text-dark",
+        "Insufficient" => "bg-danger",
+        _              => "bg-secondary",
+    };
+    // 以字面鍵解析（避免動態串接鍵，符合 R1 本地化慣例）
+    string CapLabel(string level) => level switch
+    {
+        "Excellent"    => Localizer["Cap_Excellent"].Value,
+        "Good"         => Localizer["Cap_Good"].Value,
+        "Adequate"     => Localizer["Cap_Adequate"].Value,
+        "Insufficient" => Localizer["Cap_Insufficient"].Value,
+        _              => Localizer["Cap_NA"].Value,
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-graph-up-arrow me-2 text-primary"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && hasSearched && hasData)
+        {
+            <a asp-action="Export" asp-route-searchProduct="@searchProduct"
+               asp-route-dateFrom="@dateFrom.ToString("yyyy-MM-dd")" asp-route-dateTo="@dateTo.ToString("yyyy-MM-dd")"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-4">
+                    <label class="form-label small fw-semibold">@Localizer["Product"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllProducts"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["DateFrom"]</label>
+                    <input type="date" name="dateFrom" value="@dateFrom.ToString("yyyy-MM-dd")" class="form-control form-control-sm" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["DateTo"]</label>
+                    <input type="date" name="dateTo" value="@dateTo.ToString("yyyy-MM-dd")" class="form-control form-control-sm" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+            <div class="form-text mt-2"><i class="bi bi-info-circle me-1"></i>@Localizer["ChartHint"]</div>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (!hasData)
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm mb-4">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["Product"]</th>
+                        <th>@Localizer["Characteristic"]</th>
+                        <th class="text-center">@Localizer["SampleCount"]</th>
+                        <th class="text-end">@Localizer["Mean"]</th>
+                        <th class="text-end">@Localizer["StdDev"]</th>
+                        <th class="text-end">@Localizer["LowerSpec"]</th>
+                        <th class="text-end">@Localizer["Target"]</th>
+                        <th class="text-end">@Localizer["UpperSpec"]</th>
+                        <th class="text-end">Cp</th>
+                        <th class="text-end">Cpk</th>
+                        <th class="text-center">@Localizer["Capability"]</th>
+                        <th class="text-end">@Localizer["OutOfSpecRate"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                @foreach (var r in paged)
+                {
+                    <tr>
+                        <td><span class="fw-semibold">@r.ProductCode</span><div class="small text-muted">@r.ProductName</div></td>
+                        <td>@r.ItemName @(string.IsNullOrEmpty(r.UomCode) ? "" : $"({r.UomCode})")</td>
+                        <td class="text-center">@r.SampleCount</td>
+                        <td class="text-end">@r.Mean.ToString("0.####")</td>
+                        <td class="text-end">@r.StdDev.ToString("0.####")</td>
+                        <td class="text-end">@(r.LowerSpec?.ToString("0.####") ?? "—")</td>
+                        <td class="text-end">@(r.TargetValue?.ToString("0.####") ?? "—")</td>
+                        <td class="text-end">@(r.UpperSpec?.ToString("0.####") ?? "—")</td>
+                        <td class="text-end">@(r.Cp?.ToString("0.00") ?? "—")</td>
+                        <td class="text-end @CpkClass(r.Cpk)">@(r.Cpk?.ToString("0.00") ?? "—")</td>
+                        <td class="text-center"><span class="badge @CapBadge(r.CapabilityLevel)">@CapLabel(r.CapabilityLevel)</span></td>
+                        <td class="text-end @(r.OutOfSpecCount > 0 ? "text-danger fw-bold" : "")">@r.OutOfSpecRate.ToString("N2")%</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @await Html.PartialAsync("_Pagination", paged)
+
+    @if (Model!.HasChart)
+    {
+        <h5 class="mb-3"><i class="bi bi-activity me-2"></i>@Localizer["ControlChart"]</h5>
+        <div class="row g-3">
+            @for (int i = 0; i < Model.Charts.Count; i++)
+            {
+                <div class="col-lg-6">
+                    <div class="card shadow-sm">
+                        <div class="card-header py-2 fw-semibold">@Model.Charts[i].ItemName
+                            @(string.IsNullOrEmpty(Model.Charts[i].UomCode) ? "" : $"({Model.Charts[i].UomCode})")</div>
+                        <div class="card-body"><canvas id="spcChart_@i" height="140"></canvas></div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    }
+</div>
+
+@section Scripts {
+    @if (Model?.HasChart == true)
+    {
+    <script src="~/lib/chart.js/chart.umd.min.js" nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)"></script>
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    (function () {
+        const charts = @Html.Raw(JsonSerializer.Serialize(Model!.Charts.Select(c => new {
+            labels = c.Labels,
+            values = c.Values,
+            mean   = c.Mean,
+            ucl    = c.Ucl,
+            lcl    = c.Lcl,
+            usl    = c.UpperSpec,
+            lsl    = c.LowerSpec,
+            target = c.TargetValue,
+        })));
+        charts.forEach((c, i) => {
+            const el = document.getElementById('spcChart_' + i);
+            if (!el) return;
+            const n = c.labels.length;
+            const flat = (v) => v === null ? null : Array(n).fill(v);
+            const ds = [{
+                label: 'Value', data: c.values, borderColor: 'rgba(13,110,253,1)',
+                backgroundColor: 'rgba(13,110,253,0.15)', borderWidth: 2, pointRadius: 2, tension: 0.1, fill: false
+            }];
+            const addLine = (label, val, color, dash) => {
+                if (val === null || val === undefined) return;
+                ds.push({ label, data: flat(val), borderColor: color, borderDash: dash,
+                          borderWidth: 1, pointRadius: 0, fill: false });
+            };
+            addLine('UCL', c.ucl, 'rgba(220,53,69,0.9)', [6,4]);
+            addLine('LCL', c.lcl, 'rgba(220,53,69,0.9)', [6,4]);
+            addLine('Mean', c.mean, 'rgba(25,135,84,0.9)', []);
+            addLine('USL', c.usl, 'rgba(255,193,7,0.9)', [2,2]);
+            addLine('LSL', c.lsl, 'rgba(255,193,7,0.9)', [2,2]);
+            new Chart(el, {
+                type: 'line',
+                data: { labels: c.labels, datasets: ds },
+                options: { responsive: true, interaction: { intersect: false, mode: 'index' },
+                           plugins: { legend: { labels: { boxWidth: 12, font: { size: 10 } } } },
+                           scales: { x: { ticks: { maxTicksLimit: 12, font: { size: 9 } } } } }
+            });
+        });
+    })();
+    </script>
+    }
+}

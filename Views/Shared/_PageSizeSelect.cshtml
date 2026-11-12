@@ -1,0 +1,33 @@
+@*
+    全站共用「每頁筆數」下拉。放在查詢表單（method="get"）內，本身就是一個查詢條件，
+    change 時由 data-action.js 的 submitOwnForm 連同其他篩選一起送出——所以它必須待在
+    表單內，不能搬到表格下方的分頁列去（搬過去就得改用連結導覽，使用者剛輸入、
+    還沒按查詢的條件會被丟掉）。
+
+    輸出是一個 grid 欄（col-auto ms-auto），請放在查詢表單 row 的最後一欄。
+
+    選項 {10, 20, 50, 100}、預設 20。⚠️ controller 的預設值必須是這四個之一：
+    下游部署專案曾出現 controller 預設 31 筆而選項裡沒有 31 的情況——**沒有任何 option
+    被選中**，瀏覽器顯示第一項「10」，而畫面其實是 31 筆。不報錯、不拋例外，
+    那個數字就一直在騙人。
+*@
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.SharedResource> PageSizeL
+@{
+    var pageSizeOptions = new[] { 10, 20, 50, 100 };
+    // 報表畫面：本下拉比 ReportPaging.Page 先渲染，ViewBag 此時還是空的，改由網址解析
+    // （同一套規則）。controller 端分頁的畫面會先設好 ViewBag，不走這條。
+    var currentPageSize = ViewBag.CurrentPageSize as int?
+        ?? SmartFactory.MES.Services.ReportPaging.ResolvePageSize(Context);
+}
+<div class="col-auto ms-auto">
+    <div class="input-group input-group-sm">
+        <span class="input-group-text bg-light">@PageSizeL["PageSize"]</span>
+        <select name="pageSize" class="form-select" data-action-change="submitOwnForm"
+                aria-label="@PageSizeL["PageSize"]">
+            @foreach (var n in pageSizeOptions)
+            {
+                <option value="@n" selected="@(currentPageSize == n)">@n</option>
+            }
+        </select>
+    </div>
+</div>

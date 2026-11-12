@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/INV/Controllers/OutsourceMaterialController.cs",
+  "sourceHash": "a4e7d3a68dc8dfce6f00366f5db07c8aeb3bb417c34680591edbce67e3f65b64",
+  "entries": [
+    {
+      "slug": "code-inv-outsourcematerialcontroller-13f82f8f",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 開單僅同步核准狀態顯示，不觸發自動過帳——過帳僅由使用者主動按",
+      "text": "開單只更新核准狀態，需手動結帳｜系統在開立單據時，僅會同步顯示該單據的核准狀態，不會自動執行過帳動作；只有當使用者主動點擊「確認過帳」按鈕後，才會觸發實際的過帳流程。",
+      "approved": false,
+      "sourceSectionHash": "0e54aa1f216440b89595b6ee276a57f6a9158368483087ece08471b4a9d2ebef"
+    },
+    {
+      "slug": "code-inv-outsourcematerialcontroller-723ce98f",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 唯讀面板上的「取消確認」依此顯示",
+      "text": "「取消確認」按鈕的顯示條件｜已確認（非草稿）的單據在列表上只能開啟檢視面板，「取消確認」按鈕就在這個檢視面板上，而且只對具有該畫面修改權限的使用者顯示。",
+      "approved": true,
+      "sourceSectionHash": "688ec05631ee95f9620c6f7a0d49f29cd7638c012a4310bdd9e8330e0e257753"
+    },
+    {
+      "slug": "code-inv-outsourcematerialcontroller-305a1344",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 放在建立實體之前：失敗不耗用單號、不在追蹤器殘留半套實體",
+      "text": "無法連結檢核規則說明｜如果製造工序的關聯性驗證失敗，系統不會消耗該批次的單據編號，也不會在追蹤記錄中留下未完成的半套實體紀錄。",
+      "approved": true,
+      "sourceSectionHash": "07c0cba66fd47feb62bf0175df8d11727ec105b8db4515b41a36d5bf658bb768"
+    }
+  ]
+}

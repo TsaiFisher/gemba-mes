@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="/mobile/manifest.json">
+    <link rel="apple-touch-icon" href="/mobile/icons/apple-touch-icon-180.png">
+    <title data-i18n="dispatch.page_title">投產報工 — 派工列表</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+    <link rel="stylesheet" href="/mobile/css/mfg-list.css">
+</head>
+<body class="bg-light">
+
+<!-- 頂部導覽列 -->
+<nav class="navbar navbar-dark bg-primary mobile-navbar px-3">
+    <button type="button" data-action="historyBack" data-fallback="/mobile/home.html"
+            class="btn btn-link text-white p-0 me-2" data-i18n-title="common.back" title="返回首頁">
+        <i class="bi bi-arrow-left fs-5"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.back_prev">返回</span>
+    </button>
+    <span class="navbar-brand fw-bold mb-0 h1 flex-grow-1">
+        <i class="bi bi-gear-wide-connected me-2"></i>
+        <span data-i18n="dispatch.title">投產報工</span>
+    </span>
+    <a href="/mobile/home.html" class="btn btn-outline-light btn-sm me-1" data-i18n-title="common.back" title="回首頁"><i class="bi bi-house-door"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="nav.home">首頁</span></a>
+    <button class="btn btn-outline-light btn-sm me-1" data-action="toggleLang" data-lang-toggle title="Language">EN</button>
+    <button class="btn btn-outline-light btn-sm" data-action="logout" data-i18n-title="common.logout" title="登出">
+        <i class="bi bi-box-arrow-right"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.logout">登出</span>
+    </button>
+</nav>
+
+<!-- 作業功能捷徑（依角色手機權限顯示，由 list.page.js 過濾） -->
+<div class="container-fluid pt-3 px-3">
+    <div class="small text-muted mb-2" data-i18n="dispatch.op_section">作業功能</div>
+    <div class="row g-2" id="opShortcuts">
+        <div class="col-3" data-op="ScheduleView">
+            <a href="/mobile/mfg/schedule.html" class="card op-card shadow-sm border-primary-subtle">
+                <i class="bi bi-bar-chart-steps op-icon text-primary"></i>
+                <span class="op-label" data-i18n="dispatch.op_schedule">生產排程</span>
+            </a>
+        </div>
+        <div class="col-3" data-op="Inspect">
+            <a href="/mobile/mfg/fpi.html" class="card op-card shadow-sm border-info-subtle">
+                <i class="bi bi-clipboard2-check op-icon text-info"></i>
+                <span class="op-label" data-i18n="dispatch.op_fpi">首件檢查</span>
+            </a>
+        </div>
+        <div class="col-3" data-op="Inspect">
+            <a href="/mobile/mfg/ipqc.html" class="card op-card shadow-sm border-success-subtle">
+                <i class="bi bi-clipboard2-pulse op-icon text-success"></i>
+                <span class="op-label" data-i18n="dispatch.op_ipqc">製程檢驗</span>
+            </a>
+        </div>
+        <div class="col-3" data-op="MachineStatus">
+            <a href="/mobile/mfg/machine-status.html" class="card op-card shadow-sm border-warning-subtle">
+                <i class="bi bi-cpu op-icon text-warning"></i>
+                <span class="op-label" data-i18n="dispatch.op_machine">機台狀態</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- 機台篩選列 -->
+<div class="machine-bar p-3 border-bottom">
+    <div class="d-flex align-items-center gap-2">
+        <div class="flex-grow-1">
+            <label class="form-label mb-1 small fw-semibold" data-i18n="dispatch.scan_machine">機台篩選</label>
+            <div class="input-group input-group-sm">
+                <input type="text" id="machineInput" class="form-control btn-mobile"
+                       data-i18n-placeholder="dispatch.scan_machine"
+                       placeholder="掃描或輸入機台編號" data-action-input="scheduleRefresh">
+                <button class="btn btn-outline-secondary" data-action="openMachineScanner" data-i18n-title="dispatch.scan_machine" title="掃描機台">
+                    <i class="bi bi-upc-scan"></i><span class="ms-1" data-i18n="common.scan">掃描</span>
+                </button>
+                <button class="btn btn-outline-secondary" data-action="clearMachine" data-i18n-title="common.clear" title="清除">
+                    <i class="bi bi-x"></i><span class="ms-1" data-i18n="common.clear">清除</span>
+                </button>
+            </div>
+        </div>
+        <div class="text-end">
+            <label class="form-label mb-1 small fw-semibold" data-i18n="dispatch.filter_status">狀態</label>
+            <select id="statusFilter" class="form-select form-select-sm btn-mobile" data-action-change="loadDispatches">
+                <option value=""         data-i18n="dispatch.opt_all">全部</option>
+                <option value="Scheduled"        data-i18n="dispatch.opt_scheduled">待開工</option>
+                <option value="SetupInProgress"  data-i18n="dispatch.opt_setup">備料中</option>
+                <option value="ReadyToStart"     data-i18n="dispatch.opt_ready">可開工</option>
+                <option value="InProgress"       data-i18n="dispatch.opt_inprogress">生產中</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- 派工列表 -->
+<div class="container-fluid py-3 px-3">
+    <div class="small text-muted mb-2" data-i18n="dispatch.list_section">派工清單（點擊卡片進行開工／報工）</div>
+    <div id="dispatchList"></div>
+    <div id="emptyState" class="text-center text-muted py-5 d-none">
+        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+        <span data-i18n="dispatch.no_data">目前無符合條件的派工</span>
+    </div>
+    <div id="loadingState" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden" data-i18n="common.loading">載入中…</span>
+        </div>
+    </div>
+</div>
+
+<!-- 離線佇列同步狀態指示 -->
+<div id="syncBadge" class="position-fixed bottom-0 start-0 m-3 d-none">
+    <span class="badge bg-warning text-dark">
+        <i class="bi bi-cloud-upload me-1"></i>
+        <span id="syncCount">0</span> <span data-i18n="home.offline_btn">筆待同步</span>
+    </span>
+</div>
+
+<!-- 條碼掃描 Modal（機台QR） -->
+<div class="modal fade" id="scannerModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title" data-i18n="machine.scan_ph">掃描機台 QR Code</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="reader"></div>
+            </div>
+            <div class="modal-footer py-2">
+                <small class="text-muted" data-i18n="dispatch.scan_aim">對準機台 QR Code</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast 容器 -->
+<div id="toast-container"></div>
+
+<script src="/mobile/js/telemetry.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/data-action.js"></script>
+<script src="/mobile/js/nav.js"></script>
+<script src="/mobile/js/libs/html5-qrcode.min.js"></script>
+<script src="/mobile/js/i18n.js"></script>
+<script src="/mobile/js/i18n.modules.js"></script>
+    <script src="/mobile/js/api.js"></script>
+<script src="/mobile/js/auth.js"></script>
+<script src="/mobile/js/scanner.js"></script>
+<script src="/mobile/js/offline-queue.js"></script>
+<script src="/mobile/mfg/list.page.js"></script>
+</body>
+</html>

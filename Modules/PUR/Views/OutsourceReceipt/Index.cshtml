@@ -1,0 +1,302 @@
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.PUR.Models.OutsourceReceipt>
+
+<link rel="stylesheet" href="~/css/panel-table.css" />
+@using SmartFactory.MES.Models
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+
+@{
+    ViewData["Title"] = L["OutsourceReceipt"];
+    bool canCreate  = ViewBag.CanCreate == true;
+    bool canUpdate  = ViewBag.CanUpdate == true;
+    bool canDelete  = ViewBag.CanDelete == true;
+    bool canPrint   = ViewBag.CanPrint  == true;
+    string curSupplier  = ViewBag.SearchSupplier as string ?? "";
+    string curOpo       = ViewBag.SearchOpo as string ?? "";
+    var supplierOptions = ViewBag.SupplierOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var opoOptions      = ViewBag.OpoOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    int  curPageSize = ViewBag.CurrentPageSize as int? ?? 20;
+    int  baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+
+    string SortIcon(string f) {
+        var s = (string?)ViewBag.SortOrder ?? "";
+        return s == f + "_asc"  ? "bi-sort-up"
+             : s == f + "_desc" ? "bi-sort-down"
+             : "bi-arrow-down-up opacity-25";
+    }
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-box-arrow-in-down me-2"></i>@L["OutsourceReceipt"]</h1>
+        @if (canCreate) {
+            <button class="btn btn-primary"
+                    data-url="/OutsourceReceipt/Create" data-label="@L["Create"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus-lg"></i> @L["Create"]
+            </button>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@L["SupplierCode"]</label>
+                    <select name="searchSupplier" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@L["AllSuppliers"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var sup in supplierOptions)
+                        {
+                            <option value="@sup.CompanyCode" selected="@(curSupplier == (string)sup.CompanyCode)">@sup.CompanyCode — @sup.CompanyName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@L["OutsourcePurchaseOrderNo"]</label>
+                    <select name="searchOpo" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@L["All"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var opo in opoOptions)
+                        {
+                            <option value="@opo" selected="@(curOpo == opo)">@opo</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-2">
+                    <label class="form-label small">@L["Status"]</label>
+                    <select name="searchStatus" class="form-select">
+                        <option value="">@L["All"]</option>
+                        @foreach (DocStatus s in Enum.GetValues<DocStatus>())
+                        {
+                            <option value="@s" selected="@(ViewBag.SearchStatus?.ToString() == s.ToString())">@SmartFactory.MES.Modules._Shared.DocEnumDisplay.Text(L, s)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@L["Search"]</button>
+                </div>
+                @if (canPrint)
+                {
+                    <div class="col-auto">
+                        <div class="btn-group">
+                            <a asp-action="Export" asp-route-searchSupplier="@ViewBag.SearchSupplier"
+                               asp-route-searchOpo="@ViewBag.SearchOpo" asp-route-searchStatus="@ViewBag.SearchStatus"
+                               asp-route-sortOrder="@ViewBag.SortOrder" asp-route-format="xlsx"
+                               class="btn btn-outline-secondary">
+                                <i class="bi bi-file-earmark-excel me-1"></i>@L["ExportExcel"]
+                            </a>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Export" asp-route-format="csv"
+                                       asp-route-searchSupplier="@ViewBag.SearchSupplier" asp-route-searchOpo="@ViewBag.SearchOpo"
+                                       asp-route-searchStatus="@ViewBag.SearchStatus">
+                                    <i class="bi bi-filetype-csv me-1"></i>@L["ExportCsv"]</a></li>
+                                <li><a class="dropdown-item" asp-action="Export" asp-route-format="json"
+                                       asp-route-searchSupplier="@ViewBag.SearchSupplier" asp-route-searchOpo="@ViewBag.SearchOpo"
+                                       asp-route-searchStatus="@ViewBag.SearchStatus">
+                                    <i class="bi bi-filetype-json me-1"></i>@L["ExportJson"]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@L["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@L["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["OutsourceReceiptId"]</th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.SupplierSort" asp-route-searched="true"
+                               asp-route-searchSupplier="@ViewBag.SearchSupplier" asp-route-searchOpo="@ViewBag.SearchOpo"
+                               asp-route-searchStatus="@ViewBag.SearchStatus" asp-route-pageSize="@curPageSize"
+                               class="text-decoration-none text-dark">
+                                @L["SupplierCode"] <i class="bi @SortIcon("sup")"></i>
+                            </a>
+                        </th>
+                        <th>@L["OutsourcePurchaseOrder"]</th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.DateSort" asp-route-searched="true"
+                               asp-route-searchSupplier="@ViewBag.SearchSupplier" asp-route-searchOpo="@ViewBag.SearchOpo"
+                               asp-route-searchStatus="@ViewBag.SearchStatus" asp-route-pageSize="@curPageSize"
+                               class="text-decoration-none text-dark">
+                                @L["ReceiptDate"] <i class="bi @SortIcon("date")"></i>
+                            </a>
+                        </th>
+                        <th class="text-end">@L["TotalAmount"]</th>
+                        <th>@L["Status"]</th>
+                        <th>@L["ApprovalStatus"]</th>
+                        <th>@L["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var r in Model)
+                {
+                    var badge = r.Status switch {
+                        DocStatus.Draft     => "bg-secondary",
+                        DocStatus.Confirmed => "bg-primary",
+                        DocStatus.Posted    => "bg-success",
+                        DocStatus.Void      => "bg-danger",
+                        _                   => "bg-light text-dark"
+                    };
+                    <tr>
+                        <td><code>@r.OutsourceReceiptId</code></td>
+                        <td>@r.SupplierCode</td>
+                        <td class="text-muted small">@r.OutsourcePurchaseOrderId</td>
+                        <td>@r.ReceiptDate.ToString("yyyy-MM-dd")</td>
+                        <td class="text-end">@r.TotalAmount.ToString(moneyFmt)</td>
+                        <td><span class="badge @badge">@SmartFactory.MES.Modules._Shared.DocEnumDisplay.Text(L, r.Status)</span></td>
+                        <td><span class="badge bg-light text-dark border">@DocStatusLabels.Label(r.ApprovalStatus)</span></td>
+                        <td>
+                            @await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = r.OutsourceReceiptId }))
+                            <button class="btn btn-sm btn-outline-secondary me-1"
+                                    data-url="/OutsourceReceipt/Details/@r.OutsourceReceiptId"
+                                    data-label="@r.OutsourceReceiptId"
+                                    data-action="openPanel"><i class="bi bi-eye"></i> @L["View"]</button>
+                            @if (canUpdate && r.Status == DocStatus.Draft && r.ApprovalStatus == DocumentApprovalStatus.Draft)
+                            {
+                                <button class="btn btn-sm btn-outline-primary me-1"
+                                        data-url="/OutsourceReceipt/Edit/@r.OutsourceReceiptId"
+                                        data-label="@r.OutsourceReceiptId"
+                                        data-action="openPanel"><i class="bi bi-pencil"></i> @L["Edit"]</button>
+                                <button class="btn btn-sm btn-outline-success me-1" data-action="submitDoc" data-id="@r.OutsourceReceiptId"><i class="bi bi-send"></i> @L["Submit"]</button>
+                            }
+                            @if (canUpdate && r.Status == DocStatus.Draft && r.ApprovalStatus == DocumentApprovalStatus.Approved)
+                            {
+                                <button class="btn btn-sm btn-outline-primary me-1" data-action="confirmDoc" data-id="@r.OutsourceReceiptId"><i class="bi bi-check2-circle"></i> @L["Confirm"]</button>
+                            }
+                            @if (canDelete && r.Status == DocStatus.Draft)
+                            {
+                                <button class="btn btn-sm btn-outline-danger" data-action="deleteDoc" data-id="@r.OutsourceReceiptId"><i class="bi bi-trash"></i> @L["Delete"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_Pagination", Model)
+    }
+
+</div>
+
+<div class="offcanvas offcanvas-end shadow-lg u-panel-wide" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="sidePanelBody"></div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@L["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function postAction(url, confirmMsg) {
+        if (confirmMsg && !confirm(confirmMsg)) return;
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(url, { method: 'POST', headers: { 'RequestVerificationToken': token, 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(async r => {
+                const d = await r.json().catch(() => ({ success: false, message: window.i18n.t('OperationFailed') }));
+                if (d.success) { window.toastSuccess && window.toastSuccess(); setTimeout(() => location.reload(), 800); }
+                else alert(d.message || window.i18n.t('OperationFailed'));
+            }).catch(() => alert(window.i18n.t('OperationFailed')));
+    }
+
+    // data-action dispatcher 以 (event, el) 呼叫；單號自 el.dataset.id 取得。
+    function submitDoc(e, el)  { postAction(`/OutsourceReceipt/Submit/${el.dataset.id}`,  window.i18n.t('ConfirmSubmitApproval')); }
+    function confirmDoc(e, el) { postAction(`/OutsourceReceipt/Confirm/${el.dataset.id}`, window.i18n.t('ConfirmReceiveOutsource')); }
+    function deleteDoc(e, el)  { postAction(`/OutsourceReceipt/Delete/${el.dataset.id}`,  window.i18n.t('ConfirmDeleteSimple')); }
+
+    let lineIdx = 0;
+
+    async function loadOpoLines() {
+        const opoId = document.getElementById('opoSelect')?.value;
+        if (!opoId) return;
+        const res = await fetch(`/OutsourceReceipt/GetOpoLines?opoId=${encodeURIComponent(opoId)}`);
+        const lines = await res.json();
+        const tbody = document.getElementById('lineBody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        lineIdx = 0;
+        lines.forEach(l => addLineRow(l));
+    }
+
+    function addLineRow(l) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <input type="hidden" name="Lines[${lineIdx}].LineNo" value="${lineIdx + 1}" />
+            <input type="hidden" name="Lines[${lineIdx}].OpoLineNo" value="${l.lineNo ?? ''}" />
+            <td><input name="Lines[${lineIdx}].ProductCode" class="form-control form-control-sm" value="${l.productCode ?? ''}" /></td>
+            <td><input name="Lines[${lineIdx}].ReceiptQty" type="number" class="form-control form-control-sm line-qty" value="${l.qty ?? 0}" step="any" min="0" data-action-input="calcLine" /></td>
+            <td><input name="Lines[${lineIdx}].UomCode" class="form-control form-control-sm" value="${l.uomCode ?? ''}" /></td>
+            <td><input name="Lines[${lineIdx}].UnitCost" type="number" class="form-control form-control-sm line-price" value="${l.unitCost ?? 0}" step="any" min="0" data-action-input="calcLine" /></td>
+            <td class="text-end line-amt">0.00</td>
+            <td><button type="button" class="btn btn-sm btn-outline-danger" data-action="removeLineRow" title="@L["RemoveLine"]" aria-label="@L["RemoveLine"]"><i class="bi bi-trash"></i></button></td>`;
+        document.getElementById('lineBody').appendChild(tr);
+        lineIdx++;
+        calcLine(tr.querySelector('.line-price'));
+        const pf = document.getElementById('panelForm');
+        if (pf) window.armValidation && window.armValidation(pf);
+    }
+
+    // 相容兩種呼叫：inline calcLine(this) 時 a 為元素；data-action dispatcher calcLine(event, el) 時 b 為元素。
+    function calcLine(a, b) {
+        const el = b || a;
+        const tr = el.closest('tr');
+        const qty   = parseFloat(tr.querySelector('.line-qty')?.value)   || 0;
+        const price = parseFloat(tr.querySelector('.line-price')?.value) || 0;
+        tr.querySelector('.line-amt').textContent = (qty * price).toLocaleString('zh-TW', { minimumFractionDigits: 2 });
+        recalcTotal();
+    }
+
+    // _Form 明細刪除鈕（data-action="removeLineRow"）：移除該列並重算總額。
+    function removeLineRow(a, b) {
+        const el = b || a;
+        el.closest('tr').remove();
+        recalcTotal();
+    }
+
+    function recalcTotal() {
+        let total = 0;
+        document.querySelectorAll('#lineBody .line-qty').forEach(q => {
+            const price = parseFloat(q.closest('tr').querySelector('.line-price')?.value) || 0;
+            total += (parseFloat(q.value) || 0) * price;
+        });
+        const ta = document.getElementById('totalAmount');
+        const td = document.getElementById('totalDisplay');
+        if (ta) ta.value = total.toFixed(4);
+        if (td) td.textContent = total.toLocaleString('zh-TW', { minimumFractionDigits: 2 });
+    }
+</script>
+}

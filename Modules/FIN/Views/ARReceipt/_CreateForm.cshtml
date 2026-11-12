@@ -1,0 +1,179 @@
+@model SmartFactory.MES.Modules.FIN.ViewModels.ARReceiptFormVm
+@using SmartFactory.MES.Modules.FIN.Models
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+
+@{
+    var customers    = ViewBag.Customers    as IList<SmartFactory.MES.Modules.BAS.Models.Company>     ?? new List<SmartFactory.MES.Modules.BAS.Models.Company>();
+    var bankAccounts = ViewBag.BankAccounts as IList<SmartFactory.MES.Modules.FIN.Models.BankAccount>  ?? new List<SmartFactory.MES.Modules.FIN.Models.BankAccount>();
+    var currencyOptions = ViewBag.CurrencyOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<form id="panelForm" method="post" asp-action="Save" asp-controller="ARReceipt"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <div class="p-3">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small mb-3 u-display-none"></div>
+
+        <div class="row g-2 mb-3">
+            <div class="col-12 col-md-6">
+                <label class="form-label small fw-semibold">@L["CustomerCode"] <span class="text-danger">*</span></label>
+                <select asp-for="CustomerCode" class="form-select form-select-sm" id="customerSelect" data-action-change="loadOpenInvoices">
+                    <option value="">@L["SelectCustomer"]</option>
+                    @foreach (var c in customers)
+                    { <option value="@c.CompanyCode" selected="@(Model.CustomerCode == c.CompanyCode)">@c.CompanyCode — @c.CompanyName</option> }
+                </select>
+                <span asp-validation-for="CustomerCode" class="text-danger small"></span>
+            </div>
+            <div class="col-6 col-md-3">
+                <label class="form-label small fw-semibold">@L["CollectionDate"] <span class="text-danger">*</span></label>
+                <input asp-for="ReceiptDate" type="date" class="form-control form-control-sm" data-action-change="fillRate" />
+                <span asp-validation-for="ReceiptDate" class="text-danger small"></span>
+            </div>
+            <div class="col-6 col-md-3">
+                <label class="form-label small fw-semibold">@L["CollectionMethod"]</label>
+                <select asp-for="Method" class="form-select form-select-sm">
+                    @foreach (PaymentMethod m in Enum.GetValues<PaymentMethod>())
+                    { <option value="@((int)m)" selected="@(Model.Method == m)">@FinEnumDisplay.Text(L, m)</option> }
+                </select>
+                <span asp-validation-for="Method" class="text-danger small"></span>
+            </div>
+            <div class="col-4 col-md-3">
+                <label class="form-label small fw-semibold">@L["CurrencyCode"]</label>
+                <select asp-for="CurrencyCode" class="form-select form-select-sm" data-action-change="fillRate">
+                    <option value="">@L["SelectCurrency"]</option>
+                    @foreach (var c in currencyOptions)
+                    { <option value="@c.CurrencyCode" selected="@(Model.CurrencyCode == (string)c.CurrencyCode)">@c.CurrencyCode — @c.CurrencyName</option> }
+                </select>
+                <span asp-validation-for="CurrencyCode" class="text-danger small"></span>
+            </div>
+            <div class="col-4 col-md-3">
+                <label class="form-label small fw-semibold">@L["ExchangeRate"]</label>
+                <input asp-for="ExchangeRate" type="number" class="form-control form-control-sm" step="0.000001" min="0.000001" />
+                <span asp-validation-for="ExchangeRate" class="text-danger small"></span>
+            </div>
+            <div class="col-4 col-md-3">
+                <label class="form-label small fw-semibold">@L["ReceiptAmount"] <span class="text-danger">*</span></label>
+                <input asp-for="Amount" type="number" class="form-control form-control-sm" step="any" id="recAmount" />
+                <span asp-validation-for="Amount" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-3">
+                <label class="form-label small fw-semibold">@L["BankAccount"]</label>
+                <select asp-for="BankAccountId" class="form-select form-select-sm">
+                    <option value="">@L["Select"]</option>
+                    @foreach (var b in bankAccounts)
+                    { <option value="@b.AccountId" selected="@(Model.BankAccountId == b.AccountId)">@b.AccountId — @b.BankName</option> }
+                </select>
+                <span asp-validation-for="BankAccountId" class="text-danger small"></span>
+            </div>
+            <div class="col-6">
+                <label class="form-label small fw-semibold">@L["Reference"]</label>
+                <input asp-for="Reference" class="form-control form-control-sm" maxlength="200" />
+                <span asp-validation-for="Reference" class="text-danger small"></span>
+            </div>
+            <div class="col-6">
+                <label class="form-label small fw-semibold">@L["Remarks"]</label>
+                <input asp-for="Remarks" class="form-control form-control-sm" maxlength="500" />
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <!-- 核銷發票 -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0 fw-semibold">@L["ARInvoiceAllocation"]</h6>
+            <span class="text-muted small">@L["LoadARInvoicesHint"]</span>
+        </div>
+        <div id="invoiceContainer">
+            <div class="text-muted small text-center py-3 border rounded">@L["PleaseSelectCustomer"]</div>
+        </div>
+
+        <div class="d-flex justify-content-end mt-2">
+            <span class="small text-muted me-2">@L["TotalAllocated"]</span>
+            <span class="fw-bold" id="totalAllocated">0.00</span>
+        </div>
+    </div>
+
+    <div class="position-sticky bottom-0 bg-white border-top px-3 py-2 d-flex gap-2">
+        <button type="submit" class="btn btn-primary btn-sm">@L["Save"]</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="offcanvas">@L["Cancel"]</button>
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+// 多語字串從 Razor 注入，避免 JS 硬編碼中文
+var _arMsgs = {
+    pleaseSelectCustomer: '@Html.Raw(L["PleaseSelectCustomer"].Value)',
+    loadFailed:           '@Html.Raw(L["LoadFailed"].Value)',
+    noOpenInvoices:       '@Html.Raw(L["NoOpenARInvoices"].Value)',
+    invoiceNo:            '@Html.Raw(L["InvoiceNo"].Value)',
+    sourceDoc:            '@Html.Raw(L["SourceDoc"].Value)',
+    invoiceDate:          '@Html.Raw(L["InvoiceDate"].Value)',
+    outstandingAmt:       '@Html.Raw(L["OutstandingAmt"].Value)',
+    allocAmt:             '@Html.Raw(L["AllocAmt"].Value)'
+};
+
+let _arInvoices = [];
+
+// Prefill ExchangeRate from currency master (Sell); user may still override the field.
+async function fillRate() {
+    const curEl  = document.querySelector('[name="CurrencyCode"]');
+    const dateEl = document.querySelector('[name="ReceiptDate"]');
+    const rateEl = document.querySelector('[name="ExchangeRate"]');
+    if (!curEl || !rateEl) return;
+    const cur = (curEl.value || '').trim();
+    if (!cur) { rateEl.value = 1; return; }          // base/empty -> 1
+    const date = dateEl ? dateEl.value : '';
+    if (!date) return;
+    try {
+        const res  = await fetch(`/api/currency/rate?currencyCode=${encodeURIComponent(cur)}&documentDate=${date}&rateType=Sell`);
+        const data = await res.json();
+        if (data.found && data.rate) rateEl.value = data.rate;   // not found -> keep current value for manual entry
+    } catch { /* keep current value */ }
+}
+
+async function loadOpenInvoices() {
+    const cust = document.getElementById('customerSelect').value;
+    const container = document.getElementById('invoiceContainer');
+    if (!cust) { container.innerHTML = `<div class="text-muted small text-center py-3 border rounded">${_arMsgs.pleaseSelectCustomer}</div>`; return; }
+    container.innerHTML = '<div class="text-center py-3"><div class="spinner-border spinner-border-sm"></div></div>';
+    try {
+        const res = await fetch(`/ARReceipt/GetOpenInvoices?customerCode=${encodeURIComponent(cust)}`);
+        _arInvoices = await res.json();
+        renderInvoiceTable();
+    } catch { container.innerHTML = `<div class="alert alert-danger small">${_arMsgs.loadFailed}</div>`; }
+}
+
+function renderInvoiceTable() {
+    const container = document.getElementById('invoiceContainer');
+    if (!_arInvoices.length) {
+        container.innerHTML = `<div class="alert alert-light small text-center">${_arMsgs.noOpenInvoices}</div>`;
+        return;
+    }
+    let html = `<div class="table-responsive"><table class="table table-sm table-bordered mb-0">
+        <thead class="table-light"><tr>
+            <th>${_arMsgs.invoiceNo}</th><th>${_arMsgs.sourceDoc}</th><th>${_arMsgs.invoiceDate}</th><th class="text-end">${_arMsgs.outstandingAmt}</th><th>${_arMsgs.allocAmt}</th>
+        </tr></thead><tbody>`;
+    _arInvoices.forEach((inv, i) => {
+        html += `<input type="hidden" name="Allocations[${i}].InvoiceId" value="${inv.arInvoiceId}" />
+        <tr>
+            <td class="small">${inv.arInvoiceId}</td>
+            <td class="small text-muted">${inv.sourceDocId || ''}</td>
+            <td>${inv.invoiceDate || ''}</td>
+            <td class="text-end">${Number(inv.outstanding).toFixed(2)}</td>
+            <td><input type="number" name="Allocations[${i}].Amount" class="form-control form-control-sm alloc-amt"
+                       step="any" min="${Math.min(0, inv.outstanding)}" max="${Math.max(0, inv.outstanding)}" value="0"
+                       data-outstanding="${inv.outstanding}" data-action-input="calcTotal" /></td>
+        </tr>`;
+    });
+    html += '</tbody></table></div>';
+    container.innerHTML = html;
+    calcTotal();
+}
+
+function calcTotal() {
+    let total = 0;
+    document.querySelectorAll('.alloc-amt').forEach(el => { total += parseFloat(el.value) || 0; });
+    document.getElementById('totalAllocated').textContent = total.toFixed(2);
+    const recAmt = document.getElementById('recAmount');
+    if (recAmt) recAmt.value = String(Math.round(total * 10000) / 10000);   // amount must equal allocation total exactly
+}
+</script>

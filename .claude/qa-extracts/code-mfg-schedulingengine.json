@@ -1,0 +1,254 @@
+{
+  "sourcePath": "Modules/MFG/Services/SchedulingEngine.cs",
+  "sourceHash": "f2f18eb6c070fcc5b89d3fc8d832cb1773287fa69fc9950c04a2326fe20d8b50",
+  "entries": [
+    {
+      "slug": "code-mfg-schedulingengine-f426775b",
+      "lang": "zh",
+      "headingPath": "生產製造 › ，否則「全部都在生產中」的廠別按重新排程等於沒反應",
+      "text": "重排程時需計算未完成量｜當一個廠別的所有派工計畫都已結束，即使沒有待處理的作業單，系統仍會根據尚未完成的數量重新計算一次。",
+      "approved": true,
+      "sourceSectionHash": "ad7eed38b31f02f2b24b8810bb7a71beeac13d1eac3355bee23c012d737e1dcd"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-0c04ef14",
+      "lang": "zh",
+      "headingPath": "生產製造 › 生產線工作中心：",
+      "text": "生產線資源的排程方式說明｜如果該工作中心未登錄具體的生產線，則將整條線視為一個單一的排程資源來處理；若已登錄了具體的生產線，則與一般機台一樣進行流程，系統會挑選最早可用的那條線。",
+      "approved": true,
+      "sourceSectionHash": "2531bd4b86e50ac1c467c25ec9fc500593df332312d4463f16f2bbe999ecac26"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-c84a5b06",
+      "lang": "zh",
+      "headingPath": "生產製造 › 不再從「今天」裸起算，否則連跑兩次排程會雙重預約同一時段",
+      "text": "機台可用時間計算規則｜系統計算機台最早可用的時間點，是取當前時間和該機台目前凍結的派工結束時間兩者中較晚的時間。這樣設計可以避免在執行排程時，因為重複運行而導致同一時段被多次預約。",
+      "approved": true,
+      "sourceSectionHash": "0e80a84fef676bae19584578dcd57e555ec8b291973abe1a074be5eeea535a5f"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-d1e65485",
+      "lang": "zh",
+      "headingPath": "生產製造 › 凍結派工：時段不移動，但「計畫結束」要依未完成量重算——",
+      "text": "計畫結束時間依未完成量重算｜當生產進度落後或超時時，系統會將預計的計畫結束時間延到實際可完成的時間點；若進度超前，則會提前計算計畫結束時間，讓後續工序可以提早排程。",
+      "approved": true,
+      "sourceSectionHash": "a0d7470118fe50ace0207d8cd7baaac115ff43ea917f0e183ea80cac5494debe"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-cd014a6f",
+      "lang": "zh",
+      "headingPath": "生產製造 › 的工單都要撈，深度才算得出來",
+      "text": "工單計算需依 BOM 結構判斷｜因為父工單不一定會自己有凍結派工，所以必須將同生產批次的全部工單都撈出來，才能正確計算出深度。",
+      "approved": false,
+      "sourceSectionHash": "d6614cf56fdbdc1da5b173bc730c5f337b87a16c41396bdbe08b720291290ded"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-323f1943",
+      "lang": "zh",
+      "headingPath": "生產製造 › 重算後的計畫時段：供接力給後續工序、寫回資料庫",
+      "text": "計畫時段的計算與寫入規則｜重新計算後的計畫時段會用來供後續工序接力，並且資料會寫回資料庫。如果只重算結束時間，則甘特圖上的長條左邊仍是舊的資訊，右邊才是新的估算結果。",
+      "approved": true,
+      "sourceSectionHash": "a8cca19f9d1ef8c231c27868b747fa3a007b9e47b36b7dad1eecea191ce116bb"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-b20cae52",
+      "lang": "zh",
+      "headingPath": "生產製造 › 把重算後的計畫時段套進本次排程的記憶體圖",
+      "text": "計畫時段更新規則｜如果系統有重新計算出的計畫時段，後續工序會使用這些重算後的完成時刻作為依據。否則，後續工序仍會讀取到投產前以整批量計算的舊排程結束時間。",
+      "approved": true,
+      "sourceSectionHash": "7d046d69d6f83d9b8a9a4cebec352dfb6812fbcd7e2292986cbb13ceb03039db"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-0d4df2c4",
+      "lang": "zh",
+      "headingPath": "生產製造 › §24.7：料況確認已上移至投產，排程不再重查料況",
+      "text": "資料檢查點變更與影響範圍｜當材料狀況確認已進入投產階段後，系統將不會再對此進行重度檢查，且相關的排程規劃也不會再修改此處的料況資訊。",
+      "approved": true,
+      "sourceSectionHash": "a95024c4c5f5dd3cf8a3217a4f4568cc4db48f760274610119b2578a51284934"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-e51bad68",
+      "lang": "zh",
+      "headingPath": "生產製造 › 依規則排序生產批",
+      "text": "排序生產批次順序的規則說明｜如果系統設定為校準模式，則生產批次的先後順序會維持在機台上原本排定的順序，不會根據任何規則重新排列。",
+      "approved": false,
+      "sourceSectionHash": "6a613b18021d6bc0ea6b5f61a852adf4ccb1aeada2cf49c68764fb1222c62842"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-1964c9ff",
+      "lang": "zh",
+      "headingPath": "生產製造 › 後序工序需等所有兄弟中最晚者",
+      "text": "後續工序等待時間的計算規則｜後續工序的開始時間，必須等到所有與其相關的同級工序（派工）都完成的最晚那個時間點才能開始。",
+      "approved": true,
+      "sourceSectionHash": "4f2207fafc64886b9e0ebcfb9adef2767bfbb85c9eec4135d73f6e8a9c2930a2"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-39a252a8",
+      "lang": "zh",
+      "headingPath": "生產製造 › 人指定的機台只排在那台",
+      "text": "機台選擇的限制與預設行為｜當系統需要指定某一台機台時，只能排在該指定的這台機台；只有當這台機台無法使用時，才會退回讓使用者從一般選項中挑選。此外，若進入校準模式，則會維持目前所使用的機台。",
+      "approved": false,
+      "sourceSectionHash": "2054b3edef11b5f54f53a41a8cb81c02b5bcb0c17cf7b2512ef1251805a33579"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-aaa9371c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 這段不佔機台，但會延後下一道工序最早可開工時刻",
+      "text": "工序間等待時間影響後續排程｜此等工序之間的移轉或等待時間，會使下一道工序最早可開工的時間點往後推遲。這使得每道工序的總歷時計算方式為機台佔用時間加上這個間隔時間，與物料需求規劃中的操作分鐘數計算口徑一致。",
+      "approved": true,
+      "sourceSectionHash": "ed9d24e2c56fd392f5dda91ff3ff58c7799eb0c6cdc165629c7f4be7e6ae3f05"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-87ec9426",
+      "lang": "zh",
+      "headingPath": "生產製造 › 交棒給下一道工序",
+      "text": "交接工序的處理方式說明｜委外工序在交給下一道工序時，是以整批次的方式進行處理，並且下一道工序會退回至「前一個工序必須完成後才能開始作業」的規則。",
+      "approved": true,
+      "sourceSectionHash": "275f5acc5447d72389d6667f4b3acf24a8f03741b8af0e191adf139a98cfd38e"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-93e244b4",
+      "lang": "zh",
+      "headingPath": "生產製造 › 生產中派工：狀態與機台不動，只更新依未完成量重算的計畫時段",
+      "text": "派工時段需成對更新才能正確顯示｜系統在更新計畫時段資訊時，必須同時寫回起始和結束時間，否則可能會保留前一次排程的起點資料，導致甘特圖上看起來像是排程開始的時間已經過去了。",
+      "approved": true,
+      "sourceSectionHash": "60212b1b14fd820868ef451a7bdfff4ba88a96cbf470733fe992bb6e88c743d3"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-d8bf1514",
+      "lang": "zh",
+      "headingPath": "生產製造 › 凍結派工的計畫時段重估——**起訖一起重算**",
+      "text": "起訖重估規則說明｜若生產排程是基於未完成數量進行重估，則計算的開始和結束時間會一起重新計算；如果該工序目前沒有實際投入或產出，其預計開始時間將從當天算起。",
+      "approved": true,
+      "sourceSectionHash": "0bb3afa97eaa3013226f12f5d3dfb67293fd207fd2f49f791c03609a7d02c1b5"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-da800c85",
+      "lang": "zh",
+      "headingPath": "生產製造 › 兩個不同的下限，語意不可混用：",
+      "text": "下限定義區分用途與範圍｜「同批接力點」是用來往後推算候選起點；而「機台硬地板」則是兩條路徑都絕對不能穿過的限制。",
+      "approved": false,
+      "sourceSectionHash": "536771422e6135cbf5dc945101085d7b904893d6989a8e670e5b3b6a70ae707f"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-13153cd5",
+      "lang": "zh",
+      "headingPath": "生產製造 › ── 工序重疊：與主迴圈同一套語意 ──────────────",
+      "text": "工序重疊判斷規則說明｜當某批材料已經實際投入生產時，系統不會根據此情況進行計算，因為其起始點已是既定事實，系統僅用來更新完成的時間點。",
+      "approved": true,
+      "sourceSectionHash": "b34e404c05911c180d6ca8409197d21cde1d7c8d6fcad842501fc040ee505ada"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-449292dd",
+      "lang": "zh",
+      "headingPath": "生產製造 › 錨點落在非上班時段時先退回最近一段產能的結束點",
+      "text": "錨點時間不在工作時段時的回溯規則｜如果設定的錨點時間不是在正常的工作時段內，系統會自動退回到前一個有效產能區間的結束點。這樣做是為了避免計算出多餘的、不正確的空白時間區間。",
+      "approved": true,
+      "sourceSectionHash": "94118d338bee572ab05781d3db9fbd5b0de7f071f6fa5e67645052a60de5c6a4"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-fad66798",
+      "lang": "zh",
+      "headingPath": "生產製造 › 下限是**機台**可用時刻",
+      "text": "作業最早可開始的時間｜排程時，一道工序的開始時間取「前一道工序的接力點」與「該設備最早可用時刻」兩者中較晚的那一個——也就是前一工序完成之後、設備實際可用的時間。唯一的例外是工序重疊：允許邊收移轉批邊做時，系統會自需求日往回倒推起點，這時開始時間可以早於前一工序整批完工，但仍然不得早於設備可用時刻——設備可用是兩條路徑都不能穿過的硬下限。",
+      "approved": true,
+      "sourceSectionHash": "a33a4939f924e8b2ed2d4c885c144d50de57f44c82e8c9d9ad7148d5461cdec8"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-8740897c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 查不到父工單時就地停止，",
+      "text": "工單結構深度與流程控制規則｜當系統無法找到上層的工單時，會立即停止處理，並且會用已走訪過的工單清單來防止資料因為父子關係造成循環鏈結。",
+      "approved": true,
+      "sourceSectionHash": "211701c071fea96196ff34f8586a668eecd7430b6a8c143a44f934bd3d63cfd7"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-243fa025",
+      "lang": "zh",
+      "headingPath": "生產製造 › 一整批凍結派工的計畫時段重估——**含彼此之間的先後關係**",
+      "text": "凍結派工時段重估的計算規則｜當對一整批已凍結派工進行計畫時段重估時，系統會考慮各個派工之間相互之間的先後關係。在同一批次內，系統會依照物料結構的深度順序來安排排程，即較深層級的元件必須先完成，之後才能開始母件的作業。如果有多個相同深度的作業，則會依據工序的編號順序進行排列。此外，雖然這些派工共用相同的設備資源，但系統僅透過計算各設備在不同時間點的可用狀態來互相影響排程，並且會以批次編號的順序來決定處理的穩定結果。",
+      "approved": true,
+      "sourceSectionHash": "7a6a7d020d67e1031d12efbca29b66cdc3c297bfddd4c137e3d02056e1a05829"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-673e4a0a",
+      "lang": "zh",
+      "headingPath": "生產製造 › 兩個下限分開傳：接力點只約束「往後推」那條，",
+      "text": "限制接力點的時間範圍｜接力點只能用來約束之後的排程時間，因為如果將兩個下限合併計算，可能會導致重複的限制互相抵銷。",
+      "approved": false,
+      "sourceSectionHash": "325dfe57367988a9a7b7460fcf57dcd41f7315a2a5dfa43bc0f4ade6a190a792"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-9873d162",
+      "lang": "zh",
+      "headingPath": "生產製造 › 交棒給同批的下一張",
+      "text": "交棒的數量依據當前工序設定｜此處決定的半成品交接方式和數量，是根據目前正在進行的工序來判斷的；如果該流程不是委外作業，則會以整批次的方式處理。",
+      "approved": true,
+      "sourceSectionHash": "b520e9d06ccf41757ef597c5b930c39a690aac132e1eb620da43d35cc52488d7"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-bc5f17a0",
+      "lang": "zh",
+      "headingPath": "生產製造 › 派工是否已實際投入產能——決定重估時要不要保留帳面起點",
+      "text": "派工是否已投入產能決定重估起點｜如果已經有實際的產出，系統會將其視為已投入產能；如果沒有任何產出，則只會判斷機台是否已被佔用。",
+      "approved": true,
+      "sourceSectionHash": "cc2396a9f41a4f4c7361b622ab00b5f79edf9a9e0248b670a80b95c7456d11ef"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-8ee13c6f",
+      "lang": "zh",
+      "headingPath": "生產製造 › 工序重疊起點推算",
+      "text": "工序起點計算規則說明｜移轉方式決定了半成品交接給本工序的方式，若前工序較快，則會往後推算起始時間；若前工序較慢，則會往前推算起始時間。",
+      "approved": true,
+      "sourceSectionHash": "4101e5723e0cc2917a4ef3bf76b1cbed733f424bd6cf66770c56dc50809420e3"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-77fa79b6",
+      "lang": "zh",
+      "headingPath": "生產製造 › 往前推：最後一個移轉批在前工序完工時抵達，本工序再做這一批即結束",
+      "text": "流程判斷規則說明｜當前工序的結案時間點，會以最後一個移轉批到達前一個工序完工的時間為準。",
+      "approved": true,
+      "sourceSectionHash": "251cf4bf4ace7654c7a4b19fedc16fc33c0dd5f29c1a0d9bd18b964a7dc42423"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-2dd7277d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 單張派工時段配置",
+      "text": "派工時段的計算規則說明｜委外作業會以前一個結束時間和當天為起點，並依據預設的工作日間隔進行排程；若生產線未指定具體機台，則以整個工作中心層級來判斷可用的時段。",
+      "approved": true,
+      "sourceSectionHash": "120108af803397856fb6558104165a3010fbc15eb7cc52e0fc74684abb37774c"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-4a2d1350",
+      "lang": "zh",
+      "headingPath": "生產製造 › 移轉方式取自「前工序」——決定它如何把半成品交給本工序：",
+      "text": "移轉方式決定半成品交接時機｜當前工序的移轉方式會根據前一個工序的完成狀況來決定。如果前一個工序比本工序快，則系統會預估本工序是主要的瓶頸，因此計算出的開始時間會往後推算；反之，如果前一個工序較慢，則系統會往前推算，以確保在處理完最後一批產品時，能準確決定出實際的開始時間。",
+      "approved": true,
+      "sourceSectionHash": "293fa39fce55c1fc81d54d82637d71b55b82ca6df29483d75ea66d5ab3bca10d"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-5fc3c519",
+      "lang": "zh",
+      "headingPath": "生產製造 › 把一段工時放進指定資源的日曆，並更新該資源的最早可用時刻",
+      "text": "工時安排的起點計算規則｜如果指定了結束時間作為錨點，系統會先嘗試從這個結束時間往前推算開始時間；若這樣推算的開始時間早於資源最早可用的時間（或今天），則會改為往後計算。",
+      "approved": true,
+      "sourceSectionHash": "f3394b49254989f76a9ae28e292c25fb87adf6854eed6bbab8b47bf6de57026f"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-da99410c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 否則倒推起點會偏晚、實際做不完",
+      "text": "無法計算工時的起始時間｜系統在計算工作時間時，僅扣除已知的停機時間，不會考慮到計劃上的停機時間。",
+      "approved": true,
+      "sourceSectionHash": "7fb80a78e1a87e6778814c48772c5640a85cc9c18206959b4b94839b400bf1cd"
+    },
+    {
+      "slug": "code-mfg-schedulingengine-19a10a5e",
+      "lang": "zh",
+      "headingPath": "生產製造 › 排程起點 = ，再校正到下一個真正有產能的時刻",
+      "text": "排程時間點需符合工作時段｜系統計算出的開始時間點，如果落在非上班時段，則無法準確反映與實際產能的關係，因此需要額外校正。",
+      "approved": true,
+      "sourceSectionHash": "bd9df06a8df0d20249808475617ec029b3483303cc8f98781f489bbafb0bdb49"
+    }
+  ]
+}

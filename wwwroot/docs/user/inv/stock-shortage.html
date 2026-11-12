@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Shortage Analysis — INV User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>缺貨分析 — INV 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">INV 目錄</span><span lang="en">INV Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">INV 畫面</span><span lang="en">INV Screens</span></div>
+    <a href="inventory-balance.html" class="nav-link"><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></a>
+    <a href="stock-movement.html" class="nav-link"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a>
+    <a href="stock-ledger.html" class="nav-link"><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></a>
+    <a href="warehouse-ops.html" class="nav-link"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a>
+    <a href="material-staging.html" class="nav-link"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a>
+    <a href="scrap-doc.html" class="nav-link"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></a>
+    <a href="loan-doc.html" class="nav-link"><span lang="zh">借入借出單</span><span lang="en">Loan Document</span></a>
+    <a href="sample-doc.html" class="nav-link"><span lang="zh">樣品/客供單</span><span lang="en">Sample/Consignment Docs</span></a>
+    <a href="inventory-count.html" class="nav-link"><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></a>
+    <a href="stock-adjustment.html" class="nav-link"><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></a>
+    <a href="../osp/outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="rework-material.html" class="nav-link"><span lang="zh">重工發退料單</span><span lang="en">Rework Material</span></a>
+    <a href="stock-transfer.html" class="nav-link"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a>
+    <a href="cross-plant-transfer.html" class="nav-link"><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></a>
+    <a href="inventory-valuation.html" class="nav-link"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a>
+    <a href="landed-cost-allocation.html" class="nav-link"><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></a>
+    <a href="stock-shortage.html" class="nav-link active"><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></a>
+    <a href="slow-moving-inventory.html" class="nav-link"><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></a>
+    <a href="inventory-aging.html" class="nav-link"><span lang="zh">存貨庫齡分析</span><span lang="en">Inventory Aging Analysis</span></a>
+    <a href="inventory-value.html" class="nav-link"><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></a>
+    <a href="inventory-turnover.html" class="nav-link"><span lang="zh">庫存周轉率</span><span lang="en">Inventory Turnover</span></a>
+    <a href="stock-variance.html" class="nav-link"><span lang="zh">盤差分析</span><span lang="en">Stock Variance</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-box-seam me-2 text-primary"></i><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/StockShortage &nbsp;|&nbsp; 低於安全庫存/需求缺口清單</span><span lang="en">Route: /StockShortage &nbsp;|&nbsp; Items below safety stock or short of demand</span></div>
+    </div>
+
+    <p><span lang="zh">列出目前可用量低於安全存量的品號，並把截止日前會到的採購在途與委外在途加進來，推算「在途補足後還缺多少」，供補貨決策。在途的算法與工單投產時的料況檢查共用同一套；工單剩餘產出、待驗量與尚未經 MRP 預留的需求都不計。</span><span lang="en">Lists items whose current available quantity is below safety stock, then adds PO and outsource quantities due by the cutoff date to show how much is still short once in-transit arrives, for replenishment decisions. In-transit is calculated exactly as the material check at work order release does; remaining work order output, quarantine stock and demand not yet reserved by MRP are not counted.</span></p>
+    <img class="screen-shot" src="img/stock-shortage.png" data-src-en="img/en/stock-shortage.png" alt="缺料分析畫面截圖" data-alt-en="Shortage analysis screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">缺料分析畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Shortage analysis screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號 / 品名</span><span lang="en">Product</span></td><td><span lang="zh">關鍵字模糊比對；留空列出全部有缺口的料件</span><span lang="en">Partial keyword match; leave blank to list every item with a shortfall</span></td></tr>
+        <tr><td><span lang="zh">在途截止日</span><span lang="en">In-transit until</span></td><td><span lang="zh">只計到貨日（委外為應交日）在此日以前的在途；留白＝今天起 30 天。與工單投產時用計畫開工日當截止日是同一個意思</span><span lang="en">Only in-transit due on or before this date (expected delivery date for outsourcing) is counted; blank = 30 days from today. It plays the same role as the planned start date used as the cutoff at work order release</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號 / 品名</span><span lang="en">Product</span></td><td><span lang="zh">料件代碼與名稱</span><span lang="en">Product code and name</span></td></tr>
+        <tr><td><span lang="zh">庫存單位</span><span lang="en">Stock UOM</span></td><td><span lang="zh">庫存管理使用的計量單位</span><span lang="en">Unit used for inventory management</span></td></tr>
+        <tr><td><span lang="zh">安全存量</span><span lang="en">Safety Stock</span></td><td><span lang="zh">產品主檔設定的安全庫存水位</span><span lang="en">Safety stock level set on the product master</span></td></tr>
+        <tr><td><span lang="zh">在手量（不含待驗）</span><span lang="en">On Hand (excl. Quarantine)</span></td><td><span lang="zh">目前實際在庫數量，全倉合計但<b>不含待驗倉</b>（IQC 尚未放行不可動用）；客供倉照計</span><span lang="en">Quantity on hand across all warehouses <b>except quarantine</b> (not usable until IQC releases it); customer-supplied warehouses are included</span></td></tr>
+        <tr><td><span lang="zh">預留量</span><span lang="en">Reserved</span></td><td><span lang="zh">已被工單、備料或 MRP 預留但尚未發出的數量（與 MRP、投產同一份預留）</span><span lang="en">Quantity reserved by work orders, staging or MRP but not yet issued (the same reservations MRP and release use)</span></td></tr>
+        <tr><td><span lang="zh">目前可用</span><span lang="en">Available Now</span></td><td><span lang="zh">在手量 − 預留量，下限 0</span><span lang="en">On hand − reserved, never below 0</span></td></tr>
+        <tr><td><span lang="zh">目前缺口</span><span lang="en">Shortage Now</span></td><td><span lang="zh">安全存量 − 目前可用；大於 0 的品號才會列出</span><span lang="en">Safety stock − available now; only items above 0 are listed</span></td></tr>
+        <tr><td><span lang="zh">採購在途</span><span lang="en">PO In Transit</span></td><td><span lang="zh">已核准、未結案採購單在截止日前到貨的未收量，扣除已被其他需求認領的部分</span><span lang="en">Unreceived quantity on approved, open purchase orders due by the cutoff date, less what other demand has already claimed</span></td></tr>
+        <tr><td><span lang="zh">委外在途</span><span lang="en">Outsource In Transit</span></td><td><span lang="zh">已確認委外採購單在截止日前應交的未收量，扣除已被其他需求認領的部分</span><span lang="en">Unreceived quantity on confirmed outsource purchase orders due by the cutoff date, less what other demand has already claimed</span></td></tr>
+        <tr><td><span lang="zh">預計可用</span><span lang="en">Projected Available</span></td><td><span lang="zh">目前可用＋採購在途＋委外在途</span><span lang="en">Available now + PO in transit + outsource in transit</span></td></tr>
+        <tr><td><span lang="zh">預計缺口</span><span lang="en">Projected Shortage</span></td><td><span lang="zh">安全存量 − 預計可用，下限 0；0（綠色）表示在途到齊就補足，大於 0 才是真的要補料。清單依此欄由大到小排序</span><span lang="en">Safety stock − projected available, never below 0; 0 (green) means in-transit covers it, above 0 means you really need to replenish. The list is sorted by this column, largest first</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="../mfg/mrp-run.html"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

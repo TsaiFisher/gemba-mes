@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Modules/MFG/Services/IMultiLevelBomService.cs",
+  "sourceHash": "2c24f1cb452ae755a78b421be886095a6459e35786576b828199f9e72fdefed3",
+  "entries": [
+    {
+      "slug": "code-mfg-imultilevelbomservice-13576884",
+      "lang": "zh",
+      "headingPath": "生產製造 › 用料若本身為自製件則續往下一階",
+      "text": "多層物料結構的展開規則｜系統會依據產品編號，沿著其工序和各個工序所使用的材料進行遞迴展開；如果某種材料本身也是需要透過工序才能產出的自製件，則會繼續向下一層級進行展開。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-imultilevelbomservice-2f51dc97",
+      "lang": "zh",
+      "headingPath": "生產製造 › 展開多階料表/途程",
+      "text": "規則說明｜展開多階料表或工序時，系統會根據當天的日期來判斷該途程是否有效。此外，每個使用者只能看到自己所屬的廠別相關資料。",
+      "approved": true
+    }
+  ]
+}

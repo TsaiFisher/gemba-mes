@@ -1,0 +1,25 @@
+@*
+    _PrintBase.cshtml — 列印共用「簽核區」區塊（製作/審核/核准/日期，本地化）。
+    這四欄在各 Print 視圖完全相同；集中於此一處，語系切換即時生效，新單據不需再抄。
+
+    名字取自 ViewBag.PrintSign（Controller 呼叫 PreparePrintSignAsync；規則見 PrintSignatureService：
+    一位核准者印「核准」、多位時最後一位印「核准」其餘印「審核」）；沒有的格子留白供手簽。
+    「日期」印列印當下的廠別時間（ViewBag.PrintTime，PreparePrintViewBagAsync 以廠別時區算好）。
+
+    用法（放在各 Print.cshtml 明細/合計之後）：
+        @@await Html.PartialAsync("_PrintBase")
+*@
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@{
+    var sign = ViewBag.PrintSign as SmartFactory.MES.Modules._Shared.Printing.PrintSignature
+               ?? SmartFactory.MES.Modules._Shared.Printing.PrintSignature.Blank;
+    var printedAt = (ViewBag.PrintTime as DateTime?)?.ToString("yyyy-MM-dd HH:mm") ?? "";
+}
+<div class="print-section">
+    <div class="print-sign-area">
+        <div><div class="print-field-label">@L["Print_Sign_Created"]</div><div class="print-sign-line d-flex align-items-end justify-content-center">@sign.Created</div></div>
+        <div><div class="print-field-label">@L["Print_Sign_Reviewed"]</div><div class="print-sign-line d-flex align-items-end justify-content-center">@sign.Reviewed</div></div>
+        <div><div class="print-field-label">@L["Print_Sign_Approved"]</div><div class="print-sign-line d-flex align-items-end justify-content-center">@sign.Approved</div></div>
+        <div><div class="print-field-label">@L["Print_Sign_Date"]</div><div class="print-sign-line d-flex align-items-end justify-content-center">@printedAt</div></div>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Linq
+@using SmartFactory.MES.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject SmartFactory.MES.Data.ApplicationDbContext DbContext
+@inject IViewLocalizer Localizer
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    var userId = UserManager.GetUserId(User);
+    var appUser = await UserManager.Users
+        .Include(u => u.ActiveRole!)
+        .ThenInclude(r => r.PlantAssignments)
+        .ThenInclude(rpa => rpa.Plant)
+        .FirstOrDefaultAsync(u => u.Id == userId);
+    var roles = appUser != null ? await UserManager.GetRolesAsync(appUser) : new List<string>();
+    var activeRoleName = appUser?.ActiveRole?.Name;
+
+    // 廠別來源：角色指定廠別；若角色不限制則取系統所有廠別
+    var rolePlantAssignments = appUser?.ActiveRole?.PlantAssignments?.ToList() ?? new List<SmartFactory.MES.Models.RolePlantAssignment>();
+    List<Plant> userPlants;
+    if (rolePlantAssignments.Any())
+    {
+        userPlants = rolePlantAssignments.Select(rpa => rpa.Plant).Where(p => p != null).Select(p => p!).ToList();
+    }
+    else
+    {
+        userPlants = await DbContext.Plants.IgnoreQueryFilters().AsNoTracking().OrderBy(p => p.Id).ToListAsync();
+    }
+    // ⚠️ 找不到就是找不到，**不可**退為清單第一個顯示。原本退成第一個廠，於是管理員把目前廠別
+    // 從角色移除後，頂端仍顯示「一廠」、看起來像已經選好，實際上所有功能都被擋下，
+    // 使用者設定裡的一廠也沒有「使用中」（2026-11-11 筆電驗收 B2）。
+    var activePlant = userPlants.FirstOrDefault(p => p.Id == appUser?.ActivePlantId);
+    var isEnUs = System.Globalization.CultureInfo.CurrentUICulture.Name == "en-US";
+    // 角色有限定廠別、目前廠別卻不在其中＝已失效；角色不限廠而從未選過＝未選廠別
+    var plantStatusText = rolePlantAssignments.Any() && appUser?.ActivePlantId != null
+        ? Localizer["PlantInvalid"].Value
+        : Localizer["NoPlant"].Value;
+
+    @* 廠別切換 Dropdown（有多個廠別才顯示下拉，否則只顯示 badge） *@
+    @if (userPlants.Count > 1)
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark px-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-building"></i>
+                @if (activePlant != null)
+                {
+                    <span class="badge bg-info text-dark ms-1">@(isEnUs ? (activePlant.NameEn ?? activePlant.Name ?? activePlant.Id) : (activePlant.Name ?? activePlant.Id))</span>
+                }
+                else
+                {
+                    <span class="badge bg-warning text-dark ms-1" data-plant-status="unselected"><i class="bi bi-exclamation-triangle-fill"></i> @plantStatusText</span>
+                }
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                @foreach (var plant in userPlants)
+                {
+                    <li>
+                        <form asp-controller="UserSettings" asp-action="SwitchPlant" method="post" class="m-0">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="plantId" value="@plant.Id" />
+                            <button type="submit" class="dropdown-item d-flex align-items-center gap-2 @(plant.Id == appUser?.ActivePlantId ? "fw-bold" : "")">
+                                @if (plant.Id == appUser?.ActivePlantId)
+                                {
+                                    <i class="bi bi-check-lg text-success"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-building text-muted"></i>
+                                }
+                                @(isEnUs ? (plant.NameEn ?? plant.Name) : plant.Name) <span class="text-muted small">(@plant.Id)</span>
+                            </button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+    else if (activePlant != null)
+    {
+        <li class="nav-item">
+            <span class="nav-link text-dark px-2">
+                <i class="bi bi-building"></i>
+                <span class="badge bg-info text-dark ms-1">@(isEnUs ? (activePlant.NameEn ?? activePlant.Name) : activePlant.Name)</span>
+            </span>
+        </li>
+    }
+    else
+    {
+        @* 只剩一個（或沒有）可用廠別、但目前廠別不是它：導去使用者設定重選，不要假裝已選好 *@
+        <li class="nav-item">
+            <a class="nav-link text-dark px-2" asp-controller="UserSettings" asp-action="Index">
+                <i class="bi bi-building"></i>
+                <span class="badge bg-warning text-dark ms-1" data-plant-status="unselected"><i class="bi bi-exclamation-triangle-fill"></i> @plantStatusText</span>
+            </a>
+        </li>
+    }
+
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-controller="UserSettings" asp-action="Index">
+            <i class="bi bi-person-circle"></i> @User.Identity?.Name
+            @if (!string.IsNullOrEmpty(activeRoleName))
+            {
+                var displayName = System.Globalization.CultureInfo.CurrentUICulture.Name == "en-US"
+                    ? (appUser.ActiveRole?.NameEn ?? appUser.ActiveRole?.Name)
+                    : (appUser.ActiveRole?.NameZh ?? appUser.ActiveRole?.Name);
+                <span class="badge bg-primary ms-1">@displayName</span>
+            }
+            else if (roles != null && roles.Any())
+            {
+                <span class="badge bg-warning text-dark ms-1">@Localizer["NoRoleSelected"]</span>
+            }
+        </a>
+    </li>
+    <li class="nav-item">
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })">
+            <button type="submit" class="nav-link btn btn-link text-dark">@Localizer["Logout"]</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">@Localizer["Login"]</a>
+    </li>
+}
+</ul>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AccountCode" xml:space="preserve">
+    <value>Account Code</value>
+  </data>
+  <data name="AccountName" xml:space="preserve">
+    <value>Account Name</value>
+  </data>
+  <data name="AccountType" xml:space="preserve">
+    <value>Account Type</value>
+  </data>
+  <data name="Remarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Expense" xml:space="preserve">
+    <value>Expense (debit side of manual AP invoices)</value>
+  </data>
+  <data name="Revenue" xml:space="preserve">
+    <value>Revenue (credit side of manual AR invoices)</value>
+  </data>
+  <data name="AccountTypeHint" xml:space="preserve">
+    <value>Determines the debit/credit direction and which report section the account lands in. The values line up with the leading digit of the account code (1xxx asset, 4xxx revenue, …).</value>
+  </data>
+  <data name="IsActiveHint" xml:space="preserve">
+    <value>Inactive accounts can no longer be selected on new invoices; existing invoices and journals are unaffected.</value>
+  </data>
+  <data name="ScopeNotice" xml:space="preserve">
+    <value>Accounts are shared company-wide, not per plant. The code cannot be changed once created — existing journals store the code as written at the time.</value>
+  </data>
+  <data name="AccountNameEn" xml:space="preserve"><value>Account name (English)</value></data>
+  <data name="AccountNameEnHint" xml:space="preserve"><value>Falls back to the Chinese name when left blank.</value></data>
+  <data name="AccountType_Asset" xml:space="preserve"><value>Asset</value></data>
+  <data name="AccountType_Liability" xml:space="preserve"><value>Liability</value></data>
+  <data name="AccountType_Equity" xml:space="preserve"><value>Equity</value></data>
+  <data name="AccountType_Revenue" xml:space="preserve"><value>Revenue</value></data>
+  <data name="AccountType_Cogs" xml:space="preserve"><value>Cost of goods sold</value></data>
+  <data name="AccountType_OperatingExpense" xml:space="preserve"><value>Operating expense</value></data>
+  <data name="AccountType_OtherIncome" xml:space="preserve"><value>Other income</value></data>
+  <data name="AccountType_OtherExpense" xml:space="preserve"><value>Other expense</value></data>
+  <data name="AllowManualEntry" xml:space="preserve"><value>Selectable manually</value></data>
+  <data name="AllowManualEntryHint" xml:space="preserve"><value>Only accounts with this checked appear in the manual invoice and manual journal pickers. Leave it off for accounts whose balance is maintained by automatic postings (inventory, GR/IR accrual) — a hand-entered line there will not reconcile with the subledger.</value></data>
+  <data name="SystemAccountNotice" xml:space="preserve"><value>System account: used by automatic postings. Its code and type cannot be changed and it cannot be deleted. Only the name, remarks and manual-selectable flag are editable.</value></data>
+  <data name="IsSystem" xml:space="preserve"><value>System account</value></data>
+</root>

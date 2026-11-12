@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Product Category — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>產品類別 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="product-category.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link active"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-tag me-2 text-primary"></i><span lang="zh">產品類別</span><span lang="en">Product Category</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/ProductCategory &nbsp;|&nbsp; 產品分類與預設值設定</span><span lang="en">Route: /BAS/ProductCategory &nbsp;|&nbsp; Product categories and their defaults</span></div>
+    </div>
+    <p><span lang="zh">產品類別用於將產品分組管理，並可為每個類別設定預設倉庫、儲位與計量單位。新增產品時選擇類別，系統會自動帶入<strong>庫存計量單位與批號追蹤</strong>兩項，減少逐筆設定的工作量。<strong>預設倉庫與預設儲位則不同</strong>——產品主檔上沒有這兩個欄位，它們不會被帶入產品，而是在單據作業當下被系統直接引用（見下方說明），因此它們不是輸入便利設定，而是幾條作業流程的必要前置。</span><span lang="en">Product categories group products for management and can carry a default warehouse, location and unit of measure. Choosing a category when creating a product fills in two of them — the <strong>stock unit of measure and lot tracking</strong> — saving repetitive setup. <strong>The default warehouse and location are different</strong>: the product master has no such fields, so they are never copied onto a product. They are read by the system at the moment a document is processed (see below), which makes them a prerequisite for several flows rather than a data-entry convenience.</span></p>
+    <img class="screen-shot" src="img/product-category.png" data-src-en="img/en/product-category.png" alt="產品分類畫面截圖" data-alt-en="Product category screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">產品分類畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Product category screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-30pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">類別代碼</span><span lang="en">Category Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">唯一識別碼（例：RAW、WIP、FG）</span><span lang="en">Unique code (e.g. RAW, WIP, FG)</span></td></tr>
+        <tr><td><span lang="zh">類別名稱</span><span lang="en">Category Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">完整名稱（例：原物料、在製品、成品）</span><span lang="en">Full name (e.g. raw material, WIP, finished goods)</span></td></tr>
+        <tr><td><span lang="zh">啟用批號追蹤</span><span lang="en">Enable Lot Tracking</span></td><td></td><td><span lang="zh">勾選後，該類別的產品預設啟用批號管理</span><span lang="en">Once checked, products in this category enable lot tracking by default</span></td></tr>
+        <tr><td><span lang="zh">預設倉庫</span><span lang="en">Default Warehouse</span></td><td></td><td><span lang="zh"><strong>不會帶入產品主檔</strong>。單據沒有指定倉庫時，系統改用此欄位——見下方「這兩個預設值實際被誰用到」</span><span lang="en"><strong>Not copied onto the product master.</strong> The system falls back to this field when a document does not name a warehouse — see "Who actually uses these two defaults" below</span></td></tr>
+        <tr><td><span lang="zh">預設儲位</span><span lang="en">Default Location</span></td><td></td><td><span lang="zh"><strong>不會帶入產品主檔</strong>（須先選擇倉庫）。儲位才是出庫驗證的實際單位，<strong>只設倉庫不設儲位等同沒設</strong></span><span lang="en"><strong>Not copied onto the product master</strong> (pick a warehouse first). The location is the unit the issue check actually works on, so <strong>setting a warehouse without a location counts as not set at all</strong></span></td></tr>
+        <tr><td><span lang="zh">預設庫存計量單位</span><span lang="en">Default Stock UOM</span></td><td></td><td><span lang="zh">新增產品時自動帶入的庫存計量單位</span><span lang="en">Stock UOM filled in automatically when a product is created</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td></td><td><span lang="zh">類別補充說明</span><span lang="en">Category notes</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後不可建立新產品時選取此類別</span><span lang="en">Once inactive, this category cannot be chosen when creating products</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進入「基本資料 &gt; 產品類別」，點「新增」。</span><span lang="en">Go to "Basic Data &gt; Product Category" and click "Add".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">填入類別代碼、名稱，視需要設定預設倉庫與儲位。</span><span lang="en">Enter the category code and name, and set the default warehouse and location if needed.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點「儲存」。日後新增產品時選此類別，計量單位與批號追蹤即自動帶入。</span><span lang="en">Click "Save". From now on, choosing this category for a new product fills in the unit of measure and lot tracking.</span></div></div>
+
+    <h2 id="who-actually-uses-these-two-defaults"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">這兩個預設值實際被誰用到</span><span lang="en">Who actually uses these two defaults</span></h2>
+    <p><span lang="zh">預設倉庫與預設儲位是<strong>作業當下的退路</strong>：以下情境的單據若沒有指定倉儲，系統就取該料件所屬類別的這兩個值；取不到就中止或退回其他來源。</span><span lang="en">The default warehouse and location act as a <strong>fallback at processing time</strong>: in the situations below, if the document does not name a warehouse or location the system reads these two values from the item&#39;s category; when it cannot, the action either stops or falls back elsewhere.</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-30pct"><span lang="zh">情境</span><span lang="en">Situation</span></th><th><span lang="zh">沒設會怎樣</span><span lang="en">What happens if it is not set</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">出貨單、銷貨退回</span><span lang="en">Goods shipment, sales return</span></td><td><span lang="zh">這兩張單<strong>沒有倉庫與儲位欄位</strong>，一律走此退路。沒設就在<strong>確認當下</strong>被擋（「未指定儲位，且產品類別無預設儲位」）——<strong>單倉部署也會踩到</strong></span><span lang="en">Neither document <strong>has a warehouse or location field</strong>, so this fallback is always used. If it is not set the document is rejected <strong>at confirmation</strong> ("no location given and the product category has no default") — <strong>this happens even on a single-warehouse deployment</strong></span></td></tr>
+        <tr><td><span lang="zh">倒扣（Backflush）用料</span><span lang="en">Backflushed material</span></td><td><span lang="zh">倒扣不經備料單，來源倉儲無欄位可填，只能取此值；取不到就退回完工入庫的倉儲。<strong>分倉時會讓整張工單無法入庫</strong>，詳見<a href="../mfg/production-completion.html">完工入庫</a></span><span lang="en">Backflush has no staging order and no field for a source, so only this value is available; failing that it falls back to the completion receipt&#39;s own warehouse. <strong>With split warehouses the whole work order then cannot be received</strong> — see <a href="../mfg/production-completion.html">Production Putaway</a></span></td></tr>
+        <tr><td><span lang="zh">進貨單、採購退貨</span><span lang="en">Goods receipt, purchase return</span></td><td><span lang="zh">簡化模式下未指定倉儲時取此值</span><span lang="en">Used in simplified mode when the document does not name a warehouse or location</span></td></tr>
+        <tr><td><span lang="zh">委外收貨（非簡化模式）</span><span lang="en">Outsource receipt (not simplified)</span></td><td><span lang="zh">手機收料不問倉儲：收回品品檢合格後就放行到此倉儲。要品檢的品號沒設，<strong>收貨確認會被擋下</strong>並寫出品號（原本會照收，品檢合格後卻留在待驗倉）</span><span lang="en">Phone receiving does not ask for a warehouse: returned goods go here once they pass inspection. If a product that needs inspection has none, <strong>confirming the receipt is blocked</strong> with the product named (previously it was accepted, and passed goods then stayed in quarantine)</span></td></tr>
+        <tr><td><span lang="zh">委外送外料自動扣、委外收料當場驗收</span><span lang="en">Auto-deducting send-out material, inspection at receipt</span></td><td><span lang="zh">送外料從此倉儲扣；當場驗收合格的收回品入此倉儲。沒設就擋下並寫出品號</span><span lang="en">Send-out material is deducted from here; goods that pass inspection at receipt are stocked here. If unset, the receipt is blocked with the product named</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">建議至少建立「原物料」、「在製品」、「成品」三個基本類別，並各自設定對應的倉庫<strong>與儲位</strong>——上表三個情境都以儲位為準，缺儲位的設定形同沒設。</span><span lang="en">Create at least the three basic categories — raw material, WIP and finished goods — each with its own warehouse <strong>and location</strong>: all three situations above work on the location, so a setting without one counts as not set.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

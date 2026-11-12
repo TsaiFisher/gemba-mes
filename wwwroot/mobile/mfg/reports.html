@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="/mobile/manifest.json">
+    <link rel="apple-touch-icon" href="/mobile/icons/apple-touch-icon-180.png">
+    <title data-i18n="report.page_title">投產報工 — 報工</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+    <link rel="stylesheet" href="/mobile/css/mfg-reports.css">
+</head>
+<body class="bg-light">
+
+<!-- 頂部導覽列 -->
+<nav class="navbar navbar-dark bg-primary mobile-navbar px-3">
+    <button type="button" data-action="historyBack" data-fallback="/mobile/mfg/list.html" class="btn btn-link text-white p-0 me-2" data-i18n-title="common.back_prev" title="返回">
+        <i class="bi bi-arrow-left fs-5"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.back_prev">返回</span>
+    </button>
+    <span class="navbar-brand fw-bold mb-0 h1 flex-grow-1" data-i18n="report.title">報工</span>
+    <a href="/mobile/home.html" class="btn btn-outline-light btn-sm me-1" data-i18n-title="common.back" title="回首頁"><i class="bi bi-house-door"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="nav.home">首頁</span></a>
+    <button class="btn btn-outline-light btn-sm me-1" data-action="toggleLang" data-lang-toggle data-i18n-title="common.lang_switch" title="Language">EN</button>
+            <button class="btn btn-outline-light btn-sm" data-action="logout" data-i18n-title="common.logout" title="登出">
+        <i class="bi bi-box-arrow-right"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.logout">登出</span>
+    </button>
+</nav>
+
+<div class="container-fluid py-3 px-3">
+
+    <!-- 派工進度卡 -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-body py-2 px-3" id="progressInfo">
+            <div class="text-center text-muted py-2">
+                <div class="spinner-border spinner-border-sm me-1"></div><span data-i18n="common.loading">載入中…</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 離線提示 -->
+    <div id="offlineAlert" class="offline-badge p-2 mb-3 d-none small">
+        <i class="bi bi-wifi-off me-1"></i><span data-i18n="report.offline_hint">目前沒有網路。這時按送出的報工會先暫存在手機，恢復連線後自動送出（以按下的時間記錄）</span>
+    </div>
+
+    <!-- 報工表單 -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-white py-2">
+            <span class="fw-semibold small"><i class="bi bi-clipboard-check me-1"></i><span data-i18n="report.form_title">填寫報工數量</span></span>
+        </div>
+        <div class="card-body py-3">
+
+            <!-- 數量輸入 -->
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label fw-semibold small" data-i18n="report.qty_ok">合格數量</label>
+                    <input type="number" id="qtyOk" class="form-control qty-input btn-mobile"
+                           min="0" step="any" value="0" inputmode="decimal">
+                    <div class="qty-label">OK</div>
+                </div>
+                <div class="col-6">
+                    <label class="form-label fw-semibold small" data-i18n="report.qty_ng">不良數量</label>
+                    <input type="number" id="qtyNg" class="form-control qty-input btn-mobile"
+                           min="0" step="any" value="0" inputmode="decimal">
+                    <div class="qty-label">NG</div>
+                </div>
+            </div>
+
+            <!-- 不良原因（NG > 0 時顯示；§scheduling-spec-review 第一階段 4） -->
+            <div class="mb-3 d-none" id="ngReasonGroup">
+                <label class="form-label fw-semibold small" data-i18n="report.ng_reason">不良原因</label>
+                <select id="ngReasonCode" class="form-select btn-mobile"></select>
+            </div>
+
+            <!-- 容器號（選填） -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold small" data-i18n="report.container">容器號（選填）</label>
+                <div class="scan-area d-flex align-items-center gap-2" id="containerScanArea" data-action="toggleContainerInput">
+                    <i class="bi bi-upc-scan fs-4 text-muted"></i>
+                    <div>
+                        <div class="fw-semibold small" id="containerDisplay" data-i18n="report.container_scan">點擊掃描容器條碼</div>
+                        <div class="text-muted u-font-size-p75rem" data-i18n="report.container_manual">或點擊手動輸入</div>
+                    </div>
+                </div>
+                <div id="containerManualArea" class="mt-2 d-none">
+                    <div class="input-group">
+                        <input type="text" id="containerId" class="form-control btn-mobile" data-i18n-placeholder="report.container_ph" placeholder="手動輸入容器號">
+                        <button class="btn btn-outline-secondary" data-action="openContainerScanner" data-i18n-title="common.scan" title="掃描">
+                            <i class="bi bi-upc-scan"></i><span class="ms-1" data-i18n="common.scan">掃描</span>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-action="clearContainer" data-i18n-title="common.clear" title="清除">
+                            <i class="bi bi-x"></i><span class="ms-1" data-i18n="common.clear">清除</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 提交按鈕：報工＝繼續生產（可多次）；完工並報工＝回報最後一批後結束本次上工 -->
+            <div class="d-grid gap-2">
+                <button class="btn btn-success btn-lg action-btn" id="btnSubmit" data-action="submitReport">
+                    <i class="bi bi-check-circle me-2"></i><span data-i18n="report.submit_continue">送出報工（繼續生產）</span>
+                </button>
+                <button class="btn btn-outline-danger btn-lg action-btn" id="btnComplete" data-action="submitComplete">
+                    <i class="bi bi-flag-fill me-2"></i><span data-i18n="report.submit_complete">完工並報工（結束本次上工）</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 本次報工歷史 -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+            <span class="fw-semibold small"><i class="bi bi-clock-history me-1"></i><span data-i18n="report.history_title">本次報工紀錄</span></span>
+            <span id="historyCount" class="badge bg-secondary">0</span>
+        </div>
+        <div class="card-body py-2" id="historyList">
+            <div class="text-muted small text-center py-2" data-i18n="report.history_empty">尚無報工紀錄</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 容器掃描 Modal -->
+<div class="modal fade" id="scannerModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title" data-i18n="report.scan_title">掃描容器條碼</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div id="reader"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 離線佇列同步狀態 -->
+<div id="syncBadge" class="position-fixed bottom-0 start-0 m-3 d-none">
+    <span class="badge bg-warning text-dark">
+        <i class="bi bi-cloud-upload me-1"></i>
+        <span id="syncCount">0</span> <span data-i18n="home.offline_btn">筆待同步</span>
+    </span>
+</div>
+
+<!-- Toast 容器 -->
+<div id="toast-container"></div>
+
+<script src="/mobile/js/telemetry.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/data-action.js"></script>
+<script src="/mobile/js/nav.js"></script>
+<script src="/mobile/js/libs/html5-qrcode.min.js"></script>
+<script src="/mobile/js/i18n.js"></script>
+<script src="/mobile/js/i18n.modules.js"></script>
+    <script src="/mobile/js/api.js"></script>
+<script src="/mobile/js/auth.js"></script>
+<script src="/mobile/js/scanner.js"></script>
+<script src="/mobile/js/offline-queue.js"></script>
+<script src="/mobile/mfg/reports.page.js"></script>
+</body>
+</html>

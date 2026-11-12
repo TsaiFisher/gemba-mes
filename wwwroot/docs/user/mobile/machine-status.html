@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Machine Status — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>機台狀態異動 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link active"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-cpu me-2 text-primary"></i><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/mfg/machine-status.html &nbsp;|&nbsp; 現場回報機台故障、保養、待機等狀態</span><span lang="en">Path: /mobile/mfg/machine-status.html &nbsp;|&nbsp; Reporting breakdowns, maintenance and standby from the floor</span></div>
+    </div>
+
+    <p><span lang="zh">掃機台 QR Code 或輸入機台代碼後，畫面顯示該機台目前狀態與此刻可執行的事件。可執行的事件由目前狀態決定，例如「正常」的機台才看得到「故障停機」，已「廢棄」的機台沒有任何可執行事件。</span><span lang="en">Scan the machine QR code or type the machine code, and the screen shows the machine's current status and the events available right now. What is available depends on the current status: only an available machine offers "Breakdown", and a retired machine offers nothing at all.</span></p>
+
+    <img class="screen-shot" src="img/machine-status.png" data-src-en="img/en/machine-status.png" alt="機台狀態異動畫面截圖" data-alt-en="Machine status screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">機台狀態異動畫面（狀態為「正常」時可執行的事件）</span><span lang="en">Machine status screen (the events available while the machine is Available)</span></div>
+
+    <h2 id="steps"><i class="bi bi-list-ol me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點掃描鈕開相機掃機台 QR Code，或直接在<strong>「機台代碼」</strong>欄位輸入後查詢。</span><span lang="en">Tap the scan button to scan the machine QR code with the camera, or type the code in the <strong>"Machine Code"</strong> field and look it up.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">確認畫面顯示的<strong>「機台名稱」</strong>與<strong>「目前狀態」</strong>無誤。</span><span lang="en">Check that the <strong>"Machine Name"</strong> and <strong>"Current Status"</strong> shown are the right ones.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點要執行的事件按鈕，畫面下方展開確認區。</span><span lang="en">Tap the event you want and the confirmation area opens below.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">填寫<strong>「備註」</strong>（選填）後點<strong>「確認送出」</strong>。</span><span lang="en">Add a <strong>"Note"</strong> if you want and tap <strong>"Confirm"</strong>.</span></div></div>
+
+    <h2 id="events"><i class="bi bi-arrow-left-right me-2 text-primary"></i><span lang="zh">事件與狀態對照</span><span lang="en">Events and statuses</span></h2>
+
+    <p><span lang="zh">每個狀態可執行的事件如下。事件的兩個字母是系統代碼，會顯示在按鈕右側：</span><span lang="en">The events available in each status are listed below. The two letters are the system code, shown at the right of each button:</span></p>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-20pct"><span lang="zh">目前狀態</span><span lang="en">Current status</span></th><th><span lang="zh">可執行的事件</span><span lang="en">Available events</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">正常</span><span lang="en">Available</span></td><td><span lang="zh">故障停機 DI、開始保養 HI、設為待機 II、進入改良 EO、外借出廠 FO、送出外修 CO、除役廢棄 GO</span><span lang="en">Breakdown DI, Start Maintenance HI, Set to Standby II, Enter Modification EO, Loan Out FO, Send for External Repair CO, Retire / Scrap GO</span></td></tr>
+    <tr><td><span lang="zh">待機</span><span lang="en">Standby</span></td><td><span lang="zh">恢復正常 CI、故障停機 DI、開始保養 HI</span><span lang="en">Restore to Available CI, Breakdown DI, Start Maintenance HI</span></td></tr>
+    <tr><td><span lang="zh">故障停機</span><span lang="en">Breakdown</span></td><td><span lang="zh">故障排除 DO、開始保養 HI、送出外修 CO、除役廢棄 GO</span><span lang="en">Breakdown Resolved DO, Start Maintenance HI, Send for External Repair CO, Retire / Scrap GO</span></td></tr>
+    <tr><td><span lang="zh">保養中</span><span lang="en">Maintenance</span></td><td><span lang="zh">保養完成 HO、故障停機 DI、除役廢棄 GO</span><span lang="en">Maintenance Done HO, Breakdown DI, Retire / Scrap GO</span></td></tr>
+    <tr><td><span lang="zh">外修中</span><span lang="en">External Repair</span></td><td><span lang="zh">恢復正常 CI、除役廢棄 GO</span><span lang="en">Restore to Available CI, Retire / Scrap GO</span></td></tr>
+    <tr><td><span lang="zh">改良中</span><span lang="en">Modification</span></td><td><span lang="zh">恢復正常 CI、除役廢棄 GO</span><span lang="en">Restore to Available CI, Retire / Scrap GO</span></td></tr>
+    <tr><td><span lang="zh">外借</span><span lang="en">Loaned</span></td><td><span lang="zh">外借回廠 FI</span><span lang="en">Return from Loan FI</span></td></tr>
+    <tr><td><span lang="zh">廢棄</span><span lang="en">Retired</span></td><td><span lang="zh">無——已除役的機台不再提供任何事件。</span><span lang="en">None — a retired machine offers no events.</span></td></tr>
+    </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">這些狀態與事件的用語和桌機完全一致（桌機在「機台狀態異動單」使用同一組字），現場與辦公室講的是同一個詞。</span><span lang="en">These statuses and events use exactly the same wording as the desktop (which uses the same terms on the machine status order screen), so the floor and the office are talking about the same thing.</span></div>
+
+    <h2 id="affected"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">狀態異動會影響派工</span><span lang="en">A status change affects dispatches</span></h2>
+
+    <p><span lang="zh">機台轉為不可用的狀態（如故障停機、保養中）時，系統會一併處理該機台上的派工，並在送出後彈出視窗告知影響範圍；機台恢復為正常或待機時，因機台停用而暫停的派工會自動恢復：</span><span lang="en">When a machine moves to a status where it cannot run (breakdown or maintenance, for example), the system also deals with the dispatches on it and shows a dialog afterwards saying what was affected. When the machine goes back to available or standby, the dispatches held because it was down resume automatically:</span></p>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-20pct"><span lang="zh">原派工狀態</span><span lang="en">Dispatch status</span></th><th><span lang="zh">系統的處理</span><span lang="en">What the system does</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">已排程</span><span lang="en">Scheduled</span></td><td><span lang="zh">退回待排，需重新排程到其他機台或時段。</span><span lang="en">Sent back to pending so it can be rescheduled onto another machine or slot.</span></td></tr>
+    <tr><td><span lang="zh">準備中、準備完成、待首件、生產中</span><span lang="en">Setup, Ready, Pending FPI, In Progress</span></td><td><span lang="zh">轉為暫停（原因：機台停用），現場無法繼續作業；不會被重新排程移走。機台恢復時自動回到原狀態；急件可由生管在桌機「派工作業 → 暫停處理」換機續做。</span><span lang="en">Put on hold (reason: machine down), so the floor cannot carry on, and rescheduling does not move them. They return to their previous status automatically when the machine is back; for urgent work, production planning can switch them to another machine on the desktop under Dispatch Operations → Handle hold.</span></td></tr>
+    </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh">送出前請先確認機台代碼正確。狀態異動會立即影響排程，掃錯機台會把別條線的派工退回待排。</span><span lang="en">Check the machine code before submitting. A status change affects the schedule immediately, so scanning the wrong machine sends another line's dispatches back to pending.</span></div>
+
+    <h2 id="offline"><i class="bi bi-wifi-off me-2 text-primary"></i><span lang="zh">斷線時</span><span lang="en">When the connection drops</span></h2>
+
+    <p><span lang="zh">送出機台狀態異動時若剛好斷線，會先暫存在手機，並且是最優先的項目，恢復連線後最先送出——機台停機的消息越早進系統，排程重算越準。<strong>停機時間記的是按下送出的那一刻</strong>，不是恢復連線的時間。詳見<a href="index.html#offline">斷線保護</a>。</span><span lang="en">If the connection drops just as you submit a status change, it is saved on the phone as the highest priority item and sent first when the connection returns — the sooner a stoppage reaches the system, the better the rescheduling. <strong>The stoppage is recorded at the moment you tapped submit</strong>, not when the connection came back. See <a href="index.html#offline">Disconnection protection</a>.</span></p>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

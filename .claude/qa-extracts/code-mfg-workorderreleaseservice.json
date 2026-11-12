@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/MFG/Services/WorkOrderReleaseService.cs",
+  "sourceHash": "4a9f624605923a37d88a9398de8c243cb065448c47823f2f94dfb61ced316901",
+  "entries": [
+    {
+      "slug": "code-mfg-workorderreleaseservice-a513b18d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 不包交易的話「已投產」會比簽核狀態先落地——之後任一步失敗",
+      "text": "系統狀態更新順序與流程控制｜當交易送審時，如果沒有使用包裝交易機制，系統會先將「已投產」這個狀態寫入資料庫，導致後續任何步驟失敗時，工單的狀態會停留在「已投產」加上草稿或已退回的狀態。",
+      "approved": true,
+      "sourceSectionHash": "24d1ad33a506c0ad0e1efcc67b36c594f36c0733d88a947423ecdd999d923d62"
+    },
+    {
+      "slug": "code-mfg-workorderreleaseservice-20caf41e",
+      "lang": "zh",
+      "headingPath": "生產製造 › 先以採購在途補，餘量再以委外在途補",
+      "text": "庫存補充來源優先順序說明｜當物料短缺時，系統會優先使用採購的在途數量來進行補足，若採購在途不足以滿足需求，才會再使用委外在途的剩餘數量來補足。",
+      "approved": true,
+      "sourceSectionHash": "f14e3219af8d6722091b2c0b4bf7e12aaf0f75939b4f3e8dd80a113bbe7d3413"
+    },
+    {
+      "slug": "code-mfg-workorderreleaseservice-63e92bbe",
+      "lang": "zh",
+      "headingPath": "生產製造 › 略過投產閘門的人工關卡，但**保留三件下游必需品**——不保留會",
+      "text": "自動投產時保留三件下游必需品｜在系統進行自動投產時，會保留三種下游必需品的資訊，這是為了確保成本、料帳和委外流程能夠順利銜接。",
+      "approved": false,
+      "sourceSectionHash": "e8e19e9cbed48c9efd756634ed119deeae37fdea0ac23f10e2b08345bbba6847"
+    },
+    {
+      "slug": "code-mfg-workorderreleaseservice-4a5c0869",
+      "lang": "zh",
+      "headingPath": "生產製造 › 原本逐張各自提交，第 N 張投產途中出錯時前 N−1 張已投產並",
+      "text": "批次交易的成功與否規則｜當處理一整批資料時，如果其中任何一筆發生錯誤，則整個批次的提交都會失敗，不會有部分資料成功而部分資料失敗。",
+      "approved": true,
+      "sourceSectionHash": "22ded2249ee839df56309130ce47d860e56809ff5f8c46430c52f54e2c87fd29"
+    }
+  ]
+}

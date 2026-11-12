@@ -1,0 +1,132 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using SmartFactory.MES.Modules.ACT.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model SmartFactory.MES.Modules.ACT.Models.JournalEntry
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    var typeBadge = Model!.Type switch {
+        JournalEntryType.Automatic  => "bg-primary",
+        JournalEntryType.Manual     => "bg-warning text-dark",
+        JournalEntryType.Adjustment => "bg-info text-dark",
+        _ => "bg-secondary"
+    };
+    var typeLabel = ActEnumDisplay.Text(L, Model.Type);
+    var ccNames    = ViewBag.CostCenterNames as IDictionary<string, string> ?? new Dictionary<string, string>();
+    string? reversedBy = ViewBag.ReversedBy as string;
+    bool canReverse = ViewBag.CanReverse == true;
+    var today = ViewBag.Today is DateOnly d ? d : DateOnly.FromDateTime(DateTime.Today);
+}
+
+<div class="p-3">
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-md-3">
+            <label class="form-label fw-semibold">@Localizer["JournalId"]</label>
+            <div class="form-control-plaintext fw-bold text-primary"><code>@Model.JournalId</code></div>
+        </div>
+        <div class="col-12 col-md-2">
+            <label class="form-label fw-semibold">@Localizer["PeriodId"]</label>
+            <div class="form-control-plaintext">@Model.PeriodId</div>
+        </div>
+        <div class="col-12 col-md-3">
+            <label class="form-label fw-semibold">@Localizer["EntryDate"]</label>
+            <div class="form-control-plaintext">@Model.EntryDate.ToString("yyyy-MM-dd")</div>
+        </div>
+        <div class="col-12 col-md-2">
+            <label class="form-label fw-semibold">@Localizer["Type"]</label>
+            <div class="mt-1"><span class="badge @typeBadge">@typeLabel</span></div>
+        </div>
+        <div class="col-12 col-md-3">
+            <label class="form-label fw-semibold">@Localizer["SourceDocType"]</label>
+            <div class="form-control-plaintext small text-muted">@ActEnumDisplay.SourceDocTypeText(L, Model.SourceDocType)</div>
+        </div>
+        <div class="col-12 col-md-3">
+            <label class="form-label fw-semibold">@Localizer["SourceDocId"]</label>
+            <div class="form-control-plaintext small text-muted">@(Model.SourceDocId ?? "—")</div>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <div class="col-12">
+                <label class="form-label fw-semibold">@Localizer["Description"]</label>
+                <div class="form-control-plaintext text-muted">@Model.Description</div>
+            </div>
+        }
+    </div>
+
+    <h6 class="fw-semibold mb-2">@Localizer["JournalLines"]</h6>
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="u-width-50px">#</th>
+                    <th class="u-col-code">@Localizer["AccountCode"]</th>
+                    <th class="u-col-soft">@Localizer["AccountName"]</th>
+                    <th class="text-end u-col-num">@Localizer["Debit"]</th>
+                    <th class="text-end u-col-num">@Localizer["Credit"]</th>
+                    <th class="text-end u-col-num">@Localizer["AmountLocal"]</th>
+                    <th class="u-col-code">@Localizer["CostCenter"]</th>
+                    <th class="u-col-soft">@Localizer["Description"]</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Lines == null || !Model.Lines.Any())
+            {
+                <tr><td colspan="8" class="text-center text-muted">@Localizer["NoLines"]</td></tr>
+            }
+            else
+            {
+                @foreach (var l in Model.Lines)
+                {
+                    <tr>
+                        <td class="text-muted small">@l.LineNo</td>
+                        <td><code class="small">@l.AccountCode</code></td>
+                        <td class="small">@l.AccountName</td>
+                        <td class="text-end small @(l.Debit > 0 ? "fw-semibold" : "text-muted")">@(l.Debit > 0 ? l.Debit.ToString(moneyFmt) : "—")</td>
+                        <td class="text-end small @(l.Credit > 0 ? "fw-semibold" : "text-muted")">@(l.Credit > 0 ? l.Credit.ToString(moneyFmt) : "—")</td>
+                        <td class="text-end small">@l.AmountLocal.ToString(moneyFmt)</td>
+                        @* 存的是組織單位 Id；改下拉之前的舊資料是手填文字，查不到就照原文 *@
+                        <td class="small text-muted">@(l.CostCenter == null ? "—" : ccNames.TryGetValue(l.CostCenter, out var ccName) ? ccName : l.CostCenter)</td>
+                        <td class="small text-muted">@(l.Description ?? "—")</td>
+                    </tr>
+                }
+                <tr class="table-light fw-semibold">
+                    <td colspan="3" class="text-end small">@Localizer["Total"]</td>
+                    <td class="text-end small">@Model.Lines.Sum(l => l.Debit).ToString(moneyFmt)</td>
+                    <td class="text-end small">@Model.Lines.Sum(l => l.Credit).ToString(moneyFmt)</td>
+                    <td class="text-end small">@Model.Lines.Sum(l => l.AmountLocal).ToString(moneyFmt)</td>
+                    <td colspan="2"></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@if (reversedBy != null)
+{
+    <div class="alert alert-warning mx-3 py-2 small">
+        <i class="bi bi-arrow-counterclockwise me-1"></i>@string.Format(Localizer.GetString("ReversedByFmt").Value, reversedBy)
+    </div>
+}
+
+<div class="offcanvas-footer p-3 border-top bg-light d-flex justify-content-end gap-2 align-items-center">
+    @if (canReverse)
+    {
+        @* 傳票建立即為正式帳，不改不刪；更正一律沖銷：產生借貸對調的新傳票，原傳票保留可追溯。 *@
+        <form method="post" action="@Url.Action("Reverse", new { id = Model.JournalId })" class="d-flex gap-2 align-items-center me-auto"
+              data-action-submit="confirmSubmitPanel" data-confirm="@Localizer["ConfirmReverse"]">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger small d-none"></div>
+            <label class="small text-muted mb-0" for="revDate">@Localizer["ReverseDate"]</label>
+            <input type="date" id="revDate" name="entryDate" class="form-control form-control-sm u-width-160px"
+                   value="@today.ToString("yyyy-MM-dd")" required />
+            <button type="submit" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-arrow-counterclockwise"></i> @Localizer["Reverse"]
+            </button>
+        </form>
+    }
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+</div>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="OriginalWorkOrder" xml:space="preserve"><value>原工單號</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="Quantity" xml:space="preserve"><value>重工數量</value></data>
+  <data name="QuantityPlaceholder" xml:space="preserve"><value>輸入重工數量</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="RemarksPlaceholder" xml:space="preserve"><value>輸入備註（可留空）</value></data>
+  <data name="Submit" xml:space="preserve"><value>建立重工工單</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Note" xml:space="preserve"><value>重工工單建立後狀態為「已規劃」，請至工單查詢頁面完成釋出與排程。</value></data>
+  <data name="Operations" xml:space="preserve"><value>重做工序</value></data>
+  <data name="OperationsHint" xml:space="preserve"><value>只勾需要重做的工序；未勾的工序與其用料不會帶到重工工單。用料依重工數量等比換算。</value></data>
+  <data name="OperationSeq" xml:space="preserve"><value>工序</value></data>
+  <data name="OperationName" xml:space="preserve"><value>工序名稱</value></data>
+  <data name="WorkCenter" xml:space="preserve"><value>工作中心</value></data>
+  <data name="MaterialCount" xml:space="preserve"><value>用料筆數</value></data>
+  <data name="IncludeDefective" xml:space="preserve"><value>不良品已入庫，列為重工用料一起發出</value></data>
+  <data name="IncludeDefectiveHint" xml:space="preserve"><value>勾選後另加一行「不良品本身」的用料，投產時隨重工發料發出；完工時良品以它的帳面值回存貨。不良品若是生產中判 NG、沒有入過庫，請不要勾，否則倉庫會把庫存裡的良品當成不良品發出去。</value></data>
+</root>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Material Slips</value></data>
+  <data name="BtnCreate" xml:space="preserve"><value>New Slip</value></data>
+  <data name="BtnSearch" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Slip No / Source Doc No</value></data>
+  <data name="AllStatus" xml:space="preserve"><value>All Statuses</value></data>
+  <data name="HintSearch" xml:space="preserve"><value>Select a category or enter search criteria then click Search.</value></data>
+  <data name="NoData" xml:space="preserve"><value>No records found.</value></data>
+  <data name="CatInternalIssue" xml:space="preserve"><value>Internal Issue (MI)</value></data>
+  <data name="CatInternalRequisition" xml:space="preserve"><value>Internal Requisition (MR)</value></data>
+  <data name="CatInternalReturn" xml:space="preserve"><value>Internal Return (MX)</value></data>
+  <data name="CatOutsourceIssue" xml:space="preserve"><value>Outsource Issue (OI)</value></data>
+  <data name="CatOutsourceReturn" xml:space="preserve"><value>Outsource Return (OR)</value></data>
+  <data name="CatReworkIssue" xml:space="preserve"><value>Rework Issue (RI)</value></data>
+  <data name="CatReworkReturn" xml:space="preserve"><value>Rework Return (RX)</value></data>
+  <data name="StDraft" xml:space="preserve"><value>Draft</value></data>
+  <data name="StApproved" xml:space="preserve"><value>Approved</value></data>
+  <data name="StIssued" xml:space="preserve"><value>Issued</value></data>
+  <data name="StCancelled" xml:space="preserve"><value>Cancelled</value></data>
+  <data name="ColSlipId" xml:space="preserve"><value>Slip No</value></data>
+  <data name="ColCategory" xml:space="preserve"><value>Category</value></data>
+  <data name="ColStatus" xml:space="preserve"><value>Status</value></data>
+  <data name="ColSlipDate" xml:space="preserve"><value>Slip Date</value></data>
+  <data name="ColSourceDoc" xml:space="preserve"><value>Source Doc</value></data>
+  <data name="ColLines" xml:space="preserve"><value>Lines</value></data>
+  <data name="ColRemarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="ColActions" xml:space="preserve"><value>Actions</value></data>
+  <data name="View" xml:space="preserve"><value>View / Actions</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="ConfirmDelete" xml:space="preserve"><value>Delete this material slip?</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>Saved successfully.</value></data>
+  <data name="PagingInfo" xml:space="preserve"><value>Page {0} of {1}, {2} records total</value></data>
+</root>

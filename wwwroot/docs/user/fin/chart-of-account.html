@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Chart of Accounts — FIN User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>會計科目 — FIN 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="chart-of-account.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">FIN 目錄</span><span lang="en">FIN contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">FIN 畫面</span><span lang="en">FIN screens</span></div>
+    <a href="chart-of-account.html" class="nav-link active"><span lang="zh">會計科目</span><span lang="en">Chart of Accounts</span></a>
+    <a href="ap-invoice.html" class="nav-link"><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></a>
+    <a href="ar-invoice.html" class="nav-link"><span lang="zh">應收帳款</span><span lang="en">AR Invoice</span></a>
+    <a href="ar-credit-note.html" class="nav-link"><span lang="zh">銷貨折讓單</span><span lang="en">Sales Credit Note</span></a>
+    <a href="ap-debit-note.html" class="nav-link"><span lang="zh">進貨折讓單</span><span lang="en">Purchase Debit Note</span></a>
+    <a href="ap-payment.html" class="nav-link"><span lang="zh">付款作業</span><span lang="en">AP Payment</span></a>
+    <a href="ar-receipt.html" class="nav-link"><span lang="zh">收款作業</span><span lang="en">AR Receipt</span></a>
+    <a href="bank-account.html" class="nav-link"><span lang="zh">銀行帳戶</span><span lang="en">Bank Account</span></a>
+    <a href="ap-aging.html" class="nav-link"><span lang="zh">應付帳齡分析</span><span lang="en">AP Aging</span></a>
+    <a href="ar-aging.html" class="nav-link"><span lang="zh">應收帳齡分析</span><span lang="en">AR Aging</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-list-columns-reverse me-2 text-primary"></i><span lang="zh">會計科目</span><span lang="en">Chart of Accounts</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/ChartOfAccount &nbsp;|&nbsp; 全公司共用的會計科目主檔</span><span lang="en">Route: /ChartOfAccount &nbsp;|&nbsp; The company-wide chart of accounts</span></div>
+    </div>
+
+    <p><span lang="zh">會計科目主檔存放</span><span lang="en">The chart of accounts holds </span><b><span lang="zh">全公司共用的科目定義</span><span lang="en">the account definitions shared across the whole company</span></b><span lang="zh">——科目不分廠別，各廠的傳票都記到同一組科目上。財務報表依科目性質決定一筆分錄落在哪一段、正負號是哪一邊。</span><span lang="en">. Accounts are not per plant: every plant posts to the same set. The financial statements use the account type to decide which section an entry lands in and which side counts as positive.</span></p>
+
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">系統科目與自建科目是兩回事：</span><span lang="en">System accounts and your own accounts are two different things:</span></strong><span lang="zh">標示「系統科目」的那些（存貨、應付帳款、進貨暫估應付…）是程式自動過帳時會用到的，</span><span lang="en"> the ones marked "System" — inventory, accounts payable, the GR/IR accrual and so on — are used when the program posts automatically, so their </span><b><span lang="zh">代碼與科目性質不可修改，也不可刪除</span><span lang="en">code and account type cannot be changed and they cannot be deleted</span></b><span lang="zh">；改了之後自動分錄會落在錯誤的報表段落，而且不會有任何錯誤訊息。可以改的只有名稱、備註、是否可手動選用與是否啟用。</span><span lang="en">. Changing them would silently put automatic entries in the wrong report section. Only the name, the remarks, the manual-selectable flag and the active flag can be edited.</span>
+    </div>
+
+    <img class="screen-shot" src="img/chart-of-account.png" data-src-en="img/en/chart-of-account.png" alt="會計科目主檔畫面截圖" data-alt-en="Chart of accounts screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">會計科目主檔畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Chart of accounts screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">科目代碼</span><span lang="en">Account code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">唯一識別碼，最長 20 個字元（例：6201）。</span><span lang="en">The unique code, up to 20 characters (for example 6201). </span><b><span lang="zh">建立後不可修改</span><span lang="en">It cannot be changed once created</span></b><span lang="zh">，重複輸入會被擋下。</span><span lang="en">, and a duplicate is refused.</span></td></tr>
+        <tr><td><span lang="zh">科目名稱</span><span lang="en">Account name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">最長 100 個字元。這個名稱會</span><span lang="en">Up to 100 characters. The name is </span><b><span lang="zh">一併寫入傳票</span><span lang="en">written onto the journal entry</span></b><span lang="zh">，讓總帳看得懂這筆分錄是什麼。</span><span lang="en"> as well, so that the ledger reads sensibly.</span></td></tr>
+        <tr><td><span lang="zh">科目性質</span><span lang="en">Account type</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">決定借貸方向與落在哪一張報表的哪一段。數值對齊科目代碼首碼：<b>1 資產、2 負債、3 權益</b>（資產負債表）、<b>4 營業收入、5 銷貨成本、6 營業費用、7 營業外收入、8 營業外費用</b>（損益表）。資產與成本費用類<b>借方為正</b>，負債、權益與收入類<b>貸方為正</b>。</span><span lang="en">Determines the debit/credit direction and which report section the account lands in. The values line up with the leading digit of the code: <b>1 asset, 2 liability, 3 equity</b> (balance sheet) and <b>4 revenue, 5 cost of goods sold, 6 operating expense, 7 other income, 8 other expense</b> (profit and loss). Assets and cost/expense accounts are <b>debit-normal</b>; liabilities, equity and revenue are <b>credit-normal</b>.</span></td></tr>
+        <tr><td><span lang="zh">系統科目</span><span lang="en">System account</span></td><td></td><td><span lang="zh">唯讀標記。標示者為程式自動過帳所用的科目，代碼與性質不可修改、不可刪除。</span><span lang="en">A read-only marker. Flagged accounts are used by automatic postings; their code and type cannot be changed and they cannot be deleted.</span></td></tr>
+        <tr><td><span lang="zh">可手動選用</span><span lang="en">Selectable manually</span></td><td></td><td><span lang="zh">勾選後才會出現在手動應付／應收發票的科目下拉。<b>存貨、進貨暫估應付這類由自動分錄維護餘額的科目請勿勾選</b>——手動打一筆進去，帳面仍然借貸平衡，但會與庫存子帳對不起來，而且要等稽核跑過才看得到。</span><span lang="en">Only accounts with this ticked appear in the account picker on manual AP and AR invoices. <b>Leave it off for accounts whose balance is maintained by automatic postings</b>, such as inventory or the GR/IR accrual: a hand-entered line still balances, but it will not reconcile with the subledger, and nothing shows it until the audit runs.</span></td></tr>
+        <tr><td><span lang="zh">科目名稱（英文）</span><span lang="en">Account name (English)</span></td><td></td><td><span lang="zh">留白時英文介面顯示中文名稱。</span><span lang="en">Falls back to the Chinese name when left blank.</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Remarks</span></td><td></td><td><span lang="zh">最長 500 個字元，供內部說明使用時機。</span><span lang="en">Up to 500 characters, for an internal note about when to use it.</span></td></tr>
+        <tr><td><span lang="zh">啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">取消勾選後，新發票不再選得到這個科目，既有發票不受影響。</span><span lang="en">Unticked, the account can no longer be chosen on new invoices; existing ones are unaffected.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">新增科目</span><span lang="en">Adding an account</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「財務管理 &gt; 會計科目」，按「查詢」載入現有科目。</span><span lang="en">Choose "Finance &gt; Chart of Accounts" in the left-hand menu and click "Search" to load the existing ones.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「新增」，填入科目代碼與名稱，選擇科目性質。<b>代碼首碼請與性質一致</b>（費用科目用 6 開頭等）：報表在主檔查無科目時會退回以首碼分類，不一致會讓舊傳票與新設定各說各話。</span><span lang="en">Click "Add", enter the code and the name, and choose the account type. <b>Keep the leading digit consistent with the type</b> (6 for operating expenses, and so on): when an account is missing from the master the reports fall back to classifying by that digit, so an inconsistent code makes old journals and the new setting disagree.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">按「儲存」。代碼重複時會在欄位下方顯示錯誤，改用其他代碼即可。</span><span lang="en">Click "Save". If the code is already taken, the error appears under the field and you can use another.</span></div></div>
+
+    <h3><span lang="zh">查詢</span><span lang="en">Searching</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">關鍵字同時比對科目代碼與科目名稱，也可用科目性質篩選。</span><span lang="en">The keyword matches both the code and the name, and the account type can be used as a filter.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點欄位標題可依代碼或名稱排序。</span><span lang="en">Click a column heading to sort by code or by name.</span></div></div>
+
+    <h2 id="how-it-relates-to-manual-invoices"><i class="bi bi-receipt me-2 text-primary"></i><span lang="zh">與手動發票的關係</span><span lang="en">How it relates to manual invoices</span></h2>
+    <p><span lang="zh">手動開立應付／應收發票時，每一行明細</span><span lang="en">When a manual AP or AR invoice is entered, every line </span><b><span lang="zh">必須指定科目</span><span lang="en">must have an account</span></b><span lang="zh">，可選的來源是本主檔中</span><span lang="en">, and the choices come from the accounts in this master that are </span><b><span lang="zh">勾選「可手動選用」且性質相符</span><span lang="en">ticked as manually selectable and of a matching type</span></b><span lang="zh">的科目——應付發票只列費用類（5／6／8），應收發票只列收入類（4／7）。這也是</span><span lang="en">: an AP invoice offers only cost and expense accounts (5, 6, 8), an AR invoice only revenue accounts (4, 7). It is also the </span><b><span lang="zh">唯一來源</span><span lang="en">only source</span></b><span lang="zh">——沒有指定科目的明細會被直接擋下，系統不會自動從產品類別或其他地方推算。</span><span lang="en">: a line without an account is refused outright, and the system does not work one out from the product category or anywhere else.</span></p>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">這正是本主檔存在的理由：水電費、運費這類支出本來就沒有品號，若要靠品號推算科目，就得為「電費」建一個假品號並掛上產品類別，那個假品號還會跟著出現在所有品號下拉、MRP 與庫存報表中。</span><span lang="en">That is exactly why this master exists: costs such as electricity or freight have no product number, and deriving the account from one would mean inventing a dummy product for "electricity", complete with a product category — a dummy that would then show up in every product drop-down, in MRP and in the stock reports.</span>
+    </div>
+
+    <h2 id="deleting-an-account"><i class="bi bi-trash me-2 text-primary"></i><span lang="zh">刪除科目</span><span lang="en">Deleting an account</span></h2>
+    <p><span lang="zh">系統科目一律不可刪除。已經被發票或傳票引用過的科目也</span><span lang="en">A system account can never be deleted. An account already referenced by an invoice or a journal entry likewise </span><b><span lang="zh">不可刪除</span><span lang="en">cannot be deleted</span></b><span lang="zh">，系統會擋下並提示已被引用。理由是刪掉之後，那些明細上的科目代碼就再也查不回名稱，傳票會失去可讀的科目說明。</span><span lang="en">; the system blocks it and says so. The reason is that once it is gone, the account code on those lines can no longer be resolved to a name, and the journal entries lose their readable account description.</span></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">要停用就取消「啟用」，不要刪除：</span><span lang="en">To retire an account, untick "Active" rather than deleting it:</span></strong><span lang="zh">停用後新發票選不到它，既有發票與傳票的顯示完全不受影響。這是處理「不再使用的科目」的正確做法。</span><span lang="en"> once inactive it can no longer be chosen on new invoices, while existing invoices and journal entries display exactly as before. This is the right way to handle an account that is no longer in use.</span>
+    </div>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">查詢結果可匯出 Excel（.xlsx）、CSV 或 JSON，並套用目前的查詢條件。</span><span lang="en">The results can be exported as Excel (.xlsx), CSV or JSON, with the current search criteria applied.</span></p>
+  </main>
+</div>
+</body>
+</html>

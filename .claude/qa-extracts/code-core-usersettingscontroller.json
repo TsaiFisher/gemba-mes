@@ -1,0 +1,70 @@
+{
+  "sourcePath": "Controllers/UserSettingsController.cs",
+  "sourceHash": "65b1cc882dfbb9139459f732f2f630fd4d85635224eedfcaaba51b7957539fd9",
+  "entries": [
+    {
+      "slug": "code-core-usersettingscontroller-45768443",
+      "lang": "zh",
+      "headingPath": "系統共用 › 「兩處各自實作同一條鏈、答案卻不同」正是 §11 #13 那個缺",
+      "text": "時區取用規則說明｜系統會使用使用者當前的上下文來決定生效的時區，不會在該處重新計算一次；若無法判斷出來源，則顯示預設值。",
+      "approved": true,
+      "sourceSectionHash": "f93abb1bb262525bdeb5766b959cb6c0cd338ad62e3680dcce06bc4a3955247f"
+    },
+    {
+      "slug": "code-core-usersettingscontroller-24c7c007",
+      "lang": "zh",
+      "headingPath": "系統共用 › 可選廠別與「能不能切」必須是同一份判定：",
+      "text": "廠別切換的判定標準一致性｜系統判斷使用者可以使用的廠別清單，必須與決定該使用者是否能進行廠別切換的依據保持一致。",
+      "approved": true,
+      "sourceSectionHash": "e957e488c86976ac57c481e04f34df2c2c26deaee5fc84f07bb7362d1a19d95a"
+    },
+    {
+      "slug": "code-core-usersettingscontroller-0408494e",
+      "lang": "zh",
+      "headingPath": "系統共用 › 檢視是 ，型別對不上會靜靜變成",
+      "text": "資料顯示的廠別列表處理｜如果系統無法正確取得使用者所屬的廠別清單，介面上的廠別選擇器將會直接消失，且不會有任何錯誤訊息提示。",
+      "approved": false,
+      "sourceSectionHash": "fc4de4b180d7872037ac6c2284bcdf678d1b3c263fa753e960c05b7e88685822"
+    },
+    {
+      "slug": "code-core-usersettingscontroller-8eaf9e23",
+      "lang": "zh",
+      "headingPath": "系統共用 › 切換角色時同步廠別：",
+      "text": "角色切換時的廠別規則｜如果新的角色設定了只能在特定廠區作業，系統會自動使用該角色預設的廠區；若新角色沒有設定任何可用的廠區，則會使用所有廠區中第一個的廠區。如果新的角色不限制廠區，則維持使用者目前正在使用的廠區。",
+      "approved": true,
+      "sourceSectionHash": "044b611fd8f3cae6fc2fc981b930cade19658dc2047538d48601de07209b560f"
+    },
+    {
+      "slug": "code-core-usersettingscontroller-43ba7863",
+      "lang": "zh",
+      "headingPath": "系統共用 › 這其實不是好行為，但改成顯示錯誤會動到桌機的",
+      "text": "切換身分失敗時的處理｜在桌機切換角色或廠別時，若權限不允許或查不到使用者，系統不會切換，直接回到首頁且不顯示訊息。手機端同樣的情況會明確回報沒有權限。兩邊的判定規則相同，差別只在呈現方式。",
+      "approved": true,
+      "sourceSectionHash": "19ea6b7fdc0c5135914d8155d3639e9f95eb48d32c73b48ab791b873ce295a3b"
+    },
+    {
+      "slug": "code-core-usersettingscontroller-87f70176",
+      "lang": "zh",
+      "headingPath": "系統共用 › 自助設定個人時區",
+      "text": "個人時區設定規則說明｜若使用者未在系統中設定個人時區，則會自動使用該帳號所屬廠別的時區。",
+      "approved": true,
+      "sourceSectionHash": "764ebe87b3e840155577f4b86393ad1d4e1434c2cf37377b6c529157f1de9fe3"
+    },
+    {
+      "slug": "code-core-usersettingscontroller-143b3ff1",
+      "lang": "zh",
+      "headingPath": "系統共用 › 誤判成「有值」——那正是 §11 #13 修掉的形狀",
+      "text": "資料輸入處理規則｜空字串和空白內容都會被視為沒有值。這樣做是為了避免系統誤判這些內容為有實際數值的資訊。",
+      "approved": true,
+      "sourceSectionHash": "c29c8527ebb3a5153f06ddd1666f05292ed2cfb630b4d9d47d10e089cdac3fba"
+    },
+    {
+      "slug": "code-core-usersettingscontroller-74b1fe9a",
+      "lang": "zh",
+      "headingPath": "系統共用 › 語言切換必須開放匿名：登入頁本身就在導覽列顯示語言下拉，",
+      "text": "語言切換功能對所有訪客都開放使用｜系統的登入頁面在導覽列會顯示可供選擇的語言選項，此操作不會影響到任何使用者資料，因此允許未登入的使用者進行語言切換是安全的。",
+      "approved": true,
+      "sourceSectionHash": "c3ffdc4941546f6589351c1118f4fe68cbf68064967b7e2464b19150ee24ee94"
+    }
+  ]
+}

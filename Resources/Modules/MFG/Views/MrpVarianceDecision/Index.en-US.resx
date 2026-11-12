@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>MRP Variance Decisions</value></data>
+  <data name="PageHint" xml:space="preserve"><value>Gaps between existing purchase requests and the latest MRP expansion are listed here until resolved. Items that can be safely retired may be closed directly; handle the rest on their own documents and then mark them as handled.</value></data>
+  <data name="SearchProduct" xml:space="preserve"><value>Product</value></data>
+  <data name="SearchMrpRunId" xml:space="preserve"><value>MRP Run</value></data>
+  <data name="OnlyOpen" xml:space="preserve"><value>Open only</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchFirst" xml:space="preserve"><value>Set your filters and search.</value></data>
+  <data name="NoData" xml:space="preserve"><value>No open reconciliation variances.</value></data>
+  <data name="MrpRunId" xml:space="preserve"><value>MRP Run</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="PurchaseRequestId" xml:space="preserve"><value>PR / Line</value></data>
+  <data name="VarKind" xml:space="preserve"><value>Kind</value></data>
+  <data name="VarPrevQty" xml:space="preserve"><value>Previous Qty</value></data>
+  <data name="VarCurQty" xml:space="preserve"><value>Current Qty</value></data>
+  <data name="VarDisposition" xml:space="preserve"><value>Disposition</value></data>
+  <data name="VarStatus" xml:space="preserve"><value>Status</value></data>
+  <data name="VarStatusOpen" xml:space="preserve"><value>Open</value></data>
+  <data name="VarStatusResolved" xml:space="preserve"><value>Resolved</value></data>
+  <data name="VarDetectedAt" xml:space="preserve"><value>Detected At</value></data>
+  <data name="VarDescription" xml:space="preserve"><value>Detail</value></data>
+  <data name="VarKindAdded" xml:space="preserve"><value>Added</value></data>
+  <data name="VarKindIncreased" xml:space="preserve"><value>Increased</value></data>
+  <data name="VarKindDecreased" xml:space="preserve"><value>Decreased</value></data>
+  <data name="VarKindModeChanged" xml:space="preserve"><value>Switched to make/outsource</value></data>
+  <data name="VarKindRemoved" xml:space="preserve"><value>Demand removed</value></data>
+  <data name="VarDispAutoClosed" xml:space="preserve"><value>Auto-closed</value></data>
+  <data name="VarDispPendingClose" xml:space="preserve"><value>Can be closed</value></data>
+  <data name="VarDispManualRequired" xml:space="preserve"><value>Manual handling required</value></data>
+  <data name="VarDispInformational" xml:space="preserve"><value>Informational</value></data>
+  <data name="CloseSelected" xml:space="preserve"><value>Close &amp; retire</value></data>
+  <data name="AckSelected" xml:space="preserve"><value>Mark handled</value></data>
+  <data name="CloseSelectedConfirm" xml:space="preserve"><value>Close the purchase request lines for the selected variances? The server re-validates each one; lines already ordered or pending approval are skipped.</value></data>
+  <data name="AckSelectedConfirm" xml:space="preserve"><value>Mark the selected variances as handled? This does not change any document.</value></data>
+  <data name="NoRowsSelected" xml:space="preserve"><value>Select at least one row first.</value></data>
+  <data name="ActionFailed" xml:space="preserve"><value>Action failed, please retry.</value></data>
+  <data name="SaveSuccess" xml:space="preserve">
+    <value>Saved successfully</value>
+  </data>
+</root>

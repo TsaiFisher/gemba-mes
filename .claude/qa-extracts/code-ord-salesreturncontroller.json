@@ -1,0 +1,70 @@
+{
+  "sourcePath": "Modules/ORD/Controllers/SalesReturnController.cs",
+  "sourceHash": "ec20a973505ed4d0e7922cad20a70429ff746d6236d448ee83fc247e67e50fe4",
+  "entries": [
+    {
+      "slug": "code-ord-salesreturncontroller-8c4bd5d5",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 銷貨退回「完成」後置：以退貨量負向回沖來源出貨單的應收發票",
+      "text": "退貨後應收帳款自動調整規則｜只有與來源出貨單有連結的退回明細才會進行應收帳款的負向沖銷，且退貨數量和應收帳款開立時使用的銷售單位必須一致。如果某筆退回明細是手動新增或沒有連結到來源出貨單，則不會執行應收帳款的回沖作業。",
+      "approved": true,
+      "sourceSectionHash": "efdb3d498ed6c727fc846f45cf3d415bdc19f008ce2934fafded514037e18ce3"
+    },
+    {
+      "slug": "code-ord-salesreturncontroller-4adab35c",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 明細幣別可各自不同，",
+      "text": "明細幣別計算規則說明｜每筆明細的金額會根據其對應的幣別和系統的換算匯率進行計算，而表頭的總計金額則必須使用後端權威匯率重新計算一次。",
+      "approved": false,
+      "sourceSectionHash": "951acebba25bb333e7897915933d36e56a9a31fc7571146607bd1489bea63cba"
+    },
+    {
+      "slug": "code-ord-salesreturncontroller-b8211315",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 完成過帳後：負向回沖來源出貨的應收發票",
+      "text": "負向回沖應收發票的會計分錄規則｜當進行負向回沖來源出貨的應收發票時，系統會產生反向分錄，該分錄包含借記銷貨收入和銷項稅，並貸記應收帳款。",
+      "approved": true,
+      "sourceSectionHash": "dc488cc1889a2e938a6793003894d675fe7f78100e2807f0e947a4ff3a17d684"
+    },
+    {
+      "slug": "code-ord-salesreturncontroller-4858481c",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 結果不影響確認流程",
+      "text": "自動建立品項檢驗訂單的規則｜如果某個產品需要進行品質管制，系統會自動為該筆銷退單建立一個待檢的檢驗訂單。但若同一張銷退單和同一個產品編號已經有等待檢驗的訂單了，則不會再重複建立新的檢驗訂單。",
+      "approved": true,
+      "sourceSectionHash": "3e284eed32a551b10a8657350cebb691aa84b778df2d035bd30bc33eed78a77a"
+    },
+    {
+      "slug": "code-ord-salesreturncontroller-5ef577d2",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 庫存單位與庫存量於伺服端權威換算：",
+      "text": "庫存計算依系統標準單元與數量｜庫存的單位會依照品號主檔所設定的標準單位為準，而實際的庫存數量則會經過換算後再進行四捨五入。",
+      "approved": false,
+      "sourceSectionHash": "0221f1e253a2aee76d072c065c5062ad70e7314f60a9da86b1b638fbdcfb391e"
+    },
+    {
+      "slug": "code-ord-salesreturncontroller-9923d260",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 入庫成本取原出貨實際扣掉的單位成本，不是銷退單上的售價",
+      "text": "出貨成本取用規則說明｜系統計算的入庫成本會使用原先出貨時實際扣除的單位成本，而不是依據銷退單上的售價。若找不到來源資料，則回傳空值，屆時由過帳端以目前的單位成本進行入庫處理。",
+      "approved": true,
+      "sourceSectionHash": "e6381eb84004ed23935edb369cdd7144c1e691afadae77f05dedc4d76c3fe4b0"
+    },
+    {
+      "slug": "code-ord-salesreturncontroller-156ee50f",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 上限＝出貨量：退回不得多於出去的",
+      "text": "出貨退回數量不能超過已出貨量｜系統規定，退回的數量不能多於已經完成的出貨數量，否則計算出的可退數量可能會變成負數，這會導致應收帳款被沖銷到小於實際應收的狀態。",
+      "approved": true,
+      "sourceSectionHash": "d8b302d26f5e4ceaaba6da0bde0150eff98442e036354dd312581cbb8bd8dabc"
+    },
+    {
+      "slug": "code-ord-salesreturncontroller-a6dfd0d0",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 下限 0：已退貨量是「累計」語意",
+      "text": "出貨可退量計算的規則說明｜已退貨量的計算是累計的，如果直接使用負數的已退貨數量來計算，可能會導致系統判斷出的可退貨額度超過實際的出貨數量。",
+      "approved": true,
+      "sourceSectionHash": "b84eb0bade3a7de6dd6173426d6a651565b53051b9d6abce1bd36afaabf588d4"
+    }
+  ]
+}

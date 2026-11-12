@@ -1,0 +1,72 @@
+@model SmartFactory.MES.Modules.PUR.Models.PurchaseRequest
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@inject SmartFactory.MES.Modules._Shared.Printing.PrintNameService PrintNameSvc
+@{
+    var names = await PrintNameSvc.ForAsync(Model);
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Localizer["DocTitle"].Value;
+    var userNames = ViewBag.UserNames as Dictionary<string, string> ?? new Dictionary<string, string>();
+    string UserDisplay(string? id) => id != null && userNames.TryGetValue(id, out var n) ? n : (id ?? "");
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div class="print-title-block">
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["DocTitle"]</div>
+        <div class="print-doc-number">@Localizer["DocNo"]：@Model.PurchaseRequestId ／ @Localizer["DocDate"]：@Model.RequestDate.ToString("yyyy-MM-dd")</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-section-title">@L["Print_BasicInfo"]</div>
+    <div class="print-field-grid">
+        <div class="print-field-label">@Localizer["Requester"]</div>
+        <div class="print-field-value">@UserDisplay(Model.RequestedBy)</div>
+        <div class="print-field-label">@Localizer["CreatedAt"]</div>
+        <div class="print-field-value">@DateTimeSvc.ToLocalTime(Model.CreatedAt).ToString("yyyy-MM-dd HH:mm")</div>
+        <div class="print-field-label">@Localizer["CreatedBy"]</div>
+        <div class="print-field-value">@UserDisplay(Model.RequestedBy)</div>
+        <div class="print-field-label">@Localizer["Status"]</div>
+        <div class="print-field-value">@DocStatusLabels.Label(Model.ApprovalStatus)</div>
+        @if (!string.IsNullOrEmpty(Model.Remarks))
+        {
+            <div class="print-field-label">@Localizer["Remarks"]</div>
+            <div class="print-field-value">@Model.Remarks</div>
+        }
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-section-title">@L["Print_Details"]</div>
+    <table class="print-table">
+        <thead>
+            <tr>
+                <th>@Localizer["ColNo"]</th>
+                <th>@Localizer["ProductCode"]</th>
+                <th>@L["Print_ProductName"]</th>
+                <th>@Localizer["RequestQty"]</th>
+                <th>@Localizer["Uom"]</th>
+                <th>@Localizer["DeliveryDate"]</th>
+                <th>@Localizer["Remarks"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var l in Model.Lines)
+            {
+                <tr>
+                    <td>@l.LineNo</td>
+                    <td>@l.ProductCode</td>
+                    <td>@names.Product(l.ProductCode)</td>
+                    <td>@l.RequestQty</td>
+                    <td>@names.UomWith(l.UomCode)</td>
+                    <td>@(l.DeliveryDate?.ToString("yyyy-MM-dd") ?? "")</td>
+                    <td>@l.Remarks</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@await Html.PartialAsync("_PrintBase")

@@ -1,0 +1,182 @@
+{
+  "sourcePath": "Modules/RPS/Controllers/ReportScheduleController.cs",
+  "sourceHash": "4b78fbe18dedcd95a363a0235796a696b458f33172aac829a90b4ad1a5783580",
+  "entries": [
+    {
+      "slug": "code-rps-reportschedulecontroller-c50bc36e",
+      "lang": "zh",
+      "headingPath": "報表 › 報表排程維護",
+      "text": "權限檢查需分兩層級判斷｜系統在決定是否能設定或執行報表排程時，需要分別檢查兩種權限。一種是判斷使用者是否有權限來維護這個排程的設定本身；另一種則是獨立檢查使用者是否有權限去查看目標報表所包含的資料。這兩項權限必須分開驗證，以確保不會因為擁有修改排程的權限，就誤以為可以執行任何報表的資料查詢。",
+      "approved": true,
+      "sourceSectionHash": "d99e08d1e4badcd2ec246fae7948edc5e79a662b1248441c8373c628f52a8f9d"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-e290d78e",
+      "lang": "zh",
+      "headingPath": "報表 › 本畫面是管理視角，看得到全部廠別的排程",
+      "text": "報表可看所有廠區排程｜預設只會顯示目前登入使用者的廠別的排程資料，若需要查看所有廠別的排程，則必須手動選擇「全部廠別」選項。",
+      "approved": true,
+      "sourceSectionHash": "facc7c72e6b447ac7e5c67b4c2f76addb08f05fa850a78b9050f6128984e4549"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-ce4331bf",
+      "lang": "zh",
+      "headingPath": "報表 › 下次執行時刻依排程所屬時區顯示",
+      "text": "時間顯示以排程所在時區為準｜系統顯示的下次執行時刻，會依照設定排程時所屬的時區來呈現。",
+      "approved": true,
+      "sourceSectionHash": "659e7b696856b48057bb26975479dd0a37b2afe9f39f0769e294c9134818c58b"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-a2730de9",
+      "lang": "zh",
+      "headingPath": "報表 › 在這裡也寫一次的話，兩個寫入點遲早會有一個被改漏",
+      "text": "資料寫入的唯一來源說明｜系統在處理期間資訊時，會統一透過後續的寫入機制來決定最終的儲存值，不會因為在不同地方重複寫入而造成遺漏。",
+      "approved": true,
+      "sourceSectionHash": "4424d3cdc50a6a697874527333fa7dc1d291dfaa7b279dd132dfc42b443e8a87"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-cfc0fc46",
+      "lang": "zh",
+      "headingPath": "報表 › 執行紀錄是稽核軌跡，不該因為排程被刪掉就消失",
+      "text": "資料保留規則說明｜系統的執行紀錄會特別保留，即使相關的排程設定被移除，這些歷史記錄也不會因此消失。",
+      "approved": true,
+      "sourceSectionHash": "63f7656a30bb7802919da274a1b27bf449ec06b3341f6222a53a70eb7837af69"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-206b29e9",
+      "lang": "zh",
+      "headingPath": "報表 › 立即執行一次",
+      "text": "立即執行一次的流程說明｜此功能是直接呼叫派工器所使用的程式碼路徑來進行處理，而非走另一條預設的路徑。",
+      "approved": true,
+      "sourceSectionHash": "68c9170887727c742713c8dc76bf74794b62b1bd268cf5f7c22cd530f0e07946"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-ab2163a5",
+      "lang": "zh",
+      "headingPath": "報表 › 反過來寫不會少擋到誰，但會讓回應碼說話",
+      "text": "權限檢查應在查詢資料前進行｜系統必須在使用者嘗試查詢資料之前就判斷其是否有權限，否則若不這樣做，沒有權限的使用者可以透過單獨詢問每個資料的識別碼來確認該筆排程是否存在。",
+      "approved": true,
+      "sourceSectionHash": "75a207052ae491c21b7f5891e93b7949a360e69a634d093bddabac23ca88cde5"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-d98b3795",
+      "lang": "zh",
+      "headingPath": "報表 › 不直接呼叫執行邏輯是刻意的：",
+      "text": "報表掃描的觸發機制說明｜系統不會直接呼叫完整的報表執行邏輯，而是將下一次可執行的時間點設定為現在，這樣在下次掃描時才會載入該報表。這是為了避免大型報表導致瀏覽器等待逾時的問題。",
+      "approved": true,
+      "sourceSectionHash": "9f21f8901eebc09b821e10239db59b3372ee4e07244ccd1b57bd5100603d6db1"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-c77aef6a",
+      "lang": "zh",
+      "headingPath": "報表 › 派工器據此把產出標成「手動」",
+      "text": "派工器判斷產出類型為手動｜系統會將該產出標記為「手動」，這樣才能區分這是排程到期觸發，還是使用者主動點擊按鈕所觸發的。",
+      "approved": true,
+      "sourceSectionHash": "eed0336bd21c38f7c913c05a9c78ae9836dae72d26ef232157b102e5bcf87ef4"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-77dc4f06",
+      "lang": "zh",
+      "headingPath": "報表 › 目標報表的權限：沒有它就不該建得出這筆排程",
+      "text": "報表排程的建立限制｜若使用者沒有相關權限，系統會阻止其建立此排程，以確保無法透過排程功能規避報表的權限檢查機制。",
+      "approved": true,
+      "sourceSectionHash": "bd18d4d10ac6bb4a7e5f9180104276b281e6fdf55186b8afb4be3c0d29759d7c"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-dc849e11",
+      "lang": "zh",
+      "headingPath": "報表 › 同一人不得有兩筆同名",
+      "text": "資料重複檢查規則｜系統會檢查同一人是否已經有相同的名稱記錄，如果發現重複的紀錄，則會在欄位層面提示使用者，而非等到儲存時才顯示錯誤訊息。",
+      "approved": true,
+      "sourceSectionHash": "ef66893b319f350b6f154b3463913d29f80b0b581a72200027678866e36da636"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-302eb3d1",
+      "lang": "zh",
+      "headingPath": "報表 › 而那個例外要等到下一次派工才看得到",
+      "text": "報表期間資料的顯示時機｜系統在執行排程時，如果缺少了期間資訊，相關的錯誤訊息不會立即顯示給使用者，而是必須等到下一次派工流程才會看到。此時，使用者操作上只會看到「存檔成功」的提示。",
+      "approved": true,
+      "sourceSectionHash": "c890e40d3beb764191f705a90d99089a10386b6c6a004a58c34925ff0240fae6"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-a92bcfbf",
+      "lang": "zh",
+      "headingPath": "報表 › 表單唯讀顯示「對象廠別」",
+      "text": "表單顯示的廠別資訊說明｜新增時會以目前登入使用者的廠別作為預設值，而編輯時則會沿用排程原本設定的廠別。",
+      "approved": true,
+      "sourceSectionHash": "345d36c1e434e00a32c258f2d08b4f554381968cf353d48cd7d3eca45996d687"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-6a7af327",
+      "lang": "zh",
+      "headingPath": "報表 › 但將來多一個就會有人在這裡踩到「存了新的、舊的不見了」",
+      "text": "排程「期間」的儲存方式｜報表排程設定的「期間」存放在報表定義的參數（ParamsJson）中；存檔時只更新其中的期間，其他已存在的參數會保留，不會被整個覆蓋。",
+      "approved": true,
+      "sourceSectionHash": "688e15658e6ccb46b61b55b3c2ac0c32157d058b4c974a8a3f212c872bdb5fad"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-470cf44c",
+      "lang": "zh",
+      "headingPath": "報表 › 留著舊值的話，",
+      "text": "報表週期日別的顯示規則｜當資料來源是按月計算時，雖然系統內部邏輯已調整為每月計算，但介面仍會顯示「星期一」，這是因為此處保留了舊有的日期格式顯示。",
+      "approved": true,
+      "sourceSectionHash": "ea2d98eb467268e0e4d18dda9d157b278b698092299bd387b951cc031d34ad81"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-b9498ec0",
+      "lang": "zh",
+      "headingPath": "報表 › 設定一改就重算下一次執行時刻，否則改了時間仍會照舊時刻跑一次",
+      "text": "排程時間依據系統預設時區計算｜當修改了執行時間後，系統會根據新的設定重新計算下一次的執行時刻。",
+      "approved": true,
+      "sourceSectionHash": "a2fedf903f3da78976172b95e16f75424794960aa23de7961457b095fcc63a28"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-05aa8967",
+      "lang": "zh",
+      "headingPath": "報表 › 派工器產檔時才解析——設定當下寫死會讓之後改語系的人收到舊語系的",
+      "text": "語言依據與預設規則｜如果沒有指定語言，系統會沿用資料擁有者的語言；若在產生報表時決定語言，可能會導致未來更改語言設定的用戶看到舊語言的報表。",
+      "approved": true,
+      "sourceSectionHash": "7737e91085d1ce4d415995fc83ce26345362a953e10b76bd037951acb955093d"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-5889cb0f",
+      "lang": "zh",
+      "headingPath": "報表 › 解不開的舊內容一律從空物件重建——寧可丟掉一份本來就讀不出來的參",
+      "text": "舊內容重建規則說明｜系統在處理期間參數時，如果無法讀取到舊的參數內容，則會將該筆資料視為空物件來重建，以確保儲存操作不會因為單一壞資料而失敗。",
+      "approved": true,
+      "sourceSectionHash": "2eb7d1711bd628d96969fcf2cde6485ffacfc3d94493b99d5bace505370ec547"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-3f9d42fd",
+      "lang": "zh",
+      "headingPath": "報表 › 只列出目前使用者有權執行的工具",
+      "text": "顯示可使用的功能工具｜系統僅會展示使用者目前有權限執行的工具，不會列出所有存在的報表。",
+      "approved": true,
+      "sourceSectionHash": "8935631ebdf6f2ae0233533adcc79a0a9a04784f4b2b88187075133de1f16e83"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-057faf40",
+      "lang": "zh",
+      "headingPath": "報表 › 守住 1:1，所以這裡直接查得到中英文",
+      "text": "報表名稱與選單共用鍵值｜報表的顯示名稱和選單的命名是使用同一組鍵值來判定的，因此使用者可以在此處直接看到中英文的顯示內容。",
+      "approved": true,
+      "sourceSectionHash": "c48509411a86cc5efa88eb605b743cce2ab14d47d3910c65483a4c5920da42c5"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-c4ecea5e",
+      "lang": "zh",
+      "headingPath": "報表 › 畫面據此決定要不要顯示期間欄位",
+      "text": "判斷是否顯示期間資訊｜系統會根據報表的類型來決定是否顯示「期間」相關的資料。如果該報表是查看當下快照的類別，則不會顯示期間的區間選擇器。",
+      "approved": true,
+      "sourceSectionHash": "f5911116ef77a67655889321bc5db9d92324fe765d4c0e432e698c2e8d0d1c60"
+    },
+    {
+      "slug": "code-rps-reportschedulecontroller-ca44ee49",
+      "lang": "zh",
+      "headingPath": "報表 › 依顯示名稱排序而非 ：中文名的順序與英文識別字的字母序毫無關係",
+      "text": "排序規則以顯示名稱為準｜系統會依照您看到的中文名稱的自然順序來排列資料，與後端用來識別的英文代碼字母順序無關。",
+      "approved": true,
+      "sourceSectionHash": "bd2e7ef8dde9f6bd0c291645ea65ca11ce6e4b2ec5b72349dcba14737af1567f"
+    }
+  ]
+}

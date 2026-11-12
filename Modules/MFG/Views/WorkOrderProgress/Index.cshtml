@@ -1,0 +1,173 @@
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Modules.MFG.ViewModels.WorkOrderProgressRow>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched   = ViewBag.Searched as bool? ?? false;
+    bool   canPrint      = ViewBag.CanPrint == true;
+    string searchProduct   = ViewBag.SearchProduct as string ?? "";
+    string fromDate        = ViewBag.FromDate      as string ?? "";
+    string toDate          = ViewBag.ToDate        as string ?? "";
+    string filterStatus    = ViewBag.FilterStatus  as string ?? "";
+    var    productOptions  = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-bar-chart-steps me-2 text-primary"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && hasSearched && Model != null && Model.Any())
+        {
+            <a asp-action="Export"
+               asp-route-searchProduct="@searchProduct" asp-route-fromDate="@fromDate"
+               asp-route-toDate="@toDate" asp-route-filterStatus="@filterStatus"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    @* 常用查詢入口（§7.9-6）。放在查詢卡片之外——partial 內有按鈕與輸入框，
+       塞進下面那張卡的 <form> 內會變成巢狀表單。 *@
+    @await Html.PartialAsync("_SavedQueries", "WorkOrderProgress")
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Product"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["Product"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["PlanEndFrom"]</label>
+                    <input type="date" name="fromDate" class="form-control" value="@fromDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["PlanEndTo"]</label>
+                    <input type="date" name="toDate" class="form-control" value="@toDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Status"]</label>
+                    <select name="filterStatus" class="form-select">
+                        <option value="">@Localizer["AllStatus"]</option>
+                        @foreach (WorkOrderStatus s in Enum.GetValues<WorkOrderStatus>())
+                        {
+                            if (s == WorkOrderStatus.Void) continue;
+                            <option value="@s" selected="@(filterStatus == s.ToString())">@Localizer[s.ToString()]</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        var overdueCount = Model.Count(r => r.IsOverdue);
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card border-0 bg-primary text-white shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["TotalOrders"]</div>
+                        <div class="fs-4 fw-bold">@Model.Count</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 bg-danger text-white shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["OverdueOrders"]</div>
+                        <div class="fs-4 fw-bold">@overdueCount</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["WorkOrderId"]</th>
+                                <th>@Localizer["ProductCode"]</th>
+                                <th>@Localizer["Type"]</th>
+                                <th>@Localizer["Status"]</th>
+                                <th>@Localizer["PlannedStartDate"]</th>
+                                <th>@Localizer["PlannedEndDate"]</th>
+                                <th class="text-end">@Localizer["Quantity"]</th>
+                                <th class="text-end">@Localizer["QtyDone"]</th>
+                                <th class="u-min-width-120px">@Localizer["Progress"]</th>
+                                <th class="text-center">@Localizer["Overdue"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var paged = ReportPaging.Page(Model, ViewData, Context); }
+                            @foreach (var row in paged)
+                            {
+                                var pct    = (int)row.ProgressPct;
+                                var trClass = row.IsOverdue ? "table-danger" : "";
+                                var statusBadge = row.Status switch
+                                {
+                                    WorkOrderStatus.Planned    => "bg-secondary",
+                                    WorkOrderStatus.Released   => "bg-info text-dark",
+                                    WorkOrderStatus.InProgress => "bg-primary",
+                                    WorkOrderStatus.Completed  => "bg-success",
+                                    WorkOrderStatus.Closed     => "bg-dark",
+                                    _                          => "bg-light text-dark"
+                                };
+                                <tr class="@trClass">
+                                    <td class="fw-semibold">@row.WorkOrderId</td>
+                                    <td>@row.ProductCode</td>
+                                    <td><span class="badge bg-light text-dark">@Localizer[row.Type.ToString()]</span></td>
+                                    <td><span class="badge @statusBadge">@Localizer[row.Status.ToString()]</span></td>
+                                    <td>@row.PlannedStartDate.ToString("yyyy-MM-dd")</td>
+                                    <td class="@(row.IsOverdue ? "text-danger fw-semibold" : "")">@row.PlannedEndDate.ToString("yyyy-MM-dd")</td>
+                                    <td class="text-end">@row.Quantity.ToString(QtyFmt(row.UomCode))</td>
+                                    <td class="text-end">@row.QtyDone.ToString(QtyFmt(row.UomCode))</td>
+                                    <td>
+                                        <div class="progress u-height-18px">
+                                            <div class="progress-bar @(pct >= 100 ? "bg-success" : "bg-primary")"
+                                                 data-pct-width="@Math.Min(pct,100)">@row.ProgressPct%</div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        @if (row.IsOverdue) { <i class="bi bi-exclamation-triangle-fill text-danger"></i> }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @await Html.PartialAsync("_Pagination", paged)
+        </div>
+    }
+</div>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="SecMaster" xml:space="preserve"><value>Routing Master</value></data>
+  <data name="TabOps" xml:space="preserve"><value>Operations &amp; Materials</value></data>
+  <data name="RoutingId" xml:space="preserve"><value>Routing ID</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product Code</value></data>
+  <data name="RoutingName" xml:space="preserve"><value>Routing Name</value></data>
+  <data name="BatchSize" xml:space="preserve"><value>Batch Size</value></data>
+  <data name="BufferDays" xml:space="preserve"><value>Buffer Days</value></data>
+  <data name="AvgLeadTime" xml:space="preserve"><value>Avg Lead Time (hrs)</value></data>
+  <data name="Active" xml:space="preserve"><value>Active</value></data>
+  <data name="SecOps" xml:space="preserve"><value>Operations</value></data>
+  <data name="AddOp" xml:space="preserve"><value>Add Operation</value></data>
+  <data name="OpsHint" xml:space="preserve"><value>Click an operation row to maintain its materials (BOM) in section 3 below.</value></data>
+  <data name="ColSeq" xml:space="preserve"><value>Seq</value></data>
+  <data name="ColName" xml:space="preserve"><value>Name</value></data>
+  <data name="ColWorkCenter" xml:space="preserve"><value>Work Center</value></data>
+  <data name="ColTransMode" xml:space="preserve"><value>Transfer</value></data>
+  <data name="ColTransQty" xml:space="preserve"><value>Transfer Qty</value></data>
+  <data name="ColContIn" xml:space="preserve"><value>FG_IN</value></data>
+  <data name="ColContOut" xml:space="preserve"><value>FG_OUT</value></data>
+  <data name="ColSetup" xml:space="preserve"><value>Setup</value></data>
+  <data name="ColUnitTime" xml:space="preserve"><value>Unit Time</value></data>
+  <data name="ColSop" xml:space="preserve"><value>SOP</value></data>
+  <data name="ColActions" xml:space="preserve"><value>Actions</value></data>
+  <data name="OpFormAdd" xml:space="preserve"><value>Add Operation</value></data>
+  <data name="OpFormEdit" xml:space="preserve"><value>Edit Operation</value></data>
+  <data name="FldSeq" xml:space="preserve"><value>Seq *</value></data>
+  <data name="FldName" xml:space="preserve"><value>Name</value></data>
+  <data name="FldWorkCenter" xml:space="preserve"><value>Work Center *</value></data>
+  <data name="FldUom" xml:space="preserve"><value>Uom *</value></data>
+  <data name="PleaseSelect" xml:space="preserve"><value>Please select</value></data>
+  <data name="TransContinuous" xml:space="preserve"><value>Continuous</value></data>
+  <data name="TransBatch" xml:space="preserve"><value>Batch</value></data>
+  <data name="TransWhole" xml:space="preserve"><value>Whole Lot</value></data>
+  <data name="FldTransMode" xml:space="preserve"><value>Transfer</value></data>
+  <data name="FldTransQty" xml:space="preserve"><value>Transfer Qty</value></data>
+  <data name="FldSetup" xml:space="preserve"><value>Setup Time</value></data>
+  <data name="FldUnitTime" xml:space="preserve"><value>Unit Time *</value></data>
+  <data name="FldSop" xml:space="preserve"><value>SOP No.</value></data>
+  <data name="FldTimeUnit" xml:space="preserve"><value>Time Unit</value></data>
+  <data name="FldSetupTimeUnit" xml:space="preserve"><value>Setup Unit</value></data>
+  <data name="FldUnitTimeUnit" xml:space="preserve"><value>Unit Time Unit</value></data>
+  <data name="TimeSec" xml:space="preserve"><value>Sec</value></data>
+  <data name="TimeMin" xml:space="preserve"><value>Min</value></data>
+  <data name="TimeHour" xml:space="preserve"><value>Hour</value></data>
+  <data name="ColYield" xml:space="preserve"><value>Yield</value></data>
+  <data name="FldYield" xml:space="preserve"><value>Yield %</value></data>
+  <data name="FldMoveTime" xml:space="preserve"><value>Move Time</value></data>
+  <data name="FldQueueTime" xml:space="preserve"><value>Queue Time</value></data>
+  <data name="FldTooling" xml:space="preserve"><value>Tooling</value></data>
+  <data name="Version" xml:space="preserve"><value>Version</value></data>
+  <data name="EffectiveFrom" xml:space="preserve"><value>Effective From</value></data>
+  <data name="EffectiveTo" xml:space="preserve"><value>Effective To</value></data>
+  <data name="ChkContIn" xml:space="preserve"><value>Start Container</value></data>
+  <data name="ChkContOut" xml:space="preserve"><value>End Container</value></data>
+  <data name="ContNone" xml:space="preserve"><value>(none)</value></data>
+  <data name="ChkOutsource" xml:space="preserve"><value>Outsource</value></data>
+  <data name="ChkFpi" xml:space="preserve"><value>Req. FPI</value></data>
+  <data name="ChkInspect" xml:space="preserve"><value>Inspection</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="SecBom" xml:space="preserve"><value>Material List</value></data>
+  <data name="AddBom" xml:space="preserve"><value>Add Material</value></data>
+  <data name="BomColSeq" xml:space="preserve"><value>Seq</value></data>
+  <data name="BomColProduct" xml:space="preserve"><value>Product</value></data>
+  <data name="BomColQty" xml:space="preserve"><value>Qty</value></data>
+  <data name="BomColUom" xml:space="preserve"><value>Uom</value></data>
+  <data name="BomColScrap" xml:space="preserve"><value>Scrap %</value></data>
+  <data name="BomColOffcut" xml:space="preserve"><value>Offcut %</value></data>
+  <data name="BomColActions" xml:space="preserve"><value>Actions</value></data>
+  <data name="BomFormAdd" xml:space="preserve"><value>Add Material</value></data>
+  <data name="BomFormEdit" xml:space="preserve"><value>Edit Material</value></data>
+  <data name="BomFldSeq" xml:space="preserve"><value>Seq *</value></data>
+  <data name="BomFldProduct" xml:space="preserve"><value>Product *</value></data>
+  <data name="BomFldQty" xml:space="preserve"><value>Qty *</value></data>
+  <data name="BomFldUom" xml:space="preserve"><value>Uom *</value></data>
+  <data name="BomFldScrap" xml:space="preserve"><value>Scrap %</value></data>
+  <data name="BomFldOffcut" xml:space="preserve"><value>Offcut %</value></data>
+  <data name="BomFldOffcutHint" xml:space="preserve"><value>Recoverable offcut rate produced after cutting/processing (e.g. sheet metal or leather trim). Unlike scrap, offcut retains residual value; this field only inflates the input quantity and does not create offcut receipts or cost recovery.</value></data>
+  <data name="NoOps" xml:space="preserve"><value>No operations</value></data>
+  <data name="NoBoms" xml:space="preserve"><value>No materials</value></data>
+  <data name="BomTitleFmt" xml:space="preserve"><value>Operation {{0}} — Material List</value></data>
+  <data name="JsOpSeqInvalid" xml:space="preserve"><value>Please enter a valid operation sequence.</value></data>
+  <data name="JsOpWcRequired" xml:space="preserve"><value>Please select a work center.</value></data>
+  <data name="JsOpUomRequired" xml:space="preserve"><value>Please select a unit.</value></data>
+  <data name="JsOpUnitInvalid" xml:space="preserve"><value>Please enter a valid unit time.</value></data>
+  <data name="JsOpSeqDupFmt" xml:space="preserve"><value>Operation sequence {{0}} already exists.</value></data>
+  <data name="JsOpDelConfirmFmt" xml:space="preserve"><value>Delete operation {{0}}?</value></data>
+  <data name="JsBomSelectOpFirst" xml:space="preserve"><value>Please select an operation first.</value></data>
+  <data name="JsBomSeqInvalid" xml:space="preserve"><value>Please enter a valid sequence.</value></data>
+  <data name="JsBomProductRequired" xml:space="preserve"><value>Please enter a product.</value></data>
+  <data name="JsBomQtyInvalid" xml:space="preserve"><value>Please enter a valid quantity.</value></data>
+  <data name="JsBomUomRequired" xml:space="preserve"><value>Please select a unit.</value></data>
+  <data name="JsBomSeqDupFmt" xml:space="preserve"><value>Material sequence {{0}} already exists.</value></data>
+  <data name="JsBomDelConfirm" xml:space="preserve"><value>Delete this material?</value></data>
+  <data name="JsBomOffcutInvalid" xml:space="preserve"><value>Offcut rate must not be negative.</value></data>
+  <data name="QueueSuggestApply" xml:space="preserve"><value>Apply</value></data>
+  <data name="QueueSuggestFmt" xml:space="preserve"><value>Suggested {0} {1} (median of {2} actual reports over the last {3} days, move time already deducted)</value></data>
+  <data name="BomColIssueMethod" xml:space="preserve"><value>Issue Method</value></data>
+  <data name="BomFldIssueMethod" xml:space="preserve"><value>Issue Method</value></data>
+  <data name="BomFldIssueMethodHint" xml:space="preserve"><value>Push = warehouse issues after release; Pull = shop floor requests on mobile; Backflush = deducted automatically at completion</value></data>
+  <data name="IssueMethodPush" xml:space="preserve"><value>Push</value></data>
+  <data name="IssueMethodPull" xml:space="preserve"><value>Pull</value></data>
+  <data name="IssueMethodBackflush" xml:space="preserve"><value>Backflush</value></data>
+  <data name="OutsourceOpDisabledHint" xml:space="preserve"><value>Outsourcing a routing operation is no longer supported: for routine outsourcing, make the outsourced stage a semi-finished product (MRP mode "Outsource"); for one-off subcontracting, use "To outsource" on the dispatch screen.</value></data>
+</root>

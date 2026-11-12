@@ -1,0 +1,35 @@
+/* 自 index.html 內嵌 <style> 外部化（CSP style-src 移除 unsafe-inline，靜態檔無法帶 nonce）*/
+  body { display: flex; flex-direction: column; min-height: 100vh; font-size: .93rem; }
+  .sidebar { width: 260px; min-width: 260px; background: #212529; min-height: calc(100vh - 56px); padding: 1rem 0; }
+  .sidebar .nav-link { color: rgba(255,255,255,.7); padding: .35rem 1.25rem; font-size: .87rem; }
+  .sidebar .nav-link:hover, .sidebar .nav-link.active { color: #fff; background: rgba(255,255,255,.08); border-left: 3px solid #0d6efd; padding-left: calc(1.25rem - 3px); }
+  .sidebar .sidebar-heading { color: rgba(255,255,255,.4); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; padding: .75rem 1.25rem .25rem; margin-top: .5rem; }
+  .content { flex: 1; padding: 2rem 2.5rem; max-width: 860px; }
+  .doc-header { border-bottom: 2px solid #0d6efd; padding-bottom: .75rem; margin-bottom: 1.75rem; }
+  h2 { font-size: 1.4rem; margin-top: 2rem; color: #212529; }
+  h3 { font-size: 1.1rem; margin-top: 1.5rem; color: #495057; }
+  .step-badge { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: #0d6efd; color: #fff; font-size: .75rem; font-weight: 700; flex-shrink: 0; }
+  .step-row { display: flex; gap: .75rem; align-items: flex-start; margin-bottom: .6rem; }
+  .screen-table th { background: #f1f3f5; font-size: .82rem; }
+  .screen-table td { vertical-align: middle; font-size: .87rem; }
+  .badge-module { font-size: .72rem; }
+  .toc-section { background: #f8f9fa; border-left: 4px solid #0d6efd; border-radius: 4px; padding: .75rem 1rem; margin-bottom: 1.5rem; }
+  .toc-section a { color: #0d6efd; text-decoration: none; line-height: 1.8; }
+  .toc-section a:hover { text-decoration: underline; }
+
+/* CSP utilities：自 inline style 外部化 */
+.u-background-198754{background:#198754 !important}
+.u-background-dc3545{background:#dc3545 !important}
+.u-height-56px{height:56px !important}
+.u-width-12pct{width:12% !important}
+.u-width-130px{width:130px !important}
+.u-width-140px{width:140px !important}
+.u-width-160px{width:160px !important}
+.u-width-180px{width:180px !important}
+.u-width-200px{width:200px !important}
+.u-width-20pct{width:20% !important}
+.u-width-28pct{width:28% !important}
+.u-width-30pct{width:30% !important}
+.u-width-32pct{width:32% !important}
+.card-screen{transition:box-shadow .15s}
+.card-screen:hover{box-shadow:0 .25rem .75rem rgba(0,0,0,.1)}

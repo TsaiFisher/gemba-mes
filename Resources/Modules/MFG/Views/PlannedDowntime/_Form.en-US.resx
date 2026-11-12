@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="WorkCenterOpt" xml:space="preserve"><value>Work Center (optional)</value></data>
+  <data name="AllPlantLayer" xml:space="preserve"><value>(All Plant)</value></data>
+  <data name="ScopeHint" xml:space="preserve"><value>At least one of work center / machine. Work center only = the whole work center is down; picking a machine lets you leave work center blank (auto-filled).</value></data>
+  <data name="MachineCode" xml:space="preserve"><value>Machine</value></data>
+  <data name="MachineWholeWc" xml:space="preserve"><value>(whole work center)</value></data>
+  <data name="SelectPlaceholder" xml:space="preserve"><value>(select)</value></data>
+  <data name="TypeNone" xml:space="preserve"><value>(none)</value></data>
+  <data name="MachineCodeOpt" xml:space="preserve"><value>Machine (optional)</value></data>
+  <data name="MachinePh" xml:space="preserve"><value>Blank = whole work center / plant</value></data>
+  <data name="StartTime" xml:space="preserve"><value>Start</value></data>
+  <data name="EndTime" xml:space="preserve"><value>End</value></data>
+  <data name="DowntimeType" xml:space="preserve"><value>Downtime Type</value></data>
+  <data name="DowntimeTypePh" xml:space="preserve"><value>Maintenance / Modification / Training…</value></data>
+  <data name="Reason" xml:space="preserve"><value>Reason</value></data>
+  <data name="IsActive" xml:space="preserve"><value>Active</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+</root>

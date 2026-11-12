@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Machine Status Events</value></data>
+  <data name="New" xml:space="preserve"><value>New Event</value></data>
+  <data name="NewTitle" xml:space="preserve"><value>New Machine Status Event</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Order ID / Remarks</value></data>
+  <data name="MachineFilter" xml:space="preserve"><value>Machine</value></data>
+  <data name="AllMachines" xml:space="preserve"><value>All Machines</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="OrderId" xml:space="preserve"><value>Order ID</value></data>
+  <data name="EventType" xml:space="preserve"><value>Event</value></data>
+  <data name="EventAt" xml:space="preserve"><value>Event Time</value></data>
+  <data name="Machine" xml:space="preserve"><value>Machine</value></data>
+  <data name="TargetStatus" xml:space="preserve"><value>Target Status</value></data>
+  <data name="RequestedBy" xml:space="preserve"><value>Requested By</value></data>
+  <data name="Note" xml:space="preserve"><value>Remarks</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="ViewTitle" xml:space="preserve"><value>Order {0}</value></data>
+  <data name="NoData" xml:space="preserve"><value>No records found</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>Enter search criteria and click Search</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>Event recorded. Machine status updated.</value></data>
+  <data name="View" xml:space="preserve"><value>View</value></data>
+</root>

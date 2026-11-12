@@ -1,0 +1,139 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.QCR.Models
+@inject IViewLocalizer Localizer
+@model InstrumentSerial
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isNew   = string.IsNullOrEmpty(Model.SerialId);
+    var deptOptions = (ViewBag.DeptOptions as IEnumerable<dynamic>)?.ToList() ?? new List<dynamic>();
+    var userOptions = (ViewBag.UserOptions as IEnumerable<dynamic>)?.ToList() ?? new List<dynamic>();
+    string title = isNew ? SL["SerialAdd"].Value : string.Format(SL["SerialEditFmt"].Value, Model.SerialNo);
+    string action = isNew
+        ? Url.Action("CreateSerial", new { instrumentCode = Model.InstrumentCode })!
+        : Url.Action("EditSerial", new { id = Model.SerialId })!;
+}
+
+<form id="sideForm" method="post" action="@action"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    @if (!isNew) { <input type="hidden" name="id" value="@Model.SerialId" /> }
+    <input type="hidden" name="InstrumentCode" value="@Model.InstrumentCode" />
+    <input type="hidden" name="PlantId" value="@Model.PlantId" />
+
+    <div class="offcanvas-body">
+        <div class="row g-2 mb-3">
+            <div class="col-6">
+                <label class="form-label fw-semibold">@SL["SerialNo"] <span class="text-danger">*</span></label>
+                <input name="SerialNo" class="form-control font-monospace"
+                       value="@Model.SerialNo" maxlength="50" required />
+            </div>
+            <div class="col-6">
+                <label class="form-label fw-semibold">@SL["Status"]</label>
+                <select name="Status" class="form-select">
+                    @foreach (var s in new[] { "Active", "UnderCalibration", "Loaned", "Retired" })
+                    {
+                        <option value="@s" selected="@(Model.Status == s)">@s</option>
+                    }
+                </select>
+            </div>
+            <div class="col-6">
+                <label class="form-label">@SL["Department"]</label>
+                <select name="DepartmentCode" class="form-select">
+                    <option value="">--</option>
+                    @foreach (var d in deptOptions)
+                    {
+                        <option value="@d.Id" selected="@(Model.DepartmentCode == (string)d.Id)">@d.Name</option>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.DepartmentCode) && !deptOptions.Any(d => (string)d.Id == Model.DepartmentCode))
+                    {
+                        @* 改下拉前以文字輸入的舊值：保留成選項，避免一編輯就被清掉 *@
+                        <option value="@Model.DepartmentCode" selected>@Model.DepartmentCode</option>
+                    }
+                </select>
+            </div>
+            <div class="col-6">
+                <label class="form-label">@SL["Custodian"]</label>
+                <select name="CustodianId" class="form-select">
+                    <option value="">--</option>
+                    @foreach (var u in userOptions)
+                    {
+                        <option value="@u.Id" selected="@(Model.CustodianId == (string)u.Id)">@u.Name</option>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.CustodianId) && !userOptions.Any(u => (string)u.Id == Model.CustodianId))
+                    {
+                        <option value="@Model.CustodianId" selected>@Model.CustodianId</option>
+                    }
+                </select>
+            </div>
+            <div class="col-6">
+                <label class="form-label">@SL["ActivationDate"]</label>
+                <input type="date" name="EffectiveDate" class="form-control"
+                       value="@Model.EffectiveDate?.ToString("yyyy-MM-dd")" />
+            </div>
+            <div class="col-6">
+                <label class="form-label">@SL["DeactivationDate"]</label>
+                <input type="date" name="ObsoleteDate" class="form-control"
+                       value="@Model.ObsoleteDate?.ToString("yyyy-MM-dd")" />
+            </div>
+        </div>
+
+        <h6 class="fw-semibold mb-2">@SL["InstrumentSpecs"]</h6>
+        <div class="row g-2 mb-3">
+            <div class="col-4">
+                <label class="form-label small">@SL["Brand"]</label>
+                <input name="Brand" class="form-control form-control-sm" value="@Model.Brand" maxlength="100" />
+            </div>
+            <div class="col-4">
+                <label class="form-label small">@SL["Model"]</label>
+                <input name="Model" class="form-control form-control-sm" value="@Model.Model" maxlength="100" />
+            </div>
+            <div class="col-4">
+                <label class="form-label small">@SL["Precision"]</label>
+                <input name="Accuracy" class="form-control form-control-sm" value="@Model.Accuracy" maxlength="50" />
+            </div>
+            <div class="col-6">
+                <label class="form-label small">@SL["Tolerance"]</label>
+                <input name="Tolerance" class="form-control form-control-sm" value="@Model.Tolerance" maxlength="50" />
+            </div>
+            <div class="col-6">
+                <label class="form-label small">@SL["Specification"]</label>
+                <input name="Spec" class="form-control form-control-sm" value="@Model.Spec" maxlength="200" />
+            </div>
+        </div>
+
+        <h6 class="fw-semibold mb-2">@SL["CalibrationInfo"]</h6>
+        <div class="row g-2 mb-3">
+            <div class="col-4">
+                <label class="form-label small">@SL["CalibrationCycleDays"]</label>
+                <input type="number" name="CalibrationFrequencyDays" class="form-control form-control-sm"
+                       value="@Model.CalibrationFrequencyDays" min="0" />
+            </div>
+            <div class="col-8">
+                <label class="form-label small">@SL["CalibrationMethod"]</label>
+                <input name="CalibrationMethod" class="form-control form-control-sm"
+                       value="@Model.CalibrationMethod" maxlength="50" />
+            </div>
+            <div class="col-6">
+                <label class="form-label small">@SL["LastCalibrationDate"]</label>
+                <input type="date" name="LastCalibrationDate" class="form-control form-control-sm"
+                       value="@Model.LastCalibrationDate?.ToString("yyyy-MM-dd")" />
+            </div>
+            <div class="col-6">
+                <label class="form-label small">@SL["NextCalibrationDate"]</label>
+                <input type="date" name="NextCalibrationDate" class="form-control form-control-sm"
+                       value="@Model.NextCalibrationDate?.ToString("yyyy-MM-dd")" />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@SL["Remarks"]</label>
+            <textarea name="Remarks" class="form-control" rows="2">@Model.Remarks</textarea>
+        </div>
+    </div>
+
+    <div class="offcanvas-footer border-top p-3 d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle me-1"></i>@SL["Save"]</button>
+        <button type="button" class="btn btn-secondary" data-action="closeSidePanel">@SL["Close"]</button>
+    </div>
+</form>

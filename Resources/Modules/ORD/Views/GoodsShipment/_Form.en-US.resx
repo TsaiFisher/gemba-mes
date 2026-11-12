@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="GoodsShipmentId" xml:space="preserve"><value>Shipment No.</value></data>
+  <data name="ShipDate" xml:space="preserve"><value>Ship Date</value></data>
+  <data name="Customer" xml:space="preserve"><value>Customer</value></data>
+  <data name="SelectCustomer" xml:space="preserve"><value>Select Customer</value></data>
+  <data name="SalesOrderId" xml:space="preserve"><value>Sales Order</value></data>
+  <data name="ShipAddress" xml:space="preserve"><value>Ship-To Address</value></data>
+  <data name="Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>Shipment Lines</value></data>
+  <data name="AddLine" xml:space="preserve"><value>Add Line</value></data>
+  <data name="Import" xml:space="preserve"><value>Import</value></data>
+  <data name="ImportFromSO" xml:space="preserve"><value>Import from Sales Order</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Sales Order No.</value></data>
+  <data name="SoRef" xml:space="preserve"><value>Source Sales Order</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="ShipQty" xml:space="preserve"><value>Ship Qty</value></data>
+  <data name="UomCode" xml:space="preserve"><value>UOM</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>Unit Price</value></data>
+  <data name="CurrencyCode" xml:space="preserve"><value>Currency</value></data>
+  <data name="TaxCode" xml:space="preserve"><value>Tax</value></data>
+  <data name="LineAmount" xml:space="preserve"><value>Amount</value></data>
+  <data name="TaxAmount" xml:space="preserve"><value>Tax Amt</value></data>
+  <data name="TotalAmount" xml:space="preserve"><value>Total</value></data>
+  <data name="AmountLocal" xml:space="preserve"><value>Local Amount</value></data>
+  <data name="WhCode" xml:space="preserve"><value>Warehouse</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>Location</value></data>
+  <data name="LotNo" xml:space="preserve"><value>Lot No.</value></data>
+  <data name="QtyPutAway" xml:space="preserve"><value>Picked Qty</value></data>
+  <data name="RemainingQty" xml:space="preserve"><value>Remaining Qty</value></data>
+  <data name="Submit" xml:space="preserve"><value>Submit</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>Withdraw</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>Submit this shipment for approval?</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>Withdraw this shipment from approval?</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm Shipment</value></data>
+  <data name="ConfirmSimplified" xml:space="preserve"><value>Confirm Shipment</value></data>
+  <data name="ConfirmWarehouse" xml:space="preserve"><value>Confirm</value></data>
+  <data name="ConfirmConfirm" xml:space="preserve"><value>Confirm this shipment and post inventory outbound?</value></data>
+  <data name="ConfirmConfirmSimplified" xml:space="preserve"><value>Confirm this shipment? Inventory will be deducted immediately.</value></data>
+  <data name="ConfirmConfirmWarehouse" xml:space="preserve"><value>Confirm this shipment? Please then go to Warehouse Ops → Outbound Picking to complete de-stocking.</value></data>
+  <data name="CancelConfirm" xml:space="preserve"><value>Cancel Confirmation</value></data>
+  <data name="ConfirmCancelConfirm" xml:space="preserve"><value>Cancel the confirmation of this shipment?</value></data>
+  <data name="Void" xml:space="preserve"><value>Void</value></data>
+  <data name="VoidReason" xml:space="preserve"><value>Enter void reason:</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="ConfirmCustomerChange" xml:space="preserve"><value>Changing the customer will clear all existing lines. Continue?</value></data>
+  <data name="SelectCustomerBeforeImportSo" xml:space="preserve"><value>Please select a customer before importing sales orders.</value></data>
+  <data name="QtyExceedShippable" xml:space="preserve"><value>Quantity cannot exceed the shippable quantity.</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>Remove line</value></data>
+</root>

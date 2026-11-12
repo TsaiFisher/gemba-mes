@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="DocTitle" xml:space="preserve"><value>Work Order</value></data>
+  <data name="DocNo" xml:space="preserve"><value>WO No.</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Quantity</value></data>
+  <data name="RoutingId" xml:space="preserve"><value>Routing</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="PlannedStart" xml:space="preserve"><value>Planned Start</value></data>
+  <data name="PlannedEnd" xml:space="preserve"><value>Planned End</value></data>
+  <data name="ParentWorkOrder" xml:space="preserve"><value>Parent WO</value></data>
+  <data name="ReworkFrom" xml:space="preserve"><value>Rework From</value></data>
+  <data name="CreatedAt" xml:space="preserve"><value>Created At</value></data>
+  <data name="OpSeq" xml:space="preserve"><value>Op#</value></data>
+  <data name="OperationName" xml:space="preserve"><value>Operation</value></data>
+  <data name="WorkCenter" xml:space="preserve"><value>Work Center</value></data>
+  <data name="SetupTime" xml:space="preserve"><value>Setup Time</value></data>
+  <data name="UnitTime" xml:space="preserve"><value>Unit Time</value></data>
+  <data name="TimeSec" xml:space="preserve"><value>sec</value></data>
+  <data name="TimeMin" xml:space="preserve"><value>min</value></data>
+  <data name="TimeHour" xml:space="preserve"><value>hr</value></data>
+  <data name="BatchQty" xml:space="preserve"><value>Batch Qty</value></data>
+</root>

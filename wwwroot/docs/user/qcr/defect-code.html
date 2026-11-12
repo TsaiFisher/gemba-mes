@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Defect Codes — QCR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>不良項目代碼 — QCR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">QCR 目錄</span><span lang="en">QCR contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">QCR 畫面</span><span lang="en">QCR screens</span></div>
+    <a href="defect-code.html" class="nav-link active"><span lang="zh">不良項目代碼</span><span lang="en">Defect Codes</span></a>
+    <a href="inspection-spec.html" class="nav-link"><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></a>
+    <a href="inspection-order.html" class="nav-link"><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></a>
+    <a href="ncr.html" class="nav-link"><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></a>
+    <a href="instrument.html" class="nav-link"><span lang="zh">檢驗儀器</span><span lang="en">Inspection Instruments</span></a>
+    <a href="spc-analysis.html" class="nav-link"><span lang="zh">SPC 製程能力分析</span><span lang="en">SPC Process Capability</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-bug me-2 text-primary"></i><span lang="zh">不良項目代碼</span><span lang="en">Defect Codes</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/DefectCode &nbsp;|&nbsp; 不良原因分類代碼維護</span><span lang="en">Route: /DefectCode &nbsp;|&nbsp; Maintaining defect reason codes</span></div>
+    </div>
+
+    <p><span lang="zh">維護檢驗與報工共用的不良項目代碼（外觀、尺寸、功能等分類），供不良統計與 NCR 分析。報工輸入不良品時必須選擇不良原因代碼。</span><span lang="en">Maintains the defect codes shared by inspection and production reporting (appearance, dimension, function and so on) for defect statistics and NCR analysis. A defect reason code has to be chosen whenever defects are reported.</span></p>
+    <img class="screen-shot" src="img/defect-code.png" data-src-en="img/en/defect-code.png" alt="不良項目代碼畫面截圖" data-alt-en="Defect code screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">不良項目代碼畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Defect code screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">維護代碼</span><span lang="en">Maintain codes</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」填入代碼、名稱與分類，儲存即可在檢驗/報工選用。</span><span lang="en">Click "Add", enter the code, name and category; once saved it can be chosen during inspection and production reporting.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">停用代碼不影響歷史紀錄，僅新單不可再選。</span><span lang="en">Deactivating a code leaves historical records alone; it simply cannot be chosen on new documents.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">查詢</span><span lang="en">Search</span></td><td><span lang="zh">代碼或名稱的模糊比對</span><span lang="en">Partial match on the code or the name</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">欄位</span><span lang="en">Field</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">代碼</span><span lang="en">Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">不良代碼的唯一識別，建立後不可修改</span><span lang="en">Unique identifier of the defect code; cannot be changed after creation</span></td></tr>
+        <tr><td><span lang="zh">名稱</span><span lang="en">Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">不良現象的描述（如刮傷、尺寸超差）</span><span lang="en">Description of the defect (a scratch, an out-of-tolerance dimension …)</span></td></tr>
+        <tr><td>IQC / IPQC / FQC / RQC</td><td><span lang="zh">勾選此代碼可在哪些檢驗階段選用：進料檢驗／製程檢驗／完工檢驗／退貨檢驗。未勾選的階段不會出現此代碼</span><span lang="en">Tick the inspection stages this code can be used in: incoming, in-process, final and return inspection. It does not appear in the stages that are not ticked</span></td></tr>
+        <tr><td><span lang="zh">啟用</span><span lang="en">Active</span></td><td><span lang="zh">停用後無法在新的檢驗與報工中選取，既有紀錄不受影響</span><span lang="en">Once inactive, it cannot be chosen for new inspections or production reports; existing records are unaffected</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">判定標準或範例的補充說明</span><span lang="en">Notes on the acceptance criteria or examples</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="../mfg/defect-rate.html"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

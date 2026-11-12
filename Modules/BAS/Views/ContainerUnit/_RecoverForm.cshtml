@@ -1,0 +1,20 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@* 容器回收（container-tracking.md §9.4）：箱子跟貨回來後掃箱號，一行一個；別廠的箱子也在這裡接手 *@
+<form id="sideForm" method="post" action="@Url.Action("Recover")" data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <div class="p-1">
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="unitIds">@Localizer["UnitIds"] <span class="text-danger">*</span></label>
+            <textarea id="unitIds" name="unitIds" rows="10" class="form-control font-monospace" autofocus required
+                      placeholder="@Localizer["UnitIdsPlaceholder"]"></textarea>
+            <span class="text-danger small field-validation-valid" data-valmsg-for="unitIds" data-valmsg-replace="true"></span>
+            <div class="form-text">@Localizer["RecoverHint"]</div>
+        </div>
+    </div>
+    <div class="position-sticky bottom-0 bg-white border-top py-2 d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-down me-1"></i>@Localizer["Recover"]</button>
+    </div>
+</form>

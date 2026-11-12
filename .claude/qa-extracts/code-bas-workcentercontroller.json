@@ -1,0 +1,54 @@
+{
+  "sourcePath": "Modules/BAS/Controllers/WorkCenterController.cs",
+  "sourceHash": "292ad89084bc39ce37ab11276e3e45df29106a6b3c935db15bdb1c62f287c1c7",
+  "entries": [
+    {
+      "slug": "code-bas-workcentercontroller-05bad791",
+      "lang": "zh",
+      "headingPath": "基本資料 › 預設備料倉：備料倉型別的倉庫排在前面，但不排除其他倉別——",
+      "text": "預設備料倉的選擇規則｜系統預設會將備料倉型別的倉庫排在最前面，但使用者仍然可以選擇其他類型的倉庫。此外，即使是沒有另外設立專門備料倉、僅在原料倉劃分備料區的廠別，也仍可以在此處進行設定。",
+      "approved": true,
+      "sourceSectionHash": "8669f518adf9533a2639b1725a45f46fd2aece38dddc4b2ae3ced0e36ad4d5f8"
+    },
+    {
+      "slug": "code-bas-workcentercontroller-4ba43c39",
+      "lang": "zh",
+      "headingPath": "基本資料 › 供面板前端做倉庫→儲位過濾用",
+      "text": "資料結構與介面名稱保持一致性｜此處將倉庫列表轉換成字串格式，目的是確保這個資料的欄位名稱能和前端介面的讀取方式完全一致。",
+      "approved": false,
+      "sourceSectionHash": "4707444ecf78b6b5c1d0c1dfbcf1a8d6a26da5a2d9fb16f1ac8a9cac77712455"
+    },
+    {
+      "slug": "code-bas-workcentercontroller-14eb2ce6",
+      "lang": "zh",
+      "headingPath": "基本資料 › 班別群組與備料倉／儲位必須存在、屬於本廠、且未停用",
+      "text": "班組與儲位必須屬於本廠且未停用｜系統會檢查所設定的班別群組和備料倉/儲位，這些資料必須是存在的、隸屬於當前工廠，並且目前沒有被停用的狀態。如果掛載了其他工廠的班別群組或備料倉/儲位，系統不會報錯，但排程計算時會使用該其他工廠的行事曆來計算此工作中心的產能；若指到其他工廠的備料倉，則備料單可能會開到無法查到的倉位。",
+      "approved": true,
+      "sourceSectionHash": "18f70b10bd85b9ed2180f765b79aabc2aed02be494cadeabc578821c0ee32c77"
+    },
+    {
+      "slug": "code-bas-workcentercontroller-5c50cf9a",
+      "lang": "zh",
+      "headingPath": "基本資料 › 機台逐列比對：",
+      "text": "工作中心的機台維護規則｜在工作中心主檔中，既有機台只能修改名稱與備註，狀態不能從這裡改，要經「機台狀態異動」處理——那裡才會連動調整派工並留下異動紀錄。新增的機台可設定初始狀態；機台還有未結束的派工時不能刪除。",
+      "approved": true,
+      "sourceSectionHash": "b73a5b593b81208ce65002f81f6783d09a1bbdb3a0830c81b2609c9c300995ef"
+    },
+    {
+      "slug": "code-bas-workcentercontroller-d1ff2c5d",
+      "lang": "zh",
+      "headingPath": "基本資料 › 途程工序、工單工序、機台異動明細、工作曆、計畫停機",
+      "text": "關聯性檢查與資料完整性｜系統會主動檢查所使用的作業中心代碼是否仍然有效，以避免在作業中心被刪除後留下無法追蹤的紀錄或導致派工、排程機制失效。",
+      "approved": true,
+      "sourceSectionHash": "349691a9262902d3d5ac860a459f7391640457a1c34fac812fd677986c522d4d"
+    },
+    {
+      "slug": "code-bas-workcentercontroller-cc76ee75",
+      "lang": "zh",
+      "headingPath": "基本資料 › 工作中心是否仍被途程工序、工單工序、機台異動明細、工作曆",
+      "text": "工作中心是否仍被其他流程使用｜此設定用來判斷一個工作中心是否還會出現在途程工序、工單工序、機台異動明細、工作曆、計畫停機、部門實際成本或重工單的引用中。",
+      "approved": true,
+      "sourceSectionHash": "4d9ca475d1828620fc4a9d4211ac06258b5551675b270afc49ed410705ab910f"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "sourcePath": "Modules/MFG/Services/MrpRunExecutionService.cs",
+  "sourceHash": "61ef28f9dcfa449dea7467fe3d5d35ef624fc4e99c5c1d3fc3eda1054cd6cf2b",
+  "entries": [
+    {
+      "slug": "code-mfg-mrprunexecutionservice-8ba4d567",
+      "lang": "zh",
+      "headingPath": "生產製造 › 展開＋請購單落地的共用交易外殼",
+      "text": "交易流程需完整回滾以避免資料不一致｜系統的處理過程必須確保所有相關資料都同步完成或全部取消，否則可能會留下部分生產批次但缺少工單的半成品資料。",
+      "approved": true,
+      "sourceSectionHash": "95d5f9081e34abd9f391d54894bba5a669cfe09e6947c4174e10d30c0d63428e"
+    },
+    {
+      "slug": "code-mfg-mrprunexecutionservice-72ff3f7d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 沿用既有「請購轉採購」批次作業消化",
+      "text": "規則說明｜請購需求的建置會根據是否已存在相關紀錄來決定處理方式。如果該需求是草稿狀態且尚未有明細轉為採購單，系統會直接覆寫重建；但若該需求已經送審、已核准或已有明細轉為採購單，則無法覆寫，系統會跳過建立新單並提醒使用者需要人工檢視，以避免同一需求的重複請購。",
+      "approved": true,
+      "sourceSectionHash": "e4b16b3f1af93078dd224cdb87b574283ec18404b48fa1943c7c0837c5f0e704"
+    },
+    {
+      "slug": "code-mfg-mrprunexecutionservice-ef288872",
+      "lang": "zh",
+      "headingPath": "生產製造 › 情形 B：既有請購單仍為草稿且無明細轉採購 → 仍完全擁有",
+      "text": "請購單狀態與資料保留規則｜如果請購單目前仍是草稿狀態且沒有任何明細轉為採購，系統會完全擁有並直接覆寫重建相關資料，這代表當需求不存在時，不應該保留舊的明細資訊。",
+      "approved": true,
+      "sourceSectionHash": "63d1c5f568aea27616c094c8bb5aff05265976891e14b6a702cf4c8546cc1a06"
+    },
+    {
+      "slug": "code-mfg-mrprunexecutionservice-5712a868",
+      "lang": "zh",
+      "headingPath": "生產製造 › 但那是「讀到當下」的判斷——中間若有人動過，覆寫重建就會把對方的",
+      "text": "資料更新需確認最新狀態｜系統在進行修改時，會檢查該筆資料的版本號是否與當初讀取時的紀錄一致，以確保在其他人有修改的情況下，不會無意間覆蓋掉別人的變動。",
+      "approved": true,
+      "sourceSectionHash": "0e7e18d7e627d2f54c9fd9b5515befde128f92ee51b2e7812bf51a34f19acf2b"
+    },
+    {
+      "slug": "code-mfg-mrprunexecutionservice-a756e807",
+      "lang": "zh",
+      "headingPath": "生產製造 › 需求信號只帶品號/數量/日期，未含單位",
+      "text": "需求信號不帶單位，單位在轉請購時才補｜MRP 產生的需求信號只帶品號、數量與需求日期，本身不帶單位。轉成請購明細時系統才回頭查品號主檔補上：庫存單位一律取品號主檔的庫存單位；採購單位取品號主檔的採購單位，沒有設定採購單位時沿用庫存單位。",
+      "approved": true,
+      "sourceSectionHash": "beee434867b1afb43881b0c25b873b386e458a50b8caa89d6f02540399deed2b"
+    },
+    {
+      "slug": "code-mfg-mrprunexecutionservice-85fcf0a3",
+      "lang": "zh",
+      "headingPath": "生產製造 › 由呼叫端在建立／覆寫後補蓋，讓後續重跑能分辨",
+      "text": "生產單據來源標記規則｜系統會將由物料需求規劃產生的明細，在執行單號上進行來源的標記。這樣做是為了讓後續重跑時，能夠區分出哪些明細資料是來自於物料需求規劃產生，以及哪些是使用者事後手動加入的明細。",
+      "approved": true,
+      "sourceSectionHash": "ffda8e94282b8719b627280a45a7940399a3723d1ef849d23fddcc862d90935b"
+    },
+    {
+      "slug": "code-mfg-mrprunexecutionservice-4e44dcfa",
+      "lang": "zh",
+      "headingPath": "生產製造 › 逐品號對帳：既有請購單已進入後續流程、不可整張覆寫時，比對",
+      "text": "對帳規則說明｜既有請購單已進入後續流程、不可整張覆寫時，比對本次的採購需求與先前產生的請購明細，會產生五類差異並依據明細的下游消化狀態決定處置。若本次沒有任何需求，但該品號在同一次展開中已有工單，代表生產模式已從採購變為自製或委外，此時的需求只是轉移了通道而非消失，系統會一併點出接手的工單，讓採購人員了解結案的原因。",
+      "approved": true,
+      "sourceSectionHash": "06ec76f6afe9de681ab3a1054714a7afee93f672f6df59527151d3aaacad1b75"
+    },
+    {
+      "slug": "code-mfg-mrprunexecutionservice-a223e3fd",
+      "lang": "zh",
+      "headingPath": "生產製造 › 差異項落地：先刪除本執行單既有的未結差異，再寫入本次對帳結果",
+      "text": "差異項落地規則說明｜系統會先清除本執行單目前所有尚未處理的差異紀錄，然後再寫入本次對帳計算出來的新結果；先前已經結清的差異紀錄則會保留下來以供查閱。",
+      "approved": true,
+      "sourceSectionHash": "7e21eea305e86a38fc656dd41d4331f00752a820b703848ad7ecfd997800728b"
+    }
+  ]
+}

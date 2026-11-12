@@ -1,0 +1,230 @@
+{
+  "sourcePath": "Modules/MFG/Services/MrpEngine.cs",
+  "sourceHash": "64ab9213b6cf7c10b6f0adbcd8786d4af3baebf7851ee41fa43564fd695f9851",
+  "entries": [
+    {
+      "slug": "code-mfg-mrpengine-012191ac",
+      "lang": "zh",
+      "headingPath": "生產製造 › §25 製造簡化模式的自動投產委派",
+      "text": "自動投產委派的必要性說明｜此功能設定為必須填寫的參數，如果沒有提供該資訊，系統將不會執行自動投產作業。",
+      "approved": true,
+      "sourceSectionHash": "458a2ac37a9355aafa6cfe5b3295a87199e6892846f80f9b3b77f360433e93d1"
+    },
+    {
+      "slug": "code-mfg-mrpengine-6ca45608",
+      "lang": "zh",
+      "headingPath": "生產製造 › 重跑：清除前次展開後重新展開",
+      "text": "工單狀態無法被覆蓋｜已進入生產流程（無論是進行中、已完成或已結案）的工單，系統會阻止任何重跑的操作。",
+      "approved": true,
+      "sourceSectionHash": "e7f120a960ed88cddfad9968afbead7c4d44b7404cfde40609161376171a8b14"
+    },
+    {
+      "slug": "code-mfg-mrpengine-89f6e8c4",
+      "lang": "zh",
+      "headingPath": "生產製造 › 此處只依評估等級決定是否中止，不再各自查一次 DB",
+      "text": "分級閘門判斷流程的簡化說明｜系統會根據評估等級來決定是否需要中止後續流程，而不會再針對每個環節分別查詢資料庫進行判定。",
+      "approved": true,
+      "sourceSectionHash": "f4097f6f5fab5cc2fabc6ccd3aa585164308a7714d98c747e64e6192ba2cf4b2"
+    },
+    {
+      "slug": "code-mfg-mrpengine-f1ce60c7",
+      "lang": "zh",
+      "headingPath": "生產製造 › 整批完全未投產才作廢",
+      "text": "無法在系統中作廢的條件說明｜只有當整個批次都從未開始生產時，才能將其作廢；只要有任何一張工單已經動過，則該批次會保持現狀繼續走生命週期。",
+      "approved": true,
+      "sourceSectionHash": "25299cfab85070a76d0c8b6a2fd5c238a90e3f003a24e7c6d47c11d9b0b8f34d"
+    },
+    {
+      "slug": "code-mfg-mrpengine-e5cf1122",
+      "lang": "zh",
+      "headingPath": "生產製造 › 作廢工單的派工一併取消：未投產＝沒有產出，",
+      "text": "作廢工單的派工一併取消規則說明｜若將工單作廢，其相關的派工紀錄也會一併取消，這樣做是為了避免未投產的工單在派工清單中顯示為待辦或準備狀態，以免被排程系統誤判為已佔用資源。",
+      "approved": true,
+      "sourceSectionHash": "0d9e77439405b00ef8b48bdd7905e61389e383eb8ce9bd59b1b9fa3a55a49ad2"
+    },
+    {
+      "slug": "code-mfg-mrpengine-bfe1cbab",
+      "lang": "zh",
+      "headingPath": "生產製造 › 僅在所有生產批都被作廢時才整批釋放，",
+      "text": "整批釋出條件說明｜只有當所有生產批次都被作廢時，才能將整個批次的成品庫存一次性釋放出來；否則，系統會避免錯誤地將仍有有效批次的成品庫存計入可用量。",
+      "approved": true,
+      "sourceSectionHash": "80a3d56d18a86b2da5a4f32e1a9f05e9dc9e08e4f4300bc200a97f65fbd933da"
+    },
+    {
+      "slug": "code-mfg-mrpengine-da2425be",
+      "lang": "zh",
+      "headingPath": "生產製造 › 判準是「下游是否已產生不可回收的外部承諾或實體／財務足跡」",
+      "text": "判準依據與限制說明｜此判準是根據下游是否已產生不可回收的外部承諾或實體／財務足跡來判斷，而非單據是否已經核准。如果工單已經投產、派工回報了產量或有上工/整備紀錄，或者委外需求引用了該工單，系統會阻止執行，因為重跑可能會刪除或抹去既成事實。此外，如果請購單已經送審、已核准或已轉採購，雖然可以重新執行，但這些請購單不會自動收斂，需要人工處理，這類脫鉤的來源是品號由採購改自製後，原有的請購單會留在原地。",
+      "approved": true,
+      "sourceSectionHash": "8d3b72943eb2fc0bb6b030aa7a09f0fb8f5d199c551c31fd9bd0d3e8412448c2"
+    },
+    {
+      "slug": "code-mfg-mrpengine-549cf97d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 委外需求：已轉委外採購單＝對外承諾，阻擋",
+      "text": "委外需求是否已轉採購單決定能否操作｜如果委外需求已經被轉換成對外的採購單，系統會阻止進一步的操作，因為這代表已經向外部承諾了。",
+      "approved": true,
+      "sourceSectionHash": "d76b9ead6d7f225e534f94a4a21830d1e9379aca8afe38d46bbb243dc1e606bf"
+    },
+    {
+      "slug": "code-mfg-mrpengine-97ac8c7c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 請購單殘留：重跑會重建工單，但既有請購單不會被自動收斂",
+      "text": "請購單殘留的工單重建與收斂規則｜系統在重新執行時，會重建工單，但已存在的請購單不會自動被納入計算。",
+      "approved": true,
+      "sourceSectionHash": "7f4516e21fc6fc799e747107e90d4b69fa2074e9efbad23d0bbc883f461d4a36"
+    },
+    {
+      "slug": "code-mfg-mrpengine-6f29379f",
+      "lang": "zh",
+      "headingPath": "生產製造 › 為廠別本地時間",
+      "text": "時間判斷依據為廠別本地時間｜系統記錄的日期會以該工廠所在地的時間為準，但為了資料一致性考量，所有儲存到系統中的時間都會轉換成協調世界時（UTC）格式。",
+      "approved": true,
+      "sourceSectionHash": "6d19e97db553f6d22c5b253492b17a85e0fb06ef5bc8348f471153052ff198d3"
+    },
+    {
+      "slug": "code-mfg-mrpengine-e0734303",
+      "lang": "zh",
+      "headingPath": "生產製造 › 派工/展開順序：交期 → 行序",
+      "text": "派工/展開的排序依據與規則｜排程時，系統會先依照交期進行排序，如果交期相同，則再依照行序來決定順序。",
+      "approved": true,
+      "sourceSectionHash": "726476483993a65f2e86df908beaaac12a6ead503cbcb7e5afb7056fd4da2c78"
+    },
+    {
+      "slug": "code-mfg-mrpengine-db3334b3",
+      "lang": "zh",
+      "headingPath": "生產製造 › 全有全無）：先驗證**全部**需求列（品號存在、",
+      "text": "需求驗證規則說明｜系統會先檢查所有需要產出的品項是否都存在、工序和物料的單位換算是否正確；如果任何一項檢查失敗，整個生產流程都會中止，不會產生任何批次或工單。",
+      "approved": true,
+      "sourceSectionHash": "ecc0edaf67ba71c114fe9fa86d874f3e993943bff1659b1c70e8edcf988b7858"
+    },
+    {
+      "slug": "code-mfg-mrpengine-b25cce97",
+      "lang": "zh",
+      "headingPath": "生產製造 › §25.3 製造簡化模式：展開完成即自動投產，工單直接進入",
+      "text": "製造簡化模式的投產規則｜若啟用了製造簡化模式，當生產完成時，相關工單會自動進入可發放狀態，而不會經過正常的投產閘門流程。如果沒有設定此模式，則會維持原有的完整流程，工單將停留在需要人工進行投產的階段。",
+      "approved": true,
+      "sourceSectionHash": "7c402f702ddc23df2ffae2b872f307a3ff4845a976f8f6c63a251774916c5747"
+    },
+    {
+      "slug": "code-mfg-mrpengine-3ef7d5b1",
+      "lang": "zh",
+      "headingPath": "生產製造 › 尚未轉委外採購單的委外需求： FK 指向工單，須先刪除才能刪工單",
+      "text": "限制工單與委外需求關聯性｜若一個委外需求已經連結到工單，則不能直接刪除該工單，必須先將相關的委外需求資料移除才能完成工單的刪除。",
+      "approved": true,
+      "sourceSectionHash": "f1d37cdfedb86765adbe29c108be25a33a281318c69a50c001129459f9c0afc4"
+    },
+    {
+      "slug": "code-mfg-mrpengine-e0f42001",
+      "lang": "zh",
+      "headingPath": "生產製造 › 逐工序倒推：優先用工作日曆，自需求日往回**逐道工序**",
+      "text": "排程計算依據與預設值｜系統在倒推工序計畫的開工和完工日時，會優先使用工作日曆來計算。如果廠別沒有設定日曆或無法取得服務，則會退回以 24 小時/天的粗估方式進行計算，此時所有工序都會共用單一的日期作為參考。",
+      "approved": true,
+      "sourceSectionHash": "4fd9bb289a5d248128cda52e4a7e9ef955e28f77af211ffe90aacacc35477f6c"
+    },
+    {
+      "slug": "code-mfg-mrpengine-47842ae4",
+      "lang": "zh",
+      "headingPath": "生產製造 › 委外品無途程不視為錯誤",
+      "text": "檢查委外品流程的規則限制｜系統在檢查委外品的途程時，如果該委外品沒有相關的工序路徑，則不會被視為錯誤。此外，當採購或僅庫存的項目作為葉節點時，系統也不會進行展開和檢核。",
+      "approved": true,
+      "sourceSectionHash": "0a332ba846c29a627906428bb3af29cb4124b4b5e8c0cd2ed70ab4f16d78dbb6"
+    },
+    {
+      "slug": "code-mfg-mrpengine-527112c7",
+      "lang": "zh",
+      "headingPath": "生產製造 › 發料單位與用料品號庫存單位不同時，須有單位換算直接查",
+      "text": "單元差異需進行轉換才能查詢庫存｜當發料的單位和用料品號的庫存單位不同時，系統必須透過單位換算的方式來計算，否則無法判斷是否有缺漏。",
+      "approved": true,
+      "sourceSectionHash": "5648c4c6d41d97d2ba93393773bfdb2442de14174bb930acf8d2b3a51ce77fb8"
+    },
+    {
+      "slug": "code-mfg-mrpengine-e30c2f16",
+      "lang": "zh",
+      "headingPath": "生產製造 › 逐工序倒推：以廠別工作日曆，自需求日往回**逐道工序**算出",
+      "text": "計算工序時間範圍的規則說明｜系統會根據廠別的工作日曆，從需求日期開始往回依序計算每一個工序的時間區間。此時，後續的工序會先排定，最最後一個工序結束於需求日，而前一個工序的結束日則決定了後一個工序的開始日。",
+      "approved": true,
+      "sourceSectionHash": "0aa1a664230ab68337fa34f2e4d44db433e9c9256c9cd5caa7fc02eedf898483"
+    },
+    {
+      "slug": "code-mfg-mrpengine-b2f26377",
+      "lang": "zh",
+      "headingPath": "生產製造 › 全模式： 不含待上架/待下架在途量，需補足差額",
+      "text": "數量計算方式的差異說明｜當系統處於全模式時，所顯示的現有庫存量不包含待上架或待下架的在途數量，因此需要額外補足差額才能得出正確的總數。而在簡化模式下，入出庫核准後會立即過帳，所以現有的庫存量已經即時反映了變動，不需要進行任何調整。",
+      "approved": true,
+      "sourceSectionHash": "59da9525cbb3f2a28faa656a98308c1da527fed95febff2462983c28064513c2"
+    },
+    {
+      "slug": "code-mfg-mrpengine-7c8a7633",
+      "lang": "zh",
+      "headingPath": "生產製造 › − 出貨待下架：非可被搶完的供給池，",
+      "text": "出貨待下架會從可用量中扣除｜出貨單已核准並確認、但庫存還沒實際扣減的數量，稱為出貨待下架。MRP 計算可用量時會把它扣掉，因為那些料已經答應要出給客戶。它與「進貨待上架」方向相反、性質也不同：待上架是會被逐筆認領到用完的供給，出貨待下架則是每次查詢都一致套用的扣減量，不需要認領追蹤。",
+      "approved": true,
+      "sourceSectionHash": "bbe0befb1b8e7d2696d9b2dec65363723a723ba79e26bd6b527e42a7c408065f"
+    },
+    {
+      "slug": "code-mfg-mrpengine-b46ca967",
+      "lang": "zh",
+      "headingPath": "生產製造 › on- 這一桶的上限須先扣安全庫存——否則在途量夠大時， 會超過",
+      "text": "庫存分配順序與安全庫存計算規則｜系統會依序從實體在手庫存、採購訂單在途量，以及收貨待上架的數量中分配本次需要的用量。在計算可用的實體在手庫存時，必須先扣除預設的安全庫存，以確保不會將實際在手庫存扣到安全庫存以下。",
+      "approved": true,
+      "sourceSectionHash": "76a7bf1e51d98e232db5ea35d6931d56394071f35afaa7c89c16a58b35ce1e4e"
+    },
+    {
+      "slug": "code-mfg-mrpengine-d45b82b0",
+      "lang": "zh",
+      "headingPath": "生產製造 › 在途/待上架部分僅是規劃訊號，",
+      "text": "庫存狀態的計算規則說明｜只有實際從現有庫存中取得的部分才會被標記為「已備貨」，而「在途/待上架」的部分僅是規劃上的訊號，不會消耗實體庫存，因此不應計入可用數量扣減。",
+      "approved": true,
+      "sourceSectionHash": "a44b42fa27b9f645951bfab2a463f92bbca4c33803ba6a2d13ef1846cece8592"
+    },
+    {
+      "slug": "code-mfg-mrpengine-a624e6a0",
+      "lang": "zh",
+      "headingPath": "生產製造 › 估算製造前置天數：Σ / 每日工時上限，向上取整",
+      "text": "估算製造前置天數的計算方式｜此預估製造所需的前置天數是根據所有工序的整備時間加上單位工時乘以數量，再除以每日工時上限後向上取整所得。",
+      "approved": true,
+      "sourceSectionHash": "9dc7dc329e9f694fb5857f150c0c83b1706f5f5a42b73ec1f19c230eaf069cee"
+    },
+    {
+      "slug": "code-mfg-mrpengine-6d00d3e2",
+      "lang": "zh",
+      "headingPath": "生產製造 › 用料需求量依計量單位小數位無條件進位",
+      "text": "用料數量依計量單位進位規則｜當計算出的用料需求量包含小數點時，如果該計量單位的最小計量單位是整數（例如片），系統會向上取整，確保發放的材料數量可以實際執行，並且不會因為小數點造成的虛假短缺判斷。若找不到該計量單位的設定，則不進行進位處理，維持原計算值。",
+      "approved": true,
+      "sourceSectionHash": "16c98483e3e8bc691d5cdeb450cdacdff9759b8be12af00d20190e45cd159caa"
+    },
+    {
+      "slug": "code-mfg-mrpengine-8c05c0b7",
+      "lang": "zh",
+      "headingPath": "生產製造 › 計算各工序的累積良率後綴乘積",
+      "text": "計算工序累積良率的規則說明｜如果某個工序的良率小於或等於零，系統會將其視為百分之百的良率來進行後續計算。當所有工序的良率都是百分之百時，計算出來的結果陣列也會全部是 1.0。",
+      "approved": true,
+      "sourceSectionHash": "8872c146ede7d68c7ea5aa52d953f1f072079acd120d159b19c57cb02b9f5f21"
+    },
+    {
+      "slug": "code-mfg-mrpengine-101b9300",
+      "lang": "zh",
+      "headingPath": "生產製造 › 依淨需求原量生產",
+      "text": "批量政策決定生產數量規則｜系統會根據設定的批次政策來調整需要生產的總量，預設情況下是依照計算出來的淨需求原量進行生產。此外，實際產出的最小數量必須達到一個最低標準，並且這個數量必須是特定倍數的整數倍。",
+      "approved": true,
+      "sourceSectionHash": "9b326af3c76d7db5ec90a4f8f7de5a720d70817b5dc3cf5a583f1e99ddbb80eb"
+    },
+    {
+      "slug": "code-mfg-mrpengine-aaca68d9",
+      "lang": "zh",
+      "headingPath": "生產製造 › 本次展開內，各品號已認領的 PO 在途量",
+      "text": "限制重複認領物料到貨數量｜系統會計算本次展開內，每個品號已經被認領的採購訂單（PO）在途總量，以避免同一批在途的採購訂單數量被多次認領。",
+      "approved": true,
+      "sourceSectionHash": "f196251234d793b8043be2125ce38aff5bc8117a91576214a6af40d87e9a8c52"
+    },
+    {
+      "slug": "code-mfg-mrpengine-afe297a2",
+      "lang": "zh",
+      "headingPath": "生產製造 › 本次展開內，各品號已認領的 GR 待上架量",
+      "text": "限制重複認領庫存數量｜系統會計算本次展開內，每個品號已經被認領的、尚未上架的入庫量，以避免同一批待上架庫存被多次需求認領。",
+      "approved": true,
+      "sourceSectionHash": "b4e5c9979179840c7d3d6151173aa7a5fe131878d5dc5005e4f1d4c53d8a0022"
+    }
+  ]
+}

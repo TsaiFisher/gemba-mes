@@ -1,0 +1,13 @@
+{
+  "sourcePath": "Modules/INV/Models/ScrapDoc.cs",
+  "sourceHash": "461eb845dd1bfaa43ffd4e67b283b10f0588e6f6ae71703ff08f218b18ebdadc",
+  "entries": [
+    {
+      "slug": "code-inv-scrapdoc-ceed1eec",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 樂觀並發控制",
+      "text": "並發處理與資料一致性控制｜系統會透過一個特殊的欄位來確保當多個操作同時進行時，不會發生重複的扣帳行為；如果後續的操作發現資料已經被修改，則該筆交易會自動回滾。",
+      "approved": false
+    }
+  ]
+}

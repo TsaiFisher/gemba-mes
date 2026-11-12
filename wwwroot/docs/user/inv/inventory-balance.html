@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Inventory Balance — INV User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>庫存餘額查詢 — INV 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">INV 目錄</span><span lang="en">INV Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">INV 畫面</span><span lang="en">INV Screens</span></div>
+    <a href="inventory-balance.html" class="nav-link active"><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></a>
+    <a href="stock-movement.html" class="nav-link"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a>
+    <a href="stock-ledger.html" class="nav-link"><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></a>
+    <a href="warehouse-ops.html" class="nav-link"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a>
+    <a href="material-staging.html" class="nav-link"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a>
+    <a href="scrap-doc.html" class="nav-link"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></a>
+    <a href="loan-doc.html" class="nav-link"><span lang="zh">借入借出單</span><span lang="en">Loan Document</span></a>
+    <a href="sample-doc.html" class="nav-link"><span lang="zh">樣品/客供單</span><span lang="en">Sample/Consignment Docs</span></a>
+    <a href="inventory-count.html" class="nav-link"><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></a>
+    <a href="stock-adjustment.html" class="nav-link"><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></a>
+    <a href="../osp/outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="rework-material.html" class="nav-link"><span lang="zh">重工發退料單</span><span lang="en">Rework Material</span></a>
+    <a href="stock-transfer.html" class="nav-link"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a>
+    <a href="cross-plant-transfer.html" class="nav-link"><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></a>
+    <a href="inventory-valuation.html" class="nav-link"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a>
+    <a href="landed-cost-allocation.html" class="nav-link"><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></a>
+    <a href="stock-shortage.html" class="nav-link"><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></a>
+    <a href="slow-moving-inventory.html" class="nav-link"><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></a>
+    <a href="inventory-aging.html" class="nav-link"><span lang="zh">存貨庫齡分析</span><span lang="en">Inventory Aging Analysis</span></a>
+    <a href="inventory-value.html" class="nav-link"><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></a>
+    <a href="inventory-turnover.html" class="nav-link"><span lang="zh">庫存周轉率</span><span lang="en">Inventory Turnover</span></a>
+    <a href="stock-variance.html" class="nav-link"><span lang="zh">盤差分析</span><span lang="en">Stock Variance</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clipboard-data me-2 text-primary"></i><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/InventoryBalance &nbsp;|&nbsp; 即時庫存量（在庫/預留/可用）查詢</span><span lang="en">Route: /InventoryBalance &nbsp;|&nbsp; Live stock enquiry (on hand / reserved / available)</span></div>
+    </div>
+
+    <p><span lang="zh">依品號 × 倉庫 × 儲位（× 批號）檢視即時在庫量與移動平均單價，並在上方列出本頁品號的全廠預留量與可用量，是日常查料的第一入口，可列印/匯出。</span><span lang="en">Shows live on-hand quantities and the moving average price by product × warehouse × location (× lot), with plant-wide reserved and available quantities for the products on the page listed above. It is the first stop for day-to-day stock enquiries and can be printed or exported.</span></p>
+    <img class="screen-shot" src="img/inventory-balance.png" data-src-en="img/en/inventory-balance.png" alt="庫存餘量查詢畫面截圖" data-alt-en="Inventory balance screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">庫存餘量查詢畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Inventory balance screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">支援品號、倉庫、僅顯示有量等條件。</span><span lang="en">Supports product, warehouse and "with stock only" criteria.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">指定單一料件；留空為全部</span><span lang="en">A single item; leave blank for all</span></td></tr>
+        <tr><td><span lang="zh">倉庫 / 儲位</span><span lang="en">WH / Location</span></td><td><span lang="zh">限定查詢範圍；選倉庫後儲位下拉只列該倉的儲位</span><span lang="en">Narrows the query; once a warehouse is chosen the location dropdown lists only that warehouse's locations</span></td></tr>
+        <tr><td><span lang="zh">批號</span><span lang="en">Lot</span></td><td><span lang="zh">批號管制品的批次；留空為全部批次</span><span lang="en">Lot for lot-controlled items; leave blank for all lots</span></td></tr>
+        <tr><td><span lang="zh">含零庫存</span><span lang="en">Include zero stock</span></td><td><span lang="zh">勾選後連庫存量為 0 的儲位/批號也一併列出，供核對用</span><span lang="en">Once checked, locations and lots with zero stock are listed as well, for checking purposes</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">清單欄位</span><span lang="en">List columns</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號 / 品名</span><span lang="en">Product</span></td><td><span lang="zh">料件代碼與名稱</span><span lang="en">Product code and name</span></td></tr>
+        <tr><td><span lang="zh">倉庫 / 儲位</span><span lang="en">WH / Location</span></td><td><span lang="zh">該筆庫存實際存放的位置</span><span lang="en">Where the stock is actually held</span></td></tr>
+        <tr><td><span lang="zh">批號</span><span lang="en">Lot</span></td><td><span lang="zh">批號管制品的批次識別；非批管品為空白</span><span lang="en">Lot identifier for lot-controlled items; blank for items that are not lot-controlled</span></td></tr>
+        <tr><td><span lang="zh">庫存量</span><span lang="en">Stock Qty</span></td><td><span lang="zh">該儲位／批號的實際在庫數量</span><span lang="en">Actual quantity on hand for that location and lot</span></td></tr>
+        <tr><td><span lang="zh">單位</span><span lang="en">UOM</span></td><td><span lang="zh">庫存計量單位</span><span lang="en">Stock UOM</span></td></tr>
+        <tr><td><span lang="zh">單位成本</span><span lang="en">Unit Cost</span></td><td><span lang="zh">該批庫存的移動加權平均（AVCO）單位成本</span><span lang="en">Moving average (AVCO) unit cost of that stock</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">品號彙總（全廠）</span><span lang="en">Product summary (whole plant)</span></h3>
+    <p><span lang="zh">預留是保留給工單、備料或 MRP 需求的數量，記在「廠 × 品號」，<b>不分儲位</b>，所以不能拆到上面的逐儲位明細，只在這張彙總顯示（每頁列出該頁出現的品號）。算法與缺貨分析、工單投產的料況檢查完全相同。</span><span lang="en">Reservations hold quantities for work orders, staging or MRP demand per plant and product, <b>not per location</b>, so they cannot be split across the location rows and are shown only in this summary (listing the products on the current page). The calculation is exactly the one used by Stock Shortage and the material check at work order release.</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">全廠在手（不含待驗）</span><span lang="en">Plant on hand (excl. quarantine)</span></td><td><span lang="zh">該品號全廠各儲位在手量合計，<b>不含待驗倉</b>（IQC 未放行不可動用）；客供倉照計</span><span lang="en">Total on hand across the plant, <b>excluding quarantine warehouses</b> (not usable until IQC releases it); customer-supplied warehouses are included</span></td></tr>
+        <tr><td><span lang="zh">全廠預留</span><span lang="en">Plant reserved</span></td><td><span lang="zh">已被工單、備料或 MRP 需求保留、尚未發料的數量</span><span lang="en">Quantity held for work orders, staging or MRP demand and not yet issued</span></td></tr>
+        <tr><td><span lang="zh">全廠可用</span><span lang="en">Plant available</span></td><td><span lang="zh">全廠在手 − 全廠預留（下限 0），是新需求實際還能動用的數量</span><span lang="en">Plant on hand − plant reserved (never below 0), the quantity new demand can still draw on</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">下方明細的「庫存量」是各儲位的實際在手量，也就是揀料時該儲位最多能揀的數量；揀料扣的是在手，預留是在廠的層級控管。</span><span lang="en">The "Stock Qty" in the detail below is the actual on-hand quantity in each location, which is also the most you can pick from it; picking draws down on-hand stock, while reservations are controlled at plant level.</span></div>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="stock-movement.html"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a>、<a href="stock-shortage.html"><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

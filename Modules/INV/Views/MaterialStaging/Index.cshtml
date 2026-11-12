@@ -1,0 +1,214 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.INV.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.INV.Models.MaterialStagingOrder>
+
+<link rel="stylesheet" href="~/css/panel-table.css" />
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    var canCreate = ViewBag.CanCreate as bool? ?? false;
+    var canUpdate = ViewBag.CanUpdate as bool? ?? false;
+    var canDelete = ViewBag.CanDelete as bool? ?? false;
+    bool hasSearched = ViewBag.Searched as bool? ?? (Model != null);
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.CurrentSort as string ?? "";
+        if (cur == col + "_asc") return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-box-seam me-2"></i>@Localizer["PageTitle"]</h1>
+        @if (canCreate)
+        {
+            <button type="button" class="btn btn-primary"
+                    data-url="@Url.Action("Create", "MaterialStaging")"
+                    data-label="@Localizer["AddEntry"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus-lg"></i> @Localizer["AddEntry"]
+            </button>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@Localizer["Search"]</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" name="searchTerm" class="form-control"
+                               placeholder="@Localizer["SearchPlaceholder"]" value="@ViewBag.SearchTerm" />
+                    </div>
+                </div>
+                <div class="col-6 col-md-2">
+                    <label class="form-label small">@Localizer["Status"]</label>
+                    <select name="status" class="form-select">
+                        <option value="">@Localizer["All"]</option>
+                        @foreach (var s in new[] { "Draft", "Confirmed", "Picking", "Completed", "Void" })
+                        {
+                            <option value="@s" selected="@(ViewBag.Status == s)">@Localizer[s]</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-6 col-md-2">
+                    <label class="form-label small">@Localizer["DateFrom"]</label>
+                    <input type="date" name="dateFrom" class="form-control" value="@(ViewBag.DateFrom?.ToString("yyyy-MM-dd"))" />
+                </div>
+                <div class="col-6 col-md-2">
+                    <label class="form-label small">@Localizer["DateTo"]</label>
+                    <input type="date" name="dateTo" class="form-control" value="@(ViewBag.DateTo?.ToString("yyyy-MM-dd"))" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoResults"]</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.IdSort"
+                               asp-route-searched="true" asp-route-searchTerm="@ViewBag.SearchTerm">
+                                @Localizer["StagingId"] <i class="bi @sortIcon("id")"></i>
+                            </a>
+                        </th>
+                        <th>@Localizer["SourceType"]</th>
+                        <th>@Localizer["SourceId"]</th>
+                        <th>@Localizer["StagingLocation"]</th>
+                        <th>@Localizer["Status"]</th>
+                        <th>@Localizer["ApprovalStatus"]</th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.DateSort"
+                               asp-route-searched="true" asp-route-searchTerm="@ViewBag.SearchTerm">
+                                @Localizer["CreatedAt"] <i class="bi @sortIcon("date")"></i>
+                            </a>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><strong>@item.StagingId</strong></td>
+                            <td>@Localizer[item.SourceType]</td>
+                            <td>@item.SourceId</td>
+                            <td>@item.StagingWhCode @item.StagingLocationCode</td>
+                            <td>
+                                @{
+                                    var badge = item.Status switch {
+                                        "Draft"     => "secondary",
+                                        "Confirmed" => "info",
+                                        "Picking"   => "warning",
+                                        "Completed" => "success",
+                                        "Void"      => "danger",
+                                        _           => "light"
+                                    };
+                                }
+                                <span class="badge bg-@badge">@Localizer[item.Status]</span>
+                            </td>
+                            <td>
+                                @{
+                                    var abadge = item.ApprovalStatus switch {
+                                        SmartFactory.MES.Models.DocumentApprovalStatus.Approved        => "success",
+                                        SmartFactory.MES.Models.DocumentApprovalStatus.PendingApproval => "warning",
+                                        SmartFactory.MES.Models.DocumentApprovalStatus.Rejected        => "danger",
+                                        _ => "secondary"
+                                    };
+                                }
+                                <span class="badge bg-@abadge">@DocStatusLabels.Label(item.ApprovalStatus)</span>
+                            </td>
+                            <td>@DateTimeSvc.ToLocalTime(item.CreatedAt).ToString("yyyy-MM-dd")</td>
+                            <td class="text-end">
+                                @await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = item.StagingId }))
+                                @if (canUpdate && item.Status == "Draft")
+                                {
+                                    <button class="btn btn-sm btn-outline-primary me-1"
+                                            data-url="@Url.Action("Edit","MaterialStaging",new{id=item.StagingId})"
+                                            data-label="@Localizer["EditEntry"]"
+                                            data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                }
+                                else if (canUpdate)
+                                {
+                                    @* 非草稿仍走 Edit：欄位唯讀，但「揀料完成（移入備料倉）」「作廢」
+                                       這些狀態動作必須做得到——只給 Details 的話單據一經確認就在畫面上動彈不得。 *@
+                                    <button class="btn btn-sm btn-outline-secondary me-1"
+                                            data-url="@Url.Action("Edit","MaterialStaging",new{id=item.StagingId})"
+                                            data-label="@item.StagingId"
+                                            data-action="openPanel"><i class="bi bi-eye"></i> @Localizer["View"]</button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-sm btn-outline-secondary me-1"
+                                            data-url="@Url.Action("Details","MaterialStaging",new{id=item.StagingId})"
+                                            data-label="@item.StagingId"
+                                            data-action="openPanel"><i class="bi bi-eye"></i> @Localizer["View"]</button>
+                                }
+                                @if (canDelete && item.Status == "Draft")
+                                {
+                                    <button class="btn btn-sm btn-outline-danger"
+                                            data-action="deleteEntry"
+                                            data-id="@item.StagingId"
+                                            data-url="@Url.Action("Delete","MaterialStaging")"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<div class="offcanvas offcanvas-end u-panel-wide" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<div id="successToast" class="toast align-items-center text-bg-success border-0 position-fixed bottom-0 end-0 m-3" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex"><div class="toast-body">@Localizer["SaveSuccess"]</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>
+</div>
+@Html.AntiForgeryToken()
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function deleteEntry(e, el) {
+        const id = el.dataset.id, url = el.dataset.url;
+        if (!confirm('@Localizer["DeleteConfirm"]')) return;
+        fetch(url, {
+            method: 'POST',
+            headers: { 'RequestVerificationToken': document.querySelector('[name=__RequestVerificationToken]')?.value ?? '', 'X-Requested-With': 'XMLHttpRequest' },
+            body: new URLSearchParams({ id })
+        }).then(r => r.json()).then(d => { if (d.success) location.reload(); else alert(d.message); });
+    }
+</script>
+}

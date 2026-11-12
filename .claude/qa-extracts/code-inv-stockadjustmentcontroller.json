@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/INV/Controllers/StockAdjustmentController.cs",
+  "sourceHash": "d834ccef97212b32ffdcb28812ccd0525b20a77a2d0caebfeb26417edbfd8b72",
+  "entries": [
+    {
+      "slug": "code-inv-stockadjustmentcontroller-7fe5b52c",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 開單僅同步核准狀態顯示，不觸發自動過帳——過帳僅由使用者主動按",
+      "text": "開單只更新核准狀態，需手動結帳｜系統在開立單據時，僅會同步顯示該單據的核准狀態，不會自動執行過帳動作；只有當使用者主動點擊「確認過帳」按鈕後，才會觸發實際的過帳流程。",
+      "approved": true,
+      "sourceSectionHash": "d4ac49d6345ea0288d213102b349ca141c81582123197de7852cf974b5067f7e"
+    },
+    {
+      "slug": "code-inv-stockadjustmentcontroller-31a53ee9",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 唯讀面板上的「取消確認」依此顯示",
+      "text": "權限控制與操作限制｜只有在資料不是草稿狀態時，才能看到「取消確認」的按鈕。",
+      "approved": false,
+      "sourceSectionHash": "5f6c4eb79cda8183e60731f8864477f96ef769a7f41890b97be74cbd99751429"
+    }
+  ]
+}

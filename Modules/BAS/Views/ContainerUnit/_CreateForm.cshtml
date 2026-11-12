@@ -1,0 +1,39 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@{
+    var containers = ViewBag.ContainerOptions as List<Container> ?? new();
+}
+
+<form id="sideForm" method="post" action="@Url.Action("Create")" data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <div class="p-1">
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="containerCode">@Localizer["ContainerCode"] <span class="text-danger">*</span></label>
+            <select id="containerCode" name="containerCode" class="form-select" required>
+                <option value=""></option>
+                @foreach (var c in containers)
+                {
+                    <option value="@c.ContainerCode">@c.ContainerCode — @c.ContainerName</option>
+                }
+            </select>
+            <span class="text-danger small field-validation-valid" data-valmsg-for="containerCode" data-valmsg-replace="true"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="prefix">@Localizer["Prefix"] <span class="text-danger">*</span></label>
+            <input id="prefix" name="prefix" class="form-control font-monospace text-uppercase" value="BX" maxlength="10" required />
+            <span class="text-danger small field-validation-valid" data-valmsg-for="prefix" data-valmsg-replace="true"></span>
+            <div class="form-text">@Localizer["PrefixHint"]</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold" for="count">@Localizer["Count"] <span class="text-danger">*</span></label>
+            <input id="count" name="count" type="number" step="1" min="1" max="500" value="10" class="form-control" required />
+            <span class="text-danger small field-validation-valid" data-valmsg-for="count" data-valmsg-replace="true"></span>
+            <div class="form-text">@Localizer["CountHint"]</div>
+        </div>
+    </div>
+    <div class="position-sticky bottom-0 bg-white border-top py-2 d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle me-1"></i>@Localizer["Create"]</button>
+    </div>
+</form>

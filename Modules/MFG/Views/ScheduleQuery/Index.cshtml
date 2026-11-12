@@ -1,0 +1,305 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@model PaginatedList<SmartFactory.MES.Modules.MFG.ViewModels.ScheduleQueryRowVm>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    string productCode  = ViewBag.ProductCode  as string ?? "";
+    string workCenterId = ViewBag.WorkCenterId as string ?? "";
+    string machineCode  = ViewBag.MachineCode  as string ?? "";
+    string workOrderId  = ViewBag.WorkOrderId  as string ?? "";
+    string batchId      = ViewBag.BatchId      as string ?? "";
+    string salesOrderId = ViewBag.SalesOrderId as string ?? "";
+    string dateFrom     = ViewBag.DateFrom     as string ?? "";
+    string dateTo       = ViewBag.DateTo       as string ?? "";
+    string statusFilter = ViewBag.StatusFilter as string ?? "";
+    string sortOrder    = ViewBag.CurrentSort  as string ?? "sched_start";
+    int    pageSize     = ViewBag.CurrentPageSize as int? ?? 20;
+    var    workCenters  = ViewBag.WorkCenters  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var    productOptions   = ViewBag.ProductOptions   as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var    workOrderOptions = ViewBag.WorkOrderOptions as IEnumerable<string>  ?? Enumerable.Empty<string>();
+    var    machineOptions   = ViewBag.MachineOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var    batchOptions     = ViewBag.BatchOptions     as IEnumerable<string>  ?? Enumerable.Empty<string>();
+    var    salesOrderOpts   = ViewBag.SalesOrderOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+
+    string SortIcon(string field) => sortOrder == field ? "bi-sort-up" :
+                                     sortOrder == field + "_desc" ? "bi-sort-down" : "bi-sort-alt";
+    string NextSort(string field) => sortOrder == field ? field + "_desc" : field;
+
+    (string css, string key) StatusBadge(DispatchStatus s) => s switch
+    {
+        DispatchStatus.Pending         => ("bg-secondary",           "StatusPending"),
+        DispatchStatus.Scheduled       => ("bg-primary",             "StatusScheduled"),
+        DispatchStatus.SetupInProgress => ("bg-warning text-dark",   "StatusSetupInProgress"),
+        DispatchStatus.ReadyToStart    => ("bg-info text-dark",      "StatusReadyToStart"),
+        DispatchStatus.InProgress      => ("bg-success",             "StatusInProgress"),
+        DispatchStatus.Closed          => ("bg-dark",                "StatusClosed"),
+        DispatchStatus.OnHold          => ("bg-danger",              "StatusOnHold"),
+        DispatchStatus.Cancelled       => ("bg-light text-muted border", "StatusCancelled"),
+        _                              => ("bg-warning text-dark",   "StatusPendingFPI")
+    };
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col"><h1><i class="bi bi-search me-2 text-primary"></i>@Localizer["PageTitle"]</h1></div>
+    </div>
+
+    @* 查詢列 *@
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" asp-action="Index" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@sortOrder" />
+
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ProductCode"]</label>
+                    <select name="productCode" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["All"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(productCode == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["WorkCenter"]</label>
+                    <select name="workCenterId" class="form-select form-select-sm">
+                        <option value="">@Localizer["All"]</option>
+                        @foreach (var wc in workCenters)
+                        {
+                            <option value="@wc.WorkCenterCode" selected="@(workCenterId == (string)wc.WorkCenterCode)">
+                                @wc.WorkCenterCode — @wc.WorkCenterName
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label small fw-semibold">@Localizer["MachineCode"]</label>
+                    <select name="machineCode" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["All"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (dynamic m in machineOptions)
+                        {
+                            <option value="@m.MachineCode" selected="@(machineCode == (string)m.MachineCode)">@m.MachineCode — @m.MachineName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["WorkOrderId"]</label>
+                    <select name="workOrderId" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["All"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var wo in workOrderOptions)
+                        {
+                            <option value="@wo" selected="@(workOrderId == wo)">@wo</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["BatchId"]</label>
+                    <select name="batchId" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["All"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var b in batchOptions)
+                        {
+                            <option value="@b" selected="@(batchId == b)">@b</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["SalesOrderId"]</label>
+                    <select name="salesOrderId" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["All"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var so in salesOrderOpts)
+                        {
+                            <option value="@so" selected="@(salesOrderId == so)">@so</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label small fw-semibold">@Localizer["Status"]</label>
+                    <select name="statusFilter" class="form-select form-select-sm">
+                        <option value="">@Localizer["All"]</option>
+                        @foreach (DispatchStatus s in Enum.GetValues<DispatchStatus>())
+                        {
+                            <option value="@s" selected="@(statusFilter == s.ToString())">@Localizer[StatusBadge(s).key]</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label small fw-semibold">@Localizer["SchedFrom"]</label>
+                    <input type="date" name="dateFrom" class="form-control form-control-sm" value="@dateFrom" />
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label small fw-semibold">@Localizer["SchedTo"]</label>
+                    <input type="date" name="dateTo" class="form-control form-control-sm" value="@dateTo" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm ms-1">
+                        <i class="bi bi-x-circle"></i> @Localizer["Clear"]
+                    </a>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (Model != null)
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle table-sm">
+                <thead class="table-light">
+                    <tr>
+                        <th>
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-productCode="@productCode" asp-route-workCenterId="@workCenterId" asp-route-machineCode="@machineCode"
+                               asp-route-workOrderId="@workOrderId" asp-route-batchId="@batchId"
+                               asp-route-salesOrderId="@salesOrderId" asp-route-dateFrom="@dateFrom"
+                               asp-route-dateTo="@dateTo" asp-route-statusFilter="@statusFilter"
+                               asp-route-pageSize="@pageSize" asp-route-sortOrder="@NextSort("sched_start")"
+                               class="text-decoration-none text-dark">
+                                @Localizer["ScheduledStart"] <i class="bi @SortIcon("sched_start")"></i>
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-productCode="@productCode" asp-route-workCenterId="@workCenterId" asp-route-machineCode="@machineCode"
+                               asp-route-workOrderId="@workOrderId" asp-route-batchId="@batchId"
+                               asp-route-salesOrderId="@salesOrderId" asp-route-dateFrom="@dateFrom"
+                               asp-route-dateTo="@dateTo" asp-route-statusFilter="@statusFilter"
+                               asp-route-pageSize="@pageSize" asp-route-sortOrder="@NextSort("work_order")"
+                               class="text-decoration-none text-dark">
+                                @Localizer["WorkOrderId"] <i class="bi @SortIcon("work_order")"></i>
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-productCode="@productCode" asp-route-workCenterId="@workCenterId" asp-route-machineCode="@machineCode"
+                               asp-route-workOrderId="@workOrderId" asp-route-batchId="@batchId"
+                               asp-route-salesOrderId="@salesOrderId" asp-route-dateFrom="@dateFrom"
+                               asp-route-dateTo="@dateTo" asp-route-statusFilter="@statusFilter"
+                               asp-route-pageSize="@pageSize" asp-route-sortOrder="@NextSort("batch")"
+                               class="text-decoration-none text-dark">
+                                @Localizer["BatchId"] <i class="bi @SortIcon("batch")"></i>
+                            </a>
+                        </th>
+                        <th>@Localizer["ProductCode"]</th>
+                        <th>@Localizer["Operation"]</th>
+                        <th>
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-productCode="@productCode" asp-route-workCenterId="@workCenterId" asp-route-machineCode="@machineCode"
+                               asp-route-workOrderId="@workOrderId" asp-route-batchId="@batchId"
+                               asp-route-salesOrderId="@salesOrderId" asp-route-dateFrom="@dateFrom"
+                               asp-route-dateTo="@dateTo" asp-route-statusFilter="@statusFilter"
+                               asp-route-pageSize="@pageSize" asp-route-sortOrder="@NextSort("machine")"
+                               class="text-decoration-none text-dark">
+                                @Localizer["MachineCode"] <i class="bi @SortIcon("machine")"></i>
+                            </a>
+                        </th>
+                        <th>@Localizer["ScheduledEnd"]</th>
+                        <th>@Localizer["Status"]</th>
+                        <th>@Localizer["Flags"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr><td colspan="9" class="text-center text-muted py-4">@Localizer["NoData"]</td></tr>
+                    }
+                    @foreach (var row in Model)
+                    {
+                        var (badgeCss, badgeKey) = StatusBadge(row.Status);
+                        <tr class="@(row.IsPredictedLate ? "table-danger" : "") u-cursor-pointer"
+                            data-action="openDetails" data-id="@row.DispatchId">
+                            @* 排程時刻不換算：數字本身就是廠別當地時間，Kind=Utc 只是貼給 Npgsql 的標籤（mfg-domain.md §UTC 地雷）。*@
+                            <td>
+                                @(row.ScheduledStart.HasValue
+                                    ? row.ScheduledStart.Value.ToString("MM/dd HH:mm")
+                                    : "—")
+                            </td>
+                            <td class="fw-semibold">@row.WorkOrderId</td>
+                            <td>@row.ProductionBatchId</td>
+                            <td>@row.ProductCode</td>
+                            <td>@row.OperationSeq — @row.OperationName</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(row.WorkCenterId))
+                                {
+                                    <span class="text-muted small">@row.WorkCenterId / </span>
+                                }
+                                @(row.MachineCode ?? "—")
+                            </td>
+                            <td>
+                                @(row.ScheduledEnd.HasValue
+                                    ? row.ScheduledEnd.Value.ToString("MM/dd HH:mm")
+                                    : "—")
+                            </td>
+                            <td><span class="badge @badgeCss">@Localizer[badgeKey]</span></td>
+                            <td>
+                                @if (row.IsPredictedLate)   { <span class="badge bg-danger me-1"><i class="bi bi-clock-history"></i> @Localizer["FlagLate"]</span> }
+                                @if (row.MaterialRisk)      { <span class="badge bg-warning text-dark me-1"><i class="bi bi-exclamation-triangle"></i> @Localizer["FlagMatRisk"]</span> }
+                                @if (!string.IsNullOrEmpty(row.ToolingCode)) { <span class="badge bg-secondary me-1"><i class="bi bi-tools"></i> @row.ToolingCode</span> }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @* 分頁導航 *@
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+@* Side Panel (offcanvas) *@
+<div class="offcanvas offcanvas-end u-width-460px" tabindex="-1" id="detailsPanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title"><i class="bi bi-card-list me-2"></i>@Localizer["DetailsTitle"]</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="detailsPanelBody">
+        <div class="text-center text-muted py-5">
+            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+        </div>
+    </div>
+</div>
+
+@* Toast *@
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="mainToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body" id="mainToastBody"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    const panel = new bootstrap.Offcanvas(document.getElementById('detailsPanel'));
+    const toast  = new bootstrap.Toast(document.getElementById('mainToast'));
+
+    window.openDetails = function (e, el) {
+        const dispatchId = el.dataset.id;
+        const body = document.getElementById('detailsPanelBody');
+        body.innerHTML = '<div class="text-center text-muted py-5"><div class="spinner-border spinner-border-sm me-2" role="status"></div></div>';
+        panel.show();
+        fetch('/ScheduleQuery/Details/' + encodeURIComponent(dispatchId),
+              { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => { if (!r.ok) throw r.status; return r.text(); })
+            .then(html => { body.innerHTML = html; })
+            .catch(status => {
+                const msg = status === 404 ? '@Localizer["NotFound"].Value' : '@Localizer["LoadFailed"].Value';
+                body.innerHTML = `<div class="alert alert-warning m-3">${msg}</div>`;
+            });
+    };
+}());
+</script>
+}

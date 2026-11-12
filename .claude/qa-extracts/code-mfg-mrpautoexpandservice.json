@@ -1,0 +1,27 @@
+{
+  "sourcePath": "Modules/MFG/Services/MrpAutoExpandService.cs",
+  "sourceHash": "2f153033c4dbc129650e2ebc4d69582be398e0e768a09d4820aa539dbefc092e",
+  "entries": [
+    {
+      "slug": "code-mfg-mrpautoexpandservice-f0f4446d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 訂單核准本身已成功落地，不可因自動展開失敗而讓呼叫端誤以為沒存檔",
+      "text": "核准成功後狀態與資料的呈現｜訂單核准本身已經完成儲存，即使自動展開失敗，也不會讓呼叫系統誤以為資料沒有儲存。如果需要查看或修正原因，使用者可以到 MRP 執行畫面進行人工處理。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-mrpautoexpandservice-0204dd1a",
+      "lang": "zh",
+      "headingPath": "生產製造 › 已核准訂單中「尚未展開」的剩餘量",
+      "text": "訂單剩餘量計算規則說明｜此處顯示的尚未展開的剩餘數量，其計算方式與物料需求計畫執行畫面中「可匯入訂單列」的計算邏輯一致。剩餘數量是原始訂單數量減去所有已在已執行物料需求計畫中的、且未作廢生產批次的總需求量。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-mrpautoexpandservice-feaaf567",
+      "lang": "zh",
+      "headingPath": "生產製造 › 交期未填時以今天為需求日——寧可算成「立刻要」也不要因為缺日期而",
+      "text": "交期未填則預設為今日的交貨要求日｜如果系統沒有填寫交期，則會自動將該筆資料的需求日設定為當天，以確保不會因為缺少此日期而導致資料無法顯示。",
+      "approved": true
+    }
+  ]
+}

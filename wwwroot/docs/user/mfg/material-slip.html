@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Material Issue / Return — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>發退料單 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link active"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-boxes me-2 text-primary"></i><span lang="zh">發退料單</span><span lang="en">Material Slips</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/MaterialSlip &nbsp;|&nbsp; 工單領料/退料單據</span><span lang="en">Route: /MaterialSlip &nbsp;|&nbsp; Work order material issue and return documents</span></div>
+    </div>
+
+    <p><span lang="zh">依工單 BOM 需求產生發料單，倉庫據以揀料發料；多餘物料以退料單退回。發料過帳扣庫存並累計工單材料成本（依發料時點成本）。</span><span lang="en">Issue slips are created from the work order's BOM requirement and the warehouse picks and issues against them; surplus material goes back on a return slip. Posting an issue deducts stock and accumulates the work order's material cost (at the cost prevailing when it was issued).</span></p>
+    <img class="screen-shot" src="img/material-slip.png" data-src-en="img/en/material-slip.png" alt="發退料單畫面截圖" data-alt-en="Material issue / return screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">發退料單畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Material issue / return screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="relation"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">備料、發料、領料、後沖、退料的關係</span><span lang="en">How staging, issue, requisition, backflush and return fit together</span></h2>
+    <p><span lang="zh">工單投產（MRP 展開／工單核准）時，系統先為每項用料做<strong>軟鎖定</strong>：只鎖廠級數量，不指定儲位。之後料件以三種方式被工單用掉，用剩的再退回：</span><span lang="en">When a work order is released (MRP explosion / work-order approval) the system places a <strong>soft reservation</strong> on each material: a plant-level quantity, with no specific location. The material is then consumed by the work order in one of three ways, and anything left over is returned:</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">作業</span><span lang="en">Operation</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">備料（選做）</span><span lang="en">Staging (optional)</span></td><td><span lang="zh">在「備料單」確認時把軟鎖定轉給備料單，再把料實際移入備料倉。鎖定一直保留到發料過帳；之後的發料／領料要先從備料儲位扣。不做備料就維持軟鎖定。</span><span lang="en">Confirming a staging order transfers the soft reservation to it, then the material is physically moved into the staging area. The reservation stays until the issue is posted. Without staging the soft reservation simply remains.</span></td></tr>
+        <tr><td><span lang="zh">發料 MI（Push）</span><span lang="en">Issue MI (Push)</span></td><td><span lang="zh">工單核准時系統自動產生草稿；倉庫指定來源儲位後過帳出庫。</span><span lang="en">Created automatically as a draft when the work order is approved; the warehouse gives the source location and posts it.</span></td></tr>
+        <tr><td><span lang="zh">領料 MR（Pull）</span><span lang="en">Requisition MR (Pull)</span></td><td><span lang="zh">生產單位按需申請 → 送審 → 倉庫核准 → 揀料過帳。手機可在上工頁直接申請。</span><span lang="en">Raised by production as needed → submitted → approved by the warehouse → picked and posted. It can be requested straight from the production-session screen on the phone.</span></td></tr>
+        <tr><td><span lang="zh">後沖（Backflush）</span><span lang="en">Backflush</span></td><td><span lang="zh">不開單；工單完工時依完工量自動扣料，結案時釋放剩餘鎖定。</span><span lang="en">No slip; material is deducted automatically from the completed quantity when the work order is completed, and remaining reservations are released at closure.</span></td></tr>
+        <tr><td><span lang="zh">退料 MX</span><span lang="en">Return MX</span></td><td><span lang="zh">用剩的料退回指定儲位，退料量不得超過已發未退；以當初發料成本入庫，不再鎖給該工單。</span><span lang="en">Surplus goes back into a chosen location; it cannot exceed what was issued and not yet returned. It comes back at the original issue cost and is no longer reserved for the work order.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-box-seam me-1 text-primary"></i><span lang="zh">已備料的料要<strong>先從備料儲位扣</strong>：這張工單在備料區還有的量，發料／領料一定要先從備料儲位領完；備料區不夠的部分才可以從其他儲位領。桌機存檔時、手機送出時與過帳時都會檢查，違反會擋下並說明該從哪個儲位領、要領多少。退料不受影響。</span><span lang="en">Staged material must be <strong>taken from the staging location first</strong>: whatever is still in the staging area for this work order has to be issued or requisitioned from the staging location; only the shortfall may come from other locations. This is checked when a desktop slip is saved, when the mobile slip is submitted and when it is posted; a violation is blocked with a message saying which location to use and how much. Returns are not affected.</span></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class="badge bg-secondary"><span lang="zh">草稿</span><span lang="en">Draft</span></span></td><td><span lang="zh">可編輯、刪除。領料單（MR）在此送審；其他類別直接「核准」。</span><span lang="en">Can be edited or deleted. Requisitions (MR) are submitted from here; every other type is simply "Approved".</span></td></tr><tr><td><span class="badge bg-info"><span lang="zh">待核准</span><span lang="en">Pending</span></span></td><td><span lang="zh">僅領料單（MR）：等倉庫核准。</span><span lang="en">Requisitions (MR) only: waiting for warehouse approval.</span></td></tr><tr><td><span class="badge bg-primary"><span lang="zh">已核准</span><span lang="en">Approved</span></span></td><td><span lang="zh">可開始揀料。</span><span lang="en">Ready to pick.</span></td></tr><tr><td><span class="badge bg-warning text-dark"><span lang="zh">揀料中</span><span lang="en">Picking</span></span></td><td><span lang="zh">倉庫正在揀料。</span><span lang="en">The warehouse is picking.</span></td></tr><tr><td><span class="badge bg-primary"><span lang="zh">已確認</span><span lang="en">Confirmed</span></span></td><td><span lang="zh">揀料完成，等待過帳。</span><span lang="en">Picking finished; waiting to be posted.</span></td></tr><tr><td><span class="badge bg-success"><span lang="zh">已過帳</span><span lang="en">Posted</span></span></td><td><span lang="zh">庫存已異動，工單已發／已退量已累計，不可再修改。</span><span lang="en">Stock has moved and the work order's issued/returned totals are updated; it can no longer be changed.</span></td></tr><tr><td><span class="badge bg-danger"><span lang="zh">已取消</span><span lang="en">Cancelled</span></span></td><td><span lang="zh">過帳前都可取消，包括倉庫已確認揀料的單（揀出的料請放回原儲位，尚未過帳故庫存帳不受影響）；已過帳或已結案的單不能取消。工單作廢時，草稿到揀料中的單會自動取消。來源工單已作廢時發退料單都不能過帳；已結案（入庫完成）的工單只能退料、不能再發料。</span><span lang="en">Can be cancelled at any point before posting, including a slip the warehouse has already confirmed as picked (put the picked material back in its original location; nothing has been posted, so stock records are unaffected). Posted or closed slips cannot be cancelled. When the work order is voided, slips from draft up to picking are cancelled automatically. No slip can be posted against a voided work order, and a closed (received) work order accepts returns only — no further issues.</span></td></tr></tbody>
+    </table>
+
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">發料（含領料、委外發料）</span><span lang="en">Issue (incl. requisition and outsource issue)</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">開啟單據，在每一行的<strong>「來源倉/儲位」</strong>點放大鏡<strong>「選擇庫存」</strong>，從列出的各儲位在手／可用量中挑一筆（倉庫、儲位、批號一起帶入）。</span><span lang="en">Open the slip and, on each line, click the magnifier <strong>"Pick from stock"</strong> next to <strong>"Source Wh/Loc"</strong>; choose one of the locations listed with on-hand and available quantities (warehouse, location and lot are filled in together).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">依狀態依序點「核准」→「開始揀料」→「確認揀料」→「過帳發料」。缺來源儲位的行會在過帳時指出行號。</span><span lang="en">Click "Approve" → "Start Picking" → "Confirm Picking" → "Post Issue" in turn. Lines with no source location are reported by line number at posting.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">或改用手機「工單發退料」：選單據 → 點儲位 → 確認，一次完成揀料與過帳。</span><span lang="en">Or use "WO Material Issue/Return" on the phone: pick the slip → tap a location → confirm, which picks and posts in one step.</span></div></div>
+    <h3><span lang="zh">退料</span><span lang="en">Return</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">退料類只顯示<strong>「退回倉/儲位」</strong>：指定料要退進的位置（不必選庫存）。</span><span lang="en">Return types show only <strong>"Return to Wh/Loc"</strong>: give the location the material goes back into (no stock to pick from).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">過帳後料件以當初發料成本入庫，工單已退量累加。</span><span lang="en">Once posted, the material comes back at its original issue cost and the work order's returned quantity goes up.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">退料的成本＝這張工單此料「還在線上」的加權平均（已發的價值扣掉已退回的價值），不是現在的庫存單價，也不是全部發料的平均。工單結案（已入庫結算）後仍可退料（現場清出的剩料），但這批料的成本已算進成品，系統會同時自動開一張分錄：借原料存貨／貸製造成本差異，讓結案工單的在製維持為 0。</span><span lang="en">A return is costed at the weighted average of what is still out on this work order for that item (value issued less value already returned) — not the current stock cost, and not the average of all issues. Returns are still allowed after the work order is closed (leftover material found on the floor), but that material's cost is already in the finished goods, so the system also posts a journal: debit raw material inventory, credit manufacturing cost variance, which keeps the closed work order's WIP at zero.</span></div>
+
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。列印單含類別、來源單據、委外廠商名稱，以及各行品號、品名、申請／核准／實發量、單位與出入庫倉儲位，供倉庫備料與簽收。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The printout shows the category, source document and subcontractor name, and for each line the product code and name, requested/approved/confirmed quantities, unit and from/to warehouse and location, for picking and sign-off.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">表頭</span><span lang="en">Header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">發退料單號</span><span lang="en">Slip No</span></td><td><span lang="zh">系統採番，前綴依類別而不同（MI／MR／MX／OI／OR／RI／RX）</span><span lang="en">Numbered by the system, with a prefix that depends on the type (MI / MR / MX / OI / OR / RI / RX)</span></td></tr>
+        <tr><td><span lang="zh">類別</span><span lang="en">Category</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">七種業務路徑：MI 廠內發料（工單釋出後系統自動建立；重工工單自動建立的是 RI）／MR 廠內領料（生產單位按需申請，需審核）／MX 廠內退料／OI 委外發料／OR 委外退料／RI 重工發料／RX 重工退料。工單的發退料一律不入帳（料只是進出在製品），由完工入庫結算；沒有開工單的重工改用庫存模組的<a href="../inv/rework-material.html">重工發退料單</a></span><span lang="en">Seven business paths: MI in-plant issue (created automatically once the work order is released; for a rework order the automatic slip is RI) / MR in-plant requisition (raised by production as needed, requires approval) / MX in-plant return / OI outsource issue / OR outsource return / RI rework issue / RX rework return. Work order material slips never create journal entries (the material just moves in and out of work in process) and are settled at completion receipt; rework without a work order uses the INV <a href="../inv/rework-material.html">Rework Material</a> document instead</span></td></tr>
+        <tr><td><span lang="zh">單據日期</span><span lang="en">Doc Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">發料或退料的日期</span><span lang="en">Date of the issue or return</span></td></tr>
+        <tr><td><span lang="zh">目標廠商</span><span lang="en">Target supplier</span></td><td><span lang="zh">委外類別（OI／OR）時填寫收料的委外廠商</span><span lang="en">For outsource types (OI / OR), the subcontractor receiving the material</span></td></tr>
+        <tr><td><span lang="zh">來源單別 / 來源單號</span><span lang="en">Source doc type / Source doc No</span></td><td><span lang="zh">產生此需求的來源單據，可回溯需求出處。來源單別從下拉選（工單；委外類別另可選委外採購單），來源單號可輸入關鍵字搜尋，只列還會發退料的單：發料類列已釋出、生產中的工單，退料類另含已完工；已入庫結案、作廢的不列。委外採購單只列已確認的。</span><span lang="en">Source document that produced this demand, for tracing where it came from. Pick the source doc type from the list (work order; outsource categories can also use an outsource purchase order) and search the source doc No by keyword. Only documents that can still issue or return material are listed: issue categories show released and in-progress work orders, return categories also include completed ones; closed (received into stock) and void ones are not listed. Outsource purchase orders are listed only once confirmed.</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">整張單據的補充說明</span><span lang="en">Notes for the whole document</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">明細</span><span lang="en">Lines</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">要發出或退回的料件</span><span lang="en">Item to be issued or returned</span></td></tr>
+        <tr><td><span lang="zh">申請量 / 單位</span><span lang="en">Requested qty / Unit</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">需求數量與計量單位。單位固定為品號的<strong>庫存單位</strong>，選了品號後自動帶出——工單用料、領退料額度與過帳都以庫存單位計，存檔時其他單位會被擋下。</span><span lang="en">Demand quantity and unit of measure. The unit is always the product's <strong>stock unit</strong>, filled in once the product is chosen — work-order materials, issue/return limits and posting all use the stock unit, and any other unit is rejected on save.</span></td></tr>
+        <tr><td><span lang="zh">來源倉 / 儲位</span><span lang="en">Source warehouse / Location</span></td><td><span lang="zh">發料類才有。料件取出的位置；先選倉庫再選儲位，或點「選擇庫存」從有庫存的儲位挑。若該品號另有保留給訂單／工單的量，視窗上方會以黃色提示列出（這些量不落在儲位上，表格的「可用」沒有扣除；出貨時超過「在手 − 保留」會被擋）。</span><span lang="en">Issue types only. Where the material is taken from: choose the warehouse then the location, or use "Pick from stock" to choose from locations that hold stock. If some of the item is also reserved for orders or work orders, a yellow notice at the top of the window lists it (those reservations are not tied to a location, so "Available" in the table does not deduct them; shipping more than on-hand minus reserved is blocked).</span></td></tr>
+        <tr><td><span lang="zh">退回倉 / 儲位</span><span lang="en">Return to warehouse / Location</span></td><td><span lang="zh">退料類才有。退回的料要放進的位置</span><span lang="en">Return types only. Where the returned material is put</span></td></tr>
+        <tr><td><span lang="zh">批號</span><span lang="en">Lot</span></td><td><span lang="zh">批號管制品的批次；影響追溯與效期管控</span><span lang="en">Lot for lot-controlled items; it drives traceability and shelf-life control</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">狀態流程：草稿 → 待核准（僅領料 MR）→ 已核准 → 揀料中 → 已確認 → 已過帳。</span><span lang="en">Status flow: draft → pending (requisitions MR only) → approved → picking → confirmed → posted.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="material-slip-progress.html"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>、<a href="../inv/warehouse-ops.html"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a>、<a href="../mobile/issue.html"><span lang="zh">手機：工單發退料</span><span lang="en">Mobile: WO Material Issue/Return</span></a>、<a href="../mobile/requisition.html"><span lang="zh">手機：領料／退料</span><span lang="en">Mobile: Requisition / Return</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Trial Balance</value></data>
+  <data name="MethodHint" xml:space="preserve"><value>Lists the opening balance, period debits and credits, and closing balance of every account, and checks that total debits equal total credits. ⚠️ This system does not perform period-end closing, so profit and loss accounts (4–8) are not reset at the year boundary; across years their opening balance is the cumulative total since inception — the same thing the "Net Profit (Unclosed)" card on the balance sheet reports.</value></data>
+  <data name="FromPeriod" xml:space="preserve"><value>From Period</value></data>
+  <data name="ToPeriod" xml:space="preserve"><value>To Period</value></data>
+  <data name="FromBeginning" xml:space="preserve"><value>(since inception)</value></data>
+  <data name="IncludeZeroRows" xml:space="preserve"><value>Show zero-balance accounts</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchFirst" xml:space="preserve"><value>Select a closing period then click Search</value></data>
+  <data name="NoData" xml:space="preserve"><value>No journal lines in the selected period</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>Export Excel</value></data>
+  <data name="ResultTitle" xml:space="preserve"><value>Account Balances</value></data>
+  <data name="Accounts" xml:space="preserve"><value>accounts</value></data>
+  <data name="Balanced" xml:space="preserve"><value>Debits equal credits</value></data>
+  <data name="NotBalanced" xml:space="preserve"><value>Debits do not equal credits — the entries in this period are wrong; do not close the period</value></data>
+  <data name="Difference" xml:space="preserve"><value>Out of balance by:</value></data>
+  <data name="TotalDebit" xml:space="preserve"><value>Total Debit</value></data>
+  <data name="TotalCredit" xml:space="preserve"><value>Total Credit</value></data>
+  <data name="Total" xml:space="preserve"><value>Total</value></data>
+  <data name="AccountCode" xml:space="preserve"><value>Account</value></data>
+  <data name="AccountName" xml:space="preserve"><value>Name</value></data>
+  <data name="OpeningBalance" xml:space="preserve"><value>Opening</value></data>
+  <data name="PeriodDebit" xml:space="preserve"><value>Debit</value></data>
+  <data name="PeriodCredit" xml:space="preserve"><value>Credit</value></data>
+  <data name="ClosingBalance" xml:space="preserve"><value>Closing</value></data>
+  <data name="FuturePeriodSuffix" xml:space="preserve"><value>(future)</value></data>
+</root>

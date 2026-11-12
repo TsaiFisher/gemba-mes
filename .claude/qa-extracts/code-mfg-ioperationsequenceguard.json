@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Modules/MFG/Services/IOperationSequenceGuard.cs",
+  "sourceHash": "181108f982c33c331e8f2b874d65f22d00f85d833a78129ea5a0cc4c15e2a9a6",
+  "entries": [
+    {
+      "slug": "code-mfg-ioperationsequenceguard-7c47e8c1",
+      "lang": "zh",
+      "headingPath": "生產製造 › 工序順序守門：後製程累計產出不得超過前製程",
+      "text": "工序順序守門規則說明｜後製程的累計產出數量不能超過前一個工序的累積產出量。此限制僅在簡化模式下生效，因為當沒有排程時，現場人員可以從任何工序直接開工，否則系統會產生後製程比前製程多出產量的異常資料。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-ioperationsequenceguard-4089e6c4",
+      "lang": "zh",
+      "headingPath": "生產製造 › 檢查本次報工是否會讓本工序累計產出超過前工序",
+      "text": "報工產出是否超過前工序限制｜如果這是第一道工序，或者系統是以完整模式運作時，本次報工的產出不會受到前一個工序累計產出的限制。",
+      "approved": true
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+#!/usr/bin/env bash
+# mes — SmartFactory MES 穩定版／開發模式切換
+# 原始檔：deploy/wsl/mes（安裝：install -m 755 deploy/wsl/mes ~/bin/mes；說明見 deploy/wsl-stable-release.md）
+#
+#   mes status              目前模式、穩定版版本、誰佔著 5110/7054、健康檢查
+#   mes publish [ref]       從 GitHub 的 ref（預設 origin/main）發布新穩定版並切換過去
+#                           加 --test 先跑單元測試；新版健康檢查失敗會自動退回上一版
+#   mes stable              切到穩定版（啟動服務，開機自動啟動）
+#   mes dev                 切到開發模式（停掉穩定版並取消開機啟動，讓出埠給 F5／dotnet watch）
+#   mes rollback            穩定版退回上一個發布
+#   mes logs [n]            穩定版最近 n 行日誌（預設 80）
+#   mes list                列出保留中的發布
+#
+# 兩種模式共用 5110/7054 與 ProjectZ 資料庫，所以一次只能跑一種（同時跑會重複執行每日排程）。
+set -euo pipefail
+
+SVC=mes-stable.service
+BASE="$HOME/mes-stable"
+RELEASES="$BASE/releases"
+CURRENT="$BASE/current"
+REPO="$HOME/ProjectZ"                 # 讀 license.json／appsettings.Development.json 的來源
+SRC="$HOME/.cache/wt-pz-release"      # 發布專用 worktree（detached），不碰你的工作樹
+KEEP=5
+PORTS=(5110 7054)
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+say()  { printf '%s\n' "$*"; }
+die()  { printf '✗ %s\n' "$*" >&2; exit 1; }
+
+port_holders() {   # 列出佔著 5110/7054 的 pid（去重）
+  local p
+  for p in "${PORTS[@]}"; do
+    ss -ltnpH "( sport = :$p )" 2>/dev/null | { grep -oE 'pid=[0-9]+' || true; } | cut -d= -f2
+  done | sort -u
+}
+
+service_pid() { systemctl --user show -p MainPID --value "$SVC" 2>/dev/null || echo 0; }
+
+foreign_holders() {   # 佔著埠、但不是穩定版服務的進程
+  local svc; svc=$(service_pid)
+  port_holders | grep -vx "${svc:-0}" || true
+}
+
+describe_pid() { ps -o pid=,lstart=,args= -p "$1" 2>/dev/null | cut -c1-150; }
+
+health() {   # 等最多 $1 秒，/health 回 200 即成功
+  local wait=${1:-90} i
+  for ((i = 0; i < wait; i += 3)); do
+    if [ "$(curl -sk -o /dev/null -w '%{http_code}' --max-time 3 https://localhost:7054/health)" = 200 ]; then
+      return 0
+    fi
+    sleep 3
+  done
+  return 1
+}
+
+release_info() { [ -f "$1/RELEASE_INFO" ] && cat "$1/RELEASE_INFO" || echo "(無版本資訊)"; }
+
+cmd_status() {
+  local active enabled
+  active=$(systemctl --user is-active "$SVC" 2>/dev/null || true)
+  enabled=$(systemctl --user is-enabled "$SVC" 2>/dev/null || true)
+  if [ "$active" = active ]; then say "模式：穩定版（服務執行中，開機啟動=$enabled）"
+  elif [ -n "$(port_holders)" ]; then say "模式：開發（埠由其他進程使用，穩定版已停）"
+  else say "模式：未啟動（穩定版 $active，埠空著）"; fi
+
+  if [ -L "$CURRENT" ]; then
+    say "穩定版：$(basename "$(readlink -f "$CURRENT")")"
+    release_info "$CURRENT" | sed 's/^/        /'
+    local sha; sha=$(sed -n 's/^commit: //p' "$CURRENT/RELEASE_INFO" 2>/dev/null || true)
+    if [ -n "$sha" ] && git -C "$REPO" rev-parse -q --verify origin/main >/dev/null; then
+      say "        落後 origin/main：$(git -C "$REPO" rev-list --count "$sha..origin/main" 2>/dev/null || echo ?) 個 commit（以本機最後一次 fetch 為準）"
+    fi
+  else
+    say "穩定版：尚未發布（執行 mes publish）"
+  fi
+
+  local pids; pids=$(port_holders)
+  if [ -n "$pids" ]; then
+    say "佔用 5110/7054："
+    for p in $pids; do say "  $(describe_pid "$p")"; done
+  fi
+  if [ -n "$pids" ]; then
+    if health 3; then say "健康檢查：OK（https://localhost:7054/health）"; else say "健康檢查：失敗"; fi
+  fi
+}
+
+ensure_ports_free_for_stable() {
+  local f; f=$(foreign_holders)
+  if [ -n "$f" ]; then
+    say "5110/7054 正被其他進程使用（多半是開發中的 F5／dotnet watch）："
+    for p in $f; do say "  $(describe_pid "$p")"; done
+    die "請先停掉它再執行 mes stable（為避免誤殺，本指令不替你結束進程）。"
+  fi
+}
+
+cmd_stable() {
+  [ -L "$CURRENT" ] || die "尚未有穩定版，請先 mes publish"
+  ensure_ports_free_for_stable
+  systemctl --user reset-failed "$SVC" >/dev/null 2>&1 || true
+  systemctl --user enable --now "$SVC" >/dev/null 2>&1
+  say "啟動穩定版 $(basename "$(readlink -f "$CURRENT")")…"
+  if health 120; then say "✓ 穩定版已就緒：https://localhost:7054"
+  else die "穩定版 120 秒內未就緒，請看 mes logs"; fi
+}
+
+cmd_dev() {
+  systemctl --user disable --now "$SVC" >/dev/null 2>&1 || true
+  local left; left=$(port_holders)
+  if [ -n "$left" ]; then
+    say "穩定版已停，但埠仍被佔用："
+    for p in $left; do say "  $(describe_pid "$p")"; done
+  else
+    say "✓ 已切到開發模式：穩定版已停並取消開機啟動，5110/7054 已空出，可用 F5 或 dotnet watch。"
+    say "  回到穩定版：先停掉開發 app，再執行 mes stable"
+  fi
+}
+
+prune() {
+  local keep_from_current
+  keep_from_current=$(readlink -f "$CURRENT" 2>/dev/null || true)
+  { ls -1dt "$RELEASES"/*/ 2>/dev/null || true; } | tail -n +$((KEEP + 1)) | while read -r d; do
+    d=${d%/}
+    [ "$(readlink -f "$d")" = "$keep_from_current" ] && continue
+    rm -rf -- "$d" && say "  清除舊發布 $(basename "$d")"
+  done
+}
+
+switch_to() {   # 把 current 指到 $1；若穩定版模式中則重啟並健康檢查，失敗退回 $2
+  local target=$1 previous=${2:-}
+  ln -sfn "$target" "$CURRENT.tmp" && mv -Tf "$CURRENT.tmp" "$CURRENT"
+  if [ "$(systemctl --user is-enabled "$SVC" 2>/dev/null || true)" = enabled ]; then
+    systemctl --user restart "$SVC"
+    if health 120; then
+      say "✓ 穩定版已切換到 $(basename "$target") 並就緒：https://localhost:7054"
+    else
+      if [ -n "$previous" ]; then
+        say "✗ 新版 120 秒內未就緒，自動退回 $(basename "$previous")"
+        ln -sfn "$previous" "$CURRENT.tmp" && mv -Tf "$CURRENT.tmp" "$CURRENT"
+        systemctl --user restart "$SVC"
+        health 120 && say "  已退回並就緒" || say "  退回後仍未就緒，請看 mes logs"
+      fi
+      die "新版啟動失敗，請看 mes logs"
+    fi
+  else
+    say "✓ 穩定版已指向 $(basename "$target")（目前是開發模式，未啟動；要用時執行 mes stable）"
+  fi
+}
+
+cmd_publish() {
+  local ref=origin/main run_tests=0 a
+  for a in "$@"; do
+    case "$a" in
+      --test) run_tests=1 ;;
+      -*) die "未知選項 $a" ;;
+      *) ref=$a ;;
+    esac
+  done
+
+  [ -f "$REPO/license.json" ] || die "找不到 $REPO/license.json"
+  [ -f "$REPO/appsettings.Development.json" ] || die "找不到 $REPO/appsettings.Development.json"
+
+  say "取得 $ref…"
+  git -C "$REPO" fetch -q origin
+  local sha; sha=$(git -C "$REPO" rev-parse --verify "$ref^{commit}") || die "找不到 $ref"
+  case "$ref" in
+    origin/*) ;;
+    *) git -C "$REPO" branch -r --contains "$sha" | grep -q . \
+         || die "$ref（${sha:0:8}）還沒推上 GitHub。穩定版只發布已推上去的 commit。" ;;
+  esac
+
+  if [ ! -e "$SRC/.git" ]; then git -C "$REPO" worktree add -q --detach "$SRC" "$sha"
+  else git -C "$SRC" checkout -q --detach "$sha"; fi
+  [ -z "$(git -C "$SRC" status --porcelain --untracked-files=no)" ] || die "$SRC 有未提交改動，請檢查"
+
+  if [ $run_tests = 1 ]; then
+    say "執行單元測試…"
+    cp "$REPO/license.json" "$SRC/license.json"
+    local out; out=$(dotnet test "$SRC/SmartFactory.MES.Tests/SmartFactory.MES.Tests.csproj" 2>&1 | grep -E '^(Passed|Failed)!' || true)
+    say "  $out"
+    echo "$out" | grep -qE '^Passed!.*Failed: *0,' || die "單元測試未全過，停止發布"
+  fi
+
+  local name; name="$(date +%Y%m%d-%H%M)-${sha:0:8}"
+  local out="$RELEASES/$name"
+  [ -e "$out" ] && die "$out 已存在"
+  say "發布 ${sha:0:8} → $name …"
+  dotnet publish "$SRC/SmartFactory.MES.csproj" -c Release -o "$out" -v q --nologo >"$BASE/last-publish.log" 2>&1 \
+    || { rm -rf -- "$out"; die "發布失敗，詳見 $BASE/last-publish.log"; }
+  cp "$REPO/license.json" "$REPO/appsettings.Development.json" "$out/"
+  # Security DLL 不進版控（/Security/ 在 .gitignore），發布用 worktree 裡沒有它；
+  # 沒有它時 DefaultEncrypted 解不開，Development 會退回空的 DefaultConnection → 啟動即崩潰。
+  if [ -f "$REPO/Security/SmartFactory.MES.Security.dll" ]; then
+    mkdir -p "$out/Security" && cp "$REPO/Security/SmartFactory.MES.Security.dll" "$out/Security/"
+  elif grep -q '"DefaultEncrypted": *"ENC:' "$REPO/appsettings.Development.json"; then
+    rm -rf -- "$out"; die "組態使用 DefaultEncrypted，但找不到 $REPO/Security/SmartFactory.MES.Security.dll"
+  fi
+  {
+    echo "commit: $sha"
+    echo "subject: $(git -C "$REPO" log -1 --format=%s "$sha")"
+    echo "committed: $(git -C "$REPO" log -1 --format=%ci "$sha")"
+    echo "published: $(date '+%Y-%m-%d %H:%M:%S %z')"
+    echo "ref: $ref"
+  } >"$out/RELEASE_INFO"
+  say "  大小 $(du -sh "$out" | cut -f1)"
+
+  local previous=""; [ -L "$CURRENT" ] && previous=$(readlink -f "$CURRENT")
+  switch_to "$out" "$previous"
+  prune
+}
+
+cmd_rollback() {
+  local cur prev
+  cur=$(readlink -f "$CURRENT" 2>/dev/null) || die "尚未有穩定版"
+  # 依名稱（<時間>-<commit>）找「比目前更早」的最近一版——不是「最新的另一版」，
+  # 否則退回後再退一次會跳回剛剛那個較新的版本。
+  local curname; curname=$(basename "$cur")
+  prev=$(find "$RELEASES" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort | awk -v c="$curname" '$0 < c' | tail -1)
+  [ -n "$prev" ] || die "沒有比 $curname 更早的發布可退回"
+  prev="$RELEASES/$prev"
+  say "退回：$(basename "$cur") → $(basename "$prev")"
+  switch_to "$prev"
+}
+
+cmd_logs() {
+  local n=${1:-80} f
+  f=$(ls -t "$CURRENT"/logs/*.log 2>/dev/null | head -1 || true)
+  if [ -n "$f" ]; then say "== $f"; tail -n "$n" "$f"; fi
+  say "== systemd（journal）"
+  journalctl --user -u "$SVC" -n 20 --no-pager 2>/dev/null || true
+}
+
+cmd_list() {
+  local cur; cur=$(readlink -f "$CURRENT" 2>/dev/null || true)
+  { ls -1dt "$RELEASES"/*/ 2>/dev/null || true; } | sed 's:/$::' | while read -r d; do
+    mark=" "; [ "$(readlink -f "$d")" = "$cur" ] && mark="*"
+    printf '%s %s  %s\n' "$mark" "$(basename "$d")" "$(sed -n 's/^subject: //p' "$d/RELEASE_INFO" 2>/dev/null)"
+  done
+}
+
+case "${1:-status}" in
+  status)   cmd_status ;;
+  publish)  shift; cmd_publish "$@" ;;
+  stable)   cmd_stable ;;
+  dev)      cmd_dev ;;
+  rollback) cmd_rollback ;;
+  logs)     shift; cmd_logs "$@" ;;
+  list)     cmd_list ;;
+  -h|--help|help) sed -n '2,15p' "$0" ;;
+  *) die "未知指令 $1（mes help 看用法）" ;;
+esac

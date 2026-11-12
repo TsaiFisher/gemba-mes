@@ -1,0 +1,165 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject ITimeZoneCatalog TimeZones
+@model SmartFactory.MES.Models.Plant
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    var action = isEdit
+        ? Url.Action("Edit", "Plant", new { id = Model.Id })
+        : Url.Action("Create", "Plant");
+
+    // ── 以下為 ProjectZ 就地漂移（Core 的 _PlantForm 維持單頁、只管廠別本身的欄位）──
+    // 「廠別參數」是本部署專案獨有的概念，頁籤是為了它才長出來的，因此頁籤這層排版
+    // 留在 ProjectZ，不上送 Core。代價已登錄於 scripts/core-drift-baseline.txt：
+    // Core 日後若改動本檔，同步時要人工合併這段。
+
+    // 先讓擴充區塊知道「宿主表單有頁籤可用」，它才會回填兩個頁籤名稱。
+    ViewData["PlantFormSupportsTabs"] = true;
+
+    // 擴充區塊先渲染成字串，才能判斷「這個部署專案到底有沒有東西要放」。
+    // Html.PartialAsync(name) 會把 ViewData 複製一份給 partial，故上面的旗標傳得下去
+    // （反向則不然，見下方頁籤名稱的取得方式）。
+    var extensionWriter = new System.IO.StringWriter();
+    (await Html.PartialAsync("_PlantFormModuleExtensions"))
+        .WriteTo(extensionWriter, System.Text.Encodings.Web.HtmlEncoder.Default);
+    var extensionHtml = extensionWriter.ToString();
+    var hasExtension = !string.IsNullOrWhiteSpace(extensionHtml);
+
+    // 兩個頁籤名稱都由擴充區塊自己的資源檔提供：引進頁籤的是本部署專案，
+    // 命名責任就跟著留在本部署專案，不必為了兩個字串去動 Core 的 _PlantForm.resx。
+    // 走 HttpContext.Items 而非 ViewData——partial 拿到的是 ViewData 的複本，寫入回不來（實測）。
+    var basicTabTitle = Context.Items["PlantFormBasicTabTitle"] as string;
+    var extensionTabTitle = Context.Items["PlantFormExtensionTabTitle"] as string;
+
+    // 少了任一個名字就退回 Core 的單頁排版——寧可沒有頁籤，也不要長出沒有名字的頁籤。
+    var useTabs = hasExtension
+        && !string.IsNullOrWhiteSpace(basicTabTitle)
+        && !string.IsNullOrWhiteSpace(extensionTabTitle);
+}
+
+<form id="panelForm" action="@action" method="post" data-ajax="true">
+    @Html.AntiForgeryToken()
+
+    @if (useTabs)
+    {
+        @* type="button" 不可省：nav-link 在 <form> 內預設是 submit，按頁籤會直接送出表單。 *@
+        <ul class="nav nav-tabs px-3 pt-3" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" type="button" role="tab"
+                        data-bs-toggle="tab" data-bs-target="#plantFormPaneBasic">
+                    @basicTabTitle
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" type="button" role="tab"
+                        data-bs-toggle="tab" data-bs-target="#plantFormPaneExtension">
+                    @extensionTabTitle
+                </button>
+            </li>
+        </ul>
+    }
+
+    <div class="tab-content">
+    <div class="@(useTabs ? "tab-pane fade show active" : "")" id="plantFormPaneBasic" role="tabpanel">
+    <div class="p-4">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+
+        <div class="mb-3">
+            <label asp-for="Id" class="form-label fw-bold">@Localizer["PlantCode"] <span class="text-danger">*</span></label>
+            @if (isEdit)
+            {
+                <input asp-for="Id" class="form-control bg-light" readonly />
+            }
+            else
+            {
+                <input asp-for="Id" class="form-control" placeholder="P1, P2, ..." />
+            }
+            <span asp-validation-for="Id" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label fw-bold">@Localizer["PlantNameZh"] <span class="text-danger">*</span></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NameEn" class="form-label fw-bold">@Localizer["PlantName"] (English)</label>
+            <input asp-for="NameEn" class="form-control" placeholder="e.g. Taipei Plant" />
+            <span asp-validation-for="NameEn" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="AddressZh" class="form-label fw-bold">@Localizer["AddressZh"]</label>
+            <input asp-for="AddressZh" class="form-control" maxlength="300" />
+            <span asp-validation-for="AddressZh" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="AddressEn" class="form-label fw-bold">@Localizer["AddressEn"]</label>
+            <input asp-for="AddressEn" class="form-control" maxlength="300" placeholder="e.g. No.1, Industry Rd., ..." />
+            <span asp-validation-for="AddressEn" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DefaultLanguage" class="form-label fw-bold">@Localizer["DefaultLanguage"]</label>
+            <select asp-for="DefaultLanguage" class="form-select">
+                <option value="">-- @Localizer["PleaseSelect"] --</option>
+                <option value="zh-TW">繁體中文 (zh-TW)</option>
+                <option value="en-US">English (en-US)</option>
+            </select>
+            <span asp-validation-for="DefaultLanguage" class="text-danger small"></span>
+            <div class="form-text">@Localizer["DefaultLanguageHint"]</div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DefaultTimeZone" class="form-label fw-bold">@Localizer["DefaultTimeZone"]</label>
+            @* 選項由系統時區清單產生（見 Services/TimeZoneCatalog.cs）。
+               select2 的初始化在 Index.cshtml 的 bindPanelForms()：面板內容是 AJAX 後
+               塞進來的，site.js 在 document ready 跑的那一次看不到它。 *@
+            <select asp-for="DefaultTimeZone" class="form-select select2-enable w-100"
+                    data-placeholder="@Localizer["PleaseSelect"]" data-allow-clear="true">
+                <option value="">-- @Localizer["PleaseSelect"] --</option>
+                @foreach (var tz in TimeZones.OptionsFor(Model.DefaultTimeZone))
+                {
+                    <option value="@tz.Id">@tz.Display</option>
+                }
+            </select>
+            <span asp-validation-for="DefaultTimeZone" class="text-danger small"></span>
+        </div>
+    </div>
+    </div>@* /#plantFormPaneBasic *@
+
+    @if (hasExtension)
+    {
+        <div class="@(useTabs ? "tab-pane fade" : "")" id="plantFormPaneExtension" role="tabpanel">
+            @* 上面已渲染過，這裡直接輸出——重跑一次 Partial 會讓有副作用的擴充跑兩遍 *@
+            @Html.Raw(extensionHtml)
+        </div>
+    }
+    </div>@* /.tab-content *@
+
+    @*
+        ⚠️ 這裡**刻意沒有** `@Html.PartialAsync("_PlantFormModuleExtensions")`。
+        那是把擴充區塊搬進頁籤之前的原始渲染點，搬完忘了刪，於是同一份欄位被輸出兩次
+        （一次在上面的 pane 裡、一次在這裡，而 `PlantFormSupportsTabs` 讓兩份都不帶標題，
+        看起來就是基本資料下面多出一堆沒有標題的參數欄位）。
+
+        重複的後果不只是外觀——兩份的 `name` 完全相同，而 PlantFormEnhancementFilter
+        讀值走 LastOrDefault()、讀勾選走 Any(v == "true")：文字／數值／選項取到的是
+        **這裡這份殘留**，所以在頁籤上改的值會被安靜丟掉；布林與「覆寫」核取方塊則因為
+        「任一份為 true 即為 true」而**永遠關不掉**。兩種都不會有錯誤訊息。
+
+        擴充區塊在上方（第 23 行）已渲染成字串並由 `@Html.Raw(extensionHtml)` 輸出一次，
+        `hasExtension` 為 false 時本來就不該有東西——三條分支都不需要這一行。
+        由 ParamSection_RendersExactlyOnce 守著。
+    *@
+
+    <div class="p-3 border-top bg-light d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" data-dismiss-panel>@Localizer["Cancel"]</button>
+        <button type="submit" class="btn btn-success px-4">
+            <i class="bi bi-save"></i> @Localizer["Save"]
+        </button>
+    </div>
+</form>

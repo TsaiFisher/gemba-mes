@@ -1,0 +1,25 @@
+# R22(b) baseline — 顯示用時間戳仍在讀伺服器時鐘的既有清單（回補時逐行刪除）。
+# 不在此清單的新違規會讓建置失敗。
+#
+# 2026-09-14：**清單已清空，本規則零例外**。
+#
+# 原本 11 筆的收斂過程，兩種處理各自的理由：
+#
+# 【一】Core 控制器的匯出檔名 10 支 —— 已由 Core-first 修正並同步回來。
+#   都是 `var now = DateTime.Now;` 餵給匯出檔名（User_20260914.csv）。
+#   Controllers/ 是核心保護區，ProjectZ 只能新增檔案不能改既有檔，所以
+#   正解是先在 SmartFactory.MES 改（upstream PR #29），再 cp 同步下來——
+#   不是在 fork 就地改，那會變成 Core 漂移且下次同步必衝突。
+#
+# 【二】每日排程 1 支 —— 已改為由組態明講排程時區。
+#   Services/Jobs/DailyJobServiceBase.cs 原本用 DateTimeOffset.Now 判斷「幾點了」，
+#   等於隱含採用伺服器時區。現改讀 appsettings 的 `Jobs:TimeZone`（IANA ID），
+#   未設定時退回伺服器時區**並留下警告**——退回可以接受，悄悄地退回不行。
+#   一度被列為 won't-fix，理由是「背景服務沒有 HTTP 使用者，IUserContext 取不到
+#   廠別時區」。那個理由其實問錯了問題：這六支排程都是全系統性的清理與稽核，
+#   沒有分廠語意，要的從來就不是「使用者的時區」而是「營運地點的時區」——
+#   而後者本來就該由組態講明，不必經過 IUserContext。
+#
+# 新增顯示用時間戳請先問：這個時間是要「秀給使用者看」的嗎？
+# 是 → 一律 IDateTimeService.Now（.cshtml 用 DateTimeSvc.Now），不要加進這裡。
+# 背景排程判斷時刻 → 用 DailyJobServiceBase.JobNow()，不要用 DateTimeOffset.Now。

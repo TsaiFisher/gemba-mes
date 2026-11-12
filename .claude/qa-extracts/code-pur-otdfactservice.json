@@ -1,0 +1,46 @@
+{
+  "sourcePath": "Modules/PUR/Services/OtdFactService.cs",
+  "sourceHash": "ee8a947d0f875f645b1a2be31d2f7e9e48015e2b3cd9dbe96015d1b56b9d290b",
+  "entries": [
+    {
+      "slug": "code-pur-otdfactservice-53d2d562",
+      "lang": "zh",
+      "headingPath": "採購 › 2026-09-21 口徑變更",
+      "text": "口徑變更規則說明｜系統現在判斷是否準時，是根據單據的預計交貨日期落在查詢期間內來決定。如果單據已經完全收到貨了，則以最後一次收貨日來判定是否準時；如果尚未全部收到貨但已超過預計交期，則會被計算為遲交，延遲天數是以指定時間點計算的；若尚未到期，則不會列入計算範圍。",
+      "approved": true,
+      "sourceSectionHash": "d6e247983b8156ea015ac75ecb3e9280b612831c0ffcaaa4eb00537ff0f905a5"
+    },
+    {
+      "slug": "code-pur-otdfactservice-df2d5578",
+      "lang": "zh",
+      "headingPath": "採購 › 「今天」，用來判斷未交的單是否已逾期並計算遲延天數",
+      "text": "報表篩選條件與日期設定說明｜系統會根據提供的廠別資訊來決定報表的範圍，若指定了廠別，則只顯示該廠別的資料；如果未指定廠別，則會彙總所有廠別的資料。此外，計算逾期天數時，必須使用當日且符合當地日期的日期作為參考點。",
+      "approved": true,
+      "sourceSectionHash": "7af14c015c70af3527bd502798c54c839d3c46c624859178acc1571d3eba1cfe"
+    },
+    {
+      "slug": "code-pur-otdfactservice-03d31ec5",
+      "lang": "zh",
+      "headingPath": "採購 › 交清日＝該行最後一次有效收貨的日期",
+      "text": "交清日依據最後一次有效收貨日期計算｜當分批收貨時，判定是否準時的標準是看所有收貨都完成的那一天，而不是只看第一次收貨的時間。",
+      "approved": true,
+      "sourceSectionHash": "1e35c93d4c0f5288d6f60c69250cc9fdac864f475f7581fcfdc579dc18049ebe"
+    },
+    {
+      "slug": "code-pur-otdfactservice-ad02cbba",
+      "lang": "zh",
+      "headingPath": "採購 › 交清了卻找不到收貨紀錄：拿不出交貨日期就無從判斷準時，",
+      "text": "交貨日期無法判斷是否準時｜如果找不到收貨紀錄，系統不會根據空缺的交貨日期來判定是否準時，這與未到期狀態一樣，目前不進行此類判斷。",
+      "approved": true,
+      "sourceSectionHash": "1b2c654ab7ef3eef603f240c11b4b03d29ce09bb1fe406421d6bf11c8dd11af0"
+    },
+    {
+      "slug": "code-pur-otdfactservice-e840227f",
+      "lang": "zh",
+      "headingPath": "採購 › ── 委外側：以委外採購單為粒度 ───────────────",
+      "text": "採購收貨依據單據層級判斷｜系統判定是否已完成收貨，僅以整個委外採購單的狀態來判斷，而非到品項明細行別的數量進行計算。",
+      "approved": true,
+      "sourceSectionHash": "76e2595af3bee6a8aed025553b86e6c6b6365f8e96f1a5e402ac88b211c36f98"
+    }
+  ]
+}

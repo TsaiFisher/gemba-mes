@@ -1,0 +1,34 @@
+{
+  "sourcePath": "Models/ApprovalModels.cs",
+  "sourceHash": "e7e96cc23d3e37eac20fd2a03360897c01259c04b42aabd66f61641b594d4637",
+  "entries": [
+    {
+      "slug": "code-core-approvalmodels-2229589f",
+      "lang": "zh",
+      "headingPath": "系統共用 › 同一簽核人自動跳簽：步驟的簽核人已於先前步驟簽核過時，",
+      "text": "同一簽核人自動跳簽規則說明｜如果負責審核的同一個人已經在前面的審核步驟中完成過審核，系統會自動將此步驟標記為已跳過並記錄到歷程中。這個功能預設是關閉的，需要透過模板來啟用。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-approvalmodels-92dc7616",
+      "lang": "zh",
+      "headingPath": "系統共用 › 送審時快照的簽核人 ID",
+      "text": "送審時的簽核人資訊來源｜系統會記錄在送審當下的簽核人識別碼，此資料可能是根據主管流程解析得出的結果，或是由管理員重新指派後覆蓋的數值。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-approvalmodels-dfa995b4",
+      "lang": "zh",
+      "headingPath": "系統共用 › 供簽核歷程顯示「代理 X 簽核」",
+      "text": "簽核紀錄會顯示代理人的資訊｜當系統進行代理人簽核時，供簽核歷程的記錄會顯示是「代理 X 簽核」，此處記錄的是實際執行簽核的人員。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-approvalmodels-20bba9cb",
+      "lang": "zh",
+      "headingPath": "系統共用 › 簽核代理人設定",
+      "text": "簽核代理人設定規則說明｜此設定的生效條件是，該代理人必須處於啟用狀態，並且當前的日期必須落在規定的開始日和結束日之間。此外，若有多層的代理關係，系統在解析時只會展開到第二層，不會遞迴展開至更深層級。",
+      "approved": true
+    }
+  ]
+}

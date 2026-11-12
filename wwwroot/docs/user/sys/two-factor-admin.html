@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Two-Factor Reset — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>兩階段驗證重置 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System Administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link active"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-shield-lock me-2 text-primary"></i><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：管理系統 → 兩階段驗證重置 &nbsp;|&nbsp; 權限：目前身份為 Admin</span><span lang="en">Menu: System Administration → Two-Factor Reset &nbsp;|&nbsp; Permission: current role is Admin</span></div>
+    </div>
+
+    <p><span lang="zh">兩階段驗證管理是</span><span lang="en">Two-factor administration is the </span><b><span lang="zh">遺失驗證器時的救援畫面</span><span lang="en">rescue screen for a lost authenticator</span></b><span lang="zh">：當某位使用者換了手機、刪掉驗證器 App，又用完或遺失復原碼而登不進系統時，由管理員在此替他重置兩階段驗證。</span><span lang="en">: when somebody changes phone, deletes their authenticator app and has run out of or lost their recovery codes, an administrator resets their two-factor authentication here.</span></p>
+
+    <img class="screen-shot" src="img/two-factor-admin.png" data-src-en="img/en/two-factor-admin.png" alt="兩階段驗證管理畫面截圖" data-alt-en="Two-factor administration screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">兩階段驗證管理畫面截圖（示意，實際資料依查詢條件而異）</span><span lang="en">Two-factor administration screenshot (illustrative; the data shown depends on the search)</span></div>
+
+    <h2 id="screen-fields"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">畫面欄位</span><span lang="en">Screen fields</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">帳號／Email</span><span lang="en">User name / e-mail</span></td><td><span lang="zh">使用者的識別資訊。上方搜尋框可同時比對這兩欄。</span><span lang="en">How the user is identified. The search box above matches on both.</span></td></tr>
+        <tr><td><span lang="zh">兩階段驗證狀態</span><span lang="en">Two-factor status</span></td><td><span lang="zh">已啟用／未啟用。已啟用者才有東西可重置。</span><span lang="en">Enabled or not. Only an enabled one has anything to reset.</span></td></tr>
+        <tr><td><span lang="zh">重置</span><span lang="en">Reset</span></td><td><span lang="zh">替該使用者停用兩階段驗證並清除其驗證器金鑰。狀態為「未啟用」的人沒有這個按鈕，操作欄顯示「—」——沒有東西可重置。</span><span lang="en">Turns two-factor authentication off for that user and clears their authenticator key. Somebody whose status is "not enabled" has no such button — the column shows a dash, because there is nothing to reset.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <span lang="zh">本畫面與其他查詢畫面不同：</span><span lang="en">Unlike the other search screens, this one </span><b><span lang="zh">一進來就直接列出使用者</span><span lang="en">lists users as soon as you open it</span></b><span lang="zh">，不需要先按「查詢」。清單最多顯示 200 筆，人數多時請用上方搜尋框縮小範圍。</span><span lang="en">, with no need to click "Search" first. At most 200 rows are shown, so use the search box to narrow it down when there are many people.</span>
+    </div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">替使用者重置兩階段驗證</span><span lang="en">Resetting two-factor authentication for a user</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">先以其他方式確認申請者身分（當面、電話或主管確認）。這個動作等同解除該帳號的第二道防線。</span><span lang="en">Confirm who is asking by some other means first — in person, by telephone or through their manager. This action removes the second line of defence on that account.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點選左側選單「管理系統 &gt; 兩階段驗證重置」，在搜尋框輸入帳號或 Email。</span><span lang="en">Choose "System Administration &gt; Two-Factor Reset" in the left-hand menu and type the user name or e-mail in the search box.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">找到該使用者，點「重置」。畫面上方會顯示已重置的確認訊息。</span><span lang="en">Find the user and click "Reset"; a confirmation message appears at the top of the screen.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">請對方重新登入。系統會要求他重新綁定驗證器並取得新的復原碼。</span><span lang="en">Ask them to sign in again; the system will require them to re-enrol an authenticator and take a fresh set of recovery codes.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">重置會讓舊金鑰與舊復原碼全部失效：</span><span lang="en">A reset invalidates the old key and all old recovery codes:</span></strong><span lang="zh">重置後，對方原本手機上的驗證器產生的驗證碼</span><span lang="en"> after the reset the codes produced by the authenticator already on their phone </span><b><span lang="zh">再也不能用</span><span lang="en">no longer work</span></b><span lang="zh">，先前列印保存的復原碼也一併作廢。若對方其實只是把驗證器 App 移到新手機、原本的金鑰還在，請</span><span lang="en">, and any recovery codes printed earlier are void as well. If they have in fact only moved the authenticator to a new phone and still have the key, </span><b><span lang="zh">不要重置</span><span lang="en">do not reset</span></b><span lang="zh">。</span><span lang="en">.</span>
+    </div>
+
+    <h2 id="who-must-have-two-factor-authentication"><i class="bi bi-shield-lock me-2 text-primary"></i><span lang="zh">誰必須啟用兩階段驗證</span><span lang="en">Who must have two-factor authentication</span></h2>
+    <p><span lang="zh">系統預設</span><span lang="en">By default the system </span><b><span lang="zh">強制 Admin 角色啟用</span><span lang="en">requires it for the Admin role</span></b><span lang="zh">兩階段驗證：具管理員角色卻尚未啟用的人，登入後會被直接導向設定畫面，在完成綁定前無法使用系統的其他功能。</span><span lang="en">: somebody with the administrator role who has not yet enabled it is taken straight to the setup screen after signing in and cannot use anything else until enrolment is complete.</span></p>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">情況</span><span lang="en">Situation</span></th><th><span lang="zh">結果</span><span lang="en">Result</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">被強制的角色，尚未啟用</span><span lang="en">A role that is required to have it, not yet enabled</span></td><td><span lang="zh">登入後強制導向兩階段驗證設定頁，完成綁定才能繼續。</span><span lang="en">Redirected to the two-factor setup page after sign-in; nothing else until enrolment is done.</span></td></tr>
+        <tr><td><span lang="zh">其他角色</span><span lang="en">Other roles</span></td><td><span lang="zh">不強制，但可自行到個人的兩階段驗證設定頁啟用。</span><span lang="en">Not required, but they may enable it themselves on their own two-factor setup page.</span></td></tr>
+        <tr><td><span lang="zh">重置之後</span><span lang="en">After a reset</span></td><td><span lang="zh">若對方屬於被強制的角色，下次登入會再次被要求綁定——這是預期行為，不是重置失敗。</span><span lang="en">If they belong to a role that requires it, they are asked to enrol again at their next sign-in. That is expected, not a failed reset.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">哪些角色被強制、以及是否整組停用強制，屬於部署層級的設定，不在畫面上調整；如需變更請洽系統維護人員。現場共用終端使用的角色通常刻意不列入強制名單。</span><span lang="en">Which roles are required to use it, and whether the requirement is switched off altogether, are deployment-level settings rather than something changed on screen; ask whoever maintains the installation. Roles used on shared shop-floor terminals are usually left out of the requirement on purpose.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "_README": [
+    "生產環境設定範本：複製為 appsettings.Production.json 後填入實際值。",
+    "appsettings.Production.json 已被 .gitignore 排除，切勿提交版控。",
+    "機敏值（連線字串、VAPID 私鑰）建議改用環境變數或 Secret Manager：",
+    "  ConnectionStrings__DefaultConnection / WebPush__VapidPrivateKey"
+  ],
+
+  "ConnectionStrings": {
+    "DefaultConnection": "",
+    "DefaultEncrypted": "ENC:v2:{salt}:{nonce}:{cipher}:{tag} ← 由 SmartFactory 以環境指紋加密核發（見 SECURITY-OPERATIONS.md §5）"
+  },
+
+  "AllowedHosts": "mes.example.com",
+
+  "Database": {
+    "AutoMigrate": false
+  },
+
+  "WebPush": {
+    "VapidPublicKey": "（與開發環境不同的一組生產用 VAPID 金鑰）",
+    "VapidPrivateKey": "（機敏：建議用環境變數 WebPush__VapidPrivateKey）",
+    "VapidSubject": "mailto:ops@example.com"
+  },
+
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "Microsoft.EntityFrameworkCore": "Warning",
+        "System": "Warning"
+      }
+    }
+  }
+}

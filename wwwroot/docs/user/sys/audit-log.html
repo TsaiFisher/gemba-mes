@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Audit Log — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>稽核日誌 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System Administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link active"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clock-history me-2 text-primary"></i><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：管理系統 → 稽核紀錄 &nbsp;|&nbsp; 權限：依權限設定（唯讀畫面）</span><span lang="en">Menu: System Administration → Audit Log &nbsp;|&nbsp; Permission: per permission settings (read-only screen)</span></div>
+    </div>
+
+    <p><span lang="zh">稽核日誌記錄系統中的資料異動：</span><span lang="en">The audit log records data changes in the system: </span><b><span lang="zh">誰、在什麼時候、對哪一筆資料、做了什麼</span><span lang="en">who did what, to which record, and when</span></b><span lang="zh">，以及來源 IP。本畫面</span><span lang="en">, together with the source IP address. This screen is </span><b><span lang="zh">唯讀</span><span lang="en">read-only</span></b><span lang="zh">：紀錄由系統自動寫入，任何人都不能在此新增、修改或刪除。</span><span lang="en">: entries are written automatically by the system and nobody can add, change or delete them here.</span></p>
+
+    <img class="screen-shot" src="img/audit-log.png" data-src-en="img/en/audit-log.png" alt="稽核日誌畫面截圖" data-alt-en="Audit log screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">稽核日誌畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Audit log screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search-criteria"><i class="bi bi-funnel me-2 text-primary"></i><span lang="zh">查詢條件</span><span lang="en">Search criteria</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">條件</span><span lang="en">Criterion</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">關鍵字</span><span lang="en">Keyword</span></td><td><span lang="zh">同時比對</span><span lang="en">Matched against both the </span><b><span lang="zh">使用者名稱</span><span lang="en">user name</span></b><span lang="zh">與</span><span lang="en"> and the </span><b><span lang="zh">資料ID</span><span lang="en">entity ID</span></b><span lang="zh">。想查某張單據的異動史，把單號貼進來即可。</span><span lang="en">. To see the history of one document, paste its number here.</span></td></tr>
+        <tr><td><span lang="zh">資料表類型</span><span lang="en">Entity Type</span></td><td><span lang="zh">下拉選單，列出目前資料中</span><span lang="en">A drop-down listing the entity types that </span><b><span lang="zh">實際出現過</span><span lang="en">actually occur</span></b><span lang="zh">的類型（例如 <code>Mobile.Permission</code>）。沒發生過的類型不會出現在清單裡。</span><span lang="en"> in the data (for example <code>Mobile.Permission</code>). A type that has never occurred is not offered.</span></td></tr>
+        <tr><td><span lang="zh">操作</span><span lang="en">Action</span></td><td><span lang="zh">依動作類型篩選（如新增、修改、刪除）。</span><span lang="en">Filters by the kind of change (create, update, delete and so on).</span></td></tr>
+        <tr><td><span lang="zh">開始日期／結束日期</span><span lang="en">Start Date / End Date</span></td><td><span lang="zh">依異動時間篩選，</span><span lang="en">Filters by the time of the change; </span><b><span lang="zh">含當日整天</span><span lang="en">the whole of both days is included</span></b><span lang="zh">（迄日當天的紀錄會被納入）。日期以</span><span lang="en"> (entries on the end date itself are covered). Days are counted in </span><b><span lang="zh">您的時區</span><span lang="en">your own time zone</span></b><span lang="zh">為準，與「時間」欄顯示的一致：清晨 0～8 點的異動算在當天，不會漏掉。</span><span lang="en">, matching what the Timestamp column shows: a change made in the early hours belongs to that day and is not missed.</span></td></tr>
+        <tr><td><span lang="zh">含無廠別記錄</span><span lang="en">Include unplanted records</span></td><td><span lang="zh">預設只看</span><span lang="en">By default you see only entries for the </span><b><span lang="zh">目前所在廠</span><span lang="en">plant you are currently in</span></b><span lang="zh">的紀錄。勾選後，額外納入不屬於任何廠的紀錄——使用者、角色、權限這類全公司共用的設定改動就屬於這一類。</span><span lang="en">. Tick it to additionally include entries that belong to no plant: changes to company-wide settings such as users, roles and permissions fall into this group.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">查不到權限或使用者的異動？先勾「含無廠別記錄」：</span><span lang="en">Cannot find a change to a user or a permission? Tick "Include unplanted records" first:</span></strong><span lang="zh">這類設定不隸屬任何廠，預設的廠別篩選會把它們濾掉，畫面看起來就像「沒有人動過」。2026-10-21 起，本身沒有廠別的資料（單據明細行、使用者、角色、權限、共用主檔）改記</span><span lang="en"> settings like these belong to no plant, so the default plant filter hides them and the screen looks as though nobody ever touched them. From 21 October 2026, changes to records that have no plant of their own (document lines, users, roles, permissions, shared master data) are filed under </span><b><span lang="zh">操作者當時所在的廠</span><span lang="en">the plant the person making the change was in</span></b><span lang="zh">，預設就看得到；在此之前的舊紀錄仍要勾選才會出現。</span><span lang="en">, so they show by default; older entries still need the box ticked.</span>
+    </div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">時間</span><span lang="en">Timestamp</span></td><td><span lang="zh">異動發生的時間，已換算成您所在廠別的時區顯示（系統內部以 UTC 儲存）。預設由新到舊排序。</span><span lang="en">When the change happened, converted to the time zone of your plant for display (internally it is stored in UTC). Sorted newest first by default.</span></td></tr>
+        <tr><td><span lang="zh">使用者</span><span lang="en">User</span></td><td><span lang="zh">執行異動者的帳號名稱。即使該帳號日後被刪除，這裡留存的名稱仍在。</span><span lang="en">The user name of whoever made the change. The name recorded here remains even if the account is later deleted.</span></td></tr>
+        <tr><td><span lang="zh">操作</span><span lang="en">Action</span></td><td><span lang="zh">動作類型，例如新增、修改、刪除。</span><span lang="en">The kind of change: create, update, delete and so on.</span></td></tr>
+        <tr><td><span lang="zh">資料表類型</span><span lang="en">Entity Type</span></td><td><span lang="zh">被異動的資料種類。</span><span lang="en">The kind of record that was changed.</span></td></tr>
+        <tr><td><span lang="zh">資料ID</span><span lang="en">Entity ID</span></td><td><span lang="zh">被異動資料的識別碼，單據多半就是單號。明細行記成「單號|行號」（例：RC-2610-00001|2），用單號查詢會連同各行一起列出，也分得出改的是哪一行。</span><span lang="en">The identifier of the record changed; for documents it is usually the document number. A document line is recorded as "number|line" (for example RC-2610-00001|2): searching by the document number lists its lines too, and tells you which line was changed.</span></td></tr>
+        <tr><td><span lang="zh">IP 位址</span><span lang="en">IP address</span></td><td><span lang="zh">發出這次異動的來源 IP。</span><span lang="en">The source address the change came from.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">追查某張單據被改過什麼</span><span lang="en">Tracing what was changed on a document</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「管理系統 &gt; 稽核紀錄」。</span><span lang="en">Choose "System Administration &gt; Audit Log" in the left-hand menu.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">關鍵字貼上單號，必要時縮小日期區間，按「查詢」。</span><span lang="en">Paste the document number into the keyword box, narrow the date range if needed, and click "Search".</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點該列右側的「詳情」開啟明細，右側面板顯示這次異動的</span><span lang="en">Click "Details" at the right of the row; the panel that opens shows the </span><b><span lang="zh">變更內容</span><span lang="en">changes</span></b><span lang="zh">（哪些欄位、由什麼值改成什麼值）。</span><span lang="en"> made — which fields, and from what value to what.</span></div></div>
+
+    <h3><span lang="zh">查某個人做了哪些事</span><span lang="en">Seeing what one person did</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">關鍵字輸入該使用者的帳號，設定日期區間後查詢。</span><span lang="en">Type their user name in the keyword box, set the date range and search.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「時間」「操作」等欄位標題可改變排序，方便找出特定時段的密集操作。</span><span lang="en">Click the "Timestamp" or "Action" headings to change the sort order, which helps to spot bursts of activity in a particular period.</span></div></div>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">可將目前查詢結果匯出 Excel（.xlsx）、CSV 或 JSON，內容為時間、使用者、操作、資料表類型、資料ID 與 IP 位址。</span><span lang="en">The current results can be exported as Excel (.xlsx), CSV or JSON, containing the timestamp, user, action, entity type, entity ID and IP address. </span><b><span lang="zh">匯出不含變更內容明細</span><span lang="en">The detailed changes are not part of the export</span></b><span lang="zh">，那需要逐筆開啟明細檢視。</span><span lang="en">; those have to be opened one entry at a time.</span></p>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">匯出會套用目前的查詢條件（含日期區間與「含無廠別記錄」），所以請</span><span lang="en">The export applies the current criteria, including the date range and "Include unplanted records", so </span><b><span lang="zh">先查到想要的結果再匯出</span><span lang="en">get the results you want on screen first</span></b><span lang="zh">。稽核資料量通常很大，日期區間留空的匯出可能相當耗時。</span><span lang="en">. Audit data is usually voluminous, and an export with no date range can take a long time.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

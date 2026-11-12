@@ -1,0 +1,94 @@
+{
+  "sourcePath": "Modules/INV/Services/IInventoryReservationService.cs",
+  "sourceHash": "997fafc197b023efb363a72d7dedb482b4653df80ed7ed1fd35d3c058a05cc4b",
+  "entries": [
+    {
+      "slug": "code-inv-iinventoryreservationservice-3a075525",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 廠級可用量 = Σ − Σ 「在手」預留量",
+      "text": "廠級可用量計算規則說明｜此廠別可用的數量是總在手數量減去所有目前正在被預留的數量，且這個預留量不考慮儲位位置。這樣計算的目的是為了讓物料需求計劃系統判斷該品號在該廠區還能滿足多少需求。",
+      "approved": true,
+      "sourceSectionHash": "eef6a8b2b0524d5c7a9921501c0a9dfda0f814b4330e80e7f8304b5e8aa954b7"
+    },
+    {
+      "slug": "code-inv-iinventoryreservationservice-0f80f8bc",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 供投產判斷缺料能否以委外在途補足",
+      "text": "可用委外在途量計算規則｜此系統會根據已確認未作廢的委外採購單據數量，減去已經收到的數量，再減去已經預留給活躍委外的供應量，來判斷可用的委外在途補足量。",
+      "approved": true,
+      "sourceSectionHash": "c5c0e86ee4d1f9e9c57fd8bc3f83b2238d9fd15cd2a9d89857f0b7d2522a2abc"
+    },
+    {
+      "slug": "code-inv-iinventoryreservationservice-13f0c6c6",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 鎖定供給給特定需求",
+      "text": "供應庫存需為特定需求保留｜系統會針對某採購訂單或委外作業的在途數量，建立一個「供給」類別的活躍預留，目的是確保這批在途的物料只會被用來滿足特定的需求，避免同一批在途物料因為多張工單而被重複計算使用。",
+      "approved": true,
+      "sourceSectionHash": "85c1f1fc6e23d2b45baa3338ae17e6dd4c808b426d054ec7a445cd2180469f0d"
+    },
+    {
+      "slug": "code-inv-iinventoryreservationservice-824a9729",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 回傳轉換筆數",
+      "text": "到貨時的供給預留變更規則｜當貨物到達並入庫時，系統會將原先依據供應來源單所建立的「在預留」狀態，轉換為實際可用的「在手」狀態。此動作是為了反映該筆數量已經確實進入倉庫庫存。",
+      "approved": true,
+      "sourceSectionHash": "34ec5438f5fb9bca5bbed8fa86615692f68cd6a4076188170e5f4319aa8b4069"
+    },
+    {
+      "slug": "code-inv-iinventoryreservationservice-fbc7c9ad",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 入庫回沖：進貨單作廢／取消確認、收貨數量回退時，",
+      "text": "庫存數量變動的規則說明｜當進貨單作廢或取消確認，收到的數量會退回原本的供應狀態，而不是直接歸入可用庫存。只有先前因到貨而轉為可用庫存的部分才會被還原回供應狀態，已經消耗掉的部分則不會進行還原。",
+      "approved": true,
+      "sourceSectionHash": "5142bece106b41c640561fb50e6aa4bf22f5b9bcadf5c2cb6e700fc6484d191f"
+    },
+    {
+      "slug": "code-inv-iinventoryreservationservice-39d4fcf9",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 該工單反而永遠被自己的預留判為缺料",
+      "text": "庫存計算時需考慮自身預留量｜在判斷某個工單是否備齊所需物料時，系統會將該工單自己已經鎖定的預留數量加回計算中，以確保不會因為自身的預留而被誤判為缺少物料。",
+      "approved": true,
+      "sourceSectionHash": "f66b035bbd0789787a45726ff5009315b4c6fbd3202c6d9648d80817543c195b"
+    },
+    {
+      "slug": "code-inv-iinventoryreservationservice-340890fd",
+      "lang": "zh",
+      "headingPath": "庫存管理 › ＋ 來源為該工單的備料單，",
+      "text": "工單預留數量計算規則｜系統會將某個工單鎖定的在手預留量，以及來源於該工單的備料單所產生的預留量加總起來。判斷本工單是否備齊時，無論是哪一種來源的預留量，都會視為已覆蓋。",
+      "approved": true,
+      "sourceSectionHash": "d86abac06ff0e19c6ba06cc3263739649355c3ced73824c96d445f827eab9d91"
+    },
+    {
+      "slug": "code-inv-iinventoryreservationservice-43eb832b",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 避免同一批料被鎖兩次而侵蝕其他工單的可用量",
+      "text": "庫存預留數量扣減規則說明｜當從來源單進行扣減時，系統會依據資料的舊到新順序逐筆扣除「Active 在手預留量」，如果某個批次的可用量被扣減至零，該批次將會轉為已釋放狀態。此機制用於確保在備料單確認時，工單原本預留給它的物料不會因為重複鎖定而侵蝕其他工單的實際可用數量。系統回傳的是實際成功扣減的數量。",
+      "approved": true,
+      "sourceSectionHash": "3eb64cf1645de625e7860a2e7d3182c84e85790d17dfb8a748121ad95d8e8de5"
+    },
+    {
+      "slug": "code-inv-iinventoryreservationservice-a7338fa8",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 領料過帳時消耗該工單保留的在手預留量發料已實際扣掉在手庫存",
+      "text": "工單領料扣減庫存的規則說明｜當進行領料過帳時，系統會先消耗該工單在備料單上保留的數量。如果備料單上的預留量不足以支付本次領料需求，才會再從工單自身的預留量中扣除剩餘部分。這樣設計是為了避免同一批材料因為「庫存減少」和「預留仍在」這兩個動作重複扣減，導致全廠可用的實際數量長期被低估。",
+      "approved": true,
+      "sourceSectionHash": "872933e2f15afcc477e1bf25224a2682be67ad65974ad40f0d66781531e39a71"
+    },
+    {
+      "slug": "code-inv-iinventoryreservationservice-7325116f",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 工單自身的  預留由呼叫端另行釋放",
+      "text": "預留資料的釋放規則說明｜當工單完成或結案時，系統會呼叫此功能來釋放該工單所有備料單來源的「Active」預留。其中，由工單本身產生的預留部分，需要由呼叫這個功能的外部程序來負責釋放；如果沒有將這部分也一併釋放，那麼在工單結案後，這些預留紀錄會永久保留下來。",
+      "approved": true,
+      "sourceSectionHash": "658ab8e0588808ee32aab91de1dc6455b37d1a730a328dc5e0ae3a6aad96d97c"
+    },
+    {
+      "slug": "code-inv-iinventoryreservationservice-a15b96e0",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 立即持久化，使後續同品號需求看得到扣減",
+      "text": "預留庫存會即時更新備貨狀態｜當系統執行此動作時，所建立的預留記錄會立刻寫入資料，這樣之後針對相同產品編號產生的任何需求都能看到這筆已扣減的數量。",
+      "approved": true,
+      "sourceSectionHash": "d398a4e33b31280213cbaf80e6680605e22eabbafe6f312a1ed3f8854f707ee5"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.RPT.Models.ProfitLossReport?
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    bool canPrint    = ViewBag.CanPrint == true;
+    string fromPeriod = ViewBag.FromPeriod as string ?? "";
+    string toPeriod   = ViewBag.ToPeriod   as string ?? "";
+    var periodOptions = ViewBag.PeriodOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-graph-up-arrow me-2"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && Model != null)
+        {
+            <div class="d-flex gap-2">
+                <a asp-action="Print" asp-route-fromPeriod="@fromPeriod" asp-route-toPeriod="@toPeriod"
+                   target="_blank" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-printer"></i> @Localizer["Print"]
+                </a>
+                <a asp-action="Export" asp-route-fromPeriod="@fromPeriod" asp-route-toPeriod="@toPeriod"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                </a>
+            </div>
+        }
+    </div>
+
+    @* 常用查詢放在查詢表單**外面**：partial 內沒有 <form>，但巢狀 form 在 HTML 無效，
+       放進去瀏覽器會把內層拆掉，送出的欄位少一半。 *@
+    @await Html.PartialAsync("_SavedQueries", "ProfitLoss")
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["FromPeriod"]</label>
+                    <select name="fromPeriod" class="form-select">
+                        <option value="">@Localizer["SelectPeriod"]</option>
+                        @foreach (var p in periodOptions)
+                        { <option value="@p" selected="@(fromPeriod == p)">@p</option> }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["ToPeriod"]</label>
+                    <select name="toPeriod" class="form-select">
+                        <option value="">@Localizer["SelectPeriod"]</option>
+                        @foreach (var p in periodOptions)
+                        { <option value="@p" selected="@(toPeriod == p)">@p</option> }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null)
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+    <!-- 摘要卡片 -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 bg-primary text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["Revenue"]</div>
+                    <div class="fs-4 fw-bold">@Model.Revenue.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-warning shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["GrossProfit"]</div>
+                    <div class="fs-4 fw-bold">@Model.GrossProfit.ToString(moneyFmt)</div>
+                    <div class="small">@Model.GrossMarginRate.ToString("N1")%</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-info text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["OperatingProfit"]</div>
+                    <div class="fs-4 fw-bold">@Model.OperatingProfit.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="@(Model.NetProfit >= 0 ? "card border-0 bg-success text-white shadow-sm" : "card border-0 bg-danger text-white shadow-sm")">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["NetProfit"]</div>
+                    <div class="fs-4 fw-bold">@Model.NetProfit.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 損益明細 -->
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["AccountCode"]</th>
+                        <th>@Localizer["AccountName"]</th>
+                        <th>@Localizer["Category"]</th>
+                        <th class="text-end">@Localizer["Amount"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var line in Model.Lines)
+                {
+                    var badgeCss = line.Category switch {
+                        "Revenue"           => "bg-primary",
+                        "Cogs"              => "bg-warning text-dark",
+                        "OperatingExpenses" => "bg-secondary",
+                        "OtherIncome"       => "bg-info text-dark",
+                        "OtherExpenses"     => "bg-danger",
+                        _                   => "bg-light text-dark"
+                    };
+                    <tr>
+                        <td><code>@line.AccountCode</code></td>
+                        <td>@line.AccountName</td>
+                        <td><span class="badge @badgeCss">@Localizer[line.Category]</span></td>
+                        <td class="text-end fw-semibold">@line.Amount.ToString(moneyFmt)</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot class="table-secondary">
+                    <tr>
+                        <td colspan="3" class="fw-bold text-end">@Localizer["NetProfit"]</td>
+                        <td class="text-end fw-bold @(Model.NetProfit >= 0 ? "text-success" : "text-danger")">
+                            @Model.NetProfit.ToString(moneyFmt)
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    }
+</div>

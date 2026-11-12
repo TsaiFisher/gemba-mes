@@ -1,0 +1,74 @@
+Gemba MES — SmartFactory MES 平台的公開發行版
+Copyright (c) 2026 Fisher Tsai (@TsaiFisher)
+
+本產品依 Elastic License 2.0 授權（見 LICENSE）。
+This product is licensed under the Elastic License 2.0 (see LICENSE).
+
+本軟體含下列第三方元件，各自依其原授權條款提供。各元件的著作權歸其作者所有，
+其授權條款不因本專案的授權而改變。
+
+================================================================================
+NuGet 套件
+================================================================================
+
+MIT License
+  Microsoft.AspNetCore.*（Identity.EntityFrameworkCore、Identity.UI、
+    Diagnostics.EntityFrameworkCore、Mvc.Testing）  — Microsoft Corporation
+  Microsoft.EntityFrameworkCore.*（InMemory、Tools）  — Microsoft Corporation
+  Microsoft.Extensions.*（Configuration.Binder、Configuration.Json、
+    Localization）                                   — Microsoft Corporation
+  Microsoft.NET.Test.Sdk                             — Microsoft Corporation
+  Microsoft.Playwright.Xunit                         — Microsoft Corporation
+  ClosedXML                                          — ClosedXML contributors
+  QRCoder                                            — Raffael Herrmann
+  Swashbuckle.AspNetCore                             — Swashbuckle contributors
+  coverlet.collector                                 — Toni Solarin-Sodara
+
+Apache License 2.0
+  Serilog.AspNetCore / Serilog.Sinks.File            — Serilog contributors
+  AspNetCore.HealthChecks.NpgSql                     — Xabaril contributors
+  xunit / xunit.runner.visualstudio                  — .NET Foundation and
+                                                       contributors
+
+PostgreSQL License
+  Npgsql.EntityFrameworkCore.PostgreSQL              — Npgsql Development Team
+
+BSD 3-Clause License
+  Moq                                                — Daniel Cazzulino and
+                                                       contributors
+
+================================================================================
+前端函式庫（隨附於 wwwroot/lib/）
+================================================================================
+
+MIT License
+  Bootstrap 5.1.0                                    — The Bootstrap Authors
+  Bootstrap Icons 1.11.3                             — The Bootstrap Authors
+  jQuery 3.6.0                                       — OpenJS Foundation
+  jQuery Validation 1.19.5                           — Jörn Zaefferer
+  Select2 4.1.0-rc.0                                 — Kevin Brown, Igor Vaynberg
+  select2-bootstrap-5-theme 1.3.0                    — Andrea Perizzato
+  Chart.js 4.4.0                                     — Chart.js contributors
+  timelines-chart 2.14.3                             — Vasco Asturiano
+
+Apache License 2.0
+  jquery-validation-unobtrusive 4.0.0                — .NET Foundation and
+                                                       contributors
+  html5-qrcode                                       — minhazav
+
+Apache License 2.0 OR Mozilla Public License 2.0（雙授權，擇一適用）
+  DOMPurify 3.2.4                                    — Cure53 and contributors
+
+================================================================================
+不含於本發布的元件
+================================================================================
+
+下列元件的原始碼不在本倉庫中：
+
+  SmartFactory.MES.Security（Security Anchor DLL）
+      二進位檔隨 GitHub Releases 發布，執行時必要（授權驗證與連線字串解密）。
+      著作權人與授權條款同本專案（Elastic License 2.0）。
+  SmartFactory.MES.LicenseAuthority（授權核發工具）
+      僅供維護者核發授權使用，不發布；使用者不需要它。
+
+詳見 LICENSING.md。

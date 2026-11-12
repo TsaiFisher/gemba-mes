@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>系統維護手冊 — SmartFactory MES</title>
+<link rel="stylesheet" href="../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="index.page.css">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-primary px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-tools me-2"></i>系統維護手冊 — SmartFactory MES</span>
+  <div class="d-flex gap-2">
+    <a href="../index.html" class="btn btn-sm btn-outline-light">文件中心</a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i>返回系統</a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading">概覽</div>
+    <a href="#overview" class="nav-link active">系統架構概覽</a>
+    <a href="#tech-stack" class="nav-link">技術堆疊</a>
+    <div class="sidebar-heading">架構設計</div>
+    <a href="#project-structure" class="nav-link">專案目錄結構</a>
+    <a href="#modules" class="nav-link">模組架構</a>
+    <a href="#db-schema" class="nav-link">資料庫設計</a>
+    <a href="#convention-tests" class="nav-link">慣例測試規則</a>
+    <div class="sidebar-heading">新增畫面</div>
+    <a href="#new-screen" class="nav-link">新增模組畫面</a>
+    <a href="#new-menu" class="nav-link">選單登錄</a>
+    <a href="#localization" class="nav-link">多語系/在地化</a>
+    <div class="sidebar-heading">核心機制</div>
+    <a href="#approval" class="nav-link">簽核機制</a>
+    <a href="#inventory" class="nav-link">庫存預留機制</a>
+    <a href="#codeentry" class="nav-link">代碼維護機制</a>
+    <div class="sidebar-heading">維運</div>
+    <a href="#migration" class="nav-link">資料庫 Migration</a>
+    <a href="#ci" class="nav-link">CI / 測試</a>
+    <a href="#backup" class="nav-link">備份與還原</a>
+    <a href="#troubleshoot" class="nav-link">常見問題排除</a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-tools text-primary me-2"></i>系統維護手冊</h1>
+      <div class="text-muted small mt-1">適用對象：系統顧問 / 企業 MIS &nbsp;|&nbsp; SmartFactory MES v1.x</div>
+    </div>
+
+    <!-- 概覽 -->
+    <h2 id="overview"><i class="bi bi-diagram-3 me-2 text-primary"></i>系統架構概覽</h2>
+    <p>SmartFactory MES 為 ASP.NET Core 10 MVC 架構，採用 Razor Pages 混合 Area/Module 模式，後端以 EF Core 連接 PostgreSQL 資料庫。</p>
+    <div class="info-box">
+      <strong>Solution 組成（三個 Projects）</strong>
+      <ul class="mb-0 mt-1">
+        <li><strong>Core</strong>（SmartFactory.Core）— 跨應用共用框架：Entity 基礎類別、簽核引擎、多語系、選單架構、共用 UI 元件</li>
+        <li><strong>ProjectZ</strong>（SmartFactory.MES）— MES 應用主體：所有業務模組（BAS/PUR/INV/ORD/MFG/OUT/QCR/FIN）</li>
+        <li><strong>Tests</strong>（SmartFactory.MES.Tests）— 整合測試 + 慣例測試</li>
+      </ul>
+    </div>
+
+    <h2 id="tech-stack"><i class="bi bi-stack me-2 text-primary"></i>技術堆疊</h2>
+    <table class="table table-sm border">
+      <thead><tr><th>層次</th><th>技術 / 套件</th><th>版本</th></tr></thead>
+      <tbody>
+        <tr><td>Web Framework</td><td>ASP.NET Core MVC 8</td><td>8.x</td></tr>
+        <tr><td>ORM</td><td>Entity Framework Core + Npgsql</td><td>8.x</td></tr>
+        <tr><td>資料庫</td><td>PostgreSQL</td><td>15+</td></tr>
+        <tr><td>認證授權</td><td>ASP.NET Core Identity</td><td>8.x</td></tr>
+        <tr><td>前端 CSS</td><td>Bootstrap 5</td><td>5.3</td></tr>
+        <tr><td>前端圖示</td><td>Bootstrap Icons</td><td>1.11</td></tr>
+        <tr><td>日期元件</td><td>Flatpickr</td><td>4.x</td></tr>
+        <tr><td>測試框架</td><td>xUnit + EF Core InMemory / SQLite</td><td>—</td></tr>
+        <tr><td>後台排程</td><td>Hangfire（規劃中）</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 專案結構 -->
+    <h2 id="project-structure"><i class="bi bi-folder2-open me-2 text-primary"></i>專案目錄結構</h2>
+    <div class="folder-tree">
+SmartFactory.MES/<br>
+├── <strong>Core/</strong>                        ← 共用框架 Project<br>
+│   ├── Entities/                    ← 基礎 Entity（IPlantEntity, IDataAuthEntity）<br>
+│   ├── Approval/                    ← 簽核引擎<br>
+│   ├── Services/                    ← IStringLocalizer 橋接、選單服務<br>
+│   └── Resources/                   ← Core SharedResource（resx 多語系）<br>
+├── <strong>ProjectZ/</strong>                    ← 主應用 Project (SmartFactory.MES)<br>
+│   ├── <strong>Modules/</strong><br>
+│   │   ├── BAS/                     ← 基本資料<br>
+│   │   ├── PUR/                     ← 採購管理<br>
+│   │   ├── INV/                     ← 庫存管理<br>
+│   │   ├── ORD/                     ← 銷售管理<br>
+│   │   ├── MFG/                     ← 製造執行<br>
+│   │   ├── OUT/                     ← 委外管理<br>
+│   │   ├── QCR/                     ← 品質管理<br>
+│   │   └── FIN/                     ← 財務管理<br>
+│   ├── <strong>Resources/</strong>               ← ProjectZSharedResource（resx 多語系）<br>
+│   ├── Pages/Shared/_Layout.cshtml  ← 主版面<br>
+│   ├── Data/ApplicationDbContext.cs ← EF DbContext（partial class）<br>
+│   ├── Migrations/                  ← EF Core Migrations<br>
+│   └── wwwroot/                     ← 靜態資源<br>
+│       ├── lib/bootstrap/           ← Bootstrap 5<br>
+│       ├── lib/bootstrap-icons/     ← Bootstrap Icons<br>
+│       └── docs/                    ← 本文件所在位置<br>
+└── <strong>Tests/</strong>                       ← SmartFactory.MES.Tests<br>
+    ├── Conventions/ConventionTests.cs<br>
+    ├── INV/                         ← 庫存模組測試<br>
+    └── ...
+    </div>
+
+    <!-- 模組架構 -->
+    <h2 id="modules"><i class="bi bi-puzzle me-2 text-primary"></i>模組架構</h2>
+    <p>每個模組（如 INV）由以下部分組成：</p>
+    <table class="table table-sm border">
+      <thead><tr><th>元件</th><th>路徑</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td>Controller</td><td><code>Modules/INV/Controllers/</code></td><td>繼承 Controller，DI 注入 Service + IStringLocalizer</td></tr>
+        <tr><td>Service</td><td><code>Modules/INV/Services/</code></td><td>業務邏輯，注入 ApplicationDbContext</td></tr>
+        <tr><td>Model / Entity</td><td><code>Modules/INV/Models/</code></td><td>EF Entity + ViewModel / DTO</td></tr>
+        <tr><td>Views</td><td><code>Modules/INV/Views/</code></td><td>Index.cshtml（列表）+ _Form.cshtml（側欄表單）</td></tr>
+        <tr><td>DbContext 片段</td><td><code>Data/INV_DbContext.cs</code></td><td>partial ApplicationDbContext，只含 INV 相關 DbSet</td></tr>
+      </tbody>
+    </table>
+
+    <!-- DB 設計 -->
+    <h2 id="db-schema"><i class="bi bi-table me-2 text-primary"></i>資料庫設計重點</h2>
+    <h3>命名規則</h3>
+    <ul>
+      <li>資料表：蛇底線複數，如 <code>purchase_orders</code>、<code>inventory_reservations</code></li>
+      <li>主鍵：<code>Id</code>（GUID，<code>HasDefaultValueSql("gen_random_uuid()")</code>）</li>
+      <li>廠別：實作 <code>IPlantEntity</code>（含 <code>PlantId</code> FK）</li>
+      <li>資料授權：實作 <code>IDataAuthEntity</code>（含 <code>CreatedByUserId</code>）</li>
+      <li>時區：所有日期時間欄位使用 UTC，PostgreSQL 儲存為 <code>timestamp with time zone</code></li>
+    </ul>
+
+    <h3>常用 Enum 對應</h3>
+    <table class="table table-sm border">
+      <thead><tr><th>Enum</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td><code>DocumentApprovalStatus</code></td><td>Draft / PendingApproval / Approved / Rejected（簽核狀態）</td></tr>
+        <tr><td><code>ReservationSourceType</code></td><td>MrpRunLine=0 / WorkOrderMaterial=1 / Dispatch=2 / MaterialStagingOrder=3</td></tr>
+        <tr><td><code>ReservationStatus</code></td><td>Active / Released / Consumed</td></tr>
+        <tr><td><code>StockMovementType</code></td><td>II / IO / IW / IS / IA / IL / ICO / ICC / QR / QJ / ...</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 慣例測試 -->
+    <h2 id="convention-tests"><i class="bi bi-shield-check me-2 text-primary"></i>慣例測試規則</h2>
+    <p>位於 <code>Tests/Conventions/ConventionTests.cs</code>，新畫面必須符合下列規則，否則 CI 紅燈：</p>
+    <table class="table table-sm border">
+      <thead><tr><th>規則</th><th>說明</th><th>修正方式</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>R6</strong></td>
+          <td>Index.cshtml 含 <code>openPanel(</code> 的畫面，必須在 Scripts section 包含 <code>_CrudPanelScripts</code></td>
+          <td>加入 <code>@section Scripts { @await Html.PartialAsync("_CrudPanelScripts") ... }</code></td>
+        </tr>
+        <tr>
+          <td><strong>R6c</strong></td>
+          <td>_Form.cshtml 動態新增列（<code>appendChild</code>/<code>insertAdjacentHTML</code>）含 input 時，必須呼叫 <code>armValidation(</code></td>
+          <td>在 appendChild 後加 <code>armValidation(document.getElementById('formId'));</code></td>
+        </tr>
+        <tr>
+          <td><strong>R7</strong></td>
+          <td>Controller 的訊息字串（<code>message=</code>、<code>AddModelError</code>、<code>TempData[</code>）不得含硬編碼中文字</td>
+          <td>將訊息移至 <code>ProjectZSharedResource.zh-TW.resx</code>，以 <code>_loc["Key"].Value</code> 引用</td>
+        </tr>
+        <tr>
+          <td><strong>R11</strong></td>
+          <td>使用 PaginatedList 的 Index.cshtml 必須在檔案內有 <code>Model.PageIndex</code> 或 <code>Model.HasNextPage</code></td>
+          <td>使用 inline pagination 而非 <code>_Pagination.cshtml</code> partial</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 新增畫面 -->
+    <h2 id="new-screen"><i class="bi bi-plus-circle me-2 text-primary"></i>新增模組畫面標準流程</h2>
+    <div class="info-box">使用 <code>/new-screen</code> 指令（Claude Code Skill）可自動產生符合所有慣例的骨架程式碼。</div>
+    <p>手動新增時需完成以下步驟：</p>
+    <ol>
+      <li>建立 <strong>Entity</strong>（<code>Modules/XXX/Models/</code>），實作 <code>IPlantEntity</code></li>
+      <li>在 <strong>partial DbContext</strong>（<code>Data/XXX_DbContext.cs</code>）加入 <code>DbSet</code></li>
+      <li>建立 <strong>Service</strong>（interface + implementation，含 CRUD）</li>
+      <li>在 <code>Program.cs</code> 或 DI 設定中 <code>AddScoped</code> 注入 Service</li>
+      <li>建立 <strong>Controller</strong>（繼承 Controller，注入 Service + <code>IStringLocalizer&lt;ProjectZSharedResource&gt;</code>）</li>
+      <li>建立 <strong>Views</strong>（<code>Index.cshtml</code> + <code>_Form.cshtml</code>），確認符合 R6/R6c/R7/R11</li>
+      <li>在多語系 resx 加入操作訊息 key（中英兩份）</li>
+      <li>登錄選單（見下節）</li>
+      <li>建立 EF Migration</li>
+      <li>執行慣例測試確認全部通過</li>
+    </ol>
+
+    <!-- 選單 -->
+    <h2 id="new-menu"><i class="bi bi-list-ul me-2 text-primary"></i>選單登錄</h2>
+    <p>新畫面必須同時在以下兩處登錄，否則選單不顯示：</p>
+    <ol>
+      <li><code>ProjectZMenuContributor.cs</code>：加入 <code>context.Menu.AddItem(...)</code>，<code>MenuKey</code> 須與 Controller Area/Name 對齊</li>
+      <li><code>Resources/ProjectZSharedResource.zh-TW.resx</code> 與 <code>en-US.resx</code>：加入選單顯示名稱的 key</li>
+    </ol>
+    <div class="warn-box">MenuKey 格式：<code>Menu.模組.畫面名</code>，例如 <code>Menu.INV.MaterialStaging</code>。兩份 resx 都要加，否則另一語系顯示空白。</div>
+
+    <!-- 多語系 -->
+    <h2 id="localization"><i class="bi bi-translate me-2 text-primary"></i>多語系 / 在地化</h2>
+    <p>系統支援繁體中文（zh-TW）與英文（en-US），採雙軌架構：</p>
+    <table class="table table-sm border">
+      <thead><tr><th>resx 檔</th><th>管理者</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>Core/Resources/CoreSharedResource.*.resx</code></td>
+          <td>Core Project</td>
+          <td>框架通用字串（審核、退回、儲存⋯）</td>
+        </tr>
+        <tr>
+          <td><code>ProjectZ/Resources/ProjectZSharedResource.*.resx</code></td>
+          <td>ProjectZ</td>
+          <td>業務模組訊息、選單名稱、欄位錯誤</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>重要規則</strong>：BAS 模組（及其他模組）不得自行 register localization provider；所有欄位驗證 key 應加入 Core SharedResource，避免重複註冊導致衝突。</p>
+
+    <!-- 簽核機制 -->
+    <h2 id="approval"><i class="bi bi-person-check me-2 text-primary"></i>簽核機制</h2>
+    <p>Core 提供統一的簽核引擎，業務單據（如採購單、庫存調整單）在以下狀態流中移動：</p>
+    <pre><code>Draft → PendingApproval → Approved / Rejected
+         （送審）          （核准/退回）
+Approved / Rejected → Draft （撤回 / 重送）</code></pre>
+    <p>Controller 中判斷是否需走簽核時，讀取「文件簽核設定」（<code>ApprovalTemplate</code>）。若未設定範本，則視為免簽核，直接核准。</p>
+    <div class="warn-box">過帳（PostLineDetailAsync / 確認單據）的入口，應統一檢查 <code>ApprovalStatus == Approved</code>，確保未簽核單據無法過帳。</div>
+
+    <!-- 庫存預留機制 -->
+    <h2 id="inventory"><i class="bi bi-box-seam me-2 text-primary"></i>庫存預留機制</h2>
+    <p>詳細規格見 <code>.claude/specifications/inventory-advanced.md</code>。簡要說明：</p>
+    <ul>
+      <li><strong>ReservationSourceType</strong>：MrpRunLine(0) / WorkOrderMaterial(1) / Dispatch(2) / MaterialStagingOrder(3)</li>
+      <li><strong>ReservationStatus</strong>：Active（佔用可用量）/ Released / Consumed</li>
+      <li><strong>inv_simplified_mode</strong>（系統參數）：<code>true</code> = 入庫核准即過帳；<code>false</code> = 全模式需完成上架</li>
+      <li>MRP Fstock 在全模式下會加入 <code>pendingPutAway − pendingPick</code> 修正值</li>
+    </ul>
+
+    <!-- 代碼維護機制 -->
+    <h2 id="codeentry"><i class="bi bi-tags me-2 text-primary"></i>代碼維護機制（CodeEntry）</h2>
+    <p>各畫面的 select 下拉選單，資料來源統一從 <code>CodeEntry</code> 依 Category 篩選：</p>
+    <pre><code>// 在 Service 中取得選項
+var options = await _context.CodeEntries
+    .Where(c => c.Category == "PZ.ScrapReason" && c.IsActive)
+    .ToDisplayOptionsAsync();
+
+// 在 View 中使用
+@Html.DropDownListFor(m => m.ReasonCode, ViewBag.ReasonOptions as SelectList, ...)</code></pre>
+    <p>新增代碼類別時，僅需在「代碼維護」畫面新增對應 Category 的記錄，無需修改程式碼。</p>
+    <p>目前使用中的 Category 清單見《<a href="../admin/go-live-checklist.html#step2-codeentry">上線設定清單 §2</a>》。</p>
+
+    <!-- Migration -->
+    <h2 id="migration"><i class="bi bi-database-gear me-2 text-primary"></i>資料庫 Migration</h2>
+    <div class="warn-box">
+      <strong>注意 Snapshot 漂移問題</strong>：每次產生 Migration 前，先確認工作目錄無未提交的 Entity 變更，
+      否則 EF Core 可能誤生虛假欄位增刪。Migration 產生後需肉眼確認 <code>Up()</code> 和 <code>Down()</code> 的內容合理。
+    </div>
+    <h3>常用指令</h3>
+    <pre><code># 在 ProjectZ 目錄下執行
+dotnet ef migrations add MigrationName --project SmartFactory.MES --startup-project SmartFactory.MES
+dotnet ef database update --project SmartFactory.MES --startup-project SmartFactory.MES
+
+# 若需回退
+dotnet ef database update PreviousMigrationName</code></pre>
+
+    <h3>Seed 資料</h3>
+    <p>初始種子資料（授權設定、預設角色）在 <code>Data/SeedData.cs</code> 中，需確認 FK 參照正確，否則 CI 中的 Clean DB 測試會失敗。</p>
+
+    <!-- CI / 測試 -->
+    <h2 id="ci"><i class="bi bi-github me-2 text-primary"></i>CI / 測試</h2>
+    <p>測試以 <code>xUnit</code> 撰寫，分兩類：</p>
+    <table class="table table-sm border">
+      <thead><tr><th>類型</th><th>說明</th><th>執行指令</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>慣例測試（Convention）</td>
+          <td>靜態掃描 .cshtml/.cs 確認符合 R6/R6c/R7/R11 規則</td>
+          <td><code>dotnet test --filter "FullyQualifiedName~ConventionTests"</code></td>
+        </tr>
+        <tr>
+          <td>整合測試</td>
+          <td>使用 InMemory / SQLite DB 驗證 Service 邏輯</td>
+          <td><code>dotnet test</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      UITests（Playwright）使用 <code>:5110</code> port。若 CI 顯示 port 不符錯誤（:5000 vs :5110），
+      是 port 設定問題而非真正回歸，以 <code>--urls http://0.0.0.0:5110</code> 啟動應用即可。
+    </div>
+
+    <h3>Baseline 慣例測試注意事項</h3>
+    <ul>
+      <li>Baseline 以<strong>檔案路徑</strong>為 key（不用 file:line 格式）</li>
+      <li>不得在工作樹有未提交變更時重建 baseline，以免納入暫時性差異</li>
+    </ul>
+
+    <!-- 備份 -->
+    <h2 id="backup"><i class="bi bi-cloud-arrow-up me-2 text-primary"></i>備份與還原</h2>
+    <div class="warn-box">
+      <strong>備份不只有資料庫。</strong>排程報表的產出檔與上傳檔（公司 logo 等）存在檔案系統上，不在資料庫裡。
+      只還原資料庫的話，<code>ReportRun</code> 的紀錄會在、檔案不在，使用者點下載一律 404。
+      請一律使用 <code>scripts/backup-db.sh</code>，它會在同一次執行、同一個時間戳下產出資料庫與檔案兩份產物。
+    </div>
+
+    <h3>執行備份</h3>
+    <pre><code># 用預設值（連線走標準 PG 環境變數，密碼建議放 ~/.pgpass）
+scripts/backup-db.sh
+
+# 生產環境典型設定
+PGHOST=db PGDATABASE=SmartFactoryMES \
+REPORTS_PATH=/var/lib/smartfactory/reports \      # 即組態 Reports:StoragePath
+UPLOADS_PATH=/var/www/smartfactory/wwwroot/uploads \
+BACKUP_DIR=/backup/mes RETENTION_DAYS=30 \
+BACKUP_GPG_RECIPIENT=backup@corp.com \            # 加密（產物 .gpg，明文即刪）
+BACKUP_RCLONE_REMOTE=offsite:mes-backups \        # 異地
+scripts/backup-db.sh</code></pre>
+    <p>產出兩份共用時間戳的產物（未設加密時沒有 <code>.gpg</code> 尾綴）：</p>
+    <ul>
+      <li><code>&lt;DB&gt;-&lt;時間戳&gt;.dump.gpg</code>——資料庫（<code>pg_dump -Fc</code>，加密前已用 <code>pg_restore --list</code> 驗過完整性）</li>
+      <li><code>&lt;DB&gt;-&lt;時間戳&gt;-files.tar.gz.gpg</code>——報表檔與上傳檔，包內是相對路徑（<code>reports/</code>、<code>uploads/</code>）</li>
+    </ul>
+    <p>目錄不存在時腳本會出聲警告並只備資料庫，不算失敗——但那行警告要當回事，
+       「以為有備到檔案」通常撐到還原當天才會發現。設 <code>UPLOADS_PATH=-</code> 可明確跳過。</p>
+    <div class="warn-box">
+      <strong>報表檔含機密等級的營運資料，與資料庫同級。</strong>生產環境務必至少啟用加密與異地其一，
+      否則備份等於一份明文機密資料落在單一台機器上。
+    </div>
+
+    <h3>還原</h3>
+    <pre><code># 1. 停止應用程式
+systemctl stop smartfactory
+
+# 2a. 資料庫（未加密）
+pg_restore --clean --if-exists -d "$PGDATABASE" &lt;備份檔.dump&gt;
+# 2b. 資料庫（已加密）
+gpg --decrypt &lt;備份檔.dump.gpg&gt; | pg_restore --clean --if-exists -d "$PGDATABASE"
+# 2c. 檔案（解到 reports/、uploads/ 的「父目錄」）
+tar -xzf &lt;備份檔-files.tar.gz&gt; -C &lt;目標父目錄&gt;
+
+# 3. 啟動並驗證
+systemctl start smartfactory &amp;&amp; curl -f http://localhost:5000/health</code></pre>
+    <div class="info-box">
+      <strong>資料庫與檔案必須取自同一次執行</strong>（檔名時間戳相同），否則 <code>ReportRun</code> 列與實際檔案對不上。
+      <code>--clean</code> 會先 DROP 再重建，請再三確認目標資料庫。
+      若是要回滾某次 migration，還原後必須部署<strong>對應舊版</strong>的應用程式，並確認生產組態的
+      <code>Database:AutoMigrate</code> 為 <code>false</code>，否則新版一啟動又把 schema 推回去。
+    </div>
+
+    <h3>備份排程建議</h3>
+    <ul>
+      <li>每日排程：<code>30 2 * * * /path/to/repo/scripts/backup-db.sh &gt;&gt; /var/log/smartfactory-backup.log 2&gt;&amp;1</code></li>
+      <li>每次 migration 前手動再跑一次</li>
+      <li>每小時：WAL 串流複製（若有高可用需求）</li>
+      <li>上線前：備份一份 baseline，存放離線媒體</li>
+      <li>每季做一次<strong>還原演練</strong>：確認加密備份真的解得開、檔案包真的解得回去——沒演練過的備份不算備份</li>
+    </ul>
+
+    <!-- 常見問題 -->
+    <h2 id="troubleshoot"><i class="bi bi-question-circle me-2 text-primary"></i>常見問題排除</h2>
+    <table class="table table-sm border">
+      <thead><tr><th>現象</th><th>可能原因</th><th>解法</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>CI 慣例測試紅燈</td>
+          <td>新畫面違反 R6/R6c/R7/R11</td>
+          <td>見上方慣例測試規則表，逐一確認並修正</td>
+        </tr>
+        <tr>
+          <td>下拉選單為空</td>
+          <td>對應 CodeEntry Category 未建立代碼</td>
+          <td>至「代碼維護」建立對應 Category 的代碼記錄</td>
+        </tr>
+        <tr>
+          <td>側欄表單欄位錯誤只閃不顯示</td>
+          <td>缺少 <code>asp-validation-for</code> span</td>
+          <td>每個 <code>asp-for</code> 欄位旁加上對應的驗證 span</td>
+        </tr>
+        <tr>
+          <td>側欄開 Modal 後灰屏凍結</td>
+          <td>Modal 在 offcanvas 內，z-index 問題</td>
+          <td>開 Modal 前先將其 <code>document.body.appendChild</code>（加 <code>data-moved-modal</code> 標記）</td>
+        </tr>
+        <tr>
+          <td>EF Migration 誤生虛假欄位</td>
+          <td>Snapshot 過期，工作樹有未提交 Entity 變更</td>
+          <td>先 commit 所有 Entity 變更再產生 Migration；手動刪除不合理的增刪欄位</td>
+        </tr>
+        <tr>
+          <td>GenerateResource MSBuild 錯誤</td>
+          <td>.resx 編譯 transient 錯誤</td>
+          <td>清除 <code>obj/</code> 目錄後重建：<code>dotnet build --no-incremental</code></td>
+        </tr>
+        <tr>
+          <td>License 檢查失敗（CI）</td>
+          <td>CI 環境缺少 license.json</td>
+          <td>在 CI pipeline 加入 license.json 的 secret 注入步驟</td>
+        </tr>
+        <tr>
+          <td>MRP 可用量低估</td>
+          <td>全模式下待上架進貨未計入</td>
+          <td>確認 <code>inv_simplified_mode</code> 設定正確；全模式下 MrpEngine 有 pendingPutAway 修正</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end">SmartFactory MES 系統維護手冊 v1.0 &nbsp;|&nbsp; 如有疑問請聯繫系統顧問</div>
+  </main>
+</div>
+</body>
+</html>

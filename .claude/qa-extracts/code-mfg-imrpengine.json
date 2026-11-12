@@ -1,0 +1,27 @@
+{
+  "sourcePath": "Modules/MFG/Services/IMrpEngine.cs",
+  "sourceHash": "797be3f2798b1cf233c4bffa0f5d9a288dc04b87a6927f9d423688e7ab0c7148",
+  "entries": [
+    {
+      "slug": "code-mfg-imrpengine-2873fcf7",
+      "lang": "zh",
+      "headingPath": "生產製造 › 已投產工單存在時不可重跑",
+      "text": "重跑工單時的限制與判斷｜如果系統中已經存在已投產狀態的工單，則無法執行重新展開的操作。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-imrpengine-6d3bb0a2",
+      "lang": "zh",
+      "headingPath": "生產製造 › 重跑前置可行性評估：唯讀掃描下游工單／派工／",
+      "text": "評估重跑前置可行性與限制｜系統會檢查下游工單、派工、委外需求和請購單的消化狀態，並回傳可執行的等級以及每項無法執行的原因，此過程不會修改任何資料。只有在使用者主動觸發後，系統才會根據這個評估結果來決定是否進行重跑。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-imrpengine-60ffdb2d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 宣告此次展開不再維護",
+      "text": "展開作業不再維護規則說明｜當執行此動作時，已投產工單、已收貨採購單或已轉委外單等下游單據不會被連鎖作廢，它們會各自依照既有的沖銷或結案流程處理；本動作僅作廢「完全未投產」的生產批號及其相關工單，使這些未滿足的需求可以回到可匯入清單供新的執行單接手。",
+      "approved": true
+    }
+  ]
+}

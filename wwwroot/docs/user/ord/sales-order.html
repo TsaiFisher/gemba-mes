@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Sales Order — ORD User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>銷售訂單 — ORD 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ORD 目錄</span><span lang="en">ORD Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ORD 畫面</span><span lang="en">ORD Screens</span></div>
+    <a href="sales-order.html" class="nav-link active"><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></a>
+    <a href="goods-shipment.html" class="nav-link"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></a>
+    <a href="sales-return.html" class="nav-link"><span lang="zh">銷退單</span><span lang="en">Sales Return</span></a>
+    <a href="internal-order.html" class="nav-link"><span lang="zh">內部訂單</span><span lang="en">Internal Order</span></a>
+    <a href="order-overdue.html" class="nav-link"><span lang="zh">訂單逾期跟催</span><span lang="en">Overdue Sales Orders</span></a>
+    <a href="sales-ranking.html" class="nav-link"><span lang="zh">銷售排名</span><span lang="en">Sales Ranking</span></a>
+    <a href="sales-trend.html" class="nav-link"><span lang="zh">銷售趨勢</span><span lang="en">Sales Trend</span></a>
+    <a href="delivery-rate.html" class="nav-link"><span lang="zh">交期達成率</span><span lang="en">Delivery Rate</span></a>
+    <a href="return-rate.html" class="nav-link"><span lang="zh">退貨率分析</span><span lang="en">Return Rate</span></a>
+    <a href="sales-forecast.html" class="nav-link"><span lang="zh">銷售預測</span><span lang="en">Sales Forecast</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-file-earmark-text me-2 text-primary"></i><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/SalesOrder &nbsp;|&nbsp; 客戶訂單建立與需求驅動</span><span lang="en">Route: /SalesOrder &nbsp;|&nbsp; Customer order entry and demand generation</span></div>
+    </div>
+
+    <p><span lang="zh">承接客戶訂單：品號、數量、交期、幣別價格（交易日匯率快照）。核准後即為 MRP 需求來源，行別追蹤已出貨量。訂單修改受管制：已投產的關聯工單會鎖定並警示，減量時未投產部分自動釋放預留。</span><span lang="en">Captures a customer order: product, quantity, delivery date and price in the transaction currency (with the rate snapshotted on the transaction date). Once approved it becomes a demand source for MRP, and each line tracks the shipped quantity. Order changes are controlled: linked work orders already released are locked and warned about, and reducing the quantity releases the reservation of whatever is not yet released.</span></p>
+    <img class="screen-shot" src="img/sales-order.png" data-src-en="img/en/sales-order.png" alt="銷售訂單畫面截圖" data-alt-en="Sales order screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">銷售訂單畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Sales order screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">草稿 Draft</span><span lang="en">Draft</span></span></td><td><span lang="zh">已建立未生效，可自由編輯、刪除；需簽核者於此狀態送審。</span><span lang="en">Created but not yet effective; can be freely edited or deleted, and submitted for approval from this status.</span></td></tr><tr><td><span class='badge bg-info'><span lang="zh">待審核</span><span lang="en">Pending approval</span></span></td><td><span lang="zh">已送審等待簽核，不可編輯；可撤回改回草稿。</span><span lang="en">Submitted and waiting for approval; it cannot be edited, but it can be withdrawn back to draft.</span></td></tr><tr><td><span class='badge bg-primary'><span lang="zh">已確認 Confirmed</span><span lang="en">Confirmed</span></span></td><td><span lang="zh">簽核核准（或免簽核直接確認）後生效，等待後續作業/過帳。</span><span lang="en">Effective once approved (or confirmed directly when no approval is required), waiting for the next step or for posting.</span></td></tr><tr><td><span class='badge bg-success'><span lang="zh">已過帳 Posted</span><span lang="en">Posted</span></span></td><td><span lang="zh">庫存/帳務已入帳，單據不可再修改。</span><span lang="en">Stock and accounting have been posted; the document can no longer be changed.</span></td></tr><tr><td><span class='badge bg-danger'><span lang="zh">已作廢 Void</span><span lang="en">Void</span></span></td><td><span lang="zh">反向沖銷已過帳內容；作廢原因需留存，不可復原。</span><span lang="en">Reverses what was posted; the void reason is kept and the action cannot be undone.</span></td></tr></tbody>
+    </table>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">建立銷售訂單</span><span lang="en">Creating a sales order</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」開啟側欄，填寫銷售訂單表頭與明細行後儲存（草稿）。</span><span lang="en">Click "Add" to open the panel, fill in the sales order header and lines, then save (as a draft).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「送審」進入簽核流程；核准後單據自動轉「已確認」。若免簽核，直接點「確認」。</span><span lang="en">Click "Submit" to start the approval flow; the document turns to "Confirmed" once approved. Where no approval is required, click "Confirm" directly.</span></div></div>
+    <h3><span lang="zh">後續作業</span><span lang="en">Follow-up actions</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">已確認/已過帳單據可點「列印」產生含 QR Code 的正式表單（新分頁開啟）。</span><span lang="en">Confirmed and posted documents can be printed with "Print", producing the official form with a QR code in a new tab.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">已過帳單據如需沖銷，點「作廢」並填寫原因；系統產生反向庫存/帳務異動。</span><span lang="en">To reverse a posted document, click "Void" and enter a reason; the system creates the reversing stock and accounting entries.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">表頭</span><span lang="en">Header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">訂單單號</span><span lang="en">Order No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">訂單日期</span><span lang="en">Order Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">接單日期</span><span lang="en">Order date</span></td></tr>
+        <tr><td><span lang="zh">訂單類型</span><span lang="en">Order Type</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">一般訂單、預測訂單等，影響 MRP 是否納入展開</span><span lang="en">Normal order, forecast order and so on, which decides whether MRP includes it</span></td></tr>
+        <tr><td><span lang="zh">客戶</span><span lang="en">Customer</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">下單客戶；選定後帶出該客戶的幣別、稅別與交易條件預設值</span><span lang="en">Customer placing the order; selecting one brings in its currency, tax code and trading terms as defaults</span></td></tr>
+        <tr><td><span lang="zh">客戶訂單號</span><span lang="en">Customer Order No</span></td><td><span lang="zh">客戶方的採購單號，供雙方對帳</span><span lang="en">The customer's own order number, for reconciliation between both parties</span></td></tr>
+        <tr><td><span lang="zh">貿易條件</span><span lang="en">Trade Term (Incoterms)</span></td><td><span lang="zh">外銷訂單才需要填。它決定<strong>運費與保險由誰負擔</strong>，以及<strong>風險移轉時點</strong>——也就是收入認列的時點。⚠️ 與採購不同：出口的運費保險<strong>不計入存貨成本</strong>（貨正在離開），而是列為營業費用或收入的減項，因此<strong>不走</strong>「進料費用分攤」。</span><span lang="en">Only needed for export orders. It decides <strong>who bears freight and insurance</strong> and <strong>when risk transfers</strong> — which is also when revenue is recognised. ⚠️ Unlike purchasing: outbound freight and insurance are <strong>not</strong> capitalised into inventory (the goods are leaving); they are an operating expense or a deduction from revenue, so they do <strong>not</strong> go through Landed Cost Allocation.</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">整張訂單的補充說明</span><span lang="en">Notes for the whole order</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">明細</span><span lang="en">Lines</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">銷售的料件</span><span lang="en">Item sold</span></td></tr>
+        <tr><td><span lang="zh">預交日期</span><span lang="en">Delivery Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">該行承諾的交貨日；MRP 以此倒推需求日，逾期報表也以此判定</span><span lang="en">Delivery date promised for the line; MRP derives the demand date from it and the overdue report measures against it</span></td></tr>
+        <tr><td><span lang="zh">訂購數量 / 單位</span><span lang="en">Order Qty / UOM</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">客戶下單的數量與銷售計量單位；與庫存單位不同時系統另存庫存單位換算量。選了品號後，單位只列該品號可用的單位（預設銷售單位）。</span><span lang="en">Quantity and sales unit of measure ordered by the customer; when it differs from the stock unit, the converted stock quantity is stored as well. Once a product is chosen, the unit list shows only the units usable for it (sales unit preselected).</span></td></tr>
+        <tr><td><span lang="zh">幣別</span><span lang="en">Currency</span></td><td><span lang="zh">該行的交易幣別；本幣金額依單據匯率換算而得</span><span lang="en">Transaction currency of the line; the local amount is converted with the document rate</span></td></tr>
+        <tr><td><span lang="zh">單價</span><span lang="en">Unit Price</span></td><td><span lang="zh">交易幣別的未稅單價，小數位數依幣別設定</span><span lang="en">Price before tax in the transaction currency; decimal places follow the currency setting</span></td></tr>
+        <tr><td><span lang="zh">稅別</span><span lang="en">Tax</span></td><td><span lang="zh">稅別代碼，決定稅率；改稅別會重算稅額</span><span lang="en">Tax code, which determines the rate; changing it recalculates the tax</span></td></tr>
+        <tr><td><span lang="zh">未稅金額</span><span lang="en">Line Amt</span></td><td><span lang="zh">數量 × 單價</span><span lang="en">Quantity × unit price</span></td></tr>
+        <tr><td><span lang="zh">稅額</span><span lang="en">Tax</span></td><td><span lang="zh">未稅金額 × 稅率</span><span lang="en">Amount before tax × tax rate</span></td></tr>
+        <tr><td><span lang="zh">含稅總額</span><span lang="en">Total</span></td><td><span lang="zh">未稅金額 ＋ 稅額，仍為</span><span lang="en">Amount before tax + tax, still in </span><b><span lang="zh">交易幣別</span><span lang="en">Currency</span></b></td></tr>
+        <tr><td><span lang="zh">本幣金額</span><span lang="en">Local Amount</span></td><td><span lang="zh">含稅總額換算為本位幣的金額（本幣＝外幣 × 匯率）；表頭合計與帳務入帳一律採本幣</span><span lang="en">The tax-inclusive total converted to local currency (local = foreign × rate); header totals and accounting entries always use local currency</span></td></tr>
+        <tr><td><span lang="zh">已出貨量</span><span lang="en">Shipped Qty</span></td><td><span lang="zh">該行累計已出貨的數量，由出貨單回寫，不可手動修改</span><span lang="en">Cumulative quantity shipped for the line, written back by shipments and not editable by hand</span></td></tr>
+        <tr><td><span lang="zh">結案</span><span lang="en">Close</span></td><td><span lang="zh">勾選後該行不再等待出貨（如客戶取消尾數）；未結案且未出完者會出現在訂單逾期追蹤</span><span lang="en">Once checked, the line no longer waits for shipment (for example when the customer cancels the balance); open lines that are not fully shipped appear in overdue order tracking</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">該明細行的個別說明</span><span lang="en">Notes for this individual line</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="goods-shipment.html"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></a>、<a href="../mfg/mrp-run.html"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>、<a href="../mfg/order-change-decision.html"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">修改已投產訂單數量會進入「訂單變更決策」流程，請與生管協調後執行。</span><span lang="en"> Changing the quantity of an order already in production enters the "Order Change Decision" flow; coordinate with production control first.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

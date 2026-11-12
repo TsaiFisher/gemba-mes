@@ -1,0 +1,459 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@using SmartFactory.MES.Modules.INV.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.INV.ViewModels.SampleDocFormVm
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isNew      = string.IsNullOrEmpty(Model?.SampleDocId);
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    var products   = ViewBag.ProductOptions   as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uoms       = ViewBag.UomOptions       as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var customers  = ViewBag.CustomerOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var suppliers  = ViewBag.SupplierOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyStep = baseDp <= 0 ? "1" : "0." + new string('0', baseDp - 1) + "1";
+    var transactionTypesJson = System.Text.Json.JsonSerializer.Serialize(ViewBag.TransactionTypes ?? new object[0]);
+}
+
+<form id="sampleForm" asp-action="Save" asp-controller="SampleDoc" method="post"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="SampleDocId" />
+    <input type="hidden" asp-for="CreatedBy" />
+    <input type="hidden" asp-for="ApprovalStatus" />
+
+    <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+    <div class="p-3">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+        <div class="row g-3 mb-3">
+            @if (!isNew)
+            {
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["SampleDocId"]</label>
+                    <div class="form-control-plaintext fw-bold text-primary">@Model!.SampleDocId</div>
+                </div>
+            }
+            <div class="col-12 col-md-3">
+                <label asp-for="SampleDate" class="form-label fw-semibold">@Localizer["SampleDate"]</label>
+                <input asp-for="SampleDate" type="date" class="form-control" />
+                <span asp-validation-for="SampleDate" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="TypeCode" class="form-label fw-semibold">@Localizer["TypeCode"]</label>
+                <span asp-validation-for="TypeCode" class="text-danger small"></span>
+                @if (isNew || isReadOnly)
+                {
+                    <select asp-for="TypeCode" id="TypeCode" class="form-select" data-action-change="onTypeCodeChange">
+                        @foreach (var tc in new[] { ("CI", SL["SampleType_CI"].Value), ("CR", SL["SampleType_CR"].Value), ("SO", SL["SampleType_SO"].Value), ("SR", SL["SampleType_SR"].Value) })
+                        {
+                            <option value="@tc.Item1" selected="@(Model?.TypeCode == tc.Item1)">@tc.Item1 — @tc.Item2</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <input type="hidden" asp-for="TypeCode" />
+                    <div class="form-control-plaintext fw-semibold">@Model!.TypeCode</div>
+                }
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="EntityType" class="form-label fw-semibold">@Localizer["EntityType"]</label>
+                <span asp-validation-for="EntityType" class="text-danger small"></span>
+                <select asp-for="EntityType" class="form-select" data-action-change="onEntityTypeChange">
+                    <option value="Customer" selected="@(Model?.EntityType == "Customer")">@Localizer["Customer"]</option>
+                    <option value="Supplier" selected="@(Model?.EntityType == "Supplier")">@Localizer["Supplier"]</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-4">
+                <label asp-for="EntityCode" class="form-label fw-semibold">@Localizer["EntityCode"]</label>
+                <select asp-for="EntityCode" id="EntityCodeSelect" class="form-select select2-enable" required data-action-change="onEntityCodeChange">
+                    <option value="">-- @Localizer["SelectEntity"] --</option>
+                    @if (Model?.EntityType == "Supplier")
+                    {
+                        @foreach (var s in suppliers)
+                        {
+                            <option value="@s.CompanyCode" selected="@(Model?.EntityCode == (string)s.CompanyCode)">@s.CompanyCode — @s.CompanyName</option>
+                        }
+                    }
+                    else
+                    {
+                        @foreach (var c in customers)
+                        {
+                            <option value="@c.CompanyCode" selected="@(Model?.EntityCode == (string)c.CompanyCode)">@c.CompanyCode — @c.CompanyName</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="EntityCode" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-5">
+                <label asp-for="Remarks" class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+                <input asp-for="Remarks" class="form-control" maxlength="500" />
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0"><i class="bi bi-list-ul me-1"></i>@Localizer["LinesTitle"]</h6>
+            @if (!isReadOnly)
+            {
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-action="addLine">
+                    <i class="bi bi-plus-lg"></i> @Localizer["AddLine"]
+                </button>
+            }
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th class="u-width-40px">#</th>
+                        <th class="u-col-code">@Localizer["ProductCode"]</th>
+                        <th class="source-col d-none u-col-code">@Localizer["SourceDoc"]</th>
+                        <th class="text-end u-col-num">@Localizer["Qty"]</th>
+                        <th class="u-col-tiny">@Localizer["UomCode"]</th>
+                        <th class="text-end u-col-num">@Localizer["QtyPutAway"]</th>
+                        <th class="u-col-soft">@Localizer["Remarks"]</th>
+                        @if (!isReadOnly) { <th class="u-width-40px"></th> }
+                    </tr>
+                </thead>
+                <tbody id="linesTbody">
+                    @for (int i = 0; i < (Model?.Lines.Count ?? 0); i++)
+                    {
+                        var line = Model!.Lines[i];
+                        <tr>
+                            <td class="text-center text-muted small">@(i+1)</td>
+                            <td>
+                                <input type="hidden" name="Lines[@i].LineNo" value="@line.LineNo" />
+                                <select name="Lines[@i].ProductCode" class="form-select form-select-sm select2-enable product-select" required data-action-change="onProductChange">
+                                    <option value="">-- @Localizer["SelectProduct"] --</option>
+                                    @foreach (var p in products)
+                                    {
+                                        <option value="@p.ProductCode" selected="@(line.ProductCode == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                                    }
+                                </select>
+                            </td>
+                            <td class="source-col d-none">
+                                <div class="input-group input-group-sm u-width-150px">
+                                    <input name="Lines[@i].SourceDocId" value="@line.SourceDocId" class="form-control form-control-sm line-source-id" readonly />
+                                    <input type="hidden" name="Lines[@i].SourceLineNo" value="@line.SourceLineNo" class="line-source-line" />
+                                    <button type="button" class="btn btn-outline-secondary btn-lookup-source" data-action="lookupSource" title="@Localizer["LookupSource"]" aria-label="@Localizer["LookupSource"]"><i class="bi bi-search"></i></button>
+                                </div>
+                            </td>
+                            <td><input name="Lines[@i].Qty" value="@line.Qty" type="number" step="any" min="@UomStepHelper.GetMinPositive(uomDecimals, line.UomCode)" class="form-control form-control-sm text-end line-qty u-width-90px" /></td>
+                            <td><select name="Lines[@i].UomCode" class="form-select form-select-sm line-uom u-width-80px" data-action-change="onUomChange">@foreach(var u in uoms){<option value="@u.UomCode" selected="@(line.UomCode==(string)u.UomCode)">@u.UomCode</option>}</select></td>
+                            <td class="d-none"><input name="Lines[@i].UnitPrice" value="@line.UnitPrice" type="number" step="@moneyStep" class="form-control form-control-sm text-end u-width-100px" /></td>
+                            <td class="text-end text-muted small">@line.QtyPutAway</td>
+                            <td><input name="Lines[@i].Remarks" value="@line.Remarks" class="form-control form-control-sm" /></td>
+                            @if (!isReadOnly) { <td class="text-center">@if(line.QtyPutAway==0){<button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button>}</td> }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </fieldset>
+
+    @if (!isNew)
+    {
+        @await Component.InvokeAsync("ContainerUnitsLeft", new { docNo = Model!.SampleDocId })
+    }
+
+    <div class="position-sticky bottom-0 bg-white border-top px-3 py-2 d-flex justify-content-between align-items-center gap-2">
+        <div class="d-flex gap-2 align-items-center">
+            @if (!isNew)
+            {
+                <span class="badge @ApprovalBadge(Model!.ApprovalStatus)">@SL["ApprovalLabelPrefix"]@DocStatusLabels.Label(Model!.ApprovalStatus)</span>
+                <span class="badge @StatusBadge(Model!.Status)">@SL["DocLabelPrefix"]@DocStatusLabels.Label(Model!.Status)</span>
+            }
+        </div>
+        <div class="d-flex gap-2">
+            @if (!string.IsNullOrEmpty(Model?.SampleDocId) && (bool?)ViewBag.CanPrint == true)
+            {
+                <a asp-action="Print" asp-route-id="@Model!.SampleDocId" target="_blank"
+                   class="btn btn-outline-secondary">
+                    <i class="bi bi-printer"></i>
+                </a>
+            }
+            @if (isReadOnly)
+            {
+                @if (Model?.Status == DocStatus.Posted)
+                {
+                    <button type="button" class="btn btn-outline-danger" data-action="voidDoc" data-id="@Model!.SampleDocId">
+                        <i class="bi bi-x-octagon me-1"></i>@Localizer["Void"]
+                    </button>
+                    <button type="button" class="btn btn-danger" data-action="voidAndReopenDoc" data-id="@Model!.SampleDocId">
+                        <i class="bi bi-arrow-clockwise me-1"></i>@Localizer["VoidAndReopen"]
+                    </button>
+                }
+                @if (!isNew && Model!.Status == DocStatus.Confirmed && (bool?)ViewBag.CanUpdate == true)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="CancelConfirm" data-id="@Model!.SampleDocId" data-msg="@Localizer["ConfirmCancelConfirm"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["CancelConfirm"]
+                    </button>
+                }
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+                @if (!isNew && (Model!.ApprovalStatus == DocumentApprovalStatus.Draft || Model.ApprovalStatus == DocumentApprovalStatus.Rejected))
+                {
+                    <button type="button" class="btn btn-outline-primary" data-action="docAction" data-doc-action="Submit" data-id="@Model!.SampleDocId" data-msg="@Localizer["ConfirmSubmit"]">
+                        <i class="bi bi-send me-1"></i>@Localizer["Submit"]
+                    </button>
+                }
+                @if (!isNew && Model!.ApprovalStatus == DocumentApprovalStatus.PendingApproval)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="Withdraw" data-id="@Model!.SampleDocId" data-msg="@Localizer["ConfirmWithdraw"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["Withdraw"]
+                    </button>
+                }
+                @if (!isNew && Model!.Status == DocStatus.Draft && Model.ApprovalStatus == DocumentApprovalStatus.Approved)
+                {
+                    <button type="button" class="btn btn-outline-success" data-action="docAction" data-doc-action="Confirm" data-id="@Model!.SampleDocId" data-msg="@Localizer["ConfirmConfirm"]">
+                        <i class="bi bi-check2-circle me-1"></i>@Localizer["Confirm"]
+                    </button>
+                }
+                @if (!isNew && Model!.Status == DocStatus.Confirmed)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="CancelConfirm" data-id="@Model!.SampleDocId" data-msg="@Localizer["ConfirmCancelConfirm"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["CancelConfirm"]
+                    </button>
+                }
+                @if (Model?.ApprovalStatus != DocumentApprovalStatus.PendingApproval
+                     && Model?.ApprovalStatus != DocumentApprovalStatus.Approved
+                     && (isNew || Model?.Status == DocStatus.Draft))
+                {
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-floppy me-1"></i>@Localizer["Save"]
+                    </button>
+                }
+            }
+        </div>
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    window.uomDecimals = Object.assign(window.uomDecimals || {}, @Html.Raw(System.Text.Json.JsonSerializer.Serialize(uomDecimals ?? new Dictionary<string,int>())));
+    function onUomChange(e, sel) {
+        var qty = sel.closest('tr').querySelector('.line-qty');
+        window.applyUomStep(qty, sel.value);
+    }
+    var lineIdx = @(Model?.Lines.Count ?? 0);
+    var prevEntityType = document.querySelector('[name="EntityType"]')?.value ?? 'Customer';
+    var prevEntityCode = '';
+    var _entityCodeSuppressed = false;
+    setTimeout(() => { prevEntityCode = document.getElementById('EntityCodeSelect')?.value ?? ''; }, 0);
+    var custData = [@foreach(var c in customers){
+@:{ code: '@c.CompanyCode', name: '@c.CompanyName' },
+}];
+    var suppData = [@foreach(var s in suppliers){
+@:{ code: '@s.CompanyCode', name: '@s.CompanyName' },
+}];
+    var uomOptions = `@foreach(var u in uoms){
+@:<option value="@u.UomCode">@u.UomCode</option>
+}`;
+    var productOptions = `<option value="">-- @Localizer["SelectProduct"] --</option>@foreach(var p in products){
+@:<option value="@p.ProductCode">@p.ProductCode — @p.ProductName</option>
+}`;
+    var transactionTypes = @Html.Raw(transactionTypesJson);
+
+    async function onProductChange(e, inp) {
+        const code = inp.value;
+        if (!code) return;
+        const tr = inp.closest('tr');
+        try {
+            const resp = await fetch(`/api/warehouse/product-detail?productCode=${encodeURIComponent(code)}`);
+            if (resp.ok) {
+                const data = await resp.json();
+                const priceInp = tr.querySelector('[name*="UnitPrice"]');
+                if (priceInp) priceInp.value = data.standardCost || 0;
+                const uomSel = tr.querySelector('.line-uom');
+                if (uomSel && data.stockUom) {
+                    uomSel.value = data.stockUom;
+                    window.applyUomStep(tr.querySelector('.line-qty'), data.stockUom);
+                }
+            }
+            const tc = document.getElementById('TypeCode')?.value;
+            if (tc === "CR" || tc === "SO") await updateStockSuggestions(tr, code);
+        } catch (e) { console.error(e); }
+    }
+
+    async function updateStockSuggestions(tr, productCode) {
+        try {
+            const resp = await fetch(`/api/warehouse/stock/${encodeURIComponent(productCode)}`);
+            if (resp.ok) {
+                const stockData = await resp.json();
+                tr.dataset.stock = JSON.stringify(stockData);
+            }
+        } catch (e) { console.error(e); }
+    }
+
+    async function lookupSource(e, btn) {
+        const typeCode = document.querySelector('[name="TypeCode"]').value;
+        const type = transactionTypes.find(t => t.TypeCode === typeCode);
+        if (!type?.SourceTypeCode) return;
+        const entityCode = document.querySelector('[name="EntityCode"]').value;
+        if (!entityCode) { alert(@(Json.Serialize(SL["SelectPartyFirst"].Value))); return; }
+        const lines = await window.lookupSourceLines(type.SourceTypeCode, entityCode);
+        if (!lines.length) return;
+        window.showSourcePicker(lines, sel => window.fillSourceLine(btn.closest('tr'), sel));
+    }
+
+    function onTypeCodeChange(e, el) {
+        const tc = el.value;
+        const btns = document.querySelectorAll('.btn-lookup-stock');
+        const isOut = (tc === "CR" || tc === "SO");
+        btns.forEach(btn => {
+            if (isOut) btn.classList.remove('d-none');
+            else btn.classList.add('d-none');
+        });
+        if (isOut) {
+            document.querySelectorAll('#linesTbody tr').forEach(tr => {
+                const productCode = tr.querySelector('[name*="ProductCode"]').value;
+                if (productCode) updateStockSuggestions(tr, productCode);
+            });
+        }
+        const type = transactionTypes.find(t => t.TypeCode === tc);
+        const hasSource = !!(type?.SourceTypeCode);
+        document.querySelectorAll('.source-col').forEach(el => {
+            if (hasSource) el.classList.remove('d-none');
+            else el.classList.add('d-none');
+        });
+        if (!hasSource) {
+            document.querySelectorAll('.line-source-id').forEach(el => el.value = '');
+            document.querySelectorAll('.line-source-line').forEach(el => el.value = '');
+        }
+    }
+
+    function onEntityTypeChange(e, el) {
+        const type = el.value;
+        const tc = document.querySelector('[name="TypeCode"]').value;
+        const hasSource = !!(transactionTypes.find(t => t.TypeCode === tc)?.SourceTypeCode);
+        const hasRows = document.querySelectorAll('#linesTbody tr').length > 0;
+        if (hasSource && hasRows) {
+            if (!confirm('@Localizer["EntityCodeChangeWillClearLines"]')) {
+                document.querySelector('[name="EntityType"]').value = prevEntityType;
+                return;
+            }
+            document.getElementById('linesTbody').innerHTML = '';
+            lineIdx = 0;
+        }
+        prevEntityType = type;
+
+        const select = document.getElementById('EntityCodeSelect');
+        const data = type === 'Supplier' ? suppData : custData;
+        const prev = select.value;
+        select.innerHTML = '<option value="">-- @Localizer["SelectEntity"] --</option>' +
+            data.map(d => `<option value="${d.code}">${d.code}${d.name ? ' \u2014 ' + d.name : ''}</option>`).join('');
+        if (data.some(d => d.code === prev)) select.value = prev;
+        else select.value = "";
+
+        _entityCodeSuppressed = true;
+        if (window.jQuery && jQuery.fn.select2) jQuery(select).trigger('change');
+        _entityCodeSuppressed = false;
+        prevEntityCode = select.value;
+    }
+
+    function onEntityCodeChange(e, el) {
+        const newVal = el.value;
+        if (_entityCodeSuppressed) return;
+        if (newVal === prevEntityCode) return;
+        const tc = document.querySelector('[name="TypeCode"]').value;
+        const hasSource = !!(transactionTypes.find(t => t.TypeCode === tc)?.SourceTypeCode);
+        const hasRows = document.querySelectorAll('#linesTbody tr').length > 0;
+        if (hasSource && hasRows) {
+            if (!confirm('@Localizer["EntityCodeChangeWillClearLines"]')) {
+                _entityCodeSuppressed = true;
+                const sel = document.getElementById('EntityCodeSelect');
+                sel.value = prevEntityCode;
+                if (window.jQuery && jQuery.fn.select2) jQuery('#EntityCodeSelect').val(prevEntityCode).trigger('change.select2');
+                _entityCodeSuppressed = false;
+                return;
+            }
+            document.getElementById('linesTbody').innerHTML = '';
+            lineIdx = 0;
+        }
+        prevEntityCode = newVal;
+    }
+    function addLine() {
+        const i = lineIdx++;
+        const srcHidden = document.querySelector('thead .source-col')?.classList.contains('d-none') ?? true;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="text-center text-muted small">${i+1}</td>
+            <td><input type="hidden" name="Lines[${i}].LineNo" value="0" /><select name="Lines[${i}].ProductCode" class="form-select form-select-sm select2-enable product-select" required data-action-change="onProductChange">${productOptions}</select></td>
+            <td class="source-col ${srcHidden ? 'd-none' : ''}">
+                <div class="input-group input-group-sm u-width-150px">
+                    <input name="Lines[${i}].SourceDocId" class="form-control form-control-sm line-source-id" readonly />
+                    <input type="hidden" name="Lines[${i}].SourceLineNo" class="line-source-line" />
+                    <button type="button" class="btn btn-outline-secondary btn-lookup-source" data-action="lookupSource" title="@Localizer["LookupSource"]" aria-label="@Localizer["LookupSource"]"><i class="bi bi-search"></i></button>
+                </div>
+            </td>
+            <td><input name="Lines[${i}].Qty" type="number" value="1" class="form-control form-control-sm text-end line-qty u-width-90px" /></td>
+            <td><select name="Lines[${i}].UomCode" class="form-select form-select-sm line-uom u-width-80px" data-action-change="onUomChange">${uomOptions}</select></td>
+            <td class="d-none"><input name="Lines[${i}].UnitPrice" type="number" step="@moneyStep" class="form-control form-control-sm text-end u-width-100px" /></td>
+            <td class="text-end text-muted small">0</td>
+            <td><input name="Lines[${i}].Remarks" class="form-control form-control-sm" /></td>
+            <td class="text-center"><button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button></td>`;
+        document.getElementById('linesTbody').appendChild(tr);
+        window.armValidation(document.getElementById('sampleForm')); // 動態列重註冊 unobtrusive 驗證（R6c）
+        const uomSel = tr.querySelector('.line-uom');
+        const qtyInp = tr.querySelector('.line-qty');
+        if (uomSel && qtyInp) window.applyUomStep(qtyInp, uomSel.value);
+    }
+    function removeLine(e, btn) { btn.closest('tr').remove(); }
+    setTimeout(() => { const tcEl = document.querySelector('[name="TypeCode"]'); if (tcEl) onTypeCodeChange(null, tcEl); }, 100);
+    function docAction(e, el) {
+        const action = el.dataset.docAction, id = el.dataset.id, msg = el.dataset.msg;
+        if (msg && !confirm(msg)) return;
+        const token = document.querySelector('#sampleForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/SampleDoc/${action}/${id}`, { method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams({__RequestVerificationToken:token}) })
+            .then(r => r.json()).then(d => { if (d.success) { window.toastSuccess && window.toastSuccess(); refreshList && refreshList(); } else alert(d.message); });
+    }
+    function voidDoc(e, el) {
+        const id = el.dataset.id;
+        const reason = prompt('@Localizer["VoidReason"]');
+        if (reason === null) return;
+        const token = document.querySelector('#sampleForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/SampleDoc/Void/${id}`, { method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams({reason, __RequestVerificationToken:token}) })
+            .then(r => r.json()).then(d => { if (d.success) { window.toastSuccess && window.toastSuccess(); refreshList && refreshList(); } else alert(d.message); });
+    }
+    function voidAndReopenDoc(e, el) {
+        const id = el.dataset.id;
+        const reason = prompt('@Localizer["VoidReason"]');
+        if (reason === null) return;
+        const token = document.querySelector('#sampleForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/SampleDoc/VoidAndReopen/${id}`, { method:'POST', headers:{'X-Requested-With':'XMLHttpRequest','Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams({reason, __RequestVerificationToken:token}) })
+            .then(async r => {
+                if (r.ok) { const html = await r.text(); const body = document.getElementById('sidePanelBody'); if (body) { body.innerHTML = html; if (window.execScripts) execScripts(body); } }
+                else { const d = await r.json(); alert(d.message || @(Json.Serialize(SL["VoidFailed"].Value))); }
+            });
+    }
+
+    // 庫存單位為品號帶出之唯讀欄位：鎖定不可手改（select 仍 enabled，值隨表單送出）
+    (function lockUomReadonly() {
+        var scope = document.getElementById('sidePanelBody');
+        if (!scope) return;
+        var lock = function () {
+            scope.querySelectorAll('select.line-uom').forEach(function (s) {
+                s.classList.add('bg-light');
+                s.style.pointerEvents = 'none';
+                s.tabIndex = -1;
+                s.setAttribute('aria-readonly', 'true');
+            });
+        };
+        lock();
+        new MutationObserver(lock).observe(scope, { childList: true, subtree: true });
+    })();
+</script>
+
+@functions {
+    string StatusBadge(DocStatus s) => s switch { DocStatus.Draft => "bg-secondary", DocStatus.Confirmed => "bg-info text-dark", DocStatus.Posted => "bg-success", DocStatus.Void => "bg-danger", _ => "bg-secondary" };
+    string ApprovalBadge(DocumentApprovalStatus s) => s switch { DocumentApprovalStatus.Approved => "bg-success", DocumentApprovalStatus.PendingApproval => "bg-warning text-dark", DocumentApprovalStatus.Rejected => "bg-danger", _ => "bg-secondary" };
+}

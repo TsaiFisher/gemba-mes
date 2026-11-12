@@ -1,0 +1,357 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@model WorkOrder
+
+@{
+    // 本片段僅供側欄面板（PartialView）或 QR 掃碼獨立頁（View）局部顯示，
+    // 不應套用整頁主版型（導覽列/側邊選單/待簽核 badge）——曾發生 PartialView
+    // 仍誤套用 _Layout.cshtml 一併渲染整包導覽內容，導致無關的版型渲染例外
+    // 連帶讓側欄面板整個載入失敗。明確關閉 Layout 避免任何情況下再被牽連。
+    Layout = null;
+}
+@using SmartFactory.MES.Modules.BAS.Services
+@{
+    bool canUpdate = ViewBag.CanUpdate == true;
+    // 作廢入口（2026-10-15 補）：端點與手冊「重算為 0 請改按作廢」早就在，畫面卻沒有任何按鈕。
+    bool canVoid = canUpdate && Model.Status is WorkOrderStatus.Planned or WorkOrderStatus.Released or WorkOrderStatus.InProgress;
+    var children = ViewBag.ChildWorkOrders as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string? productUom = ViewBag.ProductUom as string;
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+
+    (string css, string key) StatusBadge(WorkOrderStatus s) => s switch
+    {
+        WorkOrderStatus.Planned    => ("bg-secondary", "StatusPlanned"),
+        WorkOrderStatus.Released   => ("bg-primary", "StatusReleased"),
+        WorkOrderStatus.InProgress => ("bg-info", "StatusInProgress"),
+        WorkOrderStatus.Completed  => ("bg-success", "StatusCompleted"),
+        WorkOrderStatus.Closed     => ("bg-dark", "StatusClosed"),
+        _                          => ("bg-danger", "StatusVoid")
+    };
+    string TimeUnitLabel(OperationTimeUnit u) => u switch
+    {
+        OperationTimeUnit.Second => Localizer["TimeSec"].Value,
+        OperationTimeUnit.Hour   => Localizer["TimeHour"].Value,
+        _                        => Localizer["TimeMin"].Value
+    };
+    (string css, string key) ApprovalBadge(DocumentApprovalStatus s) => s switch
+    {
+        DocumentApprovalStatus.PendingApproval => ("bg-warning text-dark", "ApPending"),
+        DocumentApprovalStatus.Approved        => ("bg-success", "ApApproved"),
+        DocumentApprovalStatus.Rejected        => ("bg-danger", "ApRejected"),
+        _                                      => ("bg-secondary", "ApDraft")
+    };
+    var sb = StatusBadge(Model.Status);
+    var ab = ApprovalBadge(Model.ApprovalStatus);
+    // §21.5 物料備齊 badge
+    (string css, string key) ReadinessBadge(MaterialReadinessStatus s) => s switch
+    {
+        MaterialReadinessStatus.Ready           => ("bg-success", "MrReady"),
+        MaterialReadinessStatus.PartialShortage => ("bg-warning text-dark", "MrPartial"),
+        MaterialReadinessStatus.Shortage        => ("bg-danger", "MrShortage"),
+        _                                       => ("bg-secondary", "MrNotChecked")
+    };
+    var rb = ReadinessBadge(Model.MaterialReadinessStatus);
+    bool canCheckReadiness = Model.Status == WorkOrderStatus.Released
+        && Model.ApprovalStatus == DocumentApprovalStatus.Approved;
+}
+
+<div class="wo-details">
+    <section class="mb-3">
+        <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">1</span>@Localizer["SecHeader"]</h6>
+        <div class="row g-2">
+            <div class="col-md-6"><span class="text-muted small">@Localizer["WorkOrderId"]</span><div class="fw-medium">@Model.WorkOrderId</div></div>
+            <div class="col-md-6"><span class="text-muted small">@Localizer["Status"]</span><div><span class="badge @sb.css">@Localizer[sb.key]</span> <span class="badge @ab.css">@Localizer[ab.key]</span> <span id="woReadinessBadge" class="badge @rb.css" title="@Localizer["MrTitle"]">@Localizer[rb.key]</span></div></div>
+            <div class="col-md-6"><span class="text-muted small">@Localizer["ProductCode"]</span><div>@Model.ProductCode</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["Quantity"]</span><div>@Model.Quantity.ToString(QtyFmt(productUom))</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["RoutingId"]</span><div>@Model.RoutingId</div></div>
+            <div class="col-md-6"><span class="text-muted small">@Localizer["Batch"]</span><div>@Model.ProductionBatchId</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["PlannedStart"]</span><div>@Model.PlannedStartDate.ToString("yyyy-MM-dd")</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["PlannedEnd"]</span><div>@Model.PlannedEndDate.ToString("yyyy-MM-dd")</div></div>
+            @if (!string.IsNullOrEmpty(Model.ParentWorkOrderId))
+            {
+                <div class="col-md-6"><span class="text-muted small">@Localizer["Parent"]</span><div>@Model.ParentWorkOrderId</div></div>
+            }
+        </div>
+    </section>
+
+    @if (Model.IsOutsource)
+    {
+        <section class="mb-3">
+            <h6 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-truck me-1"></i>@Localizer["SecOutsource"]</h6>
+            <div class="row g-2">
+                <div class="col-md-4"><span class="text-muted small">@Localizer["OutsourceSupplier"]</span><div>@Model.OutsourceSupplierCode</div></div>
+                <div class="col-md-4"><span class="text-muted small">@Localizer["OutsourcePO"]</span><div>@Model.OutsourcePurchaseOrderId</div></div>
+                <div class="col-md-4"><span class="text-muted small">@Localizer["OutsourceExpected"]</span><div>@(Model.OutsourceExpectedDeliveryDate?.ToString("yyyy-MM-dd"))</div></div>
+            </div>
+        </section>
+    }
+
+    <section class="mb-3">
+        <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">2</span>@Localizer["SecCosts"]</h6>
+        <div class="text-muted small mb-2">@Localizer["CostHint"]</div>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead class="table-light"><tr>
+                    <th></th><th class="text-end">@Localizer["CostMaterial"]</th>
+                    <th class="text-end">@Localizer["CostLabor"]</th><th class="text-end">@Localizer["CostOverhead"]</th>
+                </tr></thead>
+                <tbody>
+                    <tr>
+                        <th class="table-light">@Localizer["StandardCost"]</th>
+                        <td class="text-end">@Model.StandardMaterialCost.ToString(moneyFmt)</td>
+                        <td class="text-end">@Model.StandardLaborCost.ToString(moneyFmt)</td>
+                        <td class="text-end">@Model.StandardOverheadCost.ToString(moneyFmt)</td>
+                    </tr>
+                    <tr>
+                        <th class="table-light">@Localizer["ActualCost"]</th>
+                        <td class="text-end">@Model.ActualMaterialCost.ToString(moneyFmt)</td>
+                        <td class="text-end">@Model.ActualLaborCost.ToString(moneyFmt)</td>
+                        <td class="text-end">@Model.ActualOverheadCost.ToString(moneyFmt)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="mb-3">
+        <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">3</span>@Localizer["SecOperations"]</h6>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead class="table-light"><tr>
+                    <th>@Localizer["ColSeq"]</th><th>@Localizer["ColOpName"]</th><th>@Localizer["ColWorkCenter"]</th>
+                    <th class="text-end">@Localizer["ColSetup"]</th><th class="text-end">@Localizer["ColUnit"]</th>
+                    <th>@Localizer["ColOutsource"]</th><th>@Localizer["ColMaterials"]</th>
+                </tr></thead>
+                <tbody>
+                    @foreach (var op in Model.Operations.OrderBy(o => o.OperationSeq))
+                    {
+                        <tr>
+                            <td>@op.OperationSeq</td>
+                            <td>@op.OperationName</td>
+                            <td>@op.WorkCenterId</td>
+                            <td class="text-end">@op.SetupTime @TimeUnitLabel(op.SetupTimeUnit)</td>
+                            <td class="text-end">@op.UnitTime @TimeUnitLabel(op.TimeUnit)</td>
+                            <td>@if (op.IsOutsource) { <i class="bi bi-check-lg text-primary"></i> }</td>
+                            <td class="small">
+                                @foreach (var m in op.Materials.OrderBy(x => x.BomSeq))
+                                {
+                                    <div>@m.ProductCode × @m.RequiredQty.ToString(QtyFmt(m.UomCode)) @m.UomCode</div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Operations.Any())
+                    {
+                        <tr><td colspan="8" class="text-center text-muted">@Localizer["NoOperations"]</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    @if (children.Any())
+    {
+        <section class="mb-3">
+            <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">4</span>@Localizer["SecChildren"]</h6>
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered">
+                    <thead class="table-light"><tr>
+                        <th>@Localizer["ColChildWo"]</th><th>@Localizer["ProductCode"]</th><th class="text-end">@Localizer["Quantity"]</th><th>@Localizer["Status"]</th>
+                    </tr></thead>
+                    <tbody>
+                        @foreach (var c in children)
+                        {
+                            var cs = StatusBadge((WorkOrderStatus)c.Status);
+                            <tr>
+                                <td>@c.WorkOrderId</td><td>@c.ProductCode</td><td class="text-end">@c.Quantity.ToString(QtyFmt((string?)c.UomCode))</td>
+                                <td><span class="badge @cs.css">@Localizer[cs.key]</span></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    }
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        @if (canUpdate && Model.Status == WorkOrderStatus.Planned)
+        {
+            <button type="button" class="btn btn-success" data-action="releaseWorkOrder">
+                <i class="bi bi-box-arrow-up"></i> @Localizer["Release"]
+            </button>
+        }
+        @if (canUpdate && Model.ApprovalStatus == DocumentApprovalStatus.PendingApproval)
+        {
+            <button type="button" class="btn btn-warning" data-action="withdrawWorkOrder">
+                <i class="bi bi-arrow-counterclockwise"></i> @Localizer["Withdraw"]
+            </button>
+        }
+        @if (canVoid)
+        {
+            @* 後端守門（WorkOrderStateMachine.CanVoid）：有產出、有已領未退的料都會擋下並說明原因，
+               這裡只依狀態決定要不要給按鈕。 *@
+            <button type="button" class="btn btn-outline-danger" data-action="voidWorkOrder">
+                <i class="bi bi-x-octagon"></i> @Localizer["Void"]
+            </button>
+        }
+        @if (canCheckReadiness)
+        {
+            <button type="button" class="btn btn-outline-primary" data-action="checkWoReadiness">
+                <i class="bi bi-clipboard-check"></i> @Localizer["MrCheck"]
+            </button>
+        }
+    </div>
+</div>
+
+@if (canCheckReadiness)
+{
+    @Html.AntiForgeryToken()
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    (function () {
+        var checkUrl = '@Url.Action("CheckReadiness", new { id = Model.WorkOrderId })';
+        var labels = {
+            Ready: { css: 'bg-success', text: '@Localizer["MrReady"]' },
+            Shortage: { css: 'bg-danger', text: '@Localizer["MrShortage"]' },
+            PartialShortage: { css: 'bg-warning text-dark', text: '@Localizer["MrPartial"]' },
+            NotChecked: { css: 'bg-secondary', text: '@Localizer["MrNotChecked"]' }
+        };
+        window.checkWoReadiness = function () {
+            var tokenEl = document.querySelector('input[name="__RequestVerificationToken"]');
+            fetch(checkUrl, {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest', 'RequestVerificationToken': tokenEl ? tokenEl.value : '' }
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+                if (!res || !res.success) { alert('@Localizer["MrCheckFailed"]'); return; }
+                var badge = document.getElementById('woReadinessBadge');
+                var lab = labels[res.overall] || labels.NotChecked;
+                if (badge) { badge.className = 'badge ' + lab.css; badge.textContent = lab.text; }
+                var bad = (res.lines || []).filter(function (l) { return l.state !== 'Ready'; });
+                if (bad.length === 0) {
+                    if (window.toastSuccess) window.toastSuccess('@Localizer["MrReady"]'); else alert('@Localizer["MrReady"]');
+                } else {
+                    var msg = '@Localizer["MrShortageList"]\n' + bad.map(function (l) {
+                        return '• ' + l.productCode + ' (' + l.state + ') ' + l.availableQty + '/' + l.requiredQty;
+                    }).join('\n');
+                    alert(msg);
+                }
+            })
+            .catch(function () { alert('@Localizer["MrCheckFailed"]'); });
+        };
+    })();
+    </script>
+}
+
+@if (canUpdate && (Model.Status == WorkOrderStatus.Planned || Model.ApprovalStatus == DocumentApprovalStatus.PendingApproval))
+{
+    @Html.AntiForgeryToken()
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    (function () {
+        var releaseUrl = '@Url.Action("Release", new { id = Model.WorkOrderId })';
+        var withdrawUrl = '@Url.Action("Withdraw", new { id = Model.WorkOrderId })';
+        var releaseMsg = "@Localizer["ReleaseConfirm"]";
+        var withdrawMsg = "@Localizer["WithdrawConfirm"]";
+        // §24.2 重算確認 / §24.3 缺料阻擋提示模板（{0}/{1} 由前端填入）。
+        // 這兩則 resx 內容含字面 {0}/{1}——用 .Value 取原始字串跳過 IViewLocalizer
+        // 的格式化輸出路徑，避免把 {0}/{1} 誤判成待代入參數丟出 FormatException；
+        // 但 .Value 是純 string，Razor 對純 string 一律走 HtmlEncoder 編碼（含中文），
+        // 中文會被轉成 &#xNNNN; 數字實體，在 <script> 的 JS 字串情境中不會被瀏覽器解碼，
+        // 顯示出來就是亂碼。故再包一層 Html.Raw 還原為未編碼原文（純靜態 resx 文案，非
+        // 使用者輸入，無 XSS 風險，可安全 Raw）。
+        var recalcTpl = "@Html.Raw(Localizer["ReleaseRecalcPrompt"].Value)";
+        var blockedTpl = "@Html.Raw(Localizer["ReleaseBlockedPrompt"].Value)";
+        var failedMsg = "@Localizer["ReleaseFailed"]";
+        function tokenVal() {
+            var el = document.querySelector('input[name="__RequestVerificationToken"]');
+            return el ? el.value : '';
+        }
+        // confirmed=true 時帶 query 重送，套用重算量（§24.2 人工確認後定案）
+        function doRelease(confirmed) {
+            var url = releaseUrl + (confirmed ? '?confirmed=true' : '');
+            fetch(url, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': tokenVal(), 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.success && d.warning) {
+                    // 已投產但本該送審卻沒有簽核流程（A3）：toast 一閃即重整會看不到，改用 alert 確認
+                    alert(d.message);
+                    location.reload();
+                } else if (d.success) {
+                    if (window.toastSuccess) window.toastSuccess(d.message);
+                    setTimeout(function () { location.reload(); }, 800);
+                } else if (d.needsConfirm) {
+                    var msg = recalcTpl.replace('{0}', d.planned).replace('{1}', d.recalculated);
+                    if (confirm(msg)) doRelease(true);
+                } else if (d.materialBlocked) {
+                    alert(blockedTpl.replace('{0}', (d.shortages || []).join(', ')));
+                } else {
+                    alert(d.message || failedMsg);
+                }
+            })
+            .catch(function () { alert(failedMsg); });
+        }
+        window.releaseWorkOrder = function () {
+            if (!confirm(releaseMsg)) return;
+            doRelease(false);
+        };
+        window.withdrawWorkOrder = function () {
+            if (!confirm(withdrawMsg)) return;
+            // crud-panel.js 的 postAction 是 IIFE 內部函式、沒有掛到 window——原本的
+            // typeof postAction 守衛永遠為 false，按下撤回什麼都不會發生（同 ProductionBatch/_Details 的修法）。
+            fetch(withdrawUrl, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': tokenVal(), 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.success) {
+                    if (window.toastSuccess) window.toastSuccess(d.message);
+                    setTimeout(function () { location.reload(); }, 800);
+                } else {
+                    alert(d.message || window.i18n.t('OperationFailed'));
+                }
+            })
+            .catch(function () { alert(window.i18n.t('OperationFailed')); });
+        };
+    })();
+    </script>
+}
+
+@if (canVoid)
+{
+    @Html.AntiForgeryToken()
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    (function () {
+        var voidUrl = '@Url.Action("Void", new { id = Model.WorkOrderId })';
+        var voidMsg = "@Localizer["VoidConfirm"]";
+        window.voidWorkOrder = function () {
+            if (!confirm(voidMsg)) return;
+            var el = document.querySelector('input[name="__RequestVerificationToken"]');
+            // 直接 fetch：crud-panel.js 的 postAction 不在 window（見同檔 withdrawWorkOrder 的註解）
+            fetch(voidUrl, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': el ? el.value : '', 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.success) {
+                    if (window.toastSuccess) window.toastSuccess(d.message);
+                    setTimeout(function () { location.reload(); }, 800);
+                } else {
+                    alert(d.message || window.i18n.t('OperationFailed'));
+                }
+            })
+            .catch(function () { alert(window.i18n.t('OperationFailed')); });
+        };
+    })();
+    </script>
+}

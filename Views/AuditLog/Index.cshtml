@@ -1,0 +1,301 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using SmartFactory.MES.Services
+@inject IPermissionService PermissionService
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Models.AuditLog>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.SharedResource> SL
+
+@{
+    ViewData["Title"] = Localizer["AuditLog"];
+    bool hasSearched = ViewBag.Searched == true;
+    var entityTypes = ViewBag.EntityTypes as List<string> ?? new List<string>();
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-clock-history"></i> @Localizer["AuditLog"]</h1>
+    </div>
+
+
+    <!-- 篩選區塊 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-2">
+                    <label class="form-label small">@Localizer["SearchTerm"]</label>
+                    <input type="text" name="searchTerm" class="form-control form-control-sm" value="@ViewBag.SearchTerm" placeholder="@Localizer["UserOrEntityId"]" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small">@Localizer["EntityType"]</label>
+                    <select name="entityType" class="form-select form-select-sm">
+                        <option value="">-- @Localizer["All"] --</option>
+                        @foreach (var type in entityTypes)
+                        {
+                            <option value="@type" selected="@(ViewBag.EntityType == type)">@type</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label small">@Localizer["Action"]</label>
+                    <select name="auditAction" class="form-select form-select-sm">
+                        <option value="">@Localizer["All"]</option>
+                        @* 選項由 AuditAction.All 產生：手打的清單漏過 Login2faRequired，那些紀錄因此篩不出來 *@
+                        @foreach (var auditAction in AuditAction.All)
+                        {
+                            <option value="@auditAction" selected="@(ViewBag.Action == auditAction)">@Localizer[AuditAction.ResourceKey(auditAction)!]</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small">@Localizer["StartDate"]</label>
+                    <input type="date" name="startDate" class="form-control form-control-sm" value="@(ViewBag.StartDate?.ToString("yyyy-MM-dd"))" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small">@Localizer["EndDate"]</label>
+                    <input type="date" name="endDate" class="form-control form-control-sm" value="@(ViewBag.EndDate?.ToString("yyyy-MM-dd"))" />
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+                <div class="col-md-1 d-flex align-items-end">
+                    <div class="form-check mb-1">
+                        <input class="form-check-input" type="checkbox" name="includeNoPlant" value="true"
+                               id="includeNoPlant" @(ViewBag.IncludeNoPlant == true ? "checked" : "") />
+                        <label class="form-check-label small" for="includeNoPlant">
+                            @Localizer["IncludeNoPlant"]
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1 d-flex align-items-end gap-1">
+                    <button type="submit" class="btn btn-primary btn-sm flex-grow-1 text-nowrap px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm text-nowrap">
+                        @Localizer["Clear"]
+                    </a>
+                    @if (await PermissionService.CanPrint("AuditLog"))
+                    {
+                        <button type="button" class="btn btn-outline-info btn-sm text-nowrap" data-action="printPage">
+                            <i class="bi bi-printer"></i> @Localizer["Print"]
+                        </button>
+                        <div class="btn-group">
+                            <a asp-action="Export"
+                               asp-route-searchTerm="@ViewBag.SearchTerm"
+                               asp-route-entityType="@ViewBag.EntityType"
+                               asp-route-auditAction="@ViewBag.Action"
+                               asp-route-startDate="@(ViewBag.StartDate?.ToString("yyyy-MM-dd"))"
+                               asp-route-endDate="@(ViewBag.EndDate?.ToString("yyyy-MM-dd"))"
+                               asp-route-sortOrder="@ViewBag.CurrentSort"
+                               asp-route-includeNoPlant="@ViewBag.IncludeNoPlant"
+                               asp-route-format="xlsx"
+                               class="btn btn-outline-success btn-sm text-nowrap">
+                                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                            </a>
+                            <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Export"
+                                       asp-route-searchTerm="@ViewBag.SearchTerm"
+                                       asp-route-entityType="@ViewBag.EntityType"
+                                       asp-route-auditAction="@ViewBag.Action"
+                                       asp-route-startDate="@(ViewBag.StartDate?.ToString("yyyy-MM-dd"))"
+                                       asp-route-endDate="@(ViewBag.EndDate?.ToString("yyyy-MM-dd"))"
+                                       asp-route-sortOrder="@ViewBag.CurrentSort"
+                                       asp-route-includeNoPlant="@ViewBag.IncludeNoPlant"
+                                       asp-route-format="csv">
+                                    <i class="bi bi-filetype-csv me-2"></i>@Localizer["ExportCsv"]</a></li>
+                                <li><a class="dropdown-item" asp-action="Export"
+                                       asp-route-searchTerm="@ViewBag.SearchTerm"
+                                       asp-route-entityType="@ViewBag.EntityType"
+                                       asp-route-auditAction="@ViewBag.Action"
+                                       asp-route-startDate="@(ViewBag.StartDate?.ToString("yyyy-MM-dd"))"
+                                       asp-route-endDate="@(ViewBag.EndDate?.ToString("yyyy-MM-dd"))"
+                                       asp-route-sortOrder="@ViewBag.CurrentSort"
+                                       asp-route-includeNoPlant="@ViewBag.IncludeNoPlant"
+                                       asp-route-format="json">
+                                    <i class="bi bi-filetype-json me-2"></i>@Localizer["ExportJson"]</a></li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <!-- 尚未查詢提示 -->
+        <div class="card shadow-sm">
+            <div class="card-body text-center py-5 text-muted">
+                <i class="bi bi-search fs-1 d-block mb-3 opacity-25"></i>
+                <p class="mb-0">@Localizer["SearchPrompt"]</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- 列表 -->
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">
+                                <a class="text-dark text-decoration-none" asp-action="Index" 
+                                   asp-route-sortOrder="@ViewBag.TimestampSort" 
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-entityType="@ViewBag.EntityType"
+                                   asp-route-auditAction="@ViewBag.Action"
+                                   asp-route-startDate="@ViewBag.StartDate"
+                                   asp-route-endDate="@ViewBag.EndDate"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-includeNoPlant="@ViewBag.IncludeNoPlant"
+                                   asp-route-searched="true">
+                                    @Localizer["Timestamp"]
+                                    @if(string.IsNullOrEmpty(ViewBag.CurrentSort) || ViewBag.CurrentSort == "timestamp_desc") { <i class="bi bi-sort-down"></i> }
+                                    else if(ViewBag.CurrentSort == "timestamp_asc") { <i class="bi bi-sort-up"></i> }
+                                </a>
+                            </th>
+                            <th>
+                                <a class="text-dark text-decoration-none" asp-action="Index" 
+                                   asp-route-sortOrder="@ViewBag.UserSort" 
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-entityType="@ViewBag.EntityType"
+                                   asp-route-auditAction="@ViewBag.Action"
+                                   asp-route-startDate="@ViewBag.StartDate"
+                                   asp-route-endDate="@ViewBag.EndDate"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-includeNoPlant="@ViewBag.IncludeNoPlant"
+                                   asp-route-searched="true">
+                                    @Localizer["User"]
+                                    @if(ViewBag.CurrentSort == "user_asc") { <i class="bi bi-sort-up"></i> }
+                                    else if(ViewBag.CurrentSort == "user_desc") { <i class="bi bi-sort-down"></i> }
+                                </a>
+                            </th>
+                            <th>
+                                <a class="text-dark text-decoration-none" asp-action="Index" 
+                                   asp-route-sortOrder="@ViewBag.ActionSort" 
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-entityType="@ViewBag.EntityType"
+                                   asp-route-auditAction="@ViewBag.Action"
+                                   asp-route-startDate="@ViewBag.StartDate"
+                                   asp-route-endDate="@ViewBag.EndDate"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-includeNoPlant="@ViewBag.IncludeNoPlant"
+                                   asp-route-searched="true">
+                                    @Localizer["Action"]
+                                    @if(ViewBag.CurrentSort == "action_asc") { <i class="bi bi-sort-up"></i> }
+                                    else if(ViewBag.CurrentSort == "action_desc") { <i class="bi bi-sort-down"></i> }
+                                </a>
+                            </th>
+                            <th>
+                                <a class="text-dark text-decoration-none" asp-action="Index" 
+                                   asp-route-sortOrder="@ViewBag.EntityTypeSort" 
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-entityType="@ViewBag.EntityType"
+                                   asp-route-auditAction="@ViewBag.Action"
+                                   asp-route-startDate="@ViewBag.StartDate"
+                                   asp-route-endDate="@ViewBag.EndDate"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-includeNoPlant="@ViewBag.IncludeNoPlant"
+                                   asp-route-searched="true">
+                                    @Localizer["EntityType"]
+                                    @if(ViewBag.CurrentSort == "type_asc") { <i class="bi bi-sort-up"></i> }
+                                    else if(ViewBag.CurrentSort == "type_desc") { <i class="bi bi-sort-down"></i> }
+                                </a>
+                            </th>
+                            <th>
+                                <a class="text-dark text-decoration-none" asp-action="Index" 
+                                   asp-route-sortOrder="@ViewBag.EntityIdSort" 
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-entityType="@ViewBag.EntityType"
+                                   asp-route-auditAction="@ViewBag.Action"
+                                   asp-route-startDate="@ViewBag.StartDate"
+                                   asp-route-endDate="@ViewBag.EndDate"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-includeNoPlant="@ViewBag.IncludeNoPlant"
+                                   asp-route-searched="true">
+                                    @Localizer["EntityId"]
+                                    @if(ViewBag.CurrentSort == "id_asc") { <i class="bi bi-sort-up"></i> }
+                                    else if(ViewBag.CurrentSort == "id_desc") { <i class="bi bi-sort-down"></i> }
+                                </a>
+                            </th>
+                            <th>
+                                <a class="text-dark text-decoration-none" asp-action="Index" 
+                                   asp-route-sortOrder="@ViewBag.IpSort" 
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-entityType="@ViewBag.EntityType"
+                                   asp-route-auditAction="@ViewBag.Action"
+                                   asp-route-startDate="@ViewBag.StartDate"
+                                   asp-route-endDate="@ViewBag.EndDate"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-includeNoPlant="@ViewBag.IncludeNoPlant"
+                                   asp-route-searched="true">
+                                    @Localizer["IpAddress"]
+                                    @if(ViewBag.CurrentSort == "ip_asc") { <i class="bi bi-sort-up"></i> }
+                                    else if(ViewBag.CurrentSort == "ip_desc") { <i class="bi bi-sort-down"></i> }
+                                </a>
+                            </th>
+                            <th class="text-end pe-4">@Localizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-5 text-muted">@Localizer["NoData"]</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var log in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4">@DateTimeSvc.ToLocalTime(log.Timestamp).ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                    <td>@(log.UserName ?? "-")</td>
+                                    <td>@await Html.PartialAsync("_ActionBadge", log.Action)</td>
+                                    <td>@log.EntityType</td>
+                                    <td><code>@(log.EntityId ?? "-")</code></td>
+                                    <td>@(log.IpAddress ?? "-")</td>
+                                    <td class="text-end pe-4">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                data-action="openDetailsPanel" data-id="@log.Id"><i class="bi bi-eye"></i> @Localizer["Details"]</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 分頁導航 -->
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel (Bootstrap Offcanvas) -->
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-680px-95vw" id="detailsPanel" tabindex="-1"
+     aria-labelledby="detailsPanelLabel">
+    <div class="offcanvas-header border-bottom bg-primary text-white py-3">
+        <h5 class="offcanvas-title mb-0" id="detailsPanelLabel">
+            <i class="bi bi-clock-history me-2"></i>@Localizer["AuditLogDetails"]
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="detailsPanelBody"></div>
+</div>
+
+@section Scripts {
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function openDetailsPanel(e, el) {
+        const id = el.dataset.id;
+        const body = document.getElementById('detailsPanelBody');
+        body.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-3 text-muted small">' + @(Json.Serialize(SL["Loading"].Value)) + '</p></div>';
+        new bootstrap.Offcanvas(document.getElementById('detailsPanel')).show();
+        fetch('/AuditLog/Details/' + id, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+            .then(html => { body.innerHTML = DOMPurify.sanitize(html); })
+            .catch(() => { body.innerHTML = '<div class="alert alert-danger m-3">' + @(Json.Serialize(SL["LoadFailedRetry"].Value)) + '</div>'; });
+    }
+</script>
+}

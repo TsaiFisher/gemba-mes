@@ -1,0 +1,107 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Services
+@inject IViewLocalizer Localizer
+@inject ITimeZoneCatalog TimeZones
+@model SmartFactory.MES.Models.ApplicationUser
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    var action = isEdit
+        ? Url.Action("Edit", "User", new { id = Model.Id })
+        : Url.Action("Create", "User");
+}
+
+<form id="panelForm" action="@action" method="post" data-ajax="true">
+    @Html.AntiForgeryToken()
+    @if (isEdit)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+    <div class="p-4">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+
+        <div class="mb-3">
+            <label asp-for="UserName" class="form-label fw-bold">@Localizer["UserName"] <span class="text-danger">*</span></label>
+            <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label fw-bold">@Localizer["Email"] <span class="text-danger">*</span></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger small"></span>
+        </div>
+
+        @if (!isEdit)
+        {
+            <div class="mb-3">
+                <label name="password" class="form-label fw-bold">@Localizer["InitialPassword"] <span class="text-danger">*</span></label>
+                <input name="password" type="password" class="form-control" required />
+            </div>
+        }
+
+        @if (isEdit)
+        {
+            <div class="mb-3">
+                <label asp-for="Language" class="form-label fw-bold">@Localizer["Language"]</label>
+                @* 留空＝依廠別預設語言（登入／切換廠別時採用該廠的設定）；選了就以個人為準。
+                   原本是自由輸入的文字框，打錯字（例：zh_TW）會靜默無效。 *@
+                <select asp-for="Language" class="form-select">
+                    <option value="">@Localizer["LanguageFollowPlant"]</option>
+                    <option value="zh-TW">繁體中文 (zh-TW)</option>
+                    <option value="en-US">English (en-US)</option>
+                </select>
+            </div>
+
+            @* 個人時區：時區優先序「廠別時區 → 個人時區 → 系統預設」的第二順位。
+               在這個欄位出現以前那一層是死的——沒有任何畫面設得了它，而且本表單
+               每存一次檔就把它繫結成 null 洗掉（因為表單根本沒有這個欄位）。
+               留空＝跟著廠別走，這是絕大多數帳號該有的狀態。 *@
+            <div class="mb-3">
+                <label asp-for="TimeZoneId" class="form-label fw-bold">@Localizer["TimeZone"]</label>
+                <select asp-for="TimeZoneId" class="form-select select2-enable w-100"
+                        data-placeholder="@Localizer["FollowPlantTimeZone"]" data-allow-clear="true">
+                    <option value="">-- @Localizer["FollowPlantTimeZone"] --</option>
+                    @foreach (var tz in TimeZones.OptionsFor(Model.TimeZoneId))
+                    {
+                        <option value="@tz.Id">@tz.Display</option>
+                    }
+                </select>
+                <span asp-validation-for="TimeZoneId" class="text-danger small"></span>
+            </div>
+        }
+
+        <!-- 角色（多選） -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">@Localizer["Roles"]</label>
+            <div class="border rounded p-3 bg-light u-max-height-200px u-overflow-y-auto">
+                @foreach (var role in ViewBag.AllRoles as List<SmartFactory.MES.Models.ApplicationRole>)
+                {
+                    var roleDisplayName = role.GetDisplayName();
+                    var isChecked = isEdit && (ViewBag.UserRoles as IList<string>)?.Contains(role.Name) == true;
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="selectedRoles" value="@role.Name"
+                               id="panel_role_@role.Id" @(isChecked ? "checked" : "") />
+                        <label class="form-check-label" for="panel_role_@role.Id">
+                            @{
+                                var roleOrg = role.OrganizationUnit?.Name ?? Localizer["SystemRole"].Value;
+                                var rolePlants = role.PlantAssignments.Count == 0
+                                    ? Localizer["AllPlants"].Value
+                                    : string.Join(Localizer["PlantSeparator"].Value,
+                                        role.PlantAssignments.OrderBy(p => p.PlantId).Select(p => p.PlantId));
+                            }
+                            @roleDisplayName <span class="text-muted small">(@roleOrg / @rolePlants)</span>
+                        </label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="p-3 border-top bg-light d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" data-dismiss-panel>@Localizer["Cancel"]</button>
+        <button type="submit" class="btn btn-success px-4">
+            <i class="bi bi-save"></i> @Localizer["Save"]
+        </button>
+    </div>
+</form>

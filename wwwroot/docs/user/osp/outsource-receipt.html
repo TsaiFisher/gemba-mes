@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Outsource Receipt — OSP User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>委外收貨 — OSP 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">委外管理目錄</span><span lang="en">Outsourcing Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="index.html#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">OSP 畫面</span><span lang="en">OSP Screens</span></div>
+    <a href="outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="outsource-receipt.html" class="nav-link active"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+    <a href="outsource-price.html" class="nav-link"><span lang="zh">委外價格分析</span><span lang="en">Outsource Price Analysis</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關</span><span lang="en">Related</span></div>
+    <a href="../rpt/outsource-performance.html" class="nav-link"><span lang="zh">委外對帳報表（RPT）</span><span lang="en">Outsource reconciliation report (RPT)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-box-arrow-in-right me-2 text-primary"></i><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/OutsourceReceipt &nbsp;|&nbsp; 委外加工完成品收貨入庫與超耗扣款</span><span lang="en">Route: /OutsourceReceipt &nbsp;|&nbsp; Receipt of outsourced finished parts and scrap penalty</span></div>
+    </div>
+
+    <p><span lang="zh">依委外採購單收回加工完成品：成品入庫單價＝在途外料結轉成本＋應付加工費（除以實收量）。系統依發料時點 AVCO 逐料計算超耗，超過合約允收損耗率的部分自動列為超耗扣款，於自動產生的委外應付發票中以負項扣減。</span><span lang="en">Receives finished parts against an outsource PO: the put-away unit cost = the carried-over cost of the in-transit material + the processing fee payable, divided by the quantity actually received. The system calculates excess consumption per material at the AVCO cost of the issue date; anything beyond the agreed scrap allowance becomes a scrap penalty and is deducted as a negative line on the outsource AP invoice created automatically.</span></p>
+    <img class="screen-shot" src="img/outsource-receipt.png" data-src-en="img/en/outsource-receipt.png" alt="委外收貨畫面截圖" data-alt-en="Outsource receipt screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">委外收貨畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Outsource receipt screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">草稿 Draft</span><span lang="en">Draft</span></span></td><td><span lang="zh">已建立未生效，可自由編輯、刪除；需簽核者於此狀態送審。</span><span lang="en">Created but not yet effective; can be freely edited or deleted, and submitted for approval from this status.</span></td></tr><tr><td><span class='badge bg-info'><span lang="zh">待審核</span><span lang="en">Pending approval</span></span></td><td><span lang="zh">已送審等待簽核，不可編輯；可撤回改回草稿。</span><span lang="en">Submitted and waiting for approval; it cannot be edited, but it can be withdrawn back to draft.</span></td></tr><tr><td><span class='badge bg-primary'><span lang="zh">已確認 Confirmed</span><span lang="en">Confirmed</span></span></td><td><span lang="zh">簽核核准（或免簽核直接確認）後生效，等待後續作業/過帳。</span><span lang="en">Effective once approved (or confirmed directly when no approval is required), waiting for the next step or for posting.</span></td></tr><tr><td><span class='badge bg-success'><span lang="zh">已過帳 Posted</span><span lang="en">Posted</span></span></td><td><span lang="zh">庫存/帳務已入帳，單據不可再修改。</span><span lang="en">Stock and accounting have been posted; the document can no longer be changed.</span></td></tr><tr><td><span class='badge bg-danger'><span lang="zh">已作廢 Void</span><span lang="en">Void</span></span></td><td><span lang="zh">反向沖銷已過帳內容；作廢原因需留存，不可復原。</span><span lang="en">Reverses what was posted; the void reason is kept and the action cannot be undone.</span></td></tr></tbody>
+    </table>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">收貨</span><span lang="en">Receipt</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」選擇委外採購單，帶出加工單價與在途外料。</span><span lang="en">Click "Add" and pick the outsource PO to bring in the processing price and the in-transit material.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">輸入實收量與入庫倉/儲位，儲存為草稿。</span><span lang="en">Enter the quantity actually received and the receiving warehouse/location, then save as a draft.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">確認：回寫委外採購單已收量。簡化模式下同時過帳入庫（OI）、更新品號均價；非簡化模式要再到「入庫上架」上架——<b>非免驗品號只能先上架到待驗倉</b>，品檢（IQC）合格後系統自動轉入收貨單記錄的一般倉（沒填時用品號類別的預設倉儲）。要品檢的品號兩者都沒有時，確認會被擋下並寫出品號——否則品檢合格也沒有地方可放。</span><span lang="en">Confirm: the received quantity is written back to the outsource PO. In simplified mode this also posts the goods into stock (OI) and updates the average cost; otherwise put them away under "Putaway" — <b>products that are not inspection-exempt can only go to the quarantine warehouse first</b>, and once IQC passes the system moves them automatically to the warehouse recorded on the receipt (or the product category default if none). If a product that needs inspection has neither, confirming is blocked with the product named — otherwise it would have nowhere to go after passing inspection.</span></div></div>
+    <div class="note-box"><i class="bi bi-box-arrow-right me-1 text-primary"></i><span lang="zh"><strong>送外料自動扣：</strong>「委外送外料於收貨時自動扣」開啟時，不必另開委外發料單：每次確認委外收貨，系統依<b>工單用料 × 累計收回量 ÷ 工單數量</b>算出應發量，扣掉已發未退的部分後自動產生並過帳一張委外發料單（從品號類別的預設倉儲出庫，取不到會擋下並說明）。整品委外扣工單全部用料、工序委外只扣該工序的用料；先前手動發過的不會重扣。這張發料單和手動開的一樣進在外原料結算（超耗扣款、帶入成本）。</span><span lang="en"><strong>Automatic send-out deduction:</strong> When "Deduct outsource send-out materials automatically at receipt" is on, no separate outsource material issue is needed: each time an outsource receipt is confirmed, the system works out the quantity due as <b>work-order material × cumulative quantity received ÷ work-order quantity</b>, subtracts what has already been issued (net of returns), and creates and posts an outsource issue slip for the difference (taken from the product category's default location; if there is none, it stops and says so). A fully outsourced order deducts all its materials, an outsourced operation only that operation's; anything issued manually earlier is not deducted again. The slip feeds the in-transit material settlement (scrap penalty, carried-in cost) exactly like a manual one.</span></div>
+    <div class="note-box"><i class="bi bi-phone me-1 text-primary"></i><span lang="zh"><strong>當場驗收：</strong>「委外收料當場驗收」開啟時，手機委外收料每一行多一欄<b>不良數</b>：送出即完成品檢（MIL-STD-1916，Ac=0），不良 0＝合格，直接入一般倉（明細儲位，沒填用品號類別預設儲位）並回寫委外派工完工量；有不良＝整批入本廠待驗倉，依不合格品處置辦理，不算完工。免驗品號直接入一般倉。不必再經「入庫上架 → 進料檢驗」，非簡化廠也適用；桌機收貨單仍走原流程。</span><span lang="en"><strong>Inspect at receipt:</strong> When "Inspect outsource deliveries at receipt" is on, each line of mobile Outsource Receiving gets a <b>Defects</b> field: submitting completes the inspection (MIL-STD-1916, Ac=0). 0 defects = pass, stocked straight into a normal warehouse (the line location, or the product category default) and added to the outsourced dispatch's completed quantity; any defect = the whole lot goes to the plant's quarantine warehouse for nonconformance handling and does not count as completed. Inspection-exempt products go straight to a normal warehouse. No "Putaway → Incoming Inspection" steps are needed, even in non-simplified plants; desktop receipts keep the normal flow.</span></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">系統自動產生委外 AP 發票（加工費 − 超耗扣款）。</span><span lang="en">The system creates the outsource AP invoice automatically (processing fee − scrap penalty).</span></div></div>
+    <div class="note-box"><i class="bi bi-arrow-repeat me-1 text-primary"></i><span lang="zh"><strong>委外工單的進度跟著「合格入庫」走：</strong>收回品進到一般倉的那一刻（簡化模式確認收貨、免驗品上架到一般倉、或品檢合格自動放行），數量才會累計到委外派工的完工量；放在待驗倉、還沒驗的不算。派工收滿就結案；整品委外工單的派工都結案時，工單直接變成「入庫完成」——成品已由收貨入庫，<b>不需也不能再做完工入庫</b>。品檢不合格的量留在待驗倉，依不合格品處置（重工、退廠）辦理。</span><span lang="en"><strong>Outsourced work orders progress with "passed and stocked":</strong> only when the returned goods enter a normal warehouse (confirming the receipt in simplified mode, putting inspection-exempt goods into a normal warehouse, or the automatic release after IQC passes) is the quantity added to the outsourced dispatch's completed quantity; goods still waiting in quarantine do not count. A dispatch closes once full, and when every dispatch of a fully outsourced work order is closed the order goes straight to "Received into stock" — the finished goods were already stocked by the receipt, so <b>production completion is neither needed nor allowed</b>. Quantities that fail IQC stay in quarantine and are dealt with through nonconformance disposition (rework, return to supplier).</span></div>
+    <div class="note-box"><i class="bi bi-diagram-3 me-1 text-primary"></i><span lang="zh"><strong>工序委外（派工「轉為委外」）：</strong>來源是廠內工單時，收回的是在製品，確認即過帳、<b>不入庫</b>，直接累計該工序派工的完工量；該工序投料同時自動扣（已領過的不重扣）。加工費與帶出料計入工單委外成本，完工入庫時併入成品成本。不能與整品委外混在同一張收貨單。</span><span lang="en"><strong>Outsourced operations ("Convert to Outsource"):</strong> when the source is an in-house work order, the returned work in progress is posted on confirmation <b>without going into inventory</b> and added to that operation's dispatch; the operation's input materials are deducted at the same time (nothing already issued is deducted twice). The fee and materials go to the work order's outsource cost, included in the product cost at completion. Do not mix them with fully outsourced orders on a single receipt.</span></div>
+
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。列印單含委外採購單號、供應商名稱、異動類型、幣別與匯率，以及各行品號、品名、收料量、單位成本與入庫倉。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The printout shows the outsource PO number, supplier name, transaction type, currency and exchange rate, and for each line the product code and name, quantity received, unit cost and receiving warehouse.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">表頭</span><span lang="en">Header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">委外進貨單號</span><span lang="en">Outsource Receipt No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">本次收回對應的委外採購單；選定後帶出待收回的加工品明細</span><span lang="en">The outsource PO this receipt belongs to; selecting one brings in the parts still to be received</span></td></tr>
+        <tr><td><span lang="zh">進貨日期</span><span lang="en">Receipt Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">委外加工品收回日期</span><span lang="en">Date the outsourced parts are received back</span></td></tr>
+        <tr><td><span lang="zh">供應商</span><span lang="en">Supplier</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">承接加工的委外廠商</span><span lang="en">Subcontractor doing the work</span></td></tr>
+        <tr><td><span lang="zh">幣別 / 匯率</span><span lang="en">Currency / Exchange Rate</span></td><td><span lang="zh">加工費的交易幣別與本次採用的匯率，決定入帳的本幣金額</span><span lang="en">Transaction currency of the processing fee and the rate used, which determine the local-currency amount posted</span></td></tr>
+        <tr><td><span lang="zh">合計金額</span><span lang="en">Total Amount</span></td><td><span lang="zh">本單加工費合計，由明細加總</span><span lang="en">Total processing fee of this document, summed from the lines</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">整張單據的補充說明</span><span lang="en">Notes for the whole document</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">明細</span><span lang="en">Lines</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">收回的加工成品</span><span lang="en">Finished parts received back</span></td></tr>
+        <tr><td><span lang="zh">進貨數量 / 單位</span><span lang="en">Receipt Qty / UOM</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">本次收回的良品數量。單位改為下拉，只列該品號可用的單位；庫存數量一律由系統依品號主檔換算。超過委外採購量時，能否收貨依廠別參數「委外超收容許率」「委外超過容許上限時」（預設需具「超量核准」權限的主管確認），超收部分是否付加工費依「委外超收部分的加工費」；設為不付時，明細備註會記下合約單價與計費量。</span><span lang="en">Good quantity received this time. The unit is now a drop-down listing only the units usable for the product, and the stock quantity is always converted by the system from the product master. Receiving more than the outsource order quantity follows the plant parameters "Outsource over-receipt tolerance" and "Outsource: beyond the tolerance" (by default a supervisor with the over-quantity approval right must confirm), and whether the extra is paid follows "Processing fee for the over-received quantity"; when it is not paid, the line remarks record the contract price and the billed quantity.</span></td></tr>
+        <tr><td><span lang="zh">單位成本</span><span lang="en">Unit Cost</span></td><td><span lang="zh">該加工品的單位委外加工費，依委外報價主檔帶出</span><span lang="en">Unit processing fee for this part, taken from the outsource quotation master</span></td></tr>
+        <tr><td><span lang="zh">金額</span><span lang="en">Amount</span></td><td><span lang="zh">進貨數量 × 單位成本</span><span lang="en">Receipt quantity × unit cost</span></td></tr>
+        <tr><td><span lang="zh">明細備註</span><span lang="en">Line note</span></td><td><span lang="zh">系統在確認時寫入的說明，顯示在品號下方（唯讀）。例：廠別設「超收部分不付加工費」時，寫出合約單價與「計費量／實收量」，說明這一行的單位成本為什麼比合約低。</span><span lang="en">An explanation the system writes when confirming, shown under the item code (read-only). For example, when the plant pays no fee for over-receipt, it records the contract price and "billed / received quantity", explaining why the line's unit cost is lower than the contract.</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">送外料的實際耗用與標準用量的差額另計超耗扣款，計價採發料當時凍結的 AVCO 單位成本。</span><span lang="en">Any difference between the actual consumption of the material sent out and the standard usage is charged as a scrap penalty, priced at the AVCO unit cost frozen at issue.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="outsource-purchase-order.html"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>、<a href="outsource-material.html"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>、<a href="../rpt/outsource-performance.html"><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">過帳/作廢命中已關帳期間會被期間鎖擋下。作廢會反沖庫存並回寫已收量。</span><span lang="en"> Posting or voiding into a closed period is blocked by the period lock. Voiding reverses the stock movement and updates the received quantity.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

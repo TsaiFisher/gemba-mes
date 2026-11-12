@@ -1,0 +1,53 @@
+@using SmartFactory.MES.Services
+@model List<MenuItem>
+
+<ul class="nav flex-column">
+    @foreach (var item in Model)
+    {
+        <li class="nav-item">
+            @if (item.SubItems.Any())
+            {
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#menu-@item.Title.GetHashCode()" aria-expanded="false">
+                    <i class="bi @item.Icon me-2"></i> @item.Title
+                    <i class="bi bi-chevron-down float-end"></i>
+                </a>
+                <div class="collapse" id="menu-@item.Title.GetHashCode()">
+                    <ul class="nav flex-column ms-3 mt-1">
+                        @foreach (var sub in item.SubItems)
+                        {
+                            <li class="nav-item">
+                                @if (!string.IsNullOrEmpty(sub.Page))
+                                {
+                                    <a class="nav-link" asp-area="" asp-page="@sub.Page">
+                                        <i class="bi @sub.Icon me-2"></i> @sub.Title
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="nav-link" asp-area="" asp-controller="@sub.Controller" asp-action="@sub.Action">
+                                        <i class="bi @sub.Icon me-2"></i> @sub.Title
+                                    </a>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+            else
+            {
+                @if (!string.IsNullOrEmpty(item.Page))
+                {
+                    <a class="nav-link" asp-area="" asp-page="@item.Page">
+                        <i class="bi @item.Icon me-2"></i> @item.Title
+                    </a>
+                }
+                else
+                {
+                    <a class="nav-link" asp-area="" asp-controller="@item.Controller" asp-action="@item.Action">
+                        <i class="bi @item.Icon me-2"></i> @item.Title
+                    </a>
+                }
+            }
+        </li>
+    }
+</ul>

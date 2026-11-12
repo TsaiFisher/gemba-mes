@@ -1,0 +1,261 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Controllers
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.MFG.Services
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.MFG.Controllers.MrpVarianceDecisionRow>
+
+@functions {
+    // R1：Localizer 鍵一律靜態字面值，不以列舉名動態串接。
+    string KindLabel(MrpPurchaseVarianceKind kind) => kind switch
+    {
+        MrpPurchaseVarianceKind.Added       => Localizer["VarKindAdded"].Value,
+        MrpPurchaseVarianceKind.Increased   => Localizer["VarKindIncreased"].Value,
+        MrpPurchaseVarianceKind.Decreased   => Localizer["VarKindDecreased"].Value,
+        MrpPurchaseVarianceKind.ModeChanged => Localizer["VarKindModeChanged"].Value,
+        _                                   => Localizer["VarKindRemoved"].Value
+    };
+
+    string DispositionLabel(MrpPurchaseVarianceDisposition d) => d switch
+    {
+        MrpPurchaseVarianceDisposition.AutoClosed     => Localizer["VarDispAutoClosed"].Value,
+        MrpPurchaseVarianceDisposition.PendingClose   => Localizer["VarDispPendingClose"].Value,
+        MrpPurchaseVarianceDisposition.ManualRequired => Localizer["VarDispManualRequired"].Value,
+        _                                             => Localizer["VarDispInformational"].Value
+    };
+}
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    int  curPageSize = ViewBag.CurrentPageSize as int? ?? 20;
+    bool onlyOpen    = ViewBag.OnlyOpen as bool? ?? true;
+    bool canUpdate   = ViewBag.CanUpdate as bool? ?? false;
+
+    var productOptions    = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var mrpRunOptions     = ViewBag.MrpRunOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    string searchProduct  = ViewBag.SearchProduct as string ?? "";
+    string searchMrpRunId = ViewBag.SearchMrpRunId as string ?? "";
+
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.SortOrder as string ?? "";
+        if (cur == col + "_asc")  return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+
+    string kindBadge(MrpPurchaseVarianceKind k) => k switch
+    {
+        MrpPurchaseVarianceKind.ModeChanged => "bg-primary",
+        MrpPurchaseVarianceKind.Removed     => "bg-danger",
+        MrpPurchaseVarianceKind.Added       => "bg-success",
+        _                                   => "bg-secondary"
+    };
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-clipboard-check me-2"></i>@Localizer["PageTitle"]</h1>
+    </div>
+
+    <div class="alert alert-light border small text-muted">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["PageHint"]
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@Localizer["SearchProduct"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["SearchProduct"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@Localizer["SearchMrpRunId"]</label>
+                    <select name="searchMrpRunId" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["SearchMrpRunId"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var id in mrpRunOptions)
+                        {
+                            <option value="@id" selected="@(searchMrpRunId == id)">@id</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check mt-4">
+                        <input class="form-check-input" type="checkbox" name="onlyOpen" value="true" id="onlyOpen" @(onlyOpen ? "checked" : "") />
+                        <label class="form-check-label small" for="onlyOpen">@Localizer["OnlyOpen"]</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-success text-center"><i class="bi bi-check-circle me-1"></i>@Localizer["NoData"]</div>
+    }
+    else
+    {
+    @if (canUpdate)
+    {
+        <div class="d-flex gap-2 mb-2">
+            <button type="button" class="btn btn-sm btn-warning" data-action="closeSelectedVariances">
+                <i class="bi bi-x-circle me-1"></i>@Localizer["CloseSelected"]
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-action="ackSelectedVariances">
+                <i class="bi bi-check2 me-1"></i>@Localizer["AckSelected"]
+            </button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        @if (canUpdate)
+                        {
+                            <th class="u-width-36px"><input type="checkbox" class="form-check-input" data-action-change="toggleAllVariances" /></th>
+                        }
+                        <th>@Localizer["MrpRunId"]</th>
+                        <th>@Localizer["VarKind"]</th>
+                        <th>@Localizer["ProductCode"]</th>
+                        <th>@Localizer["PurchaseRequestId"]</th>
+                        <th class="text-end">@Localizer["VarPrevQty"]</th>
+                        <th class="text-end">@Localizer["VarCurQty"]</th>
+                        <th>@Localizer["VarDisposition"]</th>
+                        <th>@Localizer["VarStatus"]</th>
+                        <th>
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-searchProduct="@searchProduct" asp-route-searchMrpRunId="@searchMrpRunId"
+                               asp-route-onlyOpen="@onlyOpen" asp-route-pageSize="@curPageSize"
+                               asp-route-sortOrder="@ViewBag.DetectedSort" class="text-decoration-none text-dark">
+                                @Localizer["VarDetectedAt"] <i class="bi @sortIcon("detected")"></i>
+                            </a>
+                        </th>
+                        <th>@Localizer["VarDescription"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        @if (canUpdate)
+                        {
+                            <td>
+                                @if (r.Status == MrpVarianceStatus.Open)
+                                {
+                                    <input type="checkbox" class="form-check-input js-variance-check" value="@r.VarianceId" />
+                                }
+                            </td>
+                        }
+                        <td><code>@r.MrpRunId</code></td>
+                        <td><span class="badge @kindBadge(r.Kind)">@KindLabel(r.Kind)</span></td>
+                        <td>@r.ProductCode</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(r.PurchaseRequestId))
+                            {
+                                <code>@r.PurchaseRequestId</code> <span class="text-muted small">#@r.LineNo</span>
+                            }
+                        </td>
+                        <td class="text-end">@r.PreviousQty.ToString(QtyFmt(r.UomCode))</td>
+                        <td class="text-end">@r.CurrentQty.ToString(QtyFmt(r.UomCode))</td>
+                        <td><span class="text-muted small">@DispositionLabel(r.Disposition)</span></td>
+                        <td>
+                            @if (r.Status == MrpVarianceStatus.Open)
+                            {
+                                <span class="badge bg-danger">@Localizer["VarStatusOpen"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">@Localizer["VarStatusResolved"]</span>
+                            }
+                        </td>
+                        <td class="small text-muted">@DateTimeSvc.ToLocalTime(r.DetectedAt).ToString("yyyy-MM-dd HH:mm")</td>
+                        <td class="small">@r.Description</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_Pagination", Model)
+    }
+
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+        var vdCloseConfirm = "@Localizer["CloseSelectedConfirm"]";
+        var vdAckConfirm   = "@Localizer["AckSelectedConfirm"]";
+        var vdNoRows       = "@Localizer["NoRowsSelected"]";
+        var vdFailed       = "@Localizer["ActionFailed"]";
+
+        window.toggleAllVariances = function (e, el) {
+            document.querySelectorAll('.js-variance-check').forEach(function (c) { c.checked = el.checked; });
+        };
+
+        function selectedVarianceIds() {
+            return Array.from(document.querySelectorAll('.js-variance-check:checked')).map(function (c) { return c.value; });
+        }
+
+        function postVarianceAction(url, ids) {
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            var fd = new FormData();
+            ids.forEach(function (id) { fd.append('varianceIds', id); });
+            fetch(url, { method: 'POST', headers: { 'RequestVerificationToken': token }, body: fd })
+                .then(function (r) { return r.json(); })
+                .then(function (j) { alert(j.message || ''); if (j.success) location.reload(); })
+                .catch(function () { alert(vdFailed); });
+        }
+
+        window.closeSelectedVariances = function () {
+            var ids = selectedVarianceIds();
+            if (ids.length === 0) { alert(vdNoRows); return; }
+            if (!confirm(vdCloseConfirm)) return;
+            postVarianceAction('@Url.Action("CloseLines")', ids);
+        };
+
+        window.ackSelectedVariances = function () {
+            var ids = selectedVarianceIds();
+            if (ids.length === 0) { alert(vdNoRows); return; }
+            if (!confirm(vdAckConfirm)) return;
+            postVarianceAction('@Url.Action("Acknowledge")', ids);
+        };
+    </script>
+}

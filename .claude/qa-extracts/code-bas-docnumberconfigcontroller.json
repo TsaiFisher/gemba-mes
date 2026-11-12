@@ -1,0 +1,70 @@
+{
+  "sourcePath": "Modules/BAS/Controllers/DocNumberConfigController.cs",
+  "sourceHash": "f6e45a9dc31b761753b4f72121589ac3b6a39730ef4bf1ff8d4d5c04174cb457",
+  "entries": [
+    {
+      "slug": "code-bas-docnumberconfigcontroller-09bf3a3d",
+      "lang": "zh",
+      "headingPath": "基本資料 › 表單勾選來源：未勾任何廠別 = 建立「預設規則」",
+      "text": "規則判斷依據與多廠共用規則｜如果沒有勾選任何廠別作為來源，系統會建立一套預設的規則；如果勾選了多個廠別，則會使用同一套規則來管理。若系統是直接建構資料模型呼叫，且沒有指定廠別清單時，仍會保留原有的單一廠別建立方式相容性。",
+      "approved": true,
+      "sourceSectionHash": "32c3c01893b80cec0e851fa3ecb6d24c19c5456d43353c3e01311dcf6ff811f6"
+    },
+    {
+      "slug": "code-bas-docnumberconfigcontroller-39dd2fb9",
+      "lang": "zh",
+      "headingPath": "基本資料 › 預設規則固定 \"\"",
+      "text": "序號鍵的生成規則說明｜此系統會為每個專屬規則指派一個唯一的識別碼，這個識別碼與廠別的編號是分開管理的，這樣即使未來增加了或減少了適用廠別，該專屬規則的序號也會保持不變，不會重複使用舊的序號。",
+      "approved": true,
+      "sourceSectionHash": "3d4dcdabf090707bbcdf0ad2c90ca1720382d432b6c6cb2bcdedb2ffc06f0a27"
+    },
+    {
+      "slug": "code-bas-docnumberconfigcontroller-d7fcd59c",
+      "lang": "zh",
+      "headingPath": "基本資料 › 適用廠別",
+      "text": "規則設定與適用範圍的決定｜系統會根據您勾選的廠別來決定此規則的適用範圍，並且一旦設定了這個範圍，即使未來增減了廠別，原有的序號也不會重發。",
+      "approved": true,
+      "sourceSectionHash": "55043bb47fd146dcd717172b0c5e6e82d66c30824fcb292b96c296138d68f92d"
+    },
+    {
+      "slug": "code-bas-docnumberconfigcontroller-b87dd5f1",
+      "lang": "zh",
+      "headingPath": "基本資料 › 適用廠別可編輯：預設規則永遠維持全廠、忽略勾選",
+      "text": "適用廠別預設規則永遠全廠範圍｜系統的預設規則會自動設定為涵蓋所有廠區，不會受使用者勾選選項影響；若要修改專屬規則時，不能將其清空，應使用刪除功能。",
+      "approved": true,
+      "sourceSectionHash": "7ab84f4ede7abbee2276c3cc318e07d76c5a95e141e3aa531fe44f56c8187c4a"
+    },
+    {
+      "slug": "code-bas-docnumberconfigcontroller-ab5b6baa",
+      "lang": "zh",
+      "headingPath": "基本資料 › 已編過號的規則：指紋欄位鎖定不可改",
+      "text": "指紋欄位資料不可修改｜一旦在單據上使用了特定的字元作為指紋的開頭或分隔符，這些字元就無法被更改。這是因為這些字元已經印在了現有的單據上，如果允許修改，可能會導致該指紋的編號被釋出供其他規則重複使用，進而造成序號從 1 開始重新發放，與過去已使用的舊號產生衝突。",
+      "approved": true,
+      "sourceSectionHash": "216456ccaecae0f4722b0b2c0f8b952b1f36b8d78b7909918ceae9295b9f3641"
+    },
+    {
+      "slug": "code-bas-docnumberconfigcontroller-7b05e482",
+      "lang": "zh",
+      "headingPath": "基本資料 › 週期變更會換序號期別鍵、從 1 重新起跳，但單號日期段未必跟著變",
+      "text": "序號變更規則說明｜週期變更會改變序號的期別鍵，並從 1 開始重新計算，但單據的日期範圍不會隨之改變。",
+      "approved": true,
+      "sourceSectionHash": "f674ba2d1018657b9f06cbe8fa0ae3f6c06337defb1b3019d35efa24ab2b0950"
+    },
+    {
+      "slug": "code-bas-docnumberconfigcontroller-4cfb5687",
+      "lang": "zh",
+      "headingPath": "基本資料 › 已編過號表示此規則已被實際使用：",
+      "text": "規則說明｜文件編號的範圍設定會根據該廠區的紀錄來判斷，如果刪除後可能會導致其他廠區回退到預設的編號範圍或序號範圍被轉移，並且若指紋相近的資料再次產生時可能會重發舊的編號，因此系統會阻止此操作。",
+      "approved": true,
+      "sourceSectionHash": "90baf197a833d5c5427b18d9171e5f1ec23c1673cf09354b3566f35184e6a765"
+    },
+    {
+      "slug": "code-bas-docnumberconfigcontroller-c43c588a",
+      "lang": "zh",
+      "headingPath": "基本資料 › 勾選的廠別代碼正規化為排序過的逗號分隔清單",
+      "text": "廠別選擇格式說明｜如果沒有勾選任何廠別，系統會將該欄位顯示為空白的字串。",
+      "approved": true,
+      "sourceSectionHash": "27d0fe7fd650a0d152a714b0aa1ac8e8f7f7c05ea3c1a5146d9144797deada07"
+    }
+  ]
+}

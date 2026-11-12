@@ -1,0 +1,27 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/WorkOrderMaterialStatusController.cs",
+  "sourceHash": "0c7cf99d224858d8c3d55d9f7f55dc2f643735f34d32b7c15fd9d730d8229911",
+  "entries": [
+    {
+      "slug": "code-mfg-workordermaterialstatuscontroller-c33d00bc",
+      "lang": "zh",
+      "headingPath": "生產製造 › 需求量 / 已發 / 已退 / 未發 與廠級可用量",
+      "text": "工單用料狀況的顯示規則｜此介面會一次性展示每個工單所需材料的需求量、已發出數量、已退回數量、未發出數量，以及該廠區可用的總庫存量，並根據這些數值標示出備齊狀態。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-workordermaterialstatuscontroller-f98ee019",
+      "lang": "zh",
+      "headingPath": "生產製造 › 但一次算完整份工單清單",
+      "text": "本工單預留量計算規則｜此系統計算的「本工單自身預留量」是將所有目前處於活躍狀態、且以該工單號和品號作為唯一識別碼的在手預留數量加總起來。這個預留量包含了由物料需求計劃（MRP）為該工單鎖定的工作訂單材料預留，以及透過備料單接手的預留數量。當進行備料確認時，原本屬於工單預留的數量會等額轉移到備料單上。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-workordermaterialstatuscontroller-6c59b571",
+      "lang": "zh",
+      "headingPath": "生產製造 › 但一次算完整份品號清單",
+      "text": "批次可用數量計算規則｜此廠區的批次可使用數量，是將所有在手庫存量減去目前已預留的活躍庫存量後所得出的數值。這個計算會排除待驗收倉儲的庫存。",
+      "approved": true
+    }
+  ]
+}

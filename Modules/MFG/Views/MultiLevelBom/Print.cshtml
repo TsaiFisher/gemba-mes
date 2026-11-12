@@ -1,0 +1,65 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.ViewModels
+@inject IViewLocalizer Localizer
+@model MultiLevelExplosionResult
+@{
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Localizer["DocTitle"].Value;
+
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string QtyFmt(string? uom)
+    {
+        var dp = (uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)) ? v : 4;
+        return dp <= 0 ? "N0" : $"N{dp}";
+    }
+    string Indent(int level) => level <= 1 ? "" : string.Concat(Enumerable.Repeat("　", level - 1)) + "└ ";
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div class="print-title-block">
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["DocTitle"]</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-field-grid">
+        <div class="print-field-label">@Localizer["ProductCode"]</div>
+        <div class="print-field-value">@Model.RootProductCode — @Model.RootProductName</div>
+        <div class="print-field-label">@Localizer["QtyBasis"]</div>
+        <div class="print-field-value">@Localizer["RootQtyBasis"]</div>
+    </div>
+</div>
+
+<table class="print-table">
+    <thead>
+        <tr>
+            <th>@Localizer["Level"]</th>
+            <th>@Localizer["ProductCode"]</th>
+            <th>@Localizer["ProductName"]</th>
+            <th>@Localizer["UomCode"]</th>
+            <th class="u-text-align-right">@Localizer["Quantity"]</th>
+            <th class="u-text-align-right">@Localizer["ScrapRate"]</th>
+            <th class="u-text-align-right">@Localizer["OffcutRate"]</th>
+            <th class="u-text-align-right">@Localizer["RequiredQty"]</th>
+            <th>@Localizer["SourceType"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.BomRows)
+        {
+            <tr>
+                <td>@r.Level</td>
+                <td>@Indent(r.Level)@r.ProductCode</td>
+                <td>@r.ProductName</td>
+                <td>@r.UomCode</td>
+                <td class="u-text-align-right">@r.Quantity.ToString(QtyFmt(r.UomCode))</td>
+                <td class="u-text-align-right">@(r.ScrapRate == 0 ? "—" : r.ScrapRate.ToString("N2"))</td>
+                <td class="u-text-align-right">@(r.OffcutRate == 0 ? "—" : r.OffcutRate.ToString("N2"))</td>
+                <td class="u-text-align-right">@r.RequiredQty.ToString(QtyFmt(r.UomCode))</td>
+                <td>@(r.SourceType == "Make" ? Localizer["SourceMake"].Value : Localizer["SourceBuy"].Value)</td>
+            </tr>
+        }
+    </tbody>
+</table>

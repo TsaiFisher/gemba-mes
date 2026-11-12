@@ -1,0 +1,113 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.ApplicationRole
+@using SmartFactory.MES.Models
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    var action = isEdit
+        ? Url.Action("Edit", "Role", new { id = Model.Id })
+        : Url.Action("Create", "Role");
+    var allPlants = ViewBag.AllPlants as List<Plant> ?? new List<Plant>();
+    var selectedPlantIds = ViewBag.SelectedPlantIds as List<string> ?? new List<string>();
+    var defaultPlantId = ViewBag.DefaultPlantId as string;
+}
+
+<form id="panelForm" action="@action" method="post" data-ajax="true">
+    @Html.AntiForgeryToken()
+    @if (isEdit)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+    <div class="p-4">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label fw-bold">@Localizer["RoleNameZh"] <span class="text-danger">*</span></label>
+            <input asp-for="Name" class="form-control" placeholder="@Localizer["RoleNameZhPlaceholder"]" />
+            <span asp-validation-for="Name" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NameEn" class="form-label fw-bold">@Localizer["RoleNameEn"]</label>
+            <input asp-for="NameEn" class="form-control" placeholder="@Localizer["RoleNameEnPlaceholder"]" />
+            <span asp-validation-for="NameEn" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="OrganizationUnitId" class="form-label fw-bold">@Localizer["Organization"]</label>
+            <select asp-for="OrganizationUnitId" class="form-select" asp-items="ViewBag.OrganizationUnitId">
+                <option value="">-- @Localizer["SystemRole"] --</option>
+            </select>
+            <span asp-validation-for="OrganizationUnitId" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">@Localizer["PlantAssignments"]</label>
+            <div class="text-muted small mb-2">@Localizer["PlantAssignmentsHint"]</div>
+            @if (allPlants.Count == 0)
+            {
+                <div class="text-muted small">—</div>
+            }
+            else
+            {
+                <table class="table table-sm table-bordered mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="u-width-2p5rem"></th>
+                            <th>@Localizer["PlantId"]</th>
+                            <th>@Localizer["PlantName"]</th>
+                            <th class="text-center u-width-5rem">@Localizer["Default"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var plant in allPlants)
+                        {
+                            var isChecked = selectedPlantIds.Contains(plant.Id);
+                            <tr>
+                                <td class="text-center align-middle">
+                                    <input type="checkbox" name="selectedPlantIds" value="@plant.Id"
+                                           class="form-check-input plant-check"
+                                           @(isChecked ? "checked" : "") />
+                                </td>
+                                <td class="align-middle"><span class="badge bg-secondary">@plant.Id</span></td>
+                                <td class="align-middle">@(System.Globalization.CultureInfo.CurrentUICulture.Name == "en-US" && !string.IsNullOrWhiteSpace(plant.NameEn) ? plant.NameEn : plant.Name)</td>
+                                <td class="text-center align-middle">
+                                    <input type="radio" name="defaultPlantId" value="@plant.Id"
+                                           class="form-check-input default-radio"
+                                           @(plant.Id == defaultPlantId ? "checked" : "")
+                                           @(!isChecked ? "disabled" : "") />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+
+    <div class="p-3 border-top bg-light d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" data-dismiss-panel>@Localizer["Cancel"]</button>
+        <button type="submit" class="btn btn-success px-4">
+            <i class="bi bi-save"></i> @Localizer["Save"]
+        </button>
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    // 勾選廠別時啟用/停用預設廠別 radio
+    document.querySelectorAll('.plant-check').forEach(function (cb) {
+        cb.addEventListener('change', function () {
+            var row = this.closest('tr');
+            var radio = row.querySelector('.default-radio');
+            if (!this.checked) {
+                radio.disabled = true;
+                radio.checked = false;
+            } else {
+                radio.disabled = false;
+            }
+        });
+    });
+})();
+</script>

@@ -1,0 +1,75 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.INV.ViewModels
+@inject IViewLocalizer Localizer
+@model List<StockMovementRowVm>
+@{
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Localizer["DocTitle"].Value;
+
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    int costDp = ViewBag.BaseCurrencyDp as int? ?? 6;
+    int totalDp = Math.Max(costDp - 4, 2);
+    string costFmt  = costDp  <= 0 ? "N0" : $"N{costDp}";
+    string totalFmt = totalDp <= 0 ? "N0" : $"N{totalDp}";
+    string QtyFmt(string? uom)
+    {
+        var dp = (uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)) ? v : 4;
+        return dp <= 0 ? "N0" : $"N{dp}";
+    }
+    var dateFrom = ViewBag.DateFrom is DateOnly df ? df.ToString("yyyy-MM-dd") : "…";
+    var dateTo   = ViewBag.DateTo   is DateOnly dt ? dt.ToString("yyyy-MM-dd") : "…";
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div class="print-title-block">
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["DocTitle"]</div>
+        <div class="print-doc-number">@Localizer["Period"]：@dateFrom ~ @dateTo</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-field-grid">
+        <div class="print-field-label">@Localizer["ProductCode"]</div>
+        <div class="print-field-value">@(string.IsNullOrEmpty(ViewBag.ProductCode as string) ? "—" : ViewBag.ProductCode)</div>
+        <div class="print-field-label">@Localizer["LocationCode"]</div>
+        <div class="print-field-value">@(string.IsNullOrEmpty(ViewBag.LocationCode as string) ? "—" : ViewBag.LocationCode)</div>
+        <div class="print-field-label">@Localizer["TypeCode"]</div>
+        <div class="print-field-value">@(string.IsNullOrEmpty(ViewBag.TypeCode as string) ? "—" : ViewBag.TypeCode)</div>
+        <div class="print-field-label">@Localizer["LotNo"]</div>
+        <div class="print-field-value">@(string.IsNullOrEmpty(ViewBag.LotNo as string) ? "—" : ViewBag.LotNo)</div>
+    </div>
+</div>
+
+<table class="print-table">
+    <thead>
+        <tr>
+            <th>@Localizer["MovementDate"]</th>
+            <th>@Localizer["TypeCode"]</th>
+            <th>@Localizer["DocNo"]</th>
+            <th>@Localizer["ProductCode"]</th>
+            <th>@Localizer["Location"]</th>
+            <th>@Localizer["LotNo"]</th>
+            <th class="u-text-align-right">@Localizer["Qty"]</th>
+            <th class="u-text-align-right">@Localizer["StockQty"]</th>
+            <th class="u-text-align-right">@Localizer["TotalCost"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.MovementDate.ToString("yyyy-MM-dd")</td>
+                <td>@r.TypeCode @r.TypeName</td>
+                <td>@r.DocNo<text> </text>#@r.DocLineNo</td>
+                <td>@r.ProductCode @r.ProductName</td>
+                <td>@r.WhCode / @r.LocationCode</td>
+                <td>@(string.IsNullOrEmpty(r.LotNo) ? "-" : r.LotNo)</td>
+                <td class="u-text-align-right">@((r.Direction >= 0 ? "" : "-") + r.Qty.ToString(QtyFmt(r.UomCode))) @r.UomCode</td>
+                <td class="u-text-align-right">@((r.Direction >= 0 ? "" : "-") + r.StockQty.ToString(QtyFmt(r.StockUomCode))) @r.StockUomCode</td>
+                <td class="u-text-align-right">@(r.TotalCost?.ToString(totalFmt) ?? "-")</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,11 @@
+/* 使用手冊中英切換
+   ------------------------------------------------------------------
+   每個文字節點以相鄰的 <span lang="zh"> / <span lang="en"> 成對存在，
+   顯示與否純由 <html data-doc-lang> 決定——不用 JS 逐一改 style.display
+   （以 class/style 混合切換顯示曾造成元素永久隱藏的回歸）。
+   HTML 靜態即帶 data-doc-lang="zh"，故未載入 JS 時不會閃現雙語。 */
+html[data-doc-lang="en"] [lang="zh"] { display: none; }
+html[data-doc-lang="zh"] [lang="en"] { display: none; }
+
+/* 切換鈕：navbar 右側按鈕群沿用 btn-outline-light 外觀 */
+#docLangToggle { min-width: 4.5rem; }

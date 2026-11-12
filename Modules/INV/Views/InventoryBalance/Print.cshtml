@@ -1,0 +1,62 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.INV.ViewModels
+@inject IViewLocalizer Localizer
+@model List<InventoryBalanceRowVm>
+@{
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Localizer["DocTitle"].Value;
+
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    int costDp = ViewBag.BaseCurrencyDp as int? ?? 6;
+    string costFmt = costDp <= 0 ? "N0" : $"N{costDp}";
+    string QtyFmt(string? uom)
+    {
+        var dp = (uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)) ? v : 4;
+        return dp <= 0 ? "N0" : $"N{dp}";
+    }
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div class="print-title-block">
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["DocTitle"]</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-field-grid">
+        <div class="print-field-label">@Localizer["ProductCode"]</div>
+        <div class="print-field-value">@(string.IsNullOrEmpty(ViewBag.ProductCode as string) ? "—" : ViewBag.ProductCode)</div>
+        <div class="print-field-label">@Localizer["WhCode"]</div>
+        <div class="print-field-value">@(string.IsNullOrEmpty(ViewBag.WhCode as string) ? "—" : ViewBag.WhCode)</div>
+        <div class="print-field-label">@Localizer["LocationCode"]</div>
+        <div class="print-field-value">@(string.IsNullOrEmpty(ViewBag.LocationCode as string) ? "—" : ViewBag.LocationCode)</div>
+        <div class="print-field-label">@Localizer["LotNo"]</div>
+        <div class="print-field-value">@(string.IsNullOrEmpty(ViewBag.LotNo as string) ? "—" : ViewBag.LotNo)</div>
+    </div>
+</div>
+
+<table class="print-table">
+    <thead>
+        <tr>
+            <th>@Localizer["ProductCode"]</th>
+            <th>@Localizer["Location"]</th>
+            <th>@Localizer["LotNo"]</th>
+            <th class="u-text-align-right">@Localizer["QtyOnHand"]</th>
+            <th class="u-text-align-right">@Localizer["UnitCost"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.ProductCode @r.ProductName</td>
+                <td>@r.WhCode / @r.LocationCode</td>
+                <td>@(string.IsNullOrEmpty(r.LotNo) ? "-" : r.LotNo)</td>
+                <td class="u-text-align-right">@r.QtyOnHand.ToString(QtyFmt(r.StockUom)) @r.StockUom</td>
+                <td class="u-text-align-right">@r.UnitCost.ToString(costFmt)</td>
+            </tr>
+        }
+    </tbody>
+</table>

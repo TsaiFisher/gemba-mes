@@ -1,0 +1,94 @@
+{
+  "sourcePath": ".claude/specifications/inventory-advanced.md",
+  "sourceHash": "3b255362e0617bd9aeaa5bdee843a4840de6e855357fba09c0c49ffea6d90d26",
+  "entries": [
+    {
+      "slug": "inventory-advanced-dd920bda",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範（進階）",
+      "text": "核心庫存規範的說明｜本系統的庫存運作，其資料模型、三層單據結構、過帳流程、單位轉換規則、時間區間設定、服務介面以及單號生成方式等詳細規定，請參閱專門的《庫存操作規範》文件以了解全部細節。",
+      "approved": false,
+      "sourceSectionHash": "d76a192773e88a0e381a242199cf2d299426dc8b18b3b1d66435e4e2592998f0"
+    },
+    {
+      "slug": "inventory-advanced-6eb45e27",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範（進階） › 一、預留機制 › 1-1 預留類型",
+      "text": "預留來源與狀態的定義說明｜系統會根據不同的需求來源，決定對物料進行不同程度的保留。例如，由生產工單確認建立的保留是較強的，在工單釋放或完工前不會釋出；而由銷售訂單出貨產生的保留，一旦出貨單確認後就會佔用直到過帳為止。此外，系統會區分物料預留的狀態，包括有效佔用、已釋放以及實際消耗，這些狀態決定了物料在庫存中的可用量計算方式。",
+      "approved": true,
+      "sourceSectionHash": "606087568a18d94bf25ba3d1b6fa9bbf062ad857d9dd0e00fd785b5f12c1501a"
+    },
+    {
+      "slug": "inventory-advanced-831b5742",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範（進階） › 一、預留機制 › 1-3 ATP（Available-to-Promise）完整公式",
+      "text": "庫存可承諾量計算的基礎規則｜在全模式倉庫運作時，系統計算客戶可以被承諾交期的庫存數量，會將帳面在庫、已確認採購在途、已驗收待上架、已確認出貨待下架、已退回待下架以及所有來源預留的量都納入考量。如果系統處於全模式運作，則需要額外計算並調整庫存可承諾量，以確保不會低估實際可用的供給量。",
+      "approved": true,
+      "sourceSectionHash": "fa998c002309d2115915f4ef5d1785b15e39f00272b7e8f54e6a9d92fc6e5d2c"
+    },
+    {
+      "slug": "inventory-advanced-a0ab28ff",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範（進階） › 三、模組整合 › 3-1 採購（PUR）",
+      "text": "採購入出庫的庫存變動規則｜當進行採購進貨時，系統會增加庫存數量並以先進先出的方式計算成本。若發生採購退貨的情形，系統則會減少庫存數量並依據此方式調整成本。",
+      "approved": true,
+      "sourceSectionHash": "5509327877bec7375ebf68cf6c5d6028c7a6b67ff055f011473e2ad7ccbb169d"
+    },
+    {
+      "slug": "inventory-advanced-2547706a",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範（進階） › 三、模組整合 › 3-2 銷售（ORD）",
+      "text": "訂單與庫存的流程規則｜當銷售訂單確認時，系統會預留出庫所需的庫存。若進行銷貨出庫，系統會根據入庫先出庫的原則消耗預留的庫存並釋放該預留。如果發生銷貨退回，系統會增加庫存數量並調整成本層級。",
+      "approved": true,
+      "sourceSectionHash": "034adbe47959d501d9b488f43277abc3b89e3b9324a320003788767849a5f20c"
+    },
+    {
+      "slug": "inventory-advanced-27792be1",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範（進階） › 三、模組整合 › 3-3 委外（OUT）",
+      "text": "庫存移動的流程與地點限制｜當工單確認時，系統會將相關物料預留。若進行委外出料操作，物料會直接出庫到委外倉庫。如果需要回收委外物料，則必須先進入待驗收倉庫，再經過品質檢核才能完成入庫作業。",
+      "approved": true,
+      "sourceSectionHash": "60d6cc01282ba4d8c2e2d3fd2fe7b533d8226adba9ebaf7e73a3f3141a92053a"
+    },
+    {
+      "slug": "inventory-advanced-333eaee5",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範（進階） › 三、模組整合 › 3-4 品檢（QCR，MIL-STD-1916）",
+      "text": "入廠後品檢流程與庫存移動規則｜當產品進入工廠時，必須先移動到等待檢驗的倉庫。如果品檢通過了，則會將庫存從等待檢驗的倉庫轉移到良品倉庫。若品檢不合格，則會將庫存從等待檢驗的倉庫直接出庫至報廢倉庫。",
+      "approved": true,
+      "sourceSectionHash": "83fe5378f8294e5a097b26e4cbe4e7158ba3432502088848304e0f49ba0ad9e0"
+    },
+    {
+      "slug": "inventory-advanced-b32e95b6",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範（進階） › 三、模組整合 › 3-5 成本結算",
+      "text": "成本結算規則說明｜在進行月結前作業時，系統會記錄一個產品、地點、批次和數量等資訊的快照。計算出庫成本時，如果採用先進先出法，則會依據產品入庫的時間順序來消耗成本；若採用移動平均法，則出庫成本是當前的單價乘以庫存數量，並且在有新貨入庫後會更新這個單價。",
+      "approved": true,
+      "sourceSectionHash": "225dba02e65dcfa4a038fc2b24a31c4d89b198ea5f92d1cf03bc04bd6b93fede"
+    },
+    {
+      "slug": "inventory-advanced-2aded5ce",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範（進階） › 五、作業畫面清單",
+      "text": "作業單據類型與功能說明｜系統提供了多種不同的單據來處理不同類型的庫存移動，例如採購入庫、銷售出庫、倉庫間轉移等。每種單據都用於特定的庫存操作目的，確保了庫存變動的流程正確性。",
+      "approved": true,
+      "sourceSectionHash": "afc5b97770f3f904786fceb7bcca355dd87e3d00f0daf8901185dd48f127341e"
+    },
+    {
+      "slug": "inventory-advanced-024d01db",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範（進階） › 六、MRP Fstock Scheduled Receipt 整合規格（2026-05-29） › 6-1 背景",
+      "text": "庫存需求計算範圍說明｜系統在進行物料需求規劃時，目前僅會考慮現有的庫存數量以及已經預留的庫存量。因此，當有新的採購需求產生時，不會再針對那些已經透過採購訂單安排好到貨日期的物料重複觸發採購需求的計算。",
+      "approved": true,
+      "sourceSectionHash": "f155b8769908b793ce9579ad22f0da69011770a464a25faf941f157a03b26fcd"
+    },
+    {
+      "slug": "inventory-advanced-20985487",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範（進階） › 六、MRP Fstock Scheduled Receipt 整合規格（2026-05-29） › 6-4 與訂單↔MRP 聯動管控的關係",
+      "text": "聯動管控的範圍與依據｜本章節只說明了如何計算可用的庫存數量，並沒有說明哪些業務事件會觸發相關的控制規則。關於具體的業務觸發規則，請參考製造域規範中的詳細說明。",
+      "approved": false,
+      "sourceSectionHash": "3e16269c74f19520afe2db63c9f0ca4b8d21a8166d404f8bea0ae6b1f40e1128"
+    }
+  ]
+}

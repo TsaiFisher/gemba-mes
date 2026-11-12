@@ -1,0 +1,127 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    var pending   = ViewBag.Pending  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var suppliers = ViewBag.Suppliers as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+}
+
+<form id="convertForm" method="post" action="@Url.Action("Convert")"
+      data-action-submit="buildAndSubmitWorklist">
+    @Html.AntiForgeryToken()
+
+    <div class="text-muted small mb-3">@Localizer["WorklistHint"]</div>
+
+    <div class="row g-2 mb-3">
+        <div class="col-md-7">
+            <label class="form-label">@Localizer["FldSupplier"] <span class="text-danger">*</span></label>
+            <select name="supplierCode" class="form-select" required>
+                <option value="">@Localizer["PleaseSelect"]</option>
+                @foreach (dynamic s in suppliers)
+                {
+                    <option value="@s.CompanyCode">@s.CompanyCode — @s.CompanyName</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-5">
+            <label class="form-label">@Localizer["FldExpectedDate"]</label>
+            <input type="date" name="expectedDate" class="form-control" />
+        </div>
+    </div>
+
+    @if (!pending.Any())
+    {
+        <div class="alert alert-info">@Localizer["NoPending"]</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th class="u-width-36px"><input type="checkbox" id="impSelAll" data-action="toggleAllOutsource" /></th>
+                        <th>@Localizer["ColWo"]</th>
+                        <th>@Localizer["ColKind"]</th>
+                        <th>@Localizer["ColProduct"]</th>
+                        <th class="text-end">@Localizer["ColDemandQty"]</th>
+                        <th class="text-end">@Localizer["ColTransferredQty"]</th>
+                        <th class="text-end u-width-120px">@Localizer["ColSplitQty"]</th>
+                        <th>@Localizer["ColDue"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in pending)
+                    {
+                        string demandId = p.DemandId ?? "";
+                        string woId     = p.WorkOrderId;
+                        int    opSeq    = p.OperationSeq;
+                        decimal remainQty = p.RemainingQty;
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="os-chk"
+                                       data-key="@($"{demandId}|{woId}|{opSeq}")" />
+                            </td>
+                            <td>@p.WorkOrderId@if (opSeq > 0){ <span class="text-muted small">-@opSeq</span> }</td>
+                            <td><span class="badge bg-light text-dark">@p.Kind</span></td>
+                            <td>@p.ProductCode</td>
+                            <td class="text-end">@(((decimal)p.DemandQty).ToString(QtyFmt((string?)p.UomCode)))</td>
+                            <td class="text-end text-muted">@(((decimal)p.TransferredQty).ToString(QtyFmt((string?)p.UomCode)))</td>
+                            <td class="text-end">
+                                <input type="number" class="form-control form-control-sm split-qty text-end u-width-110px"
+                                       value="@remainQty" min="0.0001" max="@remainQty" step="any"
+                                       />
+                            </td>
+                            <td>@p.RequiredDate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- hidden container for dynamically built selectedKeys -->
+    <div id="selectedKeysContainer"></div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+        @if (pending.Any())
+        {
+            <button type="submit" class="btn btn-primary"><i class="bi bi-file-earmark-plus"></i> @Localizer["BtnCreate"]</button>
+        }
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    window.toggleAllOutsource = function (e, master) {
+        document.querySelectorAll('#convertForm .os-chk').forEach(function (c) { c.checked = master.checked; });
+    };
+
+    window.buildAndSubmitWorklist = function (e, form) {
+        var container = document.getElementById('selectedKeysContainer');
+        container.innerHTML = '';
+
+        var checked = form.querySelectorAll('.os-chk:checked');
+        if (checked.length === 0) {
+            alert('@Localizer["OutsourceNoSelection"]');
+            return false;   // 阻止表單原生送出（對齊舊 inline 的 return false）
+        }
+
+        checked.forEach(function (chk) {
+            var row    = chk.closest('tr');
+            var keyBase = chk.dataset.key;               // demandId|woId|opSeq
+            var splitInput = row.querySelector('.split-qty');
+            var splitQty   = splitInput ? splitInput.value : '0';
+
+            var inp = document.createElement('input');
+            inp.type  = 'hidden';
+            inp.name  = 'selectedKeys';
+            inp.value = keyBase + '|' + splitQty;
+            container.appendChild(inp);
+        });
+
+        submitPanel(form, null);
+        return false;   // 阻止表單原生送出，只走 AJAX
+    };
+</script>

@@ -1,0 +1,55 @@
+{
+  "sourcePath": "Modules/RPS/Contracts/ReportRequestBase.cs",
+  "sourceHash": "e59765c130670205b350f503a4f8e45cffa471f5f85fac4ab9612e809b4b3441",
+  "entries": [
+    {
+      "slug": "code-rps-reportrequestbase-26aff425",
+      "lang": "zh",
+      "headingPath": "報表 › 期間的滾動視窗語意",
+      "text": "期間查詢必須使用相對時間範圍｜系統在儲存的查詢條件中，不能直接指定絕對日期，否則未來點開時可能會顯示錯誤月份的資料。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportrequestbase-93970cc7",
+      "lang": "zh",
+      "headingPath": "報表 › 與  **正交**：相對期間解決日期算術，",
+      "text": "日期基準決定規則｜系統在處理與相對期間相關的日期計算時，仍無法完全釐清是應該以訂單日還是出貨日來作為主要的計算依據。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportrequestbase-97093194",
+      "lang": "zh",
+      "headingPath": "報表 › 不是**「查全部廠」",
+      "text": "限制只能看特定廠別的資料｜系統預設只會根據執行當下的使用權限範圍來篩選資料，不會自動顯示所有廠別的彙總資訊。若要查看跨廠區的資料匯總，必須透過另一個指定的參數進行明確授權設定。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportrequestbase-a33ced8b",
+      "lang": "zh",
+      "headingPath": "報表 › 僅供畫面手動查詢與既有排程匯入使用",
+      "text": "期間範圍的設定限制｜此功能僅供使用者手動查詢或匯入既有排程資料時使用，不能用於儲存為常用查詢或排程。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportrequestbase-9ae1bb3c",
+      "lang": "zh",
+      "headingPath": "報表 › 這是**新呼叫端應走的路徑**",
+      "text": "計算基準日依據呼叫來源不同｜如果是由排程或大型語言模型呼叫系統，則以當天日期作為計算的基準日；若是由舊有的畫面介面呼叫，則維持使用傳入的當日日期作為計算的基準日。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportrequestbase-27b5baf5",
+      "lang": "zh",
+      "headingPath": "報表 › 明確時區",
+      "text": "時區設定影響日期判斷｜系統在處理排程資料時，如果沒有接收到當前的網路時間資訊，預設會使用行程本身的預設值來判定日期，這可能導致跨不同廠別的單據在計算「今天」的日期時，實際顯示的日期會比預期晚一天。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportrequestbase-cb7333a5",
+      "lang": "zh",
+      "headingPath": "報表 › 兩個期間欄位是否恰好給了一個",
+      "text": "期間欄位是否只填了一個｜此判斷是系統自動計算的，用來確認兩個期間相關的欄位是否恰好只被填入一個值。",
+      "approved": true
+    }
+  ]
+}

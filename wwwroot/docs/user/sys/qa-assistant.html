@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Ask the Manual — Admin Management User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>手冊問答 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">Admin contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理</span><span lang="en">Admin Management</span></div>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link active"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-chat-dots me-2 text-primary"></i><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/QaAssistant &nbsp;|&nbsp; 用自己的話問使用手冊，並回頭查證答案的依據</span><span lang="en">Route: /QaAssistant &nbsp;|&nbsp; Ask the user manual in your own words, then verify the answer against its sources</span></div>
+    </div>
+
+    <p><span lang="zh">這個畫面讓你用自己的話問問題，例如「要抓出很久沒有進出的料，該看哪個畫面」，不必先知道功能叫什麼名字。系統會先在使用手冊裡找出最相關的幾段，連同你的問題一起交給本機的語言模型，再把答案與它所依據的段落一起顯示出來。</span><span lang="en">This screen lets you ask in your own words — for example "which screen shows materials with no movement for a long time" — without having to know what the function is called. The system first finds the most relevant passages in the user manual, hands them to the local language model together with your question, and then shows the answer alongside the passages it was based on.</span></p>
+    <img class="screen-shot" src="img/qa-assistant.png" data-src-en="img/en/qa-assistant.png" alt="手冊問答畫面截圖" data-alt-en="Ask the Manual screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">手冊問答畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Ask the Manual screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <p><span lang="zh">畫面上方有兩個模式，<strong>由你自己選，系統不會替你猜</strong>：「手冊問答」讀的是使用手冊與規則說明，「資料查詢」讀的是你自己的營運資料。兩者的來源、權限與可信度都不同，所以分開。</span><span lang="en">There are two modes at the top of the screen, and <strong>you choose which one — the system never guesses for you</strong>: "Manual Q&amp;A" reads the user manual and the rule notes, while "Data query" reads your own operational data. They differ in source, permissions and how much you should trust them, which is why they are kept apart.</span></p>
+
+    <h2 id="manual-q-a"><i class="bi bi-book me-2 text-primary"></i><span lang="zh">手冊問答</span><span lang="en">Manual Q&amp;A</span></h2>
+
+    <p><span lang="zh"><strong>它回答的是「去哪裡看、怎麼操作、規則是什麼」，不是「你的數字是多少」。</strong>它讀的是使用手冊，不是你的資料庫——在這個模式下問「上個月採購金額多少」不會得到數字，只會得到「哪一張報表看得到」。</span><span lang="en"><strong>It answers "where to look, how to do it, what the rule says" — not "what your numbers are".</strong> It reads the user manual, not your database: in this mode, asking "what was last month's purchase amount" will not return a figure, only which report shows it.</span></p>
+
+    <h2 id="how-to-use-it"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">How to use it</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在下方輸入框寫下問題，按「送出」。問題請控制在 500 字以內。</span><span lang="en">Type your question in the box at the bottom and click Send. Keep it under 500 characters.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">等待回答。推論在本機的 CPU 上進行，<strong>一題大約需要一分鐘</strong>；等待期間輸入框會鎖住並顯示已等待的秒數。不想等時按「取消」——這會真的中止運算，不只是把畫面收起來。</span><span lang="en">Wait for the answer. Inference runs on the local CPU and <strong>a question takes about a minute</strong>; the input box is locked meanwhile and shows how long you have waited. Click Cancel if you do not want to wait — this genuinely stops the computation, not just the display.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh"><strong>展開答案下方的「來源」，確認那一段真的支持這個答案。</strong>這一步不是可選的：模型會把兩段內容揉成一段通順的話，而通順與正確是兩件事。</span><span lang="en"><strong>Open the "Sources" below the answer and check that the passage really supports it.</strong> This step is not optional: the model blends two passages into one fluent paragraph, and fluent is not the same as correct.</span></div></div>
+
+    <h2 id="the-three-kinds-of-source"><i class="bi bi-bookmark-check me-2 text-primary"></i><span lang="zh">來源的三種樣子</span><span lang="en">The three kinds of source</span></h2>
+
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">樣子</span><span lang="en">Appearance</span></th><th><span lang="zh">意義</span><span lang="en">What it means</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">可點的連結</span><span lang="en">A clickable link</span></td><td><span lang="zh">使用手冊的頁面，點開即為該畫面的完整說明。</span><span lang="en">A page of this user manual; click it for the full instructions for that screen.</span></td></tr>
+        <tr><td><span lang="zh">可展開的段落（頁碼以 <code>rules/</code> 開頭）</span><span lang="en">An expandable passage (its page code starts with <code>rules/</code>)</span></td><td><span lang="zh">規則說明。這一類內容沒有對應的手冊頁面，全文就直接展開在答案底下，不需要另外開頁。<strong>這一類段落目前只有中文一份</strong>，所以用英文介面提問時，答案是英文、這一段引文仍會是中文——它是刻意的：改成比對語系的話，英文提問一段規則都拿不到，而畫面上看起來會跟「手冊裡本來就沒寫」一模一樣。</span><span lang="en">A rule explanation. This kind of content has no manual page of its own, so the full text is expanded right below the answer instead. <strong>These passages currently exist in Chinese only</strong>, so when you ask in English the answer comes back in English while this kind of citation stays in Chinese. That is deliberate: matching the language here would leave an English question with no rule passages at all, and on screen that looks exactly like "the manual never covered it".</span></td></tr>
+        <tr><td><span lang="zh">灰色純文字，標註「無從查證」</span><span lang="en">Grey plain text marked "cannot be verified"</span></td><td><span lang="zh"><strong>模型引用了一個本次並未提供給它的頁碼</strong>，也就是它自己編出來的。這一段答案沒有依據，請不要採信，並改用其他方式確認。</span><span lang="en"><strong>The model cited a page that was not supplied to it this time</strong> — in other words, it made the reference up. That part of the answer has no basis; do not rely on it, and confirm another way.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="data-query"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">資料查詢</span><span lang="en">Data query</span></h2>
+
+    <p><span lang="zh">切到「資料查詢」後，你可以用一句話查營運資料，例如「有哪些品號的可用量低於安全存量」。系統會依你的問題挑一支既有的報表查詢、填好條件、執行它，再把結果整理成表格並附上一段白話說明。<strong>查詢是由系統執行的，不是由模型執行的</strong>——模型只負責「挑哪一支、填什麼條件」與最後那段說明，它全程沒有碰到資料庫。</span><span lang="en">Switch to "Data query" and you can query operational data in one sentence — for example "which items have available stock below their safety level". The system picks one of the existing report queries, fills in its conditions, runs it, and returns a table with a plain-language summary. <strong>The query is run by the system, not by the model</strong>: the model only decides which query to use and what conditions to fill in, plus writes the closing summary. It never touches the database.</span></p>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh"><strong>如果畫面先出現一塊確認區，把條件看過再按「確認並執行」。</strong>兩種情形會先問你：一是這份查詢的結果<strong>含金額</strong>（系統同時有好幾套成本口徑並行，挑錯時數字看起來仍然合理），二是<strong>你的問題可能對應到不只一個查詢</strong>，這時上方會多一個選擇器讓你挑。條件都可以直接改；清空某一欄就是「不指定」。按「取消這次查詢」則什麼都不會執行。<strong>確認之前系統一列資料都還沒查。</strong></span><span lang="en"><strong>If a confirmation block appears first, read the conditions before pressing "Confirm and run".</strong> Two situations trigger it: the query returns <strong>monetary amounts</strong> (several costing bases run in parallel here, and the wrong one still yields plausible figures), or <strong>your question may match more than one query</strong>, in which case a selector appears above. You can edit any condition; clearing a field means "not specified". "Discard this query" runs nothing. <strong>Nothing has been queried yet at that point.</strong></span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh"><strong>展開表格上方的「查詢條件」，核對它填的條件真的是你問的那一段。</strong>這一步和手冊問答的「查證來源」一樣不是可選的：模型有時會自行補上你沒有提到的條件（最常見的是期間），而補出來的值看起來完全合理、數字也自洽——不核對就看不出來。</span><span lang="en"><strong>Open "Query parameters" above the table and check that the conditions really match what you asked.</strong> This is no more optional than checking sources in Manual Q&amp;A: the model sometimes fills in conditions you never mentioned — most often the period — and the value it picks looks entirely reasonable and the figures are self-consistent. You cannot tell without checking.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">一題需要<strong>兩次</strong>推論（挑查詢、寫說明），所以比手冊問答更久。若說明那一段逾時，表格仍會照常顯示，並在上方標示說明未產生——資料那時已經查到了。</span><span lang="en">A question takes <strong>two</strong> inference passes (choosing the query, then writing the summary), so it is slower than Manual Q&amp;A. If the summary times out the table is still shown, with a note saying the summary was skipped — the data had already been retrieved by then.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">資料列數多時畫面只顯示前 200 筆並標明總筆數，完整資料請開對應的報表畫面。</span><span lang="en">When there are many rows only the first 200 are shown, together with the total count; open the corresponding report screen for the complete set.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh"><strong>查到想要的結果後，可以在下方替它取個名字存成常用查詢。</strong>存起來的是<strong>條件</strong>不是結果，下次點開會重新查一次，權限也重新檢查。⚠️ 存檔訊息若提到某些條件「沒有一起存進去」，代表報表畫面的查詢列沒有對應的欄位——<strong>那張常用查詢的範圍會比你剛才問的那一題寬</strong>，數字會比較大。要定期收到它，再到報表排程畫面替它加排程。</span><span lang="en"><strong>Once you have the result you wanted, name it below and save it as a favourite query.</strong> What is saved is the <strong>conditions</strong>, not the results: opening it later runs the query again and re-checks your permissions. ⚠️ If the confirmation message says some conditions "were not saved", the report screen has no matching field for them — <strong>that saved query is broader than the question you asked</strong> and its figures will be larger. To receive it regularly, add a schedule for it on the report schedule screen.</span></div></div>
+
+    <p><span lang="zh"><strong>查不到的東西，它會直接說沒有對應的查詢，而不是拿別的資料湊。</strong>目前能用這個方式查到的只有部分報表——<strong>含金額的報表（銷售金額、庫存金額、成本）預設不開放用自然語言查詢，只能從報表畫面進入</strong>，即使你有權限也一樣。這是刻意的：同樣一份資料，用一句話反覆逼近和一步步點開報表，風險並不相同。是否開放由系統管理者設定。</span><span lang="en"><strong>If nothing fits, it says there is no matching query rather than substituting other data.</strong> Only some reports are reachable this way — <strong>reports containing monetary amounts (sales value, inventory value, cost) are not available through natural language by default</strong> and must be opened from their report screens, even if you have permission for them. This is deliberate: repeatedly probing the same data one sentence at a time is not the same risk as opening a report step by step. Your system administrator decides whether to open it up.</span></p>
+
+    <p><span lang="zh"><strong>你只查得到自己本來就有權限開的報表。</strong>廠別與資料範圍的限制也完全照舊——用問的和用點的，看到的資料範圍是同一套。</span><span lang="en"><strong>You can only reach reports you are already allowed to open.</strong> Plant and data-scope restrictions apply exactly as before — asking and clicking give you the same slice of data.</span></p>
+
+    <h2 id="points-to-note"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">注意事項</span><span lang="en">Points to note</span></h2>
+
+    <p><span lang="zh"><strong>手冊沒有寫的，它會直接回覆「使用手冊中查無相關說明。」</strong>這是正確行為，不是故障。與其憑印象編一段看起來很合理的操作步驟，回答不知道對你比較有用。</span><span lang="en"><strong>If the manual does not cover it, the answer is simply "not found in the user manual".</strong> That is correct behaviour, not a fault: saying so is more useful to you than inventing a plausible-looking set of steps.</span></p>
+
+    <p><span lang="zh"><strong>它只找得到你有權限看的畫面。</strong>檢索會依你目前使用中的角色過濾——同一個問題，不同角色問到的答案可能不同，沒有權限的畫面不會出現在來源裡。</span><span lang="en"><strong>It can only find screens you are allowed to see.</strong> Retrieval is filtered by the role you are currently using, so the same question may be answered differently for different roles, and screens you have no permission for never appear as sources.</span></p>
+
+    <p><span lang="zh"><strong>同一個人一次只能問一題。</strong>上一題還在運算時再送出，會被擋下並提示你等它完成或按取消——這不是故障。推論在本機一顆 CPU 上進行，同時跑兩題只會讓兩題都變慢。若整台機器正忙，你會看到「推論服務忙碌中」，此時請稍後再試，或直接開報表畫面查——那條路不經過推論，一向是即時的。</span><span lang="en"><strong>One question at a time per person.</strong> Sending another while the previous one is still running is refused with a prompt to wait or cancel — this is not a fault. Inference runs on a single local CPU, and running two questions at once merely makes both slower. If the whole machine is busy you will see "inference service is busy"; wait and retry, or simply open the report screen instead — that path does not involve inference and is always immediate.</span></p>
+
+    <p><span lang="zh"><strong>你問過什麼不會被保留。</strong>提問與答案都不寫入任何索引或資料表，關掉畫面就沒有了，也不會出現在別人的搜尋結果裡。同樣的，助理也不記得你上一題問了什麼——每一題都是獨立的。</span><span lang="en"><strong>Your questions are not kept.</strong> Neither the question nor the answer is written to any index or table; they are gone when you leave the page and can never turn up in anyone else's results. By the same token the assistant does not remember your previous question — each one stands alone.</span></p>
+
+    <p><span lang="zh">若畫面上方出現黃色的「推論服務尚未就緒」，代表本機的語言模型沒有啟動或模型檔尚未安裝，訊息中會寫明是哪一種。此時仍可開啟畫面，但問不出答案，請聯繫系統管理者。</span><span lang="en">A yellow "inference service is not ready" banner means the local language model is not running or the model files are not installed; the message says which. You can still open the screen but cannot get answers — contact your system administrator.</span></p>
+
+    <h2 id="rebuilding-the-index"><i class="bi bi-arrow-clockwise me-2 text-primary"></i><span lang="zh">重建索引</span><span lang="en">Rebuilding the index</span></h2>
+
+    <p><span lang="zh">右上角的「重建索引」只有具備本畫面<strong>修改</strong>權限的角色看得到。使用手冊更新後，索引會在系統下次啟動時自動更新；這個按鈕是給「不重啟也想立刻生效」的情況用的。重建會用到推論資源，但<strong>提問一律優先</strong>——有人在問的時候重建會自己讓路，所以它不會把別人的提問卡住，代價是重建本身在忙碌時會拖得比較久（可能數分鐘以上）。仍建議避開上班尖峰。</span><span lang="en">The Rebuild index button in the top right is only visible to roles with <strong>update</strong> permission on this screen. After the manual is updated the index refreshes automatically at the next system start; this button is for when you want it to take effect without a restart. Rebuilding uses inference resources, but <strong>questions always take priority</strong> — the rebuild yields whenever someone is asking, so it will not hold anyone up; the cost is that the rebuild itself takes longer when the system is busy (possibly well over several minutes). Avoiding busy periods is still advisable.</span></p>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+
+    <p><a href="system-param.html"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a></p>
+  </main>
+</div>
+</body>
+</html>

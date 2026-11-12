@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Outsource Price Analysis</value></data>
+  <data name="MethodHint" xml:space="preserve"><value>Compares the actual outsourcing unit cost on each receipt line against the quotation in effect on that receipt date (4-level lookup: supplier + product + routing + operation). Monthly average prices are converted to local currency and weighted by receipt quantity, so suppliers quoting in different currencies can be read on one chart. When the date range is left blank it defaults to the last 30 days.</value></data>
+  <data name="FromDate" xml:space="preserve"><value>Receipt Date (From)</value></data>
+  <data name="ToDate" xml:space="preserve"><value>Receipt Date (To)</value></data>
+  <data name="Supplier" xml:space="preserve"><value>Subcontractor</value></data>
+  <data name="AllSuppliers" xml:space="preserve"><value>All Subcontractors</value></data>
+  <data name="Product" xml:space="preserve"><value>Product</value></data>
+  <data name="AllProducts" xml:space="preserve"><value>All Products</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchFirst" xml:space="preserve"><value>Set filter criteria then click Search</value></data>
+  <data name="NoData" xml:space="preserve"><value>No outsource receipt lines in the selected period</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>Export Detail</value></data>
+  <data name="ExportMonthly" xml:space="preserve"><value>Export Trend</value></data>
+  <data name="ResultTitle" xml:space="preserve"><value>Outsource Price Comparison</value></data>
+  <data name="Lines" xml:space="preserve"><value>lines</value></data>
+  <data name="NotComparable" xml:space="preserve"><value>not comparable</value></data>
+  <data name="NotComparableHint" xml:space="preserve"><value>No applicable quotation, or the quotation currency differs from the receipt currency. Neither is shown as a zero difference.</value></data>
+  <data name="MonthlyTrend" xml:space="preserve"><value>Monthly Price Trend (weighted, local currency)</value></data>
+  <data name="MonthlyTable" xml:space="preserve"><value>Monthly Trend</value></data>
+  <data name="DetailTable" xml:space="preserve"><value>Comparison Detail</value></data>
+  <data name="YearMonth" xml:space="preserve"><value>Month</value></data>
+  <data name="ReceiptLines" xml:space="preserve"><value>Receipt Lines</value></data>
+  <data name="AvgUnitPrice" xml:space="preserve"><value>Weighted Avg Price</value></data>
+  <data name="MinUnitPrice" xml:space="preserve"><value>Min Price</value></data>
+  <data name="MaxUnitPrice" xml:space="preserve"><value>Max Price</value></data>
+  <data name="ReceiptDate" xml:space="preserve"><value>Receipt Date</value></data>
+  <data name="ReceiptId" xml:space="preserve"><value>Receipt No.</value></data>
+  <data name="ActualUnitPrice" xml:space="preserve"><value>Actual Price</value></data>
+  <data name="QuotedUnitPrice" xml:space="preserve"><value>Quoted Price</value></data>
+  <data name="NoQuotation" xml:space="preserve"><value>No quotation</value></data>
+  <data name="PriceDiff" xml:space="preserve"><value>Diff</value></data>
+  <data name="PriceDiffPct" xml:space="preserve"><value>Diff%</value></data>
+</root>

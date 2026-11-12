@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Home" xml:space="preserve"><value>首頁</value></data>
+  <data name="AdminManagement" xml:space="preserve"><value>管理系統</value></data>
+  <data name="UserManagement" xml:space="preserve"><value>使用者管理</value></data>
+  <data name="RoleManagement" xml:space="preserve"><value>角色管理</value></data>
+  <data name="OrgStructure" xml:space="preserve"><value>組織架構管理</value></data>
+  <data name="PermissionSettings" xml:space="preserve"><value>功能權限管理</value></data>
+  <data name="MobilePermissionSettings" xml:space="preserve"><value>手機模組權限</value></data>
+  <data name="PlantSettings" xml:space="preserve"><value>廠別設定</value></data>
+  <data name="PlantManagement" xml:space="preserve"><value>廠別基本資料</value></data>
+  <data name="UserSettings" xml:space="preserve"><value>個人設定</value></data>
+  <data name="AuditLog" xml:space="preserve"><value>稽核日誌</value></data>
+  <data name="TwoFactorAdmin" xml:space="preserve"><value>兩階段驗證重置</value></data>
+  <data name="ApprovalManagement" xml:space="preserve"><value>簽核管理</value></data>
+  <data name="PendingApprovals" xml:space="preserve"><value>待我簽核</value></data>
+  <data name="AllApprovalRequests" xml:space="preserve"><value>所有簽核記錄</value></data>
+  <data name="ApprovalTemplateSetting" xml:space="preserve"><value>簽核模板設定</value></data>
+  <data name="DocumentApprovalConfig" xml:space="preserve"><value>作業類型簽核設定</value></data>
+  <data name="CodeEntry" xml:space="preserve"><value>代碼維護</value></data>
+  <data name="SystemParam" xml:space="preserve"><value>系統參數</value></data>
+
+  <!-- DataAnnotations 驗證訊息本地化 (key = attribute class name 或 default format string) -->
+  <data name="RequiredAttribute" xml:space="preserve"><value>「{0}」為必填欄位。</value></data>
+  <data name="The {0} field is required." xml:space="preserve"><value>「{0}」為必填欄位。</value></data>
+  <data name="MaxLengthAttribute" xml:space="preserve"><value>「{0}」長度不得超過 {1} 個字元。</value></data>
+  <data name="The field {0} must be a string or array type with a maximum length of '{1}'." xml:space="preserve"><value>「{0}」長度不得超過 {1} 個字元。</value></data>
+  <data name="RangeAttribute" xml:space="preserve"><value>「{0}」必須介於 {1} 與 {2} 之間。</value></data>
+  <data name="The field {0} must be between {1} and {2}." xml:space="preserve"><value>「{0}」必須介於 {1} 與 {2} 之間。</value></data>
+  <data name="StringLengthAttribute" xml:space="preserve"><value>「{0}」長度必須介於 {2} 與 {1} 個字元之間。</value></data>
+  <data name="EmailAddressAttribute" xml:space="preserve"><value>「{0}」不是有效的電子郵件格式。</value></data>
+  <data name="CompareAttribute" xml:space="preserve"><value>「{0}」與「{1}」不符。</value></data>
+  <data name="SupplierCode" xml:space="preserve"><value>供應商</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="OrderQty" xml:space="preserve"><value>採購數量</value></data>
+
+  <data name="CategoryCode" xml:space="preserve"><value>類別代號</value></data>
+  <data name="CategoryName" xml:space="preserve"><value>類別名稱</value></data>
+  <data name="CompanyCode" xml:space="preserve"><value>公司代號</value></data>
+  <data name="CompanyName" xml:space="preserve"><value>公司名稱</value></data>
+  <data name="ContainerName" xml:space="preserve"><value>容器名稱</value></data>
+  <data name="CreatedBy" xml:space="preserve"><value>建立者</value></data>
+  <data name="CrossPlantTransferId" xml:space="preserve"><value>調撥單號</value></data>
+  <data name="CurrencyCode" xml:space="preserve"><value>幣別</value></data>
+  <data name="CurrencyName" xml:space="preserve"><value>幣別名稱</value></data>
+  <data name="DayType" xml:space="preserve"><value>類型</value></data>
+  <data name="DocNo" xml:space="preserve"><value>單號</value></data>
+  <data name="DocTypeName" xml:space="preserve"><value>顯示名稱</value></data>
+  <data name="EntityCode" xml:space="preserve"><value>對象</value></data>
+  <data name="EntityType" xml:space="preserve"><value>對象類型</value></data>
+  <data name="GoodsReceiptId" xml:space="preserve"><value>進貨單號</value></data>
+  <data name="GoodsReturnId" xml:space="preserve"><value>退貨單號</value></data>
+  <data name="GoodsShipmentId" xml:space="preserve"><value>出貨單號</value></data>
+  <data name="GroupCode" xml:space="preserve"><value>班制代號</value></data>
+  <data name="GroupName" xml:space="preserve"><value>班制名稱</value></data>
+  <data name="LoanDocId" xml:space="preserve"><value>借入借出單號</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>儲位</value></data>
+  <data name="LocationName" xml:space="preserve"><value>儲位名稱</value></data>
+  <data name="LotNo" xml:space="preserve"><value>批號</value></data>
+  <data name="MachineCode" xml:space="preserve"><value>機台編號</value></data>
+  <data name="MachineName" xml:space="preserve"><value>機台名稱</value></data>
+  <data name="OutsourceMaterialDocId" xml:space="preserve"><value>單號</value></data>
+  <data name="Prefix" xml:space="preserve"><value>前置碼</value></data>
+  <data name="ProductName" xml:space="preserve"><value>產品名稱</value></data>
+  <data name="PurchaseOrderId" xml:space="preserve"><value>採購單號</value></data>
+  <data name="PurchaseRequestId" xml:space="preserve"><value>請購單號</value></data>
+  <data name="RequestedBy" xml:space="preserve"><value>請購人</value></data>
+  <data name="ReworkMaterialDocId" xml:space="preserve"><value>單號</value></data>
+  <data name="RoutingId" xml:space="preserve"><value>途程代號</value></data>
+  <data name="SalesReturnId" xml:space="preserve"><value>銷退單號</value></data>
+  <data name="SampleDocId" xml:space="preserve"><value>樣品單號</value></data>
+  <data name="ScrapDocId" xml:space="preserve"><value>報廢單號</value></data>
+  <data name="ShiftName" xml:space="preserve"><value>班別名稱</value></data>
+  <data name="SourceDocNo" xml:space="preserve"><value>來源單號</value></data>
+  <data name="StockAdjustmentId" xml:space="preserve"><value>調整單號</value></data>
+  <data name="StockTransferId" xml:space="preserve"><value>調撥單號</value></data>
+  <data name="TaxName" xml:space="preserve"><value>稅別名稱</value></data>
+  <data name="ToolingName" xml:space="preserve"><value>模具名稱</value></data>
+  <data name="TypeCode" xml:space="preserve"><value>類型</value></data>
+  <data name="TypeName" xml:space="preserve"><value>類別名稱</value></data>
+  <data name="UomCode" xml:space="preserve"><value>單位</value></data>
+  <data name="UomName" xml:space="preserve"><value>單位名稱</value></data>
+  <data name="WhCode" xml:space="preserve"><value>倉庫</value></data>
+  <data name="WhName" xml:space="preserve"><value>倉庫名稱</value></data>
+  <data name="WorkCenterCode" xml:space="preserve"><value>工作中心代號</value></data>
+  <data name="WorkCenterName" xml:space="preserve"><value>工作中心名稱</value></data>
+  <data name="AbcGrade" xml:space="preserve"><value>ABC 等級</value></data>
+  <data name="AdditionalRate" xml:space="preserve"><value>附加費率</value></data>
+  <data name="Address" xml:space="preserve"><value>地址</value></data>
+  <data name="AdjustDate" xml:space="preserve"><value>調整日期</value></data>
+  <data name="AdjustReasonCode" xml:space="preserve"><value>調整原因</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>簽核狀態</value></data>
+  <data name="BoxQty" xml:space="preserve"><value>單箱數量</value></data>
+  <data name="BuyRate" xml:space="preserve"><value>買入匯率</value></data>
+  <data name="CavityCount" xml:space="preserve"><value>穴數</value></data>
+  <data name="CompensatoryDayOfWeek" xml:space="preserve"><value>補班星期</value></data>
+  <data name="ContactName" xml:space="preserve"><value>姓名</value></data>
+  <data name="Contacts" xml:space="preserve"><value>聯絡人</value></data>
+  <data name="ContainerCode" xml:space="preserve"><value>容器代號</value></data>
+  <data name="Conversions" xml:space="preserve"><value>換算設定</value></data>
+  <data name="CostMethod" xml:space="preserve"><value>成本計算方式</value></data>
+  <data name="CreatedAt" xml:space="preserve"><value>建立時間</value></data>
+  <data name="Currency" xml:space="preserve"><value>幣別</value></data>
+  <data name="CustomerOrderNo" xml:space="preserve"><value>客戶訂單號</value></data>
+  <data name="Date" xml:space="preserve"><value>日期</value></data>
+  <data name="DateFormat" xml:space="preserve"><value>日期格式</value></data>
+  <data name="DayOfWeek" xml:space="preserve"><value>星期</value></data>
+  <data name="Days" xml:space="preserve"><value>天</value></data>
+  <data name="DecimalPlaces" xml:space="preserve"><value>小數位數</value></data>
+  <data name="DefaultLocationCode" xml:space="preserve"><value>預設儲位代號</value></data>
+  <data name="DefaultStockUomCode" xml:space="preserve"><value>預設庫存單位</value></data>
+  <data name="DefaultWarehouseCode" xml:space="preserve"><value>預設倉庫</value></data>
+  <data name="DeliveryAddress" xml:space="preserve"><value>送貨地址</value></data>
+  <data name="DeliveryDate" xml:space="preserve"><value>預交日期</value></data>
+  <data name="Denominator" xml:space="preserve"><value>分母</value></data>
+  <data name="DepartmentCode" xml:space="preserve"><value>責任部門</value></data>
+  <data name="DepartmentId" xml:space="preserve"><value>部門代號</value></data>
+  <data name="Description" xml:space="preserve"><value>說明</value></data>
+  <data name="Direction" xml:space="preserve"><value>方向</value></data>
+  <data name="DocType" xml:space="preserve"><value>單據類型代號</value></data>
+  <data name="EnableLotTracking" xml:space="preserve"><value>預設啟用批號管理</value></data>
+  <data name="EndTime" xml:space="preserve"><value>下班時間</value></data>
+  <data name="Fax" xml:space="preserve"><value>傳真</value></data>
+  <data name="FromLocationCode" xml:space="preserve"><value>撥出儲位</value></data>
+  <data name="FromUom" xml:space="preserve"><value>來源單位</value></data>
+  <data name="FromWhCode" xml:space="preserve"><value>撥出倉庫</value></data>
+  <data name="GrossWeight" xml:space="preserve"><value>毛重</value></data>
+  <data name="InspectionLevelC" xml:space="preserve"><value>連續驗收水準</value></data>
+  <data name="InspectionLevelN" xml:space="preserve"><value>計數驗收水準</value></data>
+  <data name="InspectionLevelR" xml:space="preserve"><value>計量驗收水準</value></data>
+  <data name="InternalOrderId" xml:space="preserve"><value>內部訂單號</value></data>
+  <data name="InvoiceNo" xml:space="preserve"><value>統一編號</value></data>
+  <data name="InvoiceType" xml:space="preserve"><value>發票類型</value></data>
+  <data name="InvoiceTypeCode" xml:space="preserve"><value>發票類型</value></data>
+  <data name="IsActive" xml:space="preserve"><value>啟用</value></data>
+  <data name="IsClosed" xml:space="preserve"><value>結案</value></data>
+  <data name="IsCustomer" xml:space="preserve"><value>客戶</value></data>
+  <data name="IsLotControlled" xml:space="preserve"><value>批號管控</value></data>
+  <data name="IsMrpWarehouse" xml:space="preserve"><value>納入MRP計算</value></data>
+  <data name="IsProductionLine" xml:space="preserve"><value>生產線</value></data>
+  <data name="IsSupplier" xml:space="preserve"><value>供應商</value></data>
+  <data name="IsSystemType" xml:space="preserve"><value>系統類型</value></data>
+  <data name="IssueDate" xml:space="preserve"><value>發退料日期</value></data>
+  <data name="LeadTimeDays" xml:space="preserve"><value>前置期</value></data>
+  <data name="LineAmount" xml:space="preserve"><value>金額</value></data>
+  <data name="LineNo" xml:space="preserve"><value>序號</value></data>
+  <data name="LoanDate" xml:space="preserve"><value>日期</value></data>
+  <data name="LocationType" xml:space="preserve"><value>儲位類型</value></data>
+  <data name="Locations" xml:space="preserve"><value>儲位設定</value></data>
+  <data name="MachineStatus" xml:space="preserve"><value>設備狀態</value></data>
+  <data name="MaxCapacity" xml:space="preserve"><value>最大容量</value></data>
+  <data name="Mobile" xml:space="preserve"><value>手機</value></data>
+  <data name="MovementDate" xml:space="preserve"><value>異動日期</value></data>
+  <data name="MrpMode" xml:space="preserve"><value>產銷模式</value></data>
+  <data name="NetWeight" xml:space="preserve"><value>淨重</value></data>
+  <data name="Numerator" xml:space="preserve"><value>分子</value></data>
+  <data name="OrderDate" xml:space="preserve"><value>訂單日期</value></data>
+  <data name="OrderType" xml:space="preserve"><value>訂單類型</value></data>
+  <data name="OutsourceQtyPerDay" xml:space="preserve"><value>委外量（件/天）</value></data>
+  <data name="PaymentTermDays" xml:space="preserve"><value>結帳日</value></data>
+  <data name="PaymentType" xml:space="preserve"><value>付款方式</value></data>
+  <data name="Phone" xml:space="preserve"><value>電話</value></data>
+  <data name="PurchaseUom" xml:space="preserve"><value>採購單位</value></data>
+  <data name="Qty" xml:space="preserve"><value>數量</value></data>
+  <data name="QtyAvailable" xml:space="preserve"><value>可用量</value></data>
+  <data name="QtyOnHand" xml:space="preserve"><value>庫存量</value></data>
+  <data name="QtyPutAway" xml:space="preserve"><value>已作業量</value></data>
+  <data name="QtyReceived" xml:space="preserve"><value>已收貨</value></data>
+  <data name="QtyReserved" xml:space="preserve"><value>預留量</value></data>
+  <data name="QtyShipped" xml:space="preserve"><value>已發出</value></data>
+  <data name="RateDate" xml:space="preserve"><value>匯率日期</value></data>
+  <data name="Rates" xml:space="preserve"><value>每日匯率</value></data>
+  <data name="ReceiptDate" xml:space="preserve"><value>進貨日期</value></data>
+  <data name="ReceiptQty" xml:space="preserve"><value>進貨數量</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="RequestDate" xml:space="preserve"><value>請購日期</value></data>
+  <data name="RequestQty" xml:space="preserve"><value>請購量</value></data>
+  <data name="RequireDoc" xml:space="preserve"><value>需填單據</value></data>
+  <data name="RequireLot" xml:space="preserve"><value>需批號</value></data>
+  <data name="ResetCycle" xml:space="preserve"><value>重置週期</value></data>
+  <data name="ReturnDate" xml:space="preserve"><value>退貨日期</value></data>
+  <data name="ReturnQty" xml:space="preserve"><value>退貨數量</value></data>
+  <data name="Role" xml:space="preserve"><value>職稱</value></data>
+  <data name="SafetyStock" xml:space="preserve"><value>安全存量</value></data>
+  <data name="SalesOrderId" xml:space="preserve"><value>銷售訂單</value></data>
+  <data name="SalesUom" xml:space="preserve"><value>銷售單位</value></data>
+  <data name="SampleDate" xml:space="preserve"><value>日期</value></data>
+  <data name="ScrapDate" xml:space="preserve"><value>報廢日期</value></data>
+  <data name="ScrapReasonCode" xml:space="preserve"><value>報廢原因</value></data>
+  <data name="SellRate" xml:space="preserve"><value>賣出匯率</value></data>
+  <data name="Separator" xml:space="preserve"><value>分隔符號</value></data>
+  <data name="SeqLength" xml:space="preserve"><value>流水碼位數</value></data>
+  <data name="ShelfLifeDays" xml:space="preserve"><value>有效期限</value></data>
+  <data name="ShiftCode" xml:space="preserve"><value>班別代號</value></data>
+  <data name="ShiftGroupCode" xml:space="preserve"><value>班制代號</value></data>
+  <data name="ShipAddress" xml:space="preserve"><value>出貨地址</value></data>
+  <data name="ShipDate" xml:space="preserve"><value>出貨日期</value></data>
+  <data name="ShipQty" xml:space="preserve"><value>出貨數量</value></data>
+  <data name="ShippedQty" xml:space="preserve"><value>已出貨量</value></data>
+  <data name="ShortName" xml:space="preserve"><value>簡稱</value></data>
+  <data name="SourceTypeCode" xml:space="preserve"><value>來源類別代號</value></data>
+  <data name="Spec" xml:space="preserve"><value>規格</value></data>
+  <data name="StandardCost" xml:space="preserve"><value>標準單價</value></data>
+  <data name="StandardLaborCost" xml:space="preserve"><value>標準工時單價</value></data>
+  <data name="StartTime" xml:space="preserve"><value>上班時間</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="StockMode" xml:space="preserve"><value>庫存模式</value></data>
+  <data name="StockQty" xml:space="preserve"><value>庫存量</value></data>
+  <data name="StockUom" xml:space="preserve"><value>庫存單位</value></data>
+  <data name="StockUomCode" xml:space="preserve"><value>庫存單位</value></data>
+  <data name="Symbol" xml:space="preserve"><value>符號</value></data>
+  <data name="TaxAmount" xml:space="preserve"><value>稅額</value></data>
+  <data name="TaxCode" xml:space="preserve"><value>稅別</value></data>
+  <data name="TaxRate" xml:space="preserve"><value>稅率</value></data>
+  <data name="ToLocationCode" xml:space="preserve"><value>目的儲位</value></data>
+  <data name="ToWhCode" xml:space="preserve"><value>撥入倉庫</value></data>
+  <data name="ToolingCode" xml:space="preserve"><value>模具代號</value></data>
+  <data name="ToolingType" xml:space="preserve"><value>種類</value></data>
+  <data name="TotalAmount" xml:space="preserve"><value>總金額</value></data>
+  <data name="TotalCost" xml:space="preserve"><value>金額</value></data>
+  <data name="TotalItems" xml:space="preserve"><value>共 {0} 筆</value></data>
+  <data name="TransferDate" xml:space="preserve"><value>調撥日期</value></data>
+  <data name="TypeCategory" xml:space="preserve"><value>異動類別</value></data>
+  <data name="UnitCost" xml:space="preserve"><value>單位成本</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>單價</value></data>
+  <data name="UrgentLeadTimeDays" xml:space="preserve"><value>緊急前置期</value></data>
+  <data name="Warehouse" xml:space="preserve"><value>倉庫</value></data>
+  <data name="WarehouseType" xml:space="preserve"><value>倉庫類型</value></data>
+  <data name="WorkCenter" xml:space="preserve"><value>工作中心</value></data>
+  <data name="WorkEnd" xml:space="preserve"><value>結束時間</value></data>
+  <data name="WorkMinutes" xml:space="preserve"><value>工作分鐘</value></data>
+  <data name="WorkOrder" xml:space="preserve"><value>工單</value></data>
+  <data name="WorkOrderCode" xml:space="preserve"><value>工單號</value></data>
+  <data name="WorkStart" xml:space="preserve"><value>開始時間</value></data>
+  <data name="Year" xml:space="preserve"><value>年度</value></data>
+  <data name="DeviceStatus" xml:space="preserve"><value>設備狀態</value></data>
+  <data name="ReportingInterface" xml:space="preserve"><value>報工介面</value></data>
+  <data name="ReportingManagement" xml:space="preserve"><value>報工管理</value></data>
+  <data name="Name" xml:space="preserve"><value>名稱</value></data>
+  <data name="Category" xml:space="preserve"><value>類別</value></data>
+  <data name="Code" xml:space="preserve"><value>代碼</value></data>
+  <data name="NameZh" xml:space="preserve"><value>中文名稱</value></data>
+  <data name="NameEn" xml:space="preserve"><value>英文名稱</value></data>
+  <data name="DocumentType" xml:space="preserve"><value>單據類型</value></data>
+  <data name="DocumentTypeName" xml:space="preserve"><value>單據類型名稱</value></data>
+  <data name="Email" xml:space="preserve"><value>電子郵件</value></data>
+  <data name="UserName" xml:space="preserve"><value>使用者名稱</value></data>
+  <data name="RoutingName" xml:space="preserve"><value>途程名稱</value></data>
+  <data name="BatchSize" xml:space="preserve"><value>批量</value></data>
+  <data name="BufferDays" xml:space="preserve"><value>緩衝天數</value></data>
+  <data name="AvgLeadTime" xml:space="preserve"><value>平均工時</value></data>
+  <data name="WorkCenterId" xml:space="preserve"><value>工作中心</value></data>
+  <data name="Note" xml:space="preserve"><value>備註</value></data>
+  <data name="TM_WKS" xml:space="preserve"><value>正班工時</value></data>
+  <data name="TM_WKO" xml:space="preserve"><value>加班工時</value></data>
+  <data name="PagerSummary" xml:space="preserve"><value>第 {0} / {1} 頁，共 {2} 筆</value></data>
+  <data name="PagerNav" xml:space="preserve"><value>分頁導覽</value></data>
+  <data name="PagerFirst" xml:space="preserve"><value>第一頁</value></data>
+  <data name="PagerPrevious" xml:space="preserve"><value>上一頁</value></data>
+  <data name="PagerNext" xml:space="preserve"><value>下一頁</value></data>
+  <data name="PagerLast" xml:space="preserve"><value>最後一頁</value></data>
+  <data name="PageSize" xml:space="preserve"><value>每頁筆數</value></data>
+  <data name="The {0} field must be a valid time zone identifier." xml:space="preserve"><value>「{0}」不是有效的時區代碼（例：Asia/Taipei）。</value></data>
+  <data name="DefaultTimeZone" xml:space="preserve"><value>預設時區</value></data>
+  <data name="TimeZoneId" xml:space="preserve"><value>個人時區</value></data>
+  <data name="Loading" xml:space="preserve"><value>載入中...</value></data>
+  <data name="LoadFailedRetry" xml:space="preserve"><value>載入失敗，請重試。</value></data>
+  <data name="Saving" xml:space="preserve"><value>儲存中...</value></data>
+  <data name="SaveFailedRetry" xml:space="preserve"><value>儲存失敗，請重試。</value></data>
+  <data name="DeleteFailedRetry" xml:space="preserve"><value>刪除失敗，請重試。</value></data>
+  <data name="UpdateFailedRetry" xml:space="preserve"><value>更新失敗，請重試。</value></data>
+  <data name="OperationFailedRetry" xml:space="preserve"><value>操作失敗，請重試。</value></data>
+  <data name="DocNotFoundMaybeDeleted" xml:space="preserve"><value>此單據已不存在（可能已被刪除）。</value></data>
+  <data name="ConfirmDeleteNameFmt" xml:space="preserve"><value>確定要刪除「{0}」？</value></data>
+  <data name="ConfirmDeleteSettingNameFmt" xml:space="preserve"><value>確定要刪除「{0}」的設定？</value></data>
+  <data name="Msg_PasswordMismatchOrInvalid" xml:space="preserve"><value>密碼不符或格式錯誤，請重新輸入。</value></data>
+  <data name="Msg_ApprovalActionFailed" xml:space="preserve"><value>簽核操作失敗，請確認請求狀態</value></data>
+  <data name="Msg_ApprovalWithdrawn" xml:space="preserve"><value>簽核申請已撤回，資料回到草稿狀態</value></data>
+  <data name="Msg_ApprovalWithdrawFailed" xml:space="preserve"><value>撤回失敗，請確認申請狀態或您是否為申請人</value></data>
+  <data name="Msg_ApproverReassigned" xml:space="preserve"><value>簽核人已重新指派</value></data>
+  <data name="Msg_ReassignFailed" xml:space="preserve"><value>指派失敗，請確認申請單狀態</value></data>
+  <data name="Msg_DelegationSaved" xml:space="preserve"><value>代理人設定已儲存</value></data>
+  <data name="Msg_DelegationDeleted" xml:space="preserve"><value>代理人設定已刪除（已改派的待簽單維持原狀，可由簽核管理員重新指派）</value></data>
+  <data name="Msg_CreateFailed" xml:space="preserve"><value>建立失敗，請稍後再試。</value></data>
+  <data name="Msg_UpdateFailed" xml:space="preserve"><value>更新失敗，請稍後再試。</value></data>
+  <data name="Msg_DeleteFailed" xml:space="preserve"><value>刪除失敗，請稍後再試。</value></data>
+  <data name="Msg_SaveFailed" xml:space="preserve"><value>儲存失敗，請稍後再試。</value></data>
+  <data name="Msg_MoveFailed" xml:space="preserve"><value>移動失敗，請稍後再試。</value></data>
+  <data name="Msg_TemplateCreated" xml:space="preserve"><value>簽核模板建立成功</value></data>
+  <data name="Msg_TemplateUpdated" xml:space="preserve"><value>簽核模板更新成功</value></data>
+  <data name="Msg_TemplateDeleted" xml:space="preserve"><value>簽核模板刪除成功</value></data>
+  <data name="Msg_TemplateNotFound" xml:space="preserve"><value>找不到此簽核模板。</value></data>
+  <data name="Msg_StepAdded" xml:space="preserve"><value>步驟新增成功</value></data>
+  <data name="Msg_StepInvalid" xml:space="preserve"><value>步驟資料有誤</value></data>
+  <data name="Msg_StepInUse" xml:space="preserve"><value>此步驟已被簽核紀錄引用，無法刪除。</value></data>
+  <data name="Msg_StepDeleted" xml:space="preserve"><value>步驟刪除成功</value></data>
+  <data name="Msg_StepNotFound" xml:space="preserve"><value>步驟不存在</value></data>
+  <data name="Msg_StepUpdated" xml:space="preserve"><value>步驟更新成功</value></data>
+  <data name="Msg_CodeEntryCreateDuplicate" xml:space="preserve"><value>建立失敗，此類別下的代碼可能已存在。</value></data>
+  <data name="Msg_CodeEntryCreated" xml:space="preserve"><value>代碼新增成功</value></data>
+  <data name="Msg_CodeEntryPendingApproval" xml:space="preserve"><value>此代碼正在審核中，無法編輯。</value></data>
+  <data name="Msg_CodeEntryUpdated" xml:space="preserve"><value>代碼更新成功</value></data>
+  <data name="Msg_CodeEntryNotFound" xml:space="preserve"><value>找不到此代碼。</value></data>
+  <data name="Msg_CodeEntryDeleted" xml:space="preserve"><value>代碼已刪除</value></data>
+  <data name="Msg_DocApprovalConfigDuplicate" xml:space="preserve"><value>建立失敗，此廠別的作業類型設定可能已存在。</value></data>
+  <data name="Msg_DocApprovalConfigCreated" xml:space="preserve"><value>作業類型簽核設定建立成功</value></data>
+  <data name="Msg_DocApprovalConfigUpdated" xml:space="preserve"><value>作業類型簽核設定更新成功</value></data>
+  <data name="Msg_SettingNotFound" xml:space="preserve"><value>找不到此設定。</value></data>
+  <data name="Msg_SettingDeleted" xml:space="preserve"><value>設定已刪除</value></data>
+  <data name="Msg_OrgCreated" xml:space="preserve"><value>組織單位新增成功</value></data>
+  <data name="Msg_OrgUpdated" xml:space="preserve"><value>組織單位更新成功</value></data>
+  <data name="Msg_OrgNotFound" xml:space="preserve"><value>找不到此組織單位。</value></data>
+  <data name="Msg_OrgDeleted" xml:space="preserve"><value>組織單位刪除成功</value></data>
+  <data name="Msg_PlantCreated" xml:space="preserve"><value>廠別新增成功</value></data>
+  <data name="Msg_PlantUpdated" xml:space="preserve"><value>廠別更新成功</value></data>
+  <data name="Msg_PlantNotFound" xml:space="preserve"><value>找不到此廠別。</value></data>
+  <data name="Msg_PlantDeleted" xml:space="preserve"><value>廠別刪除成功</value></data>
+  <data name="Msg_RoleCreated" xml:space="preserve"><value>角色新增成功</value></data>
+  <data name="Msg_RoleUpdated" xml:space="preserve"><value>角色更新成功</value></data>
+  <data name="Msg_RoleNotFound" xml:space="preserve"><value>找不到此角色。</value></data>
+  <data name="Msg_RoleDeleted" xml:space="preserve"><value>角色刪除成功</value></data>
+  <data name="Msg_LogoTooLarge" xml:space="preserve"><value>圖片大小不可超過 2 MB</value></data>
+  <data name="Msg_LogoNotImage" xml:space="preserve"><value>請上傳圖片檔案（jpg / png / gif / webp）</value></data>
+  <data name="Msg_LogoBadExtension" xml:space="preserve"><value>僅接受 .jpg / .jpeg / .png / .gif / .webp，不接受 SVG。</value></data>
+  <data name="Msg_LogoBadContent" xml:space="preserve"><value>檔案內容不是有效的 JPEG / PNG / GIF / WebP 影像。</value></data>
+  <data name="Msg_SystemParamSaved" xml:space="preserve"><value>系統參數已儲存</value></data>
+  <data name="Msg_UserCreated" xml:space="preserve"><value>使用者新增成功</value></data>
+  <data name="Msg_UserUpdated" xml:space="preserve"><value>使用者更新成功</value></data>
+  <data name="Msg_UserNotFound" xml:space="preserve"><value>找不到此使用者。</value></data>
+  <data name="Msg_UserDeleted" xml:space="preserve"><value>使用者刪除成功</value></data>
+  <data name="Msg_ApprovalDoneApproved" xml:space="preserve"><value>已核准此簽核請求</value></data>
+  <data name="Msg_ApprovalDoneReturned" xml:space="preserve"><value>已退回修改此簽核請求</value></data>
+  <data name="Msg_ApprovalDoneRejected" xml:space="preserve"><value>已拒絕此簽核請求</value></data>
+  <data name="Msg_DelegationSavedMovedFmt" xml:space="preserve"><value>代理人設定已儲存，{0} 張待簽單已改派代理人</value></data>
+  <data name="Msg_TemplateNotFoundFmt" xml:space="preserve"><value>找不到簽核模板：{0}</value></data>
+  <data name="Msg_TemplateNoStepsFmt" xml:space="preserve"><value>模板 {0} 沒有定義步驟</value></data>
+  <data name="Msg_ListSeparator" xml:space="preserve"><value>、</value></data>
+  <data name="Msg_OrgInUseFmt" xml:space="preserve"><value>無法刪除，此組織單位正被以下功能使用中：{0}</value></data>
+  <data name="Msg_OrgInUse_Children" xml:space="preserve"><value>子組織單位</value></data>
+  <data name="Msg_OrgInUse_Roles" xml:space="preserve"><value>角色</value></data>
+  <data name="Msg_DocApprovalTemplateRequired" xml:space="preserve"><value>勾選「需要簽核」時必須指定簽核範本，否則單據會被視為未設線上簽核而直接放行。</value></data>
+  <data name="Msg_DocApprovalConfigInUseFmt" xml:space="preserve"><value>無法刪除，作業類型「{0}」尚有進行中的簽核流程</value></data>
+  <data name="Msg_SwitchRoleFailed" xml:space="preserve"><value>切換角色失敗</value></data>
+  <data name="Msg_SwitchRoleFailedRetry" xml:space="preserve"><value>切換角色失敗，請稍後再試。</value></data>
+  <data name="Msg_SwitchPlantFailedRetry" xml:space="preserve"><value>切換廠別失敗，請稍後再試。</value></data>
+  <data name="LicenseStatus" xml:space="preserve"><value>授權狀態</value></data>
+  <data name="Msg_PlantContextInvalid" xml:space="preserve"><value>你目前的作用廠別已不在角色可使用的廠別內（可能是管理員調整了角色），請重新選擇廠別後再操作。</value></data>
+  <data name="Msg_ActiveRoleRevoked" xml:space="preserve"><value>你目前使用的角色已被移除，請重新選擇角色與廠別後再操作。</value></data>
+  <data name="Msg_SaveTimeZoneFailedRetry" xml:space="preserve"><value>儲存個人時區失敗，請稍後再試。</value></data>
+  <data name="Msg_UnsupportedLanguage" xml:space="preserve"><value>不支援的語言設定</value></data>
+  <data name="Msg_CodeEntryCreatedAutoApproved" xml:space="preserve"><value>代碼已建立，簽核流程自動完成並生效</value></data>
+  <data name="Msg_CodeEntryCreatedSubmitted" xml:space="preserve"><value>代碼已建立並送審，待主管核准後生效</value></data>
+  <data name="Msg_CodeEntryUpdatedAutoApproved" xml:space="preserve"><value>代碼已更新，簽核流程自動完成並生效</value></data>
+  <data name="Msg_CodeEntryUpdatedSubmitted" xml:space="preserve"><value>代碼已更新並重新送審，待主管核准後生效</value></data>
+  <data name="Msg_CodeEntryInUse_Pending" xml:space="preserve"><value>正在審核中</value></data>
+  <data name="Msg_CodeEntryInUseFmt" xml:space="preserve"><value>無法刪除，此代碼{0}</value></data>
+  <data name="Msg_ApprovalAlreadyClosed" xml:space="preserve"><value>此簽核請求已完成或遭拒，無法再次操作。</value></data>
+  <data name="Msg_ApprovalNotPending" xml:space="preserve"><value>此申請單不在待審核狀態</value></data>
+  <data name="Msg_DelegationEnabledMovedFmt" xml:space="preserve"><value>代理人設定已啟用，{0} 張待簽單已改派代理人</value></data>
+  <data name="Msg_DelegationEnabled" xml:space="preserve"><value>代理人設定已啟用</value></data>
+  <data name="Msg_DelegationDisabled" xml:space="preserve"><value>代理人設定已停用（已改派的待簽單維持原狀，可由簽核管理員重新指派）</value></data>
+  <data name="Msg_DelegateRequired" xml:space="preserve"><value>請選擇代理人。</value></data>
+  <data name="Msg_DelegateNotSelf" xml:space="preserve"><value>代理人不可為自己。</value></data>
+  <data name="Msg_DelegateNotFound" xml:space="preserve"><value>找不到指定的代理人。</value></data>
+  <data name="Msg_DelegationEndBeforeStart" xml:space="preserve"><value>結束日期不可早於開始日期。</value></data>
+  <data name="Msg_DelegationOverlap" xml:space="preserve"><value>同一時段已有生效中的代理設定，請先調整既有設定的期間或停用。</value></data>
+  <data name="Msg_UserInUse_Requested" xml:space="preserve"><value>已發起的簽核流程（進行中）</value></data>
+  <data name="Msg_UserInUse_Approving" xml:space="preserve"><value>待簽核的簽核流程</value></data>
+  <data name="Msg_UserInUseFmt" xml:space="preserve"><value>無法刪除，此使用者尚有{0}</value></data>
+  <data name="Msg_TemplateInUseFmt" xml:space="preserve"><value>無法刪除，此模板正被以下功能使用中：{0}</value></data>
+  <data name="Msg_InUse_DocApprovalConfig" xml:space="preserve"><value>作業類型簽核設定</value></data>
+  <data name="Msg_InUse_PendingApprovals" xml:space="preserve"><value>進行中的簽核流程</value></data>
+  <data name="Msg_TemplateStepsLocked" xml:space="preserve"><value>此模板有進行中的簽核流程，無法調整步驟。請待簽核完成或撤回後再修改。</value></data>
+  <data name="Msg_PlantInUseFmt" xml:space="preserve"><value>無法刪除，此廠別正被以下功能使用中：{0}</value></data>
+  <data name="Msg_PlantInUse_Users" xml:space="preserve"><value>使用者（作用中廠別）</value></data>
+  <data name="Msg_PlantInUse_Orgs" xml:space="preserve"><value>組織架構</value></data>
+  <data name="Msg_PlantInUse_RolePlants" xml:space="preserve"><value>角色廠別指派</value></data>
+  <data name="Msg_RoleInUseFmt" xml:space="preserve"><value>無法刪除，此角色正被以下功能使用中：{0}</value></data>
+  <data name="Msg_RoleInUse_UsersFmt" xml:space="preserve"><value>使用者（{0} 位）</value></data>
+  <data name="Msg_RoleInUse_TemplateSteps" xml:space="preserve"><value>簽核模板步驟</value></data>
+  <data name="ApprovalNote_Submitted" xml:space="preserve"><value>送審</value></data>
+  <data name="ApprovalNote_SkipRequester" xml:space="preserve"><value>自動跳簽：申請人本人</value></data>
+  <data name="ApprovalNote_SkipSameSigner" xml:space="preserve"><value>自動跳簽：同一簽核人已於先前步驟簽核</value></data>
+  <data name="ApprovalNote_Withdrawn" xml:space="preserve"><value>由申請人撤回</value></data>
+  <data name="ApprovalNote_ReassignedFmt" xml:space="preserve"><value>重新指派簽核人：{0}｜原因：{1}</value></data>
+  <data name="ApprovalNote_ReassignedDefaultFmt" xml:space="preserve"><value>重新指派簽核人：{0}｜原因：組織異動</value></data>
+  <data name="ApprovalNote_DelegationAppliedFmt" xml:space="preserve"><value>代理人設定生效：{0} → {1}，待簽單改派代理人</value></data>
+  <data name="ApprovalNote_DocDeletedFmt" xml:space="preserve"><value>文件刪除自動取消｜原因：{0}</value></data>
+  <data name="ApprovalNote_DocDeletedDefault" xml:space="preserve"><value>文件刪除自動取消｜原因：業務文件已刪除</value></data>
+  <data name="ModelBinding_RequiredFmt" xml:space="preserve"><value>「{0}」為必填欄位。</value></data>
+  <data name="ModelBinding_MustBeNumberFmt" xml:space="preserve"><value>「{0}」必須輸入數值。</value></data>
+  <data name="ModelBinding_InvalidFmt" xml:space="preserve"><value>「{0}」的值無效。</value></data>
+  <data name="ModelBinding_MissingKeyOrValue" xml:space="preserve"><value>請填入索引鍵與對應值。</value></data>
+  <data name="ModelBinding_MustBeNumber" xml:space="preserve"><value>請輸入有效數值。</value></data>
+  <data name="ModelBinding_Invalid" xml:space="preserve"><value>提供的值無效。</value></data>
+  <data name="Mobile_CredentialsRequired" xml:space="preserve"><value>帳號與密碼不得為空</value></data>
+  <data name="Mobile_InvalidCredentials" xml:space="preserve"><value>帳號或密碼錯誤</value></data>
+  <data name="Mobile_EnterCode" xml:space="preserve"><value>請輸入驗證碼</value></data>
+  <data name="Mobile_LockedOut" xml:space="preserve"><value>帳號已鎖定，請稍後再試</value></data>
+  <data name="Mobile_TwoFactorExpired" xml:space="preserve"><value>驗證逾時，請重新輸入帳號密碼</value></data>
+  <data name="Mobile_InvalidCode" xml:space="preserve"><value>驗證碼不正確</value></data>
+  <data name="Msg_LicenseReadOnlyBlocked" xml:space="preserve"><value>系統目前為唯讀狀態，無法新增、修改或刪除資料。請聯絡系統管理員。</value></data>
+  <data name="Msg_LicenseDisabledBlocked" xml:space="preserve"><value>系統目前已停用，只能查看授權狀態。請聯絡系統管理員。</value></data>
+  <data name="Lbl_LicenseBlockedTitle" xml:space="preserve"><value>無法儲存</value></data>
+  <data name="Lbl_LicenseStatusLink" xml:space="preserve"><value>授權狀態</value></data>
+  <data name="Lbl_LicenseGoBack" xml:space="preserve"><value>返回</value></data>
+  <data name="Msg_LicenseImportInvalidFile" xml:space="preserve"><value>請選擇有效的授權檔（license.json）。</value></data>
+  <data name="Msg_LicenseImportRejected" xml:space="preserve"><value>授權檔驗證失敗，未變更現行授權。</value></data>
+  <data name="Msg_LicenseImportLicenseIdChanged" xml:space="preserve"><value>新授權的編號與現行不同。本部署的連線字串以授權編號加密，請先重新加密 DefaultEncrypted 再換授權並重新啟動。</value></data>
+  <data name="Msg_LicenseCheckinOk" xml:space="preserve"><value>授權確認完成。</value></data>
+  <data name="Msg_LicenseCheckinNotice" xml:space="preserve"><value>授權伺服器未核准這次確認。</value></data>
+  <data name="Msg_LicenseCheckinNotApplicable" xml:space="preserve"><value>此授權不需要定期確認。</value></data>
+  <data name="Msg_LicenseCheckinInvalid" xml:space="preserve"><value>確認回覆無效（簽章不符、檔案不對，或不是這台系統的回覆）。請重新按「確認授權」。</value></data>
+  <data name="Msg_LicenseImported" xml:space="preserve"><value>已匯入新授權。</value></data>
+  <data name="Msg_LicenseOnlineCheckNotOffline" xml:space="preserve"><value>此授權本身就要求線上確認，不適用此設定。</value></data>
+  <data name="Msg_LicenseOnlineCheckForcedByHost" xml:space="preserve"><value>偵測到本機為虛擬機器或容器，線上授權確認為強制，無法停用。</value></data>
+  <data name="Msg_LicenseOnlineCheckConfirmFirst" xml:space="preserve"><value>請先按「確認授權」完成一次確認，再啟用線上授權確認。</value></data>
+  <data name="Msg_LicenseOnlineCheckEnabled" xml:space="preserve"><value>已啟用線上授權確認。請在確認到期前再次確認，否則系統會轉為唯讀。</value></data>
+  <data name="Msg_LicenseOnlineCheckDisabled" xml:space="preserve"><value>已停用線上授權確認，改回僅離線驗證。</value></data>
+  <data name="ApprovalDocType_CodeEntry" xml:space="preserve"><value>代碼維護</value></data>
+</root>

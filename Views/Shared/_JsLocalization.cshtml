@@ -1,0 +1,53 @@
+@*
+    _JsLocalization.cshtml — 將共用字串輸出為 window.i18n 供前端 JS 使用。
+    解決「JS alert/confirm 硬編碼中文不隨語系切換」。
+    來源：ProjectZSharedResource（ProjectZ 專屬 resx，含 zh-TW / en-US）。
+    本檔含獨立 <script>，僅可放在 @section Scripts 或 Layout 的 script 區外，
+    不可被嵌入既有 <script> 內（巢狀 script 會提前結束外層）。
+*@
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@{
+    string[] keys =
+    {
+        "RecordNotFound", "LoadFailed", "OperationFailed",
+        "ConfirmSubmitApproval", "ConfirmWithdraw", "ConfirmDelete",
+        "Print_Print", "Print_Close", "Print_BasicInfo", "Print_Details",
+        "Print_Total", "Print_Sign_Created", "Print_Sign_Reviewed",
+        "Print_Sign_Approved", "Print_Sign_Date", "Print_PrintedAt",
+        "InvSourceQueryFailed", "InvNoOpenSourceLines", "InvSelectSourceLine",
+        "InvColDocNo", "InvColProduct", "InvColOrigQty", "InvColRemaining",
+        "InvColUom", "InvActionSelect",
+        "SaveFailed", "DeleteFailed", "ConfirmDeleteContact",
+        "ConfirmDeleteConversion", "ConfirmDeleteLocation", "ConfirmDeleteRateOn",
+        "FieldRequiredFmt", "FieldsRequiredFmt",
+        "ConfirmDeleteSimple", "ConfirmReceiveOutsource",
+        "ConfirmSendRework", "ConfirmReceiveRework", "ConfirmVoidRework",
+        "VendorEvalSelectSupplierFirst", "VendorEvalBasisFmt",
+        "MonthEndSkipReason", "FxRatesRequired",
+        "ConfirmRunNow",
+        // 跨廠擋下時「切回原廠別並照原內容存檔」（crud-panel.js submitPanel，2026-11-11 驗收 C3）
+        "PlantContextSwitchBackConfirm",
+        // FIN 單據確認／作廢與 ACT 月結：鍵早就在雙語 resx 裡，但漏掛白名單，
+        // 於是 window.i18n.t 走 fallback、對話框直接顯示原始鍵值（2026-09-05 3-7 實測發現）。
+        "ConfirmARReceipt", "ConfirmAPPayment", "ConfirmVoid",
+        "ConfirmVoidInvoice", "VoidFailed", "DeptCostRequired",
+        "ConfirmReissueInvoice", "ReissueFailed",
+        // 第二批：這五顆是用 `window.i18n?.t(...)`（optional chaining）呼叫的，
+        // Cx9 第一版的正則要求 `i18n.t`，整批掃不到。正則已放寬，見 Cx9。
+        "InventoryCountCloseConfirm", "CalibrateConfirm",
+        "NcrSubmitConfirm", "NcrExecuteConfirm", "NcrCloseConfirm",
+        // 手動傳票的即時借貸合計（2026-09-21）
+        "Journal_Balanced", "Journal_DiffLabel", "Journal_PasteResultFmt"
+    };
+    var dict = keys.ToDictionary(k => k, k => L[k].Value);
+}
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    window.i18n = window.i18n || {};
+    window.i18n._d = Object.assign(window.i18n._d || {},
+        @Html.Raw(System.Text.Json.JsonSerializer.Serialize(dict)));
+    window.i18n.t = function (key) {
+        return Object.prototype.hasOwnProperty.call(window.i18n._d, key)
+            ? window.i18n._d[key] : key;
+    };
+</script>

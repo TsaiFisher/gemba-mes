@@ -1,0 +1,227 @@
+/* ============================================================
+   列印專用樣式 (print.css)
+   使用方式：搭配 Pages/Shared/_PrintLayout.cshtml
+   ============================================================ */
+
+/* ---- 基礎字型與排版 ---- */
+body.print-body {
+    font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+    font-size: 11pt;
+    color: #000;
+    margin: 0;
+    padding: 0;
+    background: #e8e8e8;
+}
+
+/* ---- 螢幕預覽：模擬 A4 頁面 ---- */
+@media screen {
+    .print-page {
+        background: #fff;
+        width: 210mm;
+        min-height: 297mm;
+        padding: 15mm;
+        margin: 20px auto;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .print-actions {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 100;
+        display: flex;
+        gap: 8px;
+    }
+}
+
+/* ---- 列印輸出 ---- */
+@media print {
+    body.print-body {
+        background: none;
+    }
+
+    .print-page {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    @page {
+        size: A4 portrait;
+        margin: 15mm;
+    }
+
+    table {
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+}
+
+/* ---- 表頭：QR Code + 單據標題 ---- */
+.print-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+}
+
+.print-qr {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+/* SVG QR Code 填滿容器（PrintHelper 已加 viewBox，此處 100% 即可正確縮放） */
+.print-qr svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.print-title-block {
+    flex: 1;
+}
+
+.print-title {
+    font-size: 20pt;
+    font-weight: bold;
+    letter-spacing: 6px;
+    line-height: 1.2;
+}
+
+.print-subtitle {
+    font-size: 9pt;
+    color: #555;
+    margin-top: 4px;
+}
+
+.print-doc-number {
+    font-size: 10pt;
+    margin-top: 2px;
+}
+
+/* ---- 區塊 ---- */
+.print-section {
+    margin-bottom: 14px;
+}
+
+.print-section-title {
+    font-weight: bold;
+    font-size: 10pt;
+    border-bottom: 1px solid #000;
+    padding-bottom: 3px;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+/* ---- 欄位網格（基本資料） ---- */
+.print-field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px 24px;
+    font-size: 10pt;
+}
+
+.print-field-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.print-field {
+    display: flex;
+    gap: 0;
+}
+
+.print-field-label {
+    font-weight: bold;
+    white-space: nowrap;
+    min-width: 72px;
+}
+
+.print-field-value {
+    flex: 1;
+    border-bottom: 1px solid #999;
+    min-width: 60px;
+    padding-bottom: 1px;
+}
+
+/* ---- 明細表格 ---- */
+.print-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin-bottom: 0;
+}
+
+.print-table th,
+.print-table td {
+    border: 1px solid #000;
+    padding: 3px 6px;
+    vertical-align: middle;
+}
+
+.print-table th {
+    background: #f0f0f0;
+    text-align: center;
+    font-weight: bold;
+}
+
+.print-table td {
+    text-align: center;
+}
+
+.print-table td.text-left {
+    text-align: left;
+}
+
+/* ---- 簽核區 ---- */
+.print-sign-area {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+    border-top: 1px solid #000;
+    padding-top: 10px;
+}
+
+.print-sign-box {
+    text-align: center;
+    font-size: 10pt;
+}
+
+.print-sign-line {
+    border-bottom: 1px solid #000;
+    height: 36px;
+    margin-bottom: 4px;
+}
+
+/* ---- 頁尾 ---- */
+.print-footer {
+    margin-top: 16px;
+    padding-top: 6px;
+    border-top: 1px dashed #999;
+    font-size: 8pt;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ---- 工具按鈕（螢幕預覽用） ---- */
+.print-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}

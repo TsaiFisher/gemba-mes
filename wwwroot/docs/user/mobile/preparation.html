@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Preparation Board — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>生產準備看板 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link active"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/mfg/preparation.html &nbsp;|&nbsp; 開工前確認備料與模具</span><span lang="en">Path: /mobile/mfg/preparation.html &nbsp;|&nbsp; Checking material and tooling before work starts</span></div>
+    </div>
+
+    <p><span lang="zh">以「哪一天要生產」為主軸，列出當天各工作中心要投產的派工與其備料狀況，供班前確認；本頁唯讀。</span><span lang="en">Organised around the day production is planned, this board lists what each work center is due to run and whether the material is ready, for the pre-shift check. It is read-only.</span></p>
+
+    <img class="screen-shot" src="img/preparation.png" data-src-en="img/en/preparation.png" alt="生產準備看板畫面截圖" data-alt-en="Preparation board screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">生產準備看板（預設顯示明日，卡片顯示備料狀態徽章）</span><span lang="en">Preparation board (it opens on tomorrow; each card carries a staging status badge)</span></div>
+
+    <h2 id="date"><i class="bi bi-calendar-event me-2 text-primary"></i><span lang="zh">選擇日期</span><span lang="en">Choosing the day</span></h2>
+
+    <p><span lang="zh">上方三個按鈕切換日期，<strong>「明日」</strong>為預設值——這個看板是給「明天要開工前先把料備好」用的，所以預設不是今天。點<strong>「自訂」</strong>可挑任意日期。</span><span lang="en">The three buttons at the top switch the day, and <strong>"Tomorrow"</strong> is the default — the board exists so that material for tomorrow is ready today, which is why it does not open on today. Tap <strong>"Custom"</strong> to pick any date.</span></p>
+
+    <h2 id="card"><i class="bi bi-card-list me-2 text-primary"></i><span lang="zh">卡片內容</span><span lang="en">What is on a card</span></h2>
+
+    <p><span lang="zh">派工依工作中心分組，每張卡片顯示派工號、品名、數量、準備工時（分鐘）與計畫起訖時間，以及一個備料狀態徽章：</span><span lang="en">Dispatches are grouped by work center. Each card shows the dispatch number, the product name, the quantity, the setup time in minutes and the planned start and finish, plus a staging status badge:</span></p>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-20pct"><span lang="zh">徽章</span><span lang="en">Badge</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">已備料</span><span lang="en">Staged</span></td><td><span lang="zh">用料已備妥，可以開工。</span><span lang="en">The material is ready and work can start.</span></td></tr>
+    <tr><td><span lang="zh">備料中</span><span lang="en">Staging</span></td><td><span lang="zh">備料單已開立，倉庫尚在揀料移倉。</span><span lang="en">A staging order exists and the warehouse is still picking and moving the material.</span></td></tr>
+    <tr><td><span lang="zh">未備料</span><span lang="en">Not Staged</span></td><td><span lang="zh">尚未開立備料單，需儘快處理，否則會影響開工。</span><span lang="en">No staging order has been raised yet; deal with it promptly or the start will slip.</span></td></tr>
+    </tbody>
+    </table>
+
+    <p><span lang="zh">圖例的三種顏色標示需要注意的派工：<strong>「模具衝突」</strong>代表同一副模具被排在重疊時段、<strong>「待料風險」</strong>代表用料可能不及、<strong>「預測延遲」</strong>代表推算會超過計畫完成時間。標<strong>「延續」</strong>的是前一天開工、跨到當天還在做的派工，不需要再準備。</span><span lang="en">The three colours in the legend mark dispatches that need attention: <strong>"Tooling Conflict"</strong> means the same tool is scheduled for overlapping slots, <strong>"Material Risk"</strong> means the material may not arrive in time, and <strong>"Predicted Late"</strong> means it is projected to miss the planned finish time. Dispatches marked <strong>"Continued"</strong> started on an earlier day and are still running, so they need no preparation.</span></p>
+
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">看到「未備料」或「待料風險」時，可到該派工的開工作業頁點「建立備料單」開單，後續鎖料與揀料由倉庫在桌機完成。</span><span lang="en">When you see "Not Staged" or "Material Risk", open that dispatch's production session screen and raise a staging order; the warehouse then locks and picks the stock on the desktop.</span></div>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

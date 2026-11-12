@@ -1,0 +1,42 @@
+/* 生產排程（mfg/schedule.html）
+   自 schedule.html 內聯 <style> 外部化：CSP style-src 已移除 'unsafe-inline'（Program.cs），
+   內聯 <style> 區塊會被瀏覽器整段擋掉。本頁 .dispatch-card 與 list.html 定義不同，故獨立成檔。 */
+
+.dispatch-card {
+    border-left: 4px solid #dee2e6;
+    background: #fff;
+    border-radius: 6px;
+    margin-bottom: .5rem;
+    padding: .6rem .75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+.dispatch-card.st-Pending         { border-left-color: #adb5bd; }
+.dispatch-card.st-Scheduled       { border-left-color: #6c757d; }
+.dispatch-card.st-SetupInProgress { border-left-color: #ffc107; }
+.dispatch-card.st-ReadyToStart    { border-left-color: #0dcaf0; }
+.dispatch-card.st-InProgress      { border-left-color: #198754; }
+.dispatch-card.flag-late          { border-left-color: #dc3545 !important; }
+.dispatch-card.flag-matRisk       { border-left-color: #fd7e14 !important; }
+
+.wc-header {
+    font-weight: 600;
+    font-size: .8rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    padding: .4rem 0 .2rem;
+}
+.machine-section { margin-bottom: .75rem; }
+.machine-label {
+    font-size: .75rem;
+    font-weight: 600;
+    background: #e9ecef;
+    border-radius: 4px;
+    padding: .15rem .5rem;
+    margin-bottom: .35rem;
+    display: inline-block;
+}
+.prog-bar   { height: 4px; background: #dee2e6; border-radius: 2px; margin-top: .3rem; }
+.prog-fill  { height: 4px; background: #198754; border-radius: 2px; }
+.time-range { font-size: .78rem; color: #6c757d; }
+.badge-flag { font-size: .68rem; vertical-align: middle; }

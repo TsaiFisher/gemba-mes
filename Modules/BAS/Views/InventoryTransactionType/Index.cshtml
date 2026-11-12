@@ -1,0 +1,179 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.BAS.Models.InventoryTransactionType>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    var canCreate = ViewBag.CanCreate as bool? ?? false;
+    var canUpdate = ViewBag.CanUpdate as bool? ?? false;
+    var canDelete = ViewBag.CanDelete as bool? ?? false;
+    var canPrint  = ViewBag.CanPrint  as bool? ?? false;
+    var searched  = ViewBag.Searched  as bool? ?? false;
+}
+
+<div class="container-fluid py-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0"><i class="bi bi-arrow-left-right me-2"></i>@Localizer["PageTitle"]</h4>
+        <div class="d-flex gap-2">
+            @if (canPrint && searched && Model != null && Model.Any())
+            {
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-download me-1"></i>@Localizer["Export"]
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/InventoryTransactionType/Export?format=xlsx&searchTerm=@ViewBag.SearchTerm">Excel</a></li>
+                        <li><a class="dropdown-item" href="/InventoryTransactionType/Export?format=csv&searchTerm=@ViewBag.SearchTerm">CSV</a></li>
+                    </ul>
+                </div>
+            }
+            @if (canCreate)
+            {
+                <button class="btn btn-primary btn-sm" data-action="openPanel" data-url="/InventoryTransactionType/Create" data-label="@Localizer["New"]">
+                    <i class="bi bi-plus-lg me-1"></i>@Localizer["New"]
+                </button>
+            }
+        </div>
+    </div>
+
+    <form method="get" action="/InventoryTransactionType">
+        <input type="hidden" name="searched" value="true" />
+        <div class="row g-2 mb-3">
+            <div class="col-12 col-md-4">
+                <input type="text" name="searchTerm" class="form-control form-control-sm"
+                       placeholder="@Localizer["SearchPlaceholder"]" value="@ViewBag.SearchTerm" />
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary btn-sm px-4">
+                    <i class="bi bi-search me-1"></i>@Localizer["Search"]
+                </button>
+            </div>
+        </div>
+        @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @if (!searched)
+    {
+        <div class="text-center text-muted py-5">
+            <i class="bi bi-search fs-1 d-block mb-2 opacity-25"></i>
+            @Localizer["PleaseSearch"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="text-center text-muted py-5">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-sm table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.CodeSort"
+                               asp-route-searchTerm="@ViewBag.SearchTerm" asp-route-searched="true"
+                               asp-route-pageSize="@ViewBag.CurrentPageSize" class="text-decoration-none text-dark">
+                                @Localizer["TypeCode"]
+                                @if (ViewBag.CurrentSort == "code_asc") { <i class="bi bi-caret-up-fill"></i> }
+                                else if (ViewBag.CurrentSort == "code_desc") { <i class="bi bi-caret-down-fill"></i> }
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort"
+                               asp-route-searchTerm="@ViewBag.SearchTerm" asp-route-searched="true"
+                               asp-route-pageSize="@ViewBag.CurrentPageSize" class="text-decoration-none text-dark">
+                                @Localizer["TypeName"]
+                                @if (ViewBag.CurrentSort == "name_asc") { <i class="bi bi-caret-up-fill"></i> }
+                                else if (ViewBag.CurrentSort == "name_desc") { <i class="bi bi-caret-down-fill"></i> }
+                            </a>
+                        </th>
+                        <th>@Localizer["TypeCategory"]</th>
+                        <th class="text-center">@Localizer["Direction"]</th>
+                        <th>@Localizer["SourceTypeCode"]</th>
+                        <th class="text-center">@Localizer["RequireLot"]</th>
+                        <th class="text-center">@Localizer["IsSystemType"]</th>
+                        <th class="text-center">@Localizer["IsActive"]</th>
+                        @if (canUpdate || canDelete) { <th class="u-width-80px"></th> }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@item.TypeCode</td>
+                            <td>@item.TypeName</td>
+                            <td><span class="badge bg-secondary">@item.TypeCategory</span></td>
+                            <td class="text-center">
+                                @if (item.Direction == 1)
+                                {
+                                    <span class="badge bg-success">@SL["DirectionInbound"]</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">@SL["DirectionOutbound"]</span>
+                                }
+                            </td>
+                            <td>@item.SourceTypeCode</td>
+                            <td class="text-center">
+                                @if (item.RequireLot) { <i class="bi bi-check-lg text-success"></i> }
+                            </td>
+                            <td class="text-center">
+                                @if (item.IsSystemType) { <i class="bi bi-lock-fill text-secondary" title="@Localizer["SystemTypeHint"]"></i> }
+                            </td>
+                            <td class="text-center">
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success">@Localizer["Active"]</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@Localizer["Inactive"]</span>
+                                }
+                            </td>
+                            @if (canUpdate || canDelete)
+                            {
+                                <td class="text-center">
+                                    @if (canUpdate)
+                                    {
+                                        <button class="btn btn-sm btn-link p-0 me-2"
+                                                data-action="openPanel" data-url="/InventoryTransactionType/Edit/@item.TypeCode" data-label="@Localizer["Edit"]"
+                                                title="@Localizer["Edit"]"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                    }
+                                    @if (canDelete && !item.IsSystemType)
+                                    {
+                                        <button class="btn btn-sm btn-link p-0 text-danger"
+                                                data-action="deleteItem" data-url="/InventoryTransactionType/Delete" data-id="@item.TypeCode" data-confirm="@Localizer["ConfirmDelete"]"
+                                                title="@Localizer["Delete"]"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<div class="offcanvas offcanvas-end u-width-500px" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel">@Localizer["PageTitle"]</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="sidePanelBody"></div>
+</div>
+
+<div id="successToast" class="toast align-items-center text-bg-success border-0 position-fixed bottom-0 end-0 m-3 u-z-index-9999" role="alert">
+    <div class="d-flex">
+        <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

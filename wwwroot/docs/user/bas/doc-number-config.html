@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Doc Number Config — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>單號設定 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="doc-number-config.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link active"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-123 me-2 text-primary"></i><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/DocNumberConfig &nbsp;|&nbsp; 各類單據流水號格式設定</span><span lang="en">Route: /BAS/DocNumberConfig &nbsp;|&nbsp; Number formats for each document type</span></div>
+    </div>
+    <p><span lang="zh">單號設定定義各類單據（請購單、採購單、工單等）的自動編號格式，包含前綴碼、日期格式與流水號長度。系統在新增單據時依此規則自動產生唯一單號。</span><span lang="en">Doc number config defines the automatic numbering format of each document type (purchase request, purchase order, work order, …), including prefix, date format and sequence length. The system generates a unique number from these rules whenever a document is created.</span></p>
+    <img class="screen-shot" src="img/doc-number-config.png" data-src-en="img/en/doc-number-config.png" alt="單號設定畫面截圖" data-alt-en="Doc number config screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">單號設定畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Doc number config screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-32pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">單據類型</span><span lang="en">Document Type</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">對應的單據種類（如 PUR = 採購單、REQ = 請購單）；系統型別不可修改</span><span lang="en">The document type it belongs to (e.g. PUR = purchase order, REQ = purchase request); system types cannot be changed</span></td></tr>
+        <tr><td><span lang="zh">前綴碼</span><span lang="en">Prefix</span></td><td></td><td><span lang="zh">單號開頭固定文字（例：PO、REQ、WO）</span><span lang="en">Fixed text at the start of the number (e.g. PO, REQ, WO)</span></td></tr>
+        <tr><td><span lang="zh">日期格式</span><span lang="en">Date Format</span></td><td></td><td><span lang="zh">插入於前綴後的日期格式：無、YYYY、YYYYMM、YYYYMMDD</span><span lang="en">Date format inserted after the prefix: none, YYYY, YYYYMM, YYYYMMDD</span></td></tr>
+        <tr><td><span lang="zh">流水號長度</span><span lang="en">Sequence Length</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">流水號補零至幾位（例：4 = 0001–9999）</span><span lang="en">Number of digits the sequence is padded to (e.g. 4 = 0001–9999)</span></td></tr>
+        <tr><td><span lang="zh">流水號重置週期</span><span lang="en">Sequence Reset Cycle</span></td><td></td><td><span lang="zh">無、每年重置、每月重置（依日期格式對應）</span><span lang="en">None, yearly reset, monthly reset (matching the date format)</span></td></tr>
+        <tr><td><span lang="zh">是否系統型別</span><span lang="en">System Type</span></td><td></td><td><span lang="zh">系統預設的單據類型（唯讀，無法刪除）</span><span lang="en">Document type shipped with the system (read-only, cannot be deleted)</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後該類型不會自動編號</span><span lang="en">Once inactive, this type no longer issues numbers automatically</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="number-preview"><i class="bi bi-eye me-2 text-primary"></i><span lang="zh">單號預覽</span><span lang="en">Number Preview</span></h2>
+    <p><span lang="zh">編輯單號設定時，右側「預覽」區塊會即時顯示依目前設定產生的範例單號格式。例如：</span><span lang="en">While editing a doc number config, the "Preview" box on the right shows a live sample of the number produced by the current settings. For example:</span></p>
+    <table class="table table-sm field-table border mb-3">
+      <thead><tr><th><span lang="zh">前綴</span><span lang="en">Prefix</span></th><th><span lang="zh">日期格式</span><span lang="en">Date Format</span></th><th><span lang="zh">流水號長度</span><span lang="en">Sequence Length</span></th><th><span lang="zh">範例單號</span><span lang="en">Sample number</span></th></tr></thead>
+      <tbody>
+        <tr><td>PO</td><td>YYYYMM</td><td>4</td><td><span class="preview-box">PO2026060001</span></td></tr>
+        <tr><td>WO</td><td>YYYYMMDD</td><td>3</td><td><span class="preview-box">WO20260601001</span></td></tr>
+        <tr><td>REQ</td><td>YYYY</td><td>5</td><td><span class="preview-box">REQ202600001</span></td></tr>
+        <tr><td>CTR</td><td><span lang="zh">無</span><span lang="en">None</span></td><td>6</td><td><span class="preview-box">CTR000001</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">修改現有設定</span><span lang="en">Editing an existing setting</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進入「基本資料 &gt; 單號設定」，找到要調整的單據類型（如 PUR）。</span><span lang="en">Go to "Basic Data &gt; Doc Number Config" and find the document type to adjust (e.g. PUR).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點擊單據類型代碼，開啟編輯側欄。</span><span lang="en">Click the document type code to open the edit panel.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">調整前綴碼、日期格式或流水號長度，右側預覽即時更新。</span><span lang="en">Adjust the prefix, date format or sequence length; the preview on the right updates immediately.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">確認預覽格式正確後點「儲存」。</span><span lang="en">Check that the preview format is correct, then click "Save".</span></div></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">系統上線並已產生單據後，請勿隨意更改前綴或日期格式，以免造成單號不連續或重複。若必須更改，建議同步調整流水號起始值。</span><span lang="en"> Once the system is live and documents exist, avoid changing the prefix or date format, as it can make numbers non-continuous or duplicated. If a change is unavoidable, adjust the starting sequence value at the same time.</span>
+    </div>
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">設定「每月重置」流水號時，建議同步選擇含「YYYYMM」日期格式，確保不同月份的相同流水號不會重複（如 PO2026050001 和 PO2026060001 是不同單據）。</span><span lang="en">When you choose a monthly sequence reset, also pick a date format containing "YYYYMM" so the same sequence in different months cannot collide (PO2026050001 and PO2026060001 are then clearly different documents).</span>
+    </div>
+
+    <h2 id="why-numbers-are-never-reused-after-the"><i class="bi bi-shield-check me-2 text-primary"></i><span lang="zh">重置週期改過之後為何不會重號</span><span lang="en">Why numbers are never reused after the reset cycle changes</span></h2>
+    <p><span lang="zh">流水號是依「期別」分別記數的：每年重置記在年期別（如</span><span lang="en">The sequence is counted per period: a yearly reset counts within the year period (e.g.</span> <code>2026</code><span lang="zh">），每月重置記在月期別（如</span><span lang="en">), a monthly reset counts within the month period (such as</span> <code>202607</code><span lang="zh">）。
+       把重置週期改掉會換一條期別記數，新的那條從 1 起跳，但單號印出的日期段（如</span><span lang="en">). Changing the reset cycle switches to another period counter that starts from 1, but the date part printed in the number (such as</span> <code>2607</code><span lang="zh">）不會跟著變，
+       於是可能重新發出已經用過的號碼——存檔時就會出現</span><span lang="en">) does not change with it, so a number that has already been used could be issued again — and saving it then produces </span><b><span lang="zh">單號重複</span><span lang="en">Duplicate document numbers</span></b><span lang="zh">或</span><span lang="en"> or </span><b><span lang="zh">「已存在過帳紀錄，禁止重複過帳」</span><span lang="en">"A posting record already exists; duplicate posting is not allowed"</span></b><span lang="zh">之類的錯誤。</span><span lang="en"> and similar errors.</span></p>
+    <ul>
+      <li><b><span lang="zh">取號時自動接續</span><span lang="en">continues automatically when numbers are issued</span></b><span lang="zh">：系統發號時會比對「同一張單據日期」在各種重置週期下的期別記數，取其中最大值往後編。
+          因此不論週期是何時、用什麼方式改的（本畫面修改、直接改資料庫、還原備份），都不會再發出舊號碼，只會</span><span lang="en">: when issuing a number the system compares the period counters of the same document date under every reset cycle and continues from the largest one. So however and whenever the cycle was changed (on this screen, directly in the database, or by restoring a backup), an old number is never issued again — at most there is </span><b><span lang="zh">跳號</span><span lang="en">a gap in the numbering</span></b>。</li>
+      <li><b><span lang="zh">正常的跨年／跨月重置不受影響</span><span lang="en">normal year-end and month-end resets are unaffected</span></b><span lang="zh">：只比對同一張單據日期推得的期別，2027 年不會看到 2026 年的號碼，該重置時照樣從 1 起編。</span><span lang="en">: only the period counters derived from the same document date are compared, so 2027 never sees a 2026 number and the sequence still restarts at 1 when it should.</span></li>
+      <li><b><span lang="zh">本畫面修改重置週期時</span><span lang="en">When the reset cycle is changed on this screen</span></b><span lang="zh">會另外先做一次序號校準，與存檔在同一筆交易內完成。</span><span lang="en"> the system first realigns the sequence, within the same transaction as the save.</span></li>
+      <li><span lang="zh">因此改週期後</span><span lang="en">so after the cycle is changed </span><b><span lang="zh">號碼可能出現跳號</span><span lang="en">the numbering may show gaps</span></b><span lang="zh">（如 00002～00006 被略過），這是為了避免重號而刻意跳過，屬正常現象。</span><span lang="en"> (for example 00002–00006 are skipped). The gap is deliberate — it prevents duplicates — and is normal.</span></li>
+    </ul>
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <span lang="zh">仍要避免的動作：改</span><span lang="en">Still to be avoided: changing </span><b><span lang="zh">前綴碼</span><span lang="en">Prefix</span></b><span lang="zh">或</span><span lang="en"> or </span><b><span lang="zh">日期格式</span><span lang="en">Date Format</span></b><span lang="zh">會直接改變單號長相，系統無法判斷新舊號是否相同，
+      上線後請盡量不要更動；真的要改，請先確認新格式產不出既有單號。</span><span lang="en"> changes how the number looks, and the system cannot tell whether a new number duplicates an old one. Avoid changing it after go-live; if you must, first make sure the new format cannot reproduce an existing number.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

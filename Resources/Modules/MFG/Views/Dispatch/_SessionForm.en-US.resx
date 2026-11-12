@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="DispatchId" xml:space="preserve"><value>Dispatch ID</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>Work Order</value></data>
+  <data name="MachineCode" xml:space="preserve"><value>Machine</value></data>
+  <data name="MachinePlaceholder" xml:space="preserve"><value>Enter machine code (optional)</value></data>
+  <data name="ToolingCode" xml:space="preserve"><value>Tooling</value></data>
+  <data name="ToolingPlaceholder" xml:space="preserve"><value>Enter tooling code (optional)</value></data>
+  <data name="StartSession" xml:space="preserve"><value>Start Production</value></data>
+  <data name="StopSession" xml:space="preserve"><value>Stop Production</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="SessionStartedAt" xml:space="preserve"><value>Session started at</value></data>
+  <data name="SessionInProgressMsg" xml:space="preserve"><value>Session is in progress. Click "Stop Production" to clock out.</value></data>
+  <data name="NoOpenSessionMsg" xml:space="preserve"><value>No active session. Click "Start Production" to begin.</value></data>
+  <data name="AssignedMachine" xml:space="preserve"><value>Assigned Machine</value></data>
+  <data name="ActiveOperators" xml:space="preserve"><value>Currently clocked in</value></data>
+</root>

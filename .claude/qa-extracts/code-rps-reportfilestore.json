@@ -1,0 +1,34 @@
+{
+  "sourcePath": "Modules/RPS/Services/ReportFileStore.cs",
+  "sourceHash": "92aa3318705bad09f125fcd59e4f60e429bce5ceb9289dd9d5b3222e30ae51c2",
+  "entries": [
+    {
+      "slug": "code-rps-reportfilestore-894f4e81",
+      "lang": "zh",
+      "headingPath": "報表 › 排程產出的報表檔落地與讀回",
+      "text": "報表檔案儲存路徑的安全性限制｜系統產出的報表檔案必須儲存在設定指定的資料夾內，並且檔名會使用無法猜測的唯一識別碼。所有讀取這些報表檔案的行為，都必須經過權限檢查才能提供給使用者下載。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportfilestore-9d5ab999",
+      "lang": "zh",
+      "headingPath": "報表 › 依日期分子目錄：單一目錄堆上萬個檔會讓保留期清理與人工排查都很痛",
+      "text": "資料分類方式限制｜系統的檔案儲存結構是依照日期來區分的，如果一個目錄下累積了過多的檔案，會導致後續進行保留期清理或人工查找時非常困難。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportfilestore-691947c3",
+      "lang": "zh",
+      "headingPath": "報表 › 可猜的檔名就是直接的資料外洩",
+      "text": "檔案命名避免資訊洩露｜系統產生的檔案名稱使用無法預測的唯一識別碼，以防止若權限檢查出現疏漏時，資料內容被直接猜測到。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportfilestore-4aedd227",
+      "lang": "zh",
+      "headingPath": "報表 › 就算今天只有派工器寫得進去，",
+      "text": "資料路徑安全檢查規則｜系統在解析任何文件路徑時，必須確認該路徑不會跳出預設的儲存根目錄範圍外，以防止惡意讀取到系統其他區域的檔案。",
+      "approved": true
+    }
+  ]
+}

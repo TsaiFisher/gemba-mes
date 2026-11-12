@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/BAS/Controllers/ContainerController.cs",
+  "sourceHash": "a2a689466ae151e0417da8d4cbea0516e1d1491f8fd91293f4ac128341c854ee",
+  "entries": [
+    {
+      "slug": "code-bas-containercontroller-accd4599",
+      "lang": "zh",
+      "headingPath": "基本資料 › 主動查核，避免容器刪除後留下孤兒資料",
+      "text": "防止刪除容器造成資料殘留｜系統會檢查一個容器是否正在被使用中，以確保在移除該容器時不會留下無法關聯的相關紀錄。",
+      "approved": true,
+      "sourceSectionHash": "4461de2ad4abe4024b18e3382c7667bf8f8fa3f0b10ffca6820bcd17dec4e71e"
+    },
+    {
+      "slug": "code-bas-containercontroller-201b4eb6",
+      "lang": "zh",
+      "headingPath": "基本資料 › 容器是否仍被途程開工/完工容器設定或報工容器紀錄引用中",
+      "text": "容器使用狀態判斷規則｜此欄位用來判斷一個容器是否還被途程開工、完工或報工的紀錄所引用，若有任何引用，則表示該容器目前仍在使用中。",
+      "approved": true,
+      "sourceSectionHash": "ce35a9ffa0ba780ead33422ed514f4a6218b966866e55d78aa4bb1c4db388d24"
+    }
+  ]
+}

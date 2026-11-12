@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="DispatchInfo" xml:space="preserve"><value>Dispatch Info</value></data>
+  <data name="DispatchId" xml:space="preserve"><value>Dispatch ID</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>Work Order</value></data>
+  <data name="OperationSeq" xml:space="preserve"><value>Op Seq</value></data>
+  <data name="OperationName" xml:space="preserve"><value>Operation</value></data>
+  <data name="WorkCenterId" xml:space="preserve"><value>Work Center</value></data>
+  <data name="MachineCode" xml:space="preserve"><value>Machine</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Qty</value></data>
+  <data name="QtyDone" xml:space="preserve"><value>Done</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="ScheduledStart" xml:space="preserve"><value>Sched. Start</value></data>
+  <data name="ScheduledEnd" xml:space="preserve"><value>Sched. End</value></data>
+  <data name="SetupHistory" xml:space="preserve"><value>Setup Records</value></data>
+  <data name="SetupStartAt" xml:space="preserve"><value>Setup Start</value></data>
+  <data name="SetupEndAt" xml:space="preserve"><value>Setup End</value></data>
+  <data name="SetupStatus" xml:space="preserve"><value>Status</value></data>
+  <data name="Operator" xml:space="preserve"><value>Operator</value></data>
+  <data name="Tooling" xml:space="preserve"><value>Tooling</value></data>
+  <data name="SessionHistory" xml:space="preserve"><value>Session Records</value></data>
+  <data name="SessionId" xml:space="preserve"><value>Session ID</value></data>
+  <data name="StartAt" xml:space="preserve"><value>Start</value></data>
+  <data name="EndAt" xml:space="preserve"><value>End</value></data>
+  <data name="SessionStatus" xml:space="preserve"><value>Status</value></data>
+  <data name="Machine" xml:space="preserve"><value>Machine</value></data>
+  <data name="ReportHistory" xml:space="preserve"><value>Report Records</value></data>
+  <data name="ReportId" xml:space="preserve"><value>Report ID</value></data>
+  <data name="ReportedAt" xml:space="preserve"><value>Reported At</value></data>
+  <data name="QtyOk" xml:space="preserve"><value>Qty OK</value></data>
+  <data name="QtyNg" xml:space="preserve"><value>Qty NG</value></data>
+  <data name="Container" xml:space="preserve"><value>Container</value></data>
+  <data name="NoSetup" xml:space="preserve"><value>No setup records</value></data>
+  <data name="NoSession" xml:space="preserve"><value>No session records</value></data>
+  <data name="NoReport" xml:space="preserve"><value>No report records</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="SessionOpen" xml:space="preserve"><value>In Progress</value></data>
+  <data name="SessionClosed" xml:space="preserve"><value>Closed</value></data>
+  <data name="SetupOpen" xml:space="preserve"><value>In Progress</value></data>
+  <data name="SetupClosed" xml:space="preserve"><value>Done</value></data>
+</root>

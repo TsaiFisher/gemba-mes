@@ -1,0 +1,20 @@
+﻿# R6 baseline — 既有違規清單（Phase B 回補時逐行刪除）。
+# 不在此清單的新違規會讓建置失敗。
+# 註：以下 BAS Index 為「BAS 自洽 crudPanel/bindPanelForms 框架」之既定偏離
+#（見 .claude/specifications/consistency-framework.md 與 LOCAL_RULES），
+# 屬 won't-fix，勿強改為 _CrudPanelScripts（高回歸風險）；保留於 baseline。
+Modules/BAS/Views/Company/Index.cshtml
+Modules/BAS/Views/Container/Index.cshtml
+Modules/BAS/Views/Currency/Index.cshtml
+Modules/BAS/Views/DocNumberConfig/Index.cshtml
+Modules/BAS/Views/InventoryTransactionType/Index.cshtml
+Modules/BAS/Views/Product/Index.cshtml
+Modules/BAS/Views/ProductCategory/Index.cshtml
+Modules/BAS/Views/Shift/Index.cshtml
+Modules/BAS/Views/ShiftGroup/Index.cshtml
+Modules/BAS/Views/SpecialDay/Index.cshtml
+Modules/BAS/Views/Tax/Index.cshtml
+Modules/BAS/Views/Tooling/Index.cshtml
+Modules/BAS/Views/Uom/Index.cshtml
+Modules/BAS/Views/Warehouse/Index.cshtml
+Modules/BAS/Views/WorkCenter/Index.cshtml

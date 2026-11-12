@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Outsource PO — OSP User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>委外採購單 — OSP 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">委外管理目錄</span><span lang="en">Outsourcing Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="index.html#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">OSP 畫面</span><span lang="en">OSP Screens</span></div>
+    <a href="outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="outsource-purchase-order.html" class="nav-link active"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+    <a href="outsource-price.html" class="nav-link"><span lang="zh">委外價格分析</span><span lang="en">Outsource Price Analysis</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關</span><span lang="en">Related</span></div>
+    <a href="../rpt/outsource-performance.html" class="nav-link"><span lang="zh">委外對帳報表（RPT）</span><span lang="en">Outsource reconciliation report (RPT)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-truck me-2 text-primary"></i><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/OutsourcePurchaseOrder &nbsp;|&nbsp; 委外加工採購單（工序委外）</span><span lang="en">Route: /OutsourcePurchaseOrder &nbsp;|&nbsp; Outsource purchase order (operation outsourcing)</span></div>
+    </div>
+
+    <p><span lang="zh">針對委外工序向加工廠下單。單價可自「委外報價主檔」帶入，確認後配合「委外發退料單」發出原料，加工完成由 PUR「委外收貨」入庫並自動產生應付發票。</span><span lang="en">Places an order with a subcontractor for an outsourced operation. Prices can be pulled from the outsource quotation master; once confirmed, raw material is sent out with an outsource material document, and finished parts come back through PUR "Outsource Receipt", which creates the AP invoice automatically.</span></p>
+    <img class="screen-shot" src="img/outsource-purchase-order.png" data-src-en="img/en/outsource-purchase-order.png" alt="委外採購單畫面截圖" data-alt-en="Outsource PO screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">委外採購單畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Outsource PO screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">草稿 Draft</span><span lang="en">Draft</span></span></td><td><span lang="zh">由「轉委外」產生，尚未送交廠商；可確認或直接刪除（刪除會回沖委外建議的已轉量）。</span><span lang="en">Created by "Convert to Outsource" and not yet sent to the vendor; it can be confirmed or deleted (deleting reverses the outsource demand's converted quantity).</span></td></tr><tr><td><span class='badge bg-primary'><span lang="zh">已確認 Confirmed</span><span lang="en">Confirmed</span></span></td><td><span lang="zh">已送交廠商，可開立委外收貨；不能再修改或刪除。</span><span lang="en">Sent to the vendor; outsource receipts can now be created. It can no longer be edited or deleted.</span></td></tr><tr><td><span class='badge bg-danger'><span lang="zh">已作廢 Void</span><span lang="en">Void</span></span></td><td><span lang="zh">廠商取消時，已確認的委外採購單可在清單按「作廢」。僅限<strong>尚未有任何收貨單</strong>（草稿收貨單請先刪除），且<strong>送到廠商的料已全數以委外退料退回</strong>；作廢後解除與工單的連結、委外建議的已轉量回沖，可重新轉單給其他廠商，來源工單也才能作廢。不可復原。</span><span lang="en">When the vendor cancels, a confirmed outsource purchase order can be voided with "Void" in the list. This is only allowed when <strong>there are no receipts yet</strong> (delete draft receipts first) and <strong>all materials sent to the vendor have been returned</strong> with an outsource return slip. Voiding unlinks it from the work order and reverses the converted quantity of the outsource demand, so it can be converted again for another vendor and the source work order can then be voided. It cannot be undone.</span></td></tr></tbody>
+    </table>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">建立委外採購單</span><span lang="en">Create Outsource PO</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">由 MRP 建議轉單，或點「新增」手動選擇工單/工序與加工廠。</span><span lang="en">Convert an MRP suggestion, or click "Add" and pick the work order/operation and subcontractor manually.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">帶入報價單價、允收損耗率與交期後儲存、送審。</span><span lang="en">Bring in the quoted price, scrap allowance and lead time, then save and submit.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">核准後至 INV「委外發退料單」建立 OO 發料。</span><span lang="en">Once approved, create the OO issue under INV "Outsource Material".</span></div></div>
+    <div class="note-box"><i class="bi bi-lightning-charge-fill me-1 text-primary"></i>
+      <strong><span lang="zh">投產自動建單（廠別參數，預設關）：</span><span lang="en">Automatic PO at release (plant parameter, off by default):</span></strong><span lang="zh">「委外工單投產自動建委外採購單」開啟時，委外工單一投產（含簡化模式的自動投產），系統就直接建一張<b>已確認</b>的委外採購單，手機委外收料馬上看得到，不必再轉單、確認。加工廠取工單上指定的廠商；沒指定時，只有在當日有效、且明確報到這個品號的報價<b>只有一家廠商</b>才採用。單價、允收損耗率、幣別與單位取該廠商最精確的一筆報價；交期取工單預計交期，沒有則依報價前置天數。挑不出唯一廠商、或該廠商沒有適用報價時<b>什麼都不建</b>，請照上面步驟手動轉單。</span><span lang="en"> When "Create the outsource PO automatically when an outsourced work order is released" is on, releasing an outsourced work order (including automatic release in simplified mode) creates a <b>Confirmed</b> outsource PO straight away, so it shows up in mobile Outsource Receiving with no conversion or confirmation step. The subcontractor is the one named on the work order; if none is named, it is used only when the quotations valid today that name this product come from <b>exactly one supplier</b>. Price, scrap allowance, currency and unit come from that supplier's most specific quotation; the delivery date is the work order's expected date, or else today plus the quotation's lead days. If no single supplier can be picked, or the supplier has no applicable quotation, <b>nothing is created</b>; convert it manually using the steps above.</span>
+    </div>
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。列印單含委外廠商名稱、各行工單／工序、品號與品名、數量與單位、幣別、單價與金額，並依幣別分列合計，可直接交給委外廠商。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The printout shows the subcontractor name, each line's work order and operation, product code and name, quantity and unit, currency, unit price and amount, with a total per currency — ready to hand to the subcontractor.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">明細欄位</span><span lang="en">Line fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">序</span><span lang="en">Seq</span></td><td><span lang="zh">明細行序</span><span lang="en">Line seq</span></td></tr>
+        <tr><td><span lang="zh">來源工單-工序</span><span lang="en">Source WO-Op</span></td><td><span lang="zh">本委外加工對應的工單與途程工序；工序主檔勾選「委外」者才會產生</span><span lang="en">The work order and routing operation this outsourcing belongs to; only operations flagged as outsourced in the routing master appear</span></td></tr>
+        <tr><td><span lang="zh">收回品</span><span lang="en">Returned Product</span></td><td><span lang="zh">加工完成後要收回的品號</span><span lang="en">Item to be received back after processing</span></td></tr>
+        <tr><td><span lang="zh">數量</span><span lang="en">Count</span></td><td><span lang="zh">委外加工的數量</span><span lang="en">Quantity sent for outsourced processing</span></td></tr>
+        <tr><td><span lang="zh">送外料</span><span lang="en">Send Materials</span></td><td><span lang="zh">需一併送到廠商端的用料清單；實際耗用超過標準用量的部分計為超耗扣款</span><span lang="en">The material list that must go out with the shipment; consumption beyond the standard usage becomes a scrap penalty</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">單價與交期天數取自委外報價主檔中該廠商／品號／工序在有效期間內的報價。</span><span lang="en">The price and lead days come from the quotation for that subcontractor, product and operation that is valid on the document date.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="outsource-quotation.html"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>、<a href="outsource-progress.html"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>、<a href="outsource-receipt.html"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">允收損耗率影響收貨時的超耗扣款計算（超耗按發料時點 AVCO 逐料計價，自動列入 AP 發票負項）。</span><span lang="en"> The scrap allowance drives the scrap penalty calculated at receipt (excess consumption is priced per material at the AVCO of the issue date and added to the AP invoice as a negative line).</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

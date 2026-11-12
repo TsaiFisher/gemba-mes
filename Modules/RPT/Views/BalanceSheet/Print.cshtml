@@ -1,0 +1,67 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.RPT.Models.BalanceSheetReport
+@{
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div>
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["PageTitle"]</div>
+        <div class="print-doc-number">@Localizer["AsOfPeriod"]：@Model.AsOfPeriod</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-section-title">@Localizer["Summary"]</div>
+    <div class="print-field-grid print-field-grid-3">
+        <div class="print-field-label">@Localizer["TotalAssets"]</div>
+        <div class="print-field-value fw-bold">@Model.TotalAssets.ToString(moneyFmt)</div>
+        <div></div>
+        <div class="print-field-label">@Localizer["TotalLiabilities"]</div>
+        <div class="print-field-value">@Model.TotalLiabilities.ToString(moneyFmt)</div>
+        <div></div>
+        <div class="print-field-label">@Localizer["TotalEquity"]</div>
+        <div class="print-field-value fw-bold">@Model.TotalEquity.ToString(moneyFmt)</div>
+        <div></div>
+    </div>
+</div>
+
+@foreach (var section in Model.Sections.Where(s => s.Items.Any()))
+{
+    var catLabel = section.Category switch {
+        "Assets"      => Localizer["Assets"].Value,
+        "Liabilities" => Localizer["Liabilities"].Value,
+        "Equity"      => Localizer["Equity"].Value,
+        _             => section.Category
+    };
+    <div class="print-section">
+        <div class="print-section-title">@catLabel（@(section.Total.ToString(moneyFmt))）</div>
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th>@Localizer["AccountCode"]</th>
+                    <th>@Localizer["AccountName"]</th>
+                    <th class="text-end">@Localizer["Balance"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in section.Items)
+                {
+                    <tr>
+                        <td>@item.AccountCode</td>
+                        <td>@item.AccountName</td>
+                        <td class="text-end">@item.Balance.ToString(moneyFmt)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@await Html.PartialAsync("_PrintBase")

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Supplier Delivery Rate — PUR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>供應商交期達成率 — PUR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">PUR 目錄</span><span lang="en">PUR Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">PUR 畫面</span><span lang="en">PUR Screens</span></div>
+    <a href="purchase-request.html" class="nav-link"><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></a>
+    <a href="purchase-order.html" class="nav-link"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></a>
+    <a href="goods-receipt.html" class="nav-link"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></a>
+    <a href="goods-return.html" class="nav-link"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></a>
+    <a href="../osp/outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="../osp/outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="vendor-price-list.html" class="nav-link"><span lang="zh">廠商單價目錄</span><span lang="en">Vendor Price List</span></a>
+    <a href="vendor-evaluation.html" class="nav-link"><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></a>
+    <a href="purchase-overdue.html" class="nav-link"><span lang="zh">採購逾期跟催</span><span lang="en">Overdue Purchase Orders</span></a>
+    <a href="supplier-delivery-rate.html" class="nav-link active"><span lang="zh">供應商交期達成率</span><span lang="en">Supplier Delivery Rate</span></a>
+    <a href="purchase-amount.html" class="nav-link"><span lang="zh">採購金額比較</span><span lang="en">Purchase Amount</span></a>
+    <a href="purchase-price.html" class="nav-link"><span lang="zh">採購價格比較</span><span lang="en">Purchase Price</span></a>
+    <a href="../osp/outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-truck-check me-2 text-primary"></i><span lang="zh">供應商交期達成率</span><span lang="en">Supplier Delivery Rate</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/SupplierDeliveryRate &nbsp;|&nbsp; 各供應商準時交貨率統計</span><span lang="en">Route: /SupplierDeliveryRate &nbsp;|&nbsp; On-time delivery statistics per supplier</span></div>
+    </div>
+
+    <p><span lang="zh">統計採購與委外的交期達成率（OTD Rate），含「月份趨勢折線圖」與「廠商延誤排名」兩個維度，作為供應商評鑑依據。</span><span lang="en">Measures the on-time delivery rate (OTD rate) of purchases and outsourcing, with a monthly trend line and a supplier delay ranking, as input to supplier evaluation.</span></p>
+
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">母體是「這段期間應該交的單」，不是「這段期間收到的貨」：</span><span lang="en">The population is what was due in the period, not what was received in it:</span></strong><span lang="zh">查詢區間比對的是<b>預交日</b>，每張採購明細（委外則是每張委外採購單）只計一次，三種結果：</span><span lang="en"> the date range is matched against the <b>promised date</b>, and each purchase order line (or, for outsourcing, each outsource PO) is counted exactly once, with three possible outcomes:</span>
+      <ul class="mb-0 mt-2">
+        <li><span lang="zh"><b>已交清</b>——以<b>收齊那一天</b>比對預交日。不是第一次收貨：首批準時、尾批拖三個月的單會被判成遲交。</span><span lang="en"><b>Fully received</b> — the date the <b>last</b> receipt completed the line is compared with the promised date. Not the first receipt: a line whose first batch arrived on time but whose last batch took three months counts as late.</span></li>
+        <li><span lang="zh"><b>已過預交日仍未交清</b>——<b>算遲交</b>，遲延天數以今天計算，會隨著拖延持續增加。</span><span lang="en"><b>Past the promised date and still not complete</b> — counted as <b>late</b>, with the overdue days measured against today, so they keep growing while the delay continues.</span></li>
+        <li><span lang="zh"><b>尚未到期</b>——不列入。還沒有結果，列入會讓達成率隨「開了幾張未來的單」上下浮動。</span><span lang="en"><b>Not yet due</b> — excluded. There is no outcome yet, and including these would make the rate drift with however many future orders happen to be open.</span></li>
+      </ul>
+    </div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">2026-09-21 口徑變更，歷史數字會比以前低：</span><span lang="en">The basis changed on 2026-09-21, so historical figures are lower than before:</span></strong><span lang="zh">舊口徑只看<b>已經收到的貨</b>，於是「拖著不交」的單完全不進分母——供應商拖得越久，分母越乾淨、達成率越好看。曾出現同一家供應商在「採購逾期跟催」上有兩筆逾期、在這張表上卻是 100% 的情形。新口徑把那些單算進來，所以數字下降是<b>修正</b>而不是退步。供應商評核的「交期」構面同源，會跟著一起降。</span><span lang="en"> The old basis looked only at goods <b>already received</b>, so an order that was simply never delivered never entered the denominator — the longer a supplier stalled, the cleaner the denominator and the better the rate looked. One supplier showed two overdue lines on the Overdue Purchase Orders report while this report showed 100%. The new basis counts those lines, so a lower number is a <b>correction</b>, not a decline. The delivery dimension of supplier evaluation shares this basis and falls with it.</span>
+    </div>
+    <img class="screen-shot" src="img/supplier-delivery-rate.png" data-src-en="img/en/supplier-delivery-rate.png" alt="供應商交期達成率畫面截圖" data-alt-en="Supplier delivery rate screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">供應商交期達成率畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Supplier delivery rate screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列可依「預交日區間、供應商、來源」過濾；來源可選「全部／採購進貨（過帳）／委外收貨（已確認以上，對交委外採購單預交日）」。</span><span lang="en">The search bar filters by promised date range, supplier and source; the source can be All, Purchase receipt (posted) or Outsource receipt (confirmed or later, measured against the outsource PO delivery date).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">月趨勢折線圖顯示各月 OTD Rate；月份統計表另列平均逾期天數、最大逾期天數（僅計逾期筆）。</span><span lang="en">The monthly trend line shows the OTD rate per month; the monthly table adds the average and maximum overdue days (counting late lines only).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">廠商延誤排名以逾期筆數多者在前，其次平均逾期天數，供評核輸入；月趨勢與廠商表可分別匯出 Excel。</span><span lang="en">The supplier delay ranking sorts by the number of late lines first and then by average overdue days, as input to evaluations; the monthly trend and the supplier table can each be exported to Excel.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">預交日（起 / 迄）</span><span lang="en">Promised date (from / to)</span></td><td><span lang="zh">納入統計的<b>預交日</b>區間——決定「哪些單該在這段期間交」，與實際何時到料無關。留白時預設<b>近 30 天</b>，不是「不限起日」</span><span lang="en">The range of <b>promised dates</b> included, which decides which lines were due in the period regardless of when the goods actually arrived. Left blank, it defaults to the <b>last 30 days</b> rather than to no lower bound.</span></td></tr>
+        <tr><td><span lang="zh">供應商</span><span lang="en">Supplier</span></td><td><span lang="zh">只看單一供應商；留空為全部</span><span lang="en">Limits the view to one supplier; leave blank for all</span></td></tr>
+        <tr><td><span lang="zh">來源</span><span lang="en">Source</span></td><td><span lang="zh">統計涵蓋的單據來源（採購進貨、委外收貨等）</span><span lang="en">Document sources included in the statistics (purchase receipts, outsource receipts …)</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">月趨勢欄位</span><span lang="en">Monthly trend fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">年月</span><span lang="en">Month</span></td><td><span lang="zh">統計月份</span><span lang="en">Statistics month</span></td></tr>
+        <tr><td><span lang="zh">應交明細數</span><span lang="en">Due Lines</span></td><td><span lang="zh">預交日落在該月的明細行數（月份也以預交日分組）</span><span lang="en">Number of lines whose promised date falls in that month; the monthly grouping also follows the promised date</span></td></tr>
+        <tr><td><span lang="zh">達成率%</span><span lang="en">Attainment %</span></td><td><span lang="zh">準時筆數 ÷ 應交明細數</span><span lang="en">On-time lines ÷ due lines</span></td></tr>
+        <tr><td><span lang="zh">平均逾期天數 / 最大逾期天數</span><span lang="en">Avg Overdue Days / Max Overdue Days</span></td><td><span lang="zh">該月逾期案件的平均與最壞情形，用於判斷是普遍性延誤或個案</span><span lang="en">The average and worst case of overdue items in the month, showing whether delays are systematic or isolated</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">供應商明細欄位</span><span lang="en">Supplier detail fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">供應商代號</span><span lang="en">Supplier</span></td><td><span lang="zh">統計對象</span><span lang="en">Group by</span></td></tr>
+        <tr><td><span lang="zh">應交明細數 / 準時筆數 / 逾期筆數</span><span lang="en">Due Lines / On-Time / Late</span></td><td><span lang="zh">該供應商應交筆數的拆解，兩者相加恆等於應交明細數</span><span lang="en">Breakdown of the lines due from this supplier; the two always add up to the due lines</span></td></tr>
+        <tr><td><span lang="zh">達成率%</span><span lang="en">Attainment %</span></td><td><span lang="zh">準時筆數 ÷ 應交明細數，是供應商評核「交期」構面的口徑來源</span><span lang="en">On-time lines ÷ due lines, the basis of the delivery dimension in supplier evaluation</span></td></tr>
+        <tr><td><span lang="zh">平均逾期天數 / 最大逾期天數</span><span lang="en">Avg Overdue Days / Max Overdue Days</span></td><td><span lang="zh">逾期案件的嚴重程度</span><span lang="en">Severity of the overdue item</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="saved-queries"><i class="bi bi-bookmark-star me-2 text-primary"></i><span lang="zh">存成常用查詢</span><span lang="en">Saving the query</span></h2>
+    <p><span lang="zh">查詢列上方有「我的常用查詢」與「儲存此查詢」，可把這一組條件存起來下次一鍵重跑。存檔時必須選一個相對期間（例如「上個月」），不是固定日期——否則下個月點開還是同一段期間的資料。用法與注意事項見<a href="../rpt/saved-queries.html">常用查詢</a>。</span><span lang="en">Above the search bar are "My saved queries" and "Save this query", which store the current criteria for one-click reuse. You must choose a relative period when saving (for example "last month") rather than fixed dates, otherwise opening it next month would still show the same stretch of time. See <a href="../rpt/saved-queries.html">saved queries</a> for how they work and what to watch for.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="purchase-overdue.html"><span lang="zh">採購逾期跟催</span><span lang="en">Overdue Purchase Orders</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

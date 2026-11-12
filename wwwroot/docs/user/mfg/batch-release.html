@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Batch Release — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>生產批投產 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link active"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-box-arrow-up me-2 text-primary"></i><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BatchRelease &nbsp;|&nbsp; 整批釋出工單進入排程與派工</span><span lang="en">Route: /BatchRelease &nbsp;|&nbsp; Releases a whole batch of work orders into scheduling and dispatch</span></div>
+    </div>
+
+    <p><span lang="zh">投產是「計畫 → 執行」的閘口：將生產批內的工單釋出，系統建立派工單（自工序帶入機台、模具需求）、做廠級物料預留，並使工單進入排程凍結保護（凍結期內 MRP 重跑不會移動）。</span><span lang="en">Release is the gate between planning and execution: the work orders in the batch are released, the system creates dispatches (pulling the machine and tooling requirement from the operations), reserves material at plant level, and puts the work order under schedule freeze protection (an MRP re-run will not move it while it is frozen).</span></p>
+    <img class="screen-shot" src="img/batch-release.png" data-src-en="img/en/batch-release.png" alt="生產批投產畫面截圖" data-alt-en="Batch release screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">生產批投產畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Batch release screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">投產</span><span lang="en">Release</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">選擇生產批，檢視批內工單與料況（齊套/待料風險）。</span><span lang="en">Choose a production batch and review the work orders in it and their material status (kitted or at material risk).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">確認後點「投產」；系統逐張建立派工單與物料預留。需要簽核的工單會送審，核准後才能排程與開工；若有工單超過簽核門檻（或符合強制送審條件）但本廠沒有工單簽核流程，會直接核准並跳出提醒列出這些工單，請確認簽核設定。</span><span lang="en">Confirm and click "Release"; the system creates the dispatches one by one and reserves the material. Work orders that need approval are submitted and can be scheduled and started only after approval. If a work order is above the approval threshold (or meets a mandatory approval condition) but this plant has no work order approval flow, it is approved directly and a reminder lists those work orders so you can check the approval settings.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">投產後至「生產排程」檢視/調整機台安排。</span><span lang="en">After release, review and adjust the machine assignment under "Production Scheduling".</span></div></div>
+    <div class="note-box"><i class="bi bi-slash-circle me-1 text-warning"></i><span lang="zh"><strong>重算為 0 不能投產</strong>：投產當下的可用量已經滿足毛需求（例如成品庫存已足），重算後的生產量是 0，代表這張工單不需生產。系統會擋下並說明，請改按「作廢」。整批投產時，這張工單連同它底下的半成品子工單一起略過，其餘照常投產，結果訊息會列出略過的工單。</span><span lang="en"><strong>A work order recalculated to 0 cannot be released</strong>: the quantity available at release already covers the gross demand (for example there is enough finished stock), so the recalculated quantity is 0 and nothing needs to be produced. The release is blocked with an explanation; void the work order instead. In a batch release, that work order and the semi-finished child orders under it are skipped, the rest are released as usual, and the result message lists the skipped orders.</span></div>
+    <div class="note-box"><i class="bi bi-collection me-1"></i><span lang="zh"><strong>整批一起投，不會只投一部分</strong>：批內任一張工單缺料，整批都不投；投產途中任一張出錯，整批也都不投，已處理的工單會一起退回已規劃，不會留下送審中的簽核。依畫面訊息排除原因後，再按一次「投產」即可。</span><span lang="en"><strong>A batch is released as a whole, never partly</strong>: if any work order in the batch is short of material, nothing is released; if any work order fails during release, nothing is released either. Orders already processed go back to Planned and no approval request is left behind. Fix the cause shown in the message and click Release again.</span></div>
+    <div class="note-box"><i class="bi bi-lock me-1"></i><span lang="zh"><strong>抵掉需求的庫存會保留給原訂單</strong>：投產重算用現有成品抵掉的量（含重算為 0 的整張），會自動保留給這張工單的來源訂單，別的出貨或工單不能動用；出貨時才扣掉。半成品子工單則保留給上階工單，上階工單發料時扣掉。手動建立、不是 MRP 展開的工單沒有來源訂單，不保留。</span><span lang="en"><strong>Stock that covers the demand is held for the original order</strong>: the finished goods counted against the demand at release (including the whole quantity when the result is 0) are reserved for the order behind this work order. Other shipments and work orders cannot use them, and the reservation is used up when that order ships. For a semi-finished child order the stock is held for the parent work order and used up when the parent is issued. Work orders entered by hand, not created by MRP, have no source order and reserve nothing.</span></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">查詢</span><span lang="en">Search</span></td><td><span lang="zh">生產批號或品號的模糊比對；清單只列出待投產的生產批</span><span lang="en">Partial match on the batch number or item; the list shows only batches waiting to be released</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">待投產清單</span><span lang="en">Release queue</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">生產批號 / 品號 / 數量</span><span lang="en">Batch No / Item / Qty</span></td><td><span lang="zh">待投產的生產批基本資訊</span><span lang="en">Basic details of the production batch waiting to be released</span></td></tr>
+        <tr><td><span lang="zh">可投產工單</span><span lang="en">Releasable WOs</span></td><td><span lang="zh">本批底下通過料況與前置檢核、可以放行的工單數</span><span lang="en">Number of work orders in the batch that pass the material and lead-time checks and can be released</span></td></tr>
+        <tr><td><span lang="zh">優先序</span><span lang="en">Priority</span></td><td><span lang="zh">投產的先後順序</span><span lang="en">Order in which they are released</span></td></tr>
+        <tr><td><span lang="zh">須完成日</span><span lang="en">Due Date</span></td><td><span lang="zh">本批的需求完成日</span><span lang="en">Required completion date of the batch</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">投產面板欄位</span><span lang="en">Release panel fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">工單</span><span lang="en">Work order</span></td><td><span lang="zh">本批展開出的各張工單</span><span lang="en">The work orders produced by this run</span></td></tr>
+        <tr><td><span lang="zh">暫定量</span><span lang="en">Provisional qty</span></td><td><span lang="zh">MRP 展開當時預估的工單數量</span><span lang="en">Work order quantity estimated at the time of the MRP run</span></td></tr>
+        <tr><td><span lang="zh">重算量</span><span lang="en">Recalculated qty</span></td><td><span lang="zh">投產當下依最新庫存、在途與良率重新計算的實際投產量；與暫定量落差即需注意</span><span lang="en">The quantity actually released, recalculated at release time from the latest stock, in-transit quantity and yield; a gap against the provisional quantity is worth looking at</span></td></tr>
+        <tr><td><span lang="zh">判定</span><span lang="en">Result</span></td><td><span lang="zh">該工單能否投產的檢核結果（料況足夠／缺料／前置工序未完成等），不通過者不隨整批放行</span><span lang="en">Result of the release check on the work order (enough material / short / an earlier operation unfinished …); those that fail are not released with the batch</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="schedule.html"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>、<a href="preparation-board.html"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">料況不足的工單仍可投產但會標示待料風險；請於生產準備看板追蹤到料情形。</span><span lang="en"> A work order that is short of material can still be released but is flagged as a material risk; track the arrivals on the production preparation board.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

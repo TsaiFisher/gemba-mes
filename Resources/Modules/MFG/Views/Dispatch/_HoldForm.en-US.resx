@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="DispatchId" xml:space="preserve"><value>Dispatch No.</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>Work Order</value></data>
+  <data name="MachineCode" xml:space="preserve"><value>Machine</value></data>
+  <data name="MachineDownBadge" xml:space="preserve"><value>Machine down</value></data>
+  <data name="HoldReason" xml:space="preserve"><value>Hold reason</value></data>
+  <data name="HoldAt" xml:space="preserve"><value>Held at</value></data>
+  <data name="Progress" xml:space="preserve"><value>Done / Qty</value></data>
+  <data name="HoldReasonMachineDown" xml:space="preserve"><value>Machine down</value></data>
+  <data name="HoldReasonFpiFailed" xml:space="preserve"><value>First-piece inspection failed</value></data>
+  <data name="HoldReasonIpqcFailed" xml:space="preserve"><value>In-process inspection failed</value></data>
+  <data name="HoldReasonUnknown" xml:space="preserve"><value>Not recorded (legacy data)</value></data>
+  <data name="ResumeSection" xml:space="preserve"><value>Resume</value></data>
+  <data name="ResumeHint" xml:space="preserve"><value>Returns the dispatch to its status before the hold and continues on the same machine. A dispatch held for a failed first-piece inspection returns to Pending FPI and must be measured again.</value></data>
+  <data name="ResumeMachineDownHint" xml:space="preserve"><value>The machine is still down, so the dispatch cannot resume on it. Dispatches held because the machine went down resume automatically when the machine is available again. For urgent work, use Switch machine below.</value></data>
+  <data name="ResumeNeedsQualityHint" xml:space="preserve"><value>This dispatch was held for a quality failure. It can only be resumed by QC staff with update permission on inspection orders.</value></data>
+  <data name="BtnResume" xml:space="preserve"><value>Resume</value></data>
+  <data name="SwitchSection" xml:space="preserve"><value>Switch machine</value></data>
+  <data name="SwitchHintNone" xml:space="preserve"><value>Nothing produced yet: the whole dispatch moves to the selected machine and returns to Pending. It needs a new setup and first-piece inspection. Rescheduling keeps it on this machine.</value></data>
+  <data name="SwitchHintPartial" xml:space="preserve"><value>{0} done: this dispatch closes at the quantity done, and the remaining {1} goes to a new continuation dispatch on the selected machine. It needs a new setup and first-piece inspection. Rescheduling keeps it on this machine.</value></data>
+  <data name="NoSwitchMachine" xml:space="preserve"><value>No other machine in this plant is available for production.</value></data>
+  <data name="BtnSwitch" xml:space="preserve"><value>Switch</value></data>
+  <data name="ShortCloseSection" xml:space="preserve"><value>Close remaining quantity</value></data>
+  <data name="ShortCloseHintPartial" xml:space="preserve"><value>The remaining quantity will not be produced: this dispatch completes at {0}. When all other dispatches of the work order are finished, the work order completes.</value></data>
+  <data name="ShortCloseHintNone" xml:space="preserve"><value>Nothing produced yet: the dispatch becomes Cancelled and no longer appears in the shop-floor list.</value></data>
+  <data name="ShortCloseConfirm" xml:space="preserve"><value>Stop producing the remaining {0}? This cannot be undone.</value></data>
+  <data name="BtnShortClose" xml:space="preserve"><value>Close remaining</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+</root>

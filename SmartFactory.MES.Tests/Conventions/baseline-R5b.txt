@@ -1,0 +1,6 @@
+# R5b baseline — 既有違規清單（Phase B 回補時逐行刪除）。
+# 不在此清單的新違規會讓建置失敗。
+#
+# 2026-06-22：已歸零。原 17 項框架/基礎建設雜訊改由 R5b 規則結構性排除
+#（Identity 使用者 / 例外型別 / PaginatedList / xmin / Timestamp / 含底線縮寫欄位），
+# 不再以 baseline 容忍。詳見 ConventionTests.cs R5b_ValidationFieldNames_InSharedResource。

@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/MFG/Services/WorkingTimeWalker.cs",
+  "sourceHash": "7d62faf331d291ed26dbe6c5435599166c55870abbab18e1a4cbbb769ec2c1f9",
+  "entries": [
+    {
+      "slug": "code-mfg-workingtimewalker-f003895b",
+      "lang": "zh",
+      "headingPath": "生產製造 › 自  起消耗  分鐘工時，",
+      "text": "工時計算與時間回傳規則｜系統會根據指定的起始時刻，計算出需要消耗的淨工時分鐘數，並回傳實際完成作業的時間點。此計算過程會考慮到當日是否有可用的工作時段清單，以及設備相關的計劃停機時間區間。",
+      "approved": true,
+      "sourceSectionHash": "43e8a3ddd70d18979fa9b7362d936f48a45b827010e2064fe97afef8a9f0a7e5"
+    },
+    {
+      "slug": "code-mfg-workingtimewalker-d09f8317",
+      "lang": "zh",
+      "headingPath": "生產製造 › 把  往前校正到下一個真正落在可用時段內的時刻，",
+      "text": "時間點會自動調整到可作業時段｜如果輸入的開始時間剛好落在非工作時段，系統會將其往前校正到下一個實際有產能的工作時間點，以確保計算出的起訖時間區間是正確的。若在指定天數內找不到任何可用時段，則回傳空值。",
+      "approved": true,
+      "sourceSectionHash": "568ece0eb13fde3e160b89cd86ad381d4c0541e1fed6155eb0c1af5243cb330b"
+    },
+    {
+      "slug": "code-mfg-workingtimewalker-a6496086",
+      "lang": "zh",
+      "headingPath": "生產製造 › 把  往「回」校正到最近一個落在可用時段內的時刻",
+      "text": "時間校正規則說明｜如果計算的結束時刻落在非工作時段，系統會將其退回到當日最後一段產能的結束點，以確保後續往前計算不會產生空白的時間區間。若在指定天數內找不到可用時段，則回傳空值。",
+      "approved": true,
+      "sourceSectionHash": "294827bb53c5f344997f3420ec082842c1e2d1fc0df38689fd5ed43b6d7971b7"
+    }
+  ]
+}

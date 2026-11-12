@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Mobile Module Permissions — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>手機模組權限 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System Administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link active"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-phone me-2 text-primary"></i><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：管理系統 → 手機權限設定 &nbsp;|&nbsp; 權限：目前身份為 Admin</span><span lang="en">Menu: System Administration → Mobile Permission Settings &nbsp;|&nbsp; Permission: current role is Admin</span></div>
+    </div>
+
+    <p><span lang="zh">手機模組權限決定各角色在</span><span lang="en">Mobile module permissions decide what each role may do in the </span><b><span lang="zh">手機端（PWA）</span><span lang="en">mobile app (PWA)</span></b><span lang="zh">能做哪些現場作業。它與桌面版的「功能權限設定」是</span><span lang="en"> for shop-floor work. It is </span><b><span lang="zh">兩套獨立的權限</span><span lang="en">a separate set of permissions</span></b><span lang="zh">：桌面版勾好，手機端仍是關閉的；反之亦然。</span><span lang="en"> from the desktop "Permission Settings": ticking the desktop matrix leaves the phone closed, and the other way round.</span></p>
+
+    <img class="screen-shot" src="img/mobile-permission.png" data-src-en="img/en/mobile-permission.png" alt="手機模組權限畫面截圖" data-alt-en="Mobile module permission screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">手機模組權限畫面截圖（示意，實際模組/動作依系統版本與啟用狀態而異）</span><span lang="en">Mobile module permission screenshot (illustrative; the modules and actions shown vary by version and by which are enabled)</span></div>
+
+    <img class="screen-shot" src="img/mobile-permission-matrix.png" data-src-en="img/en/mobile-permission-matrix.png" alt="手機權限設定側面板截圖" data-alt-en="Mobile permission panel screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">點「設定手機權限」後開啟的面板：依模組分區，逐一動作勾選，每區右上角有「全選／全不選」</span><span lang="en">The panel that opens after clicking "Set mobile permissions": grouped by module, ticked action by action, with "Select All / Deselect All" at the top right of each group</span></div>
+
+    <h2 id="modules-and-actions-you-can-grant"><i class="bi bi-phone me-2 text-primary"></i><span lang="zh">可授權的模組與動作</span><span lang="en">Modules and actions you can grant</span></h2>
+    <p><span lang="zh">權限是</span><span lang="en">Permissions are granted </span><b><span lang="zh">逐一動作</span><span lang="en">action by action</span></b><span lang="zh">授權的，勾了哪個動作，該角色的人在手機上才做得了那件事。</span><span lang="en">: a person with that role can only do on the phone what has been ticked here.</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">模組</span><span lang="en">Module</span></th><th><span lang="zh">動作</span><span lang="en">Actions</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">投產報工</span><span lang="en">Production reporting</span></td><td><span lang="zh">備料開工準備、開工上工、下工、報工、機台狀態異動、檢驗（FPI／IPQC）、生產排程查看（含排程查詢與準備看板）、領料／退料申請、<b>超量核准</b></span><span lang="en">Setup before starting, start work, stop work, report production, change machine status, inspection (FPI / IPQC), viewing the production schedule (including the schedule query and the preparation board), requisition / return requests, and <b>over-quantity approval</b></span></td></tr>
+        <tr><td><span lang="zh">倉儲作業</span><span lang="en">Warehouse operations</span></td><td><span lang="zh">入庫上架、出庫下架、庫存查詢、進料檢驗（IQC／FQC／RQC）、庫存盤點、工單發退料、備料作業、委外收料、<b>超量核准</b></span><span lang="en">Put away, pick, stock enquiry, incoming inspection (IQC / FQC / RQC), stock counting, work-order issue / return, staging, outsource receiving, and <b>over-quantity approval</b></span></td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><i class="bi bi-shield-lock me-1"></i><span lang="zh"><strong>超量核准＝「主管」權限。</strong>廠別把「超過容許上限時」設成需主管確認時，只有這一格被勾的角色能超量報工（投產報工）或超量收委外的貨（倉儲作業）；<b>桌機的報工與委外收貨確認也看這一格</b>。系統升級新增作業時，通常會自動補給已有該模組權限的角色，但這兩格<b>刻意不自動補</b>，請只勾給主管。</span><span lang="en"><strong>Over-quantity approval is the "supervisor" right.</strong> When a plant sets "beyond the tolerance" to supervisor confirmation, only roles with this box ticked can report over-production (Production reporting) or receive outsource deliveries over the order quantity (Warehouse operations); <b>desktop reporting and outsource receipt confirmation check the same box</b>. New actions added by an upgrade are normally granted automatically to roles that already have the module, but these two are <b>deliberately not</b> — tick them for supervisors only.</span></div>
+
+    <div class="tip-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <span lang="zh">畫面只列出</span><span lang="en">The screen lists only the modules that are </span><b><span lang="zh">已啟用</span><span lang="en">enabled</span></b><span lang="zh">的模組。系統另有「品質檢驗」與「備料領料」兩個手機模組，預設為</span><span lang="en">. The system also has two further mobile modules — quality inspection and material picking — which are </span><b><span lang="zh">未啟用</span><span lang="en">disabled</span></b><span lang="zh">，因此不會出現在這裡。看不到它們是正常的，不是權限問題。</span><span lang="en"> by default and therefore do not appear here. Not seeing them is expected and is not a permission problem.</span>
+    </div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「管理系統 &gt; 手機權限設定」，按「查詢」列出角色。</span><span lang="en">Choose "System Administration &gt; Mobile Permission Settings" in the left-hand menu and click "Search" to list the roles.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點該角色的編輯，右側滑出模組／動作清單。</span><span lang="en">Click edit on the role; the list of modules and actions slides out on the right.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">勾選該角色在手機端可執行的動作，按「儲存」。</span><span lang="en">Tick the actions the role may perform on the phone and click "Save".</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">現場人員在手機端重新整理或重新登入後即可看到新的功能。</span><span lang="en">Shop-floor staff see the new functions after refreshing or signing in again on the phone.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">儲存是整份覆蓋：</span><span lang="en">Saving replaces the whole set:</span></strong><span lang="zh">按下儲存時，系統會清掉這個角色所有手機權限，再依畫面上的勾選狀態重新寫入每一個動作（未勾的寫成不允許）。請在同一次開啟中完成調整。</span><span lang="en"> when you save, the system clears this role's mobile permissions entirely and writes every action back from what is ticked on screen, recording the unticked ones as not allowed. Make all your changes in one visit.</span>
+    </div>
+
+    <div class="tip-box"><i class="bi bi-clipboard-check-fill me-1 text-primary"></i>
+      <strong><span lang="zh">這裡的每次變更都會留下稽核紀錄：</span><span lang="en">Every change here leaves an audit record:</span></strong><span lang="zh">系統會在稽核日誌寫入一筆物件類型為 <code>Mobile.Permission</code> 的異動，記載角色與這次核准的動作數量。要追查手機權限何時被誰改過，請到</span><span lang="en"> the system writes an entry to the audit log with the entity type <code>Mobile.Permission</code>, recording the role and how many actions were allowed. To trace when and by whom the mobile permissions were changed, go to </span><a href="audit-log.html"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a><span lang="zh">以此類型篩選。</span><span lang="en"> and filter by that entity type.</span>
+    </div>
+
+    <h2 id="cannot-sign-in-on-the-phone-or-no"><i class="bi bi-question-circle me-2 text-primary"></i><span lang="zh">手機端登入不進去／看不到功能</span><span lang="en">Cannot sign in on the phone, or no functions appear</span></h2>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">現象</span><span lang="en">Symptom</span></th><th><span lang="zh">先確認什麼</span><span lang="en">What to check first</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">登得進去，但首頁沒有任何作業</span><span lang="en">Signs in, but the home screen has no operations</span></td><td><span lang="zh">該使用者目前作用中的角色在本畫面一個動作都沒勾。注意一個人可能有多個角色，起作用的是</span><span lang="en">The role currently in effect for that user has no action ticked here. Note that a person may hold several roles, and what counts is </span><b><span lang="zh">目前作用中的那一個</span><span lang="en">the one currently in effect</span></b><span lang="zh">。</span><span lang="en">.</span></td></tr>
+        <tr><td><span lang="zh">看得到模組，但按下去被拒絕</span><span lang="en">The module is visible but the action is refused</span></td><td><span lang="zh">模組內的個別動作未勾選——模組與動作是分開授權的。</span><span lang="en">The individual action inside the module is not ticked; modules and actions are granted separately.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">清單可匯出 Excel（.xlsx）、CSV 或 JSON，內容為角色名稱、中文名稱與組織單位；與桌面版權限畫面相同，匯出的是角色清單而非勾選內容。</span><span lang="en">The list can be exported as Excel (.xlsx), CSV or JSON, containing the role name, its Chinese name and its organization unit. As on the desktop permission screen, the export is the list of roles, not the ticks.</span></p>
+  </main>
+</div>
+</body>
+</html>

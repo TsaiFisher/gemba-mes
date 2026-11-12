@@ -1,0 +1,64 @@
+@model PrivacyModel
+@{
+    var org = Model.Organization ?? "your organization";
+}
+<p class="text-muted small">Last updated: October 27, 2026</p>
+
+<p>
+    This system (SmartFactory MES) is hosted and operated by <strong>@org</strong> on servers under its control.
+    This policy explains what data the system processes, why, and how you can exercise your rights.
+</p>
+
+<h2 class="h5 mt-4">Data controller</h2>
+<p>
+    Data in this system is held and managed by <strong>@org</strong>, which is the controller of your personal data.
+    The software vendor does not collect, receive, or access your personal data through this system.
+</p>
+
+<h2 class="h5 mt-4">Data we process</h2>
+<ul>
+    <li><strong>Account data</strong>: user name, email address, phone number (if provided), interface language, time zone, assigned plant and role. Passwords are stored only as hashes; the system never stores them in plain text.</li>
+    <li><strong>Two-factor authentication</strong>: when enabled, the authenticator key and recovery codes are stored and used solely for sign-in.</li>
+    <li><strong>Audit logs</strong>: who performed an action, the action type, the records and field values changed, the time, IP address, and browser identification string (User-Agent). Email addresses and phone numbers in change details are masked before being written.</li>
+    <li><strong>Business data</strong>: documents, master data, and other operational records you create or modify, and files you upload.</li>
+    <li><strong>System logs</strong>: server-side application and error logs, which may include user names and requested page paths, used for operations and troubleshooting.</li>
+</ul>
+
+<h2 class="h5 mt-4">Cookies and on-device storage</h2>
+<ul>
+    <li><strong>Sign-in cookie</strong>: keeps you signed in (not readable by page scripts; encrypted in transit when accessed over HTTPS).</li>
+    <li><strong>Anti-forgery cookie</strong>: protects against cross-site request forgery (CSRF).</li>
+    <li><strong>Language cookie</strong>: remembers your chosen interface language.</li>
+    <li><strong>Mobile offline data</strong>: so that work can continue during network outages, the mobile app temporarily stores pending operations and necessary reference data in the device's browser storage and submits them once the connection is restored. Do not stay signed in on shared devices.</li>
+</ul>
+<p>This system does not use advertising or third-party tracking cookies and does not load any external analytics tools.</p>
+
+<h2 class="h5 mt-4">Purposes of use</h2>
+<p>
+    The data above is used only to provide system features, authenticate users and enforce permissions,
+    audit and investigate security incidents, and operate the system. It is not used for marketing and is never sold or rented.
+</p>
+
+<h2 class="h5 mt-4">Storage and transfers</h2>
+<p>
+    Data is stored on servers and databases managed by <strong>@org</strong>. The system does not send data externally except as follows:
+</p>
+<ul>
+    <li><strong>License revocation list</strong>: if enabled by the operator, the system periodically downloads a revocation list from the license issuer. This is a one-way download; no user or business data is uploaded.</li>
+    <li><strong>License confirmation</strong>: depending on the license type, the system periodically confirms with the license issuer that the license is still valid. By default an administrator clicks Confirm on the License Status page and the confirmation is relayed through their browser; the operator may instead let the server confirm automatically once a day. Only the license file, the host fingerprint, the system version, the operating system and server time, and the IP address of the connection are sent; no user accounts or business data are included.</li>
+    <li><strong>Termination notice and license server list</strong>: once a day the system reads, from a location published by the license issuer, a termination notice that exists only if the issuer discontinues the service; when the server confirms automatically, it also downloads the list of license servers. Both are one-way downloads; nothing is uploaded.</li>
+    <li>When required by law or lawfully requested by competent authorities.</li>
+</ul>
+
+<h2 class="h5 mt-4">Retention</h2>
+<p>
+    Retention periods are determined by <strong>@org</strong> in accordance with its internal policies and applicable law.
+    Audit logs may be kept longer for security or legal reasons.
+</p>
+
+<h2 class="h5 mt-4">Security</h2>
+<p>
+    The system supports HTTPS encryption in transit and protects data with hashed passwords, role-based access control, audit logging,
+    account lockout after failed sign-ins, and two-factor authentication. No system can guarantee absolute security;
+    if you notice a possible security issue, please notify the contact below immediately.
+</p>

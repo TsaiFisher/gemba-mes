@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="/mobile/manifest.json">
+    <link rel="apple-touch-icon" href="/mobile/icons/apple-touch-icon-180.png">
+    <title data-i18n="query.page_title">排程結果查詢</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+    <link rel="stylesheet" href="/mobile/css/mfg-schedule-query.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary mobile-navbar px-3">
+    <button type="button" data-action="historyBack" data-fallback="/mobile/mfg/schedule.html"
+            class="btn btn-link text-white p-0 me-2" data-i18n-title="common.back_prev" title="返回排程">
+        <i class="bi bi-arrow-left fs-5"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.back_prev">返回</span>
+    </button>
+    <span class="navbar-brand fw-bold mb-0 h1 flex-grow-1">
+        <i class="bi bi-search me-2"></i><span data-i18n="query.title">排程查詢</span>
+    </span>
+    <a href="/mobile/home.html" class="btn btn-outline-light btn-sm me-1" data-i18n-title="common.back" title="回首頁"><i class="bi bi-house-door"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="nav.home">首頁</span></a>
+    <button class="btn btn-outline-light btn-sm me-1" data-action="toggleLang" data-lang-toggle title="Language">EN</button>
+    <button class="btn btn-outline-light btn-sm" data-action="logout" data-i18n-title="common.logout" title="登出">
+        <i class="bi bi-box-arrow-right"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.logout">登出</span>
+    </button>
+</nav>
+
+<!-- 查詢條件 -->
+<div class="bg-white border-bottom p-3">
+    <div class="row g-2">
+        <div class="col-6">
+            <label class="form-label mb-1 small fw-semibold" data-i18n="query.wc">工作中心</label>
+            <select id="selWc" class="form-select form-select-sm">
+                <option value="" data-i18n="query.all">全部</option>
+            </select>
+        </div>
+        <div class="col-6">
+            <label class="form-label mb-1 small fw-semibold" data-i18n="query.machine">機台</label>
+            <input type="text" id="inputMachine" class="form-control form-control-sm" data-i18n-placeholder="query.machine_ph" placeholder="機台代號">
+        </div>
+        <div class="col-6">
+            <label class="form-label mb-1 small fw-semibold" data-i18n="query.wo">工單號</label>
+            <input type="text" id="inputWo" class="form-control form-control-sm" data-i18n-placeholder="query.wo" placeholder="工單號">
+        </div>
+        <div class="col-6">
+            <label class="form-label mb-1 small fw-semibold" data-i18n="query.batch">生產批號</label>
+            <input type="text" id="inputBatch" class="form-control form-control-sm" data-i18n-placeholder="query.batch" placeholder="生產批號">
+        </div>
+        <div class="col-6">
+            <label class="form-label mb-1 small fw-semibold" data-i18n="query.date_from">計畫開始（起）</label>
+            <input type="date" id="inputDateFrom" class="form-control form-control-sm">
+        </div>
+        <div class="col-6">
+            <label class="form-label mb-1 small fw-semibold" data-i18n="query.date_to">計畫開始（迄）</label>
+            <input type="date" id="inputDateTo" class="form-control form-control-sm">
+        </div>
+    </div>
+    <div class="d-flex gap-2 mt-2">
+        <button class="btn btn-secondary btn-sm flex-grow-1" data-action="doSearch">
+            <i class="bi bi-search me-1"></i><span data-i18n="query.search">查詢</span>
+        </button>
+        <button class="btn btn-outline-secondary btn-sm" data-action="clearForm" data-i18n-title="common.clear" title="清除">
+            <i class="bi bi-x-circle"></i><span class="ms-1" data-i18n="common.clear">清除</span>
+        </button>
+    </div>
+</div>
+
+<!-- 結果區 -->
+<div class="container-fluid py-3 px-3">
+    <div id="loadingState" class="text-center text-muted py-5 d-none">
+        <div class="spinner-border spinner-border-sm me-2" role="status"></div><span data-i18n="common.loading">載入中…</span>
+    </div>
+    <div id="emptyState" class="text-center text-muted py-5 d-none">
+        <i class="bi bi-inbox fs-1 d-block mb-2"></i><span data-i18n="query.empty">無符合條件的派工</span>
+    </div>
+    <div id="hintState" class="text-center text-muted py-5">
+        <i class="bi bi-search fs-1 d-block mb-2 opacity-25"></i>
+        <small data-i18n="query.hint">設定條件後按查詢</small>
+    </div>
+    <div id="resultContent"></div>
+    <div id="resultCount" class="text-center text-muted small mt-2"></div>
+</div>
+
+<script src="/mobile/js/telemetry.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/data-action.js"></script>
+<script src="/mobile/js/nav.js"></script>
+<script src="/mobile/js/i18n.js"></script>
+<script src="/mobile/js/i18n.modules.js"></script>
+<script src="/mobile/js/api.js"></script>
+<script src="/mobile/js/auth.js"></script>
+<script src="/mobile/mfg/schedule-query.page.js"></script>
+</body>
+</html>

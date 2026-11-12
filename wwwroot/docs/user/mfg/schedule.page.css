@@ -1,0 +1,13 @@
+/* 生產排程說明頁專用：甘特圖圖例色塊。
+   CSP style-src 無 unsafe-inline，色塊不能寫 style 屬性，故外部化為 class。
+   色碼必須與 Modules/MFG/Views/Schedule/Index.cshtml 的 GANTT_CAT_COLORS 一致，
+   改色時兩處要一起改，否則手冊會教錯顏色。 */
+.gantt-swatch{display:inline-block;width:1.05rem;height:1.05rem;border-radius:3px;border:1px solid rgba(0,0,0,.15);vertical-align:-.18rem}
+.gantt-swatch-inprogress{background:#198754}
+.gantt-swatch-late{background:#dc3545}
+.gantt-swatch-toolconflict{background:#6f42c1}
+.gantt-swatch-matrisk{background:#fd7e14}
+.gantt-swatch-planned{background:#4a7ba7}
+.gantt-swatch-actual{background:#0dcaf0}
+.gantt-swatch-shiftregular{background:#c5ccd4}
+.gantt-swatch-shiftovertime{background:#7b848d}

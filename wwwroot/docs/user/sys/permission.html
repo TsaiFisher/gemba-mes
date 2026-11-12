@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Permission Settings — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>功能權限設定 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System Administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link active"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-key me-2 text-primary"></i><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：管理系統 → 權限設定 &nbsp;|&nbsp; 權限：目前身份為 Admin</span><span lang="en">Menu: System Administration → Permission Settings &nbsp;|&nbsp; Permission: current role is Admin</span></div>
+    </div>
+
+    <p><span lang="zh">功能權限設定是</span><span lang="en">Permission settings are </span><b><span lang="zh">決定「誰能看到什麼、能做什麼」的地方</span><span lang="en">where you decide who sees what and who may do what</span></b><span lang="zh">。它以</span><span lang="en">. Permissions are granted </span><b><span lang="zh">角色</span><span lang="en">by role</span></b><span lang="zh">為單位授權：先在清單挑一個角色，再在權限矩陣中逐一畫面勾選讀取／新增／修改／刪除／列印五種動作。</span><span lang="en">: pick a role from the list, then tick the five actions — read, create, update, delete and print — screen by screen in the permission matrix.</span></p>
+
+    <div class="note-box"><i class="bi bi-shield-check me-1 text-warning"></i>
+      <strong><span lang="zh">沒有勾選就是沒有權限：</span><span lang="en">Not ticked means not allowed:</span></strong><span lang="zh">本系統採</span><span lang="en"> the system works on </span><b><span lang="zh">預設拒絕</span><span lang="en">default-deny</span></b><span lang="zh">。沒有勾「讀取」的畫面不會出現在該角色的選單，直接輸入網址也會被擋下，不是只有隱藏而已。</span><span lang="en">. A screen with no "read" tick does not appear in that role's menu, and typing its address directly is blocked as well — it is not merely hidden.</span>
+    </div>
+
+    <img class="screen-shot" src="img/permission.png" data-src-en="img/en/permission.png" alt="功能權限設定畫面截圖" data-alt-en="Permission settings screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">功能權限設定畫面截圖（示意，實際模組/畫面依系統版本而異）</span><span lang="en">Permission settings screenshot (illustrative; the modules and screens shown vary by version)</span></div>
+
+    <img class="screen-shot" src="img/permission-matrix.png" data-src-en="img/en/permission-matrix.png" alt="權限矩陣側面板截圖" data-alt-en="Permission matrix panel screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">點「設定功能權限」後開啟的權限矩陣：依模組群組分區，每列一個畫面，每欄一種動作</span><span lang="en">The permission matrix that opens after clicking "Set permissions": grouped by module, one screen per row and one action per column</span></div>
+
+    <h2 id="the-five-actions-in-the-matrix"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">權限矩陣的五種動作</span><span lang="en">The five actions in the matrix</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">動作</span><span lang="en">Action</span></th><th><span lang="zh">代表什麼</span><span lang="en">What it means</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">檢視(R)</span><span lang="en">View (R)</span></td><td><span lang="zh">看得到這個選單項目、進得去畫面、查得到資料。</span><span lang="en">The menu item is visible, the screen can be opened and the data can be queried. </span><b><span lang="zh">它是其他四種動作的前提</span><span lang="en">It is the precondition for the other four</span></b><span lang="zh">。</span><span lang="en">.</span></td></tr>
+        <tr><td><span lang="zh">新增(C)</span><span lang="en">Create (C)</span></td><td><span lang="zh">畫面上出現「新增」按鈕，並可建立新資料。</span><span lang="en">The "Add" button appears and new records can be created.</span></td></tr>
+        <tr><td><span lang="zh">修改(U)</span><span lang="en">Update (U)</span></td><td><span lang="zh">可編輯既有資料。單據類畫面的過帳、核准等狀態異動也歸在這一項。</span><span lang="en">Existing records can be edited. On document screens, actions that change status such as posting or approving fall under this too.</span></td></tr>
+        <tr><td><span lang="zh">刪除(D)</span><span lang="en">Delete (D)</span></td><td><span lang="zh">可刪除資料（多數畫面另有使用中檢查，權限有也未必刪得掉）。</span><span lang="en">Records can be deleted; most screens additionally check whether the record is in use, so having the permission does not always mean it can be removed.</span></td></tr>
+        <tr><td><span lang="zh">列印(P)</span><span lang="en">Print (P)</span></td><td><span lang="zh">可列印或匯出（Excel／CSV／JSON）。</span><span lang="en">Printing and exporting (Excel, CSV, JSON) are allowed.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <span lang="zh">某些畫面天生沒有全部五種動作——例如報表只有讀取與列印，稽核日誌不可能有新增。</span><span lang="en">Some screens do not have all five actions by nature: a report has only read and print, and an audit log can hardly have create. </span><b><span lang="zh">矩陣中該欄空白（沒有開關）就是該畫面不支援該動作</span><span lang="en">An empty cell with no switch means the screen does not support that action</span></b><span lang="zh">，不是漏畫。</span><span lang="en">, not that it was left out.</span>
+    </div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">設定某個角色的權限</span><span lang="en">Setting the permissions of a role</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「管理系統 &gt; 權限設定」，按「查詢」列出角色。</span><span lang="en">Choose "System Administration &gt; Permission Settings" in the left-hand menu and click "Search" to list the roles.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點該角色的編輯，右側滑出權限矩陣，依模組群組（基本資料、製造、採購…）分區列出所有畫面。</span><span lang="en">Click edit on the role; the matrix slides out on the right, listing every screen grouped by module (master data, manufacturing, purchasing and so on).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">逐一勾選。每個模組群組的標題列有「全選」，可一次勾滿整個模組。</span><span lang="en">Tick what is needed. Each module heading has a "Select all" that fills in the whole module at once.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">按「儲存」。設定</span><span lang="en">Click "Save". The change takes effect </span><b><span lang="zh">立即生效</span><span lang="en">immediately</span></b><span lang="zh">，該角色的使用者重新整理頁面就會看到新的選單。</span><span lang="en">; users with that role see the new menu as soon as they refresh the page.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">儲存是整份覆蓋，不是只存有變動的：</span><span lang="en">Saving replaces the whole matrix, not just what changed:</span></strong><span lang="zh">按下儲存時，系統會先清掉這個角色</span><span lang="en"> when you save, the system first clears </span><b><span lang="zh">全部</span><span lang="en">all</span></b><span lang="zh">既有權限，再依畫面上目前的勾選狀態重建。因此請</span><span lang="en"> of this role's existing permissions and then rebuilds them from what is ticked on screen. So </span><b><span lang="zh">在同一次開啟中完成所有調整</span><span lang="en">make all your changes in one visit</span></b><span lang="zh">，不要在矩陣還沒載入完整時就儲存。</span><span lang="en">, and do not save while the matrix is still loading.</span>
+    </div>
+
+    <h3><span lang="zh">新角色開通權限的順序</span><span lang="en">The order for opening up a new role</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">先到「角色管理」建立角色（含組織單位與可用廠別）。</span><span lang="en">Create the role under "Role Management" first, with its organization unit and allowed plants.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">回到本畫面勾選權限。</span><span lang="en">Come back here and tick the permissions.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">到「使用者管理」把角色指派給人。</span><span lang="en">Assign the role to people under "User Management".</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">若該角色也要用手機端，另外到「手機模組權限」設定手機功能。兩套權限</span><span lang="en">If the role also uses the mobile app, set its mobile functions under "Mobile Module Permissions" as well. The two sets of permissions are </span><b><span lang="zh">彼此獨立</span><span lang="en">independent of each other</span></b><span lang="zh">，桌面版勾好不等於手機版能用。</span><span lang="en">: ticking the desktop matrix does not enable anything on the phone.</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <strong><span lang="zh">為什麼有些畫面在矩陣裡找不到：</span><span lang="en">Why some screens are not in the matrix:</span></strong><span lang="zh">首頁與個人設定人人可用，不列入矩陣。管理系統中的使用者、角色、組織架構、廠別、權限設定、手機權限設定、兩步驟驗證重置與授權狀態</span><span lang="en"> the home page and personal settings are available to everyone and are not listed. The user, role, organization, plant, permission settings, mobile permission settings, two-step verification reset and license status screens under system administration are </span><b><span lang="zh">只限目前身份為 Admin 時使用</span><span lang="en">available only while your current role is Admin</span></b><span lang="zh">，也不列入矩陣——這些畫面能改的是「誰有什麼權限」，交給矩陣等於讓能進權限設定的人替自己升權。屬於 Admin 的人切換成其他身份後，這些項目同樣會從選單消失、也進不去。代碼維護、稽核日誌、系統參數、簽核範本與單據簽核設定則和其他畫面一樣，依矩陣的勾選決定。</span><span lang="en">, and are not listed either: those screens change who may do what, so handing them to the matrix would let anyone who can open permission settings promote themselves. Someone who belongs to Admin but has switched to another role loses these menu items and cannot open them either. Code maintenance, the audit log, system parameters, approval templates and document approval settings follow the matrix like every other screen.</span>
+    </div>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">清單可匯出 Excel（.xlsx）、CSV 或 JSON，內容為角色名稱、英文名稱與組織單位。</span><span lang="en">The list can be exported as Excel (.xlsx), CSV or JSON, containing the role name, its English name and its organization unit. </span><b><span lang="zh">匯出的是角色清單，不含權限矩陣的勾選內容</span><span lang="en">The export is the list of roles, not the ticks in the matrix</span></b><span lang="zh">。</span><span lang="en">.</span></p>
+  </main>
+</div>
+</body>
+</html>

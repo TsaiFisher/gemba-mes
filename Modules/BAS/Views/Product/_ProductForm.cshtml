@@ -1,0 +1,308 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.Product
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    var selectedCats = (ViewBag.SelectedCategories as IEnumerable<string>) ?? Enumerable.Empty<string>();
+    var allCats      = (ViewBag.AllCategories as System.Collections.IEnumerable) ?? Enumerable.Empty<object>();
+    var uomOptions   = (ViewBag.UomOptions as System.Collections.IEnumerable) ?? Enumerable.Empty<object>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    var stockStep   = UomStepHelper.GetStep(uomDecimals, Model?.StockUom);
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyStep = baseDp <= 0 ? "1" : "0." + new string('0', baseDp - 1) + "1";
+}
+
+<div class="p-3">
+        <form method="post"
+              asp-action="@(isEdit ? "Edit" : "Create")" asp-controller="Product"
+              asp-route-code="@(isEdit ? Model.ProductCode : null)"
+              data-ajax="true" id="productForm">
+            @Html.AntiForgeryToken()
+<fieldset @(isReadOnly ? Html.Raw("disabled=\"disabled\"") : Html.Raw(""))>
+
+            <div class="row g-3">
+                <!-- 代號 / 名稱 -->
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["ProductCode"] <span class="text-danger">*</span></label>
+                    @if (isEdit)
+                    {
+                        <input type="text" class="form-control bg-light" value="@Model.ProductCode" readonly />
+                        <input type="hidden" asp-for="ProductCode" />
+                    }
+                    else
+                    {
+                        <input asp-for="ProductCode" class="form-control u-text-transform-uppercase" placeholder="@Localizer["ProductCodePlaceholder"]" />
+                    }
+                    <span asp-validation-for="ProductCode" class="text-danger small"></span>
+                </div>
+                <div class="col-md-8">
+                    <label class="form-label fw-semibold">@Localizer["ProductName"] <span class="text-danger">*</span></label>
+                    <input asp-for="ProductName" class="form-control" />
+                    <span asp-validation-for="ProductName" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <label class="form-label fw-semibold">@Localizer["Spec"]</label>
+                    <input asp-for="Spec" class="form-control" />
+                    <span asp-validation-for="Spec" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["RoutingId"]</label>
+                    <select asp-for="RoutingId" class="form-select product-routing">
+                        <option value="">@Localizer["RoutingIdPlaceholder"]</option>
+                        @foreach (var rt in (ViewBag.Routings as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>()))
+                        {
+                            <option value="@rt.RoutingId">@rt.RoutingId — @rt.RoutingName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="RoutingId" class="text-danger small"></span>
+                </div>
+
+                <!-- 產品類別（多選 + 主要類別） -->
+                <div class="col-12">
+                    <label class="form-label fw-semibold">@Localizer["Categories"] <span class="text-danger">*</span></label>
+                    <div class="form-text text-muted mb-2">@Localizer["CategoryHint"]</div>
+                    @{
+                        var catList = allCats.Cast<dynamic>().ToList();
+                    }
+                    @if (!catList.Any())
+                    {
+                        <div class="alert alert-light text-muted mb-0">@Localizer["NoCategoryData"]</div>
+                    }
+                    else
+                    {
+                        <div class="border rounded u-max-height-240px u-overflow-y-auto">
+                            <table class="table table-sm table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="text-center u-width-70px">@Localizer["Primary"]</th>
+                                        <th class="text-center u-width-70px">@Localizer["SelectColumn"]</th>
+                                        <th>@Localizer["Categories"]</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cat in catList)
+                                    {
+                                        string entryCode = cat.CategoryCode;
+                                        string entryName = cat.CategoryName;
+                                        bool isChecked = selectedCats.Contains(entryCode);
+                                        bool isPrimary = Model.CategoryCode == entryCode;
+                                        <tr>
+                                            <td class="text-center align-middle">
+                                                <input type="radio" class="form-check-input" name="CategoryCode"
+                                                       value="@entryCode" id="pri_@entryCode"
+                                                       @(isPrimary ? "checked" : "")
+                                                       data-action-change="catPrimaryChange" />
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <input type="checkbox" class="form-check-input cat-sel" name="selectedCategories"
+                                                       value="@entryCode" id="sel_@entryCode"
+                                                       @(isChecked ? "checked" : "")
+                                                       data-action-change="catSelectChange" />
+                                            </td>
+                                            <td class="align-middle">
+                                                <label for="sel_@entryCode" class="mb-0 w-100 u-cursor-pointer">@entryCode — @entryName</label>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <span asp-validation-for="CategoryCode" class="text-danger small"></span>
+                    }
+                </div>
+
+                <!-- 單位 -->
+                <div class="col-12"><hr class="my-1" /><span class="text-muted small fw-semibold">@Localizer["UomSection"]</span></div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["SalesUom"]</label>
+                    <select asp-for="SalesUom" class="form-select">
+                        <option value="">@Localizer["UomDefaultToStock"]</option>
+                        @foreach (dynamic u in uomOptions)
+                        {
+                            <option value="@u.UomCode" selected="@(Model.SalesUom == (string)u.UomCode)">
+                                @u.UomCode — @u.UomName
+                            </option>
+                        }
+                    </select>
+                    <span asp-validation-for="SalesUom" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["PurchaseUom"]</label>
+                    <select asp-for="PurchaseUom" class="form-select">
+                        <option value="">@Localizer["UomDefaultToStock"]</option>
+                        @foreach (dynamic u in uomOptions)
+                        {
+                            <option value="@u.UomCode" selected="@(Model.PurchaseUom == (string)u.UomCode)">
+                                @u.UomCode — @u.UomName
+                            </option>
+                        }
+                    </select>
+                    <span asp-validation-for="PurchaseUom" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["StockUom"] <span class="text-danger">*</span></label>
+                    <select asp-for="StockUom" class="form-select" data-action-change="onStockUomChange">
+                        <option value="">—</option>
+                        @foreach (dynamic u in uomOptions)
+                        {
+                            <option value="@u.UomCode" selected="@(Model.StockUom == (string)u.UomCode)">
+                                @u.UomCode — @u.UomName
+                            </option>
+                        }
+                    </select>
+                    <span asp-validation-for="StockUom" class="text-danger small"></span>
+                </div>
+
+                <!-- 存貨 / 計劃 -->
+                <div class="col-12"><hr class="my-1" /><span class="text-muted small fw-semibold">@Localizer["PlanningSection"]</span></div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["StockMode"]</label>
+                    <select asp-for="StockMode" class="form-select">
+                        <option value="">—</option>
+                        <option value="J">J — JIT</option>
+                        <option value="M">M — MRP</option>
+                        <option value="N">N — @Localizer["StockModeN"]</option>
+                        <option value="S">S — @Localizer["StockModeS"]</option>
+                    </select>
+                    <span asp-validation-for="StockMode" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["MrpMode"]</label>
+                    <select asp-for="MrpMode" class="form-select">
+                        <option value="">—</option>
+                        <option value="M">M — @Localizer["MrpModeM"]</option>
+                        <option value="S">S — @Localizer["MrpModeS"]</option>
+                        <option value="P">P — @Localizer["MrpModeP"]</option>
+                    </select>
+                    <span asp-validation-for="MrpMode" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["SafetyStock"]</label>
+                    <input asp-for="SafetyStock" type="number" step="@stockStep" min="0" class="form-control stock-qty-input" />
+                    <span asp-validation-for="SafetyStock" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["StandardCost"]</label>
+                    <input asp-for="StandardCost" type="number" step="@moneyStep" min="0" class="form-control" />
+                    <span asp-validation-for="StandardCost" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["LeadTimeDays"]</label>
+                    <div class="input-group">
+                        <input asp-for="LeadTimeDays" type="number" min="0" class="form-control" />
+                        <span asp-validation-for="LeadTimeDays" class="text-danger small"></span>
+                        <span class="input-group-text">@Localizer["Days"]</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["UrgentLeadTimeDays"]</label>
+                    <div class="input-group">
+                        <input asp-for="UrgentLeadTimeDays" type="number" min="0" class="form-control" />
+                        <span asp-validation-for="UrgentLeadTimeDays" class="text-danger small"></span>
+                        <span class="input-group-text">@Localizer["Days"]</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["OutsourceQtyPerDay"]</label>
+                    <input asp-for="OutsourceQtyPerDay" type="number" step="@stockStep" min="0" class="form-control stock-qty-input" />
+                    <span asp-validation-for="OutsourceQtyPerDay" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["ShelfLifeDays"]</label>
+                    <div class="input-group">
+                        <input asp-for="ShelfLifeDays" type="number" min="0" class="form-control" />
+                        <span asp-validation-for="ShelfLifeDays" class="text-danger small"></span>
+                        <span class="input-group-text">@Localizer["Days"]</span>
+                    </div>
+                </div>
+
+                <!-- 重量 / 包裝 -->
+                <div class="col-12"><hr class="my-1" /><span class="text-muted small fw-semibold">@Localizer["PackagingSection"]</span></div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["NetWeight"]</label>
+                    <div class="input-group">
+                        <input asp-for="NetWeight" type="number" step="any" min="0" class="form-control" />
+                        <span asp-validation-for="NetWeight" class="text-danger small"></span>
+                        <span class="input-group-text">kg</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["GrossWeight"]</label>
+                    <div class="input-group">
+                        <input asp-for="GrossWeight" type="number" step="any" min="0" class="form-control" />
+                        <span asp-validation-for="GrossWeight" class="text-danger small"></span>
+                        <span class="input-group-text">kg</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["BoxQty"]</label>
+                    <input asp-for="BoxQty" type="number" step="@stockStep" min="0" class="form-control stock-qty-input" />
+                    <span asp-validation-for="BoxQty" class="text-danger small"></span>
+                </div>
+
+                <!-- 品質 -->
+                <div class="col-12"><hr class="my-1" /><span class="text-muted small fw-semibold">@Localizer["QualitySection"]</span></div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["InspectionLevelN"]</label>
+                    <input asp-for="InspectionLevelN" class="form-control" />
+                    <span asp-validation-for="InspectionLevelN" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["InspectionLevelR"]</label>
+                    <input asp-for="InspectionLevelR" class="form-control" />
+                    <span asp-validation-for="InspectionLevelR" class="text-danger small"></span>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["InspectionLevelC"]</label>
+                    <input asp-for="InspectionLevelC" class="form-control" />
+                    <span asp-validation-for="InspectionLevelC" class="text-danger small"></span>
+                </div>
+
+                <!-- 其他 -->
+                <div class="col-12">
+                    <label class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                    <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+                    <span asp-validation-for="Remarks" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input type="checkbox" asp-for="IsLotControlled" class="form-check-input" id="chkLot" />
+                            <label class="form-check-label" for="chkLot">@Localizer["IsLotControlled"]</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" asp-for="IsActive" class="form-check-input" id="prodIsActive" />
+                            <label class="form-check-label fw-semibold" for="prodIsActive">@Localizer["IsActive"]</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+                </button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+                    @Localizer["Cancel"]
+                </button>
+            </div>
+</fieldset>
+@if (isReadOnly)
+{
+    <div class="px-3 pb-3 pt-2 border-top text-end">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">
+            <i class="bi bi-x-lg me-1"></i>@SL["Close"]
+        </button>
+    </div>
+}
+        </form>
+</div>
+
+@* 面板互動 handler（onStockUomChange/catPrimaryChange/catSelectChange）與 .product-routing
+   select2 初始化已移至 Product/Index.cshtml 的 @@section Scripts —— 本 partial 由
+   DOMPurify.sanitize 注入會剝除 <script>，inline 腳本在此無法執行。 *@

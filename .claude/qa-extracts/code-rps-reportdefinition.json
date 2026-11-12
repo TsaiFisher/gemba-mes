@@ -1,0 +1,46 @@
+{
+  "sourcePath": "Modules/RPS/Models/ReportDefinition.cs",
+  "sourceHash": "5b13512ab8bfcd999f820da2c8e3ff87de87d7c31c256e20d6b8a81869137741",
+  "entries": [
+    {
+      "slug": "code-rps-reportdefinition-284366f6",
+      "lang": "zh",
+      "headingPath": "報表 › 「工具＋固定參數」的組合",
+      "text": "報表資料範圍的例外處理規則｜本系統在查詢和排程報表的底層結構中，不會強制實作依據廠別或使用者權限來限制資料範圍，這與一般作業單據的規範不同。",
+      "approved": true,
+      "sourceSectionHash": "01cc337bc6c1c2f76b2a9e023a85ed26d506e16354bcaa6d80b7afa2666659c5"
+    },
+    {
+      "slug": "code-rps-reportdefinition-98499466",
+      "lang": "zh",
+      "headingPath": "報表 › 建立當下的角色",
+      "text": "建立角色時的授權範圍判斷｜此欄位用於排程觸發時解析使用者的授權範圍，但當使用者直接點擊進入常用查詢介面時，則必須以該使用者的實際角色來決定其可見的權限。",
+      "approved": true,
+      "sourceSectionHash": "af1fa965eb0bd5584aebf8b880712fa8ef7981ee60002c9f26ee95a225aafafd"
+    },
+    {
+      "slug": "code-rps-reportdefinition-3b2b6fa5",
+      "lang": "zh",
+      "headingPath": "報表 › 存成 2026-07-01~2026-07-31 的上月銷售排",
+      "text": "期間資料範圍的設定規則｜系統在存取「上月銷售排行」時，會以相對時間區間來儲存日期範圍，因此即使下次點開報表，顯示的仍是原先設定的月份資料。",
+      "approved": true,
+      "sourceSectionHash": "da522500c53b2ed3e424b3d1a3b2666666b958884ef07a60f70becc11522b39d"
+    },
+    {
+      "slug": "code-rps-reportdefinition-587a00aa",
+      "lang": "zh",
+      "headingPath": "報表 › 目前階段只交付常用查詢，以下欄位一併建好但尚無寫入者",
+      "text": "報表欄位預設值說明｜目前只提供常用的查詢結果，因此相關的排程資訊欄位雖然已建置好，但尚未有任何資料寫入。",
+      "approved": true,
+      "sourceSectionHash": "4655a875807fddfa7d9820358f196a8a149e2b42affec74e322dfb8317431d82"
+    },
+    {
+      "slug": "code-rps-reportdefinition-be2b0501",
+      "lang": "zh",
+      "headingPath": "報表 › 它只是把  拉到現在讓派工器撈",
+      "text": "觸發方式與執行記錄的區別｜當使用者點擊立即執行時，系統會將此行為視為排程到期觸發的結果，目的是讓後續的報表處理機制能夠正確地追蹤誰在什麼情況下產生了這份報表。",
+      "approved": true,
+      "sourceSectionHash": "eed24f39ce8ad7c8c8efb4860595582e4cba4cf5644a8ec6f201ca2eb0ab7657"
+    }
+  ]
+}

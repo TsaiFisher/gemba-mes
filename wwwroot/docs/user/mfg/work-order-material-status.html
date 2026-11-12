@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Work Order Material Status — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>工單用料狀況 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link active"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clipboard-data me-2 text-primary"></i><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/WorkOrderMaterialStatus &nbsp;|&nbsp; 工單逐料的需求／發料／缺料一覽</span><span lang="en">Route: /WorkOrderMaterialStatus &nbsp;|&nbsp; Demand, issue and shortage by material for a work order</span></div>
+    </div>
+
+    <p><span lang="zh">以「工單 × 工序 × BOM 序」逐料列出需求量、已發料、已退料、淨發料、未發量與廠級可用量，並標示備齊狀態。
+       生產批投產被缺料擋下時，可由此查出是哪一張工單、哪一項料、缺多少。</span><span lang="en">Lists demand, issued, returned, net issued, unissued and plant-level available quantity for every material by work order × operation × BOM sequence, together with its kitting status.
+       When a production batch is blocked from release by a shortage, this is where you find out which work order, which material and how much is missing.</span></p>
+    <img class="screen-shot" src="img/work-order-material-status.png" data-src-en="img/en/work-order-material-status.png" alt="工單用料狀況畫面截圖" data-alt-en="Work order material status screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">工單用料狀況畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Work order material status screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">可依生產批、工單號、料件品號篩選；勾選「只顯示未齊料」可濾出缺料與待下階完工的料。</span><span lang="en">Can be filtered by production batch, work order number and item; tick "show incomplete kits only" to see just the material that is short or waiting for a lower level to finish.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">上方統計卡顯示用料筆數、缺料筆數、待下階完工筆數與尚有未發料的筆數。</span><span lang="en">The cards at the top show the number of material lines, shortage lines, lines waiting for a lower level to finish and lines with material still unissued.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">支援匯出 Excel（需列印權限）。</span><span lang="en">Export to Excel is supported (print permission required).</span></div></div>
+
+    <h2 id="field-definitions"><i class="bi bi-info-circle me-2 text-primary"></i><span lang="zh">欄位口徑</span><span lang="en">Field definitions</span></h2>
+    <ul>
+      <li><b><span lang="zh">需求量／已發／已退</span><span lang="en">Demand / Issued / Returned</span></b><span lang="zh">：取自工單用料，單位為發料單位。</span><span lang="en">: taken from the work order material, in the issuing unit. </span><b><span lang="zh">淨發料</span><span lang="en">Net Issued</span></b><span lang="zh">＝已發 − 已退；</span><span lang="en"> = issued − returned; </span><b><span lang="zh">未發量</span><span lang="en">Unissued qty</span></b><span lang="zh">＝需求 − 淨發（下限 0）。</span><span lang="en"> = demand − net issued (never below 0).</span></li>
+      <li><b><span lang="zh">可用量</span><span lang="en">Available</span></b><span lang="zh">＝廠級在手量 − 有效在手預留（排除待驗倉）＋</span><span lang="en"> = plant on hand − active on-hand reservations (quarantine warehouses excluded) +</span> <b><span lang="zh">本工單自身的預留</span><span lang="en">the work order's own reservation</span></b><span lang="zh">，與生產批投產的料況閘口同一口徑。
+          MRP 展開時會為工單鎖住在手庫存，那筆預留是「為這張工單保留的」，判斷本工單是否備齊時視為已覆蓋；
+          被</span><span lang="en">, on the same basis as the material gate in batch release.
+          The MRP run locks on-hand stock for the work order, and because that reservation is held for this work order it counts as covered when deciding whether the work order is fully staged;
+          quantities locked by </span><b><span lang="zh">其他</span><span lang="en">Other</span></b><span lang="zh">單據鎖走的量則照常扣減。
+          該工單的</span><span lang="en"> Quantities locked by documents are still deducted as usual.
+          The work order's </span><a href="../inv/material-staging.html"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a><span lang="zh">鎖住的量同樣算「自己的」——備料確認時工單預留已轉移過去。</span><span lang="en"> the quantity it has locked also counts as "its own" — the work order's reservation was transferred to it when the staging was confirmed.</span></li>
+      <li><b><span lang="zh">備齊狀態</span><span lang="en">Kitting status</span></b>：
+        <ul>
+          <li><span class="badge bg-success"><span lang="zh">已備齊</span><span lang="en">Ready</span></span> <span lang="zh">可用量足夠，或後沖料（完工才扣），或下階自製工單已完工。</span><span lang="en">Enough is available, or the line is backflushed (deducted at completion), or the lower-level work order is already finished.</span></li>
+          <li><span class="badge bg-danger"><span lang="zh">缺料</span><span lang="en">Shortage</span></span> <span lang="zh">可用量小於需求量。</span><span lang="en">Available is less than demand.</span></li>
+          <li><span class="badge bg-warning text-dark"><span lang="zh">待下階完工</span><span lang="en">Pending Sub-assembly</span></span> <span lang="zh">該料由下階自製工單供給，子工單尚未完工。</span><span lang="en">The material comes from a lower-level work order which has not finished yet.</span></li>
+        </ul>
+      </li>
+      <li><span lang="zh">後沖料與下階自製料不比對庫存，可用量欄顯示「—」。</span><span lang="en">Backflushed material and lower-level made items are not checked against stock, so the available column shows "—".</span></li>
+      <li><span lang="zh">本畫面為唯讀查詢，不會改寫工單的料況狀態；要更新工單表頭的料況徽章，請至工單明細按「檢查料況」。</span><span lang="en">This screen is a read-only enquiry and does not change the work order's material status; to refresh the material badge on the work order header, open the work order and click "Check material".</span></li>
+    </ul>
+
+    <h2 id="quantity-display-and-decimals"><i class="bi bi-123 me-2 text-primary"></i><span lang="zh">數量顯示與小數位</span><span lang="en">Quantity display and decimals</span></h2>
+    <ul>
+      <li><span lang="zh">數量預設依該料的</span><span lang="en">The quantity defaults to the material's </span><b><span lang="zh">計量單位小數位</span><span lang="en">Unit of measure decimals</span></b><span lang="zh">顯示（如 PCS 為 0 位，顯示整數）。</span><span lang="en"> is displayed (PCS has 0 decimals, so a whole number is shown).</span></li>
+      <li><span lang="zh">但需求量可能因損耗率／下角率算出超過單位精度的值（例：105 × 1.05 ＝ 110.25，而 PCS 為 0 位）。
+          此時</span><span lang="en">but the scrap rate and offcut rate can produce a requirement with more decimals than the unit allows (e.g. 105 × 1.05 = 110.25 while PCS has 0 decimals).
+          In that case </span><b><span lang="zh">顯示真值不四捨五入</span><span lang="en">shows the true value without rounding</span></b><span lang="zh">，避免出現「需求 110、可用 110 卻標缺料」的誤解。</span><span lang="en">, so you never get the confusing case of "demand 110, available 110, yet marked short".</span></li>
+      <li><span lang="zh">判為缺料的列，可用量下方會加註</span><span lang="en">Rows judged short of material carry a note under the available quantity </span><span class="badge bg-danger"><span lang="zh">尚缺</span><span lang="en">Short by</span></span><span lang="zh">差額（如「尚缺 0.25」），
+          即需求量 − 可用量的實際差距。</span><span lang="en"> the shortfall (e.g. "0.25 short"),
+          i.e. the actual gap between demand and available quantity.</span></li>
+      <li><b><span lang="zh">2026-07 起</span><span lang="en">From 2026-07</span></b><span lang="zh">：MRP 展開產生工單用料時，需求量會依該料計量單位的小數位</span><span lang="en">: when the MRP run creates the work order material, the demand is rounded to the decimals of that material's unit of measure </span><b><span lang="zh">無條件進位</span><span lang="en">rounded up</span></b>
+          <span lang="zh">（PCS 0 位 → 110.25 進位為 111），避免整數單位出現小數需求量。
+          此調整只影響之後新展開的工單；</span><span lang="en">(PCS has 0 decimals, so 110.25 rounds up to 111), so that a whole-number unit never carries a fractional demand.
+          The adjustment only affects work orders exploded afterwards; </span><b><span lang="zh">既有工單的需求量不會被追溯修改</span><span lang="en">the demand quantity of existing work orders is not changed retroactively</span></b><span lang="zh">，
+          若要讓舊工單改用新口徑，需重跑該張</span><span lang="en">,
+          to move an older work order onto the new basis, re-run its</span> <a href="mrp-run.html"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a><span lang="zh">。
+          計量單位主檔查無該單位時維持原值不進位。</span><span lang="en">.
+          If the unit is not found in the unit-of-measure master the value is kept as it is, without rounding up.</span></li>
+    </ul>
+
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">生產批 / 工單號 / 料件品號</span><span lang="en">Batch / Work order No / Item</span></td><td><span lang="zh">各自縮小查詢範圍</span><span lang="en">each narrows the query scope</span></td></tr>
+        <tr><td><span lang="zh">僅顯示短缺</span><span lang="en">Show shortages only</span></td><td><span lang="zh">只列出未備齊（未發量大於可用量）的料件</span><span lang="en">Lists only items that are not fully staged (unissued quantity greater than available)</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">清單欄位</span><span lang="en">List columns</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">生產批 / 工單號 / 工單狀態</span><span lang="en">Batch / Work order No / Status</span></td><td><span lang="zh">料況所屬的生產批、工單與工單目前狀態</span><span lang="en">The production batch and work order the material status belongs to, and the work order's current status</span></td></tr>
+        <tr><td><span lang="zh">產出品號</span><span lang="en">Output</span></td><td><span lang="zh">工單要生產的成品／半成品</span><span lang="en">Finished or semi-finished item the work order produces</span></td></tr>
+        <tr><td><span lang="zh">工序</span><span lang="en">Operation</span></td><td><span lang="zh">該用料所屬的途程工序</span><span lang="en">Routing operation the material belongs to</span></td></tr>
+        <tr><td><span lang="zh">料件品號 / 品名</span><span lang="en">Item code / Item name</span></td><td><span lang="zh">要領用的料件</span><span lang="en">Item to be issued</span></td></tr>
+        <tr><td><span lang="zh">發料方式</span><span lang="en">Issue Method</span></td><td><span lang="zh">領料（人工開單領用）或倒扣（Backflush，完工時依用量自動扣帳）</span><span lang="en">Issue (a slip is raised by hand) or backflush (deducted automatically at completion according to the usage)</span></td></tr>
+        <tr><td><span lang="zh">需求量</span><span lang="en">Demand qty</span></td><td><span lang="zh">依工單數量與料表用量（含損耗率、下角率）計算的應領量</span><span lang="en">Quantity that should be issued, calculated from the work order quantity and the BOM usage (including scrap rate and offcut rate)</span></td></tr>
+        <tr><td><span lang="zh">已發料 / 已退料</span><span lang="en">Issued / Returned</span></td><td><span lang="zh">累計實際發出與退回的數量</span><span lang="en">Cumulative quantity actually issued and returned</span></td></tr>
+        <tr><td><span lang="zh">淨發料</span><span lang="en">Net Issued</span></td><td><span lang="zh">已發料 － 已退料，即目前實際投入產線的數量</span><span lang="en">Issued − returned, i.e. the quantity actually on the line now</span></td></tr>
+        <tr><td><span lang="zh">未發量</span><span lang="en">Unissued qty</span></td><td><span lang="zh">需求量 － 淨發料，仍待發出的數量</span><span lang="en">Demand − net issued, i.e. what is still to be issued</span></td></tr>
+        <tr><td><span lang="zh">可用量</span><span lang="en">Available</span></td><td><span lang="zh">該料件目前庫存的可用量（已扣除他單預留）</span><span lang="en">Available stock of the item at the moment (other documents' reservations already deducted)</span></td></tr>
+        <tr><td><span lang="zh">備齊狀態</span><span lang="en">Kitting status</span></td><td><span lang="zh">未發量與可用量的比較結果；可用量不足即為短缺，會擋住投產放行</span><span lang="en">The unissued quantity compared with the available quantity; too little available counts as a shortage and blocks release</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p>
+      <a href="batch-release.html"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a> ｜
+      <a href="work-order.html"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a> ｜
+      <a href="material-slip.html"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a> ｜
+      <a href="preparation-board.html"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    </p>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Guided tutorials — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>操作教學 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="tutor.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">課程分類</span><span lang="en">Categories</span></div>
+    <a href="#m-main" class="nav-link"><span lang="zh">總覽</span><span lang="en">Overview</span> <span class="badge bg-secondary">6</span></a>
+    <a href="#m-bas" class="nav-link"><span lang="zh">基礎資料 BAS</span><span lang="en">Master Data (BAS)</span> <span class="badge bg-secondary">6</span></a>
+    <a href="#m-ord" class="nav-link"><span lang="zh">訂單 ORD</span><span lang="en">Orders (ORD)</span> <span class="badge bg-secondary">6</span></a>
+    <a href="#m-pur" class="nav-link"><span lang="zh">採購 PUR</span><span lang="en">Purchasing (PUR)</span> <span class="badge bg-secondary">6</span></a>
+    <a href="#m-mfg" class="nav-link"><span lang="zh">製造 MFG</span><span lang="en">Manufacturing (MFG)</span> <span class="badge bg-secondary">9</span></a>
+    <a href="#m-inv" class="nav-link"><span lang="zh">庫存 INV</span><span lang="en">Inventory (INV)</span> <span class="badge bg-secondary">8</span></a>
+    <a href="#m-qcr" class="nav-link"><span lang="zh">品質 QCR</span><span lang="en">Quality (QCR)</span> <span class="badge bg-secondary">6</span></a>
+    <a href="#m-osp" class="nav-link"><span lang="zh">委外 OSP</span><span lang="en">Outsourcing (OSP)</span> <span class="badge bg-secondary">5</span></a>
+    <a href="#m-fin" class="nav-link"><span lang="zh">財務 FIN</span><span lang="en">Finance (FIN)</span> <span class="badge bg-secondary">5</span></a>
+    <a href="#m-act" class="nav-link"><span lang="zh">會計 ACT</span><span lang="en">Accounting (ACT)</span> <span class="badge bg-secondary">5</span></a>
+    <a href="#m-rpt" class="nav-link"><span lang="zh">報表 RPT</span><span lang="en">Reports (RPT)</span> <span class="badge bg-secondary">5</span></a>
+    <a href="#m-mobile" class="nav-link"><span lang="zh">行動端 Mobile</span><span lang="en">Mobile</span> <span class="badge bg-secondary">4</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-play-btn me-2 text-primary"></i><span lang="zh">操作教學</span><span lang="en">Guided tutorials</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">依系統的作業程序逐步演示：一條課程走完一段跨畫面的完整流程</span><span lang="en">Step through the system's operating procedures: one course walks one complete cross-screen flow</span></div>
+    </div>
+    <p><span lang="zh">每一條課程就是手冊裡的一條作業流程。播放時會依序帶您走過流程上的每一個畫面，顯示該畫面的截圖與逐步操作說明，並可開啟語音朗讀。教學內容全部取自使用手冊本身，不是另寫的一份——手冊更新，教學跟著更新。</span><span lang="en">Each course is one of the process flows in this manual. Playing a course walks you through every screen on that flow in order, showing the screenshot and the step-by-step instructions for it, with optional voice narration. All of the content comes from the user manual itself rather than from a separate copy, so when the manual is updated the tutorials follow.</span></p>
+
+    <div class="tip-box">
+      <strong><span lang="zh">教學是模擬演示，不會動到真實資料。</span><span lang="en">The tutorials are simulated demonstrations and never touch real data.</span></strong>
+      <span lang="zh">演示用的是手冊既有的畫面截圖，不會開啟真正的作業畫面，也不會建立、修改或刪除任何單據。要實際操作請從系統選單進入該畫面。</span><span lang="en">They use the screenshots already in the manual; no real screen is opened and no document is created, changed or deleted. To do the work for real, open the screen from the system menu.</span>
+    </div>
+
+    <div class="note-box">
+      <span lang="zh">流程上標示為外部事件的環節（例如「廠商交貨」）在系統裡沒有對應畫面，播放時會顯示為說明卡片。標示為「替代路徑」的課程是同一段流程的另一種走法（例如簡化模式）。</span><span lang="en">Steps marked as an external event ("supplier delivers", for example) have no screen in the system and are shown as an explanatory card. A course marked "Alternative" is another way through the same stretch of the flow, such as simplified mode.</span>
+    </div>
+
+    <h2 id="m-main"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">總覽</span><span lang="en">Overview</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-main-setup-prerequisites">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">建置前置</span><span lang="en">Setup prerequisites</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">主檔建置（幣別／單位／產品／倉庫／廠商） → 途程／BOM → 會計期間開帳</span><span lang="en">Setting up the master data (currency, unit, product, warehouse, supplier) → Routing / BOM → Opening the accounting period</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-main-order-to-cash">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">接單到收款</span><span lang="en">From order to cash</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">銷售訂單 → MRP 展開 → 出貨單 → 揀貨出庫 → 應收發票 → 收款核銷</span><span lang="en">Sales Order → MRP run → Goods Shipment → Picking and issue → AR invoice → Receipt allocation</span></div>
+        <div class="tutor-card-meta"><span lang="zh">6 站</span><span lang="en">6 stops</span> · <span class="tutor-card-src">index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-main-requisition-to-payment">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">請購到付款</span><span lang="en">From requisition to payment</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">請購單 → 採購單 → 進貨單 → IQC 檢驗 → 入庫上架 → 應付發票 → 付款核銷</span><span lang="en">Purchase requisition → Purchase Order → Goods Receipt → IQC inspection → Put-Away → AP Invoice → Payment allocation</span></div>
+        <div class="tutor-card-meta"><span lang="zh">7 站</span><span lang="en">7 stops</span> · <span class="tutor-card-src">index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-main-plan-to-production">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">計畫到生產</span><span lang="en">From plan to production</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">工單 → 排程派工 → 備料發料 → 現場報工 → FQC 完工檢驗 → 完工入庫 → 工單成本</span><span lang="en">Work order → Scheduling and dispatch → Staging and issue → Shop-floor reporting → FQC final inspection → Production Putaway → Work order cost</span></div>
+        <div class="tutor-card-meta"><span lang="zh">7 站</span><span lang="en">7 stops</span> · <span class="tutor-card-src">index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-main-outsource-processing">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">委外加工</span><span lang="en">Outsource processing</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">工序設為委外 → 委外採購單 → 委外發料 → 委外收貨 → 委外應付發票</span><span lang="en">The operation is set as outsourced → Outsource purchase order → Issue to Outsource → Outsource receipt → Outsource AP invoice</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-main-period-end-closing">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">期末結帳</span><span lang="en">Period-end closing</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">單據過帳 → 日記帳 → 月結檢查 → 期間關帳 → 財務／管理報表</span><span lang="en">Posting the document → Journal → Month-end checks → Closing the period → Financial and management reports</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">index.html</span></div>
+      </a>
+    </div>
+    <h2 id="m-bas"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">基礎資料 BAS</span><span lang="en">Master Data (BAS)</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-bas-1-financial-and-measurement">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">① 財務計量</span><span lang="en">① Financial and measurement</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">幣別與匯率 → 稅別 → 計量單位 → 會計期間</span><span lang="en">Currency and exchange rates → Tax → Unit of Measure → Accounting period</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">bas/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-bas-2-products">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">② 產品</span><span lang="en">② Products</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">產品類別 → 產品主檔（MRP 模式／前置天數） → 途程主檔（工序＋BOM）</span><span lang="en">Product Category → Product Master (MRP mode / lead time) → Routing master (operations + BOM)</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">bas/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-bas-3-plant-facilities">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">③ 廠別設施</span><span lang="en">③ Plant facilities</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">倉庫／儲位 → 班別 → 班別群組 → 特殊日 → 工作中心（費率） → 工作日曆</span><span lang="en">Warehouse / Location → Shift → Shift Group → Special Day → Work Center (rates) → Work Calendar</span></div>
+        <div class="tutor-card-meta"><span lang="zh">6 站</span><span lang="en">6 stops</span> · <span class="tutor-card-src">bas/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-bas-4-partners-and-doc-numbers">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">④ 往來與單號</span><span lang="en">④ Partners and doc numbers</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">公司／客戶／供應商 → 單號設定 → 庫存異動類型</span><span lang="en">Company / Customer / Supplier → Doc Number Config → Inventory Transaction Type</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">bas/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-bas-5-production-aids">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">⑤ 生產輔具</span><span lang="en">⑤ Production aids</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">模具 → 容器 → 生產排程（模具衝突檢查）</span><span lang="en">Tooling → Container → Production scheduling (tooling conflict check)</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">bas/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-bas-downstream-use">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">下游使用</span><span lang="en">Downstream use</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">主檔完成 → 請購／採購 → 銷售訂單 → 工單生產 → 庫存異動</span><span lang="en">Master data complete → Purchase request / purchase order → Sales Order → Work order production → Inventory Movement</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">bas/index.html</span></div>
+      </a>
+    </div>
+    <h2 id="m-ord"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">訂單 ORD</span><span lang="en">Orders (ORD)</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-ord-order-to-stock">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">接單備貨</span><span lang="en">Order to stock</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">客戶需求 → 銷售訂單 → MRP 執行 → 工單生產 → 採購進貨 → 成品庫存</span><span lang="en">Customer demand → Sales Order → MRP Run → Work order production → PO Receipts → Finished goods stock</span></div>
+        <div class="tutor-card-meta"><span lang="zh">6 站</span><span lang="en">6 stops</span> · <span class="tutor-card-src">ord/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-ord-shipment-and-collection">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">出貨收款</span><span lang="en">Shipment and collection</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">出貨單 → 倉庫作業揀貨出庫 → 應收發票 → 收款作業（核銷） → 應收帳齡</span><span lang="en">Goods Shipment → Warehouse picking and issue → AR invoice → Receipts (allocation) → AR aging</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">ord/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-ord-return">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">退貨</span><span lang="en">Return</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">銷退單 → 退貨入庫 → 應收沖減 → 退貨率分析</span><span lang="en">Sales Return → Return into stock → AR offset → Return Rate</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">ord/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-ord-internal-demand">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">內部需求</span><span lang="en">Internal demand</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">內部訂單 → MRP 執行 → 跨廠調撥</span><span lang="en">Internal Order → MRP Run → Cross-plant transfer</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">ord/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-ord-preparation">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">事前準備</span><span lang="en">Preparation</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">客戶主檔 → 產品主檔 → 銷售預測（供 MRP 需求）</span><span lang="en">Customer master → Product Master → Sales forecast (as MRP demand)</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">ord/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-ord-tracking-and-analysis">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">追蹤分析</span><span lang="en">Tracking and analysis</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">訂單逾期跟催 → 交期達成率 → 銷售排名 → 銷售趨勢 → 毛利分析</span><span lang="en">Overdue Sales Orders → Delivery Rate → Sales Ranking → Sales Trend → Gross Margin Analysis</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">ord/index.html</span></div>
+      </a>
+    </div>
+    <h2 id="m-pur"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">採購 PUR</span><span lang="en">Purchasing (PUR)</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-pur-main-purchasing-flow">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">採購主流程</span><span lang="en">Main purchasing flow</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">MRP 執行 → 請購單 → 採購單 → 廠商交貨 → 進貨單</span><span lang="en">MRP Run → Purchase requisition → Purchase Order → Supplier delivery → Goods Receipt</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">pur/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-pur-incoming-inspection">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">進料檢驗</span><span lang="en">Incoming inspection</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">進貨單 → IQC 檢驗單 → 倉庫作業入庫 → 應付發票 → 付款作業</span><span lang="en">Goods Receipt → IQC inspection order → Warehouse put-away → AP Invoice → AP Payment</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">pur/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-pur-disposition-of-a-failed-evaluation">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">不合格處置</span><span lang="en">Disposition of a failed evaluation</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">IQC 檢驗單 → NCR 不合格處置 → 進貨退出 → 應付沖減</span><span lang="en">IQC inspection order → NCR failure disposition → Goods Return → AP offset</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">pur/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-pur-outsource-osp">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">委外（OSP）</span><span lang="en">Outsource (OSP)</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">委外報價主檔 → 委外採購單 → 委外發料 → 委外收貨 → 委外重工單</span><span lang="en">Outsource Quotation → Outsource purchase order → Issue to Outsource → Outsource receipt → Outsource Rework</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">pur/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-pur-preparation">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">事前準備</span><span lang="en">Preparation</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">供應商主檔 → 廠商單價目錄 → 採購單單價</span><span lang="en">Supplier master → Vendor Price List → Purchase order price</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">pur/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-pur-follow-up-and-evaluation">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">追蹤與評核</span><span lang="en">Follow-up and evaluation</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">採購逾期跟催 → 委外進度追蹤 → 交期達成率 → 採購金額比較 → 採購價格比較 → 供應商評分卡</span><span lang="en">Overdue Purchase Orders → Outsource Progress → Delivery Rate → Purchase Amount → Purchase Price → Vendor Evaluation</span></div>
+        <div class="tutor-card-meta"><span lang="zh">6 站</span><span lang="en">6 stops</span> · <span class="tutor-card-src">pur/index.html</span></div>
+      </a>
+    </div>
+    <h2 id="m-mfg"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">製造 MFG</span><span lang="en">Manufacturing (MFG)</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-mfg-run-the-plan">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">計畫展開</span><span lang="en">Run the plan</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">銷售訂單 → MRP 執行 → 工單 → 生產批 → 生產批投產</span><span lang="en">Sales Order → MRP Run → Work order → Production batch → Batch Release</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">mfg/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-mfg-other-mrp-output">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">MRP 其他產出</span><span lang="en">Other MRP output</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">MRP 執行 → 請購單（自製件外的採購） → 委外採購單 → MRP 差異決策</span><span lang="en">MRP Run → Purchase requisitions (for anything not made in house) → Outsource purchase order → MRP variance decisions</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">mfg/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-mfg-scheduling-and-dispatch">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">排程派工</span><span lang="en">Scheduling and dispatch</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">生產批投產 → 生產排程 → 備料看板 → 派工作業（上下工報工） → IPQC 製程檢驗</span><span lang="en">Batch Release → Production Schedule → Staging board → Dispatch (clocking on and off, production reporting) → IPQC in-process inspection</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">mfg/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-mfg-simplified-mode">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">簡化模式</span><span lang="en">Simplified Mode</span> <span class="badge bg-warning text-dark"><span lang="zh">替代路徑</span><span lang="en">Alternative</span></span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">系統參數：製造簡化模式 → 工單 → 派工作業（報工） → 完工入庫</span><span lang="en">System parameter: Simplified Manufacturing Mode → Work order → Dispatch (production reporting) → Production Putaway</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">mfg/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-mfg-material-issue">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">領料發料</span><span lang="en">Material issue</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">備料／領料單 → 備料揀貨 → 倉庫作業出庫 → 領料進度追蹤</span><span lang="en">Staging / issue slip → Staging pick → Warehouse operation issue → Issue progress tracking</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">mfg/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-mfg-completed-and-closed">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">完工結案</span><span lang="en">Completed and closed</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">末工序完工 → FQC 完工檢驗 → 完工入庫 → 成品庫存 → 工單成本差異 → 實際費率重估</span><span lang="en">Last operation completed → FQC final inspection → Production Putaway → Finished goods stock → WO Cost Variance → Actual Rate Re-estimation</span></div>
+        <div class="tutor-card-meta"><span lang="zh">6 站</span><span lang="en">6 stops</span> · <span class="tutor-card-src">mfg/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-mfg-outsource-osp">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">委外（OSP）</span><span lang="en">Outsource (OSP)</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">委外報價主檔 → 委外採購單 → 委外發料 → 委外收貨 → 委外重工</span><span lang="en">Outsource Quotation → Outsource purchase order → Issue to Outsource → Outsource receipt → Outsource rework</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">mfg/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-mfg-prerequisites">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">事前設定</span><span lang="en">Prerequisites</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">產品主檔 → 工作中心 → 途程主檔（工序＋BOM） → 工作日曆 → 計劃停機</span><span lang="en">Product Master → Work Center → Routing master (operations + BOM) → Work Calendar → Planned Downtime</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">mfg/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-mfg-shop-floor-and-analysis">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">現場與分析</span><span lang="en">Shop floor and analysis</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">產線即時看板 → 工單進度 → 在製品分析 → 不良率 → 稼動率 → OEE</span><span lang="en">Production Line Status → Work Order Progress → WIP analysis → Defect Rate → Utilization Rate → OEE</span></div>
+        <div class="tutor-card-meta"><span lang="zh">6 站</span><span lang="en">6 stops</span> · <span class="tutor-card-src">mfg/index.html</span></div>
+      </a>
+    </div>
+    <h2 id="m-inv"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">庫存 INV</span><span lang="en">Inventory (INV)</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-inv-document-life-cycle">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">單據生命週期</span><span lang="en">Document life cycle</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">建單（草稿） → 送審／確認 → 倉庫作業（逐儲位執行） → 庫存異動 → 全部完成自動過帳 → 日記帳分錄</span><span lang="en">Create (draft) → Submit / Confirm → Warehouse operations (location by location) → Inventory Movement → Posts automatically once everything is done → Journal entry</span></div>
+        <div class="tutor-card-meta"><span lang="zh">6 站</span><span lang="en">6 stops</span> · <span class="tutor-card-src">inv/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-inv-simplified-mode">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">簡化模式</span><span lang="en">Simplified Mode</span> <span class="badge bg-warning text-dark"><span lang="zh">替代路徑</span><span lang="en">Alternative</span></span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">系統參數：庫存簡化模式 → 建單（草稿） → 確認即直接過帳 → 庫存異動 → 日記帳分錄</span><span lang="en">System parameter: Simplified Inventory Mode → Create (draft) → Confirming posts it directly → Inventory Movement → Journal entry</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">inv/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-inv-receipt-source">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">入庫來源</span><span lang="en">Receipt source</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">進貨單 → 委外收貨 → 完工入庫 → 銷退單 → 上架入庫 → 庫存餘額</span><span lang="en">Goods Receipt → Outsource receipt → Production Putaway → Sales Return → Put-away into stock → Inventory Balance</span></div>
+        <div class="tutor-card-meta"><span lang="zh">6 站</span><span lang="en">6 stops</span> · <span class="tutor-card-src">inv/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-inv-issue-destination">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">出庫去向</span><span lang="en">Issue destination</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">領料單 → 出貨單 → 報廢單 → 借出單 → 樣品單 → 備料揀貨 → 揀貨出庫</span><span lang="en">Material Requisitions → Goods Shipment → Scrap Doc → Lend-out document → Sample doc → Staging pick → Picking and issue</span></div>
+        <div class="tutor-card-meta"><span lang="zh">7 站</span><span lang="en">7 stops</span> · <span class="tutor-card-src">inv/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-inv-movement-within-the-plant">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">廠內異動</span><span lang="en">Movement within the plant</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">庫存調撥 → 跨廠調撥 → 盤點單 → 庫存調整（盤盈虧） → 盤點差異分析</span><span lang="en">Stock transfer → Cross-plant transfer → Count sheet → Stock adjustment (count gains and losses) → Count variance analysis</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">inv/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-inv-outsourcing-osp-rework">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">委外（OSP）／重工</span><span lang="en">Outsourcing (OSP) / rework</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">委外採購單 → 委外發／退料 → 委外收貨 → NCR 重工 → 重工發／退料</span><span lang="en">Outsource purchase order → Outsource issue / return → Outsource receipt → NCR rework → Rework issue / return</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">inv/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-inv-valuation-and-analysis">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">評價與分析</span><span lang="en">Valuation and analysis</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">庫存帳（進銷存） → 進口費用分攤 → 庫存評價 → NRV 存貨減損</span><span lang="en">Stock ledger (in, out and balance) → Landed Cost Allocation → Inventory valuation → NRV inventory impairment</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">inv/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-inv-inventory-health">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">庫存健康度</span><span lang="en">Inventory health</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">缺料分析 → 庫齡分析 → 呆滯料分析 → 庫存週轉率 → 庫存金額分析</span><span lang="en">Shortage analysis → Aging analysis → Slow-moving analysis → Inventory Turnover → Inventory value analysis</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">inv/index.html</span></div>
+      </a>
+    </div>
+    <h2 id="m-qcr"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">品質 QCR</span><span lang="en">Quality (QCR)</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-qcr-iqc-incoming">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">IQC 進料</span><span lang="en">IQC incoming</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">進貨單 → 委外收貨 → 檢驗單（IQC） → 入良品倉</span><span lang="en">Goods Receipt → Outsource receipt → Inspection order (IQC) → into the good-stock warehouse</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">qcr/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-qcr-ipqc-in-process">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">IPQC 製程</span><span lang="en">IPQC in-process</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">派工報工（工序需檢驗） → 檢驗單（IPQC） → NCR 不合格品</span><span lang="en">Dispatch reporting (operation requires inspection) → Inspection order (IPQC) → NCR nonconformance</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">qcr/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-qcr-fqc-final">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">FQC 完工</span><span lang="en">FQC final</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">末工序完工 → 檢驗單（FQC） → 完工入庫</span><span lang="en">Last operation completed → Inspection order (FQC) → Production Putaway</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">qcr/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-qcr-ncr-disposition">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">NCR 處置</span><span lang="en">NCR disposition</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">NCR 不合格品 → 報廢單 → 重工工單 → 特採放行 → 進貨退出</span><span lang="en">NCR nonconformance → Scrap Doc → Rework WO → Use-as-is release → Goods Return</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">qcr/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-qcr-prerequisites">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">事前設定</span><span lang="en">Prerequisites</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">產品主檔（是否需檢驗） → 不良項目代碼 → 檢驗規範（抽樣水準） → 儀器校正</span><span lang="en">Product master (whether inspection is required) → Defect Codes → Inspection spec (sampling level) → Instrument calibration</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">qcr/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-qcr-quality-analysis">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">品質分析</span><span lang="en">Quality analysis</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">檢驗實績 → SPC 製程能力 → 不良率分析 → 供應商評分卡</span><span lang="en">Inspection results → SPC process capability → Defect rate analysis → Vendor Evaluation</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">qcr/index.html</span></div>
+      </a>
+    </div>
+    <h2 id="m-osp"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">委外 OSP</span><span lang="en">Outsourcing (OSP)</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-osp-outsourcing-planning">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">委外規劃</span><span lang="en">Outsourcing planning</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">途程（工序設為委外） → 委外報價主檔 → MRP 委外建議 → 委外採購單</span><span lang="en">Routing (operation flagged as outsourced) → Outsource Quotation → MRP outsource suggestions → Outsource purchase order</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">osp/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-osp-issue-to-the-subcontractor">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">發料出廠</span><span lang="en">Issue to the subcontractor</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">委外採購單 → 委外發料單（OO） → 倉庫作業出庫 → 加工廠加工</span><span lang="en">Outsource purchase order → Outsource issue (OO) → Warehouse operation issue → Subcontractor processing</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">osp/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-osp-receipt-into-stock">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">收貨入庫</span><span lang="en">Receipt into stock</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">加工廠交貨 → 委外收貨（超耗扣款） → IQC 進料檢驗 → 倉庫作業入庫 → 委外應付發票 → 付款作業</span><span lang="en">Subcontractor delivers → Outsource receipt (with scrap penalty) → IQC incoming inspection → Warehouse put-away → Outsource AP invoice → AP Payment</span></div>
+        <div class="tutor-card-meta"><span lang="zh">6 站</span><span lang="en">6 stops</span> · <span class="tutor-card-src">osp/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-osp-rejects-and-returns">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">不良與退料</span><span lang="en">Rejects and returns</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">委外收貨 → NCR 不合格處置 → 委外重工單 → 委外退料單（OR）</span><span lang="en">Outsource receipt → NCR failure disposition → Outsource Rework → Outsource return (OR)</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">osp/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-osp-tracking-and-reconciliation">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">追蹤對帳</span><span lang="en">Tracking and reconciliation</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">委外進度追蹤（在外料況） → 委外對帳／績效報表 → 供應商評分卡</span><span lang="en">Outsource progress (material at the subcontractor) → Outsource reconciliation and performance reports → Vendor Evaluation</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">osp/index.html</span></div>
+      </a>
+    </div>
+    <h2 id="m-fin"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">財務 FIN</span><span lang="en">Finance (FIN)</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-fin-payables-cycle">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">應付循環</span><span lang="en">The payables cycle</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">進貨單（貨進正常倉） → 委外收貨 → 應付發票 → 付款作業（核銷） → 銀行帳戶餘額</span><span lang="en">Goods receipt (stock into a normal warehouse) → Outsource receipt → AP Invoice → Payments (allocation) → Bank account balance</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">fin/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-fin-receivables-cycle">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">應收循環</span><span lang="en">The receivables cycle</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">出貨單 → 應收發票 → 收款作業（核銷） → 銀行帳戶餘額</span><span lang="en">Goods Shipment → AR invoice → Receipts (allocation) → Bank account balance</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">fin/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-fin-return-offset">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">退貨沖減</span><span lang="en">Return offset</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">進貨退出 → 應付沖減 → 銷退單 → 應收沖減</span><span lang="en">Goods Return → AP offset → Sales Return → AR offset</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">fin/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-fin-overdue-monitoring">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">逾期監控</span><span lang="en">Overdue monitoring</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">應付帳齡分析 → 應收帳齡分析 → ECL 預期信用損失 → 呆帳準備</span><span lang="en">AP Aging → AR Aging → ECL expected credit loss → Bad debt provision</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">fin/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-fin-prerequisites">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">事前設定</span><span lang="en">Prerequisites</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">幣別與匯率 → 稅別 → 銀行帳戶 → 會計期間（過帳閘口）</span><span lang="en">Currency and exchange rates → Tax → Bank Account → Accounting period (the posting gate)</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">fin/index.html</span></div>
+      </a>
+    </div>
+    <h2 id="m-act"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">會計 ACT</span><span lang="en">Accounting (ACT)</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-act-day-to-day-posting">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">平時過帳</span><span lang="en">Day-to-day posting</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">會計期間（Open） → 庫存單據過帳 → 應收付過帳 → 日記帳（自動分錄）</span><span lang="en">Accounting period (Open) → Posting inventory documents → Posting AR and AP → Journal (automatic entries)</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">act/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-act-month-end-1">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">月結 ①</span><span lang="en">Month-end ①</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">月結檢查清單 → 各模組單據皆已過帳／結案 → 資料稽核</span><span lang="en">Month-end checklist → Every module's documents are posted or closed → Data audit</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">act/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-act-month-end-2">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">月結 ②</span><span lang="en">Month-end ②</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">部門實際費用 → 實際費率重估 → 工單成本回刷（Final）</span><span lang="en">Department Actual Cost → Actual Rate Re-estimation → Work order cost restatement (Final)</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">act/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-act-month-end-3">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">月結 ③</span><span lang="en">Month-end ③</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">NRV 存貨減損 → ECL 預期信用損失 → 呆帳準備 → 期末匯率重評 → 評估分錄入帳</span><span lang="en">NRV inventory impairment → ECL expected credit loss → Bad debt provision → Period-end revaluation → Post the assessment entry</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">act/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-act-month-end-4">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">月結 ④</span><span lang="en">Month-end ④</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">期間轉 Closing → 關帳 Closed → 損益表 → 資產負債表</span><span lang="en">Switch the period to Closing → Closed → Profit &amp; Loss → Balance Sheet</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">act/index.html</span></div>
+      </a>
+    </div>
+    <h2 id="m-rpt"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">報表 RPT</span><span lang="en">Reports (RPT)</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-rpt-operations-dashboard">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">營運儀表板</span><span lang="en">Operations dashboard</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">銷售訂單 → 工單 → 採購單 → 庫存餘額 → 管理儀表板</span><span lang="en">Sales Order → Work order → Purchase Order → Inventory Balance → Management dashboard</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">rpt/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-rpt-financial-statements">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">財務報表</span><span lang="en">Financial statements</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">日記帳 → 月結關帳 → 損益表 → 資產負債表 → 合併財報</span><span lang="en">Journal → Month-end closing → Profit &amp; Loss → Balance Sheet → Consolidated Statements</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">rpt/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-rpt-profitability-analysis">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">獲利分析</span><span lang="en">Profitability analysis</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">出貨（營收） → 工單實際成本 → 毛利率分析 → 多維度毛利 → 邊際貢獻</span><span lang="en">Shipment (revenue) → Work order actual cost → Margin rate analysis → Multi-dimensional margin → Contribution</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">rpt/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-rpt-outsource-reconciliation">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">委外對帳</span><span lang="en">Outsource reconciliation</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">委外採購單 → 委外發料 → 委外收貨 → 委外對帳／績效</span><span lang="en">Outsource purchase order → Issue to Outsource → Outsource receipt → Outsource reconciliation and performance</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">rpt/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-rpt-data-audit">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">資料稽核</span><span lang="en">Data audit</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">單據與帳務資料 → 資料稽核（帳實勾稽） → 月結關帳守門</span><span lang="en">Document and accounting data → Data audit (book vs actual reconciliation) → The month-end closing gate</span></div>
+        <div class="tutor-card-meta"><span lang="zh">3 站</span><span lang="en">3 stops</span> · <span class="tutor-card-src">rpt/index.html</span></div>
+      </a>
+    </div>
+    <h2 id="m-mobile"><i class="bi bi-collection-play me-2 text-primary"></i><span lang="zh">行動端 Mobile</span><span lang="en">Mobile</span></h2>
+    <div class="tutor-list">
+      <a class="tutor-card" href="player.html?flow=flow-mobile-shop-floor">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">生產現場</span><span lang="en">Shop floor</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">登入（含 2FA） → 投產報工（選派工卡） → 備料準備／建立備料單 → 備料單鎖料揀料（桌機）</span><span lang="en">Logging in (with 2FA) → Production and reporting (choose a dispatch card) → Staging / creating a staging order → Staging order stock locking and picking (desktop)</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">mobile/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-mobile-start-to-finish">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">開工到完工</span><span lang="en">From start to finish</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">開工 → FPI 首件檢驗 → 報工（可多次） → IPQC 製程檢驗 → 完工並報工 → 完工入庫（桌機）</span><span lang="en">Start work → FPI first-piece inspection → Reporting (as often as needed) → IPQC in-process inspection → Finish and report → Completion receipt (desktop)</span></div>
+        <div class="tutor-card-meta"><span lang="zh">6 站</span><span lang="en">6 stops</span> · <span class="tutor-card-src">mobile/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-mobile-inventory-operations">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">庫存作業</span><span lang="en">Inventory operations</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">進貨單（桌機） → IQC 進料檢驗 → 進貨上架 → 發料／出貨揀貨 → 倉庫作業（桌機同源）</span><span lang="en">Goods receipt (desktop) → IQC incoming inspection → Receipt put-away → Issue and shipment picking → Warehouse operations (same as the desktop)</span></div>
+        <div class="tutor-card-meta"><span lang="zh">5 站</span><span lang="en">5 stops</span> · <span class="tutor-card-src">mobile/index.html</span></div>
+      </a>
+      <a class="tutor-card" href="player.html?flow=flow-mobile-counting-and-enquiry">
+        <div class="tutor-card-title"><i class="bi bi-play-circle-fill tutor-card-play"></i><span><span lang="zh">盤點與查詢</span><span lang="en">Counting and enquiry</span></span></div>
+        <div class="tutor-card-chain"><span lang="zh">盤點單開立（桌機） → 掃碼盤點輸入 → 盤盈虧調整（桌機） → 庫存餘量查詢</span><span lang="en">Raising a count sheet (desktop) → Scan-and-count entry → Count gain/loss adjustment (desktop) → Stock balance enquiry</span></div>
+        <div class="tutor-card-meta"><span lang="zh">4 站</span><span lang="en">4 stops</span> · <span class="tutor-card-src">mobile/index.html</span></div>
+      </a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

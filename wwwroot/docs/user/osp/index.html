@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Outsourcing (OSP) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>委外管理（OSP）— SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">OSP 畫面</span><span lang="en">OSP Screens</span></div>
+    <a href="outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+    <a href="outsource-price.html" class="nav-link"><span lang="zh">委外價格分析</span><span lang="en">Outsource Price Analysis</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關</span><span lang="en">Related</span></div>
+    <a href="../rpt/outsource-performance.html" class="nav-link"><span lang="zh">委外對帳報表（RPT）</span><span lang="en">Outsource reconciliation report (RPT)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">委外管理（OSP）</span><span lang="en">Outsource Management (OSP)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">委外報價 → 委外採購 → 發料 → 收貨 → 重工／對帳的完整委外加工循環</span><span lang="en">The full outsourcing cycle: quotation → outsource PO → material issue → receipt → rework / reconciliation</span></div>
+    </div>
+    <p><span lang="zh">OSP（Outsourcing）模組集中管理工序委外加工：以委外報價主檔維護加工廠 × 工序的單價，由 MRP 或人工開立委外採購單，
+       委外發退料單把原料發往加工廠，完成品以委外收貨入庫並依實際用料計算</span><span lang="en">The OSP (Outsourcing) module manages subcontracted operations in one place: the outsource quotation master holds the price per subcontractor and operation, outsource purchase orders are raised by MRP or by hand, outsource material documents send raw material to the subcontractor, and finished parts come back through an outsource receipt where the actual material usage determines the </span><strong><span lang="zh">超耗扣款</span><span lang="en">Scrap Penalty</span></strong><span lang="zh">，加工不良以委外重工單追蹤成本與索賠歸屬。
+       收貨確認後自動產生委外應付發票（FIN），委外進度追蹤與委外對帳報表（RPT）則提供在外料況與費用勾稽。</span><span lang="en">, while processing rejects are tracked for cost and claim allocation on an outsource rework document. Confirming a receipt creates the outsource AP invoice (FIN) automatically, and outsource progress plus the outsource reconciliation report (RPT) show the material at the subcontractor and reconcile the charges.</span></p>
+
+    <h2 id="core-flow"><i class="bi bi-signpost-2 me-2 text-primary"></i><span lang="zh">核心流程</span><span lang="en">Core flow</span></h2>
+    <div class="tip-box">
+      <strong><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></strong> → <strong><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></strong><span lang="zh">（MRP 建議或人工開立）→</span><span lang="en"> (an MRP suggestion or entered by hand) →</span> <strong><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></strong><span lang="zh">（發料出廠）
+      → 加工廠加工 →</span><span lang="en"> (issue to the subcontractor) → subcontractor processing →</span> <strong><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></strong><span lang="zh">（IQC 檢驗、超耗扣款）→ 委外應付發票（FIN）</span><span lang="en"> (IQC inspection, scrap penalty) → outsource AP invoice (FIN)</span><br>
+      <span lang="zh">不良：</span><span lang="en">Rejects: </span><strong><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></strong><span lang="zh">（成本／索賠歸屬）&nbsp;|&nbsp; 追蹤：</span><span lang="en"> (cost and claim allocation) &nbsp;|&nbsp; Tracking: </span><strong><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></strong><span lang="zh">、委外對帳報表（RPT）</span><span lang="en">, outsource reconciliation report (RPT)</span>
+    </div>
+
+    <h2 id="flow"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></h2>
+    <p class="small text-muted mb-2"><span lang="zh">依作業先後順序排列，點擊方塊可開啟該畫面的操作說明。</span><span lang="en">Arranged in the order the work is done; click a box to open the instructions for that screen. </span><strong><span lang="zh">虛線外框</span><span lang="en">A dashed outline</span></strong><span lang="zh">為其他模組的作業（以顏色區分模組）。</span><span lang="en"> marks a step in another module (colour-coded by module).</span></p>
+    <div class="flow">
+      <div class="flow-legend">
+        <span class="flow-legend-item m-osp"><i class="flow-dot"></i><span lang="zh">OSP 委外（本模組）</span><span lang="en">OSP Outsourcing (this module)</span></span>
+        <span class="flow-legend-item m-mfg"><i class="flow-dot"></i><span lang="zh">MFG 製造</span><span lang="en">MFG Manufacturing</span></span>
+        <span class="flow-legend-item m-inv"><i class="flow-dot"></i><span lang="zh">INV 庫存</span><span lang="en">INV Inventory</span></span>
+        <span class="flow-legend-item m-qcr"><i class="flow-dot"></i><span lang="zh">QCR 品質</span><span lang="en">QCR Quality</span></span>
+        <span class="flow-legend-item m-fin"><i class="flow-dot"></i><span lang="zh">FIN 財務</span><span lang="en">FIN Finance</span></span>
+        <span class="flow-legend-item m-pur"><i class="flow-dot"></i><span lang="zh">PUR 採購</span><span lang="en">PUR Purchasing</span></span>
+        <span class="flow-legend-item m-rpt"><i class="flow-dot"></i><span lang="zh">RPT 報表</span><span lang="en">RPT Reports</span></span>
+        <span class="flow-legend-item"><i class="flow-dot flow-dot-ext"></i><span lang="zh">虛線＝其他模組作業</span><span lang="en">Dashed = a step in another module</span></span>
+      </div>
+
+      <div class="flow-row" id="flow-osp-outsourcing-planning">
+        <div class="flow-row-label"><span lang="zh">委外規劃</span><span lang="en">Outsourcing planning</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-mfg ext" href="../mfg/routing.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">途程（工序設為委外）</span><span lang="en">Routing (operation flagged as outsourced)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp" href="outsource-quotation.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg ext" href="../mfg/mrp-run.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">MRP 委外建議</span><span lang="en">MRP outsource suggestions</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp" href="outsource-purchase-order.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-osp-issue-to-the-subcontractor">
+        <div class="flow-row-label"><span lang="zh">發料出廠</span><span lang="en">Issue to the subcontractor</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-osp" href="outsource-purchase-order.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp" href="outsource-material.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外發料單（OO）</span><span lang="en">Outsource issue (OO)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">倉庫作業出庫</span><span lang="en">Warehouse operation issue</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <span class="flow-node m-ext evt"><span class="flow-mod"><span lang="zh">外部</span><span lang="en">External</span></span><span class="flow-name"><span lang="zh">加工廠加工</span><span lang="en">Subcontractor processing</span></span></span>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-osp-receipt-into-stock">
+        <div class="flow-row-label"><span lang="zh">收貨入庫</span><span lang="en">Receipt into stock</span></div>
+        <div class="flow-steps">
+          <span class="flow-node m-ext evt"><span class="flow-mod"><span lang="zh">外部</span><span lang="en">External</span></span><span class="flow-name"><span lang="zh">加工廠交貨</span><span lang="en">Subcontractor delivers</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp" href="outsource-receipt.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外收貨（超耗扣款）</span><span lang="en">Outsource receipt (with scrap penalty)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr ext" href="../qcr/inspection-order.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">IQC 進料檢驗</span><span lang="en">IQC incoming inspection</span></span></a>
+          <span class="flow-cond"><span lang="zh">合格</span><span lang="en">Qualified</span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">倉庫作業入庫</span><span lang="en">Warehouse put-away</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin ext" href="../fin/ap-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">委外應付發票</span><span lang="en">Outsource AP invoice</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin ext" href="../fin/ap-payment.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">付款作業</span><span lang="en">AP Payment</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-osp-rejects-and-returns">
+        <div class="flow-row-label"><span lang="zh">不良與退料</span><span lang="en">Rejects and returns</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-osp" href="outsource-receipt.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></span></a>
+          <span class="flow-cond"><span lang="zh">加工不良</span><span lang="en">Processing rejects</span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr ext" href="../qcr/ncr.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">NCR 不合格處置</span><span lang="en">NCR failure disposition</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp" href="outsource-rework.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-osp" href="outsource-material.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外退料單（OR）</span><span lang="en">Outsource return (OR)</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-osp-tracking-and-reconciliation">
+        <div class="flow-row-label"><span lang="zh">追蹤對帳</span><span lang="en">Tracking and reconciliation</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-osp" href="outsource-progress.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外進度追蹤（在外料況）</span><span lang="en">Outsource progress (material at the subcontractor)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt ext" href="../rpt/outsource-performance.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">委外對帳／績效報表</span><span lang="en">Outsource reconciliation and performance reports</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-pur ext" href="../pur/vendor-evaluation.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-foot">
+        <i class="bi bi-info-circle me-1"></i><span lang="zh">委外發料的單位成本在</span><span lang="en">The unit cost of an outsource issue is </span><strong><span lang="zh">發料當下即凍結</span><span lang="en">frozen at the moment of issue</span></strong><span lang="zh">（AVCO），超耗扣款依此計算，之後庫存成本變動不影響已發料部分。
+        委外發料屬形態轉換不入損益，加工費於收貨認列。啟用「庫存簡化模式」時，發料／收貨確認即直接異動，不經倉庫作業逐儲位執行。</span><span lang="en"> (AVCO), which is what the scrap penalty is priced at, so later changes in stock cost do not affect material already issued. An outsource issue is a change of form and does not hit profit or loss; the processing fee is recognized at receipt. With "Simplified Inventory Mode" enabled, confirming an issue or receipt moves the stock directly, without location-by-location warehouse operations.</span>
+      </div>
+    </div>
+
+    <h2 id="screen-list"><i class="bi bi-grid me-2 text-primary"></i><span lang="zh">畫面清單</span><span lang="en">Screen list</span></h2>
+    <div class="row g-3">
+      <div class="col-md-6"><a href="outsource-quotation.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-cash-coin me-1 text-primary"></i><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></h6>
+        <div class="text-muted small"><span lang="zh">加工廠 × 工序報價維護</span><span lang="en">Subcontractor × operation price maintenance</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="outsource-purchase-order.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-truck me-1 text-primary"></i><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></h6>
+        <div class="text-muted small"><span lang="zh">工序委外的採購單（MRP 建議或人工開立）</span><span lang="en">Purchase order for an outsourced operation (raised by MRP or by hand)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="outsource-material.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-boxes me-1 text-primary"></i><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></h6>
+        <div class="text-muted small"><span lang="zh">委外加工發料（OO）與退料（OR）</span><span lang="en">Outsource material issue (OO) and return (OR)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="outsource-receipt.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box-arrow-in-right me-1 text-primary"></i><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></h6>
+        <div class="text-muted small"><span lang="zh">完成品收貨入庫與超耗扣款</span><span lang="en">Receipt of finished parts and scrap penalty</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="outsource-rework.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-arrow-repeat me-1 text-primary"></i><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></h6>
+        <div class="text-muted small"><span lang="zh">委外不良重工追蹤與成本／索賠歸屬</span><span lang="en">Tracking of outsourced rework with cost and claim allocation</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="outsource-progress.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-building me-1 text-primary"></i><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></h6>
+        <div class="text-muted small"><span lang="zh">委外單發料／收貨進度總覽</span><span lang="en">Overview of issue and receipt progress per outsource order</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="outsource-price.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-graph-up-arrow me-1 text-primary"></i><span lang="zh">委外價格分析</span><span lang="en">Outsource Price Analysis</span></h6>
+        <div class="text-muted small"><span lang="zh">加工費月趨勢，以及實際收貨單價與委外報價的比價</span><span lang="en">Monthly trend of processing fees, and actual receipt prices compared against quotations</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="../rpt/outsource-performance.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-diagram-3 me-1 text-primary"></i><span lang="zh">委外對帳報表（RPT）</span><span lang="en">Outsource reconciliation report (RPT)</span></h6>
+        <div class="text-muted small"><span lang="zh">委外加工費與損耗勾稽，隸屬管理報表模組</span><span lang="en">Reconciliation of outsource processing fees and scrap; part of the management reports module</span></div></div></div></a></div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

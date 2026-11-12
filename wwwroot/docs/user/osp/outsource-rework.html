@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Outsource Rework — OSP User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>委外重工單 — OSP 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">委外管理目錄</span><span lang="en">Outsourcing Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="index.html#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">OSP 畫面</span><span lang="en">OSP Screens</span></div>
+    <a href="outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="outsource-rework.html" class="nav-link active"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+    <a href="outsource-price.html" class="nav-link"><span lang="zh">委外價格分析</span><span lang="en">Outsource Price Analysis</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關</span><span lang="en">Related</span></div>
+    <a href="../rpt/outsource-performance.html" class="nav-link"><span lang="zh">委外對帳報表（RPT）</span><span lang="en">Outsource reconciliation report (RPT)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-arrow-repeat me-2 text-primary"></i><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/OutsourceRework &nbsp;|&nbsp; 委外加工品不良之重工追蹤與成本／索賠歸屬</span><span lang="en">Route: /OutsourceRework &nbsp;|&nbsp; Rework tracking of outsourced parts with cost and claim allocation</span></div>
+    </div>
+
+    <p><span lang="zh">委外進貨檢驗（IQC）不合格、或委外廠送件後發現問題時，建立委外重工單追蹤重工品的送件與收回，並依</span><span lang="en">When outsourced goods fail incoming inspection (IQC), or a problem is found after parts have been sent, an outsource rework document tracks the parts sent out and received back, and allocates the cost according to </span><strong><span lang="zh">責任歸屬</span><span lang="en">Liability Party</span></strong><span lang="zh">決定成本流向：廠商責任向廠商扣款、我方責任列應付重工加工費、共同責任依比例拆分。</span><span lang="en"> Determines the cost flow: a vendor liability becomes a chargeback, our liability becomes a rework processing fee payable, and shared liability is split by percentage.</span></p>
+    <img class="screen-shot" src="img/outsource-rework.png" data-src-en="img/en/outsource-rework.png" alt="委外重工單畫面截圖" data-alt-en="Outsource rework screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">委外重工單畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Outsource rework screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列可依原始委外派工、來源 NCR、狀態過濾；點「查詢」顯示清單，欄位標題可點擊排序，下方有分頁導航。</span><span lang="en">The search bar filters by original outsource dispatch, source NCR and status; click "Search" to show the list, click a column header to sort, and use the pager below.</span></div></div>
+
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class='badge bg-secondary'><span lang="zh">草稿 Draft</span><span lang="en">Draft</span></span></td><td><span lang="zh">已建立未生效，可自由編輯、刪除。</span><span lang="en">Created but not yet effective; can be freely edited or deleted.</span></td></tr>
+        <tr><td><span class='badge bg-info text-dark'><span lang="zh">已送件 Sent</span><span lang="en">Sent</span></span></td><td><span lang="zh">不良品已送回委外廠重工，等待收回；不可編輯。</span><span lang="en">The rejects have been sent back to the subcontractor for rework and are awaiting return; the document cannot be edited.</span></td></tr>
+        <tr><td><span class='badge bg-success'><span lang="zh">已收回 Received</span><span lang="en">Received</span></span></td><td><span lang="zh">重工品已收回，單據結案，不可再變更。</span><span lang="en">The reworked parts have been received and the document is closed; it can no longer be changed.</span></td></tr>
+        <tr><td><span class='badge bg-danger'><span lang="zh">已作廢 Void</span><span lang="en">Void</span></span></td><td><span lang="zh">草稿或已送件狀態可作廢；已收回不可作廢。</span><span lang="en">Draft and Sent documents can be voided; once received, they cannot.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="cost-and-claim-model-liability-plus-two"><i class="bi bi-cash-coin me-2 text-primary"></i><span lang="zh">成本／索賠模型（責任歸屬＋雙路徑）</span><span lang="en">Cost and claim model (liability plus two paths)</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">責任歸屬</span><span lang="en">Liability Party</span></th><th><span lang="zh">成本流向</span><span lang="en">Cost flow</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">廠商責任 Vendor</span><span lang="en">Vendor</span></td><td><span lang="zh">廠商占比固定 100%：「向廠商扣款」＝重工成本全額（開借項通知或沖抵下期委外應付），加工費 0。</span><span lang="en">With the vendor share fixed at 100%, the "vendor chargeback" is the full rework cost (a debit note or an offset against the next outsource payable) and the processing fee is 0.</span></td></tr>
+        <tr><td><span lang="zh">我方責任 Us</span><span lang="en">Us</span></td><td><span lang="zh">廠商占比固定 0%：「應付重工加工費」＝加工費全額（新委外 PO 或成本加項），扣款 0。</span><span lang="en">With the vendor share fixed at 0%, the "rework processing fee payable" is the full fee (a new outsource PO or a cost add-on) and the chargeback is 0.</span></td></tr>
+        <tr><td><span lang="zh">共同責任 Shared</span><span lang="en">Shared</span></td><td><span lang="zh">輸入廠商責任比例（0–100）：扣款＝重工成本 × 廠商占比、加工費＝加工費 × 我方占比。</span><span lang="en">Enter the vendor share (0–100): chargeback = rework cost × vendor share, processing fee = fee × our share.</span></td></tr>
+      </tbody>
+    </table>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">輸入「重工成本」「重工加工費」全額並選擇責任歸屬，表單即時預覽拆分結果；儲存時由系統依本位幣小數位計算入檔。</span><span lang="en">Enter the full "rework cost" and "processing fee" and choose the liability; the form previews the split immediately, and the values are stored at the local-currency decimal precision when saved.</span></div></div>
+
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">建立與送件</span><span lang="en">Creating and sending</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」，選擇原始委外派工與定責來源 NCR（IQC 不合格之 NCR），輸入重工數量與原因。亦可由 NCR 處置「退件重工」自動建立草稿（自動帶入來源 NCR、數量與原因，預設廠商責任；委外 IQC 來源可自動連結原始派工），再於本畫面補登成本欄位。</span><span lang="en">Click "Add", pick the original outsource dispatch and the NCR that assigns liability (the NCR from a failed IQC), then enter the rework quantity and reason. The NCR disposition "Return-Rework" can also create the draft automatically (bringing in the source NCR, quantity and reason, defaulting to vendor liability, and linking the original dispatch when the source is an outsource IQC); the cost fields are then filled in on this screen.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">設定責任歸屬與成本欄位，儲存為草稿。</span><span lang="en">Set the liability and cost fields, then save as a draft.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點「送件」將不良品送回委外廠重工（Draft → Sent）。</span><span lang="en">Click "Send" to return the rejects to the subcontractor for rework (Draft → Sent).</span></div></div>
+    <h3><span lang="zh">收回</span><span lang="en">Receive</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">重工品回廠後點「收回」結案（Sent → Received）；若以新委外採購單重工，可於單上關聯「重工委外採購單」。</span><span lang="en">When the reworked parts come back, click "Receive" to close the document (Sent → Received); if the rework used a new outsource PO, link it in the "Rework Outsource PO" field.</span></div></div>
+
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。列印單含原派工、委外採購單、品號與品名、重工數量、責任歸屬與重工費用。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The printout shows the original dispatch, outsource PO, product code and name, rework quantity, liability and rework charges.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">欄位</span><span lang="en">Field</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">委外重工單號</span><span lang="en">Rework No</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">原派工單</span><span lang="en">Original dispatch</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">產生不良、需要重工的來源派工單</span><span lang="en">The dispatch that produced the rejects and needs rework</span></td></tr>
+        <tr><td><span lang="zh">來源 NCR</span><span lang="en">Source NCR</span></td><td><span lang="zh">觸發本次重工的不合格通知單，用於品質追溯</span><span lang="en">The non-conformance report that triggered this rework, for quality traceability</span></td></tr>
+        <tr><td><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></td><td><span lang="zh">重工作業對應的委外採購單</span><span lang="en">Outsource PO the rework belongs to</span></td></tr>
+        <tr><td><span lang="zh">重工數量</span><span lang="en">Rework Qty</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">要重工的不良品數量</span><span lang="en">Quantity of rejects to be reworked</span></td></tr>
+        <tr><td><span lang="zh">重工原因</span><span lang="en">Rework Reason</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">造成重工的原因說明，供品質改善分析</span><span lang="en">Reason for the rework, used in quality improvement analysis</span></td></tr>
+        <tr><td><span lang="zh">責任歸屬</span><span lang="en">Liability Party</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">判定責任方（本公司／委外廠商／共同分擔），決定費用由誰負擔</span><span lang="en">Determines the liable party (our company / the subcontractor / shared), and therefore who bears the cost</span></td></tr>
+        <tr><td><span lang="zh">廠商負擔比例</span><span lang="en">Vendor Liable %</span></td><td><span lang="zh">責任為共同分擔時，廠商應負擔的百分比；據此拆分重工成本</span><span lang="en">Percentage the subcontractor bears when liability is shared; the rework cost is split accordingly</span></td></tr>
+        <tr><td><span lang="zh">重工成本</span><span lang="en">Rework Cost</span></td><td><span lang="zh">本次重工發生的總成本</span><span lang="en">Total cost incurred by this rework</span></td></tr>
+        <tr><td><span lang="zh">加工費</span><span lang="en">Processing Fee</span></td><td><span lang="zh">應付委外廠商的重工加工費；廠商責任部分會自加工費中扣抵</span><span lang="en">Rework processing fee payable to the subcontractor; the vendor's share is deducted from the fee</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">補充說明</span><span lang="en">Notes</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="outsource-receipt.html"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>、<a href="outsource-purchase-order.html"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>、<a href="../qcr/ncr.html"><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></a>、<a href="../pur/goods-return.html"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">退件（不重工、直接退回）走 NCR 處置「退回」產生採購退貨單，不在本畫面處理。向廠商扣款沿用委外扣款機制沖抵委外應付，不另建財務通道。</span><span lang="en"> Returns without rework are handled by the NCR disposition "Return", which creates a purchase return, not on this screen. Vendor chargebacks reuse the outsource deduction mechanism against the outsource payable, with no separate financial channel.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

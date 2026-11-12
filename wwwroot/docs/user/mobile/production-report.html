@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Production report — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>報工 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link active"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clipboard-check me-2 text-primary"></i><span lang="zh">報工</span><span lang="en">Production report</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/mfg/reports.html &nbsp;|&nbsp; 回報合格與不良數量</span><span lang="en">Path: /mobile/mfg/reports.html &nbsp;|&nbsp; Reporting good and defective quantities</span></div>
+    </div>
+
+    <p><span lang="zh">由開工作業頁點「報工」進入，必須先開工才能報工——直接開啟本頁會顯示「缺少上工 Session ID，請先開工」且無法送出。</span><span lang="en">Opened from the production session screen by tapping "Report". You have to have started work first — opening this page directly shows "no session ID, please start work first" and nothing can be submitted.</span></p>
+
+    <img class="screen-shot" src="img/production-report.png" data-src-en="img/en/production-report.png" alt="報工畫面截圖" data-alt-en="Production report screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">報工畫面（上方進度卡顯示已報、剩餘與總量）</span><span lang="en">Production report screen (the progress card shows reported, remaining and total)</span></div>
+
+    <h2 id="entry"><i class="bi bi-pencil-square me-2 text-primary"></i><span lang="zh">填寫報工數量</span><span lang="en">Entering the quantities</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">填<strong>「合格數量」</strong>與<strong>「不良數量」</strong>，兩者至少要有一個大於 0，否則送出時會提示「合格或不良數量至少填入一個大於 0 的值」。</span><span lang="en">Enter the <strong>"Good Qty"</strong> and <strong>"NG Qty"</strong>. At least one of them has to be greater than zero, otherwise submitting warns that one of the two must be filled in.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">不良數量大於 0 時，<strong>「不良原因」</strong>下拉會自動出現，請選擇對應的原因。</span><span lang="en">When the defective quantity is greater than zero the <strong>"NG Reason"</strong> dropdown appears; choose the matching reason.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh"><strong>「容器號」</strong>為選填。點虛線框可開相機掃描條碼，或點下方文字改用手動輸入。也可以掃<a href="../bas/container-unit.html#wip">箱子</a>的箱號，合格數就記在那個箱子上；箱子不能用（例如裝著別張工單的在製品）時報工照樣完成，只是箱子沒綁上，成功訊息後面會說明原因。</span><span lang="en">The <strong>"Container (optional)"</strong> field is optional. Tap the dashed box to open the camera and scan a barcode, or tap the text below it to type one instead. You can also scan a <a href="../bas/container-unit.html#wip">box</a> number, and the good quantity is recorded on that box; if the box cannot be used (for example it already holds some other work order's work in process), the report still goes through but the box is not linked, and the success message explains why.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">選擇送出方式（見下節），送出後本次紀錄會列在頁面下方的<strong>「本次報工紀錄」</strong>。</span><span lang="en">Choose how to submit (see below); once sent, the entry is listed under <strong>"This session's reports"</strong> at the bottom of the page.</span></div></div>
+
+    <h2 id="submit"><i class="bi bi-signpost-split me-2 text-primary"></i><span lang="zh">兩顆送出鈕的差別</span><span lang="en">The difference between the two submit buttons</span></h2>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-28pct"><span lang="zh">按鈕</span><span lang="en">Button</span></th><th><span lang="zh">作用</span><span lang="en">What it does</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">送出報工（繼續生產）</span><span lang="en">Submit Report (keep producing)</span></td><td><span lang="zh">回報這一批的數量，上工繼續有效，人仍在線上生產。生產期間可按多次，例如每完成一箱轉移就回報一次。</span><span lang="en">Reports this batch's quantity and keeps the session open, so the operator stays on the job. It can be used as often as needed during production — once per container, for example.</span></td></tr>
+    <tr><td><span lang="zh">完工並報工（結束本次上工）</span><span lang="en">Finish and Report (end this session)</span></td><td><span lang="zh">回報最後一批數量並同時結束本次上工、結算工時。按下後會出現確認提示。</span><span lang="en">Reports the final quantity and ends the session, settling the hours at the same time. It asks for confirmation first.</span></td></tr>
+    </tbody>
+    </table>
+
+    <p class="text-muted small"><span lang="zh">尚未生產完的派工，結束上工後仍可回開工作業頁再次開工，形成下一輪循環；累計良品數達派工量時派工自動結案。</span><span lang="en">If production is not finished, you can return to the production session screen and start another round after ending a session; the dispatch closes automatically once the cumulative good quantity reaches the dispatched quantity.</span></p>
+
+    <div class="note-box"><i class="bi bi-plus-slash-minus me-1"></i><span lang="zh"><strong>合格數累計不能超過派工量</strong>，除非廠別設了「廠內超量容許率」（例如 3% 時派工 100 最多報到 103）。再超過時預設拒收；若廠別設成需主管確認，只有具「超量核准」權限的主管能報。派工報滿就自動結案，所以多做的量請在最後一次報工一起報。</span><span lang="en"><strong>The cumulative good quantity cannot exceed the dispatch quantity</strong> unless the plant sets an "In-plant over-production tolerance" (at 3%, a dispatch of 100 can be reported up to 103). Beyond that it is rejected by default; if the plant requires supervisor confirmation, only a supervisor with the over-quantity approval right can report it. A dispatch closes automatically once it is full, so report any extra quantity together with the last report.</span></div>
+
+    <h2 id="offline"><i class="bi bi-wifi-off me-2 text-primary"></i><span lang="zh">斷線時報工</span><span lang="en">Reporting when the connection drops</span></h2>
+
+    <p><span lang="zh">手機偵測到沒有網路時，畫面上方會出現「目前沒有網路。這時按送出的報工會先暫存在手機，恢復連線後自動送出」的提示。Wi-Fi 有訊號但伺服器暫時連不到時也一樣會暫存。每筆報工都帶有唯一識別碼，重送不會重複計數；<strong>報工與下工時間記的是按下送出的那一刻</strong>，不是送達的時間，所以工時不會被拉長。</span><span lang="en">When the phone detects there is no network, a banner says reports submitted now are saved on the phone and sent when the connection returns. The same happens when Wi-Fi is up but the server is briefly unreachable. Every report carries a unique identifier, so resending never double counts, and <strong>the report and clock-out times are recorded at the moment you tapped submit</strong>, not when they arrived, so hours are not stretched.</span></p>
+    <p><span lang="zh">暫存超過 30 分鐘就不再自動送出，要到首頁的待送出清單確認或捨棄；上工本身只能在連線時做。詳見<a href="index.html#offline">斷線保護</a>。</span><span lang="en">Entries saved for more than 30 minutes are no longer sent automatically — confirm or discard them in the waiting list on the home page. Clocking in itself works only while connected. See <a href="index.html#offline">Disconnection protection</a>.</span></p>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

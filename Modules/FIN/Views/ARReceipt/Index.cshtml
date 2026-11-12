@@ -1,0 +1,165 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.FIN.Models.ARReceipt>
+@using SmartFactory.MES.Modules.FIN.Models
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = L["ARReceipt"];
+    bool canUpdate      = ViewBag.CanUpdate == true;
+    bool hasSearched    = ViewBag.Searched as bool? ?? false;
+    int  curPageSize    = ViewBag.CurrentPageSize as int? ?? 20;
+    string curCustomer  = ViewBag.SearchCustomer as string ?? "";
+    var customerOptions = ViewBag.CustomerOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-cash-stack me-2"></i>@L["ARReceipt"]</h1>
+        @if (ViewBag.CanCreate == true) {
+            <button class="btn btn-primary"
+                    data-url="/ARReceipt/Create" data-label="@L["NewARReceipt"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus-lg"></i> @L["Create"]
+            </button>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@L["CustomerCode"]</label>
+                    <select name="searchCustomer" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@L["AllCustomers"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var c in customerOptions)
+                        {
+                            <option value="@c.CompanyCode" selected="@(curCustomer == (string)c.CompanyCode)">@c.CompanyCode — @c.CompanyName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-2">
+                    <label class="form-label small">@L["Status"]</label>
+                    <select name="searchStatus" class="form-select">
+                        <option value="">@L["All"]</option>
+                        @foreach (ARReceiptStatus s in Enum.GetValues<ARReceiptStatus>())
+                        { <option value="@s" selected="@(ViewBag.SearchStatus?.ToString() == s.ToString())">@FinEnumDisplay.Text(L, s)</option> }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@L["Search"]</button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@L["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@L["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["ARReceiptId"]</th>
+                        <th>@L["CustomerCode"]</th>
+                        <th>@L["ReceiptDate_Fin"]</th>
+                        <th class="text-end">@L["AmountLocal"]</th>
+                        <th>@L["Status"]</th>
+                        <th>@L["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var r in Model)
+                {
+                    var badge = r.Status switch {
+                        ARReceiptStatus.Received => "bg-success",
+                        ARReceiptStatus.Void     => "bg-secondary",
+                        ARReceiptStatus.Approved => "bg-info text-dark",
+                        _                        => "bg-warning text-dark"
+                    };
+                    <tr>
+                        <td><code>@r.ARReceiptId</code></td>
+                        <td>@r.CustomerCode</td>
+                        <td>@r.ReceiptDate.ToString("yyyy-MM-dd")</td>
+                        <td class="text-end">@r.AmountLocal.ToString(moneyFmt)</td>
+                        <td><span class="badge @badge">@FinEnumDisplay.Text(L, r.Status)</span></td>
+                        <td>
+                            @await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = r.ARReceiptId }))
+                            <button class="btn btn-sm btn-outline-secondary me-1"
+                                    data-url="/ARReceipt/Details/@r.ARReceiptId" data-label="@r.ARReceiptId"
+                                    data-action="openPanel"><i class="bi bi-eye"></i> @L["View"]</button>
+                            @* 確認鈕的條件必須與服務層一致（FinPaymentService.ConfirmARReceiptAsync
+                               只擋 Received/Void）。原本寫成「Status == Approved」，但全系統沒有任何
+                               地方會把收款單設成 Approved——建立即為 Draft，於是確認鈕永遠不渲染，
+                               收款單在畫面上再也無法完成核銷。 *@
+                            @if (canUpdate && r.Status != ARReceiptStatus.Received && r.Status != ARReceiptStatus.Void)
+                            {
+                                <button class="btn btn-sm btn-outline-success me-1" data-action="confirmReceipt" data-id="@r.ARReceiptId"><i class="bi bi-check2-circle"></i> @L["Confirm"]</button>
+                            }
+                            @* 同 APPayment：Received 才是伺服端會回沖的狀態，排除掉等於入口不存在。*@
+                            @if (canUpdate && r.Status != ARReceiptStatus.Void)
+                            {
+                                <button class="btn btn-sm btn-outline-danger" data-action="voidReceipt" data-id="@r.ARReceiptId"><i class="bi bi-x-circle"></i> @L["Void"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_Pagination", Model)
+    }
+
+</div>
+
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-600px-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="sidePanelBody"></div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@L["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function postAction(url, confirmMsg) {
+        if (confirmMsg && !confirm(confirmMsg)) return;
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(url, { method: 'POST', headers: { 'RequestVerificationToken': token, 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(async r => {
+                const d = await r.json().catch(() => ({ success: false, message: window.i18n.t('OperationFailed') }));
+                if (d.success) { window.toastSuccess && window.toastSuccess(); setTimeout(() => location.reload(), 800); }
+                else alert(d.message || window.i18n.t('OperationFailed'));
+            }).catch(() => alert(window.i18n.t('OperationFailed')));
+    }
+    function confirmReceipt(e, el) { postAction(`/ARReceipt/Confirm/${el.dataset.id}`, window.i18n.t('ConfirmARReceipt')); }
+    function voidReceipt(e, el)    { postAction(`/ARReceipt/Void/${el.dataset.id}`,    window.i18n.t('ConfirmVoid')); }
+</script>
+}

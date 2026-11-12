@@ -1,0 +1,59 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.ShiftGroup
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    string action = isEdit ? "Edit" : "Create";
+}
+
+<form method="post" asp-action="@action" asp-controller="ShiftGroup" asp-route-code="@(isEdit ? Model.GroupCode : null)"
+      data-ajax="true" class="p-1">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["GroupCode"] <span class="text-danger">*</span></label>
+        @if (isEdit)
+        {
+            <input type="text" class="form-control bg-light" value="@Model.GroupCode" readonly />
+            <input type="hidden" asp-for="GroupCode" />
+            <div class="form-text text-muted">@Localizer["GroupCodeReadonlyHint"]</div>
+        }
+        else
+        {
+            <input asp-for="GroupCode" class="form-control u-text-transform-uppercase" />
+        }
+        <span asp-validation-for="GroupCode" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["GroupName"] <span class="text-danger">*</span></label>
+        <input asp-for="GroupName" class="form-control" />
+        <span asp-validation-for="GroupName" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-2">
+        <div class="form-check">
+            <input type="checkbox" asp-for="IsDefault" class="form-check-input" id="groupIsDefault" />
+            <label class="form-check-label fw-semibold" for="groupIsDefault">@Localizer["IsDefault"]</label>
+        </div>
+        <div class="form-text text-muted">@Localizer["IsDefaultHint"]</div>
+    </div>
+
+    <div class="mb-4">
+        <div class="form-check">
+            <input type="checkbox" asp-for="IsActive" class="form-check-input" id="groupIsActive" />
+            <label class="form-check-label fw-semibold" for="groupIsActive">@Localizer["IsActive"]</label>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+            @Localizer["Cancel"]
+        </button>
+    </div>
+</form>

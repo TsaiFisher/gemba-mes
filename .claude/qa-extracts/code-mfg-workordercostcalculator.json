@@ -1,0 +1,13 @@
+{
+  "sourcePath": "Modules/MFG/Services/WorkOrderCostCalculator.cs",
+  "sourceHash": "5a07a9c1c46830cf60c88f732da363a4a093e9959b51f2a1a684f54a3feef192",
+  "entries": [
+    {
+      "slug": "code-mfg-workordercostcalculator-ffc55f70",
+      "lang": "zh",
+      "headingPath": "生產製造 › 依工單數量、用料與工序工時 + 工作中心費率，算出標準三成本",
+      "text": "計算標準三成本的依據與方式｜此標準三成本是根據工單數量、用料的快照價格，以及各工序所花費的時間和工作中心費用率來計算的。在計算工時換算時，每個工序會先依照其時間單位（秒/分/時）折算成小時，再乘以該工作中心的人工或機台費用率。如果找不到工作中心的費用率，則以零為計。最終的結果會四捨五入到小數點後四位。",
+      "approved": true
+    }
+  ]
+}

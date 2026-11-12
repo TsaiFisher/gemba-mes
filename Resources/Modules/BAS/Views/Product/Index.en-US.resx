@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Product Master</value></data>
+  <data name="AddEntry" xml:space="preserve"><value>Add Product</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Code, name, spec</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>Enter criteria and click Search</value></data>
+  <data name="BasicInfo" xml:space="preserve"><value>Basic Info</value></data>
+  <data name="Categories" xml:space="preserve"><value>Categories</value></data>
+  <data name="CategoryHint" xml:space="preserve"><value>Select one or more categories</value></data>
+  <data name="NoCategoryData" xml:space="preserve"><value>No categories configured (set up product_category in Code Entry)</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product Code</value></data>
+  <data name="ProductCodePlaceholder" xml:space="preserve"><value>e.g. PROD001</value></data>
+  <data name="ProductName" xml:space="preserve"><value>Product Name</value></data>
+  <data name="Spec" xml:space="preserve"><value>Spec</value></data>
+  <data name="RoutingId" xml:space="preserve"><value>Routing ID</value></data>
+  <data name="RoutingIdPlaceholder" xml:space="preserve"><value>Link to routing module later</value></data>
+  <data name="UomSection" xml:space="preserve"><value>Unit of Measure</value></data>
+  <data name="SalesUom" xml:space="preserve"><value>Sales UOM</value></data>
+  <data name="PurchaseUom" xml:space="preserve"><value>Purchase UOM</value></data>
+  <data name="StockUom" xml:space="preserve"><value>Stock UOM</value></data>
+  <data name="UomPlaceholder" xml:space="preserve"><value>e.g. PCS</value></data>
+  <data name="PlanningSection" xml:space="preserve"><value>Inventory / Planning</value></data>
+  <data name="StockMode" xml:space="preserve"><value>Stock Mode</value></data>
+  <data name="AllModes" xml:space="preserve"><value>All Modes</value></data>
+  <data name="MrpMode" xml:space="preserve"><value>MRP Mode</value></data>
+  <data name="CodeEntryPlaceholder" xml:space="preserve"><value>Enter code</value></data>
+  <data name="SafetyStock" xml:space="preserve"><value>Safety Stock</value></data>
+  <data name="StandardCost" xml:space="preserve"><value>Standard Cost</value></data>
+  <data name="LeadTimeDays" xml:space="preserve"><value>Lead Time</value></data>
+  <data name="UrgentLeadTimeDays" xml:space="preserve"><value>Urgent Lead Time</value></data>
+  <data name="OutsourceQtyPerDay" xml:space="preserve"><value>Outsource Qty/Day</value></data>
+  <data name="ShelfLifeDays" xml:space="preserve"><value>Shelf Life</value></data>
+  <data name="Days" xml:space="preserve"><value>days</value></data>
+  <data name="PackagingSection" xml:space="preserve"><value>Weight / Packaging</value></data>
+  <data name="NetWeight" xml:space="preserve"><value>Net Weight</value></data>
+  <data name="GrossWeight" xml:space="preserve"><value>Gross Weight</value></data>
+  <data name="BoxQty" xml:space="preserve"><value>Box Qty</value></data>
+  <data name="QualitySection" xml:space="preserve"><value>Quality Inspection</value></data>
+  <data name="InspectionLevelN" xml:space="preserve"><value>Attribute Level (N)</value></data>
+  <data name="InspectionLevelR" xml:space="preserve"><value>Variable Level (R)</value></data>
+  <data name="InspectionLevelC" xml:space="preserve"><value>Continuous Level (C)</value></data>
+  <data name="IsLotControlled" xml:space="preserve"><value>Lot Controlled</value></data>
+  <data name="Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="IsActive" xml:space="preserve"><value>Active</value></data>
+  <data name="Active" xml:space="preserve"><value>Active</value></data>
+  <data name="Inactive" xml:space="preserve"><value>Inactive</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>Approval</value></data>
+  <data name="Approved" xml:space="preserve"><value>Approved</value></data>
+  <data name="PendingApproval" xml:space="preserve"><value>Pending</value></data>
+  <data name="Rejected" xml:space="preserve"><value>Rejected</value></data>
+  <data name="Draft" xml:space="preserve"><value>Draft</value></data>
+  <data name="ViewApproval" xml:space="preserve"><value>View Approval</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="NoData" xml:space="preserve"><value>No data found</value></data>
+  <data name="Print" xml:space="preserve"><value>Print</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>Export Excel</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>Export CSV</value></data>
+  <data name="ExportJson" xml:space="preserve"><value>Export JSON</value></data>
+</root>

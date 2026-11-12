@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Modules/RPS/Services/ReportSchedulingDisabledNotice.cs",
+  "sourceHash": "e07ee9e20287f312092bc879d0bf8bbd9ff64b32eb00514995a734b3815eed67",
+  "entries": [
+    {
+      "slug": "code-rps-reportschedulingdisablednotice-e40aa938",
+      "lang": "zh",
+      "headingPath": "報表 › 開關關閉時取代派工器註冊的一次性通知",
+      "text": "關閉報表工具後排程會停止執行｜當系統的「報表工具」功能被關閉時，所有目前設定為啟用狀態的排程任務將不會再執行了。此變更在介面上看起來與沒有任何排程到期一樣，不會有錯誤訊息或紀錄可見，因此必須在啟動日誌中明確記錄此項停用，並說明受影響的排程數量。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportschedulingdisablednotice-d577b51e",
+      "lang": "zh",
+      "headingPath": "報表 › 這只是一行提示",
+      "text": "報表排程目前狀態說明｜系統在資料庫尚未完全遷移完成時，執行報表排程可能會導致查詢失敗，因此此功能目前是停用的。",
+      "approved": true
+    }
+  ]
+}

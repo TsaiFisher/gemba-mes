@@ -1,0 +1,257 @@
+@model SmartFactory.MES.Controllers.LicenseStatusViewModel
+@{
+    ViewData["Title"] = Localizer["LicenseStatus"];
+    var s = Model.Status;
+    var lic = ((ILicenseStateService)Context.RequestServices.GetService(typeof(ILicenseStateService))!).License;
+    var (cls, icon) = s.State switch
+    {
+        LicenseState.Normal   => ("success", "bi-shield-check"),
+        LicenseState.Warning  => ("warning", "bi-exclamation-triangle"),
+        LicenseState.ReadOnly => ("danger",  "bi-lock"),
+        LicenseState.Disabled => ("danger",  "bi-x-octagon"),
+        _                     => ("info",    "bi-unlock"),
+    };
+}
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <h1 class="mb-4"><i class="bi bi-patch-check"></i> @Localizer["LicenseStatus"]</h1>
+
+            @if (TempData["LicenseImportOk"] is string ok)
+            {
+                <div class="alert alert-success u-white-space-pre-wrap">@ok</div>
+            }
+            @if (TempData["LicenseImportError"] is string err)
+            {
+                <div class="alert alert-danger u-white-space-pre-wrap">@err</div>
+            }
+
+            <div class="alert alert-@cls">
+                <h5 class="alert-heading"><i class="bi @icon"></i> @Localizer["State_" + s.State]</h5>
+                @if (s.State == SmartFactory.MES.Services.LicenseState.Normal)
+                {
+                    @* 正常時標題已是「授權有效」，內文原本也是「授權有效。」——重複且沒有資訊（2026-11-12 rc4 裝機回報）。
+                       改依授權內容組一句說明，並隨語系顯示（判斷結果本身是啟動時算好的中文字串，不隨語系）。 *@
+                    var inp = Model.Inputs;
+                    var parts = new List<string>();
+                    if (inp?.HostCheck == SmartFactory.MES.Services.HostCheckResult.Match) parts.Add(Localizer["Summary_HostBound"].Value);
+                    if (s.ExpiresAt is { } summaryExp)
+                        parts.Add(summaryExp.Year >= 9999 ? Localizer["Summary_Perpetual"].Value
+                            : string.Format(Localizer["Summary_ValidUntil"].Value, DateTimeSvc.ToLocalTime(summaryExp.UtcDateTime).ToString("yyyy-MM-dd")));
+                    if (inp is { LeaseRequired: true, LeaseNotAfter: { } summaryLease })
+                        parts.Add(string.Format(Localizer["Summary_CheckinUntil"].Value, DateTimeSvc.ToLocalTime(summaryLease.UtcDateTime).ToString("yyyy-MM-dd")));
+                    <div>@(parts.Count > 0 ? string.Join(Localizer["Summary_Separator"].Value, parts) : s.Reason)</div>
+                }
+                else
+                {
+                    <div class="u-white-space-pre-wrap">@s.Reason</div>
+                }
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        @if (s.ExpiresAt is { } exp)
+                        {
+                            <dt class="col-sm-4">@Localizer["ExpiresAt"]</dt>
+                            <dd class="col-sm-8">@(exp.Year >= 9999 ? Localizer["Perpetual"].Value : DateTimeSvc.ToLocalTime(exp.UtcDateTime).ToString("yyyy-MM-dd"))</dd>
+                        }
+                        @if (s.ReadOnlySince is { } ro)
+                        {
+                            <dt class="col-sm-4">@Localizer["ReadOnlySince"]</dt>
+                            <dd class="col-sm-8">@DateTimeSvc.ToLocalTime(ro.UtcDateTime).ToString("yyyy-MM-dd")</dd>
+                        }
+                        @if (s.DisabledAt is { } dis)
+                        {
+                            <dt class="col-sm-4">@Localizer["DisabledAt"]</dt>
+                            <dd class="col-sm-8">@DateTimeSvc.ToLocalTime(dis.UtcDateTime).ToString("yyyy-MM-dd")</dd>
+                        }
+                        @if (Model.IsAdmin && lic is not null)
+                        {
+                            <dt class="col-sm-4">@Localizer["LicenseId"]</dt>
+                            <dd class="col-sm-8"><code>@lic.LicenseId</code></dd>
+                            <dt class="col-sm-4">@Localizer["ClientName"]</dt>
+                            <dd class="col-sm-8">@lic.ClientName (@lic.ClientCode)</dd>
+                            <dt class="col-sm-4">@Localizer["BindingMode"]</dt>
+                            <dd class="col-sm-8">@Localizer["Binding_" + lic.BindingMode] · @Localizer["Seats"] @lic.Seats</dd>
+                        }
+                    </dl>
+                </div>
+            </div>
+
+            @if (Model.IsAdmin)
+            {
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header"><h5 class="mb-0">@Localizer["ObtainLicense"]</h5></div>
+                    <div class="card-body">
+                        @if (Model.Fingerprint is null)
+                        {
+                            <p class="text-danger mb-0">@Localizer["AnchorMissing"]</p>
+                        }
+                        else
+                        {
+                            <p class="mb-1">@Localizer["Fingerprint"]</p>
+                            <p><code class="text-break">@Model.Fingerprint</code></p>
+                            <p class="small text-muted">@Localizer["FingerprintHint"]</p>
+                            @if (Model.Host is { } host)
+                            {
+                                <dl class="row small mb-2">
+                                    <dt class="col-sm-4">@Localizer["DeployKind"]</dt>
+                                    <dd class="col-sm-8">@Localizer["Deploy_" + host.DeployCode]</dd>
+                                    <dt class="col-sm-4">@Localizer["HostId"]</dt>
+                                    <dd class="col-sm-8">
+                                        @if (host.HostId is null)
+                                        {
+                                            <span class="text-warning">@Localizer["HostIdUnavailable"]</span>
+                                            <div class="text-muted u-white-space-pre-wrap">@host.Problem</div>
+                                        }
+                                        else
+                                        {
+                                            <code class="text-break">@host.HostId</code>
+                                        }
+                                    </dd>
+                                    <dt class="col-sm-4">@Localizer["SuggestedBinding"]</dt>
+                                    <dd class="col-sm-8">@Localizer["Suggested_" + host.SuggestedBindingMode]</dd>
+                                    @if (lic is not null && lic.HostCheck != HostCheckResult.NotRequired)
+                                    {
+                                        <dt class="col-sm-4">@Localizer["HostCheck"]</dt>
+                                        <dd class="col-sm-8">@Localizer["HostCheck_" + lic.HostCheck]</dd>
+                                    }
+                                </dl>
+                            }
+                            @if (Model.RequestCode is not null)
+                            {
+                                <p class="mb-1">@Localizer["RequestCode"]</p>
+                                <div class="input-group input-group-sm mb-2">
+                                    <input type="text" class="form-control font-monospace" id="licRequestCode" value="@Model.RequestCode" readonly />
+                                    <button type="button" class="btn btn-outline-secondary" data-lic-copy="#licRequestCode"
+                                            data-lic-copied="@Localizer["Copied"]"><i class="bi bi-clipboard"></i> @Localizer["Copy"]</button>
+                                </div>
+                            }
+                            <a class="btn btn-primary" href="@Model.RegisterUrl" target="_blank" rel="noopener">
+                                <i class="bi bi-box-arrow-up-right"></i> @Localizer["Register"]
+                            </a>
+                        }
+                        <a class="btn btn-outline-secondary ms-2" href="@Model.RenewUrl" target="_blank" rel="noopener">
+                            <i class="bi bi-arrow-repeat"></i> @Localizer["RenewOffline"]
+                        </a>
+                    </div>
+                </div>
+
+                @if (Model.CheckinUrl is not null)
+                {
+                    <div class="card shadow-sm mb-4 border-primary">
+                        <div class="card-header"><h5 class="mb-0"><i class="bi bi-shield-check"></i> @Localizer["CheckinTitle"]</h5></div>
+                        <div class="card-body">
+                            <p>@Localizer["CheckinHint"]</p>
+                            @if (!Model.IsRelay)
+                            {
+                                <p class="small text-muted">@Localizer["CheckinDirectHint"]</p>
+                            }
+                            <form id="licCheckinForm" method="post" asp-action="CheckinResponse" class="d-inline">
+                                <button type="button" class="btn btn-primary" id="licCheckinBtn"
+                                        data-url="@Model.CheckinUrl" data-origin="@Model.CheckinOrigin"
+                                        data-waiting="@Localizer["CheckinWaiting"]" data-failed="@Localizer["CheckinFailed"]">
+                                    <i class="bi bi-box-arrow-up-right"></i> @Localizer["CheckinButton"]
+                                </button>
+                            </form>
+                            <button type="button" class="btn btn-outline-secondary ms-2" data-lic-copy="#licCheckinLink"
+                                    data-lic-copied="@Localizer["Copied"]"><i class="bi bi-link-45deg"></i> @Localizer["CheckinCopyLink"]</button>
+                            <input type="hidden" id="licCheckinLink" value="@Model.CheckinUrl" />
+                            <div id="licCheckinStatus" class="alert mt-3 mb-0 u-display-none u-white-space-pre-wrap" role="status"></div>
+
+                            <details class="mt-3">
+                                <summary class="small">@Localizer["CheckinWhatIsSent"]</summary>
+                                <p class="small text-muted mt-2 mb-1">@Localizer["CheckinWhatIsSentHint"]</p>
+                                <pre class="small bg-body-tertiary p-2 rounded text-break u-white-space-pre-wrap">@Model.CheckinRequestJson</pre>
+                            </details>
+
+                            <hr />
+                            <p class="small text-muted mb-1">@Localizer["CheckinImportHint"]</p>
+                            <form method="post" asp-action="ImportCheckin" enctype="multipart/form-data">
+                                <div class="input-group input-group-sm">
+                                    <input type="file" name="file" accept=".json,application/json" class="form-control" required />
+                                    <button type="submit" class="btn btn-outline-primary">@Localizer["CheckinImport"]</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.Inputs is { BindingMode: "offline" } inp)
+                {
+                    var optConfirmed = inp.LeaseNotAfter is { } na && na > DateTimeOffset.UtcNow && inp.LeaseNoticeAt is null;
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header"><h5 class="mb-0"><i class="bi bi-cloud-check"></i> @Localizer["OnlineCheckTitle"]</h5></div>
+                        <div class="card-body">
+                            <p>@Localizer["OnlineCheckHint"]</p>
+                            <dl class="row small mb-3">
+                                <dt class="col-sm-4">@Localizer["OnlineCheckEffective"]</dt>
+                                <dd class="col-sm-8">
+                                    @if (inp.LeaseForcedByHost)
+                                    {
+                                        <span class="badge text-bg-primary">@Localizer["OnlineCheckForced"]</span>
+                                    }
+                                    else if (inp.LeaseOptedIn)
+                                    {
+                                        <span class="badge text-bg-success">@Localizer["OnlineCheckOn"]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge text-bg-secondary">@Localizer["OnlineCheckOff"]</span>
+                                    }
+                                </dd>
+                                @if (inp.LeaseNotAfter is { } until)
+                                {
+                                    <dt class="col-sm-4">@Localizer["OnlineCheckValidUntil"]</dt>
+                                    <dd class="col-sm-8">@DateTimeSvc.ToLocalTime(until.UtcDateTime).ToString("yyyy-MM-dd")</dd>
+                                }
+                            </dl>
+                            @if (inp.LeaseForcedByHost)
+                            {
+                                <p class="small text-muted mb-0">@Localizer["OnlineCheckForcedHint"]</p>
+                            }
+                            else
+                            {
+                                <form method="post" asp-action="OnlineCheck" class="d-inline">
+                                    @if (inp.LeaseOptedIn)
+                                    {
+                                        <input type="hidden" name="enable" value="false" />
+                                        <button type="submit" class="btn btn-outline-secondary">@Localizer["OnlineCheckDisable"]</button>
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" name="enable" value="true" />
+                                        <button type="submit" class="btn btn-primary" disabled="@(!optConfirmed)">@Localizer["OnlineCheckEnable"]</button>
+                                    }
+                                </form>
+                                @if (!inp.LeaseOptedIn && !optConfirmed)
+                                {
+                                    <p class="small text-muted mt-2 mb-0">@Localizer["OnlineCheckConfirmFirst"]</p>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+
+                <div class="card shadow-sm">
+                    <div class="card-header"><h5 class="mb-0">@Localizer["ImportLicense"]</h5></div>
+                    <div class="card-body">
+                        <p class="small text-muted">@Localizer["ImportHint"]</p>
+                        <form method="post" asp-action="Import" enctype="multipart/form-data">
+                            <div class="input-group">
+                                <input type="file" name="file" accept=".json,application/json" class="form-control" required />
+                                <button type="submit" class="btn btn-primary">@Localizer["Import"]</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/license-checkin.js" asp-append-version="true"></script>
+}

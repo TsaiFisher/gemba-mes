@@ -1,0 +1,385 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Modules.BAS.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@using SmartFactory.MES.Modules.INV.Models
+@using SmartFactory.MES.Modules.INV.Services
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.INV.ViewModels.LandedCostAllocationFormVm
+
+@{
+    bool isNew      = string.IsNullOrEmpty(Model?.LandedCostAllocationId);
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    var costTypes   = ViewBag.CostTypeOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var currencies  = ViewBag.CurrencyOptions as IEnumerable<Currency> ?? Enumerable.Empty<Currency>();
+    var currencyDecimals = ViewBag.CurrencyDecimals as IReadOnlyDictionary<string, int>;
+    int cdp = CurrencyStepHelper.GetDp(currencyDecimals, Model?.CurrencyCode);
+    bool confirmed = Model?.Status == DocStatus.Confirmed || Model?.Status == DocStatus.Posted;
+}
+
+<form id="lcaForm" asp-action="Save" asp-controller="LandedCostAllocation" method="post"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="LandedCostAllocationId" />
+    <input type="hidden" asp-for="CreatedBy" />
+    <input type="hidden" asp-for="ApprovalStatus" />
+    <input type="hidden" asp-for="RowVersion" />
+
+    <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+    <div class="p-3">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+
+        <!-- 主檔 -->
+        <div class="row g-3 mb-3">
+            @if (!isNew)
+            {
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold">@Localizer["LandedCostAllocationId"]</label>
+                    <div class="form-control-plaintext fw-bold text-primary">@Model!.LandedCostAllocationId</div>
+                </div>
+            }
+            <div class="col-6 col-md-3">
+                <label asp-for="DocDate" class="form-label fw-semibold">@Localizer["DocDate"] <span class="text-danger">*</span></label>
+                <input asp-for="DocDate" type="date" class="form-control" />
+                <span asp-validation-for="DocDate" class="text-danger small"></span>
+            </div>
+            <div class="col-6 col-md-3">
+                <label asp-for="Basis" class="form-label fw-semibold">@Localizer["Basis"] <span class="text-danger">*</span></label>
+                <select asp-for="Basis" class="form-select">
+                    <option value="0" selected="@(Model?.Basis == LandedCostBasis.Amount)">@Localizer["Basis_Amount"]</option>
+                    <option value="1" selected="@(Model?.Basis == LandedCostBasis.Quantity)">@Localizer["Basis_Quantity"]</option>
+                    <option value="2" selected="@(Model?.Basis == LandedCostBasis.Weight)">@Localizer["Basis_Weight"]</option>
+                </select>
+                <span asp-validation-for="Basis" class="text-danger small"></span>
+            </div>
+            <div class="col-6 col-md-3">
+                <label asp-for="CostType" class="form-label fw-semibold">@Localizer["CostType"]</label>
+                <select asp-for="CostType" class="form-select">
+                    <option value="">-- @Localizer["SelectCostType"] --</option>
+                    @foreach (var c in costTypes)
+                    {
+                        <option value="@c.Code" selected="@(Model?.CostType == (string)c.Code)">@c.Code — @c.DisplayName</option>
+                    }
+                </select>
+                <span asp-validation-for="CostType" class="text-danger small"></span>
+            </div>
+            <div class="col-6 col-md-3">
+                <label asp-for="CurrencyCode" class="form-label fw-semibold">@Localizer["CurrencyCode"]</label>
+                <select asp-for="CurrencyCode" class="form-select" data-action-change="onDocCurrencyChange">
+                    @foreach (var c in currencies)
+                    {
+                        <option value="@c.CurrencyCode" selected="@(Model?.CurrencyCode == c.CurrencyCode)">@c.CurrencyCode</option>
+                    }
+                </select>
+                <span asp-validation-for="CurrencyCode" class="text-danger small"></span>
+            </div>
+            <div class="col-6 col-md-3">
+                <label asp-for="TotalLandedCost" class="form-label fw-semibold">@Localizer["TotalLandedCost"] <span class="text-danger">*</span></label>
+                <input asp-for="TotalLandedCost" type="number" step="any" min="0"
+                       value="@(Model?.TotalLandedCost.ToString("F" + cdp))"
+                       class="form-control text-end" id="totalLandedCost" />
+                <span asp-validation-for="TotalLandedCost" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="Remarks" class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                <input asp-for="Remarks" class="form-control" maxlength="500" />
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- 明細 -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0"><i class="bi bi-list-ul me-1"></i>@Localizer["LinesTitle"]</h6>
+            @if (!isReadOnly)
+            {
+                <button type="button" class="btn btn-sm btn-outline-primary" data-action="openGrPicker">
+                    <i class="bi bi-search"></i> @Localizer["PickGrLines"]
+                </button>
+            }
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered align-middle" id="linesTable">
+                <thead class="table-light">
+                    <tr>
+                        <th class="u-width-36px">#</th>
+                        <th>@Localizer["GoodsReceiptId"]</th>
+                        <th class="u-col-code">@Localizer["ProductCode"]</th>
+                        <th class="u-col-code">@Localizer["LocationCode"]</th>
+                        <th class="text-end u-col-num">@Localizer["ReceiptQty"]</th>
+                        <th class="text-end u-col-num">@Localizer["PurchaseAmount"]</th>
+                        <th class="text-end u-col-num">@Localizer["Weight"]</th>
+                        <th class="text-end u-col-num">@Localizer["OriginalUnitCost"]</th>
+                        @if (confirmed)
+                        {
+                            <th class="text-end u-col-num">@Localizer["AllocatedCost"]</th>
+                            <th class="text-end u-col-num">@Localizer["CapitalizedCost"]</th>
+                            <th class="text-end u-col-num">@Localizer["ExpensedCost"]</th>
+                            <th class="text-end u-col-num">@Localizer["NewUnitCost"]</th>
+                        }
+                        @if (!isReadOnly) { <th class="u-width-36px"></th> }
+                    </tr>
+                </thead>
+                <tbody id="linesTbody">
+                    @for (int i = 0; i < (Model?.Lines.Count ?? 0); i++)
+                    {
+                        var line = Model!.Lines[i];
+                        <tr>
+                            <td class="text-center text-muted small">@(i + 1)</td>
+                            <td class="font-monospace small">
+                                @line.GoodsReceiptId#@line.GoodsReceiptLineNo
+                                <input type="hidden" name="Lines[@i].LineNo" value="@line.LineNo" />
+                                <input type="hidden" name="Lines[@i].GoodsReceiptId" value="@line.GoodsReceiptId" />
+                                <input type="hidden" name="Lines[@i].GoodsReceiptLineNo" value="@line.GoodsReceiptLineNo" />
+                                <input type="hidden" name="Lines[@i].LotNo" value="@line.LotNo" />
+                            </td>
+                            <td class="small">
+                                @line.ProductCode
+                                <input type="hidden" name="Lines[@i].ProductCode" value="@line.ProductCode" />
+                            </td>
+                            <td class="small">
+                                @line.LocationCode
+                                <input type="hidden" name="Lines[@i].LocationCode" value="@line.LocationCode" />
+                            </td>
+                            <td class="text-end small">@line.ReceiptQty<input type="hidden" name="Lines[@i].ReceiptQty" value="@line.ReceiptQty" /></td>
+                            <td class="text-end small">@line.PurchaseAmount.ToString("F" + cdp)<input type="hidden" name="Lines[@i].PurchaseAmount" value="@line.PurchaseAmount" /></td>
+                            <td class="text-end small">@line.Weight<input type="hidden" name="Lines[@i].Weight" value="@line.Weight" /></td>
+                            <td class="text-end small">@line.OriginalUnitCost<input type="hidden" name="Lines[@i].OriginalUnitCost" value="@line.OriginalUnitCost" /></td>
+                            @if (confirmed)
+                            {
+                                <td class="text-end small">@line.AllocatedCost.ToString("F" + cdp)</td>
+                                <td class="text-end small">@line.CapitalizedCost.ToString("F" + cdp)</td>
+                                <td class="text-end small text-warning-emphasis">@line.ExpensedCost.ToString("F" + cdp)</td>
+                                <td class="text-end small fw-semibold">@line.NewUnitCost</td>
+                            }
+                            @if (!isReadOnly)
+                            {
+                                <td class="text-center"><button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="text-muted small">@Localizer["AllocationHint"]</div>
+    </div>
+    </fieldset>
+
+    <div class="position-sticky bottom-0 bg-white border-top px-3 py-2 d-flex justify-content-between align-items-center gap-2">
+        <div class="d-flex gap-2 align-items-center">
+            @if (!isNew)
+            {
+                <span class="badge @ApprovalBadge(Model!.ApprovalStatus)">@Localizer["ApprovalStatus"]：@DocStatusLabels.Label(Model!.ApprovalStatus)</span>
+                <span class="badge @StatusBadge(Model!.Status)">@Localizer["Status"]：@DocStatusLabels.Label(Model!.Status)</span>
+            }
+        </div>
+        <div class="d-flex gap-2">
+            @if (isReadOnly)
+            {
+                @if (ViewBag.CanVoid == true)
+                {
+                    <button type="button" class="btn btn-outline-danger" data-action="voidDoc" data-id="@Model!.LandedCostAllocationId">
+                        <i class="bi bi-x-octagon me-1"></i>@Localizer["Void"]
+                    </button>
+                }
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+                @if (!isNew && (Model!.ApprovalStatus == DocumentApprovalStatus.Draft || Model.ApprovalStatus == DocumentApprovalStatus.Rejected))
+                {
+                    <button type="button" class="btn btn-outline-primary" data-action="docAction" data-doc-action="Submit" data-id="@Model!.LandedCostAllocationId" data-msg="@Localizer["ConfirmSubmit"]">
+                        <i class="bi bi-send me-1"></i>@Localizer["Submit"]
+                    </button>
+                }
+                @if (!isNew && Model!.ApprovalStatus == DocumentApprovalStatus.PendingApproval)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="Withdraw" data-id="@Model!.LandedCostAllocationId" data-msg="@Localizer["ConfirmWithdraw"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["Withdraw"]
+                    </button>
+                }
+                @if (!isNew && Model!.Status == DocStatus.Draft && Model.ApprovalStatus == DocumentApprovalStatus.Approved)
+                {
+                    <button type="button" class="btn btn-outline-success" data-action="docAction" data-doc-action="Confirm" data-id="@Model!.LandedCostAllocationId" data-msg="@Localizer["ConfirmConfirm"]">
+                        <i class="bi bi-check2-circle me-1"></i>@Localizer["Confirm"]
+                    </button>
+                }
+                @if (Model?.ApprovalStatus != DocumentApprovalStatus.PendingApproval
+                     && Model?.ApprovalStatus != DocumentApprovalStatus.Approved
+                     && (isNew || Model?.Status == DocStatus.Draft))
+                {
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-floppy me-1"></i>@Localizer["Save"]
+                    </button>
+                }
+            }
+        </div>
+    </div>
+</form>
+
+<!-- 進貨明細選入器 modal（開啟前搬至 document.body，避免 offcanvas 內 modal 灰屏凍結） -->
+<div class="modal fade" id="grPickerModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-box-arrow-in-down me-1"></i>@Localizer["PickGrLines"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-2">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input type="text" id="grPickerTerm" class="form-control" placeholder="@Localizer["GrSearchPlaceholder"]" />
+                    <button type="button" class="btn btn-outline-primary" data-action="loadGrLines">@Localizer["Search"]</button>
+                </div>
+                <div class="table-responsive u-max-height-50vh">
+                    <table class="table table-sm table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="u-width-36px"></th>
+                                <th>@Localizer["GoodsReceiptId"]</th>
+                                <th>@Localizer["ProductCode"]</th>
+                                <th>@Localizer["LocationCode"]</th>
+                                <th class="text-end">@Localizer["ReceiptQty"]</th>
+                                <th class="text-end">@Localizer["PurchaseAmount"]</th>
+                                <th class="text-end">@Localizer["OriginalUnitCost"]</th>
+                            </tr>
+                        </thead>
+                        <tbody id="grPickerBody">
+                            <tr><td colspan="7" class="text-center text-muted py-3">@Localizer["GrSearchPrompt"]</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Cancel"]</button>
+                <button type="button" class="btn btn-primary" data-action="addSelectedGrLines"><i class="bi bi-plus-lg me-1"></i>@Localizer["AddSelected"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    var lcaLineIdx = @(Model?.Lines.Count ?? 0);
+    var lcaCdp = @cdp;
+    var lcaPickerData = [];
+    var lcaNoResults = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["NoResults"].Value));
+    var lcaActionFailed = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["ActionFailed"].Value));
+    var lcaVoidPrompt = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Localizer["VoidPrompt"].Value));
+
+    function onDocCurrencyChange(e, sel) { /* 單一幣別：step 維持 any，精度由伺服端 RoundAsync 把關 */ }
+
+    // 開啟選入器：先把 modal 搬到 document.body，否則在 offcanvas 內會灰屏凍結
+    function openGrPicker() {
+        var modalEl = document.getElementById('grPickerModal');
+        if (modalEl && modalEl.getAttribute('data-moved-modal') !== 'true') {
+            document.body.appendChild(modalEl);
+            modalEl.setAttribute('data-moved-modal', 'true');
+        }
+        loadGrLines();
+        bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    }
+
+    async function loadGrLines() {
+        var term = document.getElementById('grPickerTerm').value || '';
+        var body = document.getElementById('grPickerBody');
+        body.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-3"><span class="spinner-border spinner-border-sm"></span></td></tr>`;
+        try {
+            var resp = await fetch(`/LandedCostAllocation/GoodsReceiptLines?term=${encodeURIComponent(term)}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            lcaPickerData = resp.ok ? await resp.json() : [];
+        } catch (e) { lcaPickerData = []; }
+        if (!lcaPickerData.length) {
+            body.innerHTML = `<tr><td colspan="7" class="text-center text-muted py-3">${lcaNoResults}</td></tr>`;
+            return;
+        }
+        body.innerHTML = lcaPickerData.map((r, idx) => `
+            <tr>
+                <td><input type="checkbox" class="form-check-input gr-pick" value="${idx}"></td>
+                <td class="font-monospace small">${r.goodsReceiptId}#${r.goodsReceiptLineNo}</td>
+                <td class="small">${r.productCode} ${r.productName ? '— ' + r.productName : ''}</td>
+                <td class="small">${r.locationCode || ''}</td>
+                <td class="text-end small">${r.receiptQty}</td>
+                <td class="text-end small">${Number(r.purchaseAmount).toFixed(lcaCdp)}</td>
+                <td class="text-end small">${r.originalUnitCost}</td>
+            </tr>`).join('');
+    }
+
+    function addSelectedGrLines() {
+        var picks = Array.from(document.querySelectorAll('#grPickerBody .gr-pick:checked')).map(c => lcaPickerData[parseInt(c.value)]);
+        var tbody = document.getElementById('linesTbody');
+        var existing = new Set(Array.from(tbody.querySelectorAll('input[name$=".GoodsReceiptId"]')).map(h => {
+            var tr = h.closest('tr');
+            var ln = tr.querySelector('input[name$=".GoodsReceiptLineNo"]');
+            return h.value + '#' + (ln ? ln.value : '');
+        }));
+        picks.forEach(r => {
+            var key = r.goodsReceiptId + '#' + r.goodsReceiptLineNo;
+            if (existing.has(key)) return;
+            existing.add(key);
+            var i = lcaLineIdx++;
+            var tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="text-center text-muted small">${tbody.children.length + 1}</td>
+                <td class="font-monospace small">${r.goodsReceiptId}#${r.goodsReceiptLineNo}
+                    <input type="hidden" name="Lines[${i}].LineNo" value="0" />
+                    <input type="hidden" name="Lines[${i}].GoodsReceiptId" value="${r.goodsReceiptId}" />
+                    <input type="hidden" name="Lines[${i}].GoodsReceiptLineNo" value="${r.goodsReceiptLineNo}" />
+                    <input type="hidden" name="Lines[${i}].LotNo" value="${r.lotNo || ''}" /></td>
+                <td class="small">${r.productCode}<input type="hidden" name="Lines[${i}].ProductCode" value="${r.productCode}" /></td>
+                <td class="small">${r.locationCode || ''}<input type="hidden" name="Lines[${i}].LocationCode" value="${r.locationCode || ''}" /></td>
+                <td class="text-end small">${r.receiptQty}<input type="hidden" name="Lines[${i}].ReceiptQty" value="${r.receiptQty}" /></td>
+                <td class="text-end small">${Number(r.purchaseAmount).toFixed(lcaCdp)}<input type="hidden" name="Lines[${i}].PurchaseAmount" value="${r.purchaseAmount}" /></td>
+                <td class="text-end small">${r.weight}<input type="hidden" name="Lines[${i}].Weight" value="${r.weight}" /></td>
+                <td class="text-end small">${r.originalUnitCost}<input type="hidden" name="Lines[${i}].OriginalUnitCost" value="${r.originalUnitCost}" /></td>
+                <td class="text-center"><button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button></td>`;
+            tbody.appendChild(tr);
+        });
+        window.armValidation(document.getElementById('lcaForm')); // 動態列重註冊 unobtrusive 驗證（R6c）
+        bootstrap.Modal.getInstance(document.getElementById('grPickerModal'))?.hide();
+    }
+
+    function voidDoc(e, el) {
+        const id = el.dataset.id;
+        const reason = prompt(lcaVoidPrompt);
+        if (reason === null) return;
+        const token = document.querySelector('#lcaForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/LandedCostAllocation/Void/${id}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ reason, __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => { if (d.success) { window.toastSuccess && window.toastSuccess(); refreshList && refreshList(); } else alert(d.message); })
+          .catch(() => alert(lcaActionFailed));
+    }
+
+    function removeLine(e, btn) {
+        var tbody = btn.closest('tbody');
+        btn.closest('tr').remove();
+        Array.from(tbody.children).forEach((tr, idx) => {
+            var c = tr.querySelector('td');
+            if (c) c.textContent = (idx + 1);
+        });
+    }
+
+    function docAction(e, el) {
+        const action = el.dataset.docAction, id = el.dataset.id, msg = el.dataset.msg;
+        if (msg && !confirm(msg)) return;
+        const token = document.querySelector('#lcaForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/LandedCostAllocation/${action}/${id}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => { if (d.success) { window.toastSuccess && window.toastSuccess(); refreshList && refreshList(); } else alert(d.message); })
+          .catch(() => alert(lcaActionFailed));
+    }
+</script>
+
+@functions {
+    string StatusBadge(DocStatus s) => s switch {
+        DocStatus.Draft => "bg-secondary", DocStatus.Confirmed => "bg-success",
+        DocStatus.Posted => "bg-success", DocStatus.Void => "bg-danger", _ => "bg-secondary"
+    };
+    string ApprovalBadge(DocumentApprovalStatus s) => s switch {
+        DocumentApprovalStatus.Approved => "bg-success", DocumentApprovalStatus.PendingApproval => "bg-warning text-dark",
+        DocumentApprovalStatus.Rejected => "bg-danger", _ => "bg-secondary"
+    };
+}

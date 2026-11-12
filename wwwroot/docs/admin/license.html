@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>授權與防複製 — SmartFactory MES 系統管理手冊</title>
+<link rel="stylesheet" href="../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="index.page.css">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-patch-check me-2"></i>授權與防複製 — SmartFactory MES</span>
+  <div class="d-flex gap-2">
+    <a href="index.html" class="btn btn-sm btn-outline-light">管理手冊</a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light">文件中心</a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i>返回系統</a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading">章節</div>
+    <a href="#types" class="nav-link active">1. 三種部署的授權方式</a>
+    <a href="#apply" class="nav-link">2. 申請授權</a>
+    <a href="#received" class="nav-link">2a. 收到授權信之後</a>
+    <a href="#checkin" class="nav-link">3. 虛擬機：每 90 天確認</a>
+    <a href="#online" class="nav-link">3a. 線上授權確認（自選）</a>
+    <a href="#linux" class="nav-link">4. Linux 與容器的設定</a>
+    <a href="#change" class="nav-link">5. 換電腦、換主機板、搬家</a>
+    <a href="#states" class="nav-link">6. 授權狀態與唯讀</a>
+    <a href="#privacy" class="nav-link">7. 會傳送什麼、不會傳送什麼</a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-patch-check text-warning me-2"></i>授權與防複製</h1>
+      <div class="text-muted small mt-1">適用對象：系統管理者 &nbsp;|&nbsp; 最後更新：2026-10</div>
+    </div>
+
+    <p>授權免費，一次取得、<strong>永久有效</strong>。授權會綁定執行系統的那台電腦，目的是讓系統<strong>被整個複製到別台電腦時無法直接使用</strong>，保護貴公司自己的部署。
+       綁定方式依部署類型而不同；系統會自動判斷，申請時不必自己選。</p>
+
+    <h2 id="types"><i class="bi bi-diagram-3 me-2 text-warning"></i>1. 三種部署的授權方式</h2>
+    <table class="table table-sm table-bordered screen-table">
+      <thead><tr><th class="u-width-20pct">部署</th><th>授權綁定</th><th class="u-width-20pct">需要連線嗎</th><th>被整個複製到別台電腦時</th></tr></thead>
+      <tbody>
+        <tr><td>實體機（Windows／Linux）</td><td>這台電腦的主機板識別碼</td><td><strong>不需要</strong>（可自選加上線上確認，<a href="#online">第 3a 節</a>）</td><td>硬碟裝到別台：識別碼不同，系統<strong>不連資料庫</strong>，只顯示授權頁</td></tr>
+        <tr><td>WSL</td><td>Windows 主機的主機板識別碼</td><td><strong>不需要</strong>（可自選加上線上確認，<a href="#online">第 3a 節</a>）</td><td>匯出到別台電腦：識別碼不同，系統<strong>不連資料庫</strong>，只顯示授權頁</td></tr>
+        <tr><td>虛擬機（VM）、容器</td><td>每 90 天由管理員確認一次</td><td>系統本身<strong>不連外</strong>；由管理員的瀏覽器代為確認</td><td>第二份來確認會被拒絕，最多用到它下次確認日，之後唯讀</td></tr>
+      </tbody>
+    </table>
+    <p class="small text-muted">虛擬機的硬體識別碼寫在虛擬機的設定檔裡，可以被改掉，所以改用定期確認。即使拿到的是綁主機板的授權，系統只要偵測到自己跑在虛擬機或容器裡，一樣要定期確認。重灌作業系統、更新 BIOS 不會改變主機板識別碼。</p>
+
+    <h2 id="apply"><i class="bi bi-envelope-paper me-2 text-warning"></i>2. 申請授權</h2>
+    <div class="step-row"><span class="step-badge">1</span><div>先在正式主機產生機器錨定碼：執行 <code>SmartFactory.MES.MachineId --init</code>（Linux 須以 root 執行）。<strong>Linux 實體機請先完成<a href="#linux">第 4 節</a>的設定</strong>，否則讀不到主機板識別碼。</div></div>
+    <div class="step-row"><span class="step-badge">2</span><div>取得<strong>申請碼</strong>（內含環境指紋、主機識別碼、部署類型，皆為雜湊值）：
+      <ul class="mb-0">
+        <li><strong>全新安裝</strong>：還沒有授權時系統無法啟動，也就開不了「授權狀態」頁。請在正式主機執行 <code>SmartFactory.MES.MachineId</code>（不加參數），畫面會印出部署類型、主機識別碼、申請碼、<strong>登記網址</strong>（第一次申請）與<strong>換發網址</strong>（已有授權、換電腦或主機板）。</li>
+        <li><strong>系統已在運作</strong>（換發、加一台）：以管理員開啟「授權狀態」頁（<code>/License</code>），頁面顯示部署類型、主機識別碼、適用的授權方式與申請碼。</li>
+        <li><strong>開啟網址只看到授權頁</strong>（換了電腦或主機板）：授權頁上就有這台電腦的申請碼與換發網址。</li>
+      </ul></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div>用任何能上網的電腦或手機開啟登記網址（「授權狀態」頁為「申請授權（開啟登記頁）」按鈕；換電腦、換主機板請改用換發網址，或按「申請換發（換電腦、換主機板）」，另需填原授權編號），填寫公司與聯絡資料送出；或把申請碼整串交給導入顧問代為申請。首次登記由授權提供者人工審核，約需數個工作天，授權檔以 Email 寄出。</div></div>
+    <div class="step-row"><span class="step-badge">4</span><div>收到授權信後，依<a href="#received">第 2a 節</a>的情況處理。</div></div>
+    <div class="alert alert-warning py-2 small"><i class="bi bi-exclamation-triangle me-1"></i>只提供申請碼，<strong>不要提供錨定碼</strong>（<code>--raw</code> 才會顯示、長得像 UUID 的那串）——它是資料庫連線字串加密的金鑰材料。</div>
+
+    <h2 id="received"><i class="bi bi-envelope-open me-2 text-warning"></i>2a. 收到授權信之後</h2>
+    <p>信件附件是授權檔（檔名可能是 <code>license-貴公司代碼.json</code>，放到系統時一律改名為 <code>license.json</code>）。先打開確認 <code>licenseId</code>（授權編號），再依目前情況擇一處理：</p>
+    <table class="table table-sm table-bordered screen-table">
+      <thead><tr><th class="u-width-30pct">目前情況</th><th>要做什麼</th></tr></thead>
+      <tbody>
+        <tr><td>全新安裝（系統還沒啟動過）</td><td>
+          ① 把 <code>license.json</code> 放到應用程式目錄；Security DLL 從 GitHub Releases 下載<strong>與系統同版本</strong>的檔案，放在 <code>Security/SmartFactory.MES.Security.dll</code>（授權信只附授權檔；系統會拒收舊版 DLL，升級系統時一併更換）。<br>
+          ② 由 IT <strong>在這台正式主機上</strong>，以這份授權的授權編號加密資料庫連線字串（工具 <code>EncryptConnectionString</code>，加 <code>--this-host</code>；VM／容器的授權沒有主機識別碼，改加 <code>--no-host-binding</code>），結果填入設定檔的 <code>ConnectionStrings:DefaultEncrypted</code>。連線字串的金鑰包含這台主機的主機板識別碼，只能在這台主機上產生，授權提供者無法代為加密。<br>
+          ③ 啟動服務，以管理員開啟「授權狀態」頁確認授權編號正確、主機比對「符合」。<br>
+          ④ 虛擬機／容器：按一次「確認授權」（<a href="#checkin">第 3 節</a>）。</td></tr>
+        <tr><td>系統已在運作，新授權的<strong>授權編號與現行相同</strong></td><td>「授權狀態」頁 →「匯入新授權」上傳。系統先驗證，通過才取代現行授權，<strong>不需重新啟動</strong>。</td></tr>
+        <tr><td>系統已在運作，<strong>授權編號不同</strong>（換電腦、換主機板、改授權方式）</td><td>「匯入新授權」會拒絕（訊息「新授權的編號與現行不同…」），因為資料庫連線字串是以授權編號加密的。請由 IT 依上面「全新安裝」的 ②，以<strong>新授權編號</strong>重新加密連線字串，替換 <code>license.json</code>，再重新啟動服務。</td></tr>
+        <tr><td>開啟網址只看到授權頁（換了電腦或主機板）</td><td>同上一列：重新加密連線字串、替換 <code>license.json</code>、重新啟動。</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><strong>不可修改授權檔</strong>：每個欄位都在數位簽章範圍內，改了就無法使用（「授權檔案簽章無效」）。內容有誤請聯繫授權提供者重新核發。</li>
+      <li>授權信、授權檔與機器錨定檔請一併備份；錨定檔遺失或重新產生，就要重新申請授權。</li>
+      <li>啟動失敗時請看服務日誌：「找不到授權檔案」＝檔案位置不對；「連線字串為 ENC:v3…但此授權沒有列主機識別碼」＝授權沒有主機識別碼卻用了 <code>--this-host</code>，改用 <code>--no-host-binding</code> 重新加密。</li>
+    </ul>
+
+    <h2 id="checkin"><i class="bi bi-shield-check me-2 text-warning"></i>3. 虛擬機：每 90 天確認</h2>
+    <p>虛擬機的授權每 90 天要確認一次。到期前 14 天開始，管理員登入後會看到提醒；逾期未確認，系統轉為唯讀（可查詢、不能新增修改），確認後立即恢復。</p>
+    <div class="step-row"><span class="step-badge">1</span><div>以管理員開啟「授權狀態」頁，在「授權確認（每 90 天）」區塊按<strong>「確認授權」</strong>。</div></div>
+    <div class="step-row"><span class="step-badge">2</span><div>瀏覽器會開啟授權伺服器的確認頁。顯示「確認完成」後，結果會<strong>自動傳回系統</strong>，原頁面重新整理並顯示新的有效期限。確認頁可關閉。</div></div>
+    <div class="alert-checklist p-3 my-3">
+      <strong><i class="bi bi-phone me-1"></i>這台電腦不能上網時</strong>：按「複製確認連結」，把連結傳到手機或其他能上網的裝置開啟；確認完成後按「下載回覆檔」，
+      把檔案傳回這台電腦，在「授權狀態」頁的「匯入確認回覆」上傳。
+    </div>
+    <ul>
+      <li>確認頁顯示<strong>「已由另一份系統確認過」</strong>：同一份授權正在別處使用，常見於虛擬機被複製。若是合法搬遷，請聯繫授權提供者申請轉移。</li>
+      <li>客戶若允許系統直接連外，可在 <code>appsettings.json</code> 設定 <code>"License": { "Transport": "direct" }</code>，系統會每日自動確認，不需人工操作。</li>
+    </ul>
+
+    <h2 id="online"><i class="bi bi-cloud-check me-2 text-warning"></i>3a. 線上授權確認（自選）</h2>
+    <p>實體機與 WSL 預設只做離線驗證。若希望再多一層保護，可以啟用<strong>「線上授權確認」</strong>：啟用後，這台電腦的授權也要每 90 天確認一次，做法與<a href="#checkin">第 3 節</a>相同。
+       整台複製到別處的副本無法通過確認。</p>
+    <div class="step-row"><span class="step-badge">1</span><div>以管理員開啟「授權狀態」頁，先在「授權確認」區塊按<strong>「確認授權」</strong>完成一次確認。</div></div>
+    <div class="step-row"><span class="step-badge">2</span><div>在「線上授權確認」區塊按<strong>「啟用線上授權確認」</strong>。沒有先完成確認時，這個按鈕無法按。</div></div>
+    <ul>
+      <li><strong>連不上授權伺服器不會影響使用</strong>，只有超過確認期限（確認後 90 天）仍未再次確認，系統才轉為唯讀；到期前 14 天開始提醒。</li>
+      <li>不再需要時可按「停用線上授權確認」，改回只做離線驗證。</li>
+      <li><strong>虛擬機與容器</strong>：一律要確認，畫面顯示「已啟用（虛擬環境強制）」，無法停用；直接修改資料庫也無效。</li>
+    </ul>
+
+    <h2 id="linux"><i class="bi bi-terminal me-2 text-warning"></i>4. Linux 與容器的設定</h2>
+    <p>Linux 的主機板識別碼只有系統管理員權限讀得到，而 MES 以一般服務帳號執行。請在 systemd 服務檔的 <code>[Service]</code> 區段加入下面這一行，讓系統每次啟動前以管理員權限把識別碼寫到記憶體中的暫存區：</p>
+<pre class="bg-light p-2 rounded small"><code>ExecStartPre=+/bin/sh -c 'mkdir -p /run/smartfactory &amp;&amp; cat /sys/class/dmi/id/product_uuid &gt; /run/smartfactory/host-id'</code></pre>
+    <p>加入後執行 <code>sudo systemctl daemon-reload</code> 並重新啟動服務。<code>/run</code> 不在硬碟上，複製硬碟不會帶走它；換到別台電腦開機時會寫入那台的識別碼。</p>
+    <p><strong>容器</strong>：一律每 90 天確認（不綁主機、不讀主機識別碼，掛載宿主的識別碼也不會改變）。機器錨定檔與授權確認結果存在 <code>docker-compose.yml</code> 的 <code>anchor</code> volume，容器重建不受影響；<strong>刪掉這個 volume 就等於換了一台機器</strong>，要重新申請授權，請納入備份。申請碼與連線字串加密用映像內附的工具（<code>docker compose run --rm --no-deps --entrypoint dotnet app tools/MachineId/SmartFactory.MES.MachineId.dll</code>），連線字串加密要加 <code>--no-host-binding</code>。</p>
+    <p><strong>WSL</strong>：系統透過 Windows 的 <code>reg.exe</code> 讀取 Windows 主機的識別碼。若授權狀態頁顯示「無法執行 Windows 的 reg.exe」，通常是 WSL 與 Windows 的互通被停用，執行 <code>sudo systemctl restart systemd-binfmt</code> 或重新啟動 WSL 即可。<strong>讀不到時系統無法確認這是授權的電腦，同樣不連資料庫、只顯示授權頁</strong>；修好後重新啟動服務即恢復。</p>
+
+    <h2 id="change"><i class="bi bi-arrow-left-right me-2 text-warning"></i>5. 換電腦、換主機板、搬家</h2>
+    <table class="table table-sm table-bordered screen-table">
+      <thead><tr><th class="u-width-30pct">情況</th><th>要做什麼</th></tr></thead>
+      <tbody>
+        <tr><td>重灌作業系統、更新 BIOS</td><td>不需處理（主機板識別碼不變）。重灌時請保留或還原錨定檔。</td></tr>
+        <tr><td>換電腦、換主機板</td><td>系統不連資料庫，開啟網址只會看到授權頁（含新電腦的申請碼）。開啟授權頁上的換發網址重新申請（填原授權編號）；收到新授權後依<a href="#received">第 2a 節</a>，請 IT <strong>在新電腦上</strong>以新授權編號重新加密資料庫連線字串（連線字串的金鑰與主機板綁定），再重新啟動。</td></tr>
+        <tr><td>虛擬機搬到另一台主機</td><td>先聯繫授權提供者申請轉移，再於新位置按「確認授權」。</td></tr>
+        <tr><td>原本的電腦還在用、要再加一台</td><td>每台電腦各需一份授權，請另行申請。</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="states"><i class="bi bi-lock me-2 text-warning"></i>6. 授權狀態與唯讀</h2>
+    <ul>
+      <li><strong>正常</strong>：所有功能可用。</li>
+      <li><strong>提醒</strong>：功能不受影響，但有事要處理，例如虛擬機的確認快到期。管理員畫面上方會顯示橫幅。</li>
+      <li><strong>唯讀</strong>：可登入、查詢、列印報表，不能新增、修改、過帳；背景排程也會暫停寫入。
+          發生於虛擬機或已啟用線上授權確認的電腦逾期未確認、授權被撤銷。處理完成（匯入新授權、完成確認）後立即恢復。</li>
+      <li><strong>只顯示授權頁</strong>：主機識別碼不符（「此授權不屬於這台電腦」，例如整台硬碟或 WSL 被複製到別台）或讀不到時，系統<strong>不連資料庫、不提供登入</strong>，任何網址都只顯示原因與申請碼——被複製出去的環境看不到任何資料。換回原電腦、修好讀取或換上新授權後重新啟動即恢復。</li>
+    </ul>
+
+    <h2 id="privacy"><i class="bi bi-eye me-2 text-warning"></i>7. 會傳送什麼、不會傳送什麼</h2>
+    <table class="table table-sm table-bordered screen-table">
+      <thead><tr><th class="u-width-28pct">時機</th><th>傳送的內容</th></tr></thead>
+      <tbody>
+        <tr><td>平常運作（每天一次，所有部署）</td><td><strong>不傳送任何資料</strong>：系統只讀取 <code>raw.githubusercontent.com</code> 上公開的終止聲明檔（作者停止維護時，用它永久解除授權限制），讀不到也不影響使用。</td></tr>
+        <tr><td>申請授權（登記頁）</td><td>您填寫的公司與聯絡資料、機器指紋、主機識別碼、部署類型、系統版本。指紋與主機識別碼都是<strong>雜湊值</strong>，無法還原成錨定碼或主機板序號。</td></tr>
+        <tr><td>虛擬機、或已啟用線上授權確認的電腦每 90 天確認</td><td>授權檔、機器指紋（雜湊）、啟用碼、系統版本、作業系統、時間。由<strong>管理員的瀏覽器</strong>送出，系統本身不連外。送出的完整內容可在「授權狀態」頁的「確認時會送出什麼？」逐字檢視。</td></tr>
+      </tbody>
+    </table>
+    <p><strong>任何時候都不會傳送</strong>：錨定碼、主機板序號原值、資料庫連線字串、帳號密碼，以及任何工單、庫存、客戶、財務等業務資料或個人資料。</p>
+    <p class="small text-muted">系統原始碼公開，貴公司資訊人員可自行檢查上述行為。防火牆設定：伺服器只需放行 <code>raw.githubusercontent.com</code>（也可以不放行，只是讀不到終止聲明）；授權伺服器 <code>license.gemba-mes.workers.dev</code> 由管理員的瀏覽器連線，伺服器本身不需放行。</p>
+  </main>
+</div>
+</body>
+</html>

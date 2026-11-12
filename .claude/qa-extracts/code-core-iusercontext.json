@@ -1,0 +1,14 @@
+{
+  "sourcePath": "Services/IUserContext.cs",
+  "sourceHash": "519fe3d837baadca848333501d2f6c9cbf080a1cb9874a6976788791be86cc63",
+  "entries": [
+    {
+      "slug": "code-core-iusercontext-601f895b",
+      "lang": "zh",
+      "headingPath": "系統共用 › 空白字串＝未設定，不是「設定成空白」",
+      "text": "時區的三層決定順序｜生效時區依「廠別時區 → 個人時區 → 系統預設」的順序決定。廠別時區若是空白字串或全是空白，一律視為未設定而往下一層找，不會被當成有值；否則個人時區那一層會被整個跳過，最後無聲地退回系統預設。",
+      "approved": true,
+      "sourceSectionHash": "aece4eacdf4121ab7038811100c9d9464f8ab150b60a426fff3d5c79882649e9"
+    }
+  ]
+}

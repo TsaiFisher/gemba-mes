@@ -1,0 +1,81 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.QCR.Models
+@inject IViewLocalizer Localizer
+@model Instrument
+
+@{
+    bool isNew      = string.IsNullOrEmpty(Model?.InstrumentCode);
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+}
+
+<form method="post"
+      action="@(isNew ? Url.Action("Create") : Url.Action("Edit", new { id = Model!.InstrumentCode }))"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+
+    @if (!isNew)
+    {
+        <input type="hidden" asp-for="InstrumentCode" />
+    }
+
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+    <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+        <div class="mb-3">
+            <label class="form-label">@Localizer["InstrumentCode"] <span class="text-danger">*</span></label>
+            @if (isNew)
+            {
+                <input type="text" class="form-control font-monospace" asp-for="InstrumentCode"
+                       maxlength="20" required placeholder="@Localizer["InstrumentCodePlaceholder"]" />
+                <span asp-validation-for="InstrumentCode" class="text-danger small d-block"></span>
+            }
+            else
+            {
+                <input type="text" class="form-control font-monospace" value="@Model!.InstrumentCode" readonly />
+            }
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["InstrumentName"] <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" asp-for="InstrumentName"
+                   maxlength="100" required />
+            <span asp-validation-for="InstrumentName" class="text-danger small d-block"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["CalibrationFrequencyDays"]</label>
+            <input type="number" class="form-control" asp-for="CalibrationFrequencyDays"
+                   min="0" step="1" />
+            <span asp-validation-for="CalibrationFrequencyDays" class="text-danger small d-block"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["CalibrationMethod"]</label>
+            <input type="text" class="form-control" asp-for="CalibrationMethod" maxlength="50" />
+            <span asp-validation-for="CalibrationMethod" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" asp-for="IsActive" />
+            <label class="form-check-label" for="IsActive">@Localizer["IsActive"]</label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Remarks"]</label>
+            <textarea class="form-control" asp-for="Remarks" rows="3"></textarea>
+            <span asp-validation-for="Remarks" class="text-danger small"></span>
+        </div>
+    </fieldset>
+
+    <div class="modal-footer">
+        @if (isReadOnly)
+        {
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+            <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+        }
+    </div>
+</form>

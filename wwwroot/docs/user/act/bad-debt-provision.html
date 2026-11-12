@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Bad Debt Provision (ECL) — ACT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>壞帳準備 ECL — ACT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ACT 目錄</span><span lang="en">ACT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ACT 畫面</span><span lang="en">ACT screens</span></div>
+    <a href="accounting-period.html" class="nav-link"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a>
+    <a href="journal-entry.html" class="nav-link"><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></a>
+    <a href="trial-balance.html" class="nav-link"><span lang="zh">試算表</span><span lang="en">Trial Balance</span></a>
+    <a href="month-end.html" class="nav-link"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>
+    <a href="department-actual-cost.html" class="nav-link"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></a>
+    <a href="nrv-assessment.html" class="nav-link"><span lang="zh">IAS 2 NRV 評估</span><span lang="en">IAS 2 NRV Assessment</span></a>
+    <a href="ecl.html" class="nav-link"><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></a>
+    <a href="bad-debt-provision.html" class="nav-link active"><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-shield-x me-2 text-primary"></i><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BadDebtProvision &nbsp;|&nbsp; 備抵呆帳提列與沖銷管理</span><span lang="en">Route: /BadDebtProvision &nbsp;|&nbsp; Managing the bad debt allowance and its write-offs</span></div>
+    </div>
+
+    <p><span lang="zh">依基準日把未收應收帳款按客戶與帳齡區間列出，套用 ECL 損失率算出應提列的壞帳準備，可匯出。本畫面只查詢、不入帳；備抵分錄在<a href="month-end.html">月結作業</a>步驟 9 依 ECL 評估結果開立。</span><span lang="en">Lists unpaid receivables by customer and aging band as at the chosen date and applies the ECL loss rates to work out the provision required; the list can be exported. This screen is enquiry only and posts nothing; the allowance entry is posted at step 9 of <a href="month-end.html">Month-End Closing</a> from the ECL assessment.</span></p>
+    <img class="screen-shot" src="img/bad-debt-provision.png" data-src-en="img/en/bad-debt-provision.png" alt="壞帳準備畫面截圖" data-alt-en="Bad debt provision screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">壞帳準備畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Bad debt provision screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">基準日</span><span lang="en">As-of Date</span></td><td><span lang="zh">帳齡的計算基準日；逾期天數＝基準日 － 發票到期日</span><span lang="en">The as-of date aging is calculated from; days overdue = as-of date − invoice due date</span></td></tr>
+        <tr><td><span lang="zh">客戶</span><span lang="en">Customer</span></td><td><span lang="zh">只看單一客戶的帳齡與準備金；留空為全部客戶</span><span lang="en">Aging and provision for one customer only; leave blank for all customers</span></td></tr>
+      </tbody>
+    </table>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">客戶代碼</span><span lang="en">Customer Code</span></td><td><span lang="zh">應收帳款的往來客戶</span><span lang="en">Customer of the receivable</span></td></tr>
+        <tr><td><span lang="zh">帳齡區間</span><span lang="en">Aging Bucket</span></td><td><span lang="zh">依基準日計算的逾期天數所落入的區間（區間定義見 ECL 準備畫面）</span><span lang="en">The band the days overdue fall into as at the as-of date (the bands are defined on the ECL provision screen)</span></td></tr>
+        <tr><td><span lang="zh">帳齡天數</span><span lang="en">Days outstanding</span></td><td><span lang="zh">該筆／該群應收自到期日起算的逾期天數</span><span lang="en">Days overdue for that receivable or group, counted from the due date</span></td></tr>
+        <tr><td><span lang="zh">金額</span><span lang="en">Amount</span></td><td><span lang="zh">該客戶在該帳齡區間內的未收應收帳款合計（本幣，總額 − 已收 − 已折讓）；客戶多付的發票以 0 計</span><span lang="en">Unpaid receivables from that customer in that aging band (local currency, total − received − credited); invoices the customer has overpaid count as 0</span></td></tr>
+        <tr><td><span lang="zh">損失率</span><span lang="en">Loss Rate</span></td><td><span lang="zh">該帳齡區間適用的預期信用損失率（%）</span><span lang="en">Expected credit loss rate applied to that aging band (%)</span></td></tr>
+        <tr><td><span lang="zh">準備金</span><span lang="en">Provision</span></td><td><span lang="zh">金額 × 損失率，該客戶該區間應提列的壞帳準備</span><span lang="en">Amount × loss rate, i.e. the bad debt provision for that customer in that band</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="ecl.html"><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

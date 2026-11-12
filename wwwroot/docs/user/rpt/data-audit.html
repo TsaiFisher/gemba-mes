@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Data Audit Diagnostics — RPT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>資料稽核診斷 — RPT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">RPT 目錄</span><span lang="en">RPT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">RPT 畫面</span><span lang="en">RPT screens</span></div>
+    <a href="dashboard.html" class="nav-link"><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></a>
+    <a href="profit-loss.html" class="nav-link"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a>
+    <a href="gross-margin.html" class="nav-link"><span lang="zh">毛利分析</span><span lang="en">Gross Margin Analysis</span></a>
+    <a href="margin-analysis.html" class="nav-link"><span lang="zh">多維度銷售毛利分析</span><span lang="en">Multi-dimensional sales margin analysis</span></a>
+    <a href="contribution-margin.html" class="nav-link"><span lang="zh">產品邊際貢獻分析</span><span lang="en">Product Contribution Margin</span></a>
+    <a href="balance-sheet.html" class="nav-link"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></a>
+    <a href="consolidated-statement.html" class="nav-link"><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></a>
+    <a href="outsource-performance.html" class="nav-link"><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></a>
+    <a href="data-audit.html" class="nav-link active"><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></a>
+    <a href="field-telemetry.html" class="nav-link"><span lang="zh">現場遙測</span><span lang="en">Field Telemetry</span></a>
+    <a href="saved-queries.html" class="nav-link"><span lang="zh">常用查詢</span><span lang="en">Saved Queries</span></a>
+    <a href="report-schedule.html" class="nav-link"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>
+    <a href="report-inbox.html" class="nav-link"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a>
+    <a href="report-run-history.html" class="nav-link"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-shield-check me-2 text-primary"></i><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/DataAudit &nbsp;|&nbsp; 業務資料流一致性檢核結果與趨勢</span><span lang="en">Route: /DataAudit &nbsp;|&nbsp; Consistency check results and trend across the business data flow</span></div>
+    </div>
+
+    <p><span lang="zh">系統每天 02:00 自動執行全部資料一致性檢核（採購超收、GR/IR 溢開與掛帳、委外在外原料平衡、傳票借貸平衡與重複立帳、庫存滾動平衡、銷售超出貨、出貨未開票、後沖消耗核對、PO/SO 累計欄位漂移、ERP 拋轉滯留），並將結果保存於本畫面。相同的檢核在月結關帳時會擋關——本畫面讓異常在關帳之前就主動浮現，爭取處理時間。</span><span lang="en">All data consistency checks run automatically at 02:00 every day (PO over-receipt, GR/IR over-invoicing and accruals, outsource material balance, journal debit/credit balance and duplicate postings, inventory roll-forward, sales over-shipment, shipments not invoiced, backflush consumption reconciliation, PO/SO cumulative field drift, ERP sync backlog) and the results are kept on this screen. The same checks block the month-end close — this screen brings the exceptions out before closing, so there is time to deal with them.</span></p>
+    <img class="screen-shot" src="img/data-audit.png" data-src-en="img/en/data-audit.png" alt="資料稽核診斷畫面截圖" data-alt-en="Data audit diagnostics screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">資料稽核診斷畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Data audit diagnostics screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="screen-contents"><i class="bi bi-speedometer2 me-2 text-primary"></i><span lang="zh">畫面內容</span><span lang="en">Screen contents</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">上方 KPI 卡顯示最近一次執行時間（排程或手動）、異常筆數、涉及的稽核類型數與執行耗時。</span><span lang="en">The KPI cards at the top show when it last ran (scheduled or manual), how many exceptions were found, how many audit types were involved and how long it took.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">趨勢圖顯示近 30 次執行的異常筆數變化；持續上升代表回寫邏輯或操作流程出了問題，應盡早追查。</span><span lang="en">The trend chart shows how the number of exceptions changed over the last 30 runs; a steady rise means something is wrong with the write-back logic or the way the work is being done, and should be looked into early.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">異常明細表列出每筆異常的稽核類型、單據號（或聚合鍵）、品號、廠別、差額與說明（含期望值與實際值）；可用「稽核類型」下拉篩選。</span><span lang="en">The exception table lists the audit type, document number (or summary key), item, plant, difference and a description including the expected and actual values for each exception; the "audit type" dropdown filters it.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">「立即執行稽核」按鈕（需異動權限）立刻執行一次全廠稽核並更新畫面，適合修完資料後驗證。</span><span lang="en">The "Run audit now" button (which needs change permission) runs a full plant audit immediately and refreshes the screen — handy for verifying a fix.</span></div></div>
+
+    <h2 id="auto-repair"><i class="bi bi-wrench-adjustable me-2 text-primary"></i><span lang="zh">可自動修正的累計欄位</span><span lang="en">Cumulative fields that can be corrected automatically</span></h2>
+    <p><span lang="zh">有一類差異不必追查就知道正確答案：單據上的<strong>進度欄位</strong>，它的值完全由來源單據決定。目前有兩種——<strong>採購明細的已收數量</strong>（應為＝所有未作廢進貨單的收貨量加總）與<strong>訂單明細的已出數量</strong>（應為＝所有未作廢出貨單的出貨量加總）。出現這類差異時，畫面上方會多一張黃框卡片，列出每一筆的現值、應為與差額。</span><span lang="en">One kind of difference has a known correct answer without any investigation: <strong>progress fields</strong> on documents whose value is fully determined by the source documents. There are two today — <strong>PO line received quantity</strong> (should be the total received on all non-void goods receipts) and <strong>SO line shipped quantity</strong> (should be the total shipped on all non-void shipments). When such differences exist, an amber card at the top of the screen lists each one with its current value, the value it should be and the difference.</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">勾選要修正的列（可全選），按「修正勾選項目」，確認後送出。需要資料稽核的異動權限。</span><span lang="en">Tick the rows to correct (or select all), click "Correct selected" and confirm. You need change permission on Data Audit.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">送出時系統會<strong>再算一次</strong>應為值，而不是照畫面上的數字寫——看完畫面到按下送出之間若又進了貨或出了貨，也會算進去。只會改目前廠別的單據。</span><span lang="en">On submit the system <strong>recalculates</strong> the correct value instead of writing the number shown on screen — anything received or shipped between viewing the screen and clicking submit is included. Only documents of your current plant are changed.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">每一筆修正的前後值與修正者都記在「稽核日誌」（資料表類型 PurchaseOrderLine／SalesOrderLine，資料 ID 為「單號|行號」）。</span><span lang="en">The before and after values of every correction and who made it are recorded in the Audit Log (entity type PurchaseOrderLine / SalesOrderLine, entity ID "number|line").</span></div></div>
+    <p class="text-muted small"><span lang="zh">傳票、庫存數量與成本的差異<strong>不會</strong>自動修正：那些錯了要先找出原因，直接把數字改對會把證據一起抹掉。進貨單指向不存在的採購明細（孤兒）也無法自動修正，仍列在下方的異常明細裡。</span><span lang="en">Differences in journals, inventory quantities and cost are <strong>never</strong> corrected automatically: their cause has to be found first, and simply making the numbers agree would wipe out the evidence. Goods receipts pointing at a PO line that does not exist (orphans) cannot be corrected automatically either and stay in the findings below.</span></p>
+
+    <h2 id="inventory-gl"><i class="bi bi-calculator me-2 text-primary"></i><span lang="zh">總帳存貨對明細帳</span><span lang="en">Inventory GL vs subledger</span></h2>
+    <p><span lang="zh">其他庫存稽核只比<strong>數量</strong>；這一組比的是<strong>金額</strong>：總帳存貨科目（1401）必須等於庫存明細帳的價值（FIFO 成本層＋移動平均品的在手量 × 均價），扣掉下列三種「依設計不入總帳」的調整項後，殘差必須是 0。</span><span lang="en">The other inventory checks compare <strong>quantities</strong>; this group compares <strong>amounts</strong>. The inventory GL account (1401) must equal the value of the inventory subledger (FIFO cost layers plus on-hand quantity × average cost for moving-average items). After removing the three adjustments below, which by design never reach the general ledger, the residual must be 0.</span></p>
+    <ul>
+      <li><span lang="zh"><strong>在製</strong>：生產與委外發料不開傳票，料發出去之後價值仍留在存貨科目，要等完工繳庫才回到明細帳。系統逐張工單計算（發料、退料、繳庫、委外收貨、完工吸收分錄）。</span><span lang="en"><strong>Work in progress</strong>: production and outsourcing issues post no journal, so issued material stays in the inventory account until the finished goods are received back into stock. It is worked out per work order (issues, returns, completions, outsource receipts and the completion absorption entry).</span></li>
+      <li><span lang="zh"><strong>客供料</strong>（CI／CR）：所有權屬客戶，只管數量不入總帳。</span><span lang="en"><strong>Customer-supplied material</strong> (CI/CR): owned by the customer, so only the quantity is tracked.</span></li>
+      <li><span lang="zh"><strong>借出在外</strong>（IL／LR）：所有權沒有移轉，只換了地點。</span><span lang="en"><strong>Lent out</strong> (IL/LR): ownership does not change, only the location does.</span></li>
+    </ul>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">稽核類型</span><span lang="en">Audit type</span></th><th><span lang="zh">意思與處理</span><span lang="en">Meaning and what to do</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">總帳存貨與明細帳不符</span><span lang="en">Inventory GL ≠ subledger</span></td><td><span lang="zh">扣掉調整項後仍有殘差：有異動漏開傳票，或傳票金額與異動不同。<strong>擋月結關帳。</strong>先看同廠的「單據總帳與異動價值不符」找出是哪幾張單；查明原因後以人工傳票更正，殘差歸零即解除。</span><span lang="en">A residual remains after the adjustments: some movement was posted without a journal, or with a different amount. <strong>Blocks the month-end close.</strong> Use the "Document GL ≠ movement value" findings for the same plant to find the documents; once the cause is known, correct it with a manual journal — the finding clears when the residual is 0.</span></td></tr>
+        <tr><td><span lang="zh">單據總帳與異動價值不符</span><span lang="en">Document GL ≠ movement value</span></td><td><span lang="zh">指路用的明細，只在殘差不為 0 時列出：這張單的存貨科目淨額與它的庫存異動價值不相等，又不屬於上述調整項。不擋關帳（擋的是殘差那一筆）。</span><span lang="en">Listed only while there is a residual, to show where it comes from: this document's inventory GL amount differs from the value of its stock movements and is not one of the adjustments above. Does not block the close on its own (the residual does).</span></td></tr>
+        <tr><td><span lang="zh">工單在製為負</span><span lang="en">Negative work-order WIP</span></td><td><span lang="zh">回到倉庫的價值比發出去的多，例如退料超過廠內實際發料，或委外收回的加工費沒有入帳。擋關帳。</span><span lang="en">More value came back to stock than was issued — for example a return larger than what was actually issued in-plant, or an outsource receipt whose processing fee was never posted. Blocks the close.</span></td></tr>
+        <tr><td><span lang="zh">結案工單仍留在製</span><span lang="en">WIP left on closed work order</span></td><td><span lang="zh">工單已結案或作廢，但發出去的料既沒有算進成品、也沒有退回倉庫。擋關帳。</span><span lang="en">The work order is closed or voided, yet the issued material was neither costed into the finished goods nor returned to stock. Blocks the close.</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">早於總帳過帳功能上線就存在的庫存異動沒有傳票，會一直出現在殘差裡；這類歷史差額同樣以一張人工傳票（借或貸存貨科目、對方為適當的調整科目）一次更正。</span><span lang="en">Stock movements recorded before journal posting existed have no journals and will keep showing up in the residual; correct such historical differences the same way, with one manual journal debiting or crediting the inventory account against a suitable adjustment account.</span></p>
+
+    <h2 id="points-to-note"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">注意事項</span><span lang="en">Points to note</span></h2>
+    <p><span lang="zh">畫面僅顯示目前廠別（及無廠別維度）的異常；異常筆數為 0 不代表全公司無異常。稽核結果保留 90 天，逾期自動清除。月結關帳前請先確認本畫面無異常，否則關帳會被相同檢核擋下。</span><span lang="en">The screen only shows exceptions for your current plant (plus those with no plant dimension), so 0 exceptions does not mean the whole company is clean. Audit results are kept for 90 days and then cleared automatically. Make sure this screen is clear before the month-end close, or the same checks will block it.</span></p>
+
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">稽核類型</span><span lang="en">Audit Type</span></td><td><span lang="zh">要執行的一致性稽核項目；留空為全部項目一次掃描</span><span lang="en">The consistency check to run; leave blank to scan every check in one pass</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">結果欄位</span><span lang="en">Result fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">稽核類型</span><span lang="en">Audit Type</span></td><td><span lang="zh">偵測到問題的稽核項目名稱</span><span lang="en">Name of the audit check that found the problem</span></td></tr>
+        <tr><td><span lang="zh">單據 / 聚合鍵</span><span lang="en">Document / Key</span></td><td><span lang="zh">問題所在的單據號碼或彙總鍵，用於定位資料</span><span lang="en">The document number or summary key where the problem is, for locating the data</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">涉及的料件（部分稽核項目適用）</span><span lang="en">Item involved (applies to some audit checks)</span></td></tr>
+        <tr><td><span lang="zh">廠別</span><span lang="en">Plant</span></td><td><span lang="zh">問題所屬的廠別</span><span lang="en">Plant the problem belongs to</span></td></tr>
+        <tr><td><span lang="zh">差額</span><span lang="en">Difference</span></td><td><span lang="zh">兩個口徑之間的不一致金額或數量；為 0 表示一致</span><span lang="en">The amount or quantity by which the two bases disagree; 0 means they agree</span></td></tr>
+        <tr><td><span lang="zh">說明</span><span lang="en">Guide</span></td><td><span lang="zh">差異的具體描述與建議處理方向</span><span lang="en">Description of the difference and the suggested way to handle it</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">稽核本身只偵測與呈報差異；除了上面「可自動修正的累計欄位」經人勾選核可之外，不會修改資料。差額落在容忍值內者不列入結果。</span><span lang="en">The audit itself only detects and reports differences; apart from the "cumulative fields" above, corrected only when someone ticks and approves them, it never changes data. Anything within the tolerance is left out of the results.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="../act/month-end.html"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>、<a href="../act/accounting-period.html"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a></p>
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="InternalOrderId" xml:space="preserve"><value>內部訂單號</value></data>
+  <data name="OrderDate" xml:space="preserve"><value>日期</value></data>
+  <data name="TypeCode" xml:space="preserve"><value>類型</value></data>
+  <data name="TypeNO" xml:space="preserve"><value>出料 (NO)</value></data>
+  <data name="TypeNR" xml:space="preserve"><value>退料 (NR)</value></data>
+  <data name="DepartmentCode" xml:space="preserve"><value>部門</value></data>
+  <data name="SelectDepartment" xml:space="preserve"><value>請選擇部門</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>發料明細</value></data>
+  <data name="AddLine" xml:space="preserve"><value>新增明細</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="DeliveryDate" xml:space="preserve"><value>需求日期</value></data>
+  <data name="OrderQty" xml:space="preserve"><value>數量</value></data>
+  <data name="UomCode" xml:space="preserve"><value>單位</value></data>
+  <data name="WhCode" xml:space="preserve"><value>倉庫</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>儲位</value></data>
+  <data name="LotNo" xml:space="preserve"><value>批號</value></data>
+  <data name="QtyPutAwayOut" xml:space="preserve"><value>已出庫量</value></data>
+  <data name="QtyPutAwayIn" xml:space="preserve"><value>已入庫量</value></data>
+  <data name="IsClosed" xml:space="preserve"><value>結案</value></data>
+  <data name="CloseAll" xml:space="preserve"><value>全部結案</value></data>
+  <data name="CloseLine" xml:space="preserve"><value>結案此行</value></data>
+  <data name="Reopen" xml:space="preserve"><value>重開</value></data>
+  <data name="ClosePendingApprovalHint" xml:space="preserve"><value>尚未核准，無法結案。</value></data>
+  <data name="ConfirmCloseDoc" xml:space="preserve"><value>確定要結案所有未結案明細嗎？結案後將無法再引用這些明細。</value></data>
+  <data name="Submit" xml:space="preserve"><value>送審</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>撤回</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>確定要送審此內部訂單嗎？</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>確定要撤回此內部訂單嗎？</value></data>
+  <data name="ConfirmNO" xml:space="preserve"><value>確認發料</value></data>
+  <data name="ConfirmNR" xml:space="preserve"><value>確認退料</value></data>
+  <data name="ConfirmConfirmNO" xml:space="preserve"><value>確定要確認此內部訂單？確認後請至【倉庫作業 → 出庫下架】完成領用作業以更新庫存。</value></data>
+  <data name="ConfirmConfirmNR" xml:space="preserve"><value>確定要確認此內部訂單？確認後請至【倉庫作業 → 入庫上架】完成退料作業以更新庫存。</value></data>
+  <data name="CancelConfirm" xml:space="preserve"><value>取消確認</value></data>
+  <data name="ConfirmCancelConfirm" xml:space="preserve"><value>確定要取消此內部訂單的確認狀態嗎？</value></data>
+  <data name="Void" xml:space="preserve"><value>作廢</value></data>
+  <data name="VoidReason" xml:space="preserve"><value>請輸入作廢原因：</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>移除此列</value></data>
+</root>

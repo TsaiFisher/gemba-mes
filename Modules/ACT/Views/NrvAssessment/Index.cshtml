@@ -1,0 +1,168 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.ACT.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.ACT.Models.InventoryNrvAssessment>
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    bool canUpdate   = ViewBag.CanUpdate == true;
+    bool canPrint    = ViewBag.CanPrint  == true;
+    int  curPageSize = ViewBag.CurrentPageSize as int? ?? 20;
+    string searchPeriod = ViewBag.SearchPeriod as string ?? "";
+    var periodOptions   = ViewBag.PeriodOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-shield-x me-2"></i>@Localizer["PageTitle"]</h1>
+    </div>
+
+    @Html.AntiForgeryToken()
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-3">
+                    <label class="form-label small">@Localizer["SearchPeriod"]</label>
+                    <select name="searchPeriod" class="form-select">
+                        <option value="">@L["AllPeriods"]</option>
+                        @foreach (var p in periodOptions)
+                        { <option value="@p" selected="@(searchPeriod == p)">@p</option> }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+                @if (canUpdate && !string.IsNullOrWhiteSpace(searchPeriod))
+                {
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-outline-warning"
+                                data-action="runNrv" data-period-id="@searchPeriod">
+                            <i class="bi bi-calculator me-1"></i>@Localizer["RunBatch"]
+                        </button>
+                    </div>
+                }
+                @if (canPrint && hasSearched)
+                {
+                    <div class="col-auto">
+                        <div class="btn-group">
+                            <a asp-action="Export" asp-route-searchPeriod="@searchPeriod" asp-route-format="xlsx"
+                               class="btn btn-outline-secondary">
+                                <i class="bi bi-file-earmark-excel me-1"></i>@Localizer["ExportExcel"]
+                            </a>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Export" asp-route-format="csv"
+                                       asp-route-searchPeriod="@searchPeriod">
+                                    <i class="bi bi-filetype-csv me-1"></i>@Localizer["ExportCsv"]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover table-sm align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Localizer["PeriodId"]</th>
+                            <th>@Localizer["ProductCode"]</th>
+                            <th class="text-end">@Localizer["QtyOnHand"]</th>
+                            <th class="text-end">@Localizer["CarryingCost"]</th>
+                            <th class="text-end">@Localizer["NrvPrice"]</th>
+                            <th class="text-end">@Localizer["SellingCost"]</th>
+                            <th class="text-end">@Localizer["NetRealizableValue"]</th>
+                            <th class="text-end">@Localizer["ImpairmentLoss"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var r in Model)
+                    {
+                        bool hasImpairment = r.ImpairmentLoss > 0;
+                        <tr class="@(hasImpairment ? "table-warning" : "")">
+                            <td>@r.PeriodId</td>
+                            <td><code>@r.ProductCode</code></td>
+                            <td class="text-end">@r.QtyOnHand.ToString("N4")</td>
+                            <td class="text-end">@r.CarryingCost.ToString(moneyFmt)</td>
+                            <td class="text-end">@r.NrvPrice.ToString(moneyFmt)</td>
+                            <td class="text-end text-muted small">@r.SellingCost.ToString(moneyFmt)</td>
+                            <td class="text-end">@r.NetRealizableValue.ToString(moneyFmt)</td>
+                            <td class="text-end @(hasImpairment ? "fw-bold text-danger" : "text-muted")">
+                                @(hasImpairment ? r.ImpairmentLoss.ToString("N2") : "—")
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <td colspan="7" class="text-end small fw-semibold">@Localizer["TotalImpairment"]</td>
+                            <td class="text-end fw-bold text-danger">@Model.Sum(r => r.ImpairmentLoss).ToString("N2")</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMsg"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+    <div id="errorToast" class="toast align-items-center text-bg-danger border-0">
+        <div class="d-flex">
+            <div class="toast-body" id="errorMsg"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    const token = () => document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+
+    function runNrv(e, el) {
+        const periodId = el.dataset.periodId;
+        fetch(`/NrvAssessment/Run?periodId=${encodeURIComponent(periodId)}`, {
+            method: 'POST',
+            headers: { 'RequestVerificationToken': token(), 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(r => r.json().catch(() => ({ success: false, message: 'JSON parse error' })))
+        .then(d => {
+            const toastEl = document.getElementById(d.success ? 'successToast' : 'errorToast');
+            document.getElementById(d.success ? 'toastMsg' : 'errorMsg').textContent = d.message;
+            bootstrap.Toast.getOrCreateInstance(toastEl).show();
+            if (d.success) setTimeout(() => location.reload(), 800);
+        });
+    }
+</script>
+}

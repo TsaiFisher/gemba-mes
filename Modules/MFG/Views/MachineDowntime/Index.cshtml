@@ -1,0 +1,121 @@
+@using SmartFactory.MES.Services
+@model List<SmartFactory.MES.Modules.MFG.ViewModels.MachineDowntimeRowVm>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    ViewData["Title"] = L["PageTitle"].Value;
+    bool searched          = ViewBag.Searched == true;
+    bool canPrint          = ViewBag.CanPrint == true;
+    var rows               = Model ?? new();
+    decimal totalHours     = rows.Sum(r => r.TotalHours);
+    string curWorkCenter   = ViewBag.WorkCenterId as string ?? "";
+    string curMachine      = ViewBag.MachineCode  as string ?? "";
+    var workCenterOptions  = ViewBag.WorkCenterOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var machineOptions     = ViewBag.MachineOptions    as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-3">
+    <h4 class="mb-3">@L["PageTitle"]</h4>
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-2">
+                <label class="form-label">@L["FromDate"]</label>
+                <input type="date" name="fromDate" class="form-control" value="@ViewBag.FromDate" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">@L["ToDate"]</label>
+                <input type="date" name="toDate" class="form-control" value="@ViewBag.ToDate" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">@L["WorkCenter"]</label>
+                <select name="workCenterId" class="form-select form-select-sm">
+                    <option value="">@L["AllWorkCenters"]</option>
+                    @foreach (var wc in workCenterOptions)
+                    {
+                        <option value="@wc.WorkCenterCode" selected="@(curWorkCenter == (string)wc.WorkCenterCode)">@wc.WorkCenterCode — @wc.WorkCenterName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">@L["MachineCode"]</label>
+                <select name="machineCode" class="form-select form-select-sm">
+                    <option value="">@L["AllMachines"]</option>
+                    @foreach (var m in machineOptions)
+                    {
+                        <option value="@m.MachineCode" selected="@(curMachine == (string)m.MachineCode)">@m.MachineCode — @m.MachineName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" name="searched" value="true" class="btn btn-primary w-100 px-4">
+                    <i class="bi bi-search"></i> @L["Search"]
+                </button>
+            </div>
+        </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @if (!searched)
+    {
+        <div class="alert alert-info">@L["SearchFirst"]</div>
+    }
+    else if (!rows.Any())
+    {
+        <div class="alert alert-warning">@L["NoData"]</div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <strong>@L["ResultTitle"]</strong>
+                <span class="ms-3 text-muted">@L["TotalDowntime"]：<strong class="text-danger">@totalHours.ToString("N1") hr</strong></span>
+            </div>
+            @if (canPrint)
+            {
+                <a asp-action="Export"
+                   asp-route-fromDate="@ViewBag.FromDate" asp-route-toDate="@ViewBag.ToDate"
+                   asp-route-workCenterId="@ViewBag.WorkCenterId" asp-route-machineCode="@ViewBag.MachineCode"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @L["ExportExcel"]
+                </a>
+            }
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["WorkCenter"]</th>
+                        <th>@L["MachineCode"]</th>
+                        <th>@L["DowntimeType"]</th>
+                        <th class="text-end">@L["EventCount"]</th>
+                        <th class="text-end">@L["TotalHours"]</th>
+                        <th>@L["Reason"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                    @foreach (var r in paged)
+                    {
+                        <tr>
+                            <td>@r.WorkCenterId</td>
+                            <td>@r.MachineCode</td>
+                            <td>@r.DowntimeType</td>
+                            <td class="text-end">@r.EventCount</td>
+                            <td class="text-end text-danger">@r.TotalHours.ToString("N1")</td>
+                            <td>@r.Reason</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot class="table-secondary fw-bold">
+                    <tr>
+                        <td colspan="3">@L["Total"]</td>
+                        <td class="text-end">@rows.Sum(r => r.EventCount)</td>
+                        <td class="text-end text-danger">@totalHours.ToString("N1")</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        @await Html.PartialAsync("_Pagination", paged)
+    }
+</div>

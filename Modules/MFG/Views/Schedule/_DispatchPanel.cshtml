@@ -1,0 +1,158 @@
+@using SmartFactory.MES.Modules.MFG.Models
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model Dispatch
+
+@{
+    var canAdjust = ViewBag.CanAdjust == true;
+    var machines  = ViewBag.Machines as List<string> ?? new List<string>();
+    var priority  = (int)(ViewBag.Priority ?? 100);
+    var batchId   = ViewBag.BatchId as string ?? "";
+    var statusLabel = Model.Status switch {
+        DispatchStatus.Pending         => Localizer["StatusPending"].Value,
+        DispatchStatus.Scheduled       => Localizer["StatusScheduled"].Value,
+        DispatchStatus.SetupInProgress => Localizer["StatusSetupInProgress"].Value,
+        DispatchStatus.ReadyToStart    => Localizer["StatusReadyToStart"].Value,
+        DispatchStatus.InProgress      => Localizer["StatusInProgress"].Value,
+        DispatchStatus.Closed          => Localizer["StatusClosed"].Value,
+        DispatchStatus.OnHold          => Localizer["StatusOnHold"].Value,
+        DispatchStatus.PendingFPI      => Localizer["StatusPendingFPI"].Value,
+        DispatchStatus.Cancelled       => Localizer["StatusCancelled"].Value,
+        _                              => Model.Status.ToString()
+    };
+}
+
+<div class="p-3">
+
+    @* 派工基本資訊 *@
+    <table class="table table-sm table-borderless mb-3">
+        <tr><th class="text-muted fw-normal small w-40">@Localizer["PanelDispatchId"]</th>
+            <td class="fw-semibold">@Model.DispatchId</td></tr>
+        <tr><th class="text-muted fw-normal small">@Localizer["PanelWorkOrder"]</th>
+            <td>@Model.WorkOrderId</td></tr>
+        <tr><th class="text-muted fw-normal small">@Localizer["PanelBatch"]</th>
+            <td>@Model.Operation?.WorkOrder?.ProductionBatchId</td></tr>
+        <tr><th class="text-muted fw-normal small">@Localizer["PanelOperation"]</th>
+            <td>@Model.OperationSeq — @Model.Operation?.OperationName</td></tr>
+        <tr><th class="text-muted fw-normal small">@Localizer["PanelStatus"]</th>
+            <td><span class="badge bg-secondary">@statusLabel</span>
+                @if (Model.IsOutsource) { <span class="badge bg-info ms-1">@Localizer["BadgeOutsource"]</span> }
+                @if (Model.MaterialRisk) { <span class="badge bg-warning text-dark ms-1">@Localizer["BadgeMaterialRisk"]</span> }
+            </td></tr>
+        <tr><th class="text-muted fw-normal small">@Localizer["PanelMachine"]</th>
+            <td>@(Model.MachineCode ?? "—")</td></tr>
+        <tr><th class="text-muted fw-normal small">@Localizer["PanelProgress"]</th>
+            <td>@Model.QtyDone / @Model.Quantity</td></tr>
+        @* 排程時刻不換算：數字本身就是廠別當地時間，Kind=Utc 只是貼給 Npgsql 的標籤（mfg-domain.md §UTC 地雷）。*@
+        @if (Model.ScheduledStart.HasValue) {
+        <tr><th class="text-muted fw-normal small">@Localizer["PanelScheduled"]</th>
+            <td class="small">@Model.ScheduledStart.Value.ToString("MM/dd HH:mm")
+                → @Model.ScheduledEnd?.ToString("MM/dd HH:mm")</td></tr>
+        }
+    </table>
+
+    @if (Model.Status == DispatchStatus.OnHold)
+    {
+        <div class="alert alert-danger py-2 small">@Localizer["PanelOnHoldHint"]</div>
+    }
+    else if (!canAdjust)
+    {
+        <div class="alert alert-secondary py-2 small">@Localizer["PanelNoAdjust"]</div>
+    }
+    else
+    {
+        @* ── 優先序（插單） ─────────────────────────────────────── *@
+        <div class="card mb-3">
+            <div class="card-header py-1 small fw-semibold">@Localizer["PanelPrioritySection"]</div>
+            <div class="card-body py-2">
+                <div class="input-group input-group-sm">
+                    <input type="number" id="panelPriority" class="form-control" value="@priority" min="1" max="9999" step="1">
+                    <button class="btn btn-outline-primary" data-action="panelUpdatePriority" data-batch-id="@batchId">
+                        @Localizer["BtnUpdatePriority"]
+                    </button>
+                </div>
+                <div class="form-text">@Localizer["PanelPriorityHint"]</div>
+            </div>
+        </div>
+
+        @* ── 換機台 ──────────────────────────────────────────────── *@
+        @if (!Model.IsOutsource && machines.Count > 0)
+        {
+        <div class="card mb-3">
+            <div class="card-header py-1 small fw-semibold">@Localizer["PanelReassignSection"]</div>
+            <div class="card-body py-2">
+                <div class="input-group input-group-sm">
+                    <select id="panelNewMachine" class="form-select">
+                        @foreach (var m in machines)
+                        {
+                            <option value="@m" selected="@(m == Model.MachineCode)">@m</option>
+                        }
+                    </select>
+                    <button class="btn btn-outline-secondary" data-action="panelReassign" data-id="@Model.DispatchId">
+                        @Localizer["BtnReassign"]
+                    </button>
+                </div>
+                <div class="form-text">@Localizer["PanelReassignHint"]</div>
+            </div>
+        </div>
+        }
+
+        @* ── 拆分 ────────────────────────────────────────────────── *@
+        @if (!Model.IsOutsource)
+        {
+        <div class="card mb-3">
+            <div class="card-header py-1 small fw-semibold">@Localizer["PanelSplitSection"]</div>
+            <div class="card-body py-2">
+                <div id="splitRows">
+                    <div class="row g-1 mb-1 split-row">
+                        <div class="col"><input type="number" class="form-control form-control-sm split-qty"
+                            placeholder="@Localizer["SplitQtyPlaceholder"]" min="0.000001" step="any"></div>
+                        <div class="col">
+                            <select class="form-select form-select-sm split-machine">
+                                <option value="">— @Localizer["SplitMachinePlaceholder"] —</option>
+                                @foreach (var m in machines) { <option value="@m">@m</option> }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-1 mb-1 split-row">
+                        <div class="col"><input type="number" class="form-control form-control-sm split-qty"
+                            placeholder="@Localizer["SplitQtyPlaceholder"]" min="0.000001" step="any"></div>
+                        <div class="col">
+                            <select class="form-select form-select-sm split-machine">
+                                <option value="">— @Localizer["SplitMachinePlaceholder"] —</option>
+                                @foreach (var m in machines) { <option value="@m">@m</option> }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 mt-1">
+                    <button class="btn btn-outline-secondary btn-sm" data-action="addSplitRow">
+                        <i class="bi bi-plus"></i> @Localizer["BtnAddSplitRow"]
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm ms-auto"
+                            data-action="panelSplit" data-id="@Model.DispatchId" data-qty="@Model.Quantity">
+                        @Localizer["BtnSplit"]
+                    </button>
+                </div>
+                <div class="form-text">@Localizer["PanelSplitHint", Model.Quantity]</div>
+                @foreach (var m in machines) { <span class="d-none split-machine-opt" data-code="@m"></span> }
+                <input type="hidden" id="splitTotalQty" value="@Model.Quantity" />
+            </div>
+        </div>
+        }
+
+        @* ── 轉委外 ──────────────────────────────────────────────── *@
+        @if (!Model.IsOutsource)
+        {
+        <div class="card mb-3">
+            <div class="card-header py-1 small fw-semibold">@Localizer["PanelOutsourceSection"]</div>
+            <div class="card-body py-2">
+                <p class="small text-muted mb-2">@Localizer["PanelOutsourceHint"]</p>
+                <button class="btn btn-outline-warning btn-sm" data-action="panelToOutsource" data-id="@Model.DispatchId">
+                    <i class="bi bi-box-arrow-up-right me-1"></i>@Localizer["BtnToOutsource"]
+                </button>
+            </div>
+        </div>
+        }
+    }
+</div>

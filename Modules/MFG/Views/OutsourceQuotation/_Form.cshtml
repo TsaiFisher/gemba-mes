@@ -1,0 +1,165 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@model OutsourceQuotation
+
+@{
+    bool isEdit = !string.IsNullOrEmpty(Model?.QuotationId);
+}
+
+<form id="outsourceQuotationForm" method="post" action="@Url.Action("Save")"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    @if (isEdit)
+    {
+        <input type="hidden" asp-for="QuotationId" />
+    }
+
+    <div class="offcanvas-body">
+        <div class="row g-3">
+
+            <div class="col-12">
+                <label asp-for="SupplierCode" class="form-label">@Localizer["LabelSupplier"] <span class="text-danger">*</span></label>
+                <select asp-for="SupplierCode" class="form-select select2">
+                    <option value="">@Localizer["SelectSupplier"]</option>
+                    @foreach (dynamic s in ViewBag.SupplierOptions ?? Enumerable.Empty<dynamic>())
+                    {
+                        var sel = (string)s.CompanyCode == Model?.SupplierCode;
+                        <option value="@s.CompanyCode" selected="@sel">@s.CompanyCode — @s.CompanyName</option>
+                    }
+                </select>
+                <span asp-validation-for="SupplierCode" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12">
+                <label asp-for="ProductCode" class="form-label">@Localizer["LabelProduct"]</label>
+                <select asp-for="ProductCode" class="form-select select2" id="selProduct">
+                    <option value="">@Localizer["OptAllProducts"]</option>
+                    @foreach (dynamic p in ViewBag.ProductOptions ?? Enumerable.Empty<dynamic>())
+                    {
+                        var sel = (string)p.ProductCode == Model?.ProductCode;
+                        <option value="@p.ProductCode" selected="@sel">@p.ProductCode — @p.ProductName</option>
+                    }
+                </select>
+                <span asp-validation-for="ProductCode" class="text-danger small"></span>
+                <div class="form-text text-muted">@Localizer["HintProduct"]</div>
+            </div>
+
+            <div class="col-8">
+                <label asp-for="RoutingId" class="form-label">@Localizer["LabelRouting"]</label>
+                <select asp-for="RoutingId" class="form-select select2" id="selRouting">
+                    <option value="">@Localizer["OptAllRoutings"]</option>
+                    @foreach (dynamic r in ViewBag.RoutingOptions ?? Enumerable.Empty<dynamic>())
+                    {
+                        var sel = (string)r.RoutingId == Model?.RoutingId;
+                        <option value="@r.RoutingId" selected="@sel">@r.RoutingId — @r.RoutingName</option>
+                    }
+                </select>
+                <span asp-validation-for="RoutingId" class="text-danger small"></span>
+            </div>
+
+            <div class="col-4">
+                <label asp-for="OperationSeq" class="form-label">@Localizer["LabelOperationSeq"]</label>
+                <input asp-for="OperationSeq" type="number" class="form-control" min="1" step="1" />
+                <span asp-validation-for="OperationSeq" class="text-danger small"></span>
+            </div>
+
+            <hr class="my-1" />
+
+            <div class="col-6">
+                <label asp-for="UnitPrice" class="form-label">@Localizer["LabelUnitPrice"] <span class="text-danger">*</span></label>
+                <input asp-for="UnitPrice" type="number" class="form-control" step="any" min="0.000001" />
+                <span asp-validation-for="UnitPrice" class="text-danger small"></span>
+            </div>
+
+            @* 合約允收損耗率：留白＝未約定，收貨時不扣款；填 0 才是「零容忍、短交即全額求償」。
+               兩者的財務結果完全相反，所以這一格刻意可以留白，而不是預設 0。 *@
+            <div class="col-6">
+                <label asp-for="AllowedScrapRate" class="form-label">@Localizer["LabelAllowedScrapRate"]</label>
+                <input asp-for="AllowedScrapRate" type="number" class="form-control" step="any" min="0" max="1"
+                       placeholder="@Localizer["PlaceholderAllowedScrapRate"]" />
+                <div class="form-text small">@Localizer["HelpAllowedScrapRate"]</div>
+                <span asp-validation-for="AllowedScrapRate" class="text-danger small"></span>
+            </div>
+
+            <div class="col-3">
+                <label asp-for="CurrencyCode" class="form-label">@Localizer["LabelCurrency"] <span class="text-danger">*</span></label>
+                <select asp-for="CurrencyCode" class="form-select">
+                    <option value="">—</option>
+                    @foreach (dynamic c in ViewBag.CurrencyOptions ?? Enumerable.Empty<dynamic>())
+                    {
+                        var sel = (string)c.CurrencyCode == Model?.CurrencyCode;
+                        <option value="@c.CurrencyCode" selected="@sel">@c.CurrencyCode</option>
+                    }
+                </select>
+                <span asp-validation-for="CurrencyCode" class="text-danger small"></span>
+            </div>
+
+            <div class="col-3">
+                <label asp-for="UomCode" class="form-label">@Localizer["LabelUom"] <span class="text-danger">*</span></label>
+                <select asp-for="UomCode" class="form-select">
+                    <option value="">—</option>
+                    @foreach (dynamic u in ViewBag.UomOptions ?? Enumerable.Empty<dynamic>())
+                    {
+                        var sel = (string)u.UomCode == Model?.UomCode;
+                        <option value="@u.UomCode" selected="@sel">@u.UomCode</option>
+                    }
+                </select>
+                <span asp-validation-for="UomCode" class="text-danger small"></span>
+            </div>
+
+            <div class="col-4">
+                <label asp-for="MinQty" class="form-label">@Localizer["LabelMinQty"]</label>
+                <input asp-for="MinQty" type="number" class="form-control" step="any" min="0" />
+                <span asp-validation-for="MinQty" class="text-danger small"></span>
+            </div>
+
+            <div class="col-4">
+                <label asp-for="MaxQty" class="form-label">@Localizer["LabelMaxQty"]</label>
+                <input asp-for="MaxQty" type="number" class="form-control" step="any" min="0" />
+                <span asp-validation-for="MaxQty" class="text-danger small"></span>
+            </div>
+
+            <div class="col-4">
+                <label asp-for="LeadDays" class="form-label">@Localizer["LabelLeadDays"] <span class="text-danger">*</span></label>
+                <input asp-for="LeadDays" type="number" class="form-control" min="0" step="1" />
+                <span asp-validation-for="LeadDays" class="text-danger small"></span>
+            </div>
+
+            <div class="col-6">
+                <label asp-for="EffectiveFrom" class="form-label">@Localizer["LabelEffectiveFrom"] <span class="text-danger">*</span></label>
+                <input asp-for="EffectiveFrom" type="date" class="form-control"
+                       value="@Model?.EffectiveFrom.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="EffectiveFrom" class="text-danger small"></span>
+            </div>
+
+            <div class="col-6">
+                <label asp-for="EffectiveTo" class="form-label">@Localizer["LabelEffectiveTo"]</label>
+                <input asp-for="EffectiveTo" type="date" class="form-control"
+                       value="@Model?.EffectiveTo?.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="EffectiveTo" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12">
+                <label asp-for="Remarks" class="form-label">@Localizer["LabelRemarks"]</label>
+                <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12">
+                <div class="form-check">
+                    <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                    <label asp-for="IsActive" class="form-check-label">@Localizer["LabelIsActive"]</label>
+                    <span asp-validation-for="IsActive" class="text-danger small"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas-footer border-top p-3 d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+        <button type="submit" name="submit" value="save" class="btn btn-primary">
+            <i class="bi bi-check-lg"></i> @Localizer["Save"]
+        </button>
+    </div>
+</form>

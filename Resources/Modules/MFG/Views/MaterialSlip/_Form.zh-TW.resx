@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="LabelCategory" xml:space="preserve"><value>類型</value></data>
+  <data name="LabelSlipDate" xml:space="preserve"><value>單據日期</value></data>
+  <data name="LabelSupplier" xml:space="preserve"><value>委外廠商</value></data>
+  <data name="LabelSourceDocType" xml:space="preserve"><value>來源單據類型</value></data>
+  <data name="LabelSourceDocId" xml:space="preserve"><value>來源單號</value></data>
+  <data name="LabelRemarks" xml:space="preserve"><value>備註</value></data>
+  <data name="SourceTypeWorkOrder" xml:space="preserve"><value>工單</value></data>
+  <data name="SourceTypeOpo" xml:space="preserve"><value>委外採購單</value></data>
+  <data name="SourceDocPlaceholder" xml:space="preserve"><value>選擇來源單號</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>料品明細</value></data>
+  <data name="AddLine" xml:space="preserve"><value>新增行項</value></data>
+  <data name="NoLines" xml:space="preserve"><value>尚無行項，請點「新增行項」。</value></data>
+  <data name="ColProduct" xml:space="preserve"><value>品號</value></data>
+  <data name="ColRequestedQty" xml:space="preserve"><value>申請量</value></data>
+  <data name="ColUom" xml:space="preserve"><value>單位</value></data>
+  <data name="ColFromWh" xml:space="preserve"><value>來源倉/儲位</value></data>
+  <data name="ColToWh" xml:space="preserve"><value>目的倉/儲位</value></data>
+  <data name="ColLotNo" xml:space="preserve"><value>批號</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>儲位代號</value></data>
+  <data name="CatInternalIssue" xml:space="preserve"><value>廠內發料(MI)</value></data>
+  <data name="CatInternalRequisition" xml:space="preserve"><value>廠內領料(MR)</value></data>
+  <data name="CatInternalReturn" xml:space="preserve"><value>廠內退料(MX)</value></data>
+  <data name="CatOutsourceIssue" xml:space="preserve"><value>委外發料(OI)</value></data>
+  <data name="CatOutsourceReturn" xml:space="preserve"><value>委外退料(OR)</value></data>
+  <data name="CatReworkIssue" xml:space="preserve"><value>重工發料(RI)</value></data>
+  <data name="CatReworkReturn" xml:space="preserve"><value>重工退料(RX)</value></data>
+  <data name="BtnSubmit" xml:space="preserve"><value>送審</value></data>
+  <data name="BtnApprove" xml:space="preserve"><value>核准</value></data>
+  <data name="BtnMarkPicking" xml:space="preserve"><value>開始揀料</value></data>
+  <data name="BtnConfirm" xml:space="preserve"><value>確認揀料完成</value></data>
+  <data name="BtnIssue" xml:space="preserve"><value>過帳發料</value></data>
+  <data name="BtnMarkReceiving" xml:space="preserve"><value>開始點收</value></data>
+  <data name="BtnConfirmReceived" xml:space="preserve"><value>確認點收完成</value></data>
+  <data name="BtnPostReturn" xml:space="preserve"><value>過帳退料</value></data>
+  <data name="ConfirmReceiving" xml:space="preserve"><value>確定開始點收退料？</value></data>
+  <data name="ConfirmReceivingDone" xml:space="preserve"><value>確定點收完成，鎖定確認量？</value></data>
+  <data name="ConfirmPostReturn" xml:space="preserve"><value>確定過帳退料？過帳後不可反轉。</value></data>
+  <data name="BtnCancel" xml:space="preserve"><value>取消</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>確定送出領料申請？</value></data>
+  <data name="ConfirmApprove" xml:space="preserve"><value>確定核准此發退料單？</value></data>
+  <data name="ConfirmPicking" xml:space="preserve"><value>確定開始揀料？</value></data>
+  <data name="ConfirmPickingDone" xml:space="preserve"><value>確定揀料完成，鎖定確認量？</value></data>
+  <data name="ConfirmIssue" xml:space="preserve"><value>確定過帳發料？過帳後不可反轉。</value></data>
+  <data name="ConfirmCancel" xml:space="preserve"><value>確定取消此發退料單？</value></data>
+  <data name="ConfirmCancelPicked" xml:space="preserve"><value>倉庫已確認揀料。確定取消？揀出的料請放回原儲位（尚未過帳，庫存帳不受影響）。</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>移除此列</value></data>
+  <data name="ColReturnToWh" xml:space="preserve"><value>退回倉/儲位</value></data>
+  <data name="SelectProductFirst" xml:space="preserve"><value>請先選擇品號</value></data>
+  <data name="LookupStock" xml:space="preserve"><value>選擇庫存</value></data>
+</root>

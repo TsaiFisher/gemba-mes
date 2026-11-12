@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Accounting Period — ACT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>會計期間 — ACT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ACT 目錄</span><span lang="en">ACT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ACT 畫面</span><span lang="en">ACT screens</span></div>
+    <a href="accounting-period.html" class="nav-link active"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a>
+    <a href="journal-entry.html" class="nav-link"><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></a>
+    <a href="trial-balance.html" class="nav-link"><span lang="zh">試算表</span><span lang="en">Trial Balance</span></a>
+    <a href="month-end.html" class="nav-link"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>
+    <a href="department-actual-cost.html" class="nav-link"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></a>
+    <a href="nrv-assessment.html" class="nav-link"><span lang="zh">IAS 2 NRV 評估</span><span lang="en">IAS 2 NRV Assessment</span></a>
+    <a href="ecl.html" class="nav-link"><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></a>
+    <a href="bad-debt-provision.html" class="nav-link"><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-calendar3 me-2 text-primary"></i><span lang="zh">會計期間</span><span lang="en">Accounting period</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/AccountingPeriod &nbsp;|&nbsp; 期間開關與過帳鎖管制</span><span lang="en">Route: /AccountingPeriod &nbsp;|&nbsp; The period switch and posting lock</span></div>
+    </div>
+
+    <p><span lang="zh">維護各月會計期間狀態：Open（可過帳）→ Closing（結帳中，僅允許調整分錄）→ Closed（關帳，全面擋單）。所有模組的過帳/作廢動作皆會檢查異動日期所屬期間，已關帳期間一律拒絕。</span><span lang="en">Maintains the status of each monthly accounting period: Open (posting allowed) → Closing (closing in progress, only adjusting entries) → Closed (everything blocked). Every posting and voiding action in every module checks the period the transaction date falls in and is refused outright in a closed period.</span></p>
+    <img class="screen-shot" src="img/accounting-period.png" data-src-en="img/en/accounting-period.png" alt="會計期間畫面截圖" data-alt-en="Accounting period screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">會計期間畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Accounting period screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列有</span><span lang="en">The query bar offers </span><b><span lang="zh">年度</span><span lang="en">Year</span></b><span lang="zh">與</span><span lang="en"> and </span><b><span lang="zh">狀態</span><span lang="en">Status</span></b><span lang="zh">兩個條件，兩者都可留白（「全部年度」「全部狀態」）；年度下拉只列出真的有資料的年份。設定條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">, both of which may be left blank ("All years", "All statuses"); the year dropdown lists only years that actually have data. Set them and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">關帳</span><span lang="en">Close Period</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">月結檢查完成後將期間切至 Closing，僅保留調整分錄入帳。</span><span lang="en">Once the month-end checks are done, switch the period to Closing so that only adjusting entries can be posted.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">調整完畢切至 Closed 完成關帳。</span><span lang="en">When the adjustments are done, switch to Closed to finish closing.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">誤關需重開時請依權限審慎操作，重開期間內的補帳需完整記錄。</span><span lang="en">Reopening a period closed by mistake needs care and the right permission, and everything posted while it is reopened has to be fully documented.</span></div></div>
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">期間</span><span lang="en">Period</span></td><td><span lang="zh">格式 YYYYMM（如 202607）。由「建立下一期」自動採番，不可手動輸入</span><span lang="en">Format YYYYMM (e.g. 202607). It is numbered automatically by "Create next period" and cannot be typed in</span></td></tr>
+        <tr><td><span lang="zh">開始日 / 結束日</span><span lang="en">Start date / End date</span></td><td><span lang="zh">該期間的自然月起訖日，決定單據入帳日落在哪一期</span><span lang="en">The calendar start and end dates of the period, which decide the period a document's date falls in</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">Open 開帳中（可自由入帳）／Closing 關帳中（僅允許調整分錄）／Closed 已關帳（禁止入帳）／Reopened 已重開</span><span lang="en">Open (posting allowed freely) / Closing (only adjusting entries) / Closed (no posting at all) / Reopened</span></td></tr>
+        <tr><td><span lang="zh">關帳時間</span><span lang="en">Closed At</span></td><td><span lang="zh">狀態切換為 Closed 的時間戳，系統自動寫入</span><span lang="en">Timestamp when the status was switched to Closed, filled in by the system</span></td></tr>
+        <tr><td><span lang="zh">關帳人</span><span lang="en">Closed By</span></td><td><span lang="zh">執行關帳的使用者，系統自動寫入</span><span lang="en">The user who closed the period, filled in by the system</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">關帳／重開的補充說明</span><span lang="en">Notes on closing or reopening</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="month-end.html"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>、<a href="journal-entry.html"><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">關帳後任何模組對該期間的過帳/作廢都會被擋下並顯示明確訊息——這是防止回填歷史帳的主控制點。</span><span lang="en"> Once a period is closed, any attempt by any module to post to it or void something in it is blocked with a clear message — this is the main control that stops history being backfilled.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Plant Parameter Overview — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>各廠參數覆寫一覽 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="plant-param-overview.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link active"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單：管理系統 → 各廠參數覆寫一覽 &nbsp;|&nbsp; 路由：/PlantParamOverview &nbsp;|&nbsp; 唯讀：哪些廠改過哪些參數</span><span lang="en">Menu: Admin Management → Plant Parameter Overview &nbsp;|&nbsp; Route: /PlantParamOverview &nbsp;|&nbsp; Read-only: which plants override which parameters</span></div>
+    </div>
+    <p><span lang="zh">系統參數可以逐廠覆寫，但編輯入口是逐廠的（廠別管理 → 編輯 → 參數設定頁籤），所以「這個參數目前有哪幾個廠改過」在原本的動線上看不到——要一廠一廠點開比對。本畫面把同一份參數清單轉置成「參數 × 廠別」矩陣補上這個視角。</span><span lang="en">System parameters can be overridden per plant, but they are edited one plant at a time (Plant Management, Edit, Parameter Settings tab). That makes 「which plants override this parameter」 invisible in the normal flow — you would have to open each plant and compare. This screen transposes the same parameter list into a parameter-by-plant matrix to fill that gap.</span></p>
+
+    <div class="note-box"><span lang="zh">本畫面<strong>唯讀</strong>，不能在這裡改值。廠別參數只有一個寫入點：廠別管理 → 編輯該廠 → 「參數設定」頁籤。多開一個寫入點就會有兩份三態語意要維護。</span><span lang="en">This screen is <strong>read-only</strong>; values cannot be changed here. Plant parameters have exactly one write path: Plant Management, edit the plant, Parameter Settings tab. A second write path would mean maintaining the three-state semantics twice.</span></div>
+
+    <img class="screen-shot" src="img/plant-param-overview.png" data-src-en="img/en/plant-param-overview.png" alt="各廠參數覆寫一覽畫面截圖" data-alt-en="Plant parameter overview screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">各廠參數覆寫一覽畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Plant parameter overview screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="query"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Query</span></h2>
+    <p><span lang="zh">本報表<strong>沒有查詢條件</strong>：參數清單固定 12 筆，廠別數量也是個位數，一次全載即可。開啟畫面就是完整結果。</span><span lang="en">This report has <strong>no query criteria</strong>. The parameter list is a fixed 12 rows and the number of plants is a single digit, so everything loads at once. Opening the screen is the whole result.</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">條件</span><span lang="en">Criterion</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">廠別範圍</span><span lang="en">Plant scope</span></td><td><span lang="zh">不是輸入條件，由登入者的角色決定：角色有廠別指派時只列出被指派的廠；沒有指派限制（例如掛在根組織的管理角色）時列出全部廠別</span><span lang="en">Not an input. It follows the signed-in user's role: if the role has plant assignments, only those plants are listed; if it has no assignment restriction (for example a management role attached to the root organization unit), every plant is listed</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">參數</span><span lang="en">Parameter</span></td><td><span lang="zh">列出 PlantParamCatalog 定義的可廠別化參數（目前 11 個），中文名稱下方的灰字是實際的參數鍵（與資料庫 SystemParams / PlantParams 的 Key 相同）</span><span lang="en">Lists the plant-scopable parameters defined by PlantParamCatalog (currently 11). The grey text under each name is the actual parameter key (identical to the Key column in SystemParams / PlantParams)</span></td></tr>
+        <tr><td><span lang="zh">已覆寫 N 廠</span><span lang="en">N plant(s) overridden</span></td><td><span lang="zh">黃色標記，出現在參數名稱旁；N＝該參數目前有幾個廠設了自己的值。沒有任何廠覆寫時不顯示</span><span lang="en">Yellow badge next to the parameter name. N is the number of plants that currently set their own value. Hidden when no plant overrides it</span></td></tr>
+        <tr><td><span lang="zh">全域值</span><span lang="en">Global Value</span></td><td><span lang="zh">Core「系統參數」畫面所設的值，也就是所有未覆寫廠別實際生效的值</span><span lang="en">The value set on the Core System Parameters screen — the value every non-overriding plant actually uses</span></td></tr>
+        <tr><td><span lang="zh">各廠欄位</span><span lang="en">Per-plant columns</span></td><td><span lang="zh">每個廠一欄，欄頭為廠別代碼與名稱。黃色標記＝該廠有覆寫（顯示覆寫值）；灰字「繼承」＝該廠沒有覆寫列，跟著全域值走</span><span lang="en">One column per plant, headed by plant code and name. A yellow badge means the plant overrides the parameter (the override value is shown); grey 「Inherited」 means the plant has no override row and follows the global value</span></td></tr>
+        <tr><td><span lang="zh">（空值）</span><span lang="en">(empty)</span></td><td><span lang="zh">覆寫值或全域值是空字串時顯示。這與「繼承」不同——「（空值）」代表有人刻意把它設成空的</span><span lang="en">Shown when the override or global value is an empty string. This is not the same as 「Inherited」: (empty) means somebody deliberately set it to nothing</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="how-a-value-is-resolved"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">取值口徑</span><span lang="en">How a value is resolved</span></h2>
+    <p><span lang="zh">同一個參數在任一廠的生效值，依下列順序取第一個有結果的：</span><span lang="en">For any plant, the effective value of a parameter is the first of the following that yields a result:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh"><strong>本廠覆寫</strong>——該廠在 PlantParams 有一列。報表上顯示為黃色標記。注意「覆寫成空值」也算覆寫，會顯示「（空值）」而不是「繼承」。</span><span lang="en"><strong>Plant override</strong> — the plant has a row in PlantParams, shown as a yellow badge. Note that overriding to an empty value still counts as an override: it shows as (empty), not Inherited.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh"><strong>全域值</strong>——Core「系統參數」畫面設定的值。報表上顯示為「繼承」的廠都用這個值，改動全域值會同時影響所有這些廠。</span><span lang="en"><strong>Global value</strong> — set on the Core System Parameters screen. Every plant marked Inherited uses this value, so changing the global value affects all of them at once.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh"><strong>程式內建預設</strong>——兩層都沒有設定時由程式決定。這一層在報表上看不到（全域值欄位會是空的）。</span><span lang="en"><strong>Built-in default</strong> — used when neither layer is set. This layer is not visible in the report; the Global Value column will be blank.</span></div></div>
+
+    <div class="tip-box"><span lang="zh">上線前的常見用途：確認「刻意分廠設定」與「忘了設」分得開。整欄都是「繼承」代表該參數目前全系統一致；只有一個廠是黃色標記時，值得確認那是不是有意的。</span><span lang="en">A common use before go-live: separate 「deliberately different per plant」 from 「forgot to set it」. A column that is entirely Inherited means the parameter is currently uniform system-wide; when exactly one plant carries a yellow badge, it is worth confirming that this was intended.</span></div>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">右上角「匯出 Excel」把整張矩陣輸出，欄位順序與畫面相同（參數／模組／全域值／各廠一欄）。需要列印權限。</span><span lang="en">The Export Excel button in the top right writes the whole matrix out with the same column order as the screen (parameter, module, global value, then one column per plant). It requires print permission.</span></p>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <ul>
+      <li><span lang="zh"><strong>廠別管理</strong>（系統管理）——參數的唯一編輯入口，在「參數設定」頁籤</span><span lang="en"><strong>Plant Management</strong> (System Administration) — the only place to edit these parameters, on the Parameter Settings tab</span></li>
+      <li><span lang="zh"><strong>系統參數</strong>（系統管理）——設定全域值，影響所有標為「繼承」的廠</span><span lang="en"><strong>System Parameters</strong> (System Administration) — sets the global value, affecting every plant marked Inherited</span></li>
+    </ul>
+
+    <hr class="mt-4"/>
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 使用手冊 — BAS 基本資料維護</span><span lang="en">SmartFactory MES User Manual — BAS Basic Data</span></div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Material Staging — INV User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>備料單 — INV 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">INV 目錄</span><span lang="en">INV Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">INV 畫面</span><span lang="en">INV Screens</span></div>
+    <a href="inventory-balance.html" class="nav-link"><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></a>
+    <a href="stock-movement.html" class="nav-link"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a>
+    <a href="stock-ledger.html" class="nav-link"><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></a>
+    <a href="warehouse-ops.html" class="nav-link"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a>
+    <a href="material-staging.html" class="nav-link active"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a>
+    <a href="scrap-doc.html" class="nav-link"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></a>
+    <a href="loan-doc.html" class="nav-link"><span lang="zh">借入借出單</span><span lang="en">Loan Document</span></a>
+    <a href="sample-doc.html" class="nav-link"><span lang="zh">樣品/客供單</span><span lang="en">Sample/Consignment Docs</span></a>
+    <a href="inventory-count.html" class="nav-link"><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></a>
+    <a href="stock-adjustment.html" class="nav-link"><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></a>
+    <a href="../osp/outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="rework-material.html" class="nav-link"><span lang="zh">重工發退料單</span><span lang="en">Rework Material</span></a>
+    <a href="stock-transfer.html" class="nav-link"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a>
+    <a href="cross-plant-transfer.html" class="nav-link"><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></a>
+    <a href="inventory-valuation.html" class="nav-link"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a>
+    <a href="landed-cost-allocation.html" class="nav-link"><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></a>
+    <a href="stock-shortage.html" class="nav-link"><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></a>
+    <a href="slow-moving-inventory.html" class="nav-link"><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></a>
+    <a href="inventory-aging.html" class="nav-link"><span lang="zh">存貨庫齡分析</span><span lang="en">Inventory Aging Analysis</span></a>
+    <a href="inventory-value.html" class="nav-link"><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></a>
+    <a href="inventory-turnover.html" class="nav-link"><span lang="zh">庫存周轉率</span><span lang="en">Inventory Turnover</span></a>
+    <a href="stock-variance.html" class="nav-link"><span lang="zh">盤差分析</span><span lang="en">Stock Variance</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-box2-heart me-2 text-primary"></i><span lang="zh">備料單</span><span lang="en">Material Staging</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/MaterialStaging &nbsp;|&nbsp; 工單備料暫存與齊套確認</span><span lang="en">Route: /MaterialStaging &nbsp;|&nbsp; Work order material staging and kitting confirmation</span></div>
+    </div>
+
+    <p><span lang="zh">依工單需求先行揀集物料至備料區，確認齊套後供發料使用，縮短開工等待。</span><span lang="en">Picks material for a work order into the staging area in advance and confirms it is complete, shortening the wait before work starts.</span></p>
+    <img class="screen-shot" src="img/material-staging.png" data-src-en="img/en/material-staging.png" alt="備料暫存畫面截圖" data-alt-en="Material staging screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">備料暫存畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Material staging screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">建立備料單</span><span lang="en">Create Staging Order</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」開啟側欄，選擇</span><span lang="en">Click "Add" to open the panel and choose </span><b><span lang="zh">來源類型</span><span lang="en">Source type</span></b><span lang="zh">（生產批／工單／派工單／手動／訂單）。選生產批、工單或派工單時，來源單號改為可查詢下拉。</span><span lang="en"> (production batch / work order / dispatch / manual / sales order). When a production batch, work order or dispatch is chosen, the source document number becomes a searchable dropdown.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「</span><span lang="en">Click " </span><b><span lang="zh">帶入用料</span><span lang="en">Load Materials</span></b><span lang="zh">」自動帶出該來源尚待備料的明細。帶出的數量已扣掉已發料量與既有備料單已鎖的量，重複開單不會把同一批料鎖兩次；Backflush（完工沖銷）料件不會帶入。</span><span lang="en"> " brings in the lines of that source still to be staged. The quantities already exclude what has been issued and what other staging orders have locked, so raising a second order never locks the same material twice; backflush lines are not brought in.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">確認</span><span lang="en">Confirm </span><b><span lang="zh">備料倉／備料儲位</span><span lang="en">Staging warehouse / staging location</span></b><span lang="zh">。預設值依「工作中心設定 → 系統參數」自動帶出，可自行修改。</span><span lang="en">. The default comes from the work center settings and the system parameters, and can be changed.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">逐行填寫</span><span lang="en">Fill in line by line </span><b><span lang="zh">揀料來源倉／儲位</span><span lang="en">Pick From Wh/Location</span></b><span lang="zh">（要從哪裡把料搬到備料倉），儲存為草稿。</span><span lang="en"> (where the material is moved from into the staging warehouse), then save it as a draft.</span></div></div>
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh">內容無誤後點「確認」鎖住庫存（硬預留），單據狀態轉為</span><span lang="en">When the content is correct, click "Confirm" to lock the stock (a hard reservation); the document status becomes </span><b><span lang="zh">已確認</span><span lang="en">Confirmed</span></b>。</div></div>
+    <h3><span lang="zh">揀料移入備料倉</span><span lang="en">Pick into the staging warehouse</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">實際揀料完成後，點「</span><span lang="en">Once picking is finished, click " </span><b><span lang="zh">揀料完成（移入備料倉）</span><span lang="en">Complete Picking (Move to Staging)</span></b><span lang="zh">」。系統依明細逐行產生同廠調撥異動（來源儲位 → 備料儲位），回寫已揀量，狀態轉為</span><span lang="en"> ". The system creates a same-plant transfer movement per line (source location → staging location), writes back the picked quantity, and the status becomes </span><b><span lang="zh">已備妥</span><span lang="en">Staged</span></b>。</div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">任一行未指定來源儲位時整張擋下——半套移庫會讓料件散在兩處，之後領料無從對應扣帳。</span><span lang="en">If any line has no source location, the whole document is blocked — a half-finished move would scatter material across two places and leave nothing to deduct against later.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">料件此時已在備料倉</span><span lang="en">The material is already in the staging warehouse at this point </span><b><span lang="zh">待領用</span><span lang="en">Awaiting issue</span></b><span lang="zh">，實際投入生產仍須開</span><span lang="en">; putting it into production still requires a </span><a href="../mfg/material-slip.html"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a><span lang="zh">從備料倉領出，成本才會進工單。</span><span lang="en"> Cost only reaches the work order once the material is issued out of the staging warehouse.</span></div></div>
+    <div class="note-box"><i class="bi bi-box-seam me-1 text-primary"></i><span lang="zh">已備料的料要<strong>先從備料儲位扣</strong>：這張工單在備料區還有的量，發料／領料一定要先從備料儲位領完；備料區不夠的部分才可以從其他儲位領。桌機存檔時、手機送出時與過帳時都會檢查，違反會擋下並說明該從哪個儲位領、要領多少。退料不受影響。</span><span lang="en">Staged material must be <strong>taken from the staging location first</strong>: whatever is still in the staging area for this work order has to be issued or requisitioned from the staging location; only the shortfall may come from other locations. This is checked when a desktop slip is saved, when the mobile slip is submitted and when it is posted; a violation is blocked with a message saying which location to use and how much. Returns are not affected.</span></div>
+    <h3><span lang="zh">後續作業</span><span lang="en">Follow-up actions</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">已過帳單據如需沖銷，點「作廢」並填寫原因；系統產生反向庫存/帳務異動。</span><span lang="en">To reverse a posted document, click "Void" and enter a reason; the system creates the reversing stock and accounting entries.</span></div></div>
+    <h2 id="reservation-and-available-quantity"><i class="bi bi-lock me-2 text-primary"></i><span lang="zh">預留與可用量</span><span lang="en">Reservation and available quantity</span></h2>
+    <ul>
+      <li><span lang="zh">「確認」時會依明細行建立</span><span lang="en">Confirming creates, line by line, </span><b><span lang="zh">硬預留</span><span lang="en">Hard reservation</span></b><span lang="zh">鎖住庫存；任一品號可用量不足即整張擋下，維持草稿。</span><span lang="en"> locks the stock; if any item has too little available the whole document is blocked and stays a draft.</span></li>
+      <li><b><span lang="zh">來源為工單的備料單</span><span lang="en">Staging order sourced from a work order</span></b><span lang="zh">：MRP 展開時通常已為該工單鎖住庫存，這部分算在這張備料單的可用量內
+          （不會被工單自己的預留擋住）；確認後系統會把工單的預留</span><span lang="en">: the MRP run has usually already locked stock for the work order, and that portion counts towards the available quantity of this staging order
+          (it is not blocked by the work order's own reservation); once confirmed, the system moves the work order's reservation </span><b><span lang="zh">等額轉移</span><span lang="en">transferred one for one</span></b><span lang="zh">給備料單，
+          同一批料不會被鎖兩次，也不會誤縮其他工單的可用量。工單的</span><span lang="en"> to the staging order, so the same stock is never locked twice and the available quantity of other work orders is not reduced by mistake. The work order's </span><a href="../mfg/work-order-material-status.html"><span lang="zh">用料狀況</span><span lang="en">Material status</span></a>
+          <span lang="zh">仍會把備料單鎖住的量算成「為這張工單保留的量」，備完料不會反而變缺料。</span><span lang="en">the quantity locked by the staging order still counts as reserved for that work order, so staging can never make the order look short.</span></li>
+      <li><b><span lang="zh">來源為手動／訂單</span><span lang="en">Sourced manually or from an order</span></b><span lang="zh">的備料單不會挪用工單預留，只能動用廠級自由量。</span><span lang="en"> staging orders do not draw on the work order's reservation and can only use free plant-level stock.</span></li>
+      <li><span lang="zh">「作廢」會釋放本單預留，庫存回到自由量；若原本是工單轉移過來的預留，</span><span lang="en">"Void" releases the reservation held by this document and returns the stock to free quantity; where the reservation was transferred from a work order, </span><b><span lang="zh">不會自動還原給工單</span><span lang="en">is not returned to the work order automatically</span></b><span lang="zh">，
+          該工單需重新確認料況（或重跑 MRP）才會再鎖料。</span><span lang="en">,
+          the work order has to have its material status confirmed again (or MRP re-run) before stock is locked once more.</span></li>
+      <li><b><span lang="zh">揀料移入備料倉不會釋放預留</span><span lang="en">Picking into the staging warehouse does not release the reservation</span></b><span lang="zh">：料只是換了儲位、仍未投入生產，鎖量要撐到領料過帳才等額退場，
+          否則備妥到領用之間會出現空窗，已備好的料可能被別張工單搶走。</span><span lang="en">: the material has only changed location and is still not in production, so the lock has to hold until the issue is posted and only then be released one for one,
+          otherwise a gap opens between staging and issue and another work order could take material that is already prepared.</span></li>
+      <li><b><span lang="zh">領料過帳時自動消耗預留</span><span lang="en">The reservation is consumed automatically when the issue is posted</span></b><span lang="zh">：發退料單過帳會依「先備料單、後工單」的順序等額釋放這張工單的鎖量；
+          工單完工或作廢時，備料單接手的殘留鎖量也會一併釋放。</span><span lang="en">: posting an issue or return releases this work order's locked quantity one for one, staging order first and work order second;
+          when the work order is completed or voided, any residual lock taken over by the staging order is released with it.</span></li>
+      <li><b><span lang="zh">備料倉庫存仍計入可用量</span><span lang="en">Stock in a staging warehouse still counts toward available quantity</span></b><span lang="zh">：與待驗倉不同，備料倉的料已被本單預留鎖住，
+          若再從可用量排除一次等於同一批料扣兩次，全廠可用量會憑空短少。</span><span lang="en">: unlike a quarantine warehouse, material in the staging warehouse is already locked by this document's reservation,
+          so excluding it from the available quantity again would deduct the same stock twice and understate the plant's available quantity.</span></li>
+    </ul>
+
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。備料單列印含來源、備料區，以及各行品號、品名、需求量、已揀量、單位與出庫倉儲位，供倉庫揀料。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The staging printout shows the source and staging area, and for each line the product code and name, required and picked quantities, unit and source warehouse and location, for picking.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">關鍵字</span><span lang="en">Keyword</span></td><td><span lang="zh">備料單號或來源單號的模糊比對</span><span lang="en">Partial match on the staging order number or the source document number</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">依備料單狀態篩選</span><span lang="en">Filters by staging order status</span></td></tr>
+        <tr><td><span lang="zh">建立日期起 / 迄</span><span lang="en">Created from / to</span></td><td><span lang="zh">依建立日期區間篩選</span><span lang="en">Filters by creation date range</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">清單欄位</span><span lang="en">List columns</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">備料單號</span><span lang="en">Slip ID</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">來源類型</span><span lang="en">Source type</span></td><td><span lang="zh">備料需求的來源作業（工單、銷貨等）</span><span lang="en">Source operation of the staging demand (work order, sales and so on)</span></td></tr>
+        <tr><td><span lang="zh">來源單號</span><span lang="en">Source doc No</span></td><td><span lang="zh">對應的來源單據號碼，可回溯需求出處</span><span lang="en">Number of the source document, so the origin of the demand can be traced</span></td></tr>
+        <tr><td><span lang="zh">備料儲位</span><span lang="en">Staging Location</span></td><td><span lang="zh">備妥料件集中存放的暫存儲位；備料完成後庫存移入此儲位</span><span lang="en">Temporary location where staged material is gathered; stock moves here once staging is complete</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">備料單的執行進度（草稿／已確認／備料中／已完成／已作廢）</span><span lang="en">Progress of the staging order (Draft / Confirmed / In Progress / Completed / Cancelled)</span></td></tr>
+        <tr><td><span lang="zh">簽核狀態</span><span lang="en">Approval</span></td><td><span lang="zh">線上簽核的進度（未送審／待簽核／已核准／已駁回）</span><span lang="en">Online approval progress (not submitted / pending / approved / rejected)</span></td></tr>
+        <tr><td><span lang="zh">建立日期</span><span lang="en">Created</span></td><td><span lang="zh">單據建立時間</span><span lang="en">Time the document was created</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="../mfg/material-slip.html"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>、<a href="../mfg/material-slip-progress.html"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>、<a href="../mfg/work-order-material-status.html"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

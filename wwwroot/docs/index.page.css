@@ -1,0 +1,20 @@
+/* 自 index.html 內嵌 <style> 外部化（CSP style-src 移除 unsafe-inline，靜態檔無法帶 nonce）*/
+  body { background: #f8f9fa; }
+  .doc-card { transition: transform .15s, box-shadow .15s; cursor: pointer; }
+  .doc-card:hover { transform: translateY(-4px); box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.12); }
+  .doc-icon { font-size: 3rem; }
+
+/* CSP utilities：自 inline style 外部化 */
+.u-background-198754{background:#198754 !important}
+.u-background-dc3545{background:#dc3545 !important}
+.u-height-56px{height:56px !important}
+.u-width-12pct{width:12% !important}
+.u-width-130px{width:130px !important}
+.u-width-140px{width:140px !important}
+.u-width-160px{width:160px !important}
+.u-width-180px{width:180px !important}
+.u-width-200px{width:200px !important}
+.u-width-20pct{width:20% !important}
+.u-width-28pct{width:28% !important}
+.u-width-30pct{width:30% !important}
+.u-width-32pct{width:32% !important}

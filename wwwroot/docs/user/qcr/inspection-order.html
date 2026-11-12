@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Inspection Order Enquiry — QCR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>檢驗單查詢 — QCR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">QCR 目錄</span><span lang="en">QCR contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">QCR 畫面</span><span lang="en">QCR screens</span></div>
+    <a href="defect-code.html" class="nav-link"><span lang="zh">不良項目代碼</span><span lang="en">Defect Codes</span></a>
+    <a href="inspection-spec.html" class="nav-link"><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></a>
+    <a href="inspection-order.html" class="nav-link active"><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></a>
+    <a href="ncr.html" class="nav-link"><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></a>
+    <a href="instrument.html" class="nav-link"><span lang="zh">檢驗儀器</span><span lang="en">Inspection Instruments</span></a>
+    <a href="spc-analysis.html" class="nav-link"><span lang="zh">SPC 製程能力分析</span><span lang="en">SPC Process Capability</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clipboard2-check me-2 text-primary"></i><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/InspectionOrder &nbsp;|&nbsp; IQC/IPQC/FQC 檢驗單管理與判定</span><span lang="en">Route: /InspectionOrder &nbsp;|&nbsp; Managing and judging IQC/IPQC/FQC inspection orders</span></div>
+    </div>
+
+    <p><span lang="zh">檢驗單由進貨/委外收貨（IQC）、工序報工（IPQC）或完工（FQC）觸發產生。抽樣依 MIL-STD-1916（Ac=0）自動計算樣本數，支援驗證水準（VL）切換與連續合格跳批。檢驗員輸入量測值/判定結果後判定合格或開立 NCR。行動裝置亦可執行檢驗。</span><span lang="en">Inspection orders are triggered by a goods or outsource receipt (IQC), by reporting an operation (IPQC) or by completion (FQC). The sample size is calculated automatically to MIL-STD-1916 (Ac=0), with verification level (VL) switching and skip-lot after consecutive acceptances. The inspector enters the measured values or the judgement and then either accepts the lot or raises an NCR. Inspections can also be carried out on a mobile device.</span></p>
+    <img class="screen-shot" src="img/inspection-order.png" data-src-en="img/en/inspection-order.png" alt="檢驗單查詢畫面截圖" data-alt-en="Inspection order enquiry screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">檢驗單查詢畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Inspection order enquiry screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">可依檢驗階段、狀態、品號、來源單號篩選。</span><span lang="en">Can be filtered by inspection stage, status, item and source document number.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">IQC 進料檢驗（桌機登錄）</span><span lang="en">IQC incoming inspection (desktop entry)</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點右上「IQC 待檢登錄」進入待檢清單，內容與手機端 IQC 待檢完全一致（已套用 VL 切換與跳批）。</span><span lang="en">Click "IQC pending entry" at the top right to open the pending list, which is exactly the same as IQC pending on mobile (with VL switching and skip-lot already applied).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">選擇一筆進貨明細點「登錄」，側欄帶出批量與建議抽樣數；可調整驗證等級（VL-1～VL-7）。</span><span lang="en">Select a receipt line and click "Enter"; the panel fills in the lot size and the suggested sample size, and the verification level (VL-1 to VL-7) can be changed.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">輸入實際抽樣數與不良數後送出。Ac=0：不良數 ≥ 1 即整批拒批。</span><span lang="en">Enter the actual sample size and the number of defects and submit. With Ac=0, one defect or more rejects the whole lot.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">合格時系統自動把待驗倉庫存調撥至進貨明細指定的倉儲（沒填就用品號類別的預設倉儲），這是系統調撥、直接過帳不走簽核，並同時就放行量認列應付；兩者都沒有時判合格會被擋下並說明，不會記錄。不合格則庫存留在待驗倉，改由 NCR 處置。待檢清單包含已確認待上架的進貨，以及已上架到待驗倉、尚未檢驗的進貨。</span><span lang="en">On acceptance the system transfers the stock out of the quarantine warehouse into the warehouse and location named on the receipt line (or the item category's default when the line has none). This is a system transfer that posts directly without approval, and the payable is accrued for the released quantity at the same time. If neither is set, the acceptance is refused with an explanation and nothing is recorded. On rejection the stock stays in quarantine and is handled through an NCR. The pending list covers receipts confirmed and awaiting put-away as well as receipts already put away into quarantine but not yet inspected.</span></div></div>
+    <h3><span lang="zh">FPI 首件檢查（桌機登錄）</span><span lang="en">FPI first-piece inspection (desktop entry)</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點右上「FPI 待檢登錄」進入待首件清單。清單列出「工序設定需要首件檢查、且尚未通過 FPI」的派工——不論該派工是否做過備料都會列出。</span><span lang="en">Click "FPI pending entry" at the top right to open the list of dispatches awaiting a first piece. It lists every dispatch whose operation requires a first-piece inspection and has not passed FPI yet — whether or not staging has been done.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">選一筆派工點「登錄」，側欄帶出派工量與建議抽樣數；可調整驗證等級（VL-1～VL-7）。</span><span lang="en">Select a dispatch and click "Enter"; the panel fills in the dispatched quantity and the suggested sample size, and the verification level (VL-1 to VL-7) can be changed.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">輸入實際抽樣數與不良數後送出。Ac=0：不良數 ≥ 1 即判定不通過。</span><span lang="en">Enter the actual sample size and the number of defects and submit. With Ac=0, one defect or more is a fail.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">通過 → 派工解鎖為「備料完成」可開工；不通過 → 派工轉為「暫停」（原因：首件不合格），暫停中的派工不會出現在待首件清單。排除異常後，在</span><span lang="en">Pass → the dispatch is unlocked to "staging done" and work can start; fail → the dispatch goes on hold (reason: first-piece inspection failed), and dispatches on hold do not appear in the pending FPI list. Once the problem is sorted out, resume it under </span><a href="../mfg/dispatch.html#hold"><span lang="zh">派工作業 → 暫停處理</span><span lang="en">Dispatch Operations → Handle hold</span></a><span lang="zh">恢復，派工回到「待首件」後再重新登錄首件。</span><span lang="en">; the dispatch returns to "Pending FPI" and the first piece is entered again.</span></div></div>
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <strong><span lang="zh">首件檢查閘口：</span><span lang="en">First-piece inspection gate:</span></strong><span lang="zh">工序若勾選「需首件檢查」，未通過 FPI 前</span><span lang="en"> If the operation has "first-piece inspection required" ticked, then until FPI passes </span><strong><span lang="zh">一律無法開工</span><span lang="en">work can never start</span></strong><span lang="zh">——
+      桌機與手機、有無經過備料都一樣。判定依據是「該派工是否已有通過的首件檢驗單」，
+      不是派工目前的狀態，因此跳過備料直接開工也擋得住。首件登錄可由桌機或手機任一端完成。</span><span lang="en"> —
+      on the desktop or on mobile, and whether or not staging was done. What counts is whether the dispatch already has a passing first-piece inspection,
+      not the dispatch's current status, so starting work directly without staging is still blocked. The first piece can be entered from either the desktop or a mobile device.</span>
+    </div>
+    <h3><span lang="zh">IPQC / FQC / RQC 待檢單補登</span><span lang="en">Entering pending IPQC / FQC / RQC inspections</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢狀態為「待檢」的檢驗單，點明細開啟側欄。</span><span lang="en">Query inspection orders with the status "pending" and click a line to open the panel.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">面板下方輸入實際抽樣數、不良數與備註後送出結果。</span><span lang="en">Enter the actual sample size, the number of defects and any notes at the bottom of the panel and submit the result.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">IPQC 判定不合格時，系統自動將生產中的相關派工改為暫停（原因：巡檢不合格）。品管確認後於</span><span lang="en">When IPQC fails, the system automatically puts the related running dispatch on hold (reason: in-process inspection failed). After QC has confirmed, resume it under </span><a href="../mfg/dispatch.html#hold"><span lang="zh">派工作業 → 暫停處理</span><span lang="en">Dispatch Operations → Handle hold</span></a><span lang="zh">恢復；品質原因的暫停須有檢驗單更新權限才能恢復。</span><span lang="en">; a hold for a quality reason needs update permission on inspection orders to be resumed.</span></div></div>
+    <h3><span lang="zh">執行檢驗（行動裝置）</span><span lang="en">Carrying out an inspection (mobile)</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">開啟待檢單，系統已依規範帶出檢驗項目與抽樣數。</span><span lang="en">Open a pending inspection order; the system has already filled in the inspection items and the sample size from the spec.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">逐項輸入量測值或判定結果；超規項目自動標示。</span><span lang="en">Enter the measured value or judgement for each item; anything out of spec is flagged automatically.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">全部合格→判定合格結案（IQC 合格量入庫、FQC 放行繳庫）。</span><span lang="en">All pass → judged accepted and closed (the IQC accepted quantity goes into stock, FQC releases the receipt).</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">不合格→開立 NCR 進入處置流程。</span><span lang="en">Fail → an NCR is raised and goes into the disposition process.</span></div></div>
+    <div class="note-box"><i class="bi bi-truck me-1 text-primary"></i><span lang="zh"><strong>IQC 待檢也包含委外收貨</strong>（單號旁標「委外」）：委外收回品與一般進貨一樣，未合格前只能上架到待驗倉，合格後自動放行到一般倉，並回寫委外派工完工量。</span><span lang="en"><strong>The IQC queue also includes outsource receipts</strong> (marked "Outsource" next to the number): like ordinary receipts, returned goods can only be put into quarantine until they pass, are then released to a normal warehouse automatically, and update the outsourced dispatch's completed quantity.</span></div>
+
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。檢驗單列印含來源單據、產品品名、批量與抽樣數，以及各檢驗項目的規格上下限、目標值、實測值與判定，可當現場量測記錄表。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The inspection printout shows the source document, product name, lot size and sample size, and for each item the spec limits, target, measured value and result, so it can serve as the shop-floor measurement record.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">檢驗類型</span><span lang="en">Type</span></td><td><span lang="zh">IQC 進料／IPQC 製程／FQC 完工／RQC 退貨</span><span lang="en">IQC incoming / IPQC in-process / FQC final / RQC return</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">依檢驗單狀態篩選</span><span lang="en">Filters by inspection order status</span></td></tr>
+        <tr><td><span lang="zh">建立日期（起 / 迄）</span><span lang="en">Created between (from / to)</span></td><td><span lang="zh">依檢驗單建立日期區間篩選</span><span lang="en">Filters by the inspection order creation date range</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">只看單一料件的檢驗單</span><span lang="en">Inspection orders for one item only</span></td></tr>
+        <tr><td><span lang="zh">來源單號</span><span lang="en">Source Doc</span></td><td><span lang="zh">只看某張進貨單、工單或派工產生的檢驗單；下拉只列本廠檢驗單出現過的來源單號，新的在前。檢驗單本身沒有單號，找單請用這個條件</span><span lang="en">Inspection orders raised from one receipt, work order or dispatch only. The list shows only source documents that appear on this plant's inspection orders, newest first. Inspection orders have no number of their own, so use this criterion to find one</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">清單欄位</span><span lang="en">List columns</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">檢驗單號</span><span lang="en">Order ID</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">檢驗類型</span><span lang="en">Type</span></td><td><span lang="zh">該單所屬的檢驗階段</span><span lang="en">Inspection stage the order belongs to</span></td></tr>
+        <tr><td><span lang="zh">來源單號</span><span lang="en">Source doc No</span></td><td><span lang="zh">觸發此次檢驗的來源單據（進貨單、工單、退貨單等），可回溯追查</span><span lang="en">The document that triggered this inspection (goods receipt, work order, sales return …), for tracing back</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">受檢的料件</span><span lang="en">Item being inspected</span></td></tr>
+        <tr><td><span lang="zh">批量</span><span lang="en">Lot size</span></td><td><span lang="zh">本次送驗的批次數量，為抽樣數的計算基準</span><span lang="en">Lot size submitted for inspection, the basis for calculating the sample size</span></td></tr>
+        <tr><td><span lang="zh">應抽數</span><span lang="en">Sample Size</span></td><td><span lang="zh">依檢驗規範的抽樣計畫算出的樣本數；抽樣狀態（正常／加嚴／減量／跳批）會改變此數</span><span lang="en">Sample size from the sampling plan in the inspection spec; the sampling state (normal / tightened / reduced / skip-lot) changes it</span></td></tr>
+        <tr><td><span lang="zh">不良數</span><span lang="en">Defects</span></td><td><span lang="zh">樣本中判定不合格的件數</span><span lang="en">Number of pieces in the sample judged nonconforming</span></td></tr>
+        <tr><td><span lang="zh">結果</span><span lang="en">Result</span></td><td><span lang="zh">合格／不合格。不合格會影響下一批的抽樣狀態，並可開立 NCR 進行處置</span><span lang="en">Accepted or rejected. A rejection affects the sampling state of the next lot, and an NCR can be raised to deal with it</span></td></tr>
+        <tr><td><span lang="zh">檢驗員 / 檢驗時間</span><span lang="en">Inspector / Inspection time</span></td><td><span lang="zh">執行檢驗的人員與完成時間</span><span lang="en">Who carried out the inspection and when it finished</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="ncr.html"><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></a>、<a href="inspection-spec.html"><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">FQC 未合格前完工入庫會被硬性阻擋；IQC 不合格量不可入良品倉。</span><span lang="en"> Completion receipt is hard-blocked until FQC passes; an IQC reject quantity cannot go into the good-stock warehouse.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

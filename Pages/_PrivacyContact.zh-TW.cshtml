@@ -1,0 +1,32 @@
+@model PrivacyModel
+@{
+    var org = Model.Organization ?? "貴公司";
+}
+<h2 class="h5 mt-4">您的權利</h2>
+<p>依《個人資料保護法》第 3 條，您可以就您的個人資料向 <strong>@org</strong> 行使下列權利：</p>
+<ul>
+    <li>查詢或請求閱覽；</li>
+    <li>請求製給複製本；</li>
+    <li>請求補充或更正；</li>
+    <li>請求停止蒐集、處理或利用；</li>
+    <li>請求刪除。</li>
+</ul>
+<p>
+    帳號資料多數可在「個人設定」中自行查看與修改。操作稽核記錄等資料若依法令或資安需要必須保存，
+    刪除請求可能無法立即執行，屆時會向您說明原因。
+</p>
+
+<h2 class="h5 mt-4">聯絡窗口</h2>
+<p>
+    @if (Model.Contact != null)
+    {
+        <text>對本政策或您的個人資料有任何問題，請聯絡：<strong>@Model.Contact</strong></text>
+    }
+    else
+    {
+        <text>對本政策或您的個人資料有任何問題，請洽 <strong>@org</strong> 的系統管理員。</text>
+    }
+</p>
+
+<h2 class="h5 mt-4">政策更新</h2>
+<p>本政策如有修訂，會更新本頁並修改頁首的「最後更新」日期。</p>

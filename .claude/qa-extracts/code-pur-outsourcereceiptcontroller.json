@@ -1,0 +1,46 @@
+{
+  "sourcePath": "Modules/PUR/Controllers/OutsourceReceiptController.cs",
+  "sourceHash": "bb95bb23402d4a340137c41378d568dc9c5e1c36e4681fb8f76a95eb81943672",
+  "entries": [
+    {
+      "slug": "code-pur-outsourcereceiptcontroller-2f683965",
+      "lang": "zh",
+      "headingPath": "採購 › 於是「有讀取權、沒有建立權」的角色**看得到選單",
+      "text": "列表檢視只需讀取權｜列表是讀取動作，只要具備該畫面的讀取權限就能開啟，不需要建立權。選單本身也是以讀取權過濾的，兩邊採同一個判準，才不會出現「選單上看得到、點進去卻被擋下」的情況。",
+      "approved": false,
+      "sourceSectionHash": "5c2e646b08a961b2706aec2a73fda160d69eaeaa4a83b1384d7de8891716d0f1"
+    },
+    {
+      "slug": "code-pur-outsourcereceiptcontroller-a5ba69e8",
+      "lang": "zh",
+      "headingPath": "採購 › 表頭移除後仍卡在這層",
+      "text": "明細單據的關聯資訊處理規則｜系統在建立新單據時，雖然前端介面不會顯示某個明細列的來源單據編號，但後端驗證機制仍會將此欄位視為必填，導致無法成功建檔。目前已調整，該來源單據編號會在資料儲存到伺服器後才由系統自動賦予值。",
+      "approved": true,
+      "sourceSectionHash": "93b2d5eae9b740797d3b1fa6aad93562330a37ccc545c6295d407c05e6c8a612"
+    },
+    {
+      "slug": "code-pur-outsourcereceiptcontroller-660e7763",
+      "lang": "zh",
+      "headingPath": "採購 › 單位換算缺主檔是「主檔沒建好」而不是「系統壞了」",
+      "text": "主檔缺失的錯誤提示說明｜當缺少單位換算的主檔時，系統會顯示「主檔沒建好」的訊息，而不是顯示系統出錯。此訊息會包含品號和兩個單位資訊。",
+      "approved": true,
+      "sourceSectionHash": "6f9bf8abec00b76949104ed84670c2c7bfe216e86a664205430e7df3f4364798"
+    },
+    {
+      "slug": "code-pur-outsourcereceiptcontroller-289c2420",
+      "lang": "zh",
+      "headingPath": "採購 › 更新明細：清除後重建",
+      "text": "明細清除後重建時的計算規則｜當使用者清除了部分明細項目後，系統不會從記憶體中移除這些已刪除的項目紀錄；因此，在重新計算總金額時，會將所有殘留的舊行金額一併加總到新的總金額中。",
+      "approved": false,
+      "sourceSectionHash": "1aa770a5327e7c8dc2a332bee04339d6468ec22eae6221d055aa9e7daca753d4"
+    },
+    {
+      "slug": "code-pur-outsourcereceiptcontroller-0b53c826",
+      "lang": "zh",
+      "headingPath": "採購 › 掛在作廢單上的孤兒——供應商對帳多出一筆、AP 未清餘額永遠掛帳",
+      "text": "應付發票無法獨立作廢｜如果僅修改了收貨單的狀態而沒有處理應付發票，會導致該筆應付發票變成孤兒記錄，使得供應商對帳多出不正確的一筆紀錄，並且相關的未清餘額將永遠掛在帳上。",
+      "approved": true,
+      "sourceSectionHash": "4b2b99f6b92e1efb435883095a7910428c823820c288d955587d307a930f9e98"
+    }
+  ]
+}

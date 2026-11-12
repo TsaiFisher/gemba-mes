@@ -1,0 +1,323 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Services
+@inject IViewLocalizer Localizer
+@inject IPermissionService PermissionService
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Models.DocumentApprovalConfig>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.SharedResource> SL
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    var canCreate = await PermissionService.CanCreate("DocumentApprovalConfig");
+    var canUpdate = await PermissionService.CanUpdate("DocumentApprovalConfig");
+    var canDelete = await PermissionService.CanDelete("DocumentApprovalConfig");
+    var canPrint  = await PermissionService.CanPrint("DocumentApprovalConfig");
+    bool hasSearched = ViewBag.Searched == true;
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.CurrentSort as string ?? "";
+        if (cur == col + "_asc")  return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-gear-wide-connected"></i> @Localizer["PageTitle"]</h1>
+        @if (canCreate)
+        {
+            <button type="button" class="btn btn-primary"
+                    data-action="openPanel" data-url="@Url.Action("Create", "DocumentApprovalConfig")" data-label="@Localizer["AddConfig"]">
+                <i class="bi bi-plus-lg"></i> @Localizer["AddConfig"]
+            </button>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-3 align-items-center">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" name="searchTerm" class="form-control border-end-0"
+                               placeholder="@Localizer["SearchPlaceholder"]" value="@ViewBag.SearchTerm" />
+                        @if (!string.IsNullOrEmpty(ViewBag.SearchTerm as string))
+                        {
+                            <a asp-action="Index" asp-route-searched="true" asp-route-pageSize="@ViewBag.CurrentPageSize"
+                               class="btn btn-outline-secondary border-start-0 border-end-0 bg-white text-muted">
+                                <i class="bi bi-x-circle"></i>
+                            </a>
+                        }
+                        <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                        @if (canPrint)
+                        {
+                            <button type="button" class="btn btn-outline-info ms-2" data-action="printPage">
+                                <i class="bi bi-printer"></i> @Localizer["Print"]
+                            </button>
+                            <div class="btn-group ms-1">
+                                <a asp-action="Export"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-sortOrder="@ViewBag.CurrentSort"
+                                   asp-route-format="xlsx"
+                                   class="btn btn-outline-success">
+                                    <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                                </a>
+                                <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown"></button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-action="Export"
+                                           asp-route-searchTerm="@ViewBag.SearchTerm"
+                                           asp-route-sortOrder="@ViewBag.CurrentSort"
+                                           asp-route-format="csv">
+                                        <i class="bi bi-filetype-csv me-2"></i>@Localizer["ExportCsv"]</a></li>
+                                    <li><a class="dropdown-item" asp-action="Export"
+                                           asp-route-searchTerm="@ViewBag.SearchTerm"
+                                           asp-route-sortOrder="@ViewBag.CurrentSort"
+                                           asp-route-format="json">
+                                        <i class="bi bi-filetype-json me-2"></i>@Localizer["ExportJson"]</a></li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="card shadow-sm">
+            <div class="card-body text-center py-5 text-muted">
+                <i class="bi bi-search fs-1 d-block mb-3 opacity-25"></i>
+                <p class="mb-0">@Localizer["SearchPrompt"]</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">
+                                <a asp-action="Index" asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-searched="true" asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-sortOrder="@ViewBag.NameSort" class="text-decoration-none text-dark">
+                                    @Localizer["DocumentTypeName"] <i class="bi @sortIcon("name")"></i>
+                                </a>
+                            </th>
+                            <th>
+                                <a asp-action="Index" asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-searched="true" asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-sortOrder="@ViewBag.DocTypeSort" class="text-decoration-none text-dark">
+                                    @Localizer["DocumentType"] <i class="bi @sortIcon("doctype")"></i>
+                                </a>
+                            </th>
+                            <th class="text-center">@Localizer["RequireApproval"]</th>
+                            <th>@Localizer["ApprovalTemplate"]</th>
+                            <th class="text-end pe-4">@Localizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-muted">@Localizer["NoData"]</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var c in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-bold">@c.DocumentTypeName</td>
+                                    <td><code>@c.DocumentType</code></td>
+                                    <td class="text-center">
+                                        @if (c.IsApprovalRequired)
+                                        {
+                                            <span class="badge bg-warning text-dark"><i class="bi bi-check-lg"></i> @Localizer["Yes"]</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-light text-muted border">@Localizer["No"]</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (c.ApprovalTemplate != null)
+                                        {
+                                            <span class="badge bg-secondary">@c.ApprovalTemplate.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group">
+                                            @if (canUpdate)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                        data-url="@Url.Action("Edit", "DocumentApprovalConfig", new { id = c.Id })"
+                                                        data-label="@($"{Localizer["Edit"].Value}：{c.DocumentTypeName}")"
+                                                        data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                            }
+                                            @if (canDelete)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        data-url="@Url.Action("Delete", "DocumentApprovalConfig", new { id = c.Id })"
+                                                        data-label="@c.DocumentTypeName"
+                                                        data-action="deleteItem"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @await Html.PartialAsync("_Pagination", Model)
+        </div>
+    }
+</div>
+
+<!-- Side Panel -->
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-520px-95vw" id="crudPanel" tabindex="-1"
+     aria-labelledby="crudPanelLabel">
+    <div class="offcanvas-header border-bottom bg-primary text-white py-3">
+        <h5 class="offcanvas-title mb-0" id="crudPanelLabel">
+            <i class="bi bi-gear-wide-connected me-2"></i><span id="crudPanelTitle"></span>
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-3" id="crudPanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-check-circle-fill me-2"></i><span id="successToastMsg"></span>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+    <div id="errorToast" class="toast align-items-center text-white bg-danger border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i><span id="errorToastMsg"></span>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<form class="u-display-none" id="__AjaxAntiForgery">@Html.AntiForgeryToken()</form>
+
+@section Scripts {
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function openPanel(a, b) {
+        const url = (a instanceof Event) ? b.dataset.url : a;
+        const title = (a instanceof Event) ? b.dataset.label : b;
+        document.getElementById('crudPanelTitle').textContent = title;
+        const body = document.getElementById('crudPanelBody');
+        body.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-3 text-muted small">' + @(Json.Serialize(SL["Loading"].Value)) + '</p></div>';
+        new bootstrap.Offcanvas(document.getElementById('crudPanel')).show();
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+            .then(html => { body.innerHTML = DOMPurify.sanitize(html); bindPanelForms(); })
+            .catch(() => { body.innerHTML = '<div class="alert alert-danger m-3">' + @(Json.Serialize(SL["LoadFailedRetry"].Value)) + '</div>'; });
+    }
+
+    function bindPanelForms() {
+        document.querySelectorAll('#crudPanelBody form[data-ajax="true"]').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitPanel(this);
+            });
+        });
+        document.querySelectorAll('#crudPanelBody [data-dismiss-panel]').forEach(btn => {
+            btn.addEventListener('click', () =>
+                bootstrap.Offcanvas.getInstance(document.getElementById('crudPanel'))?.hide());
+        });
+        const reqChk = document.querySelector('#crudPanelBody #isApprovalRequired');
+        if (reqChk) {
+            reqChk.addEventListener('change', function() { toggleTemplateDiv(this.checked); });
+            toggleTemplateDiv(reqChk.checked);
+        }
+    }
+
+    // 🚨 顯示／隱藏一律 classList 切 d-none，禁用 style.display。
+    //    templateDiv 的初始隱藏是 _ConfigForm 直接渲染在 class 上的（Bootstrap 的
+    //    d-none 帶 !important），inline 的 display 蓋不過它——原本寫成
+    //    div.style.display = '' 的版本，勾了「需要簽核」以後那一欄**永遠打不開**，
+    //    而且不報錯。後果不是版面難看：管理員選不到範本就存檔，會存出
+    //    「要簽核但沒範本」的設定，下游一律把它當成未設線上簽核，單據直接 Approved。
+    function toggleTemplateDiv(required) {
+        const div = document.getElementById('templateDiv');
+        if (div) div.classList.toggle('d-none', !required);
+    }
+
+    function submitPanel(form) {
+        const btn = form.querySelector('[type="submit"]');
+        const orig = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>';
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(r => {
+            const ct = r.headers.get('Content-Type') || '';
+            return ct.includes('application/json')
+                ? r.json().then(d => ({ isJson: true, data: d }))
+                : r.text().then(h => ({ isJson: false, html: h }));
+        })
+        .then(result => {
+            if (result.isJson && result.data.success) {
+                bootstrap.Offcanvas.getInstance(document.getElementById('crudPanel')).hide();
+                document.getElementById('successToastMsg').textContent = result.data.message;
+                new bootstrap.Toast(document.getElementById('successToast')).show();
+                setTimeout(() => location.reload(), 1200);
+            } else if (result.isJson && !result.data.success) {
+                btn.disabled = false; btn.innerHTML = orig;
+                document.getElementById('errorToastMsg').textContent = result.data.message;
+                new bootstrap.Toast(document.getElementById('errorToast')).show();
+            } else {
+                document.getElementById('crudPanelBody').innerHTML = DOMPurify.sanitize(result.html);
+                bindPanelForms();
+            }
+        })
+        .catch(() => { btn.disabled = false; btn.innerHTML = orig; alert(@(Json.Serialize(SL["SaveFailedRetry"].Value))); });
+    }
+
+    function deleteItem(e, el) {
+        const url = el.dataset.url, name = el.dataset.label;
+        if (!confirm(@(Json.Serialize(SL["ConfirmDeleteSettingNameFmt"].Value)).replace('{0}', name))) return;
+        const token = document.querySelector('#__AjaxAntiForgery input[name="__RequestVerificationToken"]').value;
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+            body: '__RequestVerificationToken=' + encodeURIComponent(token)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                document.getElementById('successToastMsg').textContent = result.message;
+                new bootstrap.Toast(document.getElementById('successToast')).show();
+                setTimeout(() => location.reload(), 1200);
+            } else {
+                document.getElementById('errorToastMsg').textContent = result.message;
+                new bootstrap.Toast(document.getElementById('errorToast')).show();
+            }
+        })
+        .catch(() => alert(@(Json.Serialize(SL["DeleteFailedRetry"].Value))));
+    }
+</script>
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>機台狀態異動</value></data>
+  <data name="New" xml:space="preserve"><value>新增異動</value></data>
+  <data name="NewTitle" xml:space="preserve"><value>新增機台狀態異動</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>異動單號/備註</value></data>
+  <data name="MachineFilter" xml:space="preserve"><value>機台</value></data>
+  <data name="AllMachines" xml:space="preserve"><value>全部機台</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="OrderId" xml:space="preserve"><value>異動單號</value></data>
+  <data name="EventType" xml:space="preserve"><value>事件類型</value></data>
+  <data name="EventAt" xml:space="preserve"><value>事件時間</value></data>
+  <data name="Machine" xml:space="preserve"><value>機台</value></data>
+  <data name="TargetStatus" xml:space="preserve"><value>目標狀態</value></data>
+  <data name="RequestedBy" xml:space="preserve"><value>申請者</value></data>
+  <data name="Note" xml:space="preserve"><value>備註</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="ViewTitle" xml:space="preserve"><value>異動單 {0}</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入條件後按「查詢」</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>異動已記錄，機台狀態已更新。</value></data>
+  <data name="View" xml:space="preserve"><value>檢視</value></data>
+</root>

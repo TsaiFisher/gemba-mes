@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/MFG/Services/MrpRunResult.cs",
+  "sourceHash": "64f687e1a3ee7ef89b7b6a6e0f3391a809d63aa0a33e9e99ae7e5a85f8ec2e26",
+  "entries": [
+    {
+      "slug": "code-mfg-mrprunresult-91d746c0",
+      "lang": "zh",
+      "headingPath": "生產製造 › 委外建議：工序委外或整品委外",
+      "text": "委外建議的類型與材料說明｜此功能用來處理工序委外，指的是自製流程中的單一工序需要委外進行；或是整品委外。在委外時，收回的產品代碼是依據「ProductCode」判斷；而送給協力廠商的物料，必須先在廠內備妥後才能發出。",
+      "approved": true,
+      "sourceSectionHash": "b4dd375e7de1c923a992f468f3ea764e2eb2bd76663ea6673562d0449c59f3da"
+    },
+    {
+      "slug": "code-mfg-mrprunresult-8450f600",
+      "lang": "zh",
+      "headingPath": "生產製造 › 由本次採購需求自動建立的請購單號供「請購轉採購」消化",
+      "text": "請購單號來源與使用範圍｜此欄位顯示的是由本次採購需求自動建立的請購單號，該單號僅供「請購轉採購」流程使用。若本次操作沒有相關的採購需求，則此欄位會是空值。",
+      "approved": true,
+      "sourceSectionHash": "15204743ff3d386f6711b777b3d3db522f3445f4afe8ddac0dd409a13552bf38"
+    },
+    {
+      "slug": "code-mfg-mrprunresult-01b9f83c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 重跑對帳差異：本次展開的採購需求與既有同源請購單明細逐品號比對的",
+      "text": "採購需求與請購單差異比對結果｜本次展開的採購需求會與既有的同源請購單明細進行逐品號的比對，如果這是首次展開或既有請購單仍是草稿狀態，則此處顯示為空。",
+      "approved": true,
+      "sourceSectionHash": "938d0ae660805927a6363a39de91d1737a8c609ea6d99d2e2255866e2b0a3ee7"
+    },
+    {
+      "slug": "code-mfg-mrprunresult-fc6b0661",
+      "lang": "zh",
+      "headingPath": "生產製造 › 不產生任何生產批/工單",
+      "text": "MRP 展開預檢失敗時的處理規則｜若任何需求項目有阻擋性的錯誤，則整個生產批或工單的產生都會中止，呼叫此系統的人需要回滾交易，並可透過特定的錯誤列表來顯示每個項目具體的驗證錯誤訊息。",
+      "approved": true,
+      "sourceSectionHash": "3798706e550d50c7a507577d6bdbc903831f1319362320df60cab18208dad6a9"
+    }
+  ]
+}

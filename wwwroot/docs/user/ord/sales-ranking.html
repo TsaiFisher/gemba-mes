@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Sales Ranking — ORD User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>銷售排名 — ORD 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ORD 目錄</span><span lang="en">ORD Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ORD 畫面</span><span lang="en">ORD Screens</span></div>
+    <a href="sales-order.html" class="nav-link"><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></a>
+    <a href="goods-shipment.html" class="nav-link"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></a>
+    <a href="sales-return.html" class="nav-link"><span lang="zh">銷退單</span><span lang="en">Sales Return</span></a>
+    <a href="internal-order.html" class="nav-link"><span lang="zh">內部訂單</span><span lang="en">Internal Order</span></a>
+    <a href="order-overdue.html" class="nav-link"><span lang="zh">訂單逾期跟催</span><span lang="en">Overdue Sales Orders</span></a>
+    <a href="sales-ranking.html" class="nav-link active"><span lang="zh">銷售排名</span><span lang="en">Sales Ranking</span></a>
+    <a href="sales-trend.html" class="nav-link"><span lang="zh">銷售趨勢</span><span lang="en">Sales Trend</span></a>
+    <a href="delivery-rate.html" class="nav-link"><span lang="zh">交期達成率</span><span lang="en">Delivery Rate</span></a>
+    <a href="return-rate.html" class="nav-link"><span lang="zh">退貨率分析</span><span lang="en">Return Rate</span></a>
+    <a href="sales-forecast.html" class="nav-link"><span lang="zh">銷售預測</span><span lang="en">Sales Forecast</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-trophy me-2 text-primary"></i><span lang="zh">銷售排名</span><span lang="en">Sales Ranking</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/SalesRanking &nbsp;|&nbsp; 客戶/品號銷售金額排名</span><span lang="en">Route: /SalesRanking &nbsp;|&nbsp; Sales amount ranking by customer and product</span></div>
+    </div>
+
+    <p><span lang="zh">依期間彙總出貨金額，排名客戶與品號貢獻度，附排名圖表。</span><span lang="en">Summarizes shipment amounts by period and ranks the contribution of customers and products, with a ranking chart.</span></p>
+    <img class="screen-shot" src="img/sales-ranking.png" data-src-en="img/en/sales-ranking.png" alt="銷售排名畫面截圖" data-alt-en="Sales ranking screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">銷售排名畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Sales ranking screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">訂單日（起 / 迄）</span><span lang="en">Order date (from / to)</span></td><td><span lang="zh">納入排行統計的接單日期區間。留白時預設<b>近 30 天</b>，不是「不限起日」</span><span lang="en">Order date range included in the ranking. Left blank, it defaults to the <b>last 30 days</b> rather than to no lower bound.</span></td></tr>
+        <tr><td><span lang="zh">排行依據</span><span lang="en">Group By</span></td><td><span lang="zh">彙總維度（依客戶／依品號／依業務等），決定名次以什麼為單位</span><span lang="en">Grouping dimension (by customer, by product, by sales rep …), which decides what the ranking counts</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">名次</span><span lang="en">Rank</span></td><td><span lang="zh">依銷售金額由大到小的排序</span><span lang="en">Sorted by sales amount, highest first</span></td></tr>
+        <tr><td><span lang="zh">（排行對象）</span><span lang="en">(ranking entity)</span></td><td><span lang="zh">欄名隨「排行依據」變動，顯示客戶、品號或業務</span><span lang="en">The column name follows the "Group By" selection and shows the customer, product or sales rep</span></td></tr>
+        <tr><td><span lang="zh">銷售金額合計</span><span lang="en">Total Sales Amount</span></td><td><span lang="zh">該對象在區間內的訂單金額合計（本位幣）</span><span lang="en">Total order amount for the entity within the period (local currency)</span></td></tr>
+        <tr><td><span lang="zh">訂單數</span><span lang="en">Order Count</span></td><td><span lang="zh">涉及的訂單張數</span><span lang="en">Number of orders involved</span></td></tr>
+        <tr><td><span lang="zh">明細筆數</span><span lang="en">Lines</span></td><td><span lang="zh">涉及的訂單明細行數；與訂單數落差大代表單張訂單品項多</span><span lang="en">Number of order lines involved; a big gap against the order count means many items per order</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="sales-trend.html"><span lang="zh">銷售趨勢</span><span lang="en">Sales Trend</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

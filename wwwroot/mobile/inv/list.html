@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="/mobile/manifest.json">
+    <link rel="apple-touch-icon" href="/mobile/icons/apple-touch-icon-180.png">
+    <title data-i18n="inv.page_title">倉儲作業</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+    <link rel="stylesheet" href="/mobile/css/inv-list.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary mobile-navbar px-3">
+    <button type="button" data-action="historyBack" data-fallback="/mobile/home.html"
+            class="btn btn-link text-white p-0 me-2" data-i18n-title="common.back_prev" title="返回">
+        <i class="bi bi-arrow-left fs-5"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.back_prev">返回</span>
+    </button>
+    <span class="navbar-brand fw-bold mb-0 h1 flex-grow-1">
+        <i class="bi bi-boxes me-2"></i>
+        <span data-i18n="inv.list.title">倉儲作業</span>
+    </span>
+    <a href="/mobile/home.html" class="btn btn-outline-light btn-sm me-1" data-i18n-title="common.back" title="回首頁"><i class="bi bi-house-door"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="nav.home">首頁</span></a>
+    <button class="btn btn-outline-light btn-sm me-1" data-action="toggleLang" data-lang-toggle title="Language">EN</button>
+    <button class="btn btn-outline-light btn-sm" data-action="logout" data-i18n-title="common.logout" title="登出">
+        <i class="bi bi-box-arrow-right"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.logout">登出</span>
+    </button>
+</nav>
+
+<div class="container-fluid py-3 px-3">
+
+    <!-- 待處理摘要 -->
+    <div class="summary-bar p-3 mb-3">
+        <div class="row g-2 text-center" id="summaryRow">
+            <div class="col-6">
+                <div class="small text-muted" data-i18n="inv.list.pending_in">待入庫</div>
+                <div class="fw-bold fs-4 text-primary" id="pendingInCount">—</div>
+            </div>
+            <div class="col-6">
+                <div class="small text-muted" data-i18n="inv.list.pending_out">待出庫</div>
+                <div class="fw-bold fs-4 text-danger" id="pendingOutCount">—</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 狀態篩選 -->
+    <div class="btn-group w-100 mb-3" role="group">
+        <input type="radio" class="btn-check" name="invFilter" id="filterAll" value="all" checked>
+        <label class="btn btn-outline-secondary btn-sm" for="filterAll" data-i18n="inv.list.filter_all">全部</label>
+        <input type="radio" class="btn-check" name="invFilter" id="filterIn" value="in">
+        <label class="btn btn-outline-primary btn-sm" for="filterIn" data-i18n="inv.list.filter_in">入庫作業</label>
+        <input type="radio" class="btn-check" name="invFilter" id="filterOut" value="out">
+        <label class="btn btn-outline-danger btn-sm" for="filterOut" data-i18n="inv.list.filter_out">出庫作業</label>
+    </div>
+
+    <!-- 作業功能卡 -->
+    <div class="row g-3 mb-3">
+        <div class="col-6" data-filter="in">
+            <a href="/mobile/inv/putaway.html" class="card op-card shadow-sm border-primary-subtle p-3">
+                <i class="bi bi-box-arrow-in-down op-icon text-primary"></i>
+                <span class="op-label" data-i18n="inv.list.putaway">入庫上架</span>
+                <span class="badge bg-primary op-badge mt-1" id="putawayBadge">—</span>
+            </a>
+        </div>
+        <div class="col-6" data-filter="out">
+            <a href="/mobile/inv/pick.html" class="card op-card shadow-sm border-danger-subtle p-3">
+                <i class="bi bi-box-arrow-up op-icon text-danger"></i>
+                <span class="op-label" data-i18n="inv.list.pick">出庫下架</span>
+                <span class="badge bg-danger op-badge mt-1" id="pickBadge">—</span>
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="/mobile/inv/stockcount.html" class="card op-card shadow-sm border-warning-subtle p-3">
+                <i class="bi bi-clipboard-check op-icon text-warning"></i>
+                <span class="op-label" data-i18n="inv.list.count">庫存盤點</span>
+                <span class="badge bg-warning text-dark op-badge mt-1" data-i18n="inv.list.scan_loc">掃儲位</span>
+            </a>
+        </div>
+        <div class="col-6" data-filter="in">
+            <a href="/mobile/inv/iqc.html" class="card op-card shadow-sm p-3 u-border-color-6f42c1">
+                <i class="bi bi-shield-check op-icon u-color-6f42c1"></i>
+                <span class="op-label" data-i18n="inv.list.iqc">進料檢驗</span>
+                <span class="badge op-badge mt-1 u-background-6f42c1">IQC</span>
+            </a>
+        </div>
+        <!-- 2026-10-05 料件作業：工單發退料／備料作業／委外收料 -->
+        <div class="col-6" data-filter="out">
+            <a href="/mobile/inv/issue.html" class="card op-card shadow-sm border-info-subtle p-3">
+                <i class="bi bi-box-seam op-icon text-info"></i>
+                <span class="op-label" data-i18n="mslip.title">工單發退料</span>
+                <span class="badge bg-info text-dark op-badge mt-1 d-none" id="slipBadge"></span>
+            </a>
+        </div>
+        <div class="col-6" data-filter="out">
+            <a href="/mobile/inv/staging.html" class="card op-card shadow-sm border-secondary-subtle p-3">
+                <i class="bi bi-diagram-3 op-icon text-secondary"></i>
+                <span class="op-label" data-i18n="stg.title">備料作業</span>
+                <span class="badge bg-secondary op-badge mt-1 d-none" id="stagingBadge"></span>
+            </a>
+        </div>
+        <div class="col-6" data-filter="in">
+            <a href="/mobile/inv/outsource-receive.html" class="card op-card shadow-sm border-primary-subtle p-3">
+                <i class="bi bi-truck op-icon text-primary"></i>
+                <span class="op-label" data-i18n="osr.title">委外收料</span>
+                <span class="badge bg-primary op-badge mt-1 d-none" id="osrBadge"></span>
+            </a>
+        </div>
+        <div class="col-12">
+            <a href="/mobile/inv/stock.html" class="card op-card shadow-sm border-success-subtle p-3 u-min-height-70px u-flex-direction-row u-gap-p75rem"
+              >
+                <i class="bi bi-search op-icon text-success u-font-size-1p8rem u-margin-0"></i>
+                <div class="text-start">
+                    <div class="op-label" data-i18n="inv.list.stock">庫存查詢</div>
+                    <div class="small text-muted" data-i18n="inv.list.stock_hint">依品號或儲位查詢庫存</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- 離線佇列狀態 -->
+    <div id="syncBadge" class="d-none">
+        <div class="alert alert-warning py-2 small mb-0">
+            <i class="bi bi-cloud-upload me-1"></i>
+            <span id="syncCount">0</span>
+            <span data-i18n="inv.list.sync"> 筆倉儲作業待同步</span>
+        </div>
+    </div>
+
+</div>
+
+<div id="toast-container"></div>
+
+<script src="/mobile/js/telemetry.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/data-action.js"></script>
+<script src="/mobile/js/nav.js"></script>
+<script src="/mobile/js/i18n.js"></script>
+<script src="/mobile/js/i18n.modules.js"></script>
+<script src="/mobile/js/api.js"></script>
+<script src="/mobile/js/auth.js"></script>
+<script src="/mobile/js/offline-queue.js"></script>
+<script src="/mobile/inv/list.page.js"></script>
+</body>
+</html>

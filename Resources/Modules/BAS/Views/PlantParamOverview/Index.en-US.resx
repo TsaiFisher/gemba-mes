@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Plant Parameter Overview</value>
+  </data>
+  <data name="ExportExcel" xml:space="preserve">
+    <value>Export Excel</value>
+  </data>
+  <data name="ReadOnlyHint" xml:space="preserve">
+    <value>This screen is read-only. To change a plant's parameters, go to Plant Management, edit the plant, and open the Parameter Settings tab.</value>
+  </data>
+  <data name="ResolutionHint" xml:space="preserve">
+    <value>Resolution order: plant override, then global value, then the built-in default. Plants marked Inherited follow the global value.</value>
+  </data>
+  <data name="NoPlants" xml:space="preserve">
+    <value>No plants available.</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Parameter</value>
+  </data>
+  <data name="GlobalValue" xml:space="preserve">
+    <value>Global Value</value>
+  </data>
+  <data name="Inherited" xml:space="preserve">
+    <value>Inherited</value>
+  </data>
+  <data name="EmptyValue" xml:space="preserve">
+    <value>(empty)</value>
+  </data>
+  <data name="OverriddenCount" xml:space="preserve">
+    <value>{0} plant(s) overridden</value>
+  </data>
+  <data name="INVSettings" xml:space="preserve">
+    <value>Inventory</value>
+  </data>
+  <data name="MFGSettings" xml:space="preserve">
+    <value>Manufacturing</value>
+  </data>
+  <data name="InvSimplifiedMode" xml:space="preserve">
+    <value>Inventory Simplified Mode</value>
+  </data>
+  <data name="MfgSimplifiedMode" xml:space="preserve">
+    <value>Manufacturing Simplified Mode</value>
+  </data>
+  <data name="MfgStandbySchedulable" xml:space="preserve">
+    <value>Standby Machines Schedulable</value>
+  </data>
+  <data name="MfgMrpAutoCloseObsoletePr" xml:space="preserve">
+    <value>Auto-close Obsolete PRs on MRP Rerun</value>
+  </data>
+  <data name="MfgMaterialGate" xml:space="preserve">
+    <value>Material Readiness Gate</value>
+  </data>
+  <data name="MfgMachineStatusGate" xml:space="preserve">
+    <value>Machine Status Gate</value>
+  </data>
+  <data name="MfgLotPolicy" xml:space="preserve">
+    <value>Lot Sizing Policy</value>
+  </data>
+  <data name="MfgDefaultIssueMethod" xml:space="preserve">
+    <value>Default Issue Method</value>
+    <comment>暫時未使用：mfg_default_issue_method 目前無任何讀取點，已依規格 §7 #8 自 PlantParamCatalog 移除。譯文保留原處，等該參數真的接上時只要把目錄那一行加回來。</comment>
+  </data>
+  <data name="MfgWoApprovalThreshold" xml:space="preserve">
+    <value>Work Order Approval Threshold</value>
+  </data>
+  <data name="MfgWoApprovalOutsource" xml:space="preserve">
+    <value>Always Require Approval: Outsourced Orders</value>
+  </data>
+  <data name="MfgWoApprovalRework" xml:space="preserve">
+    <value>Always Require Approval: Rework Orders</value>
+  </data>
+  <data name="MfgWoApprovalOnDelay" xml:space="preserve">
+    <value>Always Require Approval: Delayed Orders</value>
+  </data>
+  <data name="MfgFgWarehouse" xml:space="preserve">
+    <value>Default Finished-Goods Warehouse</value>
+  </data>
+  <data name="MfgFgLocation" xml:space="preserve">
+    <value>Default Finished-Goods Location</value>
+  </data>
+  <data name="MfgDefaultStagingWh" xml:space="preserve">
+    <value>Default Staging Warehouse</value>
+  </data>
+  <data name="MfgDefaultStagingLocation" xml:space="preserve">
+    <value>Default Staging Location</value>
+  </data>
+  <data name="MfgAutoScheduleOnChange" xml:space="preserve"><value>Reschedule automatically after changes</value></data>
+  <data name="MfgAutoScheduleBeforeDispatch" xml:space="preserve"><value>Reschedule automatically before dispatch</value></data>
+  <data name="MfgAutoScheduleDailyTime" xml:space="preserve"><value>Daily automatic rescheduling time (HH:mm)</value></data>
+  <data name="MfgOverReportTolerancePct" xml:space="preserve"><value>In-plant over-production tolerance (%)</value></data>
+  <data name="MfgOverReportAction" xml:space="preserve"><value>In-plant: beyond the tolerance</value></data>
+  <data name="MfgOutsourceOverReceiptTolerancePct" xml:space="preserve"><value>Outsource over-receipt tolerance (%)</value></data>
+  <data name="MfgOutsourceOverReceiptAction" xml:space="preserve"><value>Outsource: beyond the tolerance</value></data>
+  <data name="MfgOutsourceOverReceiptFee" xml:space="preserve"><value>Processing fee for the over-received quantity</value></data>
+  <data name="ChoiceSupervisor" xml:space="preserve"><value>Supervisor confirmation (over-quantity approval right)</value></data>
+  <data name="ChoicePay" xml:space="preserve"><value>Pay</value></data>
+  <data name="ChoiceNoPay" xml:space="preserve"><value>Do not pay</value></data>
+  <data name="MfgOutsourceIssueOnReceipt" xml:space="preserve"><value>Deduct outsource send-out materials automatically at receipt</value></data>
+  <data name="MfgOutsourceInspectAtReceipt" xml:space="preserve"><value>Inspect outsource deliveries at receipt</value></data>
+  <data name="MfgOutsourceAutoPo" xml:space="preserve"><value>Create the outsource PO automatically when an outsourced work order is released</value></data>
+  <data name="MfgAutoScheduleRule" xml:space="preserve"><value>Sequencing rule for automatic runs</value></data>
+  <data name="MfgAutoScheduleFreezeHours" xml:space="preserve"><value>Freeze window (hours)</value></data>
+</root>

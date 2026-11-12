@@ -1,0 +1,54 @@
+{
+  "sourcePath": "Modules/BAS/Controllers/UomController.cs",
+  "sourceHash": "be0984fb0237cd67c67aa1ccf7ab0775a91b7f821a4206d88b410964ee4d7f24",
+  "entries": [
+    {
+      "slug": "code-bas-uomcontroller-8a78ad9a",
+      "lang": "zh",
+      "headingPath": "基本資料 › 且前端只是數量帶不出來、不報錯",
+      "text": "單位轉換的適用範圍限制說明｜只有在單位維護畫面和會進行單位換算的六種單據表單中才能呼叫此功能。如果僅鎖定單位主檔，則有權限開單但沒有使用 BAS 模組的角色在執行單位換算時會失敗，且系統介面只會導致數量無法顯示，不會報錯。",
+      "approved": true,
+      "sourceSectionHash": "e0cc31966cdbe8f321f6970de454968cecc35d783cbe198003fe8b9d0947f7bf"
+    },
+    {
+      "slug": "code-bas-uomcontroller-b40b3e15",
+      "lang": "zh",
+      "headingPath": "基本資料 › 品號特定換算用的選單",
+      "text": "品號選擇會自動排除停用產品｜系統在顯示可供選擇的品號時，會自動將已經標記為停用的品號排除在外。",
+      "approved": true,
+      "sourceSectionHash": "a0ecd6daf835c1ebbf25c01203149d0222bbb64fb3678615507dba6b6a24460d"
+    },
+    {
+      "slug": "code-bas-uomcontroller-1073f70f",
+      "lang": "zh",
+      "headingPath": "基本資料 › 主動查核，避免計量單位刪除後留下孤兒資料或數量欄位精度失準",
+      "text": "庫存單元與用料的關聯性檢查｜系統會以鬆散字串的方式參照品號庫存單元、單位換算和途程用料，因此當計量單元被刪除時，可能會留下無法正確關聯的資料或導致數量欄位的精度出現問題。",
+      "approved": true,
+      "sourceSectionHash": "41e31605f03ba74c8d84727048950b3882d87f0c099b837bdaeb8212c710e695"
+    },
+    {
+      "slug": "code-bas-uomcontroller-0706dc2b",
+      "lang": "zh",
+      "headingPath": "基本資料 › 所以引用檢查必須在這裡顯式涵蓋它",
+      "text": "品號換算與單位關聯性檢查｜刪除某個單位時，必須特別檢查它是否被用在其他產品的單位轉換記錄中，否則會留下無法追蹤的資料。",
+      "approved": true,
+      "sourceSectionHash": "c027b120f855b686572f427f679f91a5c100587d34236ba3de37c7b964eeb3db"
+    },
+    {
+      "slug": "code-bas-uomcontroller-9107333b",
+      "lang": "zh",
+      "headingPath": "基本資料 › 空字串＝全域，有值＝該品號專屬",
+      "text": "單位轉換規則的顯示方式｜系統會將所有單位的換算比例，無論是適用於所有產品的通用比例還是特定產品的專屬比例，都合併在同一頁面展示。這樣設計的目的是為了讓維護人員能清楚地比較和了解不同範圍下的換算關係，避免因為分開顯示而造成使用者誤判到資料被覆蓋的情況。",
+      "approved": true,
+      "sourceSectionHash": "9aa282e61f6ed5361946d23d6b817ee40f7a18714cbd1ea7da65f065b3d01b46"
+    },
+    {
+      "slug": "code-bas-uomcontroller-e1e35dbb",
+      "lang": "zh",
+      "headingPath": "基本資料 › 品號不存在就不讓存：換算查找是以品號為鍵",
+      "text": "品號必須存在才能儲存資料｜系統會檢查輸入的品號是否在資料庫中，如果該品號不存在，則無法進行儲存操作。",
+      "approved": true,
+      "sourceSectionHash": "1798d0a7d489202ea90e61dd46500470fbb292db24d285792060e0dbffeebecf"
+    }
+  ]
+}

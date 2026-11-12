@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Personal Settings — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>個人設定 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System Administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link active"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-person-circle me-2 text-primary"></i><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：個人設定 &nbsp;|&nbsp; 權限：所有登入者皆可使用</span><span lang="en">Menu: Personal Settings &nbsp;|&nbsp; Permission: available to everyone who can sign in</span></div>
+    </div>
+
+    <p><span lang="zh">個人設定是</span><span lang="en">Personal settings is the </span><b><span lang="zh">每個人自己的畫面</span><span lang="en">one screen that belongs to each person</span></b><span lang="zh">：切換目前廠別、切換目前身份、設定個人時區，並查看自己的帳號資訊。這裡的設定只影響您自己，不會動到別人，也不需要管理員權限。</span><span lang="en">: switch the current plant, switch the current role, set a personal time zone and look at your own account details. Nothing here affects anybody else, and no administrator permission is needed.</span></p>
+
+        <img class="screen-shot" src="img/user-settings.png" data-src-en="img/en/user-settings.png" alt="個人設定畫面截圖" data-alt-en="Personal settings screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">個人設定畫面截圖（示意，可切換的廠別與身份依您被指派的內容而異）</span><span lang="en">Personal settings screenshot (illustrative; the plants and roles you can switch to depend on what you have been assigned)</span></div>
+
+    <h2 id="sections-of-the-screen"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">畫面區塊</span><span lang="en">Sections of the screen</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">區塊</span><span lang="en">Section</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">切換目前廠別</span><span lang="en">Switch Active Plant</span></td><td><span lang="zh">列出您被指派到的所有廠，目前所在的那一廠標示為「使用中」。切換之後，</span><span lang="en">Lists every plant you are assigned to, with the one you are in now marked "In Use". After switching, </span><b><span lang="zh">全系統的單據與庫存都只會看到新的那一廠</span><span lang="en">every document and stock figure in the system is that of the new plant only</span></b><span lang="zh">。若目前身份的可用廠別有限制，畫面上方會說明。</span><span lang="en">. If the role currently in effect restricts which plants are available, a notice says so at the top.</span></td></tr>
+        <tr><td><span lang="zh">切換目前身份</span><span lang="en">Switch Active Role</span></td><td><span lang="zh">一個人可以被指派多個角色，但</span><span lang="en">A person may hold several roles, but </span><b><span lang="zh">同一時間只有一個生效</span><span lang="en">only one is in effect at a time</span></b><span lang="zh">。生效的那一個決定您看得到哪些選單、以及送出的單據由誰簽核。角色名稱下方顯示它所屬的組織單位，沒有掛組織單位的顯示為系統角色。</span><span lang="en">. The one in effect decides which menus you see and who approves the documents you submit. The organization unit is shown under each role name; a role with no organization unit is shown as a system role.</span></td></tr>
+        <tr><td><span lang="zh">個人時區</span><span lang="en">Personal Time Zone</span></td><td><span lang="zh">畫面最上方先顯示「目前生效時區」，旁邊的小標籤說明它來自哪一層（來自廠別設定／來自個人設定／系統預設）。下方的下拉可設定您自己的時區，留空即</span><span lang="en">The time zone in effect is shown first, with a small label saying which level it came from — from plant setting, from personal setting, or system default. The dropdown below sets your own, and leaving it empty means </span><b><span lang="zh">跟隨廠別時區</span><span lang="en">follow the plant time zone</span></b><span lang="zh">。</span><span lang="en">.</span></td></tr>
+        <tr><td><span lang="zh">帳號資訊</span><span lang="en">Account Information</span></td><td><span lang="zh">唯讀：帳號、Email 與目前廠別。要修改帳號或 Email 請洽系統管理員（使用者管理畫面）。</span><span lang="en">Read-only: user name, e-mail and current plant. To change the account name or e-mail, ask an administrator to do it on the user management screen.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="how-the-time-zone-is-decided"><i class="bi bi-clock-history me-2 text-primary"></i><span lang="zh">時區是怎麼決定的</span><span lang="en">How the time zone is decided</span></h2>
+    <p><span lang="zh">畫面上所有時間的顯示，都依</span><span lang="en">Every time shown on screen is converted using </span><b><span lang="zh">一條三層的優先序</span><span lang="en">a three-level order of precedence</span></b><span lang="zh">換算而來。系統內部一律以世界標準時間儲存，換算只影響顯示與日期篩選，不會改動既有資料。</span><span lang="en">. Internally everything is stored in universal time; the conversion affects only what is displayed and how date filters are interpreted, never the stored data.</span></p>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">順序</span><span lang="en">Order</span></th><th><span lang="zh">來源</span><span lang="en">Source</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">第一順位</span><span lang="en">First</span></td><td><span lang="zh">目前廠別的預設時區（廠別管理畫面設定）。</span><span lang="en">The default time zone of the plant you are in, set on the plant management screen.</span></td></tr>
+        <tr><td><span lang="zh">第二順位</span><span lang="en">Second</span></td><td><span lang="zh">您的個人時區（本畫面設定；管理員也可在使用者管理畫面代設）。</span><span lang="en">Your personal time zone, set here — an administrator can also set it for you on the user management screen.</span></td></tr>
+        <tr><td><span lang="zh">最後</span><span lang="en">Last</span></td><td><span lang="zh">系統預設 Asia/Taipei。</span><span lang="en">The system default, Asia/Taipei.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <span lang="zh">廠別有設定時區時，</span><span lang="en">When the plant has a time zone of its own, </span><b><span lang="zh">個人時區不會生效</span><span lang="en">your personal time zone does not take effect</span></b><span lang="zh">——這不是存檔失敗。畫面會直接說明目前是哪一個廠別時區蓋過了它，而您存下的值仍然保留，切換到未指定時區的廠別之後就會採用。</span><span lang="en"> — and that is not a failed save. The screen says outright which plant time zone is overriding it; the value you saved is kept, and is used as soon as you switch to a plant that has none.</span>
+    </div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">切換到另一個廠</span><span lang="en">Switching to another plant</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「個人設定」。</span><span lang="en">Choose "Personal Settings" in the left-hand menu.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">在「切換目前廠別」區找到要去的廠，點「切換此廠別」。</span><span lang="en">Find the plant you want under Switch Active Plant and click "Switch to This Plant".</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">切換後請重新查詢您正在看的清單——舊的查詢結果仍是前一廠的資料。</span><span lang="en">Search again on whatever list you were looking at; the results already on screen are still those of the previous plant.</span></div></div>
+
+    <h3><span lang="zh">切換目前身份</span><span lang="en">Switching the role in effect</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在「切換目前身份」區找到要使用的角色，點「切換此身份」。</span><span lang="en">Find the role you want under Switch Active Role and click "Switch to This".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">左側選單會依新身份的權限重新產生；原本看得到的畫面可能因此消失，這是正常的。</span><span lang="en">The left-hand menu is rebuilt for the permissions of the new role, so screens you could see before may disappear. That is expected.</span></div></div>
+
+    <h3><span lang="zh">設定個人時區</span><span lang="en">Setting a personal time zone</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在「個人時區」區的下拉中輸入關鍵字尋找時區（例如輸入 Taipei 或 Shanghai），或直接選「跟隨廠別時區」清除設定。</span><span lang="en">Type a keyword into the dropdown under Personal Time Zone to find a zone — Taipei or Shanghai, for example — or pick "Follow plant time zone" to clear the setting.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「儲存時區」。存檔成功會顯示確認訊息；若選到系統無法解析的時區代碼，會顯示錯誤且不會存檔。</span><span lang="en">Click "Save time zone". A confirmation appears when it is stored; if the zone cannot be resolved by the system an error is shown and nothing is saved.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">回頭看「目前生效時區」那一列，確認旁邊的標籤是否變成「來自個人設定」——若仍顯示「來自廠別設定」，表示廠別時區蓋過了它。</span><span lang="en">Look back at the time zone in effect and check whether the label now reads "from personal setting"; if it still says "from plant setting", the plant time zone is overriding yours.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh"><strong>畫面上方的廠別顯示黃色「廠別已失效，請重新選擇」：</strong>管理員把您目前所在的廠別從您的身份移除了，此時各功能畫面都會先導到這裡。請在「切換目前廠別」選一個可用的廠，切換後即恢復正常。</span><span lang="en"><strong>The plant at the top shows a yellow "Plant no longer available — please choose again":</strong> an administrator removed your current plant from your role, so every screen sends you here first. Pick an available plant under Switch Active Plant and everything works again.</span></div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">廠別與身份是兩件事：</span><span lang="en">Plant and role are two different things:</span></strong><span lang="zh">廠別決定您</span><span lang="en"> the plant decides </span><b><span lang="zh">看得到哪一廠的資料</span><span lang="en">whose data you see</span></b><span lang="zh">，身份決定您</span><span lang="en">, the role decides </span><b><span lang="zh">能做哪些事、以及單據由誰簽核</span><span lang="en">what you may do and who approves your documents</span></b><span lang="zh">。送簽之前請先確認這兩者都是您要用的那一組——同一張單由不同身份送出，會走到不同的簽核流程。</span><span lang="en">. Check both before submitting anything for approval: the same document submitted under a different role goes down a different approval flow.</span>
+    </div>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="user.html"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a><span lang="zh">（管理員代設語系與個人時區）、</span><span lang="en"> (an administrator sets the language and personal time zone on somebody's behalf), </span><a href="plant.html"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a><span lang="zh">（廠別預設時區）、</span><span lang="en"> (the plant default time zone), </span><a href="role.html"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a><span lang="zh">（角色的可用廠別）。</span><span lang="en"> (which plants a role may use).</span></p>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+@model SmartFactory.MES.Controllers.TwoFactorController.SetupViewModel
+@{
+    var isEn = System.Globalization.CultureInfo.CurrentUICulture.Name.StartsWith("en");
+    ViewData["Title"] = isEn ? "Two-Factor Authentication" : "兩階段驗證";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-shield-lock"></i> @(isEn ? "Set up two-factor authentication" : "設定兩階段驗證")</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.AlreadyEnabled)
+                    {
+                        <div class="alert alert-success">
+                            <i class="bi bi-check-circle"></i>
+                            @(isEn ? "Two-factor authentication is already enabled on your account. You can re-scan below to move it to a new device." : "您的帳號已啟用兩階段驗證。若更換裝置，可用下方 QR 碼重新綁定。")
+                        </div>
+                        @* 必須是 POST：重產會作廢既有復原碼，GET 連結可被 img/link 誘導觸發（見 Controller 註解）。 *@
+                        <form method="post" asp-action="RegenerateRecoveryCodes" class="mb-3">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-arrow-repeat"></i> @(isEn ? "Regenerate recovery codes" : "重新產生復原碼")
+                            </button>
+                            <div class="form-text">
+                                @(isEn
+                                    ? "Generating new codes immediately invalidates the ones you saved earlier."
+                                    : "產生新的復原碼後，先前保存的復原碼會立即失效。")
+                            </div>
+                        </form>
+                    }
+
+                    <p class="text-muted small mb-2">
+                        @(isEn
+                            ? "1. Scan the QR code with an authenticator app (Google Authenticator, Microsoft Authenticator, etc.), or enter the key manually."
+                            : "1. 以驗證器 App（Google Authenticator、Microsoft Authenticator 等）掃描下方 QR 碼，或手動輸入金鑰。")
+                    </p>
+                    <div class="text-center my-3">
+                        <img src="@Model.QrDataUri" alt="TOTP QR" width="220" class="img-fluid border rounded p-2 bg-white" />
+                    </div>
+                    <p class="small">
+                        @(isEn ? "Manual key:" : "手動金鑰：")
+                        <code class="user-select-all">@Model.SharedKey</code>
+                    </p>
+
+                    <hr />
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <div>@error.ErrorMessage</div>
+                            }
+                        </div>
+                    }
+
+                    <p class="text-muted small mb-2">
+                        @(isEn
+                            ? "2. Enter the 6-digit code shown in your authenticator app to finish enabling."
+                            : "2. 輸入驗證器 App 顯示的 6 位數驗證碼以完成啟用。")
+                    </p>
+                    <form method="post" asp-action="Enable">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3">
+                            <label class="form-label">@(isEn ? "Verification code" : "驗證碼")</label>
+                            <input name="code" class="form-control" autocomplete="off" inputmode="numeric"
+                                   required pattern="[0-9 \-]{6,12}" placeholder="000000" />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-check-circle"></i> @(isEn ? "Verify & enable" : "驗證並啟用")
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+{
+  "sourcePath": "Modules/PUR/Controllers/GoodsReceiptController.cs",
+  "sourceHash": "da6dd2e8fe9abb68c14510d49170663a53637e138c91ebd061e5f5f4643b8bd5",
+  "entries": [
+    {
+      "slug": "code-pur-goodsreceiptcontroller-fe4b3501",
+      "lang": "zh",
+      "headingPath": "採購 › 就能修改審核中的單，而簽核申請不會重跑",
+      "text": "單據狀態判斷以資料庫為準｜系統判定單據是否處於審核中的狀態時，會直接參考資料庫儲存的實際狀態，而不是依賴使用者介面傳送的值來決定。",
+      "approved": true,
+      "sourceSectionHash": "30623f8ae6d49e5220091aeb1b33898f9595b37d9c7a9b8fc63b76a527d72b78"
+    },
+    {
+      "slug": "code-pur-goodsreceiptcontroller-43b134fe",
+      "lang": "zh",
+      "headingPath": "採購 › 放在這裡等於比對一個自己剛覆寫掉的基準",
+      "text": "收貨單據更新時的資料一致性檢查｜當系統執行收貨單據的更新動作時，會比對一個已經被本次操作覆寫過的基準資料，以確保資料的一致性。",
+      "approved": true,
+      "sourceSectionHash": "cdf822069c3f16a30c202a7f96a8220b1246d3b52aa3a9a69cfabbd60bf94aed"
+    },
+    {
+      "slug": "code-pur-goodsreceiptcontroller-7118ad83",
+      "lang": "zh",
+      "headingPath": "採購 › 未設簽核流程時存檔即核准並自動過帳完成",
+      "text": "流程控制與自動化處理｜當未設定簽核流程時，系統在儲存資料的同時會直接完成核准並自動過帳作業；此過程必須包含後置作業（委外鉤子和應付發票的自動產生），否則已完成核准的進貨單將不會出現在應付帳款中。因此，過帳、儲存與後置作業必須視為一個單一交易來執行，若其中任何環節失敗，整批資料都會回滾。",
+      "approved": true,
+      "sourceSectionHash": "5222c33e5ac958f261ad87bc5e9cc1a4dc311f7da2d97f5fa8243a6cc20c9c22"
+    },
+    {
+      "slug": "code-pur-goodsreceiptcontroller-4185933b",
+      "lang": "zh",
+      "headingPath": "採購 › 核准即完成的進貨單不會出現在應付帳款",
+      "text": "採購進貨單與應付帳款關聯性｜核准即完成的進貨單，必須產生應付發票，否則該筆進貨單將不會出現在應付帳款明細中。",
+      "approved": true,
+      "sourceSectionHash": "81d21c89fac6ebca6820ac417197aaf241c9cef4b8e2996a1b55e12426f7438d"
+    },
+    {
+      "slug": "code-pur-goodsreceiptcontroller-86345149",
+      "lang": "zh",
+      "headingPath": "採購 › 庫存過帳、委外鉤子、自動產生 AP 發票須為單一原子作業：",
+      "text": "交易必須是單一原子作業｜當進行庫存過帳或自動產生應付帳款發票時，所有相關的動作會被視為一個不可分割的整體操作，以確保資料的一致性。如果這個流程中的任何環節失敗了，則整個過帳和發票建置的動作都會全部回退，避免出現庫存已經過帳但對應發票尚未建立的情況。",
+      "approved": true,
+      "sourceSectionHash": "cc46be5c5c09d658ebf4d6887772bb82f77a089f2f1765c98fa96bcfd1f7a87b"
+    },
+    {
+      "slug": "code-pur-goodsreceiptcontroller-d47cf2a8",
+      "lang": "zh",
+      "headingPath": "採購 › 內容為委外進貨鉤子 + 自動產生應付發票",
+      "text": "進貨單完成後會自動產生應付發票｜無論是手動確認、系統自動核准或經由簽核流程，只要進貨單完成，都會確保相關的應付帳款紀錄被建立。",
+      "approved": true,
+      "sourceSectionHash": "e9144f6a91e01ecd0da37f660fb44d5072c8d0f9f951ac9c362bcdce6cb9c6cd"
+    },
+    {
+      "slug": "code-pur-goodsreceiptcontroller-e07c4fd0",
+      "lang": "zh",
+      "headingPath": "採購 › AP 認列時點：以「貨是否已實際進正常倉」為準",
+      "text": "認列時點依據貨物入庫狀態｜系統的認列時間點，會以貨物是否已實際進入正常倉庫為準，不再在進貨單完成時就一次性進行所有筆數的認列。如果採用簡化模式，當貨物直接進入正常倉庫且沒有待驗或上架步驟時，會根據各明細收到的數量進行即時認列。若採用完整模式，由於貨物尚未上架，則不會在此階段進行認列，而是等到貨物完成入庫（免驗直放）或通過品質檢驗後方可由系統呼叫相關服務來計算應計提的數量，此期間產生的差異會暫時由進收帳科目承接。",
+      "approved": true,
+      "sourceSectionHash": "04f0f202d3f1214a5c076f43846460cfbf804d43ac5cfc507c8157c5d9327f62"
+    },
+    {
+      "slug": "code-pur-goodsreceiptcontroller-9d78ffae",
+      "lang": "zh",
+      "headingPath": "採購 › 否則作廢後 PO 額度被永久占用",
+      "text": "PO 作廢後，採購額度會被永久佔用｜當採購單據作廢時，系統會將其累計的進貨數量回沖到原始狀態，以避免作廢後導致採購額度被永久佔用，並符合稽核規定。",
+      "approved": true,
+      "sourceSectionHash": "7aad61166dc41d256f4c53e209c31b6a29115ea7ce68463a5fc57e477eb0bbe4"
+    }
+  ]
+}

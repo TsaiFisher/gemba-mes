@@ -1,0 +1,63 @@
+@using SmartFactory.MES.Modules.ACT.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model SmartFactory.MES.Modules.ACT.Models.AccountingPeriod
+
+@{
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    var userNames = ViewBag.UserNames as Dictionary<string, string> ?? new();
+    var closedByName = Model!.ClosedBy != null && userNames.TryGetValue(Model.ClosedBy, out var cbn) ? cbn : Model.ClosedBy;
+}
+
+<div class="p-3">
+    <div class="row g-3">
+        <div class="col-12 col-md-4">
+            <label class="form-label fw-semibold">@Localizer["PeriodId"]</label>
+            <div class="form-control-plaintext fw-bold text-primary">@Model!.PeriodId</div>
+        </div>
+        <div class="col-12 col-md-4">
+            <label class="form-label fw-semibold">@Localizer["StartDate"]</label>
+            <div class="form-control-plaintext">@Model.StartDate.ToString("yyyy-MM-dd")</div>
+        </div>
+        <div class="col-12 col-md-4">
+            <label class="form-label fw-semibold">@Localizer["EndDate"]</label>
+            <div class="form-control-plaintext">@Model.EndDate.ToString("yyyy-MM-dd")</div>
+        </div>
+        <div class="col-12 col-md-4">
+            <label class="form-label fw-semibold">@Localizer["Status"]</label>
+            @{
+                var badge = Model.Status switch {
+                    PeriodStatus.Open     => "bg-success",
+                    PeriodStatus.Closing  => "bg-warning text-dark",
+                    PeriodStatus.Closed   => "bg-secondary",
+                    PeriodStatus.Reopened => "bg-info text-dark",
+                    _                     => "bg-light text-dark"
+                };
+                var label = ActEnumDisplay.Text(L, Model.Status);
+            }
+            <div class="mt-1"><span class="badge @badge fs-6">@label</span></div>
+        </div>
+        @if (Model.ClosedAt.HasValue)
+        {
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-semibold">@Localizer["ClosedAt"]</label>
+                <div class="form-control-plaintext">@Model.ClosedAt?.ToString("yyyy-MM-dd HH:mm")</div>
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-semibold">@Localizer["ClosedBy"]</label>
+                <div class="form-control-plaintext">@(closedByName ?? "—")</div>
+            </div>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.Remarks))
+        {
+            <div class="col-12">
+                <label class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                <div class="form-control-plaintext text-muted">@Model.Remarks</div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="offcanvas-footer p-3 border-top bg-light d-flex justify-content-end">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+</div>

@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/BAS/Services/UomService.cs",
+  "sourceHash": "42ade097f2a4fcd01b6053a5a07ceebff63c8f3090b6e04104926c9f0d4e9f76",
+  "entries": [
+    {
+      "slug": "code-bas-uomservice-6ff2fa15",
+      "lang": "zh",
+      "headingPath": "基本資料 › 查找優先序：品號特定 → 全域 → 例外",
+      "text": "查找優先級決定使用哪個標準｜系統會依照產品編號是否指定，依序判斷適用規則；若有特定產品編號的設定，則以該設定為最高優先權，其次才是全域設定，最後才考慮例外設定。",
+      "approved": true,
+      "sourceSectionHash": "2f6b9231ef609b35a1e6766dc047cd0a5e450393d865ec49f50483e2cef76043"
+    },
+    {
+      "slug": "code-bas-uomservice-3130cf38",
+      "lang": "zh",
+      "headingPath": "基本資料 › 兩個單位不同、卻查不到任何換算 —— 這是資料缺漏",
+      "text": "單位換算找不到時會直接報錯｜如果系統無法找到兩個不同單位之間的換算比例，系統會立即拋出錯誤訊息，不會預設將其視為相等或進行靜默處理。",
+      "approved": true,
+      "sourceSectionHash": "8a9baa0993cc953eb65365b4e1792dbb2aa5cce39cadabec3ded5e9c72a741a1"
+    },
+    {
+      "slug": "code-bas-uomservice-6b7a6ecf",
+      "lang": "zh",
+      "headingPath": "基本資料 › 濾掉停用單位會讓既有單據的數量在重新存檔時退回 dp=0 被捨成",
+      "text": "資料篩選與顯示的規則說明｜系統會根據是否啟用狀態來決定單位是否可供選擇，但對於已經存在的單據數量，即使單位被停用，其原始數值仍會保留下來，不會因為過濾了停用的單位而導致既有單據的數量資訊發生變動或遺失。",
+      "approved": true,
+      "sourceSectionHash": "00163e230e820b8632e01b39c2446646d2e502ff669b719061be4fa32a0db246"
+    }
+  ]
+}

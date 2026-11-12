@@ -1,0 +1,105 @@
+## .NET / ASP.NET Core
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/settings.json
+.continueignore
+
+## 敏感設定檔（請勿提交至版控）
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+.env
+
+## 日誌
+logs/
+*.log
+
+## Entity Framework
+*.mdf
+*.ldf
+
+## NuGet
+.nuget/
+packages/
+*.nupkg
+
+## Node.js / Jest
+node_modules/
+npm-debug.log*
+
+## 測試結果
+TestResults/
+coverage/
+*.coverage
+
+## Playwright 測試產物
+SmartFactory.MES.UITests/bin/
+SmartFactory.MES.UITests/obj/
+playwright-report/
+test-results/
+
+## OS 產生檔案
+.DS_Store
+Thumbs.db
+
+## License 與安全性（顧問環境）
+license.json
+## CI 於執行期由 secret 解碼產生（見 .github/workflows/）
+ci-license.json
+license-*.json
+# 撤銷清單成品（§15）。它本身是公開資料，但屬於另一個「只有資料」的 public repo，
+# 不該因為在本專案根目錄執行而被誤提交進來。
+crl.json
+
+## RSA 私鑰（SmartFactory 保管，絕不進版控）
+## 注意：license-public.pem 需要進版控（嵌入為 EmbeddedResource）
+Resources/license-private.pem
+SmartFactory.MES.LicenseAuthority/license-private.pem
+SmartFactory.MES.LicenseAuthority/license-*.pem
+*.snk
+
+## Security Anchor DLL（Phase 2，由 SmartFactory 核發）
+## 注意：錨定至 repo 根（前導斜線），否則會誤吞 Services/Security、
+## SmartFactory.MES.Tests/Security 等巢狀原始碼目錄（曾導致 M3/M6 測試漏進版控）。
+/Security/
+SmartFactory.MES.Security.dll
+
+## SmartFactory 內部工具與安全模組（原始碼不對顧問開放）
+## 若此 repo 為顧問可見的版本，需確保這些目錄不存在或已排除
+SmartFactory.MES.LicenseAuthority/
+SmartFactory.MES.Security/
+
+## SmartFactory 內部文件（顧問不應閱覽）
+## 顧問只應看到 CONSULTANT-ONBOARDING.md
+CONSULTANT-ARCHITECTURE.md
+SECURITY-OPERATIONS.md
+
+## LLM 模型二進位（單檔數 GB，絕不進版控）
+## ⚠️ 刻意不寫成 `models/`：Windows／macOS 的 clone 會自動帶 core.ignorecase=true，
+##    該樣式經大小寫摺疊後會吃掉根目錄 Models/ 與各 Modules/*/Models/
+##    共 168 個已追蹤的原始碼檔。本機 ext4 是大小寫敏感的，看不出這個問題。
+/llm-models/
+*.gguf
+*.safetensors
+
+## 防呆：萬一有人把 Reports:StoragePath 設到專案內
+## 報表落地目錄正常應在 repo 之外——機密報表一旦進 git 歷史就清不掉，
+## 且會隨每一次 fork/clone 擴散出去。
+/reports-output/
+
+## 報表工具（RPS）預設落地目錄。Reports:StoragePath 未設時報表會寫進這裡（工作目錄下），
+## 而工作目錄通常就是 repo 根——沒有這一條，開發區跑過一次排程就會有機密報表待提交。
+/App_Data/
+
+# Python（scripts/ 下的離線工具；只有 .py 本體進版控）
+__pycache__/
+*.pyc
+
+# 設定檔備份（含加密連線字串、推播私鑰等）一律不進版控——2026-10-21 曾被 git add -A 帶進 commit
+appsettings.*.json.bak*
+appsettings.*.bak*

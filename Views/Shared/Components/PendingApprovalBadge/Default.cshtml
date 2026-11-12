@@ -1,0 +1,13 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model int
+
+@if (Model > 0)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark position-relative" href="/Approval/PendingIndex" title="@Localizer["PendingApprovals"]">
+            <i class="bi bi-pen"></i>
+            <span class="badge rounded-pill bg-danger align-text-top">@(Model > 99 ? "99+" : Model.ToString())</span>
+        </a>
+    </li>
+}

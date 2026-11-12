@@ -1,0 +1,210 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.ACT.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.RPT.Models.ConsolidatedStatementVm
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool searched  = ViewBag.Searched == true;
+    bool canPrint  = ViewBag.CanPrint == true;
+    int  baseDp    = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+    var plantOptions  = ViewBag.PlantOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var periodOptions = ViewBag.PeriodOptions as IEnumerable<string>  ?? Enumerable.Empty<string>();
+    var selected      = ViewBag.SelectedPlants as List<string> ?? new();
+    string curAsOf = ViewBag.AsOfPeriod as string ?? "";
+    string curFrom = ViewBag.FromPeriod as string ?? "";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0"><i class="bi bi-building-fill-gear me-2"></i>@Localizer["PageTitle"]</h4>
+        @if (canPrint && searched && Model != null)
+        {
+            <a class="btn btn-outline-success btn-sm"
+               href="/ConsolidatedStatement/Export?format=xlsx&asOfPeriod=@curAsOf&fromPeriod=@curFrom@(string.Concat(selected.Select(p => $"&plantIds={p}")))">
+                <i class="bi bi-file-earmark-excel me-1"></i>@Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    <div class="alert alert-info py-2 small">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["ScopeNotice"]
+    </div>
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <input type="hidden" name="searched" value="true" />
+        <div class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label small fw-semibold">@Localizer["AsOfPeriod"] <span class="text-danger">*</span></label>
+                <select name="asOfPeriod" class="form-select">
+                    <option value="">@Localizer["SelectPeriod"]</option>
+                    @foreach (var p in periodOptions)
+                    {
+                        <option value="@p" selected="@(curAsOf == p)">@p</option>
+                    }
+                </select>
+                <div class="form-text">@Localizer["AsOfPeriodHint"]</div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label small fw-semibold">@Localizer["FromPeriod"]</label>
+                <select name="fromPeriod" class="form-select">
+                    <option value="">@Localizer["FromInception"]</option>
+                    @foreach (var p in periodOptions)
+                    {
+                        <option value="@p" selected="@(curFrom == p)">@p</option>
+                    }
+                </select>
+                <div class="form-text">@Localizer["FromPeriodHint"]</div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label small fw-semibold">@Localizer["Plants"]</label>
+                <div class="border rounded p-2">
+                    @foreach (var p in plantOptions)
+                    {
+                        var pid = (string)p.Id;
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="plantIds"
+                                   value="@pid" id="plant-@pid" checked="@(selected.Contains(pid))" />
+                            <label class="form-check-label small" for="plant-@pid">@pid — @p.Name</label>
+                        </div>
+                    }
+                </div>
+                <div class="form-text">@Localizer["PlantsHint"]</div>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search me-1"></i>@Localizer["Search"]
+                </button>
+            </div>
+        </div>
+    </form>
+
+    @if (!searched)
+    {
+        <div class="alert alert-secondary">@Localizer["SearchFirst"]</div>
+    }
+    else if (Model == null)
+    {
+        <div class="alert alert-warning">@Localizer["NeedPeriodAndPlant"]</div>
+    }
+    else
+    {
+        <h6 class="text-secondary mb-2">@Localizer["PlantStatus"]</h6>
+        <div class="table-responsive mb-3">
+            <table class="table table-sm table-bordered align-middle w-auto">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["Plant"]</th>
+                        <th>@Localizer["PeriodStatus"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.Plants)
+                    {
+                        <tr>
+                            <td>@p.PlantId — @p.PlantName</td>
+                            <td>
+                                @if (p.Status == null)
+                                {
+                                    @* 「沒建期間」與「已開帳」是兩回事：前者連過帳閘門都不生效。 *@
+                                    <span class="badge bg-secondary">@Localizer["NoPeriod"]</span>
+                                }
+                                else
+                                {
+                                    var statusKey = "PeriodStatus_" + p.Status;
+                                    <span class="badge @(p.Status == PeriodStatus.Closed ? "bg-success" : "bg-warning text-dark")">
+                                        @Localizer[statusKey]
+                                    </span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.HasMixedCloseStatus)
+        {
+            <div class="alert alert-warning py-2 small">
+                <i class="bi bi-exclamation-triangle-fill me-1"></i>@Localizer["MixedStatusWarning"]
+            </div>
+        }
+
+        <div class="row g-3">
+            <div class="col-12 col-xl-6">
+                <div class="card h-100">
+                    <div class="card-header fw-semibold">
+                        @Localizer["BalanceSheet"] <span class="text-muted small">@Model.AsOfPeriod</span>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.BalanceSheet != null)
+                        {
+                            <div class="row text-center g-2 mb-3">
+                                <div class="col-3"><div class="small text-muted">@Localizer["TotalAssets"]</div><div class="fw-bold">@Model.BalanceSheet.TotalAssets.ToString(moneyFmt)</div></div>
+                                <div class="col-3"><div class="small text-muted">@Localizer["TotalLiabilities"]</div><div class="fw-bold">@Model.BalanceSheet.TotalLiabilities.ToString(moneyFmt)</div></div>
+                                <div class="col-3"><div class="small text-muted">@Localizer["TotalEquity"]</div><div class="fw-bold">@Model.BalanceSheet.TotalEquity.ToString(moneyFmt)</div></div>
+                                <div class="col-3"><div class="small text-muted">@Localizer["NetProfit"]</div><div class="fw-bold">@Model.NetProfit.ToString(moneyFmt)</div></div>
+                            </div>
+                            <div class="alert alert-light border py-2 small mb-3">
+                                <i class="bi bi-info-circle me-1"></i>@Localizer["IdentityNotice"]
+                            </div>
+
+                            <div class="alert @(Model.InterPlantInTransit == 0 ? "alert-light border" : "alert-warning") py-2 small">
+                                <i class="bi bi-truck me-1"></i>
+                                <strong>@Localizer["InTransit"]：@Model.InterPlantInTransit.ToString(moneyFmt)</strong>
+                                <div>@Localizer["InTransitNotice"]</div>
+                            </div>
+
+                            @foreach (var sec in Model.BalanceSheet.Sections)
+                            {
+                                var sectionKey = "Section_" + sec.Category;
+                                <h6 class="mt-3 mb-1 text-secondary">@Localizer[sectionKey] — <strong>@sec.Total.ToString(moneyFmt)</strong></h6>
+                                <table class="table table-sm table-bordered mb-2">
+                                    <tbody>
+                                        @foreach (var item in sec.Items)
+                                        {
+                                            <tr>
+                                                <td class="u-width-30pct">@item.AccountCode</td>
+                                                <td>@item.AccountName</td>
+                                                <td class="text-end">@item.Balance.ToString(moneyFmt)</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-xl-6">
+                <div class="card h-100">
+                    <div class="card-header fw-semibold">
+                        @Localizer["ProfitLoss"]
+                        <span class="text-muted small">
+                            @(string.IsNullOrEmpty(Model.FromPeriod) ? Localizer["FromInception"].Value : Model.FromPeriod) ~ @Model.AsOfPeriod
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.ProfitLoss != null)
+                        {
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr><td>@Localizer["Revenue"]</td><td class="text-end">@Model.ProfitLoss.Revenue.ToString(moneyFmt)</td></tr>
+                                    <tr><td>@Localizer["Cogs"]</td><td class="text-end">@Model.ProfitLoss.Cogs.ToString(moneyFmt)</td></tr>
+                                    <tr class="table-light fw-semibold"><td>@Localizer["GrossProfit"]</td><td class="text-end">@Model.ProfitLoss.GrossProfit.ToString(moneyFmt)</td></tr>
+                                    <tr><td>@Localizer["OperatingExpenses"]</td><td class="text-end">@Model.ProfitLoss.OperatingExpenses.ToString(moneyFmt)</td></tr>
+                                    <tr class="table-light fw-semibold"><td>@Localizer["OperatingProfit"]</td><td class="text-end">@Model.ProfitLoss.OperatingProfit.ToString(moneyFmt)</td></tr>
+                                    <tr><td>@Localizer["OtherIncome"]</td><td class="text-end">@Model.ProfitLoss.OtherIncome.ToString(moneyFmt)</td></tr>
+                                    <tr><td>@Localizer["OtherExpenses"]</td><td class="text-end">@Model.ProfitLoss.OtherExpenses.ToString(moneyFmt)</td></tr>
+                                    <tr class="table-secondary fw-bold"><td>@Localizer["NetProfitOfPeriod"]</td><td class="text-end">@Model.ProfitLoss.NetProfit.ToString(moneyFmt)</td></tr>
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

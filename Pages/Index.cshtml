@@ -1,0 +1,23 @@
+@page
+@using SmartFactory.MES.Services
+@inject ISystemParamService SystemParamSvc
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.SharedResource> SL
+@model IndexModel
+@{
+    @* 與選單同一個資源鍵（CoreMenuContributor 的 "Home"）。原本寫死英文 "Home page"，
+       中文介面的分頁標題也是英文，且與選單「首頁」不一致。 *@
+    ViewData["Title"] = SL["Home"].Value;
+    var isEn = System.Globalization.CultureInfo.CurrentUICulture.Name.StartsWith("en");
+    var companyName = await SystemParamSvc.GetCompanyNameAsync(isEn);
+    var logoUrl     = await SystemParamSvc.GetLogoUrlAsync();
+}
+
+<div class="text-center py-5">
+    @if (!string.IsNullOrEmpty(logoUrl))
+    {
+        <img src="@logoUrl" alt="Logo" class="mb-3 d-block mx-auto u-max-height-80px u-max-width-320px u-object-fit-contain"
+             />
+    }
+    <h1 class="display-5 fw-bold">@companyName</h1>
+    <p class="text-muted mb-0">SmartFactory MES</p>
+</div>

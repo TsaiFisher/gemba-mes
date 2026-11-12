@@ -1,0 +1,482 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model MaterialSlip
+
+@{
+    bool isEdit       = !string.IsNullOrEmpty(Model?.SlipId);
+    bool isDraft      = Model?.Status == MaterialSlipStatus.Draft;
+    bool isPending    = Model?.Status == MaterialSlipStatus.Pending;
+    bool isApproved   = Model?.Status == MaterialSlipStatus.Approved;
+    bool isPicking    = Model?.Status == MaterialSlipStatus.Picking;
+    bool isConfirmed  = Model?.Status == MaterialSlipStatus.Confirmed;
+    bool isMr         = Model?.Category == MaterialSlipCategory.InternalRequisition;
+    bool canEdit      = !isEdit || isDraft;
+    bool canCancel    = isDraft || isPending || isApproved || isPicking || isConfirmed;
+    var products   = ViewBag.ProductOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var warehouses = ViewBag.WarehouseOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uoms       = ViewBag.UomOptions      as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    var suppliers  = ViewBag.SupplierOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    bool needsSupplier = Model?.Category == MaterialSlipCategory.OutsourceIssue
+                      || Model?.Category == MaterialSlipCategory.OutsourceReturn;
+    var locations  = ViewBag.LocationOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var sourceDocs = ViewBag.SourceDocOptions as System.Collections.IEnumerable ?? Array.Empty<object>();
+    var srcType    = string.IsNullOrEmpty(Model?.SourceDocType) ? "WorkOrder" : Model!.SourceDocType;
+    // 發料類（發／領／委外發／重工發）從「來源倉/儲位」扣庫存；退料類從現場退「回」某個倉/儲位。
+    // 兩類只會用到其中一組（過帳：發料讀 From、退料讀 To），原本兩組都顯示，使用者無從判斷要填哪個。
+    bool isReturnCat = MaterialSlipFlow.IsReturn(Model?.Category ?? MaterialSlipCategory.InternalIssue);
+    IEnumerable<dynamic> LocsOf(string? wh) => string.IsNullOrEmpty(wh)
+        ? locations : locations.Where(l => (string)l.WhCode == wh);
+}
+
+@if (isEdit)
+{
+    <div class="border-bottom py-2 px-3 d-flex align-items-center gap-2 bg-light">
+        <span class="fw-medium me-auto small">@Model!.SlipId
+            <span class="badge bg-secondary ms-1">@MfgEnumDisplay.Text(L, Model.Status)</span>
+        </span>
+
+        @* Draft：MR 送審 / 其他類別直接核准 *@
+        @if (isDraft && isMr)
+        {
+            <form method="post" action="@Url.Action("Submit", new { id = Model.SlipId })" class="d-inline"
+                  data-action-submit="confirmSubmitPanel" data-confirm="@Localizer["ConfirmSubmit"]">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-send"></i> @Localizer["BtnSubmit"]
+                </button>
+            </form>
+        }
+        @if (isDraft && !isMr)
+        {
+            <form method="post" action="@Url.Action("Approve", new { id = Model.SlipId })" class="d-inline"
+                  data-action-submit="confirmSubmitPanel" data-confirm="@Localizer["ConfirmApprove"]">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-check2-circle"></i> @Localizer["BtnApprove"]
+                </button>
+            </form>
+        }
+
+        @* Pending：倉庫核准 *@
+        @if (isPending)
+        {
+            <form method="post" action="@Url.Action("Approve", new { id = Model.SlipId })" class="d-inline"
+                  data-action-submit="confirmSubmitPanel" data-confirm="@Localizer["ConfirmApprove"]">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-sm btn-primary">
+                    <i class="bi bi-check2-all"></i> @Localizer["BtnApprove"]
+                </button>
+            </form>
+        }
+
+        @* Approved：開始揀料（退料類：開始點收） *@
+        @if (isApproved)
+        {
+            <form method="post" action="@Url.Action("MarkPicking", new { id = Model.SlipId })" class="d-inline"
+                  data-action-submit="confirmSubmitPanel" data-confirm="@Localizer[isReturnCat ? "ConfirmReceiving" : "ConfirmPicking"]">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-sm btn-outline-warning">
+                    <i class="bi bi-boxes"></i> @Localizer[isReturnCat ? "BtnMarkReceiving" : "BtnMarkPicking"]
+                </button>
+            </form>
+        }
+
+        @* Picking：確認揀料完成（退料類：確認點收完成） *@
+        @if (isPicking)
+        {
+            <form method="post" action="@Url.Action("Confirm", new { id = Model.SlipId })" class="d-inline"
+                  data-action-submit="confirmSubmitPanel" data-confirm="@Localizer[isReturnCat ? "ConfirmReceivingDone" : "ConfirmPickingDone"]">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-sm btn-warning">
+                    <i class="bi bi-check-circle"></i> @Localizer[isReturnCat ? "BtnConfirmReceived" : "BtnConfirm"]
+                </button>
+            </form>
+        }
+
+        @* Confirmed：過帳發料（退料類：過帳退料——同一個 Issue 動作，過帳時依類別寫入退回儲位） *@
+        @if (isConfirmed)
+        {
+            <form method="post" action="@Url.Action("Issue", new { id = Model.SlipId })" class="d-inline"
+                  data-action-submit="confirmSubmitPanel" data-confirm="@Localizer[isReturnCat ? "ConfirmPostReturn" : "ConfirmIssue"]">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-sm btn-success">
+                    <i class="bi bi-box-seam"></i> @Localizer[isReturnCat ? "BtnPostReturn" : "BtnIssue"]
+                </button>
+            </form>
+        }
+
+        @* 取消按鈕 *@
+        @if (canCancel)
+        {
+            <form method="post" action="@Url.Action("Cancel", new { id = Model.SlipId })" class="d-inline"
+                  data-action-submit="confirmSubmitPanel" data-confirm="@(isConfirmed ? Localizer["ConfirmCancelPicked"] : Localizer["ConfirmCancel"])">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-sm btn-outline-danger">
+                    <i class="bi bi-x-circle"></i> @Localizer["BtnCancel"]
+                </button>
+            </form>
+        }
+    </div>
+}
+
+<form id="materialSlipForm" method="post" action="@Url.Action("Save")"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+    @if (isEdit)
+    {
+        <input type="hidden" asp-for="SlipId" />
+        <input type="hidden" asp-for="Status" />
+        <input type="hidden" asp-for="Category" />
+    }
+
+    <fieldset @(canEdit ? "" : "disabled=\"disabled\"")>
+        <div class="offcanvas-body">
+            <div class="row g-3 mb-3">
+                @if (!isEdit)
+                {
+                    <div class="col-md-6">
+                        <label asp-for="Category" class="form-label">@Localizer["LabelCategory"] <span class="text-danger">*</span></label>
+                        <select asp-for="Category" class="form-select" data-action-change="onMsCategoryChange">
+                            <option value="InternalIssue"       selected="@(Model?.Category == MaterialSlipCategory.InternalIssue)">@Localizer["CatInternalIssue"]</option>
+                            <option value="InternalRequisition" selected="@(Model?.Category == MaterialSlipCategory.InternalRequisition)">@Localizer["CatInternalRequisition"]</option>
+                            <option value="InternalReturn"      selected="@(Model?.Category == MaterialSlipCategory.InternalReturn)">@Localizer["CatInternalReturn"]</option>
+                            <option value="OutsourceIssue"      selected="@(Model?.Category == MaterialSlipCategory.OutsourceIssue)">@Localizer["CatOutsourceIssue"]</option>
+                            <option value="OutsourceReturn"     selected="@(Model?.Category == MaterialSlipCategory.OutsourceReturn)">@Localizer["CatOutsourceReturn"]</option>
+                            <option value="ReworkIssue"         selected="@(Model?.Category == MaterialSlipCategory.ReworkIssue)">@Localizer["CatReworkIssue"]</option>
+                            <option value="ReworkReturn"        selected="@(Model?.Category == MaterialSlipCategory.ReworkReturn)">@Localizer["CatReworkReturn"]</option>
+                        </select>
+                        <span asp-validation-for="Category" class="text-danger small"></span>
+                    </div>
+                }
+
+                <div class="col-md-6">
+                    <label asp-for="SlipDate" class="form-label">@Localizer["LabelSlipDate"] <span class="text-danger">*</span></label>
+                    <input asp-for="SlipDate" type="date" class="form-control"
+                           value="@Model?.SlipDate.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="SlipDate" class="text-danger small"></span>
+                </div>
+
+                @if (needsSupplier)
+                {
+                    <div class="col-12">
+                        <label asp-for="TargetSupplierCode" class="form-label">@Localizer["LabelSupplier"]</label>
+                        <select asp-for="TargetSupplierCode" class="form-select">
+                            <option value="">—</option>
+                            @foreach (dynamic s in suppliers)
+                            {
+                                var sel = (string)s.CompanyCode == Model?.TargetSupplierCode;
+                                <option value="@s.CompanyCode" selected="@sel">@s.CompanyCode — @s.CompanyName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="TargetSupplierCode" class="text-danger small"></span>
+                    </div>
+                }
+
+                @* 來源類別／單號原本是自由輸入：打錯一碼（或多一個空白）工單比對就落空，
+                   額度訊息變成「已發未退的 0」（2026-10-11）。改成下拉＋select2，只列還會發退料的單。 *@
+                <div class="col-md-4">
+                    <label asp-for="SourceDocType" class="form-label">@Localizer["LabelSourceDocType"]</label>
+                    <select asp-for="SourceDocType" class="form-select" id="msSourceType" data-action-change="onMsSourceTypeChange">
+                        <option value="WorkOrder" selected="@(srcType == "WorkOrder")">@Localizer["SourceTypeWorkOrder"]</option>
+                        <option value="OutsourcePurchaseOrder" selected="@(srcType == "OutsourcePurchaseOrder")"
+                                class="@(needsSupplier || srcType == "OutsourcePurchaseOrder" ? "" : "d-none")">@Localizer["SourceTypeOpo"]</option>
+                    </select>
+                    <span asp-validation-for="SourceDocType" class="text-danger small"></span>
+                </div>
+                <div class="col-md-8">
+                    <label asp-for="SourceDocId" class="form-label">@Localizer["LabelSourceDocId"]</label>
+                    <select asp-for="SourceDocId" class="form-select" id="msSourceDoc"
+                            data-placeholder="@Localizer["SourceDocPlaceholder"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (dynamic d in sourceDocs)
+                        {
+                            <option value="@d.Id" selected="@((string)d.Id == Model?.SourceDocId)">@d.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="SourceDocId" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Remarks" class="form-label">@Localizer["LabelRemarks"]</label>
+                    <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+                    <span asp-validation-for="Remarks" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <!-- 行項 -->
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="mb-0"><i class="bi bi-list-ul me-1"></i>@Localizer["LinesTitle"]</h6>
+                @if (canEdit)
+                {
+                    <button type="button" class="btn btn-sm btn-outline-primary" data-action="addMsLine">
+                        <i class="bi bi-plus-lg"></i> @Localizer["AddLine"]
+                    </button>
+                }
+            </div>
+
+            <div class="table-responsive u-max-height-300px u-overflow-y-auto">
+                <table class="table table-sm table-bordered align-middle" id="msLinesTable">
+                    <thead class="table-light small sticky-top">
+                        <tr>
+                            @if (canEdit) { <th class="u-width-32px"></th> }
+                            <th>@Localizer["ColProduct"] <span class="text-danger">*</span></th>
+                            <th class="text-end u-width-100px">@Localizer["ColRequestedQty"] <span class="text-danger">*</span></th>
+                            <th class="u-width-75px">@Localizer["ColUom"]</th>
+                            <th class="ms-col-from @(isReturnCat ? "d-none" : "")">@Localizer["ColFromWh"]</th>
+                            <th class="ms-col-to @(isReturnCat ? "" : "d-none")">@Localizer["ColReturnToWh"]</th>
+                            <th class="u-width-90px">@Localizer["ColLotNo"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="msLinesBody">
+                        @for (int i = 0; i < (Model?.Lines.Count ?? 0); i++)
+                        {
+                            var ln = Model!.Lines[i];
+                            <tr class="ms-line-row">
+                                @if (canEdit)
+                                {
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-outline-danger" data-action="removeMsLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </td>
+                                }
+                                <td>
+                                    <select name="Lines[@i].ProductCode" class="form-select form-select-sm" required>
+                                        <option value="">—</option>
+                                        @foreach (dynamic p in products)
+                                        {
+                                            <option value="@p.ProductCode" selected="@((string)p.ProductCode == ln.ProductCode)">@p.ProductCode</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input name="Lines[@i].RequestedQty" type="number" step="any"
+                                           min="@UomStepHelper.GetMinPositive(uomDecimals, ln.UomCode)"
+                                           value="@ln.RequestedQty.ToString("F" + UomStepHelper.GetDp(uomDecimals, ln.UomCode))" required
+                                           class="form-control form-control-sm text-end" />
+                                </td>
+                                <td>
+                                    <select name="Lines[@i].UomCode" class="form-select form-select-sm" data-uom-stock-only="1">
+                                        <option value="">—</option>
+                                        @foreach (dynamic u in uoms)
+                                        {
+                                            <option value="@u.UomCode" selected="@((string)u.UomCode == ln.UomCode)">@u.UomCode</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td class="ms-col-from @(isReturnCat ? "d-none" : "")">
+                                    <div class="input-group input-group-sm">
+                                        <select name="Lines[@i].FromWarehouseCode" class="form-select form-select-sm" data-action-change="onMsWhChange">
+                                            <option value="">—</option>
+                                            @foreach (dynamic w in warehouses)
+                                            {
+                                                <option value="@w.WhCode" selected="@((string)w.WhCode == ln.FromWarehouseCode)">@w.WhCode</option>
+                                            }
+                                        </select>
+                                        @if (canEdit)
+                                        {
+                                            <button type="button" class="btn btn-outline-secondary" data-action="lookupStock"
+                                                    data-wh-field="FromWarehouseCode" data-loc-field="FromLocationCode" data-lot-field="LotNo"
+                                                    data-no-product-msg="@Localizer["SelectProductFirst"]"
+                                                    title="@Localizer["LookupStock"]" aria-label="@Localizer["LookupStock"]"><i class="bi bi-search"></i></button>
+                                        }
+                                    </div>
+                                    <select name="Lines[@i].FromLocationCode" class="form-select form-select-sm mt-1" data-action-change="onMsLocChange">
+                                        <option value=""></option>
+                                        @foreach (dynamic loc in LocsOf(ln.FromWarehouseCode))
+                                        {
+                                            <option value="@loc.LocationCode" selected="@((string)loc.LocationCode == ln.FromLocationCode)">@loc.LocationCode</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td class="ms-col-to @(isReturnCat ? "" : "d-none")">
+                                    <select name="Lines[@i].ToWarehouseCode" class="form-select form-select-sm" data-action-change="onMsWhChange">
+                                        <option value="">—</option>
+                                        @foreach (dynamic w in warehouses)
+                                        {
+                                            <option value="@w.WhCode" selected="@((string)w.WhCode == ln.ToWarehouseCode)">@w.WhCode</option>
+                                        }
+                                    </select>
+                                    <select name="Lines[@i].ToLocationCode" class="form-select form-select-sm mt-1" data-action-change="onMsLocChange">
+                                        <option value=""></option>
+                                        @foreach (dynamic loc in LocsOf(ln.ToWarehouseCode))
+                                        {
+                                            <option value="@loc.LocationCode" selected="@((string)loc.LocationCode == ln.ToLocationCode)">@loc.LocationCode</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input name="Lines[@i].LotNo" class="form-control form-control-sm"
+                                           value="@ln.LotNo" maxlength="30" />
+                                </td>
+                                <input type="hidden" name="Lines[@i].ConfirmedQty" value="@ln.ConfirmedQty" />
+                                <input type="hidden" name="Lines[@i].ReturnedQty" value="@ln.ReturnedQty" />
+                                @if (ln.ApprovedQty.HasValue)
+                                {
+                                    <input type="hidden" name="Lines[@i].ApprovedQty" value="@ln.ApprovedQty" />
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @if (!(Model?.Lines.Any() ?? false))
+            {
+                <p class="text-muted small text-center py-2 mb-0" id="msLinesEmpty">@Localizer["NoLines"]</p>
+            }
+        </div>
+
+    </fieldset>
+
+    @* ⚠️ 頁尾必須在 fieldset 外面：唯讀時 fieldset 是 disabled，裡面的按鈕（含「關閉」）
+       會一起被停用——「檢視」打開後關閉按不了（2026-10-05 回報）。 *@
+    @if (canEdit)
+    {
+        <div class="offcanvas-footer border-top p-3 d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            <button type="submit" name="submit" value="save" class="btn btn-primary">
+                <i class="bi bi-check-lg"></i> @Localizer["Save"]
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="offcanvas-footer border-top p-3 d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        </div>
+    }
+</form>
+
+@await Html.PartialAsync("~/Modules/INV/Views/Shared/_StockPickerModal.cshtml")
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    var msLineCount = @((Model?.Lines.Count ?? 0));
+    var msIsReturn  = @(isReturnCat ? "true" : "false");
+    var _msReturnCats = ['InternalReturn', 'OutsourceReturn', 'ReworkReturn'];
+
+    var _msProducts  = [@foreach (dynamic p in products) { <text>{ code: '@Html.Raw(((string)p.ProductCode).Replace("'", "\\'"))' },</text> }];
+    var _msWhs       = [@foreach (dynamic w in warehouses) { <text>{ code: '@Html.Raw(((string)w.WhCode).Replace("'", "\\'"))' },</text> }];
+    var _msLocs      = [@foreach (dynamic l in locations) { <text>{ wh: '@Html.Raw(((string)l.WhCode).Replace("'", "\\'"))', code: '@Html.Raw(((string)l.LocationCode).Replace("'", "\\'"))' },</text> }];
+
+    function _msEsc(v) { return String(v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+    function _msSel(opts, name, req, extra) {
+        var s = '<select name="' + name + '" class="form-select form-select-sm' + (extra && extra.cls ? ' ' + extra.cls : '') + '"' +
+                (req ? ' required' : '') + (extra && extra.change ? ' data-action-change="' + extra.change + '"' : '') +
+                (extra && extra.attrs ? ' ' + extra.attrs : '') + '>';
+        s += '<option value="">—</option>';
+        opts.forEach(function(o) { s += '<option value="' + _msEsc(o.code) + '">' + _msEsc(o.code) + '</option>'; });
+        return s + '</select>';
+    }
+
+    // ── 倉庫 → 儲位（ProjectZ 倉庫／儲位欄位規則）──────────────────────────────
+    function _msLocOpts(wh) {
+        var list = wh ? _msLocs.filter(function (l) { return l.wh === wh; }) : _msLocs;
+        return '<option value=""></option>' + list.map(function (l) {
+            return '<option value="' + _msEsc(l.code) + '">' + _msEsc(l.code) + '</option>'; }).join('');
+    }
+    function _msPair(sel, from, to) {
+        return sel.closest('tr').querySelector('[name="' + sel.name.replace(from, to) + '"]');
+    }
+    function onMsWhChange(e, sel) {
+        var locSel = _msPair(sel, /WarehouseCode$/, 'LocationCode');
+        if (!locSel) return;
+        var prev = locSel.value;
+        locSel.innerHTML = _msLocOpts(sel.value);
+        locSel.value = (sel.value && prev && _msLocs.some(function (l) { return l.code === prev && l.wh === sel.value; })) ? prev : '';
+    }
+    function onMsLocChange(e, sel) {
+        if (!sel.value) return;
+        var whSel = _msPair(sel, /LocationCode$/, 'WarehouseCode');
+        if (!whSel || whSel.value) return;
+        var loc = _msLocs.find(function (l) { return l.code === sel.value; });
+        if (!loc) return;
+        whSel.value = loc.wh;
+        sel.innerHTML = _msLocOpts(loc.wh);
+        sel.value = loc.code;
+    }
+
+    // ── 來源單號：select2，依來源類別（與類別的發／退）重新載入 ─────────────────────
+    function _msInitSourceDoc() {
+        var $s = jQuery('#msSourceDoc');
+        if ($s.hasClass('select2-hidden-accessible')) $s.select2('destroy');
+        $s.select2({ theme: 'bootstrap-5', width: '100%', dropdownParent: jQuery('#materialSlipForm'),
+                     placeholder: $s.data('placeholder'), allowClear: true });
+    }
+    async function _msReloadSourceDocs() {
+        var type = document.getElementById('msSourceType').value;
+        var catSel = document.querySelector('#materialSlipForm [name="Category"]');
+        var cat = catSel ? catSel.value : '@(Model?.Category.ToString())';
+        var sel = document.getElementById('msSourceDoc');
+        var cur = sel.value;
+        try {
+            var r = await fetch('@Url.Action("SourceDocs", "MaterialSlip")?type=' + encodeURIComponent(type)
+                + '&category=' + encodeURIComponent(cat) + '&current=' + encodeURIComponent(cur),
+                { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            if (!r.ok) return;
+            var list = await r.json();
+            sel.innerHTML = '<option value=""></option>' + list.map(function (d) {
+                return '<option value="' + _msEsc(d.id) + '">' + _msEsc(d.text) + '</option>'; }).join('');
+            sel.value = list.some(function (d) { return d.id === cur; }) ? cur : '';
+            _msInitSourceDoc();
+        } catch (err) { /* 載不到就維持原清單，存檔時伺服器仍會檢查來源 */ }
+    }
+    function onMsSourceTypeChange(e, sel) { document.getElementById('msSourceDoc').value = ''; _msReloadSourceDocs(); }
+    _msInitSourceDoc();
+
+    // 新增時切換類別：發料類只顯示來源倉/儲位、退料類只顯示退回倉/儲位
+    function onMsCategoryChange(e, sel) {
+        // 委外類別才有「委外採購單」來源；發／退料的可選工單範圍也不同（退料含已完工）
+        var outsource = sel.value === 'OutsourceIssue' || sel.value === 'OutsourceReturn';
+        var typeSel = document.getElementById('msSourceType');
+        typeSel.querySelector('option[value="OutsourcePurchaseOrder"]').classList.toggle('d-none', !outsource);
+        if (!outsource && typeSel.value === 'OutsourcePurchaseOrder') typeSel.value = 'WorkOrder';
+        _msReloadSourceDocs();
+        msIsReturn = _msReturnCats.indexOf(sel.value) >= 0;
+        document.querySelectorAll('#msLinesTable .ms-col-from').forEach(function (el) { el.classList.toggle('d-none', msIsReturn); });
+        document.querySelectorAll('#msLinesTable .ms-col-to').forEach(function (el) { el.classList.toggle('d-none', !msIsReturn); });
+    }
+
+    function addMsLine(e, el) {
+        var i = msLineCount++;
+        var n = function(f) { return 'Lines[' + i + '].' + f; };
+        var tr = document.createElement('tr');
+        tr.className = 'ms-line-row';
+        tr.innerHTML =
+            '<td><button type="button" class="btn btn-sm btn-outline-danger" data-action="removeMsLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-trash3"></i></button></td>' +
+            '<td>' + _msSel(_msProducts, n('ProductCode'), true) + '</td>' +
+            '<td><input name="' + n('RequestedQty') + '" type="number" step="any" min="0.0001" required class="form-control form-control-sm text-end" /></td>' +
+            // 單位由 uom-step.js 依品號帶出庫存單位（data-uom-stock-only），選品號前先空著
+            '<td>' + _msSel([], n('UomCode'), false, { attrs: 'data-uom-stock-only="1"' }) + '</td>' +
+            '<td class="ms-col-from' + (msIsReturn ? ' d-none' : '') + '"><div class="input-group input-group-sm">' +
+                _msSel(_msWhs, n('FromWarehouseCode'), false, { change: 'onMsWhChange' }) +
+                '<button type="button" class="btn btn-outline-secondary" data-action="lookupStock" data-wh-field="FromWarehouseCode" data-loc-field="FromLocationCode" data-lot-field="LotNo"' +
+                ' data-no-product-msg="@Localizer["SelectProductFirst"]" title="@Localizer["LookupStock"]" aria-label="@Localizer["LookupStock"]"><i class="bi bi-search"></i></button></div>' +
+                '<select name="' + n('FromLocationCode') + '" class="form-select form-select-sm mt-1" data-action-change="onMsLocChange">' + _msLocOpts('') + '</select></td>' +
+            '<td class="ms-col-to' + (msIsReturn ? '' : ' d-none') + '">' +
+                _msSel(_msWhs, n('ToWarehouseCode'), false, { change: 'onMsWhChange' }) +
+                '<select name="' + n('ToLocationCode') + '" class="form-select form-select-sm mt-1" data-action-change="onMsLocChange">' + _msLocOpts('') + '</select></td>' +
+            '<td><input name="' + n('LotNo') + '" class="form-control form-control-sm" maxlength="30" /></td>' +
+            '<input type="hidden" name="' + n('ConfirmedQty') + '" value="0" />' +
+            '<input type="hidden" name="' + n('ReturnedQty') + '" value="0" />';
+        document.getElementById('msLinesBody').appendChild(tr);
+        var empty = document.getElementById('msLinesEmpty');
+        if (empty) empty.classList.add('d-none');
+        window.armValidation(document.getElementById('materialSlipForm')); // 動態列重註冊 unobtrusive 驗證（R6c）
+    }
+
+    function removeMsLine(e, btn) {
+        btn.closest('tr').remove();
+        document.querySelectorAll('#msLinesBody tr.ms-line-row').forEach(function(tr, idx) {
+            tr.querySelectorAll('[name]').forEach(function(el) {
+                el.name = el.name.replace(/Lines\[\d+\]/, 'Lines[' + idx + ']');
+            });
+        });
+        msLineCount = document.querySelectorAll('#msLinesBody tr.ms-line-row').length;
+    }
+</script>

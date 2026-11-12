@@ -1,0 +1,161 @@
+@model SmartFactory.MES.Modules.PUR.Models.OutsourceReceipt
+@using SmartFactory.MES.Modules.PUR.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    bool isNew      = string.IsNullOrEmpty(Model.OutsourceReceiptId);
+    string formAction = isNew ? "/OutsourceReceipt/Save" : $"/OutsourceReceipt/Save";
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+
+    var openOpos = ViewBag.OpenOpos as IList<SmartFactory.MES.Modules.MFG.Models.OutsourcePurchaseOrder> ?? new List<SmartFactory.MES.Modules.MFG.Models.OutsourcePurchaseOrder>();
+    var suppliers = ViewBag.Suppliers as IList<SmartFactory.MES.Modules.BAS.Models.Company> ?? new List<SmartFactory.MES.Modules.BAS.Models.Company>();
+    var currencies = ViewBag.CurrencyOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="p-3">
+<form id="panelForm" method="post" action="@formAction"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+    <input type="hidden" asp-for="OutsourceReceiptId" />
+    <input type="hidden" asp-for="xmin" />
+    <input type="hidden" asp-for="Status" />
+    <input type="hidden" asp-for="CreatedBy" />
+
+    <fieldset @(isReadOnly ? Html.Raw("disabled=\"disabled\"") : Html.Raw(""))>
+    <div class="row g-2 mb-3">
+        <div class="col-6">
+            <label class="form-label small fw-semibold" asp-for="OutsourcePurchaseOrderId">@L["OutsourcePurchaseOrder"]</label>
+            <select asp-for="OutsourcePurchaseOrderId" class="form-select form-select-sm"
+                    id="opoSelect" data-action-change="loadOpoLines">
+                <option value="">@SL["Select"]</option>
+                @foreach (var o in openOpos)
+                {
+                    <option value="@o.OutsourcePurchaseOrderId" selected="@(Model.OutsourcePurchaseOrderId == o.OutsourcePurchaseOrderId)">
+                        @o.OutsourcePurchaseOrderId — @o.SupplierCode
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="OutsourcePurchaseOrderId" class="text-danger small"></span>
+        </div>
+        <div class="col-3">
+            <label class="form-label small fw-semibold" asp-for="ReceiptDate">@L["GoodsReceiptDate"]</label>
+            <input asp-for="ReceiptDate" type="date" class="form-control form-control-sm" />
+            <span asp-validation-for="ReceiptDate" class="text-danger small"></span>
+        </div>
+        <div class="col-3">
+            <label class="form-label small fw-semibold" asp-for="SupplierCode">@L["SupplierCode"]</label>
+            <select asp-for="SupplierCode" class="form-select form-select-sm">
+                @foreach (var s in suppliers)
+                { <option value="@s.CompanyCode" selected="@(Model.SupplierCode == s.CompanyCode)">@s.CompanyCode — @s.CompanyName</option> }
+            </select>
+            <span asp-validation-for="SupplierCode" class="text-danger small"></span>
+        </div>
+        <div class="col-3">
+            <label class="form-label small fw-semibold" asp-for="CurrencyCode">@L["CurrencyCode"]</label>
+            <select asp-for="CurrencyCode" class="form-select form-select-sm">
+                <option value="">@SL["Select"]</option>
+                @foreach (var c in currencies)
+                {
+                    <option value="@c.Code" selected="@(Model.CurrencyCode == (string)c.Code)">@c.Code — @c.Name</option>
+                }
+            </select>
+            <span asp-validation-for="CurrencyCode" class="text-danger small"></span>
+        </div>
+        <div class="col-3">
+            <label class="form-label small fw-semibold" asp-for="ExchangeRate">@L["ExchangeRate"]</label>
+            <input asp-for="ExchangeRate" type="number" class="form-control form-control-sm" step="any" min="0.000001" />
+            <span asp-validation-for="ExchangeRate" class="text-danger small"></span>
+        </div>
+        <div class="col-6">
+            <label class="form-label small fw-semibold" asp-for="Remarks">@L["Remarks"]</label>
+            <input asp-for="Remarks" class="form-control form-control-sm" maxlength="500" />
+            <span asp-validation-for="Remarks" class="text-danger small"></span>
+        </div>
+        <div class="col-12">
+            <div class="form-check">
+                <input asp-for="IsFinalReceipt" class="form-check-input" type="checkbox" id="isFinalReceipt" />
+                <label class="form-check-label small" for="isFinalReceipt">@L["IsFinalReceipt"]</label>
+            </div>
+            <div class="form-text small">@L["IsFinalReceiptHint"]</div>
+            <span asp-validation-for="IsFinalReceipt" class="text-danger small"></span>
+        </div>
+    </div>
+
+    <!-- 明細 -->
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h6 class="mb-0 fw-semibold">@L["Detail"]</h6>
+        @if (!isReadOnly)
+        {
+            <button type="button" class="btn btn-sm btn-outline-primary" data-action="loadOpoLines">
+                <i class="bi bi-arrow-repeat me-1"></i>@L["LoadFromOpo"]
+            </button>
+        }
+    </div>
+    <div class="table-responsive mb-3">
+        <table class="table table-sm table-bordered" id="lineTable">
+            <thead class="table-light">
+                <tr>
+                    <th class="u-col-code">@L["ProductCode"]</th><th class="u-col-num">@L["ReceiptQty"]</th><th class="u-col-tiny">@L["UomCode"]</th>
+                    <th class="u-col-num">@L["UnitCost"]</th><th class="text-end u-col-num">@L["Amount"]</th>
+                    @if (!isReadOnly) { <th></th> }
+                </tr>
+            </thead>
+            <tbody id="lineBody">
+            @for (int i = 0; i < Model.Lines.Count; i++)
+            {
+                var l = Model.Lines.ElementAt(i);
+                <tr>
+                    <input type="hidden" name="Lines[@i].OutsourceReceiptId" value="@l.OutsourceReceiptId" />
+                    <input type="hidden" name="Lines[@i].LineNo" value="@l.LineNo" />
+                    <td><input name="Lines[@i].ProductCode" class="form-control form-control-sm" value="@l.ProductCode" @(isReadOnly ? "readonly" : "") />
+                        @* 明細備註：確認時系統寫入的說明（例：超收不付加工費的合約單價與計費量），原本畫面看不到（2026-10-14） *@
+                        <input type="hidden" name="Lines[@i].Remarks" value="@l.Remarks" />
+                        @if (!string.IsNullOrWhiteSpace(l.Remarks))
+                        {
+                            <div class="small text-muted mt-1 line-remarks">@l.Remarks</div>
+                        }</td>
+                    <td><input name="Lines[@i].ReceiptQty" type="number" class="form-control form-control-sm line-qty" value="@l.ReceiptQty" step="any" min="0" @(isReadOnly ? "readonly" : "") /></td>
+                    @* 單位原本是自由輸入框：打錯一個字就是一張換算失敗或入錯單位的收貨單。
+                       改成下拉，選項由 uom-step.js 依品號限縮成可用單位（先放目前值，載入後補齊）。 *@
+                    <td>@if (isReadOnly)
+                        {
+                            <input name="Lines[@i].UomCode" class="form-control form-control-sm" value="@l.UomCode" readonly />
+                        }
+                        else
+                        {
+                            <select name="Lines[@i].UomCode" class="form-select form-select-sm"><option value="@l.UomCode">@l.UomCode</option></select>
+                        }</td>
+                    <td><input name="Lines[@i].UnitCost" type="number" class="form-control form-control-sm line-price" value="@l.UnitCost.ToString("F" + baseDp)" step="any" min="0" @(isReadOnly ? "readonly" : "") data-action-input="calcLine" /></td>
+                    <td class="text-end line-amt">@l.LineAmount.ToString("N" + baseDp)</td>
+                    @if (!isReadOnly) { <td><button type="button" class="btn btn-sm btn-outline-danger" data-action="removeLineRow" title="@L["RemoveLine"]" aria-label="@L["RemoveLine"]"><i class="bi bi-trash"></i></button></td> }
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <input type="hidden" asp-for="TotalAmount" id="totalAmount" />
+    <div class="d-flex justify-content-end mb-3">
+        <span class="fw-bold">@L["TotalAmount"]：<span id="totalDisplay">@Model.TotalAmount.ToString("N" + baseDp)</span></span>
+    </div>
+
+    </fieldset>
+
+    @if (!isReadOnly)
+    {
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-sm">@L["Save"]</button>
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="offcanvas">@L["Cancel"]</button>
+        </div>
+    }
+    else
+    {
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="offcanvas">@L["Close"]</button>
+    }
+</form>
+</div>
+

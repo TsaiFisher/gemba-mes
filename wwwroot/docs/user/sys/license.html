@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="License Status — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>授權狀態 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System Administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link active"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-patch-check me-2 text-primary"></i><span lang="zh">授權狀態</span><span lang="en">License Status</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：管理系統 → 授權狀態（網址 <code>/License</code>） &nbsp;|&nbsp; 權限：選單入口與各項操作限目前身份為 Admin；狀態本身人人可看</span><span lang="en">Menu: System Administration → License Status (address <code>/License</code>) &nbsp;|&nbsp; Permission: the menu entry and every action require the current role to be Admin; anyone may view the status itself</span></div>
+    </div>
+
+    <p><span lang="zh">授權狀態頁顯示本系統目前的授權是否有效，並提供</span><span lang="en">The license status page shows whether this system's license is currently valid, and is where you </span><b><span lang="zh">申請、換發、匯入授權與定期確認授權</span><span lang="en">apply for, renew, import and periodically confirm the license</span></b><span lang="zh">的入口。安裝後第一次確認授權、換電腦或主機板、虛擬機每 90 天的確認，都在這一頁完成。</span><span lang="en">. Checking the license after installation, moving to a new computer or motherboard, and the 90-day confirmation on a virtual machine all happen on this page.</span></p>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <strong><span lang="zh">找不到入口時：</span><span lang="en">If you cannot find the way in:</span></strong><span lang="zh">直接在網址列輸入</span><span lang="en"> type </span><code>/License</code><span lang="zh">（例如 </span><span lang="en"> after the site address (for example </span><code>https://localhost:7054/License</code><span lang="zh">）。授權有狀況時，畫面上方的提示條也會連到這一頁；授權不屬於這台電腦時，系統只會顯示這一頁。</span><span lang="en">). When something is wrong with the license, the notice bar at the top of every screen links here too; if the license does not belong to this computer, this is the only page the system shows.</span>
+    </div>
+
+    <h2 id="screen-fields"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">畫面內容</span><span lang="en">What the page shows</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">區塊</span><span lang="en">Section</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">狀態（彩色框）</span><span lang="en">Status (coloured box)</span></td><td><span lang="zh">綠色「授權有效」並說明綁定與效期（例如「已綁定本機，永久有效」）；黃色「授權有事項需要處理」列出待辦（例如即將到期、尚未確認）；紅色「唯讀」或「已停用」說明原因與停用日期。</span><span lang="en">Green "License valid", with a line on binding and term (for example "Bound to this machine; No expiry date"); amber "The license needs attention" lists what to do (expiring soon, not yet confirmed); red "Read-only" or "Disabled" gives the reason and the date the system stops.</span></td></tr>
+        <tr><td><span lang="zh">到期日／唯讀起始／停用日</span><span lang="en">Expiry / read-only since / disabled on</span></td><td><span lang="zh">永久授權的到期日顯示「永久」。唯讀起始與停用日只在授權失效時出現。</span><span lang="en">A perpetual license shows "Perpetual" as its expiry. Read-only since and disabled on appear only once the license has lapsed.</span></td></tr>
+        <tr><td><span lang="zh">授權編號、授權對象、綁定方式、座數</span><span lang="en">License ID, licensee, binding, seats</span></td><td><span lang="zh">只有 Admin 看得到。換發或聯絡授權提供者時用得到授權編號。</span><span lang="en">Visible to Admin only. You need the license ID when renewing or contacting the license provider.</span></td></tr>
+        <tr><td><span lang="zh">申請或換發授權</span><span lang="en">Apply for or renew a license</span></td><td><span lang="zh">顯示部署類型、主機比對結果與申請碼。「申請授權」開啟登記頁；「申請換發」用於換電腦、換主機板。申請時只送出指紋與主機識別碼（皆為雜湊）。</span><span lang="en">Shows the deployment type, the host check result and the request code. "Apply for a license" opens the registration page; "Request renewal" is for a new computer or motherboard. Only the fingerprint and host identifier (both hashed) are sent.</span></td></tr>
+        <tr><td><span lang="zh">授權確認（每 90 天）</span><span lang="en">License confirmation (every 90 days)</span></td><td><span lang="zh">虛擬機，或已啟用線上授權確認時才需要。按「確認授權」會開啟授權伺服器的確認頁，完成後自動回到本頁；這台電腦不能上網時，可把確認連結傳到其他裝置，再「匯入確認回覆」。</span><span lang="en">Needed only on a virtual machine, or once online license check is turned on. "Confirm license" opens the license server's confirmation page and comes back here when done; if this computer cannot reach the internet, send the link to another device and then use "Import confirmation reply".</span></td></tr>
+        <tr><td><span lang="zh">線上授權確認</span><span lang="en">Online license check</span></td><td><span lang="zh">綁定本機的授權可自行啟用：啟用後每 90 天確認一次，整台複製到別處的副本無法通過。虛擬機一律強制啟用，無法停用。</span><span lang="en">A machine-bound license may turn this on: it then needs confirming every 90 days, and a copy of the whole machine elsewhere cannot pass. On a virtual machine it is always on and cannot be turned off.</span></td></tr>
+        <tr><td><span lang="zh">匯入授權檔</span><span lang="en">Import license file</span></td><td><span lang="zh">上傳收到的 <code>license.json</code>。系統先驗證，通過才取代現行授權（舊檔自動備份），不需重新啟動。</span><span lang="en">Upload the <code>license.json</code> you received. It is verified first and replaces the current license only if it passes (the old file is backed up); no restart is needed.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">不要編輯授權檔：</span><span lang="en">Do not edit the license file:</span></strong><span lang="zh">所有欄位都在簽章內，改了就是「簽章無效」。主機比對顯示「不符」時代表授權不屬於這台電腦，請用頁上的申請碼重新申請。</span><span lang="en"> every field is covered by the signature, so any change makes it "signature invalid". If the host check says the license does not belong to this computer, apply again with the request code on the page.</span>
+    </div>
+
+    <h2 id="related"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="user.html"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a><span lang="zh">（指派 Admin 角色）、</span><span lang="en"> (assigning the Admin role), </span><a href="user-settings.html"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a><span lang="zh">（切換目前身份）。</span><span lang="en"> (switching your current role).</span></p>
+  </main>
+</div>
+</body>
+</html>

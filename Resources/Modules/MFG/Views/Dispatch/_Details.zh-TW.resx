@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="DispatchInfo" xml:space="preserve"><value>派工資訊</value></data>
+  <data name="DispatchId" xml:space="preserve"><value>派工單號</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>工單號</value></data>
+  <data name="OperationSeq" xml:space="preserve"><value>工序</value></data>
+  <data name="OperationName" xml:space="preserve"><value>工序名稱</value></data>
+  <data name="WorkCenterId" xml:space="preserve"><value>工作中心</value></data>
+  <data name="MachineCode" xml:space="preserve"><value>機台</value></data>
+  <data name="Quantity" xml:space="preserve"><value>派工量</value></data>
+  <data name="QtyDone" xml:space="preserve"><value>完工量</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="ScheduledStart" xml:space="preserve"><value>排程開始</value></data>
+  <data name="ScheduledEnd" xml:space="preserve"><value>排程結束</value></data>
+  <data name="SetupHistory" xml:space="preserve"><value>備料紀錄</value></data>
+  <data name="SetupStartAt" xml:space="preserve"><value>備料開始</value></data>
+  <data name="SetupEndAt" xml:space="preserve"><value>備料結束</value></data>
+  <data name="SetupStatus" xml:space="preserve"><value>狀態</value></data>
+  <data name="Operator" xml:space="preserve"><value>操作員</value></data>
+  <data name="Tooling" xml:space="preserve"><value>模具</value></data>
+  <data name="SessionHistory" xml:space="preserve"><value>上工紀錄</value></data>
+  <data name="SessionId" xml:space="preserve"><value>上工序號</value></data>
+  <data name="StartAt" xml:space="preserve"><value>上工時間</value></data>
+  <data name="EndAt" xml:space="preserve"><value>下工時間</value></data>
+  <data name="SessionStatus" xml:space="preserve"><value>狀態</value></data>
+  <data name="Machine" xml:space="preserve"><value>機台</value></data>
+  <data name="ReportHistory" xml:space="preserve"><value>報工紀錄</value></data>
+  <data name="ReportId" xml:space="preserve"><value>報工序號</value></data>
+  <data name="ReportedAt" xml:space="preserve"><value>報工時間</value></data>
+  <data name="QtyOk" xml:space="preserve"><value>合格數</value></data>
+  <data name="QtyNg" xml:space="preserve"><value>不良數</value></data>
+  <data name="Container" xml:space="preserve"><value>容器</value></data>
+  <data name="NoSetup" xml:space="preserve"><value>無備料紀錄</value></data>
+  <data name="NoSession" xml:space="preserve"><value>無上工紀錄</value></data>
+  <data name="NoReport" xml:space="preserve"><value>無報工紀錄</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="SessionOpen" xml:space="preserve"><value>上工中</value></data>
+  <data name="SessionClosed" xml:space="preserve"><value>已下工</value></data>
+  <data name="SetupOpen" xml:space="preserve"><value>備料中</value></data>
+  <data name="SetupClosed" xml:space="preserve"><value>已完成</value></data>
+</root>

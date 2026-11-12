@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="DispatchId" xml:space="preserve"><value>派工單號</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>工單號</value></data>
+  <data name="ToolingCode" xml:space="preserve"><value>使用模具</value></data>
+  <data name="ToolingPlaceholder" xml:space="preserve"><value>輸入模具代碼（可留空）</value></data>
+  <data name="StartSetup" xml:space="preserve"><value>開始備料</value></data>
+  <data name="DoneSetup" xml:space="preserve"><value>備料完成</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="SetupStartedAt" xml:space="preserve"><value>備料開始於</value></data>
+  <data name="SetupInProgressMsg" xml:space="preserve"><value>備料進行中，點擊「備料完成」確認備料結束。</value></data>
+  <data name="NoOpenSetupMsg" xml:space="preserve"><value>尚未開始備料，點擊「開始備料」登記備料開始時間。</value></data>
+  <data name="ActiveOperators" xml:space="preserve"><value>目前備料人員</value></data>
+  <data name="MaterialStagingSection" xml:space="preserve"><value>備料（移入備料倉）</value></data>
+  <data name="SetupSection" xml:space="preserve"><value>機台準備</value></data>
+  <data name="StagingId" xml:space="preserve"><value>備料單號</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="StagingWhCode" xml:space="preserve"><value>備料倉／儲位</value></data>
+  <data name="Lines" xml:space="preserve"><value>明細筆數</value></data>
+  <data name="Draft" xml:space="preserve"><value>草稿</value></data>
+  <data name="Confirmed" xml:space="preserve"><value>已確認</value></data>
+  <data name="Picking" xml:space="preserve"><value>揀料中</value></data>
+  <data name="Completed" xml:space="preserve"><value>已備妥</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="RequiredQty" xml:space="preserve"><value>待備數量</value></data>
+  <data name="UomCode" xml:space="preserve"><value>單位</value></data>
+  <data name="PendingMaterialsMsg" xml:space="preserve"><value>以下用料尚未備妥，請開立備料單將料件移入備料倉待領用。</value></data>
+  <data name="NoPendingMaterialsMsg" xml:space="preserve"><value>本派工用料皆已備妥或已發料，無須另開備料單。</value></data>
+  <data name="CreateStagingOrder" xml:space="preserve"><value>建立備料單</value></data>
+  <data name="CreateStagingOrderHint" xml:space="preserve"><value>以本派工未發料用料建立草稿備料單（預設備料倉取自工作中心設定）；確認鎖料與揀料移倉於備料單畫面完成。</value></data>
+  <data name="NoSetupRequiredMsg" xml:space="preserve"><value>本工序未設定準備工時，免機台準備，可直接開工。</value></data>
+</root>

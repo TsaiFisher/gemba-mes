@@ -1,0 +1,77 @@
+@{
+    // 🚨 Layout = null 是這支檢視存在的**唯一理由**。
+    //
+    // 手機 PWA 是 standalone 啟動的：沒有網址列、沒有分頁列。套上桌機的
+    // /Pages/Shared/_Layout.cshtml 之後，使用者就被丟出手機殼且回不來——
+    // 而桌機錯誤頁上那顆「返回首頁」指的是 `/`，按下去只會把他推得更深。
+    // 所以這裡自己是一份完整的 HTML 文件，且返回連結指向 /mobile/home.html。
+    Layout = null;
+
+    var statusCode   = (int)(ViewBag.StatusCode ?? 0);
+    var originalPath = (string)(ViewBag.OriginalPath ?? "");
+
+    string icon, title, message;
+
+    if (statusCode == 404)
+    {
+        icon    = "bi-signpost-2";
+        title   = Localizer["NotFoundTitle"].Value;
+        // 手機端最常見的成因不是「網址打錯」（使用者沒有網址列可以打），
+        // 而是這個模組在本系統尚未提供手機畫面。訊息照這個情境寫。
+        message = Localizer["NotFoundMessage"].Value;
+    }
+    else if (statusCode == 403)
+    {
+        icon    = "bi-shield-lock";
+        title   = Localizer["ForbiddenTitle"].Value;
+        message = Localizer["ForbiddenMessage"].Value;
+    }
+    else
+    {
+        icon    = "bi-exclamation-triangle";
+        title   = Localizer["ErrorTitle"].Value;
+        message = Localizer["ErrorMessage"].Value;
+    }
+}
+<!DOCTYPE html>
+<html lang="@System.Globalization.CultureInfo.CurrentUICulture.Name">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <title>@statusCode — @title</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+</head>
+@* 這一頁刻意**不載入任何 script**：CSP 的 script-src 走 per-request nonce，
+   而錯誤頁在各種狀態下都必須顯示得出來，不該再多一個會失敗的相依。
+   也因此沒有「上一頁」按鈕（那需要 data-action.js）——返回手機首頁就夠了。 *@
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary mobile-navbar px-3">
+        <span class="navbar-brand fw-bold">
+            <i class="bi bi-factory me-2"></i>SmartFactory MES
+        </span>
+    </nav>
+
+    <div class="container-fluid py-5 px-3 text-center">
+        <i class="bi @icon text-secondary display-3"></i>
+        <h1 class="mt-3 display-6 fw-bold">@statusCode</h1>
+        <p class="fs-5 text-secondary mb-1">@title</p>
+        <p class="text-muted small mb-4">@message</p>
+
+        @if (!string.IsNullOrEmpty(originalPath))
+        {
+            <p class="text-muted small mb-4">
+                <code>@originalPath</code>
+            </p>
+        }
+
+        @* 返回的是**手機**首頁。指向 `/` 等於把使用者推進桌機版面，
+           那正是這一頁要解決的問題。 *@
+        <a href="/mobile/home.html" class="btn btn-primary">
+            <i class="bi bi-house me-1"></i>@Localizer["BackMobileHome"]
+        </a>
+    </div>
+</body>
+</html>

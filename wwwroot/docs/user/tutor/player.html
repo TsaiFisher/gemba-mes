@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Tutorial player — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>教學播放器 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="tutor.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+    <script src="tutor.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">課程總覽</span><span lang="en">All courses</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本頁</span><span lang="en">This page</span></div>
+    <a href="#play" class="nav-link"><span lang="zh">播放區</span><span lang="en">Player</span></a>
+    <a href="#howto" class="nav-link"><span lang="zh">操作方式</span><span lang="en">How to use it</span></a>
+    <a href="#reading" class="nav-link"><span lang="zh">畫面上的標示</span><span lang="en">What you see on screen</span></a>
+    <a href="#voice" class="nav-link"><span lang="zh">語音朗讀</span><span lang="en">Voice narration</span></a>
+    <a href="#limits" class="nav-link"><span lang="zh">教學做不到的事</span><span lang="en">What the tutorial cannot do</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關</span><span lang="en">Related</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">課程總覽</span><span lang="en">All courses</span></a>
+    <a href="../index.html" class="nav-link"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-play-btn me-2 text-primary"></i><span lang="zh">教學播放器</span><span lang="en">Tutorial player</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">一次演示一條作業流程，逐畫面、逐步驟</span><span lang="en">Demonstrates one process flow at a time, screen by screen and step by step</span></div>
+    </div>
+
+    <p><span lang="zh">本頁播放一條課程。課程由網址的</span><span lang="en">This page plays one course. The course is chosen by the </span> <code>?flow=</code> <span lang="zh">參數指定，例如</span><span lang="en">parameter in the address, for example </span> <code>player.html?flow=flow-pur-main-purchasing-flow</code><span lang="zh">。請從</span><span lang="en">. Pick a course from </span><a href="index.html"><span lang="zh">課程總覽</span><span lang="en">All courses</span></a><span lang="zh">挑選課程進入，直接開啟本頁時會顯示課程清單。</span><span lang="en">; opening this page on its own shows the course list instead.</span></p>
+
+    <h2 id="play"><i class="bi bi-display me-2 text-primary"></i><span lang="zh">播放區</span><span lang="en">Player</span></h2>
+    <div id="tutorApp">
+      <div class="note-box">
+        <span lang="zh">播放區需要瀏覽器執行 JavaScript。若這段文字持續顯示，代表指令碼未載入或瀏覽器停用了 JavaScript；
+        此時可直接閱讀各畫面的操作說明——教學的內容與手冊完全相同，只是換成逐步呈現。</span><span lang="en">The player needs JavaScript. If this text stays on screen, the script did not load or JavaScript is turned off in the browser. You can read the instructions for each screen directly instead — the tutorial content is exactly the same as the manual, only presented one step at a time.</span>
+        <a href="index.html"><span lang="zh">前往課程總覽</span><span lang="en">Go to all courses</span></a>
+      </div>
+    </div>
+
+    <h2 id="howto"><i class="bi bi-hand-index me-2 text-primary"></i><span lang="zh">操作方式</span><span lang="en">How to use it</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">於</span><span lang="en">Pick a course in </span><a href="index.html"><span lang="zh">課程總覽</span><span lang="en">All courses</span></a><span lang="zh">點選一條課程，本頁會載入該流程的所有站別。</span><span lang="en">, and this page loads every stop on that flow.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「下一步」逐步前進。每一步會顯示該畫面的截圖、該步驟的說明文字，並在截圖上框出這一步要點的地方。</span><span lang="en">Use "Next" to move forward one step at a time. Each step shows the screenshot for that screen, the wording of that step, and a box on the screenshot around the control the step is about.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">不想一直點的話按「連續播放」，教學會自己一格一格走下去。</span><span lang="en">If you would rather not keep clicking, use "Auto-play" and the tutorial advances on its own. </span><strong><span lang="zh">任何手動操作都會停下來</span><span lang="en">Any manual action stops it</span></strong><span lang="zh">——按上一步／下一步、點站別、按方向鍵皆然，這樣想自己接手時不必先找暫停鍵。走到最後一格會自動停；在最後一格再按一次「連續播放」則從頭重播。</span><span lang="en"> — Back, Next, clicking a stop, or the arrow keys — so you can take over without first looking for a pause button. It stops by itself at the last step; pressing "Auto-play" again while on the last step replays the course from the beginning.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">上方的站別列顯示目前走到流程的哪一站，可直接點選跳到該站的第一步。</span><span lang="en">The row of stops along the top shows where you are on the flow; click any stop to jump to its first step.</span></div></div>
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh">導覽列的語言按鈕同時切換教學的文字與截圖（中英文各有一套截圖）。</span><span lang="en">The language button in the top bar switches both the wording and the screenshots — there is a separate set of screenshots for each language.</span></div></div>
+    <div class="step-row"><span class="step-badge">6</span><div><span lang="zh">每一站都可點「開啟完整說明」跳到該畫面在手冊裡的原始頁面，那裡有欄位說明與注意事項等教學不會逐一唸出的內容。</span><span lang="en">On every stop you can choose "Open the full page" to jump to that screen's own page in the manual, which also has the field reference and the cautions that the tutorial does not read out one by one.</span></div></div>
+
+    <h2 id="reading"><i class="bi bi-signpost-split me-2 text-primary"></i><span lang="zh">畫面上的標示</span><span lang="en">What you see on screen</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><strong><span lang="zh">黃色外框</span><span lang="en">A yellow box</span></strong><span lang="zh">：這一步要點的按鈕或欄位。並非每一步都有——像「儲存後系統自動產生應付發票」這種說的是系統行為，畫面上沒有東西可框。</span><span lang="en">: the button or field this step is about. Not every step has one — a step such as "an AP invoice is created automatically after saving" describes what the system does, so there is nothing on screen to point at.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><strong><span lang="zh">虛線卡片</span><span lang="en">A dashed card</span></strong><span lang="zh">：流程上的外部事件，例如「廠商交貨」。這類環節在系統裡沒有畫面，只說明它發生在什麼時候。</span><span lang="en">: an external event on the flow, such as "supplier delivers". These have no screen in the system; the card just says when they happen.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><strong><span lang="zh">擇一</span><span lang="en">"Either/or"</span></strong><span lang="zh">：流程圖上以「＋」相連的兩個畫面代表同一個環節有兩種走法（例如自製件走請購單、委外件走委外採購單），教學會兩條都帶過一次，不是漏掉一條。</span><span lang="en">: two screens joined by a plus sign on the flow chart are two ways of doing the same part of the flow (for example, in-house parts go through a purchase requisition while outsourced parts go through an outsource purchase order). The tutorial walks through both rather than skipping one.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><strong><span lang="zh">替代路徑</span><span lang="en">"Alternative"</span></strong><span lang="zh">：整條課程本身就是另一種走法，例如製造簡化模式免投產、免排程。這類課程請對照主流程課程一起看。</span><span lang="en">: the whole course is another way through, such as simplified manufacturing mode which skips release and scheduling. Read these together with the course for the main flow.</span></div></div>
+
+    <h2 id="voice"><i class="bi bi-volume-up me-2 text-primary"></i><span lang="zh">語音朗讀</span><span lang="en">Voice narration</span></h2>
+    <p><span lang="zh">播放區的喇叭按鈕可開關語音朗讀，開啟後每前進一步會唸出該步驟的說明文字。語音使用瀏覽器內建的朗讀功能，不需安裝也不會上傳任何內容到外部；能不能發聲、以及聲音好不好聽，取決於作業系統與瀏覽器安裝了哪些語音。若系統沒有可用的中文或英文語音，按鈕會停用，其餘功能不受影響。</span><span lang="en">The speaker button in the player turns narration on and off; while it is on, each step is read aloud as you move to it. Narration uses the browser's built-in speech function, so nothing needs to be installed and nothing is sent anywhere. Whether it can speak at all, and how good it sounds, depends on which voices the operating system and browser have installed. If no Chinese or English voice is available the button is disabled and everything else still works.</span></p>
+    <p><span lang="zh">語音與「連續播放」一起開的話，換格的時機會等這一步唸完，而不是照固定秒數；只開連續播放時，每一格停留的長短依該步文字的長度估算。</span><span lang="en">If narration and "Auto-play" are both on, each step is held until it has finished being read aloud rather than for a fixed number of seconds. With auto-play alone, how long a step is held is estimated from the length of its wording.</span></p>
+
+    <h2 id="limits"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">教學做不到的事</span><span lang="en">What the tutorial cannot do</span></h2>
+    <div class="tip-box">
+      <strong><span lang="zh">教學是模擬演示。</span><span lang="en">The tutorial is a simulated demonstration.</span></strong>
+      <span lang="zh">它播的是手冊既有的畫面截圖，不會開啟真正的作業畫面，也不會建立、修改或刪除任何單據；
+      因此也不會受您的權限影響——課程裡出現的畫面，不代表您在系統裡有權限進入。要實際操作請從系統選單進入該畫面。</span><span lang="en">It plays the screenshots that are already in the manual. It does not open a real screen and it does not create, change or delete any document. For the same reason it is not affected by your permissions — a screen appearing in a course does not mean you are allowed to open it in the system. To do the work for real, open the screen from the system menu.</span>
+    </div>
+    <div class="note-box">
+      <span lang="zh">截圖是在示範資料上拍攝的，畫面中的單號、品號與數量僅供辨識版面之用，與貴公司的實際資料無關。
+      系統改版後截圖可能與最新畫面略有差異；操作順序與欄位意義以手冊內文為準。</span><span lang="en">The screenshots were taken on demonstration data: the document numbers, part numbers and quantities in them are there to make the layout readable and have nothing to do with your own data. After a system update a screenshot may differ slightly from the current screen; where they disagree, the wording in the manual is what counts.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

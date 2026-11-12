@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Purchase Overdue — PUR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>採購逾期跟催 — PUR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">PUR 目錄</span><span lang="en">PUR Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">PUR 畫面</span><span lang="en">PUR Screens</span></div>
+    <a href="purchase-request.html" class="nav-link"><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></a>
+    <a href="purchase-order.html" class="nav-link"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></a>
+    <a href="goods-receipt.html" class="nav-link"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></a>
+    <a href="goods-return.html" class="nav-link"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></a>
+    <a href="../osp/outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="../osp/outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="vendor-price-list.html" class="nav-link"><span lang="zh">廠商單價目錄</span><span lang="en">Vendor Price List</span></a>
+    <a href="vendor-evaluation.html" class="nav-link"><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></a>
+    <a href="purchase-overdue.html" class="nav-link active"><span lang="zh">採購逾期跟催</span><span lang="en">Overdue Purchase Orders</span></a>
+    <a href="supplier-delivery-rate.html" class="nav-link"><span lang="zh">供應商交期達成率</span><span lang="en">Supplier Delivery Rate</span></a>
+    <a href="purchase-amount.html" class="nav-link"><span lang="zh">採購金額比較</span><span lang="en">Purchase Amount</span></a>
+    <a href="purchase-price.html" class="nav-link"><span lang="zh">採購價格比較</span><span lang="en">Purchase Price</span></a>
+    <a href="../osp/outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">採購逾期跟催</span><span lang="en">Overdue Purchase Orders</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/PurchaseOverdue &nbsp;|&nbsp; 逾交期未到貨採購行列表</span><span lang="en">Route: /PurchaseOverdue &nbsp;|&nbsp; Order lines past their delivery date and not yet received</span></div>
+    </div>
+
+    <p><span lang="zh">列出已過交期仍未收貨（或部分收貨）且未結案的採購行，含逾期天數與採購員，供採購每日跟催。已結案（IsClosed）的採購行不再列入。</span><span lang="en">Lists order lines past their delivery date that are not yet received (or only partly received) and not closed, with the overdue days and the buyer, for daily follow-up. Closed lines (IsClosed) are excluded.</span></p>
+    <img class="screen-shot" src="img/purchase-overdue.png" data-src-en="img/en/purchase-overdue.png" alt="採購逾期分析畫面截圖" data-alt-en="Purchase overdue analysis screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">採購逾期分析畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Purchase overdue analysis screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列可依「預交日區間、供應商、品號」過濾後點「查詢」。</span><span lang="en">Filter by delivery date range, supplier and product in the search bar, then click "Search".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">「逾期天數 ≥」可只列出逾期達 N 天以上的行（預設 1＝全部逾期行）。</span><span lang="en">"Overdue Days ≥" lists only lines overdue by at least N days (the default 1 shows every overdue line).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">清單含「採購員」欄（採購單建單人），點採購單號可於側欄檢視單據；具列印權限可匯出 Excel。</span><span lang="en">The list includes a "Buyer" column (whoever created the order); click an order number to view the document in the side panel, and export to Excel with print permission.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">預交日（起 / 迄）</span><span lang="en">Delivery date (from / to)</span></td><td><span lang="zh">依採購明細的預計到貨日區間篩選。留白時預設<b>近 30 天</b>，不是「不限起日」</span><span lang="en">Filters by the expected delivery date range on the order lines. Left blank, it defaults to the <b>last 30 days</b> rather than to no lower bound.</span></td></tr>
+        <tr><td><span lang="zh">供應商代號 / 品號</span><span lang="en">Supplier / Product</span></td><td><span lang="zh">各自縮小查詢範圍</span><span lang="en">each narrows the query scope</span></td></tr>
+        <tr><td><span lang="zh">逾期天數 ≥</span><span lang="en">Overdue Days ≥</span></td><td><span lang="zh">只列出逾期達指定天數以上者，用於聚焦嚴重延誤</span><span lang="en">Lists only items overdue by at least the given number of days, to focus on serious delays</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">採購單號 / 行號</span><span lang="en">Order No. / Line</span></td><td><span lang="zh">逾期的採購單與其明細行</span><span lang="en">The overdue purchase order and its lines</span></td></tr>
+        <tr><td><span lang="zh">供應商</span><span lang="en">Supplier</span></td><td><span lang="zh">交貨的供應商</span><span lang="en">Delivering supplier</span></td></tr>
+        <tr><td><span lang="zh">採購日 / 預交日</span><span lang="en">Order Date / Delivery Date</span></td><td><span lang="zh">下單日期與承諾到貨日</span><span lang="en">Order date and promised delivery date</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">採購的料件</span><span lang="en">Item being purchased</span></td></tr>
+        <tr><td><span lang="zh">採購量 / 已到量 / 未到量</span><span lang="en">Order Qty / Received Qty / Pending Qty</span></td><td><span lang="zh">訂購數量、累計進貨量，以及仍未到貨的差額</span><span lang="en">Ordered quantity, cumulative receipts and the balance still outstanding</span></td></tr>
+        <tr><td><span lang="zh">逾期天數</span><span lang="en">Overdue Days</span></td><td><span lang="zh"><b>廠別當地日</b> － 預交日；是催料的優先排序依據。基準日取的是<b>該廠時區的今天</b>而不是伺服器時區，廠別與伺服器不同時區時才不會整批差一天</span><span lang="en">The <b>plant's local date</b> − the promised delivery date; it drives the follow-up priority. The baseline is <b>today in the plant's own time zone</b>, not the server's, so a plant in another zone is not out by a day across the board</span></td></tr>
+        <tr><td><span lang="zh">採購員</span><span lang="en">Buyer</span></td><td><span lang="zh">負責此採購單的採購人員，便於指派追蹤</span><span lang="en">Buyer responsible for this order, making follow-up easy to assign</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="supplier-delivery-rate.html"><span lang="zh">供應商交期達成率</span><span lang="en">Supplier Delivery Rate</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

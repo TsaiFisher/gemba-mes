@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="/mobile/manifest.json">
+    <link rel="apple-touch-icon" href="/mobile/icons/apple-touch-icon-180.png">
+    <title data-i18n="count.page_title">庫存盤點</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+    <link rel="stylesheet" href="/mobile/css/inv-stockcount.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary mobile-navbar px-3">
+    <button type="button" data-action="historyBack" data-fallback="/mobile/inv/list.html"
+            class="btn btn-link text-white p-0 me-2" data-i18n-title="common.back_prev" title="返回">
+        <i class="bi bi-arrow-left fs-5"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.back_prev">返回</span>
+    </button>
+    <span class="navbar-brand fw-bold mb-0 h1 flex-grow-1">
+        <i class="bi bi-clipboard-check me-2"></i><span data-i18n="count.title">庫存盤點</span>
+    </span>
+    <a href="/mobile/home.html" class="btn btn-outline-light btn-sm me-1" data-i18n-title="common.back" title="回首頁"><i class="bi bi-house-door"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="nav.home">首頁</span></a>
+    <button class="btn btn-outline-light btn-sm me-1" data-action="toggleLang" data-lang-toggle title="Language">EN</button>
+    <button class="btn btn-outline-light btn-sm" data-action="logout" data-i18n-title="common.logout" title="登出">
+        <i class="bi bi-box-arrow-right"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.logout">登出</span>
+    </button>
+</nav>
+
+<div class="container-fluid py-3 px-3">
+
+    <!-- 模式切換 -->
+    <ul class="nav nav-pills nav-fill mb-3" id="modeTabs">
+        <li class="nav-item">
+            <button class="nav-link active" data-action="switchMode" data-mode="sheet" data-i18n="count.mode_sheet">依清冊盤點</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-action="switchMode" data-mode="free" data-i18n="count.mode_free">自由盤點</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-action="switchMode" data-mode="recount" data-i18n="count.mode_recount">複盤</button>
+        </li>
+    </ul>
+
+    <!-- ══════════ 模式一：依清冊盤點 ══════════ -->
+    <div id="modeSheet">
+        <div class="card shadow-sm mb-3">
+            <div class="card-body py-3">
+                <label class="form-label small fw-semibold" data-i18n="count.select_sheet">選擇盤點清冊</label>
+                <select id="sheetSelect" class="form-select btn-mobile" data-action-change="onSheetChange">
+                    <option value="" data-i18n="count.sheet_ph">請選擇...</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="sheetItemsCard" class="card shadow-sm mb-3 u-display-none">
+            <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+                <span class="fw-semibold small" data-i18n="count.pending_items">待盤項目</span>
+                <button class="btn btn-sm btn-outline-secondary" data-action="reloadSheetItems" data-i18n-title="common.refresh" title="重新整理">
+                    <i class="bi bi-arrow-clockwise"></i><span class="ms-1" data-i18n="common.refresh">重新整理</span>
+                </button>
+            </div>
+            <div class="card-body py-0 px-0" id="sheetItemRows"></div>
+        </div>
+
+        <div class="d-grid mb-3">
+            <button class="btn btn-success btn-lg action-btn u-display-none" id="btnSubmitSheet" data-action="submitSheetCount">
+                <i class="bi bi-check-circle me-2"></i><span data-i18n="count.submit">送出盤點結果</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ══════════ 模式二：自由盤點（可累積多儲位/品號再一次送出） ══════════ -->
+    <div id="modeFree" class="u-display-none">
+
+        <div id="stepLoc" class="card shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <span class="badge bg-primary me-2">1</span>
+                <span class="fw-semibold small" data-i18n="count.step1">選擇盤點儲位</span>
+            </div>
+            <div class="card-body py-3">
+                <div class="input-group mb-2">
+                    <input type="text" id="locInput" class="form-control btn-mobile"
+                           placeholder="掃描或輸入儲位代碼" data-i18n-placeholder="count.loc_ph" autocomplete="off">
+                    <button class="btn btn-outline-secondary" data-action="openLocScanner" data-i18n-title="common.scan" title="掃描">
+                        <i class="bi bi-upc-scan"></i><span class="ms-1" data-i18n="common.scan">掃描</span>
+                    </button>
+                    <button class="btn btn-primary" data-action="loadLocation" data-i18n-title="common.search" title="搜尋">
+                        <i class="bi bi-search"></i><span class="ms-1" data-i18n="common.search">搜尋</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="u-display-none" id="stepCount">
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="badge bg-primary me-2">2</span>
+                        <span class="fw-semibold small" id="locTitle">—</span>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary" data-action="resetLoc">
+                        <i class="bi bi-arrow-left me-1"></i><span data-i18n="count.reselect">重選</span>
+                    </button>
+                </div>
+                <div class="card-body py-0 px-0" id="productRows"></div>
+            </div>
+
+            <div class="d-grid mb-3">
+                <button class="btn btn-primary btn-lg action-btn" id="btnAddCart" data-action="addToCart">
+                    <i class="bi bi-cart-plus me-2"></i><span data-i18n="count.add_to_cart">加入待送出清單</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="cartCard" class="card shadow-sm mb-3 u-display-none">
+            <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+                <span class="fw-semibold small" data-i18n="count.cart_title">待送出清單</span>
+                <span class="badge bg-secondary" id="cartCount">0</span>
+            </div>
+            <div class="card-body py-0 px-0" id="cartRows"></div>
+        </div>
+
+        <div class="d-grid mb-3">
+            <button class="btn btn-success btn-lg action-btn u-display-none" id="btnSubmitCart" data-action="submitCart">
+                <i class="bi bi-check-circle me-2"></i><span data-i18n="count.submit_batch">送出全部</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ══════════ 模式三：複盤 ══════════ -->
+    <div id="modeRecount" class="u-display-none">
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+                <span class="fw-semibold small" data-i18n="count.recount_title">待複盤項目（需與初盤人員不同）</span>
+                <button class="btn btn-sm btn-outline-secondary" data-action="reloadRecount" data-i18n-title="common.refresh" title="重新整理">
+                    <i class="bi bi-arrow-clockwise"></i><span class="ms-1" data-i18n="common.refresh">重新整理</span>
+                </button>
+            </div>
+            <div class="card-body py-0 px-0" id="recountRows"></div>
+        </div>
+
+        <div class="d-grid mb-3">
+            <button class="btn btn-warning btn-lg action-btn u-display-none" id="btnSubmitRecount" data-action="submitRecount">
+                <i class="bi bi-check-circle me-2"></i><span data-i18n="count.submit">送出盤點結果</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 結果卡（三種模式共用） -->
+    <div id="resultCard" class="card shadow-sm mb-3 u-display-none">
+        <div class="card-header py-2" id="resultHeader"></div>
+        <div class="card-body py-2 px-3 small" id="resultBody"></div>
+    </div>
+
+</div>
+
+<!-- 掃描 Modal -->
+<div class="modal fade" id="scannerModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title" data-i18n="count.scan_title">掃描儲位條碼</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-0"><div id="reader"></div></div>
+        </div>
+    </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="/mobile/js/telemetry.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/data-action.js"></script>
+<script src="/mobile/js/nav.js"></script>
+<script src="/mobile/js/libs/html5-qrcode.min.js"></script>
+<script src="/mobile/js/i18n.js"></script>
+<script src="/mobile/js/i18n.modules.js"></script>
+    <script src="/mobile/js/api.js"></script>
+<script src="/mobile/js/auth.js"></script>
+<script src="/mobile/js/scanner.js"></script>
+<script src="/mobile/js/offline-queue.js"></script>
+<script src="/mobile/inv/stockcount.page.js"></script>
+</body>
+</html>

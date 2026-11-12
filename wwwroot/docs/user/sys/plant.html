@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Plant Management — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>廠別管理 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System Administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link active"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-building me-2 text-primary"></i><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：管理系統 → 廠別管理 &nbsp;|&nbsp; 權限：目前身份為 Admin</span><span lang="en">Menu: System Administration → Plant Management &nbsp;|&nbsp; Permission: current role is Admin</span></div>
+    </div>
+
+    <p><span lang="zh">廠別管理維護系統中的</span><span lang="en">Plant management maintains the </span><b><span lang="zh">廠</span><span lang="en">plants</span></b><span lang="zh">，以及每一廠的預設語系、時區與</span><span lang="en"> in the system, along with each plant's default language, time zone and </span><b><span lang="zh">參數覆寫</span><span lang="en">parameter overrides</span></b><span lang="zh">。廠別是全系統資料的切分依據：使用者目前在哪一廠，就只看得到那一廠的單據與庫存。</span><span lang="en">. The plant is how data is partitioned system-wide: users see the documents and stock of the plant they are currently in, and no other.</span></p>
+
+    <img class="screen-shot" src="img/plant.png" data-src-en="img/en/plant.png" alt="廠別管理畫面截圖" data-alt-en="Plant management screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">廠別管理畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Plant management screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">廠別代碼</span><span lang="en">Plant code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">唯一識別碼（例：P01），</span><span lang="en">The unique code (for example P01); </span><b><span lang="zh">建立後不可變更</span><span lang="en">it cannot be changed once created</span></b><span lang="zh">，所有單據都以它記錄所屬廠。</span><span lang="en">, and every document records it as the plant it belongs to.</span></td></tr>
+        <tr><td><span lang="zh">廠別名稱</span><span lang="en">Plant name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">中文名稱，顯示於畫面右上角的廠別切換與各式報表。</span><span lang="en">The Chinese name, shown in the plant switcher at the top right and on reports.</span></td></tr>
+        <tr><td><span lang="zh">英文名稱</span><span lang="en">Name (EN)</span></td><td></td><td><span lang="zh">介面為英文時顯示的名稱。</span><span lang="en">The name shown when the interface is in English.</span></td></tr>
+        <tr><td><span lang="zh">中／英文地址</span><span lang="en">Address (ZH / EN)</span></td><td></td><td><span lang="zh">列印單據時的抬頭地址，兩種語系各一份。</span><span lang="en">The address printed on documents, one for each language.</span></td></tr>
+        <tr><td><span lang="zh">預設語系</span><span lang="en">Default language</span></td><td></td><td><span lang="zh">使用者沒有個人語系（使用者維護選「依廠別預設」）時，登入或切換到本廠採用的介面語言；有個人語系的以個人為準。</span><span lang="en">The interface language used when a user with no personal language (set to "Follow plant default" in user maintenance) signs in or switches to this plant; a personal language, when set, takes priority.</span></td></tr>
+        <tr><td><span lang="zh">預設時區</span><span lang="en">Default time zone</span></td><td></td><td><span lang="zh">畫面上的時間顯示依此換算。系統內部一律以 UTC 儲存，因此</span><span lang="en">Times on screen are converted using it. Internally everything is stored in UTC, so </span><b><span lang="zh">改時區只影響顯示</span><span lang="en">changing the time zone only affects the display</span></b><span lang="zh">，不會改動既有資料。下拉列出系統認得的所有時區，可直接輸入關鍵字尋找（例如 Taipei）；存檔時會驗證，認不得的值存不進去。這一層</span><span lang="en"> and never alters the stored data. The dropdown lists every time zone the system knows and can be searched by keyword — "Taipei", for example — and the value is validated on save, so one the system does not recognize cannot be stored. This level </span><b><span lang="zh">優先於使用者的個人時區</span><span lang="en">takes precedence over each person's own time zone</span></b><span lang="zh">：這裡一旦設了，該廠使用者在「個人設定」設的時區就不生效（見</span><span lang="en">: once it is set, the time zone people of this plant chose under Personal Settings has no effect (see </span><a href="user-settings.html"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a><span lang="zh">）。</span><span lang="en">).</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="plant-parameter-settings"><i class="bi bi-sliders me-2 text-primary"></i><span lang="zh">廠別參數設定</span><span lang="en">Plant parameter settings</span></h2>
+    <p><span lang="zh">編輯廠別時，表單上有「基本資料」與「廠別參數設定」兩個頁籤。後者讓您</span><span lang="en">When editing a plant the form has two tabs: "Basic information" and "Plant parameter settings". The second lets you </span><b><span lang="zh">針對這一廠覆寫全域的系統參數</span><span lang="en">override the global system parameters for this one plant</span></b><span lang="zh">，分為庫存與製造兩區，包含庫存簡化模式、製造簡化模式、開工物料備齊閘口、開工機台狀態閘口、批量政策、工單簽核金額門檻、工單強制送審條件（委外工單／重工工單／預計完工晚於訂單交期，開啟後符合者一律送審、不走金額門檻；須該廠有工單簽核流程才會送出）、完成品入庫倉／儲位、自動重排排程（異動後／派工前／每日時刻、排序規則、凍結時界）等。</span><span lang="en">, in two sections — inventory and manufacturing — covering simplified inventory mode, simplified manufacturing mode, the material-ready gate at start, the machine status gate at start, the lot policy, the work-order approval amount threshold, the mandatory work-order approval conditions (outsourced orders / rework orders / orders planned to finish after the order due date — when on, matching orders are always submitted regardless of the amount threshold; a work order approval flow must exist for them to be sent), the finished-goods warehouse and location, automatic rescheduling (after changes / before dispatch / daily time, sequencing rule, freeze window), and so on.</span></p>
+
+    <img class="screen-shot" src="img/plant-params.png" data-src-en="img/en/plant-params.png" alt="廠別參數設定頁籤截圖" data-alt-en="Plant parameter settings tab screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">編輯廠別 → 「廠別參數設定」頁籤：每個參數左側是「覆寫」核取方塊，下方灰字為目前的全域值</span><span lang="en">Editing a plant, on the "Plant parameter settings" tab: each parameter has an "Override" checkbox on the left, with the current global value in grey underneath</span></div>
+
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">畫面上的標示</span><span lang="en">What you see</span></th><th><span lang="zh">意義</span><span lang="en">What it means</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">「覆寫」核取方塊</span><span lang="en">The "Override" checkbox</span></td><td><span lang="zh">勾選＝本廠自訂這個參數；不勾＝沿用全域的系統參數值。</span><span lang="en">Ticked means this plant sets the parameter itself; unticked means the global system parameter applies.</span></td></tr>
+        <tr><td><span lang="zh">欄位下方的「全域值」</span><span lang="en">The "Global value" note under the field</span></td><td><span lang="zh">目前全域系統參數的值。已覆寫時會加上刪除線，表示本廠不採用它。</span><span lang="en">The current global value. When the parameter is overridden it is struck through, showing that this plant does not use it.</span></td></tr>
+        <tr><td><span lang="zh">區塊標題旁的黃色標記</span><span lang="en">The yellow badge beside a section heading</span></td><td><span lang="zh">該區已覆寫的參數個數；顯示「全部繼承」表示這一區完全沿用全域設定。</span><span lang="en">How many parameters in that section are overridden; "All inherited" means the section follows the global settings entirely.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">值改了但沒勾「覆寫」＝不會生效：</span><span lang="en">Changing a value without ticking "Override" has no effect:</span></strong><span lang="zh">未勾覆寫時，右側的值控制項仍然可以點、可以改，但存檔時系統</span><span lang="en"> while "Override" is unticked the control on the right can still be clicked and changed, but on save the system </span><b><span lang="zh">會忽略它，並清掉本廠既有的覆寫</span><span lang="en">ignores it and clears any existing override for this plant</span></b><span lang="zh">。判斷依據永遠是核取方塊，不是您在值控制項上做了什麼。要取消覆寫、改回沿用全域，就是把核取方塊取消勾選後存檔。</span><span lang="en">. The checkbox is always what counts, not what you did to the value control. To drop an override and go back to the global value, untick the box and save.</span>
+    </div>
+
+    <div class="note-box"><i class="bi bi-gear-wide-connected me-1 text-primary"></i>
+      <strong><span lang="zh">開工機台狀態閘口：</span><span lang="en">Machine status gate at start:</span></strong><span lang="zh">上工（桌機與手機）時檢查機台狀態。機台不在可排程狀態（故障停機、保養中、外修中等；「待機」依「Standby 機台可排程」參數）時——</span><span lang="en"> checked when work is started (desktop and mobile). If the machine is not in a schedulable state (breakdown, maintenance, external repair and so on; "standby" follows the "Standby Machines Schedulable" parameter) —</span><b><span lang="zh">不檢查</span><span lang="en">None</span></b><span lang="zh">照常開工；</span><span lang="en"> starts as usual; </span><b><span lang="zh">警告</span><span lang="en">Warning</span></b><span lang="zh">（未設定時的預設）照常開工但提醒確認機台狀態；</span><span lang="en"> (the default when not set) starts but reminds the user to check the machine status; </span><b><span lang="zh">阻擋</span><span lang="en">Block</span></b><span lang="zh">不允許開工。建議先用「警告」一段時間，確認現場在機台修好後都會更新狀態，再改成「阻擋」，以免機台已修好卻因狀態沒改而無法開工。</span><span lang="en"> does not allow the start. We suggest running with "Warning" for a while, until the shop floor reliably updates the status once a machine is repaired, before switching to "Block" — otherwise a repaired machine whose status was never updated cannot be started.</span>
+    </div>
+
+    <div class="note-box"><i class="bi bi-plus-slash-minus me-1 text-primary"></i>
+      <strong><span lang="zh">超量生產與委外超收：</span><span lang="en">Over-production and outsource over-receipt:</span></strong><span lang="zh">「廠內超量容許率」讓報工的合格數累計可以超過派工量到該百分比（例如 3% 時派工 100 最多報到 103），未設定＝0，一個都不能多；再超過時依「廠內超過容許上限時」<b>拒收</b>（未設定時的預設），或<b>需主管確認</b>——只有角色在「手機模組權限」被授予「超量核准」的人能報（桌機與手機同一個權限）。委外收貨同樣有「委外超收容許率」與「委外超過容許上限時」（未設定時預設需主管確認），另可設定「委外超收部分的加工費」：<b>照付</b>（預設）或<b>不付</b>——不付時應付發票只算到委外採購量，收貨單明細備註會記下合約單價與計費量。</span><span lang="en"> "In-plant over-production tolerance" lets the cumulative good quantity reported exceed the dispatch quantity by that percentage (at 3%, a dispatch of 100 can be reported up to 103); not set = 0, not a single unit more. Beyond that, "In-plant: beyond the tolerance" either <b>rejects</b> it (the default) or requires <b>supervisor confirmation</b> — only roles granted "Over-quantity approval" under Mobile Module Permissions can report it (the same right applies on desktop and mobile). Outsource receipts have the same pair, "Outsource over-receipt tolerance" and "Outsource: beyond the tolerance" (default: supervisor confirmation), plus "Processing fee for the over-received quantity": <b>Pay</b> (default) or <b>Do not pay</b> — with "Do not pay" the AP invoice covers only the ordered quantity, and the receipt line remarks record the contract price and the billed quantity.</span>
+    </div>
+
+    <div class="note-box"><i class="bi bi-truck me-1 text-primary"></i>
+      <strong><span lang="zh">委外簡化（預設皆關）：</span><span lang="en">Simplified outsourcing (all off by default):</span></strong><span lang="zh">「委外送外料於收貨時自動扣」開啟時，不必另開委外發料單：每次確認委外收貨，系統依<b>工單用料 × 累計收回量 ÷ 工單數量</b>算出應發量，扣掉已發未退的部分後自動產生並過帳一張委外發料單（從品號類別的預設倉儲出庫，取不到會擋下並說明）。整品委外扣工單全部用料、工序委外只扣該工序的用料；先前手動發過的不會重扣。「委外收料當場驗收」開啟時，手機委外收料每一行多一欄<b>不良數</b>：送出即完成品檢（MIL-STD-1916，Ac=0），不良 0＝合格，直接入一般倉（明細儲位，沒填用品號類別預設儲位）並回寫委外派工完工量；有不良＝整批入本廠待驗倉，依不合格品處置辦理，不算完工。免驗品號直接入一般倉。不必再經「入庫上架 → 進料檢驗」，非簡化廠也適用；桌機收貨單仍走原流程。「委外工單投產自動建委外採購單」開啟時，委外工單投產即依唯一有效報價廠商建一張已確認的委外採購單（細節見委外採購單說明）。</span><span lang="en"> When "Deduct outsource send-out materials automatically at receipt" is on, no separate outsource material issue is needed: each time an outsource receipt is confirmed, the system works out the quantity due as <b>work-order material × cumulative quantity received ÷ work-order quantity</b>, subtracts what has already been issued (net of returns), and creates and posts an outsource issue slip for the difference (taken from the product category's default location; if there is none, it stops and says so). A fully outsourced order deducts all its materials, an outsourced operation only that operation's; anything issued manually earlier is not deducted again. When "Inspect outsource deliveries at receipt" is on, each line of mobile Outsource Receiving gets a <b>Defects</b> field: submitting completes the inspection (MIL-STD-1916, Ac=0). 0 defects = pass, stocked straight into a normal warehouse (the line location, or the product category default) and added to the outsourced dispatch's completed quantity; any defect = the whole lot goes to the plant's quarantine warehouse for nonconformance handling and does not count as completed. Inspection-exempt products go straight to a normal warehouse. No "Putaway → Incoming Inspection" steps are needed, even in non-simplified plants; desktop receipts keep the normal flow. When "Create the outsource PO automatically when an outsourced work order is released" is on, releasing an outsourced work order creates a Confirmed outsource PO for the single supplier with a valid quotation (see the Outsource PO page for details).</span>
+    </div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">新增廠別</span><span lang="en">Adding a plant</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「管理系統 &gt; 廠別管理」，按「查詢」載入現有廠別。</span><span lang="en">Choose "System Administration &gt; Plant Management" in the left-hand menu and click "Search" to load the existing plants.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「新增」，填入廠別代碼與名稱，設定預設語系與時區後儲存。</span><span lang="en">Click "Add", enter the plant code and name, set the default language and time zone, and save.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">新廠建立後，還要到「角色管理」把這個廠勾進相關角色的可用廠別，人員才進得去。</span><span lang="en">Once the plant exists, tick it into the relevant roles' allowed plants under "Role Management"; until then nobody can enter it.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">新廠通常還需要自己的倉庫、儲位、單號設定與會計期間，請至各主檔畫面建立。</span><span lang="en">A new plant usually needs its own warehouses, storage locations, document number settings and accounting periods, created on the respective master-data screens.</span></div></div>
+
+    <h3><span lang="zh">為單一廠開啟簡化模式</span><span lang="en">Turning on simplified mode for one plant</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">編輯該廠，切到「廠別參數設定」頁籤。</span><span lang="en">Open the plant and switch to the "Plant parameter settings" tab.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">找到製造簡化模式，先</span><span lang="en">Find simplified manufacturing mode, </span><b><span lang="zh">勾選「覆寫」</span><span lang="en">tick "Override" first</span></b><span lang="zh">，再把右側開關切成開啟。</span><span lang="en">, then switch the toggle on the right to on.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">存檔後重新開啟，區塊標題旁會出現「已覆寫 N 項」的黃色標記，代表設定已生效。</span><span lang="en">Reopen it after saving and the yellow "N overridden" badge appears beside the section heading, showing that the override is in place.</span></div></div>
+
+    <h2 id="deleting-a-plant"><i class="bi bi-trash me-2 text-primary"></i><span lang="zh">刪除廠別</span><span lang="en">Deleting a plant</span></h2>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">擋下的原因</span><span lang="en">Reason it is blocked</span></th><th><span lang="zh">處理方式</span><span lang="en">What to do</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">有使用者目前正在這個廠</span><span lang="en">Users are currently in this plant</span></td><td><span lang="zh">請對方切換到其他廠後再刪。</span><span lang="en">Ask them to switch to another plant first.</span></td></tr>
+        <tr><td><span lang="zh">有組織單位指定這個廠</span><span lang="en">Organization units point to it</span></td><td><span lang="zh">到「組織架構」把那些單位的廠別改掉或清空。</span><span lang="en">Change or clear the plant on those units under "Organization Structure".</span></td></tr>
+        <tr><td><span lang="zh">有角色把它列為可用廠別</span><span lang="en">Roles list it as an allowed plant</span></td><td><span lang="zh">到「角色管理」取消勾選。</span><span lang="en">Untick it under "Role Management".</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">已經上線運作過的廠實務上刪不掉，也不該刪——單據、庫存與傳票都掛著它。要停用一個廠，做法是把它從所有角色的可用廠別中移除，使用者就再也切不進去。</span><span lang="en">A plant that has been in use cannot in practice be deleted, and should not be: documents, stock and journal entries all reference it. To retire one, remove it from every role's allowed plants and nobody can switch into it again.</span>
+    </div>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">查詢結果可匯出 Excel（.xlsx）、CSV 或 JSON，內容為廠別代碼、名稱、預設語系與預設時區。</span><span lang="en">The results can be exported as Excel (.xlsx), CSV or JSON, containing the plant code, name, default language and default time zone.</span></p>
+  </main>
+</div>
+</body>
+</html>

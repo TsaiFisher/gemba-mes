@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Ask the Manual</value></data>
+  <data name="HelpText" xml:space="preserve"><value>Two sources you can ask about: the user manual (which screen to use, how to operate it) and approved rule extracts (what a rule says and why). Answers are generated only from those two; anything neither covers is answered with "not found" — always open the sources below and verify for yourself. This assistant does not query your actual data (stock quantities, document amounts, and the like), and does not remember what you asked.</value></data>
+  <data name="QuestionPlaceholder" xml:space="preserve"><value>For example: which screen shows materials with no movement for a long time?</value></data>
+  <data name="Send" xml:space="preserve"><value>Send</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="LatencyNote" xml:space="preserve"><value>Inference runs locally; a question takes about a minute. You can cancel at any time while waiting.</value></data>
+  <data name="EmptyPrompt" xml:space="preserve"><value>Type a question and press Send</value></data>
+  <data name="You" xml:space="preserve"><value>You</value></data>
+  <data name="Assistant" xml:space="preserve"><value>Assistant</value></data>
+  <data name="Thinking" xml:space="preserve"><value>Thinking…</value></data>
+  <data name="Cancelled" xml:space="preserve"><value>Cancelled.</value></data>
+  <data name="RequestFailed" xml:space="preserve"><value>Something went wrong. Please try again later.</value></data>
+  <data name="Sources" xml:space="preserve"><value>Sources</value></data>
+  <data name="UnverifiableCitation" xml:space="preserve"><value>(the model cited a page that was not supplied this time; it cannot be verified — do not rely on this part)</value></data>
+  <data name="ElapsedFmt" xml:space="preserve"><value>{0}s</value></data>
+  <data name="StageSearch" xml:space="preserve"><value>Searching the manual…</value></data>
+  <data name="StageInferFmt" xml:space="preserve"><value>Model is reading {0} excerpt(s), about {1} characters…</value></data>
+  <data name="NotReady" xml:space="preserve"><value>The inference service is not ready; questions cannot be answered right now.</value></data>
+  <data name="RebuildIndex" xml:space="preserve"><value>Rebuild index</value></data>
+  <data name="ConfirmRebuild" xml:space="preserve"><value>Rebuild the index? It occupies inference resources while running, slows everyone's questions down, and may take several minutes.</value></data>
+  <data name="Rebuilding" xml:space="preserve"><value>Rebuilding…</value></data>
+  <data name="StreamIncomplete" xml:space="preserve"><value>The answer was interrupted while streaming. Please try again.</value></data>
+  <data name="Mode" xml:space="preserve"><value>Question mode</value></data>
+  <data name="ModeManual" xml:space="preserve"><value>Manual Q&amp;A</value></data>
+  <data name="ModeData" xml:space="preserve"><value>Data query</value></data>
+  <data name="ModeManualHint" xml:space="preserve"><value>Answers how the system works, with citations to the user manual.</value></data>
+  <data name="ModeDataHint" xml:space="preserve"><value>Queries operational data and returns a table. Only reports you are already authorised to open are reachable, and the query parameters are shown so you can verify them.</value></data>
+  <data name="ConfirmRun" xml:space="preserve"><value>Confirm and run</value></data>
+  <data name="ConfirmDiscard" xml:space="preserve"><value>Discard this query</value></data>
+  <data name="ConfirmChooseTool" xml:space="preserve"><value>Which query should run?</value></data>
+  <data name="ConfirmUnset" xml:space="preserve"><value>(not specified)</value></data>
+  <data name="ConfirmPending" xml:space="preserve"><value>Please confirm before running</value></data>
+  <data name="SaveQuery" xml:space="preserve"><value>Save this query</value></data>
+  <data name="SaveQueryPlaceholder" xml:space="preserve"><value>e.g. Last month's slow-moving stock</value></data>
+  <data name="QueryParams" xml:space="preserve"><value>Query parameters</value></data>
+  <data name="NoRows" xml:space="preserve"><value>No matching data.</value></data>
+  <data name="RowsFmt" xml:space="preserve"><value>{0} row(s)</value></data>
+  <data name="TruncatedFmt" xml:space="preserve"><value>Showing the first {0} of {1} rows (open the corresponding report screen for the full set)</value></data>
+</root>

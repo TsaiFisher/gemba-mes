@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Management Reports (RPT) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>管理報表（RPT）— SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">RPT 畫面</span><span lang="en">RPT screens</span></div>
+    <a href="dashboard.html" class="nav-link"><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></a>
+    <a href="profit-loss.html" class="nav-link"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a>
+    <a href="gross-margin.html" class="nav-link"><span lang="zh">毛利分析</span><span lang="en">Gross Margin Analysis</span></a>
+    <a href="margin-analysis.html" class="nav-link"><span lang="zh">多維度銷售毛利分析</span><span lang="en">Multi-dimensional sales margin analysis</span></a>
+    <a href="contribution-margin.html" class="nav-link"><span lang="zh">產品邊際貢獻分析</span><span lang="en">Product Contribution Margin</span></a>
+    <a href="balance-sheet.html" class="nav-link"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></a>
+    <a href="consolidated-statement.html" class="nav-link"><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></a>
+    <a href="outsource-performance.html" class="nav-link"><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></a>
+    <a href="data-audit.html" class="nav-link"><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></a>
+    <a href="field-telemetry.html" class="nav-link"><span lang="zh">現場遙測</span><span lang="en">Field Telemetry</span></a>
+    <a href="saved-queries.html" class="nav-link"><span lang="zh">常用查詢</span><span lang="en">Saved Queries</span></a>
+    <a href="report-schedule.html" class="nav-link"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>
+    <a href="report-inbox.html" class="nav-link"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a>
+    <a href="report-run-history.html" class="nav-link"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-bar-chart-fill me-2 text-primary"></i><span lang="zh">管理報表（RPT）</span><span lang="en">Management Reports (RPT)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">跨模組管理儀表板與財務/毛利/委外分析報表</span><span lang="en">A cross-module management dashboard with financial, margin and outsource analysis reports</span></div>
+    </div>
+    <p><span lang="zh">RPT（Report）模組彙整全系統資料提供決策報表：管理儀表板即時呈現營運 KPI，損益表/資產負債表供財務檢視，毛利與邊際貢獻分析深入產品獲利結構，委外對帳報表勾稽委外加工費與損耗。各報表皆可依期間/維度篩選並匯出。</span><span lang="en">The RPT (Report) module pulls data together from across the system into reports for decision making: the management dashboard shows operating KPIs live, the income statement and balance sheet give the financial view, margin and contribution analysis look into how products actually make money, and the outsource reconciliation report ties out subcontract charges and scrap. Every report can be filtered by period and dimension and exported.</span></p>
+
+    <h2 id="flow"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">作業流程圖（資料來源 → 報表）</span><span lang="en">Process flow chart (data source → report)</span></h2>
+    <p class="small text-muted mb-2"><span lang="zh">報表以各模組已過帳的單據為來源，故須先完成前段作業才有資料。</span><span lang="en">Reports are built from documents already posted in each module, so the upstream work has to be finished before there is anything to show. </span><strong><span lang="zh">虛線外框</span><span lang="en">A dashed outline</span></strong><span lang="zh">為其他模組的作業（以顏色區分模組）。</span><span lang="en"> marks a step in another module (colour-coded by module).</span></p>
+    <div class="flow">
+      <div class="flow-legend">
+        <span class="flow-legend-item m-rpt"><i class="flow-dot"></i><span lang="zh">RPT 報表（本模組）</span><span lang="en">RPT Reports (this module)</span></span>
+        <span class="flow-legend-item m-ord"><i class="flow-dot"></i><span lang="zh">ORD 訂單</span><span lang="en">ORD Orders</span></span>
+        <span class="flow-legend-item m-mfg"><i class="flow-dot"></i><span lang="zh">MFG 製造</span><span lang="en">MFG Manufacturing</span></span>
+        <span class="flow-legend-item m-pur"><i class="flow-dot"></i><span lang="zh">PUR 採購</span><span lang="en">PUR Purchasing</span></span>
+        <span class="flow-legend-item m-inv"><i class="flow-dot"></i><span lang="zh">INV 庫存</span><span lang="en">INV Inventory</span></span>
+        <span class="flow-legend-item m-act"><i class="flow-dot"></i><span lang="zh">ACT 結帳</span><span lang="en">ACT Closing</span></span>
+        <span class="flow-legend-item m-osp"><i class="flow-dot"></i><span lang="zh">OSP 委外</span><span lang="en">OSP Outsource</span></span>
+        <span class="flow-legend-item"><i class="flow-dot flow-dot-ext"></i><span lang="zh">虛線＝其他模組作業</span><span lang="en">Dashed = a step in another module</span></span>
+      </div>
+
+      <div class="flow-row" id="flow-rpt-operations-dashboard">
+        <div class="flow-row-label"><span lang="zh">營運儀表板</span><span lang="en">Operations dashboard</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-ord ext" href="../ord/sales-order.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-mfg ext" href="../mfg/work-order.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">工單</span><span lang="en">Work order</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-pur ext" href="../pur/purchase-order.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv ext" href="../inv/inventory-balance.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存餘額</span><span lang="en">Inventory Balance</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt" href="dashboard.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-rpt-financial-statements">
+        <div class="flow-row-label"><span lang="zh">財務報表</span><span lang="en">Financial statements</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-act ext" href="../act/journal-entry.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">日記帳</span><span lang="en">Journal</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act ext" href="../act/month-end.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">月結關帳</span><span lang="en">Month-end closing</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt" href="profit-loss.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></span></a>
+          <span class="flow-plus">＋</span>
+          <a class="flow-node m-rpt" href="balance-sheet.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt" href="consolidated-statement.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-rpt-profitability-analysis">
+        <div class="flow-row-label"><span lang="zh">獲利分析</span><span lang="en">Profitability analysis</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-ord ext" href="../ord/goods-shipment.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">出貨（營收）</span><span lang="en">Shipment (revenue)</span></span></a>
+          <span class="flow-plus">＋</span>
+          <a class="flow-node m-mfg ext" href="../mfg/work-order-variance.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">工單實際成本</span><span lang="en">Work order actual cost</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt" href="gross-margin.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">毛利率分析</span><span lang="en">Margin rate analysis</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt" href="margin-analysis.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">多維度毛利</span><span lang="en">Multi-dimensional margin</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt" href="contribution-margin.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">邊際貢獻</span><span lang="en">Contribution</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-rpt-outsource-reconciliation">
+        <div class="flow-row-label"><span lang="zh">委外對帳</span><span lang="en">Outsource reconciliation</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-osp ext" href="../osp/outsource-purchase-order.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp ext" href="../osp/outsource-material.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外發料</span><span lang="en">Issue to Outsource</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp ext" href="../osp/outsource-receipt.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt" href="outsource-performance.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">委外對帳／績效</span><span lang="en">Outsource reconciliation and performance</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-rpt-data-audit">
+        <div class="flow-row-label"><span lang="zh">資料稽核</span><span lang="en">Data audit</span></div>
+        <div class="flow-steps">
+          <span class="flow-node m-ext evt"><span class="flow-mod"><span lang="zh">全模組</span><span lang="en">All modules</span></span><span class="flow-name"><span lang="zh">單據與帳務資料</span><span lang="en">Document and accounting data</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt" href="data-audit.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">資料稽核（帳實勾稽）</span><span lang="en">Data audit (book vs actual reconciliation)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act ext" href="../act/month-end.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">月結關帳守門</span><span lang="en">The month-end closing gate</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-foot">
+        <i class="bi bi-info-circle me-1"></i><span lang="zh">報表僅呈現已過帳資料；若數字與預期不符，請先確認來源單據是否已完成過帳，以及查詢期間／廠別條件是否正確。</span><span lang="en">Reports only show posted data; if a figure is not what you expect, first check that the source documents have been posted and that the period and plant criteria are right.</span>
+      </div>
+    </div>
+
+    <h2 id="screen-list"><i class="bi bi-grid me-2 text-primary"></i><span lang="zh">畫面清單</span><span lang="en">Screen list</span></h2>
+    <div class="row g-3">
+      <div class="col-md-6"><a href="dashboard.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-speedometer2 me-1 text-primary"></i><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></h6>
+        <div class="text-muted small"><span lang="zh">營運 KPI 總覽</span><span lang="en">Operating KPI overview</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="profit-loss.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-graph-up-arrow me-1 text-primary"></i><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></h6>
+        <div class="text-muted small"><span lang="zh">期間損益（P&L）</span><span lang="en">Period profit and loss (P&amp;L)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="gross-margin.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-bar-chart-line me-1 text-primary"></i><span lang="zh">毛利分析</span><span lang="en">Gross Margin Analysis</span></h6>
+        <div class="text-muted small"><span lang="zh">整體毛利與趨勢</span><span lang="en">Overall gross margin and trend</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="margin-analysis.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-cash-stack me-1 text-primary"></i><span lang="zh">多維度銷售毛利分析</span><span lang="en">Multi-dimensional sales margin analysis</span></h6>
+        <div class="text-muted small"><span lang="zh">客戶/品號/月份毛利切換分析</span><span lang="en">Margin analysis switchable by customer, item and month</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="contribution-margin.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-graph-up me-1 text-primary"></i><span lang="zh">產品邊際貢獻分析</span><span lang="en">Product Contribution Margin</span></h6>
+        <div class="text-muted small"><span lang="zh">變動成本邊際貢獻（要素占比可調）</span><span lang="en">Contribution margin over variable cost (the element proportions can be adjusted)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="balance-sheet.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-bank me-1 text-primary"></i><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></h6>
+        <div class="text-muted small"><span lang="zh">科目餘額彙總資產負債表</span><span lang="en">Balance sheet summarised from account balances</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="consolidated-statement.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-building-fill-gear me-1 text-primary"></i><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></h6>
+        <div class="text-muted small"><span lang="zh">跨廠彙總的合併資產負債表與損益表</span><span lang="en">Balance sheet and P&amp;L summed across plants</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="outsource-performance.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-diagram-3 me-1 text-primary"></i><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></h6>
+        <div class="text-muted small"><span lang="zh">加工廠對帳單與損耗率排名</span><span lang="en">Subcontractor reconciliation statement and scrap rate ranking</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="data-audit.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-shield-check me-1 text-primary"></i><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></h6>
+        <div class="text-muted small"><span lang="zh">每日資料一致性檢核結果與趨勢</span><span lang="en">Daily data consistency check results and trend</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="field-telemetry.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-broadcast me-1 text-primary"></i><span lang="zh">現場遙測</span><span lang="en">Field Telemetry</span></h6>
+        <div class="text-muted small"><span lang="zh">手機的頁面錯誤、API 耗時、斷線與未送出資料</span><span lang="en">Page errors, API response times, disconnections and unsent data on the phones</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="saved-queries.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-bookmark-star me-1 text-primary"></i><span lang="zh">常用查詢</span><span lang="en">Saved Queries</span></h6>
+        <div class="text-muted small"><span lang="zh">把一組查詢條件存起來下次一鍵重跑；排程的前一步</span><span lang="en">Store a set of criteria for one-click reuse; the step before scheduling</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="report-schedule.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-calendar-check me-1 text-primary"></i><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></h6>
+        <div class="text-muted small"><span lang="zh">例行報表自動產生與收件人設定</span><span lang="en">Automatic production of routine reports and their recipients</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="report-inbox.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-inbox me-1 text-primary"></i><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></h6>
+        <div class="text-muted small"><span lang="zh">下載排程產生並指定給您的報表</span><span lang="en">Download the scheduled reports addressed to you</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="report-run-history.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-clock-history me-1 text-primary"></i><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></h6>
+        <div class="text-muted small"><span lang="zh">每一次排程執行的結果與失敗原因</span><span lang="en">The result of every schedule run and why it failed</span></div></div></div></a></div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

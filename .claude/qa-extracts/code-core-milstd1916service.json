@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Services/MilStd1916Service.cs",
+  "sourceHash": "b520c9332df2df7cd6f8acd60cafb121fb6713048779e4f9a01ef5f4cf9328b2",
+  "entries": [
+    {
+      "slug": "code-core-milstd1916service-74d6d07a",
+      "lang": "zh",
+      "headingPath": "系統共用 › 特性：允收數恆為 0，樣本數依批量與驗證等級決定",
+      "text": "抽樣計畫的判定規則說明｜此服務根據美國軍事標準 1916 的表格二，決定了檢驗所需的樣本數量。其中，可接受的數量固定為零，而實際採取的樣本數則會依據批次的數量和所設定的驗證等級來決定。",
+      "approved": true,
+      "sourceSectionHash": "68074d52d58a5a6e4ee289d1f59c5d1bb3ec4d79218970366f1c0ab60b1c5fbb"
+    },
+    {
+      "slug": "code-core-milstd1916service-41eed91d",
+      "lang": "zh",
+      "headingPath": "系統共用 › 驗證等級",
+      "text": "驗證等級的適用範圍與建議標準｜此系統的驗證等級從 I 到 VII，數字越小代表檢核要求越寬鬆，數字越大代表檢核要求越嚴格。一般品質管制（IQC）建議使用第四級別；對於關鍵件或安全相關的零件，則建議使用第六級別或第七級別進行檢核。",
+      "approved": true,
+      "sourceSectionHash": "b59bb6a16fe9a42c15517049029c3d487b81287185ac3df42e77cebf5f8e65cf"
+    },
+    {
+      "slug": "code-core-milstd1916service-dda28f9a",
+      "lang": "zh",
+      "headingPath": "系統共用 › 依批量與驗證等級查出應抽樣數 n",
+      "text": "抽樣數量依批次大小與驗證等級決定｜系統會根據產品的總批次量和所設定的驗證級別，計算出需要檢驗的樣本數。如果實際的批次量小於計算出的樣本數，則所有品項都會被要求進行全數檢驗。",
+      "approved": true,
+      "sourceSectionHash": "f99a42380c4928603feef7fc4527ec5cf474f6fa31f8c64337500e9900480cc3"
+    }
+  ]
+}

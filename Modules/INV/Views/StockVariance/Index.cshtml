@@ -1,0 +1,142 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using SmartFactory.MES.Services
+@model List<SmartFactory.MES.Modules.INV.ViewModels.StockVarianceRowVm>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = L["PageTitle"].Value;
+    bool searched        = ViewBag.Searched == true;
+    bool canPrint        = ViewBag.CanPrint == true;
+    var rows             = Model ?? new();
+    var reasonCodes      = ViewBag.ReasonCodes as List<string> ?? new();
+    decimal totalVarianceAmt = rows.Sum(r => r.VarianceAmount ?? 0m);
+    string curProduct    = ViewBag.SearchProduct as string ?? "";
+    var productOptions   = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-3">
+    <h4 class="mb-3">@L["PageTitle"]</h4>
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-2">
+                <label class="form-label">@L["FromDate"]</label>
+                <input type="date" name="fromDate" class="form-control" value="@ViewBag.FromDate" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">@L["ToDate"]</label>
+                <input type="date" name="toDate" class="form-control" value="@ViewBag.ToDate" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">@L["Product"]</label>
+                <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                        data-placeholder="@L["AllProducts"]" data-allow-clear="true">
+                    <option value=""></option>
+                    @foreach (var p in productOptions)
+                    {
+                        <option value="@p.ProductCode" selected="@(curProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">@L["ReasonCode"]</label>
+                <select name="reasonCode" class="form-select">
+                    <option value="">@L["AllReasons"]</option>
+                    @foreach (var r in reasonCodes)
+                    {
+                        <option value="@r" selected="@(ViewBag.ReasonCode?.ToString() == r)">@r</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" name="searched" value="true" class="btn btn-primary w-100 px-4">
+                    <i class="bi bi-search"></i> @L["Search"]
+                </button>
+            </div>
+        </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @if (!searched)
+    {
+        <div class="alert alert-info">@L["SearchFirst"]</div>
+    }
+    else if (!rows.Any())
+    {
+        <div class="alert alert-warning">@L["NoData"]</div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <strong>@L["ResultTitle"]</strong>
+                <span class="text-muted ms-1">@rows.Count @L["Items"]</span>
+                <span class="ms-3">@L["TotalVarianceAmt"]：
+                    <strong class="@(totalVarianceAmt < 0 ? "text-success" : totalVarianceAmt > 0 ? "text-danger" : "")">
+                        @totalVarianceAmt.ToString(moneyFmt)
+                    </strong>
+                </span>
+            </div>
+            @if (canPrint)
+            {
+                <a asp-action="Export"
+                   asp-route-fromDate="@ViewBag.FromDate" asp-route-toDate="@ViewBag.ToDate"
+                   asp-route-searchProduct="@ViewBag.SearchProduct" asp-route-reasonCode="@ViewBag.ReasonCode"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @L["ExportExcel"]
+                </a>
+            }
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["StockAdjustmentId"]</th>
+                        <th>@L["AdjustDate"]</th>
+                        <th>@L["ReasonCode"]</th>
+                        <th>@L["ProductCode"]</th>
+                        <th class="text-end">@L["VarianceQty"]</th>
+                        <th class="text-end">@L["VarianceAmount"]</th>
+                        <th>@L["WhCode"]</th>
+                        <th>@L["Remarks"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                    @foreach (var r in paged)
+                    {
+                        <tr>
+                            <td>@r.StockAdjustmentId</td>
+                            <td>@r.AdjustDate.ToString("yyyy-MM-dd")</td>
+                            <td>@r.AdjustReasonCode</td>
+                            <td>@r.ProductCode</td>
+                            <td class="text-end @(r.VarianceQty < 0 ? "text-success" : r.VarianceQty > 0 ? "text-danger" : "")">
+                                @r.VarianceQty.ToString("N2")
+                            </td>
+                            <td class="text-end @(r.VarianceAmount.HasValue && r.VarianceAmount < 0 ? "text-success" : r.VarianceAmount > 0 ? "text-danger" : "")">
+                                @(r.VarianceAmount?.ToString(moneyFmt) ?? "-")
+                            </td>
+                            <td>@r.WhCode</td>
+                            <td>@r.Remarks</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot class="table-secondary fw-bold">
+                    <tr>
+                        <td colspan="4">@L["Total"]</td>
+                        <td class="text-end @(rows.Sum(r => r.VarianceQty) < 0 ? "text-success" : "text-danger")">
+                            @rows.Sum(r => r.VarianceQty).ToString("N2")
+                        </td>
+                        <td class="text-end @(totalVarianceAmt < 0 ? "text-success" : totalVarianceAmt > 0 ? "text-danger" : "")">
+                            @totalVarianceAmt.ToString(moneyFmt)
+                        </td>
+                        <td colspan="2"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        @await Html.PartialAsync("_Pagination", paged)
+    }
+</div>

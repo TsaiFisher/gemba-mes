@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="My Pending / All Approval Requests — Approval Management Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>待我簽核／所有簽核記錄 — 簽核管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">簽核管理目錄</span><span lang="en">Approval Management contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">簽核管理畫面</span><span lang="en">Approval Management Screens</span></div>
+    <a href="approval.html" class="nav-link active"><span lang="zh">待我簽核／所有簽核記錄</span><span lang="en">My Pending / All Approval Requests</span></a>
+    <a href="approval-template.html" class="nav-link"><span lang="zh">簽核模板設定</span><span lang="en">Approval Template Settings</span></a>
+    <a href="document-approval-config.html" class="nav-link"><span lang="zh">作業類型簽核設定</span><span lang="en">Document Approval Settings</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../sys/index.html" class="nav-link"><span lang="zh">系統管理（SYS）</span><span lang="en">System Administration (SYS)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-pen me-2 text-primary"></i><span lang="zh">待我簽核／所有簽核記錄</span><span lang="en">My Pending / All Approval Requests</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：簽核管理 → 待我簽核／全部簽核申請 &nbsp;|&nbsp; 權限：讀取／修改</span><span lang="en">Menu: Approval Management → My Pending / All Approval Requests &nbsp;|&nbsp; Permissions: read / update</span></div>
+    </div>
+
+    <p><span lang="zh">簽核流程有兩個入口，本頁一併說明：</span><span lang="en">Approval has two entry points, and this page covers both: </span><b><span lang="zh">待我簽核</span><span lang="en">My Pending Approvals</span></b><span lang="zh">是每位簽核者的個人待辦清單；</span><span lang="en"> is each approver's own to-do list, and </span><b><span lang="zh">所有簽核記錄</span><span lang="en">All Approval Requests</span></b><span lang="zh">則供管理者綜覽全部申請單、追查卡住的單並重新指派簽核人。</span><span lang="en"> lets managers see every request, track down ones that are stuck and reassign the approver.</span></p>
+
+    <img class="screen-shot" src="img/approval.png" data-src-en="img/en/approval.png" alt="待我簽核畫面截圖" data-alt-en="My pending approvals screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">待我簽核畫面截圖（示意，實際資料依您的待辦而異）</span><span lang="en">My pending approvals screenshot (illustrative; the data depends on your own to-do list)</span></div>
+
+    <h2 id="my-pending-approvals"><i class="bi bi-pen me-2 text-primary"></i><span lang="zh">待我簽核</span><span lang="en">My Pending Approvals</span></h2>
+    <p><span lang="zh">清單只列出</span><span lang="en">The list shows only what is </span><b><span lang="zh">指派給您本人的待簽單</span><span lang="en">assigned to you</span></b><span lang="zh">。判定依據包含您的帳號與</span><span lang="en">. That is decided by your account and by the </span><b><span lang="zh">目前作用中的角色</span><span lang="en">role currently in effect</span></b><span lang="zh">：若簽核步驟指定的是角色，只有在您切換到該角色時才看得到那張單。</span><span lang="en">: when a step targets a role, the request only appears while you have switched to that role.</span></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">同事說已送審，但我的清單是空的：</span><span lang="en">A colleague says they submitted it, but my list is empty:</span></strong><span lang="zh">最常見的原因是</span><span lang="en"> the most common reason is that you are </span><b><span lang="zh">目前作用中的角色不對</span><span lang="en">in the wrong role</span></b><span lang="zh">。請到右上角的個人設定切換到有簽核權的角色再看一次。若仍為空，該單可能根本沒解析到簽核人（見下方「未指派簽核人」）。</span><span lang="en">. Switch to the role that has the approval right under personal settings at the top right and look again. If it is still empty, the request may have no approver resolved at all (see "Unassigned approver" below).</span>
+    </div>
+
+    <h3><span lang="zh">簽核一張單</span><span lang="en">Signing a request</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「簽核管理 &gt; 待我簽核」。</span><span lang="en">Choose "Approval Management &gt; My Pending Approvals" in the left-hand menu.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點單號可開啟原始單據內容檢視，確認要簽的是什麼。</span><span lang="en">Click the document number to view the original document and see what you are signing.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點簽核，於面板選擇處理方式並填寫意見（意見會留在簽核歷程中）。</span><span lang="en">Click to process it, choose what to do in the panel and add a comment; the comment stays in the approval history.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">送出。若後面還有步驟，單據轉給下一位；若這是最後一步，單據即為核准。</span><span lang="en">Submit. If further steps remain the request moves to the next approver; if this was the last step the document is approved.</span></div></div>
+
+    <h3><span lang="zh">三種處理方式</span><span lang="en">The three ways to process a request</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">處理方式</span><span lang="en">Action</span></th><th><span lang="zh">結果</span><span lang="en">Result</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">核准</span><span lang="en">Approve</span></td><td><span lang="zh">進入下一個簽核步驟；已是最後一步則單據狀態轉為已核准並生效。</span><span lang="en">Moves to the next step; on the last step the document becomes approved and takes effect.</span></td></tr>
+        <tr><td><span lang="zh">拒絕</span><span lang="en">Reject</span></td><td><span lang="zh">流程</span><span lang="en">The flow ends </span><b><span lang="zh">就此結束</span><span lang="en">there and then</span></b><span lang="zh">，單據不生效。申請人需另行處理。</span><span lang="en">, and the document does not take effect. The requester has to deal with it separately.</span></td></tr>
+        <tr><td><span lang="zh">退回修改</span><span lang="en">Return for revision</span></td><td><span lang="zh">單據回到申請人手上，可修改後</span><span lang="en">The document goes back to the requester, who may change it and </span><b><span lang="zh">重新送審</span><span lang="en">submit it again</span></b><span lang="zh">。與拒絕的差別在於流程還留著。</span><span lang="en">. Unlike a rejection, the flow is not closed.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">也可以在手機上簽</span><span lang="en">You can also sign on a phone</span></h3>
+    <p><span lang="zh">手機版有同一份「待我簽核」清單，在哪一邊簽都一樣，簽完另一邊就會少一張。手機上看得到金額、廠別、主檔欄位與前幾筆明細，足以做決定；完整單據仍請用電腦版開啟。</span><span lang="en">The mobile app has the same pending list, so signing on either side removes it from the other. The phone shows the amount, plant, header fields and the first few lines — enough to decide; open the desktop app when you need the whole document.</span></p>
+    <p><span lang="zh">兩個差別要知道：手機上只有<strong>核准</strong>與<strong>駁回</strong>，<strong>沒有「退回修改」</strong>——需要退回請用電腦版；另外只有<strong>看得到摘要內容的單別</strong>才簽得了（目前 14 個），其餘單別在手機上看得到但會明說要用電腦版。詳見</span><span lang="en">Two differences to know: the phone offers only <strong>Approve</strong> and <strong>Reject</strong> — there is <strong>no "Return for revision"</strong>, so use the desktop for that; and only document types <strong>whose content can actually be shown</strong> can be signed there (14 today), while the rest are visible but say to use the desktop. See </span><a href="../mobile/approval.html"><span lang="zh">手機版的待我簽核</span><span lang="en">My Approvals on mobile</span></a><span lang="zh">。</span><span lang="en">.</span></p>
+
+    <h2 id="approval-history"><i class="bi bi-clock-history me-2 text-primary"></i><span lang="zh">簽核歷程</span><span lang="en">Approval history</span></h2>
+    <p><span lang="zh">每張申請單都可查看歷程：依序列出每一步的簽核人、動作、時間與意見。若該步驟是由</span><span lang="en">Every request has a history: each step in order, with the approver, the action, the time and the comment. When a step was signed by a </span><b><span lang="zh">代理人</span><span lang="en">delegate</span></b><span lang="zh">簽的，歷程會一併標示他是代表誰簽的。自動跳簽的步驟也會留下紀錄。</span><span lang="en">, the history also records on whose behalf they signed. Steps that were skipped automatically are recorded too.</span></p>
+
+    <div class="tip-box"><i class="bi bi-shield-lock-fill me-1 text-primary"></i>
+      <span lang="zh">簽核單的內容與歷程只有</span><span lang="en">The content and history of a request are visible only to </span><b><span lang="zh">關係人</span><span lang="en">those involved</span></b><span lang="zh">（申請人、目前簽核人、曾經簽過的人）以及持有「所有簽核記錄」讀取權的人看得到。拿到別人的單號也開不起來。</span><span lang="en"> — the requester, the current approver and anyone who has already signed — plus people who may read "All Approval Requests". Somebody else's request number will not open for you.</span>
+    </div>
+
+    <h2 id="withdrawing-a-request"><i class="bi bi-arrow-counterclockwise me-2 text-primary"></i><span lang="zh">撤回申請</span><span lang="en">Withdrawing a request</span></h2>
+    <p><span lang="zh">送錯了想收回？</span><span lang="en">Submitted by mistake? </span><b><span lang="zh">只有申請人本人</span><span lang="en">Only the requester</span></b><span lang="zh">可以撤回，而且必須是還在進行中的單。撤回後資料回到草稿狀態，修改後可重新送審。</span><span lang="en"> can withdraw a request, and only while it is still running. The record returns to draft, and can be changed and submitted again.</span></p>
+
+    <h2 id="delegates-while-you-are-away"><i class="bi bi-person-check me-2 text-primary"></i><span lang="zh">代理人（請假時）</span><span lang="en">Delegates (while you are away)</span></h2>
+    <p><span lang="zh">從「待我簽核」畫面右上角的</span><span lang="en">From </span><b><span lang="zh">代理人設定</span><span lang="en">Delegate settings</span></b><span lang="zh">可以指定自己的代理人與代理期間（起訖日）。設定生效時：</span><span lang="en"> at the top right of "My Pending Approvals" you can name your delegate and the period they cover (a start and end date). When the setting is in effect:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">期間內指派給您的單，會直接送到代理人的待簽清單。</span><span lang="en">Requests assigned to you during the period go straight to your delegate's list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">設定當下</span><span lang="en">Requests </span><b><span lang="zh">已經在您清單裡的單也會一併改派</span><span lang="en">already sitting in your list are moved across too</span></b><span lang="zh">，儲存後訊息會告訴您改派了幾張。</span><span lang="en">, and the message after saving tells you how many were moved.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">代理人簽核時，歷程會記錄他是代表您簽的。</span><span lang="en">When the delegate signs, the history records that they signed on your behalf.</span></div></div>
+    <div class="tip-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <span lang="zh">若代理人正好是該單的申請人，系統</span><span lang="en">If the delegate happens to be the requester of that particular document, the system </span><b><span lang="zh">不會</span><span lang="en">does not</span></b><span lang="zh">把單交給他（自己送的單不能自己代簽），該單仍留在原簽核人手上。</span><span lang="en"> hand it to them — nobody signs off their own submission by proxy — and it stays with the original approver.</span>
+    </div>
+
+    <h2 id="all-approval-requests"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">所有簽核記錄</span><span lang="en">All Approval Requests</span></h2>
+    <p><span lang="zh">此畫面列出</span><span lang="en">This screen lists </span><b><span lang="zh">所有狀態</span><span lang="en">requests in every status</span></b><span lang="zh">的簽核申請單，可依狀態、單據類型篩選，並依單據類型、狀態或建立時間排序。單據類型欄依介面語系顯示名稱（如「採購單」）；篩選框比對的是單據類型代碼（如 <code>PurchaseOrder</code>，可只打一部分），排序也依代碼。需要「所有簽核記錄」的讀取權才進得去。</span><span lang="en">, filtered by status and document type and sorted by document type, status or creation time. The document type column shows the name in the interface language (such as "Purchase Order"); the filter box matches the document type code (such as <code>PurchaseOrder</code>, partial input allowed), and sorting also follows the code. Read permission for "All Approval Requests" is required to open it.</span></p>
+
+    <img class="screen-shot" src="img/approval-all.png" data-src-en="img/en/approval-all.png" alt="所有簽核記錄畫面截圖" data-alt-en="All approval requests screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">所有簽核記錄畫面截圖（示意，實際資料依查詢條件而異）</span><span lang="en">All approval requests screenshot (illustrative; the data depends on the search criteria)</span></div>
+
+    <h3><span lang="zh">找出卡住的單：未指派簽核人</span><span lang="en">Finding stuck requests: unassigned approver</span></h3>
+    <p><span lang="zh">勾選</span><span lang="en">Ticking </span><b><span lang="zh">僅看未指派</span><span lang="en">Unassigned only</span></b><span lang="zh">篩選，可列出「狀態仍是進行中，卻沒有任何簽核人」的單。這種單</span><span lang="en"> lists requests that are still running yet have no approver at all. Such a request </span><b><span lang="zh">不會出現在任何人的待我簽核</span><span lang="en">appears in nobody's pending list</span></b><span lang="zh">，也不會報錯，只會安靜地停在那裡。成因是主管型步驟解析不到人——申請人的角色沒掛組織單位、組織單位沒有上層，或上層單位底下沒有任何使用者。</span><span lang="en">, raises no error, and simply sits there. It happens when a supervisor step cannot resolve a person: the requester's role has no organization unit, the unit has no parent, or no user sits under the parent unit.</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在「所有簽核記錄」勾選「僅看未指派」後按「篩選」，找出這些單。</span><span lang="en">Tick "Unassigned only" on "All Approval Requests" and click "Filter" to find them.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「重新指派簽核人」，選擇要接手的簽核人並填寫原因後送出。該單即會出現在對方的待簽清單。</span><span lang="en">Click "Reassign Approver", choose who should take it over, give a reason and submit; the request then appears in their pending list.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">治本的做法是回到</span><span lang="en">The lasting fix is to go back to </span><a href="../sys/organization.html"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a><span lang="zh">與</span><span lang="en"> and </span><a href="../sys/role.html"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a><span lang="zh">，把組織樹與角色的組織單位補齊，否則之後送出的單會再次卡住。</span><span lang="en">, and complete the tree and the roles' organization units — otherwise the next submission gets stuck the same way.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-person-fill-gear me-1 text-warning"></i>
+      <strong><span lang="zh">重新指派需要「所有簽核記錄」的修改權：</span><span lang="en">Reassigning requires update permission on "All Approval Requests":</span></strong><span lang="zh">只有讀取權的人看得到清單但按不了重新指派。另外，只有</span><span lang="en"> somebody with read permission alone sees the list but cannot reassign. Also, only requests that are </span><b><span lang="zh">仍在進行中</span><span lang="en">still running</span></b><span lang="zh">的單可以重新指派，已核准或已拒絕的單不行。</span><span lang="en"> can be reassigned; approved or rejected ones cannot.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

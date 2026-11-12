@@ -1,0 +1,637 @@
+{
+  "_readme": [
+    "教學播放器的熱點來源。**人類維護這一份（CSS 選擇器），座標由工具產生**。",
+    "座標若是手工填的輸入檔，畫面一改就靜默錯位——框還在，只是指錯地方，沒有任何測試會紅。",
+    "改法：跑 ~/.cache/manual-tutor/hotspotgen（見該目錄 README），它會重算 hotspots.json。",
+    "選擇器選不到元素時產生器**失敗並列出是哪一個**，把靜默錯位換成明確的紅燈。",
+    "",
+    "**守門只守手冊真的點名的熱點**：播放器只有在步驟內文出現「X」時才去查 X 的框（tutor.js 的 hotspotFor）。",
+    "  622 個框裡有 336 個沒有任何一頁會用到，其中 170 個是「操作」／Actions 欄頭——多數畫面的手冊根本不寫",
+    "  「點『操作』欄」（報表頁更是連操作欄都沒有，thead th:last-child 選到的是「閒置天數」這類欄頭）。",
+    "  這些框畫不出來，卻是唯一會隨資料庫內容浮動的一類，所以守門測試（HotspotSelectorTests）把它們排除在外；",
+    "  死框刻意保留不刪——手冊改寫成點名它的那天，它會自動回到守門範圍。",
+    "",
+    "defaults：全站 Index 列表頁共用的控制項。121 個畫面的手冊頁只有一張截圖、而且都是 Index 列表，",
+    "  所以絕大多數熱點是版型層級的，不需要逐頁維護。只套用在 useDefaults 不是 false 的 shot 上——",
+    "  側欄／彈窗的截圖上這些按鈕被遮住了，還去標它們會指向看不見的東西。",
+    "",
+    "widthFromData / positionFromData：座標比對的判準（守門測試 HotspotSelectorTests 用）。",
+    "  widthFromData——表格欄頭是 auto layout，左緣／寬／高由當下的資料決定；只有上緣與右緣是容器決定的，只比這兩條邊。",
+    "  positionFromData——彈窗頁尾這種被上方清單推著上下移的控制項，座標沒有可比性，只驗選擇器選不選得到。",
+    "",
+    "shots：一張截圖一筆，等同於「怎麼把畫面弄成截圖當時那個樣子」。",
+    "  route/query/clicks/waitFor 的語意與 ~/.cache/manual-panel-shots/panelshot 的 shots.json 相同。",
+    "",
+    "zh/en 是**手冊內文裡點名該控制項時用的字**（中文用「」、英文用 \"\"），",
+    "  播放器就是拿步驟文字裡的這些字去查框的，所以必須與手冊用字一致，而手冊用字又與 resx 一致。",
+    "",
+    "shots 的 Index 那 121 筆是機械產生的：HelpDocResolver 的 controller→模組表決定手冊頁與截圖檔名，",
+    "  route 就是 /{Controller}。要重建清單看 ~/.cache/manual-tutor/README.md。",
+    "  帶 clicks 的那幾筆是側欄／彈窗，人工維護，順序放在最後。"
+  ],
+  "defaults": [
+    {
+      "zh": "新增",
+      "en": "Add",
+      "selector": "button.btn-primary[data-action='openPanel']:not(.btn-sm)",
+      "note": "列表頁右上角的新增鈕。列內的編輯鈕是 btn-outline-* 或 btn-sm，不會被選到。"
+    },
+    {
+      "zh": "查詢",
+      "zhAlias": [
+        "搜尋"
+      ],
+      "en": "Search",
+      "selector": "form[method='get'] button[type='submit']",
+      "note": [
+        "查詢表單的送出鈕。三個限制條件都是實測撞出來的：",
+        "① 不能綁 btn-primary——MrpRun 用的是 btn-secondary；",
+        "② 必須限定 method=get——導覽列的廠別切換是三個隱藏的 POST dropdown-item，DOM 順序在前面，",
+        "   不限定的話 .First 會選到看不見的元素，然後被誤報成「選擇器選不到」；",
+        "③ 需要別名：resx 鍵 Search 有兩種中譯——72 支譯「查詢」、58 支譯「搜尋」，12 支檔案內部並存，",
+        "   而手冊 116 頁內文一律教「點『查詢』」。別名讓熱點兩種寫法都查得到，\n   但**不代表用字不一致已經解決**——那是產品決定（規格 §9 待裁決 7）。"
+      ]
+    },
+    {
+      "zh": "操作",
+      "en": "Actions",
+      "selector": "table thead th:last-child",
+      "needsRows": true,
+      "widthFromData": true,
+      "note": [
+        "「操作」欄頭。手冊常說「點『操作』欄的鉛筆圖示」，標欄頭比標某一列的圖示穩定——列會隨資料變動。",
+        "needsRows：多數單據頁是 @if (!Model.Any()) 才顯示提示，連 <table> 都不輸出，",
+        "沒有資料就沒有欄頭可驗。守門測試在沒有資料列時記為略過（不是通過），CI 的乾淨庫走的就是這條。"
+      ]
+    }
+  ],
+  "shots": [
+    {
+      "img": "fin/img/ap-aging.png",
+      "route": "/APAging"
+    },
+    {
+      "img": "fin/img/ap-invoice.png",
+      "route": "/APInvoice"
+    },
+    {
+      "img": "fin/img/ap-payment.png",
+      "route": "/APPayment"
+    },
+    {
+      "img": "fin/img/ar-aging.png",
+      "route": "/ARAging"
+    },
+    {
+      "img": "fin/img/ar-invoice.png",
+      "route": "/ARInvoice"
+    },
+    {
+      "img": "fin/img/ar-receipt.png",
+      "route": "/ARReceipt"
+    },
+    {
+      "img": "act/img/accounting-period.png",
+      "route": "/AccountingPeriod"
+    },
+    {
+      "img": "act/img/bad-debt-provision.png",
+      "route": "/BadDebtProvision"
+    },
+    {
+      "img": "rpt/img/balance-sheet.png",
+      "route": "/BalanceSheet"
+    },
+    {
+      "img": "fin/img/bank-account.png",
+      "route": "/BankAccount"
+    },
+    {
+      "img": "mfg/img/batch-release.png",
+      "route": "/BatchRelease"
+    },
+    {
+      "img": "bas/img/company.png",
+      "route": "/Company"
+    },
+    {
+      "img": "bas/img/container.png",
+      "route": "/Container"
+    },
+    {
+      "img": "rpt/img/contribution-margin.png",
+      "route": "/ContributionMargin"
+    },
+    {
+      "img": "inv/img/cross-plant-transfer.png",
+      "route": "/CrossPlantTransfer"
+    },
+    {
+      "img": "bas/img/currency.png",
+      "route": "/Currency"
+    },
+    {
+      "img": "rpt/img/dashboard.png",
+      "route": "/Dashboard"
+    },
+    {
+      "img": "rpt/img/data-audit.png",
+      "route": "/DataAudit"
+    },
+    {
+      "img": "qcr/img/defect-code.png",
+      "route": "/DefectCode"
+    },
+    {
+      "img": "mfg/img/defect-rate.png",
+      "route": "/DefectRate"
+    },
+    {
+      "img": "ord/img/delivery-rate.png",
+      "route": "/DeliveryRate"
+    },
+    {
+      "img": "act/img/department-actual-cost.png",
+      "route": "/DepartmentActualCost"
+    },
+    {
+      "img": "mfg/img/dispatch.png",
+      "route": "/Dispatch",
+      "excludeDefaults": ["新增"],
+      "note": "派工單由工單產生，這頁沒有右上角新增鈕。不排除的話，預設選擇器會往下配到列內那顆同為 btn-primary 的「報工／完工」，教學就會把報工圖示框成「新增」。"
+    },
+    {
+      "img": "bas/img/doc-number-config.png",
+      "route": "/DocNumberConfig"
+    },
+    {
+      "img": "act/img/ecl.png",
+      "route": "/Ecl"
+    },
+    {
+      "img": "pur/img/goods-receipt.png",
+      "route": "/GoodsReceipt"
+    },
+    {
+      "img": "pur/img/goods-return.png",
+      "route": "/GoodsReturn"
+    },
+    {
+      "img": "ord/img/goods-shipment.png",
+      "route": "/GoodsShipment"
+    },
+    {
+      "img": "rpt/img/gross-margin.png",
+      "route": "/GrossMargin"
+    },
+    {
+      "img": "qcr/img/inspection-order.png",
+      "route": "/InspectionOrder"
+    },
+    {
+      "img": "qcr/img/inspection-spec.png",
+      "route": "/InspectionSpec"
+    },
+    {
+      "img": "qcr/img/instrument.png",
+      "route": "/Instrument"
+    },
+    {
+      "img": "ord/img/internal-order.png",
+      "route": "/InternalOrder"
+    },
+    {
+      "img": "inv/img/inventory-aging.png",
+      "route": "/InventoryAging"
+    },
+    {
+      "img": "inv/img/inventory-balance.png",
+      "route": "/InventoryBalance"
+    },
+    {
+      "img": "inv/img/inventory-count.png",
+      "route": "/InventoryCount"
+    },
+    {
+      "img": "bas/img/inventory-transaction-type.png",
+      "route": "/InventoryTransactionType"
+    },
+    {
+      "img": "inv/img/inventory-turnover.png",
+      "route": "/InventoryTurnover"
+    },
+    {
+      "img": "inv/img/inventory-valuation.png",
+      "route": "/InventoryValuation"
+    },
+    {
+      "img": "inv/img/inventory-value.png",
+      "route": "/InventoryValue"
+    },
+    {
+      "img": "act/img/journal-entry.png",
+      "route": "/JournalEntry"
+    },
+    {
+      "img": "inv/img/landed-cost-allocation.png",
+      "route": "/LandedCostAllocation"
+    },
+    {
+      "img": "mfg/img/line-status.png",
+      "route": "/LineStatus"
+    },
+    {
+      "img": "inv/img/loan-doc.png",
+      "route": "/LoanDoc"
+    },
+    {
+      "img": "mfg/img/machine-downtime.png",
+      "route": "/MachineDowntime"
+    },
+    {
+      "img": "mfg/img/machine-status-order.png",
+      "route": "/MachineStatusOrder"
+    },
+    {
+      "img": "rpt/img/margin-analysis.png",
+      "route": "/MarginAnalysis"
+    },
+    {
+      "img": "mfg/img/material-slip.png",
+      "route": "/MaterialSlip"
+    },
+    {
+      "img": "mfg/img/material-slip-progress.png",
+      "route": "/MaterialSlipProgress"
+    },
+    {
+      "img": "inv/img/material-staging.png",
+      "route": "/MaterialStaging"
+    },
+    {
+      "img": "act/img/month-end.png",
+      "route": "/MonthEnd"
+    },
+    {
+      "img": "mfg/img/mrp-achievement.png",
+      "route": "/MrpAchievement"
+    },
+    {
+      "img": "mfg/img/mrp-run.png",
+      "route": "/MrpRun"
+    },
+    {
+      "img": "mfg/img/mrp-variance-decision.png",
+      "route": "/MrpVarianceDecision"
+    },
+    {
+      "img": "mfg/img/multi-level-bom.png",
+      "route": "/MultiLevelBom"
+    },
+    {
+      "img": "mfg/img/multi-level-routing.png",
+      "route": "/MultiLevelRouting"
+    },
+    {
+      "img": "qcr/img/ncr.png",
+      "route": "/Ncr"
+    },
+    {
+      "img": "act/img/nrv-assessment.png",
+      "route": "/NrvAssessment"
+    },
+    {
+      "img": "mfg/img/oee.png",
+      "route": "/Oee"
+    },
+    {
+      "img": "mfg/img/order-change-decision.png",
+      "route": "/OrderChangeDecision"
+    },
+    {
+      "img": "ord/img/order-overdue.png",
+      "route": "/OrderOverdue"
+    },
+    {
+      "img": "osp/img/outsource-material.png",
+      "route": "/OutsourceMaterial"
+    },
+    {
+      "img": "rpt/img/outsource-performance.png",
+      "route": "/OutsourcePerformance"
+    },
+    {
+      "img": "osp/img/outsource-progress.png",
+      "route": "/OutsourceProgress"
+    },
+    {
+      "img": "osp/img/outsource-purchase-order.png",
+      "route": "/OutsourcePurchaseOrder"
+    },
+    {
+      "img": "osp/img/outsource-quotation.png",
+      "route": "/OutsourceQuotation"
+    },
+    {
+      "img": "osp/img/outsource-receipt.png",
+      "route": "/OutsourceReceipt"
+    },
+    {
+      "img": "osp/img/outsource-rework.png",
+      "route": "/OutsourceRework"
+    },
+    {
+      "img": "mfg/img/planned-downtime.png",
+      "route": "/PlannedDowntime"
+    },
+    {
+      "img": "mfg/img/preparation-board.png",
+      "route": "/PreparationBoard"
+    },
+    {
+      "img": "bas/img/product.png",
+      "route": "/Product"
+    },
+    {
+      "img": "bas/img/product-category.png",
+      "route": "/ProductCategory"
+    },
+    {
+      "img": "mfg/img/production-batch.png",
+      "route": "/ProductionBatch"
+    },
+    {
+      "img": "mfg/img/production-completion.png",
+      "route": "/ProductionCompletion"
+    },
+    {
+      "img": "mfg/img/production-efficiency.png",
+      "route": "/ProductionEfficiency"
+    },
+    {
+      "img": "rpt/img/profit-loss.png",
+      "route": "/ProfitLoss"
+    },
+    {
+      "img": "pur/img/purchase-amount.png",
+      "route": "/PurchaseAmount"
+    },
+    {
+      "img": "pur/img/purchase-order.png",
+      "route": "/PurchaseOrder"
+    },
+    {
+      "img": "pur/img/purchase-overdue.png",
+      "route": "/PurchaseOverdue"
+    },
+    {
+      "img": "pur/img/purchase-price.png",
+      "route": "/PurchasePrice"
+    },
+    {
+      "img": "pur/img/purchase-request.png",
+      "route": "/PurchaseRequest"
+    },
+    {
+      "img": "ord/img/return-rate.png",
+      "route": "/ReturnRate"
+    },
+    {
+      "img": "inv/img/rework-material.png",
+      "route": "/ReworkMaterial"
+    },
+    {
+      "img": "mfg/img/routing.png",
+      "route": "/Routing"
+    },
+    {
+      "img": "ord/img/sales-forecast.png",
+      "route": "/SalesForecast"
+    },
+    {
+      "img": "ord/img/sales-order.png",
+      "route": "/SalesOrder"
+    },
+    {
+      "img": "ord/img/sales-ranking.png",
+      "route": "/SalesRanking"
+    },
+    {
+      "img": "ord/img/sales-return.png",
+      "route": "/SalesReturn"
+    },
+    {
+      "img": "ord/img/sales-trend.png",
+      "route": "/SalesTrend"
+    },
+    {
+      "img": "inv/img/sample-doc.png",
+      "route": "/SampleDoc"
+    },
+    {
+      "img": "mfg/img/schedule.png",
+      "route": "/Schedule"
+    },
+    {
+      "img": "mfg/img/schedule-query.png",
+      "route": "/ScheduleQuery"
+    },
+    {
+      "img": "inv/img/scrap-doc.png",
+      "route": "/ScrapDoc"
+    },
+    {
+      "img": "bas/img/shift.png",
+      "route": "/Shift"
+    },
+    {
+      "img": "bas/img/shift-group.png",
+      "route": "/ShiftGroup"
+    },
+    {
+      "img": "inv/img/slow-moving-inventory.png",
+      "route": "/SlowMovingInventory"
+    },
+    {
+      "img": "qcr/img/spc-analysis.png",
+      "route": "/SpcAnalysis"
+    },
+    {
+      "img": "bas/img/special-day.png",
+      "route": "/SpecialDay"
+    },
+    {
+      "img": "inv/img/stock-adjustment.png",
+      "route": "/StockAdjustment"
+    },
+    {
+      "img": "inv/img/stock-ledger.png",
+      "route": "/StockLedger"
+    },
+    {
+      "img": "inv/img/stock-movement.png",
+      "route": "/StockMovement"
+    },
+    {
+      "img": "inv/img/stock-shortage.png",
+      "route": "/StockShortage"
+    },
+    {
+      "img": "inv/img/stock-transfer.png",
+      "route": "/StockTransfer"
+    },
+    {
+      "img": "inv/img/stock-variance.png",
+      "route": "/StockVariance"
+    },
+    {
+      "img": "pur/img/supplier-delivery-rate.png",
+      "route": "/SupplierDeliveryRate"
+    },
+    {
+      "img": "sys/img/system-param.png",
+      "route": "/SystemParam"
+    },
+    {
+      "img": "bas/img/tax.png",
+      "route": "/Tax"
+    },
+    {
+      "img": "bas/img/tooling.png",
+      "route": "/Tooling"
+    },
+    {
+      "img": "bas/img/uom.png",
+      "route": "/Uom"
+    },
+    {
+      "img": "mfg/img/utilization.png",
+      "route": "/Utilization"
+    },
+    {
+      "img": "pur/img/vendor-evaluation.png",
+      "route": "/VendorEvaluation"
+    },
+    {
+      "img": "pur/img/vendor-price-list.png",
+      "route": "/VendorPriceList"
+    },
+    {
+      "img": "bas/img/warehouse.png",
+      "route": "/Warehouse"
+    },
+    {
+      "img": "inv/img/warehouse-ops.png",
+      "route": "/WarehouseOps"
+    },
+    {
+      "img": "mfg/img/wip-report.png",
+      "route": "/WipReport"
+    },
+    {
+      "img": "mfg/img/work-calendar.png",
+      "route": "/WorkCalendar"
+    },
+    {
+      "img": "bas/img/work-center.png",
+      "route": "/WorkCenter"
+    },
+    {
+      "img": "mfg/img/work-order.png",
+      "route": "/WorkOrder"
+    },
+    {
+      "img": "mfg/img/work-order-material-status.png",
+      "route": "/WorkOrderMaterialStatus"
+    },
+    {
+      "img": "mfg/img/work-order-progress.png",
+      "route": "/WorkOrderProgress"
+    },
+    {
+      "img": "mfg/img/work-order-variance.png",
+      "route": "/WorkOrderVariance"
+    },
+    {
+      "img": "mfg/img/mrp-run-panel.png",
+      "route": "/MrpRun",
+      "query": "&searchText=MRP-2607-00003",
+      "clicks": [
+        "button.btn-primary[data-action='openPanel']"
+      ],
+      "waitFor": "#sidePanel.show #sidePanelBody form",
+      "useDefaults": false,
+      "controls": [
+        {
+          "zh": "匯入訂單",
+          "en": "Import Orders",
+          "selector": "#sidePanelBody button[data-action='openImportModal']"
+        },
+        {
+          "zh": "儲存草稿",
+          "en": "Save Draft",
+          "selector": "#sidePanelBody button[name='saveDraft']"
+        }
+      ]
+    },
+    {
+      "img": "mfg/img/mrp-run-import.png",
+      "route": "/MrpRun",
+      "query": "&searchText=MRP-2607-00003",
+      "needsDoc": true,
+      "clicks": [
+        "button.btn-primary[data-action='openPanel']",
+        "button[data-action='openImportModal']"
+      ],
+      "waitFor": "#importOrdersModal.show tbody tr td",
+      "useDefaults": false,
+      "controls": [
+        {
+          "zh": "加入選取",
+          "en": "Add Selected",
+          "selector": "#importOrdersModal button[data-action='importSelectedLines']",
+          "positionFromData": true
+        }
+      ]
+    },
+    {
+      "img": "mfg/img/mrp-run-result.png",
+      "route": "/MrpRun",
+      "query": "&searchText=MRP-2607-00003",
+      "needsDoc": true,
+      "clicks": [
+        "tr:has-text('MRP-2607-00003') button.btn-info[data-action='openPanel']"
+      ],
+      "waitFor": "#sidePanel.show #sidePanelBody tbody tr td",
+      "useDefaults": false,
+      "controls": [
+        {
+          "zh": "預檢錯誤",
+          "en": "Pre-check errors",
+          "selector": "#sidePanelBody table thead th:last-child",
+          "widthFromData": true
+        }
+      ]
+    }
+  ],
+  "shotsNeedingFixture": [
+    {
+      "img": "mfg/img/mrp-run-execute.png",
+      "route": "/MrpRun",
+      "query": "&searchText=MRP-2608-00016",
+      "clicks": [
+        "tr:has-text('MRP-2608-00016') button.btn-warning[data-action='openPanel']"
+      ],
+      "waitFor": "#sidePanel.show #sidePanelBody button[name='doExecute']",
+      "useDefaults": false,
+      "controls": [
+        {
+          "zh": "執行 MRP",
+          "en": "Execute MRP",
+          "selector": "#sidePanelBody button[name='doExecute']"
+        }
+      ],
+      "_why": "需要一張「有需求列的草稿」當前置資料才拍得到／量得到（_Form.cshtml 用 @if (!isNew && isDraft) 包住「執行 MRP」，新增側欄裡永遠沒有那顆鈕）。當初用的 MRP-2608-00016 已依使用者要求從 dev 庫清掉，所以這筆移出 shots——留著會讓產生器與 HotspotSelectorTests 一起紅。截圖本身仍在、教學照播，只是這一步沒有高亮框。要復原：用 ~/.cache/manual-panel-shots/panelshot 的 setup-shots.json（clicks-only + SHOT_DRYRUN=1）從 UI 建一張乾淨草稿，把這筆搬回 shots 並改成新單號，再重跑 hotspotgen。"
+    }
+  ]
+}

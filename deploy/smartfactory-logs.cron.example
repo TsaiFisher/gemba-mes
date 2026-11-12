@@ -1,0 +1,25 @@
+#!/bin/sh
+# SmartFactory 應用日誌每日清理（安裝至 /etc/cron.daily/smartfactory-logs）
+#
+# 為什麼不用 logrotate：
+#   Serilog 的 File sink 自己管理滾動檔名（smartfactory-YYYYMMDD.log、撞大小上限再開
+#   _001/_002），並且持續持有「當日檔」的檔案 handle。logrotate 的做法是改名或截斷，
+#   會與 sink 搶同一個檔案；copytruncate 也只是把競態縮小而非消除。
+#   相對地 find -mtime +N 只會碰到「N 天內未被寫入」的檔案，當日開啟中的檔案永遠不在
+#   範圍內，不需要任何 handle 協調。
+#
+# 為什麼 Serilog 的 retainedFileCountLimit 還不夠：
+#   (1) 它只在「滾動開新檔」的那一刻才清理——服務停機期間完全不會回收；
+#   (2) 開啟 rollOnFileSizeLimit 後它的計算單位是「檔案數」而非「天數」，
+#       單日多次滾檔會讓實際保留天數低於預期。
+#   本腳本是按日期的保底層，兩者互補。
+
+set -eu
+
+LOG_DIR="${SMARTFACTORY_LOG_DIR:-/home/dev/ProjectZ/logs}"
+RETENTION_DAYS="${SMARTFACTORY_LOG_RETENTION_DAYS:-30}"
+
+[ -d "$LOG_DIR" ] || exit 0
+
+find "$LOG_DIR" -maxdepth 1 -type f -name 'smartfactory-*.log' \
+     -mtime "+$RETENTION_DAYS" -delete

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="DispatchId" xml:space="preserve"><value>Dispatch ID</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>Work Order</value></data>
+  <data name="ToolingCode" xml:space="preserve"><value>Tooling</value></data>
+  <data name="ToolingPlaceholder" xml:space="preserve"><value>Enter tooling code (optional)</value></data>
+  <data name="StartSetup" xml:space="preserve"><value>Start Setup</value></data>
+  <data name="DoneSetup" xml:space="preserve"><value>Setup Done</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="SetupStartedAt" xml:space="preserve"><value>Setup started at</value></data>
+  <data name="SetupInProgressMsg" xml:space="preserve"><value>Setup in progress. Click "Setup Done" when preparation is complete.</value></data>
+  <data name="NoOpenSetupMsg" xml:space="preserve"><value>No setup started. Click "Start Setup" to record the setup start time.</value></data>
+  <data name="ActiveOperators" xml:space="preserve"><value>Currently preparing</value></data>
+  <data name="MaterialStagingSection" xml:space="preserve"><value>Material Staging</value></data>
+  <data name="SetupSection" xml:space="preserve"><value>Machine Setup</value></data>
+  <data name="StagingId" xml:space="preserve"><value>Staging Order</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="StagingWhCode" xml:space="preserve"><value>Staging Wh/Location</value></data>
+  <data name="Lines" xml:space="preserve"><value>Lines</value></data>
+  <data name="Draft" xml:space="preserve"><value>Draft</value></data>
+  <data name="Confirmed" xml:space="preserve"><value>Confirmed</value></data>
+  <data name="Picking" xml:space="preserve"><value>Picking</value></data>
+  <data name="Completed" xml:space="preserve"><value>Staged</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="RequiredQty" xml:space="preserve"><value>Qty To Stage</value></data>
+  <data name="UomCode" xml:space="preserve"><value>UOM</value></data>
+  <data name="PendingMaterialsMsg" xml:space="preserve"><value>The following materials are not staged yet. Create a staging order to move them into the staging warehouse.</value></data>
+  <data name="NoPendingMaterialsMsg" xml:space="preserve"><value>All materials for this dispatch are staged or already issued. No staging order needed.</value></data>
+  <data name="CreateStagingOrder" xml:space="preserve"><value>Create Staging Order</value></data>
+  <data name="CreateStagingOrderHint" xml:space="preserve"><value>Creates a draft staging order from this dispatch's unissued materials (default staging warehouse comes from the work center). Reservation and picking are completed in the staging order screen.</value></data>
+  <data name="NoSetupRequiredMsg" xml:space="preserve"><value>This operation has no setup time configured. No machine setup required — you can start production directly.</value></data>
+</root>

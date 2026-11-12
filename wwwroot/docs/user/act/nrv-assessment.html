@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="IAS 2 NRV Assessment — ACT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IAS 2 NRV 評估 — ACT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ACT 目錄</span><span lang="en">ACT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ACT 畫面</span><span lang="en">ACT screens</span></div>
+    <a href="accounting-period.html" class="nav-link"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a>
+    <a href="journal-entry.html" class="nav-link"><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></a>
+    <a href="trial-balance.html" class="nav-link"><span lang="zh">試算表</span><span lang="en">Trial Balance</span></a>
+    <a href="month-end.html" class="nav-link"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>
+    <a href="department-actual-cost.html" class="nav-link"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></a>
+    <a href="nrv-assessment.html" class="nav-link active"><span lang="zh">IAS 2 NRV 評估</span><span lang="en">IAS 2 NRV Assessment</span></a>
+    <a href="ecl.html" class="nav-link"><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></a>
+    <a href="bad-debt-provision.html" class="nav-link"><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-shield-x me-2 text-primary"></i><span lang="zh">IAS 2 NRV 評估</span><span lang="en">IAS 2 NRV Assessment</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/NrvAssessment &nbsp;|&nbsp; 存貨淨變現價值減損評估</span><span lang="en">Route: /NrvAssessment &nbsp;|&nbsp; Inventory net realisable value impairment assessment</span></div>
+    </div>
+
+    <p><span lang="zh">依 IAS 2 比較存貨成本與淨變現價值（NRV），成本高於 NRV 的品號算出跌價損失。分錄在<a href="month-end.html">月結作業</a>步驟 9 開立（借 5240 存貨跌價損失／貸 1419 備抵存貨跌價損失），備抵調整到等於本期評估額，評估變小時迴轉差額。</span><span lang="en">Compares inventory cost with net realisable value under IAS 2, and works out the loss on items whose cost exceeds NRV. The entry is posted at step 9 of <a href="month-end.html">Month-End Closing</a> (Dr 5240 Inventory write-down loss / Cr 1419 Allowance for inventory valuation loss); the allowance is adjusted to equal this period's assessment, and if the assessment falls the difference is reversed.</span></p>
+    <img class="screen-shot" src="img/nrv-assessment.png" data-src-en="img/en/nrv-assessment.png" alt="NRV 淨變現價值評估畫面截圖" data-alt-en="NRV net realisable value assessment screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">NRV 淨變現價值評估畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">NRV net realisable value assessment screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">輸入評估期間與售價基礎後執行評估，逐筆檢視建議提列額。</span><span lang="en">Enter the assessment period and the selling price basis, run the assessment and review the suggested provision line by line.</span></div></div>
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">期間（YYYYMM）</span><span lang="en">Period (YYYYMM)</span></td><td><span lang="zh">要評估或查詢的會計期間</span><span lang="en">The accounting period to assess or query</span></td></tr>
+      </tbody>
+    </table>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">期間</span><span lang="en">Period</span></td><td><span lang="zh">本次評估歸屬的會計期間</span><span lang="en">Accounting period this assessment belongs to</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">受評估的料件；期末日往前 90 天內無銷售紀錄者不納入評估（無法推估售價）。客供倉的料屬客戶財產，不納入</span><span lang="en">Item being assessed; items with no sales in the 90 days up to the period end are left out because no selling price can be estimated. Stock in customer-supplied warehouses belongs to the customer and is not assessed</span></td></tr>
+        <tr><td><span lang="zh">在庫量</span><span lang="en">Qty on Hand</span></td><td><span lang="zh">期末日當時的在庫數量（期末之後的進出會倒推扣回，反關帳後重做上一期也不受影響）</span><span lang="en">Quantity on hand at the period end (movements after the end date are backed out, so redoing a reopened period is not affected by later activity)</span></td></tr>
+        <tr><td><span lang="zh">帳面成本</span><span lang="en">Carrying Cost</span></td><td><span lang="zh">期末當時的單位帳面成本：均價料取移動加權平均，先進先出料取成本層剩餘價值 ÷ 數量</span><span lang="en">Unit carrying cost at the period end: the moving average for average-cost items, and the remaining cost-layer value ÷ quantity for FIFO items</span></td></tr>
+        <tr><td><span lang="zh">NRV 單價</span><span lang="en">NRV Price</span></td><td><span lang="zh">預期銷售單價：期末日往前 90 天銷貨發票明細的加權平均，換算為本幣、每庫存單位（Σ 本幣金額 ÷ Σ 庫存數量）</span><span lang="en">Expected selling price: the weighted average over sales invoice lines in the 90 days up to the period end, in local currency per stock unit (Σ local amount ÷ Σ stock quantity)</span></td></tr>
+        <tr><td><span lang="zh">銷售費用</span><span lang="en">Selling Cost</span></td><td><span lang="zh">估計銷售費用＝NRV 單價 × 銷售費用率（系統參數設定）</span><span lang="en">Estimated selling cost = NRV unit price × selling cost rate (set as a system parameter)</span></td></tr>
+        <tr><td>NRV</td><td><span lang="zh">淨變現價值＝NRV 單價 － 銷售費用</span><span lang="en">Net realisable value = NRV unit price − selling cost</span></td></tr>
+        <tr><td><span lang="zh">減損損失</span><span lang="en">Impairment Loss</span></td><td><span lang="zh">max(0, (帳面成本 － NRV) × 在庫量)。帳面成本未高於 NRV 時為 0，不提列</span><span lang="en">max(0, (book cost − NRV) × quantity on hand). It is 0 when the book cost does not exceed NRV, and nothing is provided for</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="../inv/inventory-valuation.html"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a>、<a href="../inv/slow-moving-inventory.html"><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

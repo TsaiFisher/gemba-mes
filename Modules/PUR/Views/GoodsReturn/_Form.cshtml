@@ -1,0 +1,732 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Services
+@using SmartFactory.MES.Modules.PUR.ViewModels
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.PUR.ViewModels.GoodsReturnFormVm
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isNew      = string.IsNullOrEmpty(Model?.GoodsReturnId);
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    bool canEdit = !isReadOnly && (isNew || (
+                      Model?.Status == SmartFactory.MES.Modules.INV.Models.DocStatus.Draft &&
+                      (Model?.ApprovalStatus == SmartFactory.MES.Models.DocumentApprovalStatus.Draft ||
+                       Model?.ApprovalStatus == SmartFactory.MES.Models.DocumentApprovalStatus.Rejected)));
+    var suppliers   = ViewBag.SupplierOptions          as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var products    = ViewBag.ProductOptions            as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uoms        = ViewBag.UomOptions                as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var currencies  = ViewBag.CurrencyOptions           as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var taxes       = ViewBag.TaxOptions                as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var warehouses  = ViewBag.WarehouseOptions          as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var txnTypes    = ViewBag.TransactionTypeOptions    as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals      = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    var currencyDecimals = ViewBag.CurrencyDecimals as IReadOnlyDictionary<string, int>;
+    // 本位幣：明細幣別可各自不同，AmountLocal 與表頭合計一律以本位幣精度呈現
+    var baseCurrency = ViewBag.BaseCurrency as string ?? "";
+    int baseDp       = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string baseStep  = baseDp <= 0 ? "1" : "0." + new string('0', baseDp - 1) + "1";
+}
+
+<form id="grtForm" asp-action="Save" asp-controller="GoodsReturn" method="post"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="GoodsReturnId" />
+    <input type="hidden" asp-for="RowVersion" />
+    <input type="hidden" asp-for="CreatedBy" />
+    <input type="hidden" asp-for="ApprovalStatus" />
+
+    <fieldset @(!canEdit ? "disabled=\"disabled\"" : "")>
+    <div class="p-3">
+        <!-- 主檔 -->
+        <div class="row g-3 mb-4">
+            @if (!isNew)
+            {
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["GoodsReturnId"]</label>
+                    <div class="form-control-plaintext fw-bold text-primary">@Model!.GoodsReturnId</div>
+                </div>
+            }
+            <div class="col-12 col-md-3">
+                <label asp-for="ReturnDate" class="form-label fw-semibold">@Localizer["ReturnDate"]</label>
+                <input asp-for="ReturnDate" type="date" class="form-control" data-action-change="refreshAllLineRates" />
+                <span asp-validation-for="ReturnDate" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="SupplierCode" class="form-label fw-semibold">@Localizer["SupplierCode"]</label>
+                @if (isNew)
+                {
+                    <select asp-for="SupplierCode" class="form-select" required data-action-change="onSupplierChange">
+                        <option value="">-- @Localizer["SelectSupplier"] --</option>
+                        @foreach (var s in suppliers)
+                        {
+                            <option value="@s.CompanyCode" selected="@(Model?.SupplierCode == (string)s.CompanyCode)">
+                                @s.CompanyCode - @s.CompanyName
+                            </option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <input type="hidden" asp-for="SupplierCode" />
+                    <div class="form-control-plaintext fw-semibold">@Model!.SupplierCode</div>
+                }
+                <span asp-validation-for="SupplierCode" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="Remarks" class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+                <input asp-for="Remarks" class="form-control" maxlength="500" />
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- 明細 -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0"><i class="bi bi-list-ul me-1"></i>@Localizer["LinesTitle"]</h6>
+            @if (canEdit)
+            {
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-action="openGrModal">
+                        <i class="bi bi-download me-1"></i>@Localizer["ImportFromGr"]
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-action="addLine">
+                        <i class="bi bi-plus-lg"></i> @Localizer["AddLine"]
+                    </button>
+                </div>
+            }
+        </div>
+
+        <div id="linesContainer">
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm align-middle" id="linesTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="u-width-40px">@Localizer["LineNo"]</th>
+                            <th class="u-col-code">@Localizer["GrRef"]</th>
+                            <th class="u-col-code">@Localizer["ProductCode"]</th>
+                            <th class="u-col-num">@Localizer["ReturnQty"]</th>
+                            <th class="u-min-width-90px">@Localizer["UomCode"]</th>
+                            <th class="u-min-width-90px">@Localizer["CurrencyCode"]</th>
+                            <th class="u-col-num">@Localizer["UnitPrice"]</th>
+                            <th class="u-min-width-90px">@Localizer["TaxCode"]</th>
+                            <th class="u-col-num">@Localizer["LineAmount"]</th>
+                            <th class="u-col-num">@Localizer["TaxAmount"]</th>
+                            <th class="u-col-num">@Localizer["TotalAmount"]</th>
+                            <th class="u-col-num">@Localizer["AmountLocal"]@(string.IsNullOrEmpty(baseCurrency) ? "" : $"（{baseCurrency}）")</th>
+                            @if (canEdit) { <th class="u-width-40px"></th> }
+                        </tr>
+                    </thead>
+                    <tbody id="linesTbody">
+                        @for (int i = 0; i < (Model?.Lines.Count ?? 0); i++)
+                        {
+                            var line = Model!.Lines[i];
+                            var cdp  = CurrencyStepHelper.GetDp(currencyDecimals, line.CurrencyCode);
+                            var isImported = line.GoodsReceiptId != null;
+                            <tr data-idx="@i" @(isImported ? "data-imported=\"true\"" : "")>
+                                <td>
+                                    <input type="hidden" name="Lines[@i].LineNo" value="@line.LineNo" />
+                                    <input type="hidden" name="Lines[@i].LocationCode" value="@line.LocationCode" />
+                                    <input type="hidden" name="Lines[@i].LotNo" value="@line.LotNo" />
+                                    @line.LineNo
+                                </td>
+                                <td class="small text-muted">
+                                    <input type="hidden" name="Lines[@i].GoodsReceiptId" value="@line.GoodsReceiptId" />
+                                    <input type="hidden" name="Lines[@i].ReceiptLineNo" value="@line.ReceiptLineNo" />
+                                    @(isImported ? $"{line.GoodsReceiptId}-{line.ReceiptLineNo}" : "")
+                                </td>
+                                <td>
+                                    <select name="Lines[@i].ProductCode" class="form-select form-select-sm" required data-action-change="onProductChange" @(isImported ? "disabled" : "")>
+                                        <option value="">@SL["SelectProductOption"]</option>
+                                        @foreach (var p in products)
+                                        {
+                                            <option value="@p.ProductCode"
+                                                    data-purchase-uom="@p.PurchaseUom"
+                                                    data-stock-uom="@p.StockUom"
+                                                    selected="@(line.ProductCode == (string)p.ProductCode)">
+                                                @p.ProductCode - @p.ProductName
+                                            </option>
+                                        }
+                                    </select>
+                                    @if (isImported) { <input type="hidden" name="Lines[@i].ProductCode" value="@line.ProductCode" /> }
+                                </td>
+                                <td>
+                                    <input name="Lines[@i].ReturnQty" type="number" class="form-control form-control-sm text-end line-qty"
+                                           value="@line.ReturnQty" min="@UomStepHelper.GetMinPositive(uomDecimals, line.UomCode)" step="any" required data-action-change="calcLineEl" />
+                                    <input type="hidden" name="Lines[@i].StockUomCode" value="@line.StockUomCode" />
+                                    <input type="hidden" name="Lines[@i].StockQty" value="@line.StockQty" />
+                                </td>
+                                <td>
+                                    <select name="Lines[@i].UomCode" data-uom-prefer="purchase" class="form-select form-select-sm line-uom" @(isImported ? "disabled" : "") data-action-change="onUomChange">
+                                        <option value="">--</option>
+                                        @foreach (var u in uoms)
+                                        {
+                                            <option value="@u.UomCode" selected="@(line.UomCode == (string)u.UomCode)">@u.UomCode</option>
+                                        }
+                                    </select>
+                                    @if (isImported) { <input type="hidden" name="Lines[@i].UomCode" value="@line.UomCode" /> }
+                                </td>
+                                <td>
+                                    <select name="Lines[@i].CurrencyCode" class="form-select form-select-sm line-currency" data-action-change="onCurrencyChange" @(isImported ? "disabled" : "")>
+                                        <option value="">--</option>
+                                        @foreach (var c in currencies)
+                                        {
+                                            <option value="@c.CurrencyCode" selected="@(line.CurrencyCode == (string)c.CurrencyCode)">@c.CurrencyCode</option>
+                                        }
+                                    </select>
+                                    @if (isImported) { <input type="hidden" name="Lines[@i].CurrencyCode" value="@line.CurrencyCode" /> }
+                                </td>
+                                <td>
+                                    <input name="Lines[@i].UnitPrice" type="number" class="form-control form-control-sm text-end line-price"
+                                           value="@(line.UnitPrice.ToString("F" + cdp))" min="0" step="@CurrencyStepHelper.GetStep(currencyDecimals, line.CurrencyCode)" data-action-change="calcLineEl" @(isImported ? "readonly" : "") />
+                                    <input type="hidden" name="Lines[@i].ExchangeRate" value="@line.ExchangeRate" class="line-exrate" />
+                                </td>
+                                <td>
+                                    <select name="Lines[@i].TaxCode" class="form-select form-select-sm" data-action-change="onTaxChange" @(isImported ? "disabled" : "")>
+                                        <option value="">--</option>
+                                        @foreach (var t in taxes)
+                                        {
+                                            <option value="@t.TaxCode" data-tax-rate="@t.TaxRate" selected="@(line.TaxCode == (string)t.TaxCode)">@t.TaxCode</option>
+                                        }
+                                    </select>
+                                    @if (isImported) { <input type="hidden" name="Lines[@i].TaxCode" value="@line.TaxCode" /> }
+                                    <input type="hidden" name="Lines[@i].TaxRate" value="@line.TaxRate" class="line-taxrate" />
+                                </td>
+                                <td class="text-end">
+                                    <input name="Lines[@i].LineAmount" type="number" class="form-control form-control-sm text-end line-lineamt" readonly
+                                           value="@(line.LineAmount.ToString("F" + cdp))" step="@CurrencyStepHelper.GetStep(currencyDecimals, line.CurrencyCode)" />
+                                </td>
+                                <td class="text-end">
+                                    <input name="Lines[@i].TaxAmount" type="number" class="form-control form-control-sm text-end line-taxamt" readonly
+                                           value="@(line.TaxAmount.ToString("F" + cdp))" step="@CurrencyStepHelper.GetStep(currencyDecimals, line.CurrencyCode)" />
+                                </td>
+                                <td class="text-end">
+                                    <input name="Lines[@i].TotalAmount" type="number" class="form-control form-control-sm text-end line-totalamt" readonly
+                                           value="@(line.TotalAmount.ToString("F" + cdp))" step="@CurrencyStepHelper.GetStep(currencyDecimals, line.CurrencyCode)" />
+                                </td>
+                                <td class="text-end">
+                                    <input name="Lines[@i].AmountLocal" type="number" class="form-control form-control-sm text-end line-amtlocal" readonly
+                                           value="@(line.AmountLocal.ToString("F" + baseDp))" step="@baseStep" />
+                                </td>
+                                @if (canEdit)
+                                {
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-sm btn-outline-danger" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-light fw-semibold">
+                        <tr>
+                            <td colspan="8" class="text-end small text-muted">@SL["Total"]</td>
+                            <td class="text-end" id="totalLineAmt">0.00</td>
+                            <td class="text-end" id="totalTaxAmt">0.00</td>
+                            <td class="text-end" id="totalTotalAmt">0.00</td>
+                            <td class="text-end" id="totalAmountLocal">0.00</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+    </div>
+    </fieldset>
+
+    @if (!isNew)
+    {
+        @await Component.InvokeAsync("ContainerUnitsLeft", new { docNo = Model!.GoodsReturnId })
+    }
+
+    <!-- Side Panel Footer -->
+    <div class="position-sticky bottom-0 bg-white border-top px-3 py-2 d-flex justify-content-between align-items-center gap-2">
+        <div class="d-flex gap-2 align-items-center">
+            @{
+                var (badgeClass, badgeText) = Model?.ApprovalStatus switch {
+                    SmartFactory.MES.Models.DocumentApprovalStatus.Draft => ("bg-secondary", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Models.DocumentApprovalStatus.Draft)),
+                    SmartFactory.MES.Models.DocumentApprovalStatus.PendingApproval => ("bg-warning text-dark", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Models.DocumentApprovalStatus.PendingApproval)),
+                    SmartFactory.MES.Models.DocumentApprovalStatus.Approved => ("bg-success", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Models.DocumentApprovalStatus.Approved)),
+                    SmartFactory.MES.Models.DocumentApprovalStatus.Rejected => ("bg-danger", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Models.DocumentApprovalStatus.Rejected)),
+                    _ => ("bg-secondary", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Models.DocumentApprovalStatus.Draft))
+                };
+                var (docBadgeClass, docBadgeText) = Model?.Status switch {
+                    SmartFactory.MES.Modules.INV.Models.DocStatus.Draft => ("bg-secondary", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Modules.INV.Models.DocStatus.Draft)),
+                    SmartFactory.MES.Modules.INV.Models.DocStatus.Confirmed => ("bg-info text-dark", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Modules.INV.Models.DocStatus.Confirmed)),
+                    SmartFactory.MES.Modules.INV.Models.DocStatus.Posted => ("bg-primary", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Modules.INV.Models.DocStatus.Posted)),
+                    SmartFactory.MES.Modules.INV.Models.DocStatus.Void => ("bg-dark", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Modules.INV.Models.DocStatus.Void)),
+                    _ => ("bg-secondary", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Modules.INV.Models.DocStatus.Draft))
+                };
+            }
+            @if (!isNew)
+            {
+                <span class="badge @badgeClass">@SL["ApprovalLabelPrefix"]@badgeText</span>
+                <span class="badge @docBadgeClass">@SL["DocLabelPrefix"]@docBadgeText</span>
+            }
+        </div>
+        <div class="d-flex gap-2">
+            @if (!string.IsNullOrEmpty(Model?.GoodsReturnId) && (bool?)ViewBag.CanPrint == true)
+            {
+                <a asp-action="Print" asp-route-id="@Model!.GoodsReturnId" target="_blank"
+                   class="btn btn-outline-secondary">
+                    <i class="bi bi-printer"></i>
+                </a>
+            }
+            @if (isReadOnly)
+            {
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@SL["Close"]</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+                @if (!isNew && Model?.ApprovalStatus == SmartFactory.MES.Models.DocumentApprovalStatus.Draft
+                     && Model?.Status == SmartFactory.MES.Modules.INV.Models.DocStatus.Draft)
+                {
+                    <button type="button" class="btn btn-outline-primary"
+                            data-action="submitApproval" data-id="@Model!.GoodsReturnId" data-controller="GoodsReturn">
+                        <i class="bi bi-send me-1"></i>@SL["Submit"]
+                    </button>
+                }
+                @if (!isNew && Model?.ApprovalStatus == SmartFactory.MES.Models.DocumentApprovalStatus.PendingApproval)
+                {
+                    <button type="button" class="btn btn-outline-warning"
+                            data-action="withdrawApproval" data-id="@Model!.GoodsReturnId" data-controller="GoodsReturn">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@SL["Withdraw"]
+                    </button>
+                }
+                @if (!isNew
+                     && Model?.Status == SmartFactory.MES.Modules.INV.Models.DocStatus.Draft
+                     && Model?.ApprovalStatus == SmartFactory.MES.Models.DocumentApprovalStatus.Approved)
+                {
+                    <button type="button" class="btn btn-outline-success"
+                            data-action="confirmDoc" data-id="@Model!.GoodsReturnId" data-controller="GoodsReturn">
+                        <i class="bi bi-check2-circle me-1"></i>@SL["Confirm"]
+                    </button>
+                }
+                @if (!isNew && Model?.Status == SmartFactory.MES.Modules.INV.Models.DocStatus.Confirmed)
+                {
+                    <button type="button" class="btn btn-outline-warning"
+                            data-action="cancelConfirmDoc" data-id="@Model!.GoodsReturnId" data-controller="GoodsReturn">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@SL["Unconfirm"]
+                    </button>
+                }
+                @if (!isNew && Model?.Status == SmartFactory.MES.Modules.INV.Models.DocStatus.Posted)
+                {
+                    <button type="button" class="btn btn-outline-danger"
+                            data-action="voidDoc" data-id="@Model!.GoodsReturnId" data-controller="GoodsReturn">
+                        <i class="bi bi-x-octagon me-1"></i>@SL["Void"]
+                    </button>
+                }
+                @if (Model?.ApprovalStatus != SmartFactory.MES.Models.DocumentApprovalStatus.PendingApproval
+                  && Model?.ApprovalStatus != SmartFactory.MES.Models.DocumentApprovalStatus.Approved
+                  && (Model?.Status == null || Model.Status == SmartFactory.MES.Modules.INV.Models.DocStatus.Draft))
+                {
+                    <button type="submit" class="btn btn-primary" name="submit" value="save">
+                        <i class="bi bi-floppy me-1"></i>@Localizer["Save"]
+                    </button>
+                }
+            }
+        </div>
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    window.uomDecimals = Object.assign(window.uomDecimals || {}, @Html.Raw(System.Text.Json.JsonSerializer.Serialize(uomDecimals ?? new Dictionary<string,int>())));
+    window.currencyDecimals = Object.assign(window.currencyDecimals || {}, @Html.Raw(System.Text.Json.JsonSerializer.Serialize(currencyDecimals ?? new Dictionary<string,int>())));
+    // 本位幣代號與精度：AmountLocal 及表頭合計專用
+    var baseCurrency = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(baseCurrency));
+    var baseDp       = @baseDp;
+    var baseStep     = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(baseStep));
+    function onUomChange(e, sel) {
+        var qty = sel.closest('tr').querySelector('.line-qty');
+        window.applyUomStep(qty, sel.value);
+    }
+    // 動態列 UOM 變更：套用 step 並重算金額（取代 inline 的兩段 onchange）。
+    function onUomChangeCalc(e, sel) {
+        onUomChange(e, sel);
+        calcLine(sel.closest('tr'));
+    }
+    // data-action 委派薄包裝：由觸發元素回推所屬 row 後呼叫 calcLine(row)。
+    function calcLineEl(e, el) {
+        calcLine(el.closest('tr'));
+    }
+    function onCurrencyChange(e, sel) {
+        const row = sel.closest('tr');
+        ['.line-price', '.line-lineamt', '.line-taxamt', '.line-totalamt'].forEach(s => {
+            const el = row.querySelector(s);
+            if (el) window.applyCurrencyStep(el, sel.value);
+        });
+        refreshLineRate(row).finally(() => calcLine(row));
+    }
+
+    async function refreshLineRate(row) {
+        const ccy = row.querySelector('.line-currency')?.value || '';
+        const exEl = row.querySelector('.line-exrate');
+        if (!exEl) return;
+        if (!ccy) { exEl.value = 1; return; }
+        const docDate = document.getElementById('ReturnDate')?.value;
+        if (!docDate) { exEl.value = 1; return; }
+        try {
+            const resp = await fetch(`/api/currency/rate?currencyCode=${encodeURIComponent(ccy)}&documentDate=${encodeURIComponent(docDate)}&rateType=Buy`,
+                { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            if (!resp.ok) return;
+            const data = await resp.json();
+            exEl.value = data.rate ?? exEl.value ?? 1;
+        } catch { /* 保留原值 */ }
+    }
+
+    async function refreshAllLineRates() {
+        const rows = document.querySelectorAll('tbody tr[data-idx]');
+        for (const row of rows) {
+            await refreshLineRate(row);
+            calcLine(row);
+        }
+    }
+    var lineCount = @(Model?.Lines.Count ?? 0);
+    var productsJson   = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(products.Select(p => new { productCode = (string)p.ProductCode, productName = (string)p.ProductName, purchaseUom = (string?)p.PurchaseUom, stockUom = (string?)p.StockUom })));
+    var uomsJson       = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(uoms.Select(u => new { uomCode = (string)u.UomCode, uomName = (string)u.UomName })));
+    var currenciesJson = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(currencies.Select(c => new { currencyCode = (string)c.CurrencyCode, currencyName = (string)c.CurrencyName })));
+    var taxesJson      = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(taxes.Select(t => new { taxCode = (string)t.TaxCode, taxName = (string)t.TaxName, taxRate = (decimal)t.TaxRate })));
+    function calcTotals() {
+        // 交易幣三欄以行的幣別分群加總；本幣欄已全部換算為本位幣，可直接單一加總 —— 即表頭 TotalAmount。
+        const groups = {};
+        let localSum = 0;
+        document.querySelectorAll('#linesTbody tr').forEach(row => {
+            const ccy = row.querySelector('.line-currency')?.value || '';
+            if (!groups[ccy]) groups[ccy] = { la: 0, ta: 0, tt: 0 };
+            groups[ccy].la += parseFloat(row.querySelector('.line-lineamt')?.value)  || 0;
+            groups[ccy].ta += parseFloat(row.querySelector('.line-taxamt')?.value)   || 0;
+            groups[ccy].tt += parseFloat(row.querySelector('.line-totalamt')?.value) || 0;
+            localSum       += parseFloat(row.querySelector('.line-amtlocal')?.value) || 0;
+        });
+        const join = key => Object.entries(groups).map(([c, v]) =>
+            (c ? c + ' ' : '') + window.fmtMoney(v[key], c)).join(' / ') || '0';
+        const laEl = document.getElementById('totalLineAmt');
+        const taEl = document.getElementById('totalTaxAmt');
+        const ttEl = document.getElementById('totalTotalAmt');
+        if (laEl) laEl.textContent = join('la');
+        if (taEl) taEl.textContent = join('ta');
+        if (ttEl) ttEl.textContent = join('tt');
+        const alEl = document.getElementById('totalAmountLocal');
+        if (alEl) alEl.textContent = (baseCurrency ? baseCurrency + ' ' : '')
+            + window.fmtMoney(window.roundHalfAway(localSum, baseDp), baseCurrency);
+    }
+
+    async function syncStockQty(row) {
+        const productCode = row.querySelector('select[name$=".ProductCode"]')?.value || row.querySelector('input[name$=".ProductCode"]')?.value;
+        const fromUom     = row.querySelector('select[name$=".UomCode"]')?.value || row.querySelector('input[name$=".UomCode"]')?.value;
+        const toUom       = row.querySelector('input[name$=".StockUomCode"]')?.value;
+        const qty         = parseFloat(row.querySelector('.line-qty')?.value) || 0;
+
+        if (!productCode || !fromUom || !toUom) return;
+
+        try {
+            const resp = await fetch(`/Uom/GetConversionRate?productCode=${encodeURIComponent(productCode)}&fromUom=${encodeURIComponent(fromUom)}&toUom=${encodeURIComponent(toUom)}`);
+            const data = await resp.json();
+            if (data.success) {
+                const dp = window.uomDecimals[toUom] != null ? window.uomDecimals[toUom] : 4;
+                const stockQty = window.roundHalfAway(qty * data.rate, dp);
+                row.querySelector('input[name$=".StockQty"]').value = stockQty;
+                const display = row.querySelector('.stock-qty-display');
+                if (display) display.textContent = stockQty.toFixed(dp);
+            }
+        } catch (e) { console.error("Uom conversion error", e); }
+    }
+
+    async function calcLine(row) {
+        const qty      = parseFloat(row.querySelector('.line-qty')?.value)   || 0;
+        const price    = parseFloat(row.querySelector('.line-price')?.value) || 0;
+        const taxRate  = parseFloat(row.querySelector('.line-taxrate')?.value) || 0;
+        const exRate   = parseFloat(row.querySelector('.line-exrate')?.value)  || 1;
+        const ccy      = row.querySelector('.line-currency')?.value || '';
+        const dp       = window.currencyDp(ccy);
+        const lineAmt  = window.roundHalfAway(qty * price, dp);
+        const taxAmt   = window.roundHalfAway(lineAmt * taxRate, dp);
+        // LineAmount / TaxAmount / TotalAmount 一律為「交易幣」金額，匯率只作用在 AmountLocal。
+        // 本幣 = 外幣 × Rate（見 currency.md §換算方向）。
+        const totalAmt = window.roundHalfAway(lineAmt + taxAmt, dp);
+        const amtLocal = window.roundHalfAway(totalAmt * exRate, baseDp);
+        const laEl = row.querySelector('.line-lineamt');
+        const taEl = row.querySelector('.line-taxamt');
+        const ttEl = row.querySelector('.line-totalamt');
+        const alEl = row.querySelector('.line-amtlocal');
+        if (laEl) laEl.value = lineAmt;
+        if (taEl) taEl.value = taxAmt;
+        if (ttEl) ttEl.value = totalAmt;
+        if (alEl) alEl.value = amtLocal;
+
+        await syncStockQty(row);
+        calcTotals();
+    }
+
+    function onTaxChange(e, sel) {
+        const opt = sel.selectedOptions[0];
+        const taxRate = parseFloat(opt?.dataset.taxRate) || 0;
+        const row = sel.closest('tr');
+        const taxRateInput = row.querySelector('.line-taxrate');
+        if (taxRateInput) taxRateInput.value = taxRate;
+        calcLine(row);
+    }
+
+    function onProductChange(e, sel) {
+        const opt = sel.selectedOptions[0];
+        const purchaseUom = opt?.dataset.purchaseUom || '';
+        const stockUom    = opt?.dataset.stockUom    || '';
+        const row = sel.closest('tr');
+        const uomSel        = row.querySelector('.line-uom');
+        const stockUomInput = row.querySelector('input[name$=".StockUomCode"]');
+        if (uomSel && purchaseUom) uomSel.value = purchaseUom;
+        if (stockUomInput) stockUomInput.value = stockUom;
+        const qty = row.querySelector('.line-qty');
+        if (qty && purchaseUom) window.applyUomStepAsync(qty, purchaseUom);
+        calcLine(row);
+    }
+
+    function buildLineRow(idx, lineNo, data) {
+        const imported = !!(data?.goodsReceiptId);
+        const dis = imported ? 'disabled' : '';
+        const ro  = imported ? 'readonly' : '';
+        const productOpts   = productsJson.map(p =>
+            `<option value="${p.productCode}" data-purchase-uom="${p.purchaseUom||''}" data-stock-uom="${p.stockUom||''}" ${data?.productCode === p.productCode ? 'selected' : ''}>${p.productCode} - ${p.productName}</option>`
+        ).join('');
+        const uomOpts = uomsJson.map(u =>
+            `<option value="${u.uomCode}" ${data?.uomCode === u.uomCode ? 'selected' : ''}>${u.uomCode}</option>`
+        ).join('');
+        const currencyOpts = currenciesJson.map(c =>
+            `<option value="${c.currencyCode}" ${data?.currencyCode === c.currencyCode ? 'selected' : ''}>${c.currencyCode}</option>`
+        ).join('');
+        const taxOpts = taxesJson.map(t =>
+            `<option value="${t.taxCode}" data-tax-rate="${t.taxRate}" ${data?.taxCode === t.taxCode ? 'selected' : ''}>${t.taxCode}</option>`
+        ).join('');
+        const grRef = (data?.goodsReceiptId && data?.receiptLineNo) ? `${data.goodsReceiptId}-${data.receiptLineNo}` : '';
+        const hiddenIfImported = (name, val) => imported ? `<input type="hidden" name="${name}" value="${val}" />` : '';
+
+        return `
+        <tr data-idx="${idx}" ${imported ? 'data-imported="true"' : ''}>
+            <td>
+                <input type="hidden" name="Lines[${idx}].LineNo" value="${lineNo}" />
+                <input type="hidden" name="Lines[${idx}].LocationCode" value="" />
+                <input type="hidden" name="Lines[${idx}].LotNo" value="" />
+                ${lineNo}
+            </td>
+            <td class="small text-muted">
+                <input type="hidden" name="Lines[${idx}].GoodsReceiptId" value="${data?.goodsReceiptId||''}" />
+                <input type="hidden" name="Lines[${idx}].ReceiptLineNo" value="${data?.receiptLineNo||''}" />
+                ${grRef}
+            </td>
+            <td>
+                <select name="Lines[${idx}].ProductCode" class="form-select form-select-sm" required data-action-change="onProductChange" ${dis}>
+                    <option value="">${@(Json.Serialize(SL["SelectProductOption"].Value))}</option>${productOpts}
+                </select>
+                ${hiddenIfImported(`Lines[${idx}].ProductCode`, data?.productCode||'')}
+            </td>
+            <td>
+                <input name="Lines[${idx}].ReturnQty" type="number" class="form-control form-control-sm text-end line-qty" value="${data?.importQty||data?.receiptQty||data?.returnQty||1}" min="0" step="any" required data-action-change="calcLineEl" />
+                <input type="hidden" name="Lines[${idx}].StockUomCode" value="${data?.stockUomCode||''}" />
+                <input type="hidden" name="Lines[${idx}].StockQty" value="${data?.stockQty||0}" />
+                <div class="small text-muted stock-qty-display" title="Inventory Stock Quantity">${(data?.stockQty||0).toFixed(window.uomDecimals[data?.stockUomCode] != null ? window.uomDecimals[data?.stockUomCode] : 4)}</div>
+            </td>
+            <td>
+                <select name="Lines[${idx}].UomCode" data-uom-prefer="purchase" class="form-select form-select-sm line-uom" ${dis} data-action-change="onUomChangeCalc">
+                    <option value="">--</option>${uomOpts}
+                </select>
+                ${hiddenIfImported(`Lines[${idx}].UomCode`, data?.uomCode||'')}
+            </td>
+            <td>
+                <select name="Lines[${idx}].CurrencyCode" class="form-select form-select-sm line-currency" data-action-change="onCurrencyChange" ${dis}>
+                    <option value="">--</option>${currencyOpts}
+                </select>
+                ${hiddenIfImported(`Lines[${idx}].CurrencyCode`, data?.currencyCode||'')}
+            </td>
+            <td>
+                <input name="Lines[${idx}].UnitPrice" type="number" class="form-control form-control-sm text-end line-price" value="${data?.unitPrice||0}" min="0" step="${window.currencyStepOf(data?.currencyCode)}" data-action-change="calcLineEl" ${ro} />
+                <input type="hidden" name="Lines[${idx}].ExchangeRate" value="${data?.exchangeRate||1}" class="line-exrate" />
+            </td>
+            <td>
+                <select name="Lines[${idx}].TaxCode" class="form-select form-select-sm" data-action-change="onTaxChange" ${dis}>
+                    <option value="">--</option>${taxOpts}
+                </select>
+                ${hiddenIfImported(`Lines[${idx}].TaxCode`, data?.taxCode||'')}
+                <input type="hidden" name="Lines[${idx}].TaxRate" value="${data?.taxRate||0}" class="line-taxrate" />
+            </td>
+            <td class="text-end"><input name="Lines[${idx}].LineAmount" type="number" class="form-control form-control-sm text-end line-lineamt" readonly value="${data?.lineAmount||0}" step="${window.currencyStepOf(data?.currencyCode)}" /></td>
+            <td class="text-end"><input name="Lines[${idx}].TaxAmount" type="number" class="form-control form-control-sm text-end line-taxamt" readonly value="${data?.taxAmount||0}" step="${window.currencyStepOf(data?.currencyCode)}" /></td>
+            <td class="text-end"><input name="Lines[${idx}].TotalAmount" type="number" class="form-control form-control-sm text-end line-totalamt" readonly value="${data?.totalAmount||0}" step="${window.currencyStepOf(data?.currencyCode)}" /></td>
+            <td class="text-end"><input name="Lines[${idx}].AmountLocal" type="number" class="form-control form-control-sm text-end line-amtlocal" readonly value="${data?.amountLocal||0}" step="${baseStep}" /></td>
+            <td class="text-center">
+                <button type="button" class="btn btn-sm btn-outline-danger" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        </tr>`;
+    }
+
+    function addLine(arg) {
+        // dispatcher 以 (event, el) 呼叫 → 視為新空白列；匯入路徑以 (data) 物件呼叫。
+        const data = (arg instanceof Event) ? undefined : arg;
+        const idx = lineCount;
+        lineCount++;
+        const lineNo = document.querySelectorAll('#linesTbody tr').length + 1;
+        const tbody = document.createElement('tbody');
+        tbody.innerHTML = buildLineRow(idx, lineNo, data);
+        const row = tbody.firstElementChild;
+        document.getElementById('linesTbody').appendChild(row);
+        window.armValidation(document.getElementById('grtForm')); // 動態列重註冊 unobtrusive 驗證（R6c）
+        calcLine(row);
+        const uomSel = row.querySelector('.line-uom');
+        const qty    = row.querySelector('.line-qty');
+        if (uomSel && qty) window.applyUomStep(qty, uomSel.value);
+    }
+
+    function removeLine(e, btn) {
+        btn.closest('tr').remove();
+        document.querySelectorAll('#linesTbody tr').forEach((tr, i) => {
+            tr.cells[0].querySelector('input[name$=".LineNo"]').value = i + 1;
+            tr.cells[0].lastChild.textContent = i + 1;
+        });
+        calcTotals();
+    }
+
+    function onSupplierChange(e, sel) {
+        const tbody = document.getElementById('linesTbody');
+        if (tbody && tbody.querySelectorAll('tr').length > 0) {
+            if (!confirm('@Localizer["ChangeSupplierClearLines"]')) {
+                sel.value = sel.dataset.prev || '';
+                return;
+            }
+            tbody.innerHTML = '';
+            lineCount = 0;
+            calcTotals();
+        }
+        sel.dataset.prev = sel.value;
+    }
+
+    // ---- GR 匯入 Modal ----
+    var grModalInst = null;
+
+    function openGrModal() {
+        const supplierCode = document.querySelector('[name="SupplierCode"]')?.value;
+        if (!supplierCode) { alert('@Localizer["SelectSupplierFirst"]'); return; }
+        const modalEl = document.getElementById('grImportModal');
+        if (modalEl && modalEl.parentElement !== document.body) {
+            document.body.appendChild(modalEl);
+            modalEl.setAttribute('data-moved-modal', '1');
+        }
+        if (!grModalInst) grModalInst = new bootstrap.Modal(modalEl);
+        loadGrLines('');
+        grModalInst.show();
+    }
+
+    function loadGrLines(a, b) {
+        // dispatcher 以 (event, inputEl) 呼叫 → 取 inputEl.value；內部以 (term 字串) 呼叫。
+        const term = (b && typeof b.value === 'string') ? b.value : (typeof a === 'string' ? a : '');
+        const supplierCode = document.querySelector('[name="SupplierCode"]')?.value || '';
+        let url = '/GoodsReceipt/AvailableLines?';
+        if (term) url += 'searchTerm=' + encodeURIComponent(term) + '&';
+        if (supplierCode) url += 'supplierCode=' + encodeURIComponent(supplierCode);
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => r.json())
+            .then(lines => {
+                const tbody = document.getElementById('grImportTbody');
+                if (!lines || lines.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">' + @(Json.Serialize(SL["NoAvailableLines"].Value)) + '</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = lines.map(l => `
+                    <tr>
+                        <td class="text-end">
+                            <input type="number" class="form-control form-control-sm text-end gr-line-qty u-width-80px"
+                                value="0" min="0" max="${l.remainingQty}" step="any"
+                                data-gr='${JSON.stringify(l).replace(/'/g, "&#39;")}'
+                                data-action-focus="selectMaxIfZero" />
+                        </td>
+                        <td><code>${l.goodsReceiptId}</code></td>
+                        <td>${l.lineNo}</td>
+                        <td>${l.productCode}</td>
+                        <td class="text-end">${l.remainingQty}</td>
+                        <td>${l.uomCode || ''}</td>
+                    </tr>`).join('');
+            });
+    }
+
+    function confirmGrImport() {
+        let hasError = false;
+        document.querySelectorAll('.gr-line-qty').forEach(input => {
+            const qty = parseFloat(input.value) || 0;
+            const max = parseFloat(input.max) || 0;
+            if (qty > max) { input.classList.add('is-invalid'); hasError = true; }
+            else { input.classList.remove('is-invalid'); }
+        });
+        if (hasError) { alert('@Localizer["QtyExceedPending"]'); return; }
+        document.querySelectorAll('.gr-line-qty').forEach(input => {
+            const qty = parseFloat(input.value) || 0;
+            if (qty <= 0) return;
+            const l = JSON.parse(input.dataset.gr);
+            addLine({
+                goodsReceiptId: l.goodsReceiptId,
+                receiptLineNo:  l.lineNo,
+                productCode:   l.productCode,
+                importQty:     qty,
+                uomCode:       l.uomCode,
+                stockUomCode:  l.stockUomCode,
+                stockQty:      l.stockQty,
+                unitPrice:     l.unitPrice,
+                currencyCode:  l.currencyCode,
+                exchangeRate:  l.exchangeRate,
+                taxCode:       l.taxCode,
+                taxRate:       l.taxRate,
+                whCode:        l.whCode,
+                locationCode:  l.locationCode,
+                lotNo:         l.lotNo,
+            });
+        });
+        grModalInst.hide();
+    }
+
+    calcTotals();
+</script>
+
+<!-- GR 匯入 Modal -->
+<div class="modal fade" id="grImportModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-download me-2"></i>@Localizer["ImportFromGr"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-2">
+                <div class="input-group input-group-sm mb-2">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" id="grImportSearch" class="form-control" placeholder="@Localizer["SearchGrOrProduct"]"
+                           data-action-input="loadGrLines" />
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-end u-width-90px">@SL["QtyThisTime"]</th>
+                                <th>@Localizer["GoodsReceiptId"]</th>
+                                <th>@Localizer["LineNo"]</th>
+                                <th>@Localizer["ProductCode"]</th>
+                                <th class="text-end">@SL["PendingQty"]</th>
+                                <th>@Localizer["UomCode"]</th>
+                            </tr>
+                        </thead>
+                        <tbody id="grImportTbody">
+                            <tr><td colspan="6" class="text-center text-muted">@SL["Loading"]</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">@Localizer["Cancel"]</button>
+                <button type="button" class="btn btn-primary" data-action="confirmGrImport">
+                    <i class="bi bi-check-lg me-1"></i>@Localizer["Confirm"]
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

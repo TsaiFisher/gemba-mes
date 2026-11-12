@@ -1,0 +1,125 @@
+@using SmartFactory.MES.Services
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@model IList<SmartFactory.MES.Modules.FIN.ViewModels.AgingRowVm>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = L["APAging"];
+    string curSupplier  = ViewBag.SearchSupplier as string ?? "";
+    var supplierOptions = ViewBag.SupplierOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.SortOrder as string ?? "";
+        if (cur == col + "_asc")  return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        // 未指定排序時的預設檢視就是總額降冪，圖示要如實反映而不是留空。
+        return col == "total" && string.IsNullOrEmpty(cur) ? "bi-sort-down" : "bi-arrow-down-up opacity-25";
+    };
+}
+
+<div class="d-flex align-items-center mb-3 gap-2">
+    <h5 class="mb-0 fw-bold">@L["APAging"]</h5>
+    @if (Model.Any())
+    {
+        <a asp-action="Export" asp-controller="APAging"
+           asp-route-asOf="@ViewBag.AsOf" asp-route-searchSupplier="@ViewBag.SearchSupplier"
+           asp-route-sortOrder="@ViewBag.SortOrder"
+           class="btn btn-sm btn-outline-success ms-auto">
+            <i class="bi bi-file-earmark-excel me-1"></i>Excel
+        </a>
+    }
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <input type="hidden" name="searched" value="true" />
+    <div class="col-auto">
+        <label class="col-form-label col-form-label-sm">@L["AsOf"]</label>
+    </div>
+    <div class="col-md-2">
+        <input type="date" name="asOf" class="form-control form-control-sm"
+               value="@((ViewBag.AsOf as DateOnly?)?.ToString("yyyy-MM-dd"))" />
+    </div>
+    <div class="col-md-3">
+        <select name="searchSupplier" class="form-select form-select-sm select2-enable w-100"
+                data-placeholder="@L["AllSuppliers"]" data-allow-clear="true">
+            <option value=""></option>
+            @foreach (var s in supplierOptions)
+            {
+                <option value="@s.CompanyCode" selected="@(curSupplier == (string)s.CompanyCode)">@s.CompanyCode — @s.CompanyName</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary btn-sm px-4"><i class="bi bi-search me-1"></i>@L["Search"]</button>
+    </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+</form>
+
+@if (Model.Any())
+{
+    var total = new SmartFactory.MES.Modules.FIN.ViewModels.AgingRowVm();
+    foreach (var r in Model) {
+        total.Current += r.Current; total.Days30 += r.Days30; total.Days60 += r.Days60;
+        total.Days90  += r.Days90; total.Days90Plus += r.Days90Plus; total.Total += r.Total;
+    }
+
+    <table class="table table-sm table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>
+                    <a asp-action="Index" asp-controller="APAging" asp-route-searched="true"
+                       asp-route-asOf="@ViewBag.AsOf" asp-route-searchSupplier="@ViewBag.SearchSupplier"
+                       asp-route-sortOrder="@ViewBag.PartySort" class="text-decoration-none text-dark">
+                        @L["SupplierCode"] <i class="bi @sortIcon("party")"></i>
+                    </a>
+                </th>
+                <th class="text-end">@L["AgingCurrent"]</th>
+                <th class="text-end">@L["Aging30"]</th>
+                <th class="text-end">@L["Aging60"]</th>
+                <th class="text-end">@L["Aging90"]</th>
+                <th class="text-end">@L["Aging90Plus"]</th>
+                <th class="text-end fw-bold">
+                    <a asp-action="Index" asp-controller="APAging" asp-route-searched="true"
+                       asp-route-asOf="@ViewBag.AsOf" asp-route-searchSupplier="@ViewBag.SearchSupplier"
+                       asp-route-sortOrder="@ViewBag.TotalSort" class="text-decoration-none text-dark">
+                        @L["AgingTotal"] <i class="bi @sortIcon("total")"></i>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @* 合計用完整 Model 算（上方 total 迴圈），明細只切當頁——
+           改成對當頁加總的話，tfoot 會變成「本頁小計」而看起來仍像總計。 *@
+        @{ var paged = ReportPaging.Page(Model, ViewData, Context); }
+        @foreach (var r in paged)
+        {
+            <tr>
+                <td>@r.PartyCode</td>
+                <td class="text-end">@r.Current.ToString(moneyFmt)</td>
+                <td class="text-end @(r.Days30 > 0 ? "text-warning fw-semibold" : "")">@r.Days30.ToString(moneyFmt)</td>
+                <td class="text-end @(r.Days60 > 0 ? "text-warning fw-semibold" : "")">@r.Days60.ToString(moneyFmt)</td>
+                <td class="text-end @(r.Days90 > 0 ? "text-danger fw-semibold" : "")">@r.Days90.ToString(moneyFmt)</td>
+                <td class="text-end @(r.Days90Plus > 0 ? "text-danger fw-bold" : "")">@r.Days90Plus.ToString(moneyFmt)</td>
+                <td class="text-end fw-bold">@r.Total.ToString(moneyFmt)</td>
+            </tr>
+        }
+        </tbody>
+        <tfoot class="table-secondary fw-bold">
+            <tr>
+                <td>@L["AgingTotal"]</td>
+                <td class="text-end">@total.Current.ToString(moneyFmt)</td>
+                <td class="text-end">@total.Days30.ToString(moneyFmt)</td>
+                <td class="text-end">@total.Days60.ToString(moneyFmt)</td>
+                <td class="text-end">@total.Days90.ToString(moneyFmt)</td>
+                <td class="text-end">@total.Days90Plus.ToString(moneyFmt)</td>
+                <td class="text-end">@total.Total.ToString(moneyFmt)</td>
+            </tr>
+        </tfoot>
+    </table>
+    @await Html.PartialAsync("_Pagination", paged)
+}
+else if (ViewBag.Searched == true)
+{
+    <div class="alert alert-info">@L["NoData"]</div>
+}

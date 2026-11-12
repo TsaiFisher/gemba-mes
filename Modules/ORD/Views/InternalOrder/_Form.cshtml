@@ -1,0 +1,416 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.ORD.ViewModels.InternalOrderFormVm
+
+@{
+    bool isNew      = string.IsNullOrEmpty(Model?.InternalOrderId);
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    bool canEdit = !isReadOnly && (isNew || (
+                      Model?.Status == DocStatus.Draft &&
+                      (Model?.ApprovalStatus == DocumentApprovalStatus.Draft ||
+                       Model?.ApprovalStatus == DocumentApprovalStatus.Rejected)));
+    // 結案/解除結案僅限已核准且未作廢的訂單可執行（與 canEdit 互斥；詳見 mfg-domain.md §21.1）。
+    bool canClose = !isReadOnly && !isNew
+                    && Model?.ApprovalStatus == DocumentApprovalStatus.Approved
+                    && Model?.Status != DocStatus.Void;
+    var products    = ViewBag.ProductOptions   as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uoms        = ViewBag.UomOptions       as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+}
+
+<form id="ioForm" asp-action="Save" asp-controller="InternalOrder" method="post"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+    <input type="hidden" asp-for="InternalOrderId" />
+    <input type="hidden" asp-for="RowVersion" />
+    <input type="hidden" asp-for="CreatedBy" />
+    <input type="hidden" asp-for="ApprovalStatus" />
+    <input type="hidden" asp-for="Status" />
+
+    <fieldset @(!canEdit ? "disabled=\"disabled\"" : "")>
+    <div class="p-3">
+        <div asp-validation-summary="All" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+        <div class="row g-3 mb-3">
+            @if (!isNew)
+            {
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["InternalOrderId"]</label>
+                    <div class="form-control-plaintext fw-bold text-primary">@Model!.InternalOrderId</div>
+                </div>
+            }
+            <div class="col-12 col-md-3">
+                <label asp-for="OrderDate" class="form-label fw-semibold">@Localizer["OrderDate"]</label>
+                <input asp-for="OrderDate" type="date" class="form-control" />
+                <span asp-validation-for="OrderDate" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="TypeCode" class="form-label fw-semibold">@Localizer["TypeCode"]</label>
+                @if (isNew)
+                {
+                    <select asp-for="TypeCode" class="form-select">
+                        <option value="NO">NO — @Localizer["TypeNO"]</option>
+                        <option value="NR">NR — @Localizer["TypeNR"]</option>
+                    </select>
+                }
+                else
+                {
+                    <select asp-for="TypeCode" class="form-select" disabled>
+                        <option value="NO">NO — @Localizer["TypeNO"]</option>
+                        <option value="NR">NR — @Localizer["TypeNR"]</option>
+                    </select>
+                    <input type="hidden" asp-for="TypeCode" />
+                }
+                <span asp-validation-for="TypeCode" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-4">
+                <label asp-for="DepartmentCode" class="form-label fw-semibold">@Localizer["DepartmentCode"]</label>
+                <select asp-for="DepartmentCode" class="form-select">
+                    <option value="">-- @Localizer["SelectDepartment"] --</option>
+                    @foreach (var d in (ViewBag.DeptOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>()))
+                    {
+                        <option value="@d.Id" selected="@(Model?.DepartmentCode == (string)d.Id)">@d.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="Remarks" class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+                <input asp-for="Remarks" class="form-control" maxlength="500" />
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0"><i class="bi bi-list-ul me-1"></i>@Localizer["LinesTitle"]</h6>
+            <div class="d-flex gap-2">
+                @if (canEdit)
+                {
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-action="addLine">
+                        <i class="bi bi-plus-lg"></i> @Localizer["AddLine"]
+                    </button>
+                }
+                @* 「全部結案」移到頁尾按鈕列（見下方），與 canEdit 的 fieldset 脫鉤，
+                   核准後才啟用（fieldset disabled 會連帶鎖住其內任何 button）。 *@
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered" id="linesTable">
+                <thead class="table-light">
+                    <tr>
+                        <th class="u-width-40px">#</th>
+                        <th class="u-min-width-240px">@Localizer["ProductCode"]</th>
+                        <th class="u-col-date">@Localizer["DeliveryDate"]</th>
+                        <th class="text-end u-col-num">@Localizer["OrderQty"]</th>
+                        <th class="u-col-tiny">@Localizer["UomCode"]</th>
+                        @if (!isNew) { <th class="text-end">@Localizer[Model!.TypeCode == "NR" ? "QtyPutAwayIn" : "QtyPutAwayOut"]</th> }
+                        <th class="u-width-50px">@Localizer["IsClosed"]</th>
+                        <th class="u-col-soft">@Localizer["Remarks"]</th>
+                        @if (canEdit) { <th class="u-width-40px"></th> }
+                    </tr>
+                </thead>
+                <tbody id="linesTbody">
+                    @for (int i = 0; i < (Model?.Lines.Count ?? 0); i++)
+                    {
+                        var line = Model!.Lines[i];
+                        <tr>
+                            <td class="text-center text-muted small">@(i+1)</td>
+                            <td>
+                                <input type="hidden" name="Lines[@i].LineNo" value="@line.LineNo" />
+                                <select name="Lines[@i].ProductCode" class="form-select form-select-sm select2-enable" required data-action-change="onProductChange">
+                                    <option value="">--</option>
+                                    @foreach (var p in products)
+                                    {
+                                        <option value="@p.ProductCode" selected="@(line.ProductCode == (string)p.ProductCode)"
+                                                data-stock-uom="@p.StockUom">@p.ProductCode — @p.ProductName</option>
+                                    }
+                                </select>
+                            </td>
+                            <td><input name="Lines[@i].DeliveryDate" value="@line.DeliveryDate?.ToString("yyyy-MM-dd")" type="date" class="form-control form-control-sm u-width-130px" /></td>
+                            <td>
+                                <input name="Lines[@i].OrderQty" value="@line.OrderQty" type="number"
+                                       step="@UomStepHelper.GetStep(uomDecimals, line.UomCode)"
+                                       min="@UomStepHelper.GetMinPositive(uomDecimals, line.UomCode)"
+                                       class="form-control form-control-sm text-end line-qty u-width-90px" required
+                                       data-action-change="syncStockQtyEl" />
+                                <input type="hidden" name="Lines[@i].StockUomCode" value="@line.StockUomCode" />
+                                <input type="hidden" name="Lines[@i].StockQty" value="@line.StockQty" />
+                            </td>
+                            <td>
+                                <select name="Lines[@i].UomCode" class="form-select form-select-sm line-uom u-width-80px" data-action-change="onUomChange">
+                                    @foreach (var u in uoms) { <option value="@u.UomCode" selected="@(line.UomCode == (string)u.UomCode)">@u.UomCode</option> }
+                                </select>
+                            </td>
+                            @if (!isNew) { <td class="text-end text-muted small">@line.QtyPutAway</td> }
+                            <td class="text-center">
+                                @* 用 <a> 而非 <button>：結案/解除結案不受 canEdit 的 <fieldset disabled> 節制
+                                   （fieldset 只會停用表單關聯元素），核准後（canClose）才可互動。 *@
+                                @if (canClose && line.IsClosed)
+                                {
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-link text-warning p-0"
+                                       data-action="toggleLineClose" data-id="@Model!.InternalOrderId" data-line-no="@line.LineNo" data-closing="false"
+                                       title="@Localizer["Reopen"]">
+                                        <i class="bi bi-lock-fill"></i>
+                                    </a>
+                                }
+                                else if (canClose)
+                                {
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-link text-secondary p-0"
+                                       data-action="toggleLineClose" data-id="@Model!.InternalOrderId" data-line-no="@line.LineNo" data-closing="true"
+                                       title="@Localizer["CloseLine"]"><i class="bi bi-unlock"></i> @Localizer["CloseLine"]</a>
+                                }
+                                else
+                                {
+                                    <i class="bi @(line.IsClosed ? "bi-lock-fill" : "bi-unlock") text-muted"
+                                       title="@(isNew ? "" : Localizer["ClosePendingApprovalHint"].Value)"></i>
+                                }
+                            </td>
+                            <td><input name="Lines[@i].Remarks" value="@line.Remarks" class="form-control form-control-sm" /></td>
+                            @if (canEdit)
+                            {
+                                <td class="text-center">
+                                    @if (line.QtyPutAway == 0)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </fieldset>
+
+    <div class="position-sticky bottom-0 bg-white border-top px-3 py-2 d-flex justify-content-between align-items-center gap-2">
+        <div class="d-flex gap-2 align-items-center">
+            @if (!isNew)
+            {
+                <span class="badge @ApprovalBadge(Model!.ApprovalStatus)">@DocStatusLabels.Label(Model!.ApprovalStatus)</span>
+                <span class="badge @StatusBadge(Model!.Status)">@DocStatusLabels.Label(Model!.Status)</span>
+            }
+        </div>
+        <div class="d-flex gap-2">
+            @if (!isNew && (bool?)ViewBag.CanPrint == true)
+            {
+                <a asp-action="Print" asp-controller="InternalOrder" asp-route-id="@Model!.InternalOrderId" target="_blank" class="btn btn-outline-secondary"><i class="bi bi-printer"></i></a>
+            }
+            @if (isReadOnly)
+            {
+                @if (Model?.Status == DocStatus.Posted)
+                {
+                    <button type="button" class="btn btn-outline-danger" data-action="voidDoc" data-id="@Model!.InternalOrderId">
+                        <i class="bi bi-x-octagon me-1"></i>@Localizer["Void"]
+                    </button>
+                }
+                @if (!isNew && Model!.Status == DocStatus.Confirmed && (bool?)ViewBag.CanUpdate == true)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="CancelConfirm" data-id="@Model!.InternalOrderId" data-msg="@Localizer["ConfirmCancelConfirm"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["CancelConfirm"]
+                    </button>
+                }
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+                @if (canClose)
+                {
+                    <button type="button" class="btn btn-outline-warning"
+                            data-action="closeDoc" data-id="@Model!.InternalOrderId">
+                        <i class="bi bi-lock me-1"></i>@Localizer["CloseAll"]
+                    </button>
+                }
+                @if (!isNew && Model!.ApprovalStatus == DocumentApprovalStatus.PendingApproval)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="Withdraw" data-id="@Model!.InternalOrderId" data-msg="@Localizer["ConfirmWithdraw"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["Withdraw"]
+                    </button>
+                }
+                @if (!isNew && (Model!.ApprovalStatus == DocumentApprovalStatus.Draft || Model!.ApprovalStatus == DocumentApprovalStatus.Rejected))
+                {
+                    <button type="button" class="btn btn-outline-primary" data-action="docAction" data-doc-action="Submit" data-id="@Model!.InternalOrderId" data-msg="@Localizer["ConfirmSubmit"]">
+                        <i class="bi bi-send me-1"></i>@Localizer["Submit"]
+                    </button>
+                }
+                @if (!isNew && Model!.Status == DocStatus.Confirmed)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="CancelConfirm" data-id="@Model!.InternalOrderId" data-msg="@Localizer["ConfirmCancelConfirm"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["CancelConfirm"]
+                    </button>
+                }
+                @* 全模式：「確認」＝轉 Confirmed（待倉庫作業領料），不在此過帳發料；
+                   實際領料（倉庫/儲位/批號、扣庫存、回寫進度）統一於庫存管理 → 倉庫作業完成。 *@
+                @if (!isNew && Model!.Status == DocStatus.Draft && Model!.ApprovalStatus == DocumentApprovalStatus.Approved)
+                {
+                    <button type="button" class="btn btn-outline-success" data-action="docAction" data-doc-action="Confirm" data-id="@Model!.InternalOrderId" data-msg="@Localizer[Model!.TypeCode == "NR" ? "ConfirmConfirmNR" : "ConfirmConfirmNO"]">
+                        <i class="bi bi-check2-circle me-1"></i>@Localizer[Model!.TypeCode == "NR" ? "ConfirmNR" : "ConfirmNO"]
+                    </button>
+                }
+                @if (Model?.ApprovalStatus != DocumentApprovalStatus.PendingApproval
+                     && Model?.ApprovalStatus != DocumentApprovalStatus.Approved
+                     && (isNew || Model?.Status == DocStatus.Draft))
+                {
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-floppy me-1"></i>@Localizer["Save"]</button>
+                }
+            }
+        </div>
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    window.uomDecimals = Object.assign(window.uomDecimals || {}, @Html.Raw(System.Text.Json.JsonSerializer.Serialize(uomDecimals ?? new Dictionary<string,int>())));
+
+    async function syncStockQty(row) {
+        const productCode = row.querySelector('select[name$=".ProductCode"]')?.value || row.querySelector('input[name$=".ProductCode"]')?.value;
+        const fromUom     = row.querySelector('select[name$=".UomCode"]')?.value;
+        const toUom       = row.querySelector('input[name$=".StockUomCode"]')?.value;
+        const qty         = parseFloat(row.querySelector('.line-qty')?.value) || 0;
+        if (!productCode || !fromUom || !toUom) return;
+        try {
+            const resp = await fetch(`/Uom/GetConversionRate?productCode=${encodeURIComponent(productCode)}&fromUom=${encodeURIComponent(fromUom)}&toUom=${encodeURIComponent(toUom)}`);
+            const data = await resp.json();
+            if (data.success) {
+                const dp = window.uomDecimals[toUom] != null ? window.uomDecimals[toUom] : 4;
+                const stockQty = window.roundHalfAway ? window.roundHalfAway(qty * data.rate, dp) : +(qty * data.rate).toFixed(dp);
+                const inp = row.querySelector('input[name$=".StockQty"]');
+                if (inp) inp.value = stockQty;
+            }
+        } catch (e) { console.error('Uom conversion error', e); }
+    }
+
+    // data-action 委派薄包裝：由觸發元素回推所屬 row 後呼叫 syncStockQty(row)。
+    function syncStockQtyEl(e, el) {
+        syncStockQty(el.closest('tr'));
+    }
+
+    function onUomChange(e, sel) {
+        const row = sel.closest('tr');
+        window.applyUomStep(row.querySelector('.line-qty'), sel.value);
+        syncStockQty(row);
+    }
+
+    function onProductChange(e, sel) {
+        const tr = sel.closest('tr');
+        const opt = sel.selectedOptions[0];
+        if (!opt) return;
+        const stockUomIn = tr.querySelector('input[name$=".StockUomCode"]');
+        if (stockUomIn && opt.dataset.stockUom) stockUomIn.value = opt.dataset.stockUom;
+        syncStockQty(tr);
+    }
+
+    var lineIdx = @(Model?.Lines.Count ?? 0);
+    var productOpts = `<option value="">--</option>@foreach(var p in products){
+@:<option value="@p.ProductCode" data-stock-uom="@p.StockUom">@p.ProductCode — @p.ProductName</option>
+}`;
+    var uomOpts = `@foreach(var u in uoms){
+@:<option value="@u.UomCode">@u.UomCode</option>
+}`;
+
+    function addLine() {
+        const i = lineIdx++;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="text-center text-muted small">${i+1}</td>
+            <td><input type="hidden" name="Lines[${i}].LineNo" value="0" /><select name="Lines[${i}].ProductCode" class="form-select form-select-sm select2-enable" required data-action-change="onProductChange">${productOpts}</select></td>
+            <td><input name="Lines[${i}].DeliveryDate" type="date" class="form-control form-control-sm u-width-130px" /></td>
+            <td>
+                <input name="Lines[${i}].OrderQty" type="number" value="1" step="any" min="0.0001" class="form-control form-control-sm text-end line-qty u-width-90px" required data-action-change="syncStockQtyEl" />
+                <input type="hidden" name="Lines[${i}].StockUomCode" value="" />
+                <input type="hidden" name="Lines[${i}].StockQty" value="0" />
+            </td>
+            <td><select name="Lines[${i}].UomCode" class="form-select form-select-sm line-uom u-width-80px" data-action-change="onUomChange">${uomOpts}</select></td>
+            @Html.Raw(isNew ? "" : "<td class=\"text-end text-muted small\">0</td>")
+            <td></td>
+            <td><input name="Lines[${i}].Remarks" class="form-control form-control-sm" /></td>
+            <td class="text-center"><button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button></td>`;
+        document.getElementById('linesTbody').appendChild(tr);
+        window.armValidation(document.getElementById('ioForm')); // 動態列重註冊 unobtrusive 驗證（R6c）
+        initSelect2(tr);
+    }
+
+    function removeLine(e, btn) { btn.closest('tr').remove(); }
+
+    function toggleLineClose(e, el) {
+        const docId = el.dataset.id;
+        const lineNo = el.dataset.lineNo;
+        const closing = el.dataset.closing === 'true';
+        const action = closing ? 'CloseLine' : 'ReopenLine';
+        const token = document.querySelector('#ioForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/InternalOrder/${action}?id=${encodeURIComponent(docId)}&lineNo=${lineNo}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => {
+            if (d.success) { window.openPanel(`/InternalOrder/Edit/${docId}`); refreshList && refreshList(); }
+            else alert(d.message);
+        });
+    }
+
+    function closeDoc(e, el) {
+        const docId = el.dataset.id;
+        if (!confirm('@Localizer["ConfirmCloseDoc"]')) return;
+        const token = document.querySelector('#ioForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/InternalOrder/CloseDoc/${docId}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => {
+            if (d.success) { window.openPanel(`/InternalOrder/Edit/${docId}`); refreshList && refreshList(); }
+            else alert(d.message);
+        });
+    }
+
+    function docAction(e, el) {
+        const action = el.dataset.docAction, id = el.dataset.id, msg = el.dataset.msg;
+        if (msg && !confirm(msg)) return;
+        const token = document.querySelector('#ioForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/InternalOrder/${action}/${id}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => {
+            if (d.success) { window.toastSuccess && window.toastSuccess(); refreshList && refreshList(); }
+            else alert(d.message);
+        });
+    }
+
+    function voidDoc(e, el) {
+        const id = el.dataset.id;
+        const reason = prompt('@Localizer["VoidReason"]');
+        if (reason === null) return;
+        const token = document.querySelector('#ioForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/InternalOrder/Void/${id}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ reason, __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => {
+            if (d.success) { window.toastSuccess && window.toastSuccess(); refreshList && refreshList(); }
+            else alert(d.message);
+        });
+    }
+
+    // select2 初始化——本 Partial 經 crud-panel.js 局部注入，site.js 的
+    // DOMContentLoaded 全域初始化不會重跑，故需自行呼叫；dropdownParent 指向表單本身，
+    // 確保下拉選單在側欄(offcanvas)內不被裁切。addLine() 新增列時也呼叫本函式。
+    function initSelect2(scope) {
+        if (!window.jQuery || !$.fn.select2) return;
+        var $scope = scope ? $(scope) : $('#ioForm');
+        $scope.find('.select2-enable').not('.select2-hidden-accessible').each(function () {
+            $(this).select2({ theme: 'bootstrap-5', width: '100%', dropdownParent: $('#ioForm') });
+        });
+    }
+    initSelect2();
+</script>
+
+@functions {
+    string StatusBadge(DocStatus s) => s switch {
+        DocStatus.Draft => "bg-secondary", DocStatus.Confirmed => "bg-info text-dark",
+        DocStatus.Posted => "bg-success", DocStatus.Void => "bg-danger", _ => "bg-secondary"
+    };
+    string ApprovalBadge(DocumentApprovalStatus s) => s switch {
+        DocumentApprovalStatus.Approved => "bg-success",
+        DocumentApprovalStatus.PendingApproval => "bg-warning text-dark",
+        DocumentApprovalStatus.Rejected => "bg-danger",
+        _ => "bg-secondary"
+    };
+}

@@ -1,0 +1,141 @@
+/* SmartFactory MES — 手機版專用樣式 */
+
+/* 最小點擊區域 44×44px（iOS HIG 標準） */
+.btn-mobile {
+    min-height: 44px;
+    min-width: 44px;
+    font-size: 16px; /* 避免 iOS 自動縮放 */
+}
+
+/* 模組格狀選單卡片 */
+.module-card {
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+    text-decoration: none;
+}
+
+.module-card:active {
+    transform: scale(0.97);
+}
+
+.module-card .module-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.module-card .module-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    color: #333;
+}
+
+/* 作業按鈕 */
+.action-btn {
+    min-height: 52px;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Toast 容器固定右下角 */
+#toast-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 9999;
+}
+
+/* 頂部 Navbar */
+.mobile-navbar {
+    min-height: 56px;
+
+    /* Bootstrap 的 .navbar 預設 flex-wrap:wrap。中文標題短，看不出問題；
+       換成英文（"Incoming Inspection (IQC)"）就把返回鍵與右側三顆按鈕擠成三行，
+       內容整個被推下去。標題本來就該是那個被壓縮的東西，不是按鈕。 */
+    flex-wrap: nowrap;
+}
+
+.mobile-navbar .navbar-brand {
+    /* flex 子項的 min-width 預設是 auto（＝不小於內容），只設 overflow 不會生效。 */
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 右側動作鍵一律不縮，被截斷的永遠是標題 */
+.mobile-navbar .btn,
+.mobile-navbar .btn-link {
+    flex-shrink: 0;
+}
+
+/* 輸入框字體不小於 16px 防 iOS 縮放 */
+input, select, textarea {
+    font-size: 16px !important;
+}
+
+/* 自 index.html 內嵌 <style> 外部化（CSP style-src 移除 unsafe-inline，靜態檔無法帶 nonce）*/
+body.login-bg { background: linear-gradient(135deg, #0d6efd22 0%, #f8f9fa 60%); }
+.login-card { border: none; border-radius: 16px; }
+.login-logo { font-size: 3rem; color: #0d6efd; }
+/* CSP utility */
+.u-max-width-400px { max-width: 400px !important; }
+
+/* CSP utilities：自 mobile inline style 外部化（HTML/JS 模板）*/
+.u-background-198754{background:#198754 !important}
+.u-background-6c757d{background:#6c757d !important}
+.u-background-6f42c1{background:#6f42c1 !important}
+.u-background-dc3545{background:#dc3545 !important}
+.u-background-f8d7da{background:#f8d7da !important}
+.u-background-fd7e14{background:#fd7e14 !important}
+.u-border-color-6f42c1{border-color:#6f42c1 !important}
+.u-border-radius-12px{border-radius:12px !important}
+.u-border-radius-50px{border-radius:50px !important}
+.u-border-radius-8px{border-radius:8px !important}
+.u-color-6f42c1{color:#6f42c1 !important}
+.u-display-none{display:none !important}
+.u-flex-direction-row{flex-direction:row !important}
+.u-font-size-16px{font-size:16px !important}
+.u-font-size-1p8rem{font-size:1.8rem !important}
+.u-font-size-p75rem{font-size:.75rem !important}
+.u-font-size-p7rem{font-size:.7rem !important}
+.u-font-size-p85rem{font-size:.85rem !important}
+.u-font-weight-400{font-weight:400 !important}
+.u-gap-p75rem{gap:.75rem !important}
+.u-margin-0{margin:0 !important}
+.u-max-height-50vh{max-height:50vh !important}
+.u-max-height-70vh{max-height:70vh !important}
+.u-max-width-180px{max-width:180px !important}
+.u-min-height-70px{min-height:70px !important}
+.u-overflow-y-auto{overflow-y:auto !important}
+.u-padding-p4rem-p9rem{padding:.4rem .9rem !important}
+.u-z-index-1050{z-index:1050 !important}
+.u-background-d1fae5{background:#d1fae5 !important}
+.u-background-e8deff{background:#e8deff !important}
+.u-background-fee2e2{background:#fee2e2 !important}
+.u-border-1px-solid-6ee7b7{border:1px solid #6ee7b7 !important}
+.u-border-1px-solid-fca5a5{border:1px solid #fca5a5 !important}
+.u-border-bottom-1px-dashed-aaa{border-bottom:1px dashed #aaa !important}
+.u-border-radius-6px{border-radius:6px !important}
+.u-color-065f46{color:#065f46 !important}
+.u-color-5a2d82{color:#5a2d82 !important}
+.u-color-7f1d1d{color:#7f1d1d !important}
+.u-cursor-pointer{cursor:pointer !important}
+.u-font-size-1p1rem{font-size:1.1rem !important}
+.u-font-size-p65rem{font-size:.65rem !important}
+.u-font-size-p72rem{font-size:.72rem !important}
+.u-font-size-p8rem{font-size:.8rem !important}
+.u-height-6px{height:6px !important}
+.u-height-8px{height:8px !important}
+.u-min-width-100px{min-width:100px !important}
+.u-min-width-40px{min-width:40px !important}
+.u-padding-1px-6px{padding:1px 6px !important}
+.u-padding-4px-6px{padding:4px 6px !important}
+.u-white-space-nowrap{white-space:nowrap !important}
+.u-width-100pct{width:100% !important}
+.u-width-64px{width:64px !important}

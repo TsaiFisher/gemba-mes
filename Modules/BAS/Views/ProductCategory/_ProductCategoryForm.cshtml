@@ -1,0 +1,142 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.ProductCategory
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    var warehouseOptions = (ViewBag.WarehouseOptions as System.Collections.IEnumerable) ?? Enumerable.Empty<object>();
+    var uomOptions       = (ViewBag.UomOptions as System.Collections.IEnumerable) ?? Enumerable.Empty<object>();
+    var locationOptions  = (ViewBag.LocationOptions as System.Collections.IEnumerable) ?? Enumerable.Empty<object>();
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+}
+
+<form method="post" asp-action="@(isEdit ? "Edit" : "Create")" asp-controller="ProductCategory"
+      asp-route-code="@(isEdit ? Model.CategoryCode : null)"
+      data-ajax="true" class="p-1">
+    @Html.AntiForgeryToken()
+
+    <div class="row g-3">
+        <!-- 類別代號 / 名稱 -->
+        <div class="col-md-4">
+            <label class="form-label fw-semibold">@Localizer["CategoryCode"] <span class="text-danger">*</span></label>
+            @if (isEdit)
+            {
+                <input type="text" class="form-control bg-light" value="@Model.CategoryCode" readonly />
+                <input type="hidden" asp-for="CategoryCode" />
+                <div class="form-text text-muted">@Localizer["CategoryCodeReadonlyHint"]</div>
+            }
+            else
+            {
+                <input asp-for="CategoryCode" class="form-control u-text-transform-uppercase" placeholder="@Localizer["CategoryCodePlaceholder"]"
+                       />
+            }
+            <span asp-validation-for="CategoryCode" class="text-danger small"></span>
+        </div>
+        <div class="col-md-8">
+            <label class="form-label fw-semibold">@Localizer["CategoryName"] <span class="text-danger">*</span></label>
+            <input asp-for="CategoryName" class="form-control" />
+            <span asp-validation-for="CategoryName" class="text-danger small"></span>
+        </div>
+
+        <!-- 成本計算方式 -->
+        <div class="col-md-4">
+            <label class="form-label fw-semibold">@Localizer["CostMethod"]</label>
+            <select asp-for="CostMethod" class="form-select">
+                <option value="@CostMethod.MovingAverage">@Localizer["CostMethodAvg"]</option>
+                <option value="@CostMethod.Fifo">@Localizer["CostMethodFifo"]</option>
+            </select>
+            <span asp-validation-for="CostMethod" class="text-danger small"></span>
+        </div>
+
+        <!-- 批號管理 -->
+        <div class="col-md-4 d-flex align-items-end">
+            <div class="form-check mt-3">
+                <input type="checkbox" asp-for="EnableLotTracking" class="form-check-input" id="chkLot" />
+                <label class="form-check-label fw-semibold" for="chkLot">@Localizer["EnableLotTracking"]</label>
+            </div>
+        </div>
+
+        <div class="col-12"><hr class="my-1" /><span class="text-muted small fw-semibold">@Localizer["DefaultsSection"]</span></div>
+
+        <!-- 預設倉庫 -->
+        <div class="col-md-4">
+            <label class="form-label fw-semibold">@Localizer["DefaultWarehouseCode"]</label>
+            <select asp-for="DefaultWarehouseCode" class="form-select">
+                <option value="">—</option>
+                @foreach (dynamic w in warehouseOptions)
+                {
+                    <option value="@w.WhCode" selected="@(Model.DefaultWarehouseCode == (string)w.WhCode)">
+                        @w.WhCode — @w.WhName
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="DefaultWarehouseCode" class="text-danger small"></span>
+        </div>
+
+        <!-- 預設儲位 -->
+        <div class="col-md-4">
+            <label class="form-label fw-semibold">@Localizer["DefaultLocationCode"]</label>
+            <select asp-for="DefaultLocationCode" class="form-select" id="selDefaultLocation">
+                <option value="">—</option>
+                @foreach (dynamic loc in locationOptions)
+                {
+                    string whCode = loc.WhCode;
+                    string locCode = loc.LocationCode;
+                    string locName = loc.LocationName;
+                    bool selected = Model.DefaultLocationCode == locCode;
+                    <option value="@locCode" data-wh="@whCode" selected="@selected">
+                        @locCode — @locName
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="DefaultLocationCode" class="text-danger small"></span>
+        </div>
+
+        <!-- 預設庫存單位 -->
+        <div class="col-md-4">
+            <label class="form-label fw-semibold">@Localizer["DefaultStockUomCode"]</label>
+            <select asp-for="DefaultStockUomCode" class="form-select">
+                <option value="">—</option>
+                @foreach (dynamic u in uomOptions)
+                {
+                    <option value="@u.UomCode" selected="@(Model.DefaultStockUomCode == (string)u.UomCode)">
+                        @u.UomCode — @u.UomName
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="DefaultStockUomCode" class="text-danger small"></span>
+        </div>
+
+        <!-- 備註 / 啟用 -->
+        <div class="col-12">
+            <label class="form-label fw-semibold">@Localizer["Remarks"]</label>
+            <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+            <span asp-validation-for="Remarks" class="text-danger small"></span>
+        </div>
+        <div class="col-12">
+            <div class="form-check">
+                <input type="checkbox" asp-for="IsActive" class="form-check-input" id="catIsActive" />
+                <label class="form-check-label fw-semibold" for="catIsActive">@Localizer["IsActive"]</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2 mt-4">
+        @if (isReadOnly)
+        {
+            <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+                @Localizer["Close"]
+            </button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+            </button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+                @Localizer["Cancel"]
+            </button>
+        }
+    </div>
+</form>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>MRP 對帳差異決策</value></data>
+  <data name="PageHint" xml:space="preserve"><value>MRP 重跑後，既有請購單與最新展開結果的落差會列在此，直到被結清為止。可安全退場者可直接結案；其餘請至各自單據處理後標記為已處理。</value></data>
+  <data name="SearchProduct" xml:space="preserve"><value>品號</value></data>
+  <data name="SearchMrpRunId" xml:space="preserve"><value>MRP 執行單</value></data>
+  <data name="OnlyOpen" xml:space="preserve"><value>僅顯示未結清</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchFirst" xml:space="preserve"><value>請設定條件後查詢。</value></data>
+  <data name="NoData" xml:space="preserve"><value>沒有未結清的對帳差異。</value></data>
+  <data name="MrpRunId" xml:space="preserve"><value>MRP 執行單</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="PurchaseRequestId" xml:space="preserve"><value>請購單／行</value></data>
+  <data name="VarKind" xml:space="preserve"><value>差異類型</value></data>
+  <data name="VarPrevQty" xml:space="preserve"><value>原數量</value></data>
+  <data name="VarCurQty" xml:space="preserve"><value>本次數量</value></data>
+  <data name="VarDisposition" xml:space="preserve"><value>處置</value></data>
+  <data name="VarStatus" xml:space="preserve"><value>狀態</value></data>
+  <data name="VarStatusOpen" xml:space="preserve"><value>未結清</value></data>
+  <data name="VarStatusResolved" xml:space="preserve"><value>已結清</value></data>
+  <data name="VarDetectedAt" xml:space="preserve"><value>偵測時間</value></data>
+  <data name="VarDescription" xml:space="preserve"><value>說明</value></data>
+  <data name="VarKindAdded" xml:space="preserve"><value>新增</value></data>
+  <data name="VarKindIncreased" xml:space="preserve"><value>增量</value></data>
+  <data name="VarKindDecreased" xml:space="preserve"><value>減量</value></data>
+  <data name="VarKindModeChanged" xml:space="preserve"><value>改自製／委外</value></data>
+  <data name="VarKindRemoved" xml:space="preserve"><value>需求消失</value></data>
+  <data name="VarDispAutoClosed" xml:space="preserve"><value>已自動結案</value></data>
+  <data name="VarDispPendingClose" xml:space="preserve"><value>可結案退場</value></data>
+  <data name="VarDispManualRequired" xml:space="preserve"><value>需人工處理</value></data>
+  <data name="VarDispInformational" xml:space="preserve"><value>僅提示</value></data>
+  <data name="CloseSelected" xml:space="preserve"><value>結案退場</value></data>
+  <data name="AckSelected" xml:space="preserve"><value>標記已處理</value></data>
+  <data name="CloseSelectedConfirm" xml:space="preserve"><value>確定將勾選項目對應的請購明細結案退場？系統會重新驗證，已轉採購或簽核中的明細會被略過。</value></data>
+  <data name="AckSelectedConfirm" xml:space="preserve"><value>確定將勾選項目標記為已處理？此動作不會變更任何單據。</value></data>
+  <data name="NoRowsSelected" xml:space="preserve"><value>請先勾選要處理的項目。</value></data>
+  <data name="ActionFailed" xml:space="preserve"><value>操作失敗，請重試。</value></data>
+  <data name="SaveSuccess" xml:space="preserve">
+    <value>儲存成功</value>
+  </data>
+</root>

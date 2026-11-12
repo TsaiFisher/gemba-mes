@@ -1,0 +1,147 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Modules.INV.ViewModels.StockShortageRowVm>
+
+@{
+    var uomDecimals      = await Precision.UomDecimalsAsync();
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched   = ViewBag.Searched as bool? ?? false;
+    bool   canPrint      = ViewBag.CanPrint == true;
+    string searchProduct  = ViewBag.SearchProduct as string ?? "";
+    string byDate         = ViewBag.ByDate as string ?? "";
+    var    productOptions = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-box-seam me-2 text-danger"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && hasSearched && Model != null && Model.Any())
+        {
+            <a asp-action="Export" asp-route-searchProduct="@searchProduct" asp-route-byDate="@byDate"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    @* 常用查詢入口（§7.9-6）。放在查詢卡片之外——partial 內有按鈕與輸入框，
+       塞進下面那張卡的 <form> 內會變成巢狀表單。 *@
+    @await Html.PartialAsync("_SavedQueries", "StockShortage")
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["Product"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["Product"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ByDate"]</label>
+                    <input type="date" name="byDate" class="form-control form-control-sm" value="@byDate" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-success text-center"><i class="bi bi-check-circle me-1"></i>@Localizer["NoData"]</div>
+    }
+    else
+    {
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card border-0 bg-danger text-white shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["ShortageCount"]</div>
+                        <div class="fs-4 fw-bold">@Model.Count</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 bg-warning text-dark shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["TotalShortage"]</div>
+                        <div class="fs-4 fw-bold">@Model.Sum(r => r.ShortageQty).ToString("N0")</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 bg-secondary text-white shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["StillShortCount"]</div>
+                        <div class="fs-4 fw-bold">@Model.Count(r => r.ProjectedShortageQty > 0)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["ProductCode"]</th>
+                                <th>@Localizer["ProductName"]</th>
+                                <th>@Localizer["UomCode"]</th>
+                                <th class="text-end">@Localizer["SafetyStock"]</th>
+                                <th class="text-end">@Localizer["QtyOnHand"]</th>
+                                <th class="text-end">@Localizer["QtyReserved"]</th>
+                                <th class="text-end">@Localizer["QtyAvailable"]</th>
+                                <th class="text-end text-danger">@Localizer["ShortageQty"]</th>
+                                <th class="text-end">@Localizer["QtyIncomingPo"]</th>
+                                <th class="text-end">@Localizer["QtyIncomingOpo"]</th>
+                                <th class="text-end">@Localizer["QtyProjected"]</th>
+                                <th class="text-end text-danger">@Localizer["ProjectedShortageQty"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var paged = ReportPaging.Page(Model, ViewData, Context); }
+                            @foreach (var row in paged)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@row.ProductCode</td>
+                                    <td>@row.ProductName</td>
+                                    <td>@row.UomCode</td>
+                                    <td class="text-end">@row.SafetyStock.ToString("N2")</td>
+                                    <td class="text-end">@row.QtyOnHand.ToString(UomStepHelper.GetFormat(uomDecimals, @row.UomCode))</td>
+                                    <td class="text-end">@row.QtyReserved.ToString(UomStepHelper.GetFormat(uomDecimals, @row.UomCode))</td>
+                                    <td class="text-end">@row.QtyAvailable.ToString(UomStepHelper.GetFormat(uomDecimals, @row.UomCode))</td>
+                                    <td class="text-end fw-bold text-danger">@row.ShortageQty.ToString(UomStepHelper.GetFormat(uomDecimals, @row.UomCode))</td>
+                                    <td class="text-end">@row.QtyIncomingPo.ToString(UomStepHelper.GetFormat(uomDecimals, @row.UomCode))</td>
+                                    <td class="text-end">@row.QtyIncomingOpo.ToString(UomStepHelper.GetFormat(uomDecimals, @row.UomCode))</td>
+                                    <td class="text-end">@row.QtyProjected.ToString(UomStepHelper.GetFormat(uomDecimals, @row.UomCode))</td>
+                                    <td class="text-end fw-bold @(row.ProjectedShortageQty > 0 ? "text-danger" : "text-success")">@row.ProjectedShortageQty.ToString(UomStepHelper.GetFormat(uomDecimals, @row.UomCode))</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @await Html.PartialAsync("_Pagination", paged)
+        </div>
+        <div class="text-muted small mt-2">@Localizer["Note"]</div>
+    }
+</div>

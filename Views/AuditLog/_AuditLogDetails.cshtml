@@ -1,0 +1,64 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.AuditLog
+
+<div class="p-4">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="text-muted small mb-1">@Localizer["Timestamp"]</div>
+            <div>@DateTimeSvc.ToLocalTime(Model.Timestamp).ToString("yyyy-MM-dd HH:mm:ss")</div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-muted small mb-1">@Localizer["User"]</div>
+            <div>@(Model.UserName ?? "-") <small class="text-muted">(@(Model.UserId ?? "-"))</small></div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="text-muted small mb-1">@Localizer["Action"]</div>
+            <div>
+                @await Html.PartialAsync("_ActionBadge", Model.Action)
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="text-muted small mb-1">@Localizer["EntityType"]</div>
+            <div>@Model.EntityType</div>
+        </div>
+        <div class="col-md-4">
+            <div class="text-muted small mb-1">@Localizer["EntityId"]</div>
+            <div><code>@(Model.EntityId ?? "-")</code></div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="text-muted small mb-1">@Localizer["IpAddress"]</div>
+            <div>@(Model.IpAddress ?? "-")</div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-muted small mb-1">@Localizer["UserAgent"]</div>
+            <div class="text-truncate small" title="@Model.UserAgent">@(Model.UserAgent ?? "-")</div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.PlantId))
+    {
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="text-muted small mb-1">@Localizer["Plant"]</div>
+                <div><span class="badge bg-info text-dark">@Model.PlantId</span></div>
+            </div>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Changes))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-muted small mb-1">@Localizer["Changes"]</div>
+                <pre class="bg-light p-3 rounded border u-max-height-400px u-overflow-y-auto u-font-size-0p8rem u-white-space-pre-wrap u-word-break-break-all"><code>@Model.Changes</code></pre>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,501 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-box-arrow-in-down"></i> @Localizer["PageTitle"]</h1>
+    </div>
+
+    <ul class="nav nav-tabs" id="whOpsTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="tab-inbound" data-bs-toggle="tab" data-bs-target="#pane-inbound"
+                    type="button" role="tab"><i class="bi bi-arrow-down-circle me-1"></i>@Localizer["InboundTab"]</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="tab-outbound" data-bs-toggle="tab" data-bs-target="#pane-outbound"
+                    type="button" role="tab"><i class="bi bi-arrow-up-circle me-1"></i>@Localizer["OutboundTab"]</button>
+        </li>
+    </ul>
+
+    <div class="tab-content border border-top-0 p-4 bg-white u-min-height-480px">
+        <!-- ================= 入庫上架 ================= -->
+        <div class="tab-pane fade show active" id="pane-inbound" role="tabpanel">
+            <div class="row g-2 align-items-end mb-3">
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["Search"]</label>
+                    <input type="text" id="inboundSearch" class="form-control form-control-sm"
+                           placeholder="@Localizer["SearchPlaceholder"]" />
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-primary btn-sm" data-action="loadPendingInbound">
+                        <i class="bi bi-arrow-clockwise me-1"></i>@Localizer["Refresh"]
+                    </button>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-light fw-semibold">@Localizer["PendingList"]</div>
+                        <div class="table-responsive u-max-height-420px u-overflow-auto">
+                            <table class="table table-sm table-hover mb-0">
+                                <thead class="table-light"><tr>
+                                    <th>@Localizer["DocNo"]</th>
+                                    <th class="text-center">@Localizer["LineNo"]</th>
+                                    <th>@Localizer["ProductCode"]</th>
+                                    <th class="text-end">@Localizer["Pending"]</th>
+                                </tr></thead>
+                                <tbody id="inboundList">
+                                    <tr><td colspan="4" class="text-center text-muted py-4">@Localizer["NoData"]</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-light fw-semibold">@Localizer["PutAwayForm"]</div>
+                        <div class="card-body">
+                            <form id="putAwayForm" data-action-submit="submitPutAway">
+                                <input type="hidden" id="pa_docNo" />
+                                <input type="hidden" id="pa_lineNo" />
+                                <input type="hidden" id="pa_typeCode" />
+                                <input type="hidden" id="pa_docType" />
+                                <div class="row g-2 mb-2">
+                                    <div class="col-6"><label class="form-label small">@Localizer["DocNo"]</label>
+                                        <input type="text" id="pa_docNoDisplay" class="form-control form-control-sm" disabled /></div>
+                                    <div class="col-6"><label class="form-label small">@Localizer["LineNo"]</label>
+                                        <input type="text" id="pa_lineNoDisplay" class="form-control form-control-sm" disabled /></div>
+                                </div>
+                                <div class="row g-2 mb-2">
+                                    <div class="col-6"><label class="form-label small">@Localizer["ProductCode"]</label>
+                                        <input type="text" id="pa_productCode" class="form-control form-control-sm" disabled /></div>
+                                    <div class="col-6"><label class="form-label small">@Localizer["Pending"]</label>
+                                        <input type="text" id="pa_pending" class="form-control form-control-sm" disabled /></div>
+                                </div>
+                                <div class="row g-2 mb-2">
+                                    <div class="col-6"><label class="form-label small">@Localizer["WhCode"]</label>
+                                        <select id="pa_whCodeSel" class="form-select form-select-sm" data-action-change="onWhSelect">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6"><label class="form-label small">@Localizer["LocationCode"] *</label>
+                                        <select id="pa_locationCode" class="form-select form-select-sm" required data-action-change="onPaLocChange">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                @* 裝入箱子（container-tracking.md §9.4）：掃空箱，這次上架的量就放進這一箱；批號留空由系統產生 *@
+                                <div class="mb-2"><label class="form-label small">@Localizer["PutAwayBox"]</label>
+                                    <input type="text" id="pa_box" class="form-control form-control-sm font-monospace" autocomplete="off"
+                                           placeholder="@Localizer["PutAwayBoxPlaceholder"]" /></div>
+                                <div class="row g-2 mb-3">
+                                    <div class="col-6"><label class="form-label small">@Localizer["LotNo"]</label>
+                                        <input type="text" id="pa_lotNo" class="form-control form-control-sm" /></div>
+                                    <div class="col-6"><label class="form-label small">@Localizer["Qty"] *</label>
+                                        <input type="number" step="any" min="0" id="pa_qty"
+                                               class="form-control form-control-sm" required /></div>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-sm" id="pa_submit" disabled>
+                                    <i class="bi bi-check-lg me-1"></i>@Localizer["ConfirmPutAway"]
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 出庫下架 ================= -->
+        <div class="tab-pane fade" id="pane-outbound" role="tabpanel">
+            <div class="row g-2 align-items-end mb-3">
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["Search"]</label>
+                    <input type="text" id="outboundSearch" class="form-control form-control-sm"
+                           placeholder="@Localizer["SearchPlaceholder"]" />
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-primary btn-sm" data-action="loadPendingOutbound">
+                        <i class="bi bi-arrow-clockwise me-1"></i>@Localizer["Refresh"]
+                    </button>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-light fw-semibold">@Localizer["PendingList"]</div>
+                        <div class="table-responsive u-max-height-420px u-overflow-auto">
+                            <table class="table table-sm table-hover mb-0">
+                                <thead class="table-light"><tr>
+                                    <th>@Localizer["DocNo"]</th>
+                                    <th class="text-center">@Localizer["LineNo"]</th>
+                                    <th>@Localizer["ProductCode"]</th>
+                                    <th class="text-end">@Localizer["Pending"]</th>
+                                </tr></thead>
+                                <tbody id="outboundList">
+                                    <tr><td colspan="4" class="text-center text-muted py-4">@Localizer["NoData"]</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-light fw-semibold">@Localizer["PickForm"]</div>
+                        <div class="card-body">
+                            <div class="row g-2 mb-2">
+                                <div class="col-6"><label class="form-label small">@Localizer["DocNo"]</label>
+                                    <input type="text" id="pk_docNoDisplay" class="form-control form-control-sm" disabled /></div>
+                                <div class="col-6"><label class="form-label small">@Localizer["LineNo"]</label>
+                                    <input type="text" id="pk_lineNoDisplay" class="form-control form-control-sm" disabled /></div>
+                            </div>
+                            <div class="row g-2 mb-2">
+                                <div class="col-6"><label class="form-label small">@Localizer["ProductCode"]</label>
+                                    <input type="text" id="pk_productCode" class="form-control form-control-sm" disabled /></div>
+                                <div class="col-6"><label class="form-label small">@Localizer["Pending"]</label>
+                                    <input type="text" id="pk_pending" class="form-control form-control-sm" disabled /></div>
+                            </div>
+
+                            <input type="hidden" id="pk_docNo" />
+                            <input type="hidden" id="pk_lineNo" />
+
+                            <hr />
+                            @* 掃箱號（container-tracking.md §9）：整箱出庫，自動填入該箱批號在各儲位的數量 *@
+                            <div class="input-group input-group-sm mb-2">
+                                <span class="input-group-text"><i class="bi bi-qr-code-scan"></i></span>
+                                <input type="text" id="pk_box" class="form-control font-monospace" autocomplete="off"
+                                       placeholder="@Localizer["ScanBoxPlaceholder"]" data-action-change="onPickBoxScan" />
+                            </div>
+                            <div class="fw-semibold small mb-2">@Localizer["AvailableStock"]</div>
+                            <div class="table-responsive u-max-height-220px u-overflow-auto">
+                                <table class="table table-sm mb-0">
+                                    <thead class="table-light small"><tr>
+                                        <th>@Localizer["WhCode"]</th><th>@Localizer["LocationCode"]</th>
+                                        <th>@Localizer["LotNo"]</th>
+                                        <th class="text-end">@Localizer["Available"]</th>
+                                        <th class="text-end u-width-100px">@Localizer["PickQty"]</th>
+                                    </tr></thead>
+                                    <tbody id="pickStockTable">
+                                        <tr><td colspan="5" class="text-center text-muted py-3">@Localizer["SelectDoc"]</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="small">@Localizer["Total"]：<span id="pk_total">0</span></div>
+                                <button type="button" class="btn btn-success btn-sm" id="pk_submit" disabled data-action="submitPick">
+                                    <i class="bi bi-check-lg me-1"></i>@Localizer["ConfirmPick"]
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/module-validation.js" asp-append-version="true"></script>
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+        // Server-side permission flags — controls which submit buttons are operable
+        const whPerms = {
+            canCreate: @(ViewBag.CanCreate == true ? "true" : "false"),
+            canUpdate: @(ViewBag.CanUpdate == true ? "true" : "false"),
+        };
+
+        const antiToken = () => document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+
+        // ─────────── Inbound ───────────
+        let inboundData = [];
+        let allLocations = [];   // 快取所有儲位，用於倉庫篩選與回寫
+
+        async function initLocations() {
+            try {
+                const res = await fetch('/api/warehouse/locations');
+                allLocations = await res.json();
+                const sel = document.getElementById('pa_whCodeSel');
+                const distinct = [...new Set(allLocations.map(l => l.whCode))].sort();
+                const current = sel.value;
+                sel.innerHTML = '<option value=""></option>' +
+                    distinct.map(w => `<option value="${w}">${w}</option>`).join('');
+                if (current) sel.value = current;
+                filterLocationSelect(sel.value);
+            } catch { }
+        }
+
+        function filterLocationSelect(whCode) {
+            const filtered = whCode ? allLocations.filter(l => l.whCode === whCode) : allLocations;
+            const sel = document.getElementById('pa_locationCode');
+            const prev = sel.value;
+            sel.innerHTML = '<option value=""></option>' +
+                filtered.map(l => `<option value="${l.locationCode}">${l.locationCode}${l.locationName ? ' — ' + l.locationName : ''} (${l.whCode})</option>`).join('');
+            if (prev && filtered.find(l => l.locationCode === prev)) sel.value = prev;
+        }
+
+        function onWhSelect() {
+            const wh = document.getElementById('pa_whCodeSel').value;
+            filterLocationSelect(wh);
+        }
+        function onPaLocChange() {
+            const locCode = document.getElementById('pa_locationCode').value;
+            if (!locCode) return;
+            const whSel = document.getElementById('pa_whCodeSel');
+            if (whSel.value) return;
+            const loc = allLocations.find(l => l.locationCode === locCode);
+            if (!loc) return;
+            whSel.value = loc.whCode;
+            filterLocationSelect(loc.whCode);
+            document.getElementById('pa_locationCode').value = locCode;
+        }
+
+        async function loadPendingInbound() {
+            const kw = document.getElementById('inboundSearch').value.trim();
+            const url = '/api/warehouse/pending-inbound' + (kw ? `?search=${encodeURIComponent(kw)}` : '');
+            try {
+                const res = await fetch(url);
+                inboundData = await res.json();
+                renderInboundList();
+            } catch { toastError('@Localizer["LoadFailed"]'); }
+        }
+
+        function renderInboundList() {
+            const tbody = document.getElementById('inboundList');
+            if (!inboundData.length) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-4">@Localizer["NoData"]</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = inboundData.map((r, i) => `
+                <tr class="u-cursor-pointer" data-action="selectInbound" data-idx="${i}">
+                    <td class="small">${r.docNo}</td>
+                    <td class="text-center">${r.lineNo}</td>
+                    <td class="small">${r.productCode}</td>
+                    <td class="text-end">${r.pending} <span class="text-muted small">${r.stockUomCode ?? ''}</span></td>
+                </tr>`).join('');
+        }
+
+        function selectInbound(e, el) {
+            const idx = parseInt(el.dataset.idx);
+            const r = inboundData[idx];
+            document.getElementById('pa_docNo').value    = r.docNo;
+            document.getElementById('pa_lineNo').value   = r.lineNo;
+            document.getElementById('pa_typeCode').value = r.typeCode || '';
+            // docType：同一個 TypeCode 可能來自不同單別（委外收貨與進貨單都是 OI），
+            // 沒有這個判別欄的話上架會被路由到錯的單別而查無此單。
+            document.getElementById('pa_docType').value  = r.docType || '';
+            document.getElementById('pa_docNoDisplay').value  = r.docNo;
+            document.getElementById('pa_lineNoDisplay').value = r.lineNo;
+            document.getElementById('pa_productCode').value   = r.productCode;
+            document.getElementById('pa_pending').value       = `${r.pending} ${r.stockUomCode ?? ''}`;
+            document.getElementById('pa_qty').value           = r.pending;
+            // 依該行的庫存單位設定 qty input 的 step / min
+            window.applyUomStepAsync(document.getElementById('pa_qty'), r.stockUomCode);
+            document.getElementById('pa_submit').disabled     = !whPerms.canCreate;
+            // 清空儲位，預設帶入單據的倉庫並篩選儲位
+            document.getElementById('pa_locationCode').value = '';
+            const whSel = document.getElementById('pa_whCodeSel');
+            whSel.value = r.whCode || '';
+            filterLocationSelect(r.whCode || '');
+        }
+
+
+        async function submitPutAway(e) {
+            e.preventDefault();
+            const body = {
+                typeCode:     document.getElementById('pa_typeCode').value,
+                docType:      document.getElementById('pa_docType').value,
+                docNo:        document.getElementById('pa_docNo').value,
+                lineNo:       parseInt(document.getElementById('pa_lineNo').value),
+                whCode:       document.getElementById('pa_whCodeSel').value.trim(),
+                locationCode: document.getElementById('pa_locationCode').value.trim(),
+                lotNo:        document.getElementById('pa_lotNo').value.trim(),
+                qty:          parseFloat(document.getElementById('pa_qty').value),
+                containerUnitId: document.getElementById('pa_box').value.trim() || null,
+            };
+            const res = await fetch('/api/warehouse/put-away', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'RequestVerificationToken': antiToken() },
+                body: JSON.stringify(body),
+            });
+            const j = await res.json();
+            if (res.ok && j.success) {
+                toastSuccess(j.message || '@Localizer["PutAwayDone"]');
+                resetPutAwayForm();
+                loadPendingInbound();
+            } else {
+                toastError(j.message || '@Localizer["PutAwayFailed"]');
+            }
+        }
+
+        function resetPutAwayForm() {
+            document.getElementById('putAwayForm').reset();
+            document.getElementById('pa_submit').disabled = true;
+            document.querySelectorAll('#putAwayForm .is-valid,#putAwayForm .is-invalid').forEach(el => {
+                el.classList.remove('is-valid', 'is-invalid');
+            });
+            filterLocationSelect(''); // reset to all locations
+        }
+
+        // ─────────── Outbound ───────────
+        let outboundData = [];
+        let pickStockRows = [];
+
+        async function loadPendingOutbound() {
+            const kw = document.getElementById('outboundSearch').value.trim();
+            const url = '/api/warehouse/pending-outbound' + (kw ? `?search=${encodeURIComponent(kw)}` : '');
+            try {
+                const res = await fetch(url);
+                outboundData = await res.json();
+                renderOutboundList();
+            } catch { toastError('@Localizer["LoadFailed"]'); }
+        }
+
+        function renderOutboundList() {
+            const tbody = document.getElementById('outboundList');
+            if (!outboundData.length) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted py-4">@Localizer["NoData"]</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = outboundData.map((r, i) => `
+                <tr class="u-cursor-pointer" data-action="selectOutbound" data-idx="${i}">
+                    <td class="small">${r.docNo}</td>
+                    <td class="text-center">${r.lineNo}</td>
+                    <td class="small">${r.productCode}</td>
+                    <td class="text-end">${r.pending} <span class="text-muted small">${r.stockUomCode ?? ''}</span></td>
+                </tr>`).join('');
+        }
+
+        let currentPickUom = '';
+        let currentPickTypeCode = '';
+        async function selectOutbound(e, el) {
+            const idx = parseInt(el.dataset.idx);
+            const r = outboundData[idx];
+            document.getElementById('pk_docNo').value = r.docNo;
+            document.getElementById('pk_lineNo').value = r.lineNo;
+            currentPickTypeCode = r.typeCode || '';
+            document.getElementById('pk_docNoDisplay').value = r.docNo;
+            document.getElementById('pk_lineNoDisplay').value = r.lineNo;
+            document.getElementById('pk_productCode').value = r.productCode;
+            document.getElementById('pk_pending').value = `${r.pending} ${r.stockUomCode ?? ''}`;
+            currentPickUom = r.stockUomCode || '';
+            await window.fetchUomDecimals(currentPickUom);
+
+            const res = await fetch(`/api/warehouse/stock/${encodeURIComponent(r.productCode)}`);
+            pickStockRows = res.ok ? await res.json() : [];
+            renderPickStockTable();
+            document.getElementById('pk_submit').disabled = !whPerms.canUpdate || pickStockRows.length === 0;
+        }
+
+        function renderPickStockTable() {
+            const tbody = document.getElementById('pickStockTable');
+            if (!pickStockRows.length) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-3">@Localizer["NoStock"]</td></tr>`;
+                return;
+            }
+            const step = "1";
+            tbody.innerHTML = pickStockRows.map((r, i) => `
+                <tr>
+                    <td class="small">${r.whCode}</td>
+                    <td class="small">${r.locationCode}</td>
+                    <td class="small">${r.lotNo || '-'}</td>
+                    <td class="text-end">${r.qtyAvailable}</td>
+                    <td><input type="number" step="${step}" min="0" max="${r.qtyAvailable}"
+                               class="form-control form-control-sm text-end pick-qty"
+                               data-idx="${i}" value="0" data-action-input="recalcPickTotal"></td>
+                </tr>`).join('');
+        }
+
+        // 掃箱號：換成該箱目前的批號，把每個儲位上該批號的可用量填入（整箱出）。不是箱號或是別的品號就提示。
+        async function onPickBoxScan(e, inp) {
+            const code = inp.value.trim();
+            if (!code) return;
+            inp.value = '';
+            let box = null;
+            try {
+                const r = await fetch(`/api/warehouse/container-unit/${encodeURIComponent(code)}`);
+                if (r.ok) box = await r.json();
+            } catch (err) { /* 連線失敗當作查無 */ }
+            if (!box) { toastError('@Localizer["BoxNotFound", "{0}"]'.replace('{0}', code)); return; }
+            if (box.productCode !== document.getElementById('pk_productCode').value) {
+                toastError('@Localizer["BoxOtherProduct", "{0}", "{1}"]'.replace('{0}', code).replace('{1}', box.productCode));
+                return;
+            }
+            let filled = 0;
+            document.querySelectorAll('.pick-qty').forEach(el => {
+                const row = pickStockRows[parseInt(el.dataset.idx)];
+                if ((row.lotNo || '') !== box.lotNo) return;
+                el.value = row.qtyAvailable;
+                filled++;
+            });
+            if (!filled) { toastError('@Localizer["BoxNoAvailable", "{0}", "{1}"]'.replace('{0}', code).replace('{1}', box.lotNo)); return; }
+            recalcPickTotal();
+        }
+
+        function recalcPickTotal() {
+            let sum = 0;
+            document.querySelectorAll('.pick-qty').forEach(el => sum += parseFloat(el.value) || 0);
+            document.getElementById('pk_total').textContent = sum;
+        }
+
+        async function submitPick() {
+            const picks = [];
+            document.querySelectorAll('.pick-qty').forEach(el => {
+                const qty = parseFloat(el.value) || 0;
+                if (qty > 0) {
+                    const idx = parseInt(el.dataset.idx);
+                    const row = pickStockRows[idx];
+                    picks.push({ locationCode: row.locationCode, lotNo: row.lotNo, qty });
+                }
+            });
+            if (!picks.length) { toastError('@Localizer["PickQtyRequired"]'); return; }
+
+            const body = {
+                typeCode: currentPickTypeCode,
+                docNo: document.getElementById('pk_docNo').value,
+                lineNo: parseInt(document.getElementById('pk_lineNo').value),
+                picks,
+            };
+            const res = await fetch('/api/warehouse/pick', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'RequestVerificationToken': antiToken() },
+                body: JSON.stringify(body),
+            });
+            const j = await res.json();
+            if (res.ok && j.success) {
+                toastSuccess(j.message || '@Localizer["PickDone"]');
+                loadPendingOutbound();
+                document.getElementById('pickStockTable').innerHTML = `<tr><td colspan="5" class="text-center text-muted py-3">@Localizer["SelectDoc"]</td></tr>`;
+                document.getElementById('pk_submit').disabled = true;
+                document.getElementById('pk_total').textContent = '0';
+            } else {
+                toastError(j.message || '@Localizer["PickFailed"]');
+            }
+        }
+
+        function toastSuccess(msg) { showToast(msg, 'success'); }
+        function toastError(msg)   { showToast(msg, 'danger'); }
+        function showToast(msg, color) {
+            const t = document.createElement('div');
+            t.className = `toast align-items-center text-bg-${color} border-0 show position-fixed top-0 end-0 m-3`;
+            t.style.zIndex = '9999';
+            t.innerHTML = `<div class="d-flex"><div class="toast-body">${msg}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>`;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initLocations();
+            loadPendingInbound();
+            document.getElementById('tab-outbound').addEventListener('shown.bs.tab', loadPendingOutbound);
+        });
+    </script>
+    @Html.AntiForgeryToken()
+}

@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Home" xml:space="preserve"><value>Home</value></data>
+  <data name="AdminManagement" xml:space="preserve"><value>Admin Management</value></data>
+  <data name="UserManagement" xml:space="preserve"><value>User Management</value></data>
+  <data name="RoleManagement" xml:space="preserve"><value>Role Management</value></data>
+  <data name="OrgStructure" xml:space="preserve"><value>Organization Structure</value></data>
+  <data name="PermissionSettings" xml:space="preserve"><value>Permission Matrix</value></data>
+  <data name="MobilePermissionSettings" xml:space="preserve"><value>Mobile Module Permissions</value></data>
+  <data name="PlantSettings" xml:space="preserve"><value>Plant Settings</value></data>
+  <data name="PlantManagement" xml:space="preserve"><value>Plant Management</value></data>
+  <data name="UserSettings" xml:space="preserve"><value>User Settings</value></data>
+  <data name="AuditLog" xml:space="preserve"><value>Audit Log</value></data>
+  <data name="TwoFactorAdmin" xml:space="preserve"><value>Two-Factor Reset</value></data>
+  <data name="ApprovalManagement" xml:space="preserve"><value>Approval</value></data>
+  <data name="PendingApprovals" xml:space="preserve"><value>Pending Approvals</value></data>
+  <data name="AllApprovalRequests" xml:space="preserve"><value>All Requests</value></data>
+  <data name="ApprovalTemplateSetting" xml:space="preserve"><value>Approval Templates</value></data>
+  <data name="DocumentApprovalConfig" xml:space="preserve"><value>Document Type Approval Settings</value></data>
+  <data name="CodeEntry" xml:space="preserve"><value>Code Maintenance</value></data>
+  <data name="SystemParam" xml:space="preserve"><value>System Parameters</value></data>
+
+  <!-- DataAnnotations validation message localization -->
+  <data name="RequiredAttribute" xml:space="preserve"><value>The {0} field is required.</value></data>
+  <data name="The {0} field is required." xml:space="preserve"><value>The {0} field is required.</value></data>
+  <data name="MaxLengthAttribute" xml:space="preserve"><value>The {0} field must not exceed {1} characters.</value></data>
+  <data name="The field {0} must be a string or array type with a maximum length of '{1}'." xml:space="preserve"><value>The {0} field must not exceed {1} characters.</value></data>
+  <data name="RangeAttribute" xml:space="preserve"><value>The {0} field must be between {1} and {2}.</value></data>
+  <data name="The field {0} must be between {1} and {2}." xml:space="preserve"><value>The {0} field must be between {1} and {2}.</value></data>
+  <data name="StringLengthAttribute" xml:space="preserve"><value>The {0} field must be between {2} and {1} characters.</value></data>
+  <data name="EmailAddressAttribute" xml:space="preserve"><value>The {0} field is not a valid e-mail address.</value></data>
+  <data name="CompareAttribute" xml:space="preserve"><value>The {0} and {1} fields do not match.</value></data>
+  <data name="SupplierCode" xml:space="preserve"><value>Supplier</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="OrderQty" xml:space="preserve"><value>Order Qty</value></data>
+
+  <data name="CategoryCode" xml:space="preserve"><value>Category Code</value></data>
+  <data name="CategoryName" xml:space="preserve"><value>Category Name</value></data>
+  <data name="CompanyCode" xml:space="preserve"><value>Company Code</value></data>
+  <data name="CompanyName" xml:space="preserve"><value>Company Name</value></data>
+  <data name="ContainerName" xml:space="preserve"><value>Container Name</value></data>
+  <data name="CreatedBy" xml:space="preserve"><value>Created By</value></data>
+  <data name="CrossPlantTransferId" xml:space="preserve"><value>Transfer No</value></data>
+  <data name="CurrencyCode" xml:space="preserve"><value>Currency</value></data>
+  <data name="CurrencyName" xml:space="preserve"><value>Currency Name</value></data>
+  <data name="DayType" xml:space="preserve"><value>Type</value></data>
+  <data name="DocNo" xml:space="preserve"><value>Doc No</value></data>
+  <data name="DocTypeName" xml:space="preserve"><value>Display Name</value></data>
+  <data name="EntityCode" xml:space="preserve"><value>Entity</value></data>
+  <data name="EntityType" xml:space="preserve"><value>Entity Type</value></data>
+  <data name="GoodsReceiptId" xml:space="preserve"><value>Receipt No.</value></data>
+  <data name="GoodsReturnId" xml:space="preserve"><value>Return No.</value></data>
+  <data name="GoodsShipmentId" xml:space="preserve"><value>Shipment No.</value></data>
+  <data name="GroupCode" xml:space="preserve"><value>Group Code</value></data>
+  <data name="GroupName" xml:space="preserve"><value>Group Name</value></data>
+  <data name="LoanDocId" xml:space="preserve"><value>Doc No</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>Location</value></data>
+  <data name="LocationName" xml:space="preserve"><value>Location Name</value></data>
+  <data name="LotNo" xml:space="preserve"><value>Lot No.</value></data>
+  <data name="MachineCode" xml:space="preserve"><value>Machine Code</value></data>
+  <data name="MachineName" xml:space="preserve"><value>Machine Name</value></data>
+  <data name="OutsourceMaterialDocId" xml:space="preserve"><value>Doc No</value></data>
+  <data name="Prefix" xml:space="preserve"><value>Prefix</value></data>
+  <data name="ProductName" xml:space="preserve"><value>Product Name</value></data>
+  <data name="PurchaseOrderId" xml:space="preserve"><value>Order No.</value></data>
+  <data name="PurchaseRequestId" xml:space="preserve"><value>Request No.</value></data>
+  <data name="RequestedBy" xml:space="preserve"><value>Requested By</value></data>
+  <data name="ReworkMaterialDocId" xml:space="preserve"><value>Doc No</value></data>
+  <data name="RoutingId" xml:space="preserve"><value>Routing ID</value></data>
+  <data name="SalesReturnId" xml:space="preserve"><value>Return No.</value></data>
+  <data name="SampleDocId" xml:space="preserve"><value>Doc No</value></data>
+  <data name="ScrapDocId" xml:space="preserve"><value>Doc No</value></data>
+  <data name="ShiftName" xml:space="preserve"><value>Shift Name</value></data>
+  <data name="SourceDocNo" xml:space="preserve"><value>Source Doc</value></data>
+  <data name="StockAdjustmentId" xml:space="preserve"><value>Doc No</value></data>
+  <data name="StockTransferId" xml:space="preserve"><value>Doc No</value></data>
+  <data name="TaxName" xml:space="preserve"><value>Tax Name</value></data>
+  <data name="ToolingName" xml:space="preserve"><value>Tooling Name</value></data>
+  <data name="TypeCode" xml:space="preserve"><value>Type</value></data>
+  <data name="TypeName" xml:space="preserve"><value>Type Name</value></data>
+  <data name="UomCode" xml:space="preserve"><value>UOM</value></data>
+  <data name="UomName" xml:space="preserve"><value>UOM Name</value></data>
+  <data name="WhCode" xml:space="preserve"><value>Warehouse</value></data>
+  <data name="WhName" xml:space="preserve"><value>WH Name</value></data>
+  <data name="WorkCenterCode" xml:space="preserve"><value>Work Center Code</value></data>
+  <data name="WorkCenterName" xml:space="preserve"><value>Work Center Name</value></data>
+  <data name="AbcGrade" xml:space="preserve"><value>ABC Grade</value></data>
+  <data name="AdditionalRate" xml:space="preserve"><value>Additional Rate</value></data>
+  <data name="Address" xml:space="preserve"><value>Address</value></data>
+  <data name="AdjustDate" xml:space="preserve"><value>Adj. Date</value></data>
+  <data name="AdjustReasonCode" xml:space="preserve"><value>Reason</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>Approval</value></data>
+  <data name="BoxQty" xml:space="preserve"><value>Box Qty</value></data>
+  <data name="BuyRate" xml:space="preserve"><value>Buy Rate</value></data>
+  <data name="CavityCount" xml:space="preserve"><value>Cavity Count</value></data>
+  <data name="CompensatoryDayOfWeek" xml:space="preserve"><value>Compensatory Day</value></data>
+  <data name="ContactName" xml:space="preserve"><value>Name</value></data>
+  <data name="Contacts" xml:space="preserve"><value>Contacts</value></data>
+  <data name="ContainerCode" xml:space="preserve"><value>Container Code</value></data>
+  <data name="Conversions" xml:space="preserve"><value>Conversion Setup</value></data>
+  <data name="CostMethod" xml:space="preserve"><value>Cost Method</value></data>
+  <data name="CreatedAt" xml:space="preserve"><value>Created At</value></data>
+  <data name="Currency" xml:space="preserve"><value>Currency</value></data>
+  <data name="CustomerOrderNo" xml:space="preserve"><value>Customer Order No.</value></data>
+  <data name="Date" xml:space="preserve"><value>Date</value></data>
+  <data name="DateFormat" xml:space="preserve"><value>Date Format</value></data>
+  <data name="DayOfWeek" xml:space="preserve"><value>Day</value></data>
+  <data name="Days" xml:space="preserve"><value>days</value></data>
+  <data name="DecimalPlaces" xml:space="preserve"><value>Decimal Places</value></data>
+  <data name="DefaultLocationCode" xml:space="preserve"><value>Default Location Code</value></data>
+  <data name="DefaultStockUomCode" xml:space="preserve"><value>Default Stock UOM</value></data>
+  <data name="DefaultWarehouseCode" xml:space="preserve"><value>Default Warehouse</value></data>
+  <data name="DeliveryAddress" xml:space="preserve"><value>Delivery Address</value></data>
+  <data name="DeliveryDate" xml:space="preserve"><value>Delivery Date</value></data>
+  <data name="Denominator" xml:space="preserve"><value>Denominator</value></data>
+  <data name="DepartmentCode" xml:space="preserve"><value>Department</value></data>
+  <data name="DepartmentId" xml:space="preserve"><value>Department</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="Direction" xml:space="preserve"><value>Direction</value></data>
+  <data name="DocType" xml:space="preserve"><value>Doc Type</value></data>
+  <data name="EnableLotTracking" xml:space="preserve"><value>Lot Tracking</value></data>
+  <data name="EndTime" xml:space="preserve"><value>End Time</value></data>
+  <data name="Fax" xml:space="preserve"><value>Fax</value></data>
+  <data name="FromLocationCode" xml:space="preserve"><value>From Location</value></data>
+  <data name="FromUom" xml:space="preserve"><value>From UOM</value></data>
+  <data name="FromWhCode" xml:space="preserve"><value>From WH</value></data>
+  <data name="GrossWeight" xml:space="preserve"><value>Gross Weight</value></data>
+  <data name="InspectionLevelC" xml:space="preserve"><value>Continuous Level (C)</value></data>
+  <data name="InspectionLevelN" xml:space="preserve"><value>Attribute Level (N)</value></data>
+  <data name="InspectionLevelR" xml:space="preserve"><value>Variable Level (R)</value></data>
+  <data name="InternalOrderId" xml:space="preserve"><value>Order No.</value></data>
+  <data name="InvoiceNo" xml:space="preserve"><value>Tax ID / Invoice No.</value></data>
+  <data name="InvoiceType" xml:space="preserve"><value>Invoice Type</value></data>
+  <data name="InvoiceTypeCode" xml:space="preserve"><value>Invoice Type</value></data>
+  <data name="IsActive" xml:space="preserve"><value>Active</value></data>
+  <data name="IsClosed" xml:space="preserve"><value>Closed</value></data>
+  <data name="IsCustomer" xml:space="preserve"><value>Customer</value></data>
+  <data name="IsLotControlled" xml:space="preserve"><value>Lot Controlled</value></data>
+  <data name="IsMrpWarehouse" xml:space="preserve"><value>Include in MRP</value></data>
+  <data name="IsProductionLine" xml:space="preserve"><value>Production Line</value></data>
+  <data name="IsSupplier" xml:space="preserve"><value>Supplier</value></data>
+  <data name="IsSystemType" xml:space="preserve"><value>System Type</value></data>
+  <data name="IssueDate" xml:space="preserve"><value>Issue Date</value></data>
+  <data name="LeadTimeDays" xml:space="preserve"><value>Lead Time</value></data>
+  <data name="LineAmount" xml:space="preserve"><value>Amount</value></data>
+  <data name="LineNo" xml:space="preserve"><value>Line</value></data>
+  <data name="LoanDate" xml:space="preserve"><value>Date</value></data>
+  <data name="LocationType" xml:space="preserve"><value>Location Type</value></data>
+  <data name="Locations" xml:space="preserve"><value>Storage Locations</value></data>
+  <data name="MachineStatus" xml:space="preserve"><value>Status</value></data>
+  <data name="MaxCapacity" xml:space="preserve"><value>Max Capacity</value></data>
+  <data name="Mobile" xml:space="preserve"><value>Mobile</value></data>
+  <data name="MovementDate" xml:space="preserve"><value>Date</value></data>
+  <data name="MrpMode" xml:space="preserve"><value>MRP Mode</value></data>
+  <data name="NetWeight" xml:space="preserve"><value>Net Weight</value></data>
+  <data name="Numerator" xml:space="preserve"><value>Numerator</value></data>
+  <data name="OrderDate" xml:space="preserve"><value>Order Date</value></data>
+  <data name="OrderType" xml:space="preserve"><value>Order Type</value></data>
+  <data name="OutsourceQtyPerDay" xml:space="preserve"><value>Outsource Qty/Day</value></data>
+  <data name="PaymentTermDays" xml:space="preserve"><value>Payment Day</value></data>
+  <data name="PaymentType" xml:space="preserve"><value>Payment Type</value></data>
+  <data name="Phone" xml:space="preserve"><value>Phone</value></data>
+  <data name="PurchaseUom" xml:space="preserve"><value>Purchase UOM</value></data>
+  <data name="Qty" xml:space="preserve"><value>Qty</value></data>
+  <data name="QtyAvailable" xml:space="preserve"><value>Available</value></data>
+  <data name="QtyOnHand" xml:space="preserve"><value>On Hand</value></data>
+  <data name="QtyPutAway" xml:space="preserve"><value>Put Away</value></data>
+  <data name="QtyReceived" xml:space="preserve"><value>Received</value></data>
+  <data name="QtyReserved" xml:space="preserve"><value>Reserved</value></data>
+  <data name="QtyShipped" xml:space="preserve"><value>Shipped</value></data>
+  <data name="RateDate" xml:space="preserve"><value>Rate Date</value></data>
+  <data name="Rates" xml:space="preserve"><value>Daily Rates</value></data>
+  <data name="ReceiptDate" xml:space="preserve"><value>Receipt Date</value></data>
+  <data name="ReceiptQty" xml:space="preserve"><value>Receipt Qty</value></data>
+  <data name="Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="RequestDate" xml:space="preserve"><value>Request Date</value></data>
+  <data name="RequestQty" xml:space="preserve"><value>Request Qty</value></data>
+  <data name="RequireDoc" xml:space="preserve"><value>Require Document</value></data>
+  <data name="RequireLot" xml:space="preserve"><value>Require Lot</value></data>
+  <data name="ResetCycle" xml:space="preserve"><value>Reset Cycle</value></data>
+  <data name="ReturnDate" xml:space="preserve"><value>Return Date</value></data>
+  <data name="ReturnQty" xml:space="preserve"><value>Return Qty</value></data>
+  <data name="Role" xml:space="preserve"><value>Role / Title</value></data>
+  <data name="SafetyStock" xml:space="preserve"><value>Safety Stock</value></data>
+  <data name="SalesOrderId" xml:space="preserve"><value>Sales Order</value></data>
+  <data name="SalesUom" xml:space="preserve"><value>Sales UOM</value></data>
+  <data name="SampleDate" xml:space="preserve"><value>Date</value></data>
+  <data name="ScrapDate" xml:space="preserve"><value>Scrap Date</value></data>
+  <data name="ScrapReasonCode" xml:space="preserve"><value>Scrap Reason</value></data>
+  <data name="SellRate" xml:space="preserve"><value>Sell Rate</value></data>
+  <data name="Separator" xml:space="preserve"><value>Separator</value></data>
+  <data name="SeqLength" xml:space="preserve"><value>Sequence Length</value></data>
+  <data name="ShelfLifeDays" xml:space="preserve"><value>Shelf Life</value></data>
+  <data name="ShiftCode" xml:space="preserve"><value>Shift Code</value></data>
+  <data name="ShiftGroupCode" xml:space="preserve"><value>Shift Group Code</value></data>
+  <data name="ShipAddress" xml:space="preserve"><value>Ship-To Address</value></data>
+  <data name="ShipDate" xml:space="preserve"><value>Ship Date</value></data>
+  <data name="ShipQty" xml:space="preserve"><value>Ship Qty</value></data>
+  <data name="ShippedQty" xml:space="preserve"><value>Shipped Qty</value></data>
+  <data name="ShortName" xml:space="preserve"><value>Short Name</value></data>
+  <data name="SourceTypeCode" xml:space="preserve"><value>Source Type Code</value></data>
+  <data name="Spec" xml:space="preserve"><value>Spec</value></data>
+  <data name="StandardCost" xml:space="preserve"><value>Standard Cost</value></data>
+  <data name="StandardLaborCost" xml:space="preserve"><value>Standard Labor Cost</value></data>
+  <data name="StartTime" xml:space="preserve"><value>Start Time</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="StockMode" xml:space="preserve"><value>Stock Mode</value></data>
+  <data name="StockQty" xml:space="preserve"><value>Stock Qty</value></data>
+  <data name="StockUom" xml:space="preserve"><value>Stock UOM</value></data>
+  <data name="StockUomCode" xml:space="preserve"><value>Stock UOM</value></data>
+  <data name="Symbol" xml:space="preserve"><value>Symbol</value></data>
+  <data name="TaxAmount" xml:space="preserve"><value>Tax Amt</value></data>
+  <data name="TaxCode" xml:space="preserve"><value>Tax</value></data>
+  <data name="TaxRate" xml:space="preserve"><value>Tax Rate</value></data>
+  <data name="ToLocationCode" xml:space="preserve"><value>To Location</value></data>
+  <data name="ToWhCode" xml:space="preserve"><value>To WH</value></data>
+  <data name="ToolingCode" xml:space="preserve"><value>Tooling Code</value></data>
+  <data name="ToolingType" xml:space="preserve"><value>Tooling Type</value></data>
+  <data name="TotalAmount" xml:space="preserve"><value>Total</value></data>
+  <data name="TotalCost" xml:space="preserve"><value>Amount</value></data>
+  <data name="TotalItems" xml:space="preserve"><value>{0} records</value></data>
+  <data name="TransferDate" xml:space="preserve"><value>Transfer Date</value></data>
+  <data name="TypeCategory" xml:space="preserve"><value>Category</value></data>
+  <data name="UnitCost" xml:space="preserve"><value>Unit Cost</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>Unit Price</value></data>
+  <data name="UrgentLeadTimeDays" xml:space="preserve"><value>Urgent Lead Time</value></data>
+  <data name="Warehouse" xml:space="preserve"><value>Warehouse</value></data>
+  <data name="WarehouseType" xml:space="preserve"><value>Warehouse Type</value></data>
+  <data name="WorkCenter" xml:space="preserve"><value>Work Center</value></data>
+  <data name="WorkEnd" xml:space="preserve"><value>Work End</value></data>
+  <data name="WorkMinutes" xml:space="preserve"><value>Work Minutes</value></data>
+  <data name="WorkOrder" xml:space="preserve"><value>Work Order</value></data>
+  <data name="WorkOrderCode" xml:space="preserve"><value>Work Order</value></data>
+  <data name="WorkStart" xml:space="preserve"><value>Work Start</value></data>
+  <data name="Year" xml:space="preserve"><value>Year</value></data>
+  <data name="DeviceStatus" xml:space="preserve"><value>Device Status</value></data>
+  <data name="ReportingInterface" xml:space="preserve"><value>Reporting UI</value></data>
+  <data name="ReportingManagement" xml:space="preserve"><value>Production Reporting</value></data>
+  <data name="Name" xml:space="preserve"><value>Name</value></data>
+  <data name="Category" xml:space="preserve"><value>Category</value></data>
+  <data name="Code" xml:space="preserve"><value>Code</value></data>
+  <data name="NameZh" xml:space="preserve"><value>Chinese Name</value></data>
+  <data name="NameEn" xml:space="preserve"><value>English Name</value></data>
+  <data name="DocumentType" xml:space="preserve"><value>Document Type</value></data>
+  <data name="DocumentTypeName" xml:space="preserve"><value>Document Type Name</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="UserName" xml:space="preserve"><value>User Name</value></data>
+  <data name="RoutingName" xml:space="preserve"><value>Routing Name</value></data>
+  <data name="BatchSize" xml:space="preserve"><value>Batch Size</value></data>
+  <data name="BufferDays" xml:space="preserve"><value>Buffer Days</value></data>
+  <data name="AvgLeadTime" xml:space="preserve"><value>Average Lead Time</value></data>
+  <data name="WorkCenterId" xml:space="preserve"><value>Work Center</value></data>
+  <data name="Note" xml:space="preserve"><value>Note</value></data>
+  <data name="TM_WKS" xml:space="preserve"><value>Regular Hours</value></data>
+  <data name="TM_WKO" xml:space="preserve"><value>Overtime Hours</value></data>
+  <data name="PagerSummary" xml:space="preserve"><value>Page {0} of {1}, {2} records</value></data>
+  <data name="PagerNav" xml:space="preserve"><value>Pagination</value></data>
+  <data name="PagerFirst" xml:space="preserve"><value>First page</value></data>
+  <data name="PagerPrevious" xml:space="preserve"><value>Previous page</value></data>
+  <data name="PagerNext" xml:space="preserve"><value>Next page</value></data>
+  <data name="PagerLast" xml:space="preserve"><value>Last page</value></data>
+  <data name="PageSize" xml:space="preserve"><value>Per page</value></data>
+  <data name="The {0} field must be a valid time zone identifier." xml:space="preserve"><value>The {0} field must be a valid time zone identifier (e.g. Asia/Taipei).</value></data>
+  <data name="DefaultTimeZone" xml:space="preserve"><value>Default Time Zone</value></data>
+  <data name="TimeZoneId" xml:space="preserve"><value>Personal Time Zone</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading...</value></data>
+  <data name="LoadFailedRetry" xml:space="preserve"><value>Failed to load. Please try again.</value></data>
+  <data name="Saving" xml:space="preserve"><value>Saving...</value></data>
+  <data name="SaveFailedRetry" xml:space="preserve"><value>Failed to save. Please try again.</value></data>
+  <data name="DeleteFailedRetry" xml:space="preserve"><value>Failed to delete. Please try again.</value></data>
+  <data name="UpdateFailedRetry" xml:space="preserve"><value>Failed to update. Please try again.</value></data>
+  <data name="OperationFailedRetry" xml:space="preserve"><value>Operation failed. Please try again.</value></data>
+  <data name="DocNotFoundMaybeDeleted" xml:space="preserve"><value>This document no longer exists (it may have been deleted).</value></data>
+  <data name="ConfirmDeleteNameFmt" xml:space="preserve"><value>Delete "{0}"?</value></data>
+  <data name="ConfirmDeleteSettingNameFmt" xml:space="preserve"><value>Delete the settings for "{0}"?</value></data>
+  <data name="Msg_PasswordMismatchOrInvalid" xml:space="preserve"><value>The passwords do not match or the format is invalid. Please try again.</value></data>
+  <data name="Msg_ApprovalActionFailed" xml:space="preserve"><value>The approval action failed. Check the request status.</value></data>
+  <data name="Msg_ApprovalWithdrawn" xml:space="preserve"><value>The approval request was withdrawn and the document is back to draft.</value></data>
+  <data name="Msg_ApprovalWithdrawFailed" xml:space="preserve"><value>Withdrawal failed. Check the request status and whether you are the requester.</value></data>
+  <data name="Msg_ApproverReassigned" xml:space="preserve"><value>The approver was reassigned.</value></data>
+  <data name="Msg_ReassignFailed" xml:space="preserve"><value>Reassignment failed. Check the request status.</value></data>
+  <data name="Msg_DelegationSaved" xml:space="preserve"><value>Delegation saved.</value></data>
+  <data name="Msg_DelegationDeleted" xml:space="preserve"><value>Delegation deleted. Pending items already moved to the delegate stay as they are; an approval administrator can reassign them.</value></data>
+  <data name="Msg_CreateFailed" xml:space="preserve"><value>Failed to create. Please try again later.</value></data>
+  <data name="Msg_UpdateFailed" xml:space="preserve"><value>Failed to update. Please try again later.</value></data>
+  <data name="Msg_DeleteFailed" xml:space="preserve"><value>Failed to delete. Please try again later.</value></data>
+  <data name="Msg_SaveFailed" xml:space="preserve"><value>Failed to save. Please try again later.</value></data>
+  <data name="Msg_MoveFailed" xml:space="preserve"><value>Failed to move. Please try again later.</value></data>
+  <data name="Msg_TemplateCreated" xml:space="preserve"><value>Approval template created.</value></data>
+  <data name="Msg_TemplateUpdated" xml:space="preserve"><value>Approval template updated.</value></data>
+  <data name="Msg_TemplateDeleted" xml:space="preserve"><value>Approval template deleted.</value></data>
+  <data name="Msg_TemplateNotFound" xml:space="preserve"><value>Approval template not found.</value></data>
+  <data name="Msg_StepAdded" xml:space="preserve"><value>Step added.</value></data>
+  <data name="Msg_StepInvalid" xml:space="preserve"><value>The step data is invalid.</value></data>
+  <data name="Msg_StepInUse" xml:space="preserve"><value>This step is referenced by approval records and cannot be deleted.</value></data>
+  <data name="Msg_StepDeleted" xml:space="preserve"><value>Step deleted.</value></data>
+  <data name="Msg_StepNotFound" xml:space="preserve"><value>Step not found.</value></data>
+  <data name="Msg_StepUpdated" xml:space="preserve"><value>Step updated.</value></data>
+  <data name="Msg_CodeEntryCreateDuplicate" xml:space="preserve"><value>Failed to create. This code may already exist in the category.</value></data>
+  <data name="Msg_CodeEntryCreated" xml:space="preserve"><value>Code added.</value></data>
+  <data name="Msg_CodeEntryPendingApproval" xml:space="preserve"><value>This code is pending approval and cannot be edited.</value></data>
+  <data name="Msg_CodeEntryUpdated" xml:space="preserve"><value>Code updated.</value></data>
+  <data name="Msg_CodeEntryNotFound" xml:space="preserve"><value>Code not found.</value></data>
+  <data name="Msg_CodeEntryDeleted" xml:space="preserve"><value>Code deleted.</value></data>
+  <data name="Msg_DocApprovalConfigDuplicate" xml:space="preserve"><value>Failed to create. Settings for this document type may already exist in this plant.</value></data>
+  <data name="Msg_DocApprovalConfigCreated" xml:space="preserve"><value>Document approval settings created.</value></data>
+  <data name="Msg_DocApprovalConfigUpdated" xml:space="preserve"><value>Document approval settings updated.</value></data>
+  <data name="Msg_SettingNotFound" xml:space="preserve"><value>Setting not found.</value></data>
+  <data name="Msg_SettingDeleted" xml:space="preserve"><value>Setting deleted.</value></data>
+  <data name="Msg_OrgCreated" xml:space="preserve"><value>Organization unit added.</value></data>
+  <data name="Msg_OrgUpdated" xml:space="preserve"><value>Organization unit updated.</value></data>
+  <data name="Msg_OrgNotFound" xml:space="preserve"><value>Organization unit not found.</value></data>
+  <data name="Msg_OrgDeleted" xml:space="preserve"><value>Organization unit deleted.</value></data>
+  <data name="Msg_PlantCreated" xml:space="preserve"><value>Plant added.</value></data>
+  <data name="Msg_PlantUpdated" xml:space="preserve"><value>Plant updated.</value></data>
+  <data name="Msg_PlantNotFound" xml:space="preserve"><value>Plant not found.</value></data>
+  <data name="Msg_PlantDeleted" xml:space="preserve"><value>Plant deleted.</value></data>
+  <data name="Msg_RoleCreated" xml:space="preserve"><value>Role added.</value></data>
+  <data name="Msg_RoleUpdated" xml:space="preserve"><value>Role updated.</value></data>
+  <data name="Msg_RoleNotFound" xml:space="preserve"><value>Role not found.</value></data>
+  <data name="Msg_RoleDeleted" xml:space="preserve"><value>Role deleted.</value></data>
+  <data name="Msg_LogoTooLarge" xml:space="preserve"><value>The image cannot exceed 2 MB.</value></data>
+  <data name="Msg_LogoNotImage" xml:space="preserve"><value>Upload an image file (jpg / png / gif / webp).</value></data>
+  <data name="Msg_LogoBadExtension" xml:space="preserve"><value>Only .jpg / .jpeg / .png / .gif / .webp are accepted. SVG is not.</value></data>
+  <data name="Msg_LogoBadContent" xml:space="preserve"><value>The file is not a valid JPEG / PNG / GIF / WebP image.</value></data>
+  <data name="Msg_SystemParamSaved" xml:space="preserve"><value>System parameters saved.</value></data>
+  <data name="Msg_UserCreated" xml:space="preserve"><value>User added.</value></data>
+  <data name="Msg_UserUpdated" xml:space="preserve"><value>User updated.</value></data>
+  <data name="Msg_UserNotFound" xml:space="preserve"><value>User not found.</value></data>
+  <data name="Msg_UserDeleted" xml:space="preserve"><value>User deleted.</value></data>
+  <data name="Msg_ApprovalDoneApproved" xml:space="preserve"><value>The approval request was approved.</value></data>
+  <data name="Msg_ApprovalDoneReturned" xml:space="preserve"><value>The approval request was returned for revision.</value></data>
+  <data name="Msg_ApprovalDoneRejected" xml:space="preserve"><value>The approval request was rejected.</value></data>
+  <data name="Msg_DelegationSavedMovedFmt" xml:space="preserve"><value>Delegation saved. {0} pending item(s) moved to the delegate.</value></data>
+  <data name="Msg_TemplateNotFoundFmt" xml:space="preserve"><value>Approval template not found: {0}</value></data>
+  <data name="Msg_TemplateNoStepsFmt" xml:space="preserve"><value>Approval template {0} has no steps.</value></data>
+  <data name="Msg_ListSeparator" xml:space="preserve"><value>, </value></data>
+  <data name="Msg_OrgInUseFmt" xml:space="preserve"><value>Cannot delete. This organization unit is in use by: {0}</value></data>
+  <data name="Msg_OrgInUse_Children" xml:space="preserve"><value>child units</value></data>
+  <data name="Msg_OrgInUse_Roles" xml:space="preserve"><value>roles</value></data>
+  <data name="Msg_DocApprovalTemplateRequired" xml:space="preserve"><value>When "Approval required" is checked, choose an approval template. Otherwise documents are treated as having no online approval and pass straight through.</value></data>
+  <data name="Msg_DocApprovalConfigInUseFmt" xml:space="preserve"><value>Cannot delete. Document type "{0}" still has approvals in progress.</value></data>
+  <data name="Msg_SwitchRoleFailed" xml:space="preserve"><value>Failed to switch role.</value></data>
+  <data name="Msg_SwitchRoleFailedRetry" xml:space="preserve"><value>Failed to switch role. Please try again later.</value></data>
+  <data name="Msg_SwitchPlantFailedRetry" xml:space="preserve"><value>Failed to switch plant. Please try again later.</value></data>
+  <data name="LicenseStatus" xml:space="preserve"><value>License Status</value></data>
+  <data name="Msg_PlantContextInvalid" xml:space="preserve"><value>Your active plant is no longer available to your role (an administrator may have changed it). Please choose a plant again before continuing.</value></data>
+  <data name="Msg_ActiveRoleRevoked" xml:space="preserve"><value>Your active role has been removed. Please choose a role and plant again before continuing.</value></data>
+  <data name="Msg_SaveTimeZoneFailedRetry" xml:space="preserve"><value>Failed to save your time zone. Please try again later.</value></data>
+  <data name="Msg_UnsupportedLanguage" xml:space="preserve"><value>Unsupported language.</value></data>
+  <data name="Msg_CodeEntryCreatedAutoApproved" xml:space="preserve"><value>Code created. Approval completed automatically and the code is in effect.</value></data>
+  <data name="Msg_CodeEntryCreatedSubmitted" xml:space="preserve"><value>Code created and submitted. It takes effect after a supervisor approves it.</value></data>
+  <data name="Msg_CodeEntryUpdatedAutoApproved" xml:space="preserve"><value>Code updated. Approval completed automatically and the change is in effect.</value></data>
+  <data name="Msg_CodeEntryUpdatedSubmitted" xml:space="preserve"><value>Code updated and resubmitted. It takes effect after a supervisor approves it.</value></data>
+  <data name="Msg_CodeEntryInUse_Pending" xml:space="preserve"><value>is pending approval</value></data>
+  <data name="Msg_CodeEntryInUseFmt" xml:space="preserve"><value>Cannot delete. This code: {0}</value></data>
+  <data name="Msg_ApprovalAlreadyClosed" xml:space="preserve"><value>This approval request is already completed or rejected and cannot be processed again.</value></data>
+  <data name="Msg_ApprovalNotPending" xml:space="preserve"><value>This request is not pending approval.</value></data>
+  <data name="Msg_DelegationEnabledMovedFmt" xml:space="preserve"><value>Delegation enabled. {0} pending item(s) moved to the delegate.</value></data>
+  <data name="Msg_DelegationEnabled" xml:space="preserve"><value>Delegation enabled.</value></data>
+  <data name="Msg_DelegationDisabled" xml:space="preserve"><value>Delegation disabled. Pending items already moved to the delegate stay as they are; an approval administrator can reassign them.</value></data>
+  <data name="Msg_DelegateRequired" xml:space="preserve"><value>Choose a delegate.</value></data>
+  <data name="Msg_DelegateNotSelf" xml:space="preserve"><value>You cannot delegate to yourself.</value></data>
+  <data name="Msg_DelegateNotFound" xml:space="preserve"><value>The selected delegate was not found.</value></data>
+  <data name="Msg_DelegationEndBeforeStart" xml:space="preserve"><value>The end date cannot be earlier than the start date.</value></data>
+  <data name="Msg_DelegationOverlap" xml:space="preserve"><value>An active delegation already covers this period. Adjust its dates or disable it first.</value></data>
+  <data name="Msg_UserInUse_Requested" xml:space="preserve"><value>approval requests they started (in progress)</value></data>
+  <data name="Msg_UserInUse_Approving" xml:space="preserve"><value>approvals waiting for them</value></data>
+  <data name="Msg_UserInUseFmt" xml:space="preserve"><value>Cannot delete. This user still has {0}</value></data>
+  <data name="Msg_TemplateInUseFmt" xml:space="preserve"><value>Cannot delete. This template is in use by: {0}</value></data>
+  <data name="Msg_InUse_DocApprovalConfig" xml:space="preserve"><value>document approval settings</value></data>
+  <data name="Msg_InUse_PendingApprovals" xml:space="preserve"><value>approvals in progress</value></data>
+  <data name="Msg_TemplateStepsLocked" xml:space="preserve"><value>This template has approvals in progress, so its steps cannot be changed. Wait until they finish or are withdrawn.</value></data>
+  <data name="Msg_PlantInUseFmt" xml:space="preserve"><value>Cannot delete. This plant is in use by: {0}</value></data>
+  <data name="Msg_PlantInUse_Users" xml:space="preserve"><value>users (active plant)</value></data>
+  <data name="Msg_PlantInUse_Orgs" xml:space="preserve"><value>organization structure</value></data>
+  <data name="Msg_PlantInUse_RolePlants" xml:space="preserve"><value>role plant assignments</value></data>
+  <data name="Msg_RoleInUseFmt" xml:space="preserve"><value>Cannot delete. This role is in use by: {0}</value></data>
+  <data name="Msg_RoleInUse_UsersFmt" xml:space="preserve"><value>users ({0})</value></data>
+  <data name="Msg_RoleInUse_TemplateSteps" xml:space="preserve"><value>approval template steps</value></data>
+  <data name="ApprovalNote_Submitted" xml:space="preserve"><value>Submitted for approval</value></data>
+  <data name="ApprovalNote_SkipRequester" xml:space="preserve"><value>Skipped automatically: the approver is the requester</value></data>
+  <data name="ApprovalNote_SkipSameSigner" xml:space="preserve"><value>Skipped automatically: the same approver already signed an earlier step</value></data>
+  <data name="ApprovalNote_Withdrawn" xml:space="preserve"><value>Withdrawn by the requester</value></data>
+  <data name="ApprovalNote_ReassignedFmt" xml:space="preserve"><value>Approver reassigned to {0}. Reason: {1}</value></data>
+  <data name="ApprovalNote_ReassignedDefaultFmt" xml:space="preserve"><value>Approver reassigned to {0}. Reason: organization change</value></data>
+  <data name="ApprovalNote_DelegationAppliedFmt" xml:space="preserve"><value>Delegation in effect: {0} → {1}. Pending items moved to the delegate.</value></data>
+  <data name="ApprovalNote_DocDeletedFmt" xml:space="preserve"><value>Cancelled automatically because the document was deleted. Reason: {0}</value></data>
+  <data name="ApprovalNote_DocDeletedDefault" xml:space="preserve"><value>Cancelled automatically because the business document was deleted.</value></data>
+  <data name="ModelBinding_RequiredFmt" xml:space="preserve"><value>The {0} field is required.</value></data>
+  <data name="ModelBinding_MustBeNumberFmt" xml:space="preserve"><value>The field {0} must be a number.</value></data>
+  <data name="ModelBinding_InvalidFmt" xml:space="preserve"><value>The value for {0} is invalid.</value></data>
+  <data name="ModelBinding_MissingKeyOrValue" xml:space="preserve"><value>A key and a value are required.</value></data>
+  <data name="ModelBinding_MustBeNumber" xml:space="preserve"><value>Please enter a valid number.</value></data>
+  <data name="ModelBinding_Invalid" xml:space="preserve"><value>The supplied value is invalid.</value></data>
+  <data name="Mobile_CredentialsRequired" xml:space="preserve"><value>Username and password are required.</value></data>
+  <data name="Mobile_InvalidCredentials" xml:space="preserve"><value>Invalid username or password.</value></data>
+  <data name="Mobile_EnterCode" xml:space="preserve"><value>Please enter the verification code.</value></data>
+  <data name="Mobile_LockedOut" xml:space="preserve"><value>The account is locked. Please try again later.</value></data>
+  <data name="Mobile_TwoFactorExpired" xml:space="preserve"><value>Verification timed out. Please sign in again.</value></data>
+  <data name="Mobile_InvalidCode" xml:space="preserve"><value>The verification code is incorrect.</value></data>
+  <data name="Msg_LicenseReadOnlyBlocked" xml:space="preserve"><value>The system is read-only. Data cannot be added, changed or deleted. Please contact your system administrator.</value></data>
+  <data name="Msg_LicenseDisabledBlocked" xml:space="preserve"><value>The system is disabled. Only the license status page is available. Please contact your system administrator.</value></data>
+  <data name="Lbl_LicenseBlockedTitle" xml:space="preserve"><value>Cannot save</value></data>
+  <data name="Lbl_LicenseStatusLink" xml:space="preserve"><value>License status</value></data>
+  <data name="Lbl_LicenseGoBack" xml:space="preserve"><value>Back</value></data>
+  <data name="Msg_LicenseImportInvalidFile" xml:space="preserve"><value>Please choose a valid license file (license.json).</value></data>
+  <data name="Msg_LicenseImportRejected" xml:space="preserve"><value>The license file failed verification. The current license was not changed.</value></data>
+  <data name="Msg_LicenseImportLicenseIdChanged" xml:space="preserve"><value>The new license has a different license ID. This deployment encrypts its connection string with the license ID: re-encrypt DefaultEncrypted first, then replace the license and restart.</value></data>
+  <data name="Msg_LicenseCheckinOk" xml:space="preserve"><value>License check-in completed.</value></data>
+  <data name="Msg_LicenseCheckinNotice" xml:space="preserve"><value>The license server did not approve this check-in.</value></data>
+  <data name="Msg_LicenseCheckinNotApplicable" xml:space="preserve"><value>This license does not need periodic check-in.</value></data>
+  <data name="Msg_LicenseCheckinInvalid" xml:space="preserve"><value>The check-in response is invalid (bad signature, wrong file, or not issued for this system). Click "Confirm license" again.</value></data>
+  <data name="Msg_LicenseImported" xml:space="preserve"><value>The new license has been imported.</value></data>
+  <data name="Msg_LicenseOnlineCheckNotOffline" xml:space="preserve"><value>This license already requires online confirmation; the setting does not apply.</value></data>
+  <data name="Msg_LicenseOnlineCheckForcedByHost" xml:space="preserve"><value>This computer is a virtual machine or container, so the online license check is required and cannot be turned off.</value></data>
+  <data name="Msg_LicenseOnlineCheckConfirmFirst" xml:space="preserve"><value>Confirm the license once with "Confirm license" before turning on the online license check.</value></data>
+  <data name="Msg_LicenseOnlineCheckEnabled" xml:space="preserve"><value>Online license check is on. Confirm again before the confirmation expires, or the system turns read-only.</value></data>
+  <data name="Msg_LicenseOnlineCheckDisabled" xml:space="preserve"><value>Online license check is off; offline verification only.</value></data>
+  <data name="ApprovalDocType_CodeEntry" xml:space="preserve"><value>Code Maintenance</value></data>
+</root>

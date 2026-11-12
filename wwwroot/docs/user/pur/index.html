@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Purchasing (PUR) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>採購管理（PUR）— SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">PUR 畫面</span><span lang="en">PUR Screens</span></div>
+    <a href="purchase-request.html" class="nav-link"><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></a>
+    <a href="purchase-order.html" class="nav-link"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></a>
+    <a href="goods-receipt.html" class="nav-link"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></a>
+    <a href="goods-return.html" class="nav-link"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></a>
+    <a href="vendor-price-list.html" class="nav-link"><span lang="zh">廠商單價目錄</span><span lang="en">Vendor Price List</span></a>
+    <a href="vendor-evaluation.html" class="nav-link"><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></a>
+    <a href="purchase-overdue.html" class="nav-link"><span lang="zh">採購逾期跟催</span><span lang="en">Overdue Purchase Orders</span></a>
+    <a href="supplier-delivery-rate.html" class="nav-link"><span lang="zh">供應商交期達成率</span><span lang="en">Supplier Delivery Rate</span></a>
+    <a href="purchase-amount.html" class="nav-link"><span lang="zh">採購金額比較</span><span lang="en">Purchase Amount</span></a>
+    <a href="purchase-price.html" class="nav-link"><span lang="zh">採購價格比較</span><span lang="en">Purchase Price</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關</span><span lang="en">Related</span></div>
+    <a href="../osp/index.html" class="nav-link"><span lang="zh">委外管理（OSP）</span><span lang="en">Outsource Management (OSP)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-cart3 me-2 text-primary"></i><span lang="zh">採購管理（PUR）</span><span lang="en">Purchasing (PUR)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">請購 → 採購 → 進貨（IQC）→ 退貨的對外採購流程</span><span lang="en">The external procurement flow: request → order → receipt (IQC) → return</span></div>
+    </div>
+    <p><span lang="zh">PUR（Purchasing）模組管理對供應商的採購循環：由請購單彙整需求，轉採購單向廠商下單，進貨單收貨入庫（可觸發 IQC 進料檢驗），品質異常以進貨退出退回；進貨確認後自動產生應付發票（FIN）。委外加工的報價、採購、發退料與收貨已獨立為</span><span lang="en">The PUR (Purchasing) module manages the procurement cycle with suppliers: purchase requests collect demand, purchase orders place it with suppliers, goods receipts bring material into stock (optionally triggering IQC incoming inspection), and quality problems are sent back with a goods return. Once a receipt is confirmed, an AP invoice is created automatically in FIN. Outsourcing quotations, orders, material issues and receipts have moved into their own </span><a href="../osp/index.html"><span lang="zh">委外管理（OSP）</span><span lang="en">Outsource Management (OSP)</span></a><span lang="zh">模組。另提供逾期跟催、供應商交期達成率、採購金額/價格比較等管理報表。</span><span lang="en"> module. It also provides management reports: overdue follow-up, supplier delivery rate, and purchase amount and price comparison.</span></p>
+
+    <h2 id="core-flow"><i class="bi bi-signpost-2 me-2 text-primary"></i><span lang="zh">核心流程</span><span lang="en">Core flow</span></h2>
+    <div class="tip-box">
+      <strong><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></strong><span lang="zh">（或 MRP 建議）→</span><span lang="en"> (or an MRP suggestion) →</span> <strong><span lang="zh">採購單</span><span lang="en">Purchase Order</span></strong> <span lang="zh">→ 廠商交貨 →</span><span lang="en">→ supplier delivers →</span> <strong><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></strong>
+      <span lang="zh">（IQC 檢驗 → 合格入庫 / 不合格 NCR →</span><span lang="en">(IQC inspection → pass into stock / fail raises an NCR →</span> <strong><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></strong><span lang="zh">）→ 應付發票（FIN）</span><span lang="en">) → AP invoice (FIN)</span><br>
+      <span lang="zh">委外加工：委外採購單 → 發料 → 委外收貨（超耗扣款）→ 委外應付發票，詳見</span><span lang="en">Outsourcing: outsource PO → material issue → outsource receipt (with scrap penalty) → outsource AP invoice; see </span><a href="../osp/index.html"><span lang="zh">委外管理（OSP）</span><span lang="en">Outsource Management (OSP)</span></a>
+    </div>
+
+    <h2 id="flow"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></h2>
+    <p class="small text-muted mb-2"><span lang="zh">依作業先後順序排列，點擊方塊可開啟該畫面的操作說明。</span><span lang="en">Arranged in the order the work is done; click a box to open the instructions for that screen. </span><strong><span lang="zh">虛線外框</span><span lang="en">A dashed outline</span></strong><span lang="zh">為其他模組的作業（以顏色區分模組）。</span><span lang="en"> marks a step in another module (colour-coded by module).</span></p>
+    <div class="flow">
+      <div class="flow-legend">
+        <span class="flow-legend-item m-pur"><i class="flow-dot"></i><span lang="zh">PUR 採購（本模組）</span><span lang="en">PUR Purchasing (this module)</span></span>
+        <span class="flow-legend-item m-mfg"><i class="flow-dot"></i><span lang="zh">MFG 製造</span><span lang="en">MFG Manufacturing</span></span>
+        <span class="flow-legend-item m-qcr"><i class="flow-dot"></i><span lang="zh">QCR 品質</span><span lang="en">QCR Quality</span></span>
+        <span class="flow-legend-item m-inv"><i class="flow-dot"></i><span lang="zh">INV 庫存</span><span lang="en">INV Inventory</span></span>
+        <span class="flow-legend-item m-fin"><i class="flow-dot"></i><span lang="zh">FIN 財務</span><span lang="en">FIN Finance</span></span>
+        <span class="flow-legend-item m-osp"><i class="flow-dot"></i><span lang="zh">OSP 委外</span><span lang="en">OSP Outsource</span></span>
+        <span class="flow-legend-item"><i class="flow-dot flow-dot-ext"></i><span lang="zh">虛線＝其他模組作業</span><span lang="en">Dashed = a step in another module</span></span>
+      </div>
+
+      <div class="flow-row" id="flow-pur-main-purchasing-flow">
+        <div class="flow-row-label"><span lang="zh">採購主流程</span><span lang="en">Main purchasing flow</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-mfg ext" href="../mfg/mrp-run.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-pur" href="purchase-request.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-pur" href="purchase-order.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <span class="flow-node m-ext evt"><span class="flow-mod"><span lang="zh">外部</span><span lang="en">External</span></span><span class="flow-name"><span lang="zh">廠商交貨</span><span lang="en">Supplier delivery</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-pur" href="goods-receipt.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-pur-incoming-inspection">
+        <div class="flow-row-label"><span lang="zh">進料檢驗</span><span lang="en">Incoming inspection</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-pur" href="goods-receipt.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr ext" href="../qcr/inspection-order.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">IQC 檢驗單</span><span lang="en">IQC inspection order</span></span></a>
+          <span class="flow-cond"><span lang="zh">合格</span><span lang="en">Qualified</span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">倉庫作業入庫</span><span lang="en">Warehouse put-away</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin ext" href="../fin/ap-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應付發票</span><span lang="en">AP Invoice</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin ext" href="../fin/ap-payment.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">付款作業</span><span lang="en">AP Payment</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-pur-disposition-of-a-failed-evaluation">
+        <div class="flow-row-label"><span lang="zh">不合格處置</span><span lang="en">Disposition of a failed evaluation</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-qcr ext" href="../qcr/inspection-order.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">IQC 檢驗單</span><span lang="en">IQC inspection order</span></span></a>
+          <span class="flow-cond"><span lang="zh">不合格</span><span lang="en">Fail</span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr ext" href="../qcr/ncr.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">NCR 不合格處置</span><span lang="en">NCR failure disposition</span></span></a>
+          <span class="flow-cond"><span lang="zh">退貨</span><span lang="en">Return</span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-pur" href="goods-return.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin ext" href="../fin/ap-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應付沖減</span><span lang="en">AP offset</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-pur-outsource-osp">
+        <div class="flow-row-label"><span lang="zh">委外（OSP）</span><span lang="en">Outsource (OSP)</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-osp ext" href="../osp/outsource-quotation.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp ext" href="../osp/outsource-purchase-order.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp ext" href="../osp/outsource-material.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外發料</span><span lang="en">Issue to Outsource</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp ext" href="../osp/outsource-receipt.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></span></a>
+          <span class="flow-cond"><span lang="zh">不良</span><span lang="en">NG</span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp ext" href="../osp/outsource-rework.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-pur-preparation">
+        <div class="flow-row-label"><span lang="zh">事前準備</span><span lang="en">Preparation</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-bas ext" href="../bas/company.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">供應商主檔</span><span lang="en">Supplier master</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-pur" href="vendor-price-list.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">廠商單價目錄</span><span lang="en">Vendor Price List</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <span class="flow-node m-ext evt"><span class="flow-mod"><span lang="zh">帶入</span><span lang="en">brought in from</span></span><span class="flow-name"><span lang="zh">採購單單價</span><span lang="en">Purchase order price</span></span></span>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-pur-follow-up-and-evaluation">
+        <div class="flow-row-label"><span lang="zh">追蹤與評核</span><span lang="en">Follow-up and evaluation</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-pur" href="purchase-overdue.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">採購逾期跟催</span><span lang="en">Overdue Purchase Orders</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-osp ext" href="../osp/outsource-progress.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-pur" href="supplier-delivery-rate.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">交期達成率</span><span lang="en">Delivery Rate</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-pur" href="purchase-amount.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">採購金額比較</span><span lang="en">Purchase Amount</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-pur" href="purchase-price.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">採購價格比較</span><span lang="en">Purchase Price</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-pur" href="vendor-evaluation.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-foot">
+        <i class="bi bi-info-circle me-1"></i><span lang="zh">進貨單「貨進正常倉」時逐次累加認列應付；免驗品號（IQC 豁免）不經檢驗單直接入良品倉。
+        啟用「庫存簡化模式」時，進貨確認即直接入庫，不經倉庫作業逐儲位執行。</span><span lang="en">AP is accrued incrementally as each receipt enters a normal warehouse; products exempt from IQC skip the inspection order and go straight into the good-stock warehouse. With "Simplified Inventory Mode" enabled, confirming the receipt puts the material into stock directly, without location-by-location warehouse operations.</span>
+      </div>
+    </div>
+
+    <h2 id="screen-list"><i class="bi bi-grid me-2 text-primary"></i><span lang="zh">畫面清單</span><span lang="en">Screen list</span></h2>
+    <div class="row g-3">
+      <div class="col-md-6"><a href="purchase-request.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-file-earmark-text me-1 text-primary"></i><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></h6>
+        <div class="text-muted small"><span lang="zh">採購需求彙整與簽核</span><span lang="en">Collecting demand and approval</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="purchase-order.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-bag-check me-1 text-primary"></i><span lang="zh">採購單</span><span lang="en">Purchase Order</span></h6>
+        <div class="text-muted small"><span lang="zh">向供應商正式下單</span><span lang="en">Places a formal order with the supplier</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="goods-receipt.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box-arrow-in-down me-1 text-primary"></i><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></h6>
+        <div class="text-muted small"><span lang="zh">採購收貨入庫與 IQC 觸發</span><span lang="en">Goods receipt into stock and IQC trigger</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="goods-return.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box-arrow-up me-1 text-primary"></i><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></h6>
+        <div class="text-muted small"><span lang="zh">採購退貨（含 NCR 退貨處置來源）</span><span lang="en">Purchase returns (including those raised by an NCR disposition)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="vendor-price-list.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-tag me-1 text-primary"></i><span lang="zh">廠商單價目錄</span><span lang="en">Vendor Price List</span></h6>
+        <div class="text-muted small"><span lang="zh">供應商報價與有效期間維護</span><span lang="en">Supplier quotations and their validity periods</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="vendor-evaluation.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-star-half me-1 text-primary"></i><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></h6>
+        <div class="text-muted small"><span lang="zh">年度/季度供應商評核與資格狀態連動（SRM）</span><span lang="en">Annual and quarterly supplier evaluation linked to the qualification status (SRM)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="purchase-overdue.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-exclamation-triangle me-1 text-primary"></i><span lang="zh">採購逾期跟催</span><span lang="en">Overdue Purchase Orders</span></h6>
+        <div class="text-muted small"><span lang="zh">逾交期未到貨採購行列表</span><span lang="en">Order lines past their delivery date and not yet received</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="supplier-delivery-rate.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-truck-check me-1 text-primary"></i><span lang="zh">供應商交期達成率</span><span lang="en">Supplier Delivery Rate</span></h6>
+        <div class="text-muted small"><span lang="zh">各供應商準時交貨率統計</span><span lang="en">On-time delivery statistics per supplier</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="purchase-amount.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-cash-stack me-1 text-primary"></i><span lang="zh">採購金額比較</span><span lang="en">Purchase Amount</span></h6>
+        <div class="text-muted small"><span lang="zh">採購金額趨勢與供應商占比</span><span lang="en">Purchase amount trend and supplier share</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="purchase-price.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-tag me-1 text-primary"></i><span lang="zh">採購價格比較</span><span lang="en">Purchase Price</span></h6>
+        <div class="text-muted small"><span lang="zh">同品號跨供應商/跨期間價格比較</span><span lang="en">Price comparison for one product across suppliers and periods</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="../osp/index.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-diagram-3 me-1 text-primary"></i><span lang="zh">委外管理（OSP）</span><span lang="en">Outsource Management (OSP)</span></h6>
+        <div class="text-muted small"><span lang="zh">委外報價／採購／發退料／收貨／重工／進度已獨立為委外管理模組，操作說明見該模組手冊</span><span lang="en">Outsource quotation, purchasing, material issue and return, receipt, rework and progress now form a separate Outsource Management module; see that module's guide for instructions</span></div></div></div></a></div>
+
+    </div>
+  </main>
+</div>
+</body>
+</html>

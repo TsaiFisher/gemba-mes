@@ -1,0 +1,152 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.MFG.Services
+@using SmartFactory.MES.Modules.MFG.ViewModels
+@inject IViewLocalizer Localizer
+@model ProductionBatch
+
+@{
+    var previews = ViewBag.Previews as List<BatchReleasePreviewRowVm> ?? new List<BatchReleasePreviewRowVm>();
+    bool canRelease = ViewBag.CanRelease == true;
+    bool anyBlocked = previews.Any(p => p.Outcome == WorkOrderReleaseOutcome.MaterialBlocked);
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string? productUom = ViewBag.ProductUom as string;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+
+    (string css, string key) OutcomeBadge(BatchReleasePreviewRowVm p)
+    {
+        if (p.Outcome == WorkOrderReleaseOutcome.MaterialBlocked) return ("bg-danger", "OutcomeBlocked");
+        if (p.Outcome == WorkOrderReleaseOutcome.NeedsConfirm)    return ("bg-warning text-dark", "OutcomeRecalc");
+        return ("bg-success", "OutcomeReady");
+    }
+}
+
+<div class="batch-release">
+    <section class="mb-3">
+        <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">1</span>@Localizer["SecHeader"]</h6>
+        <div class="row g-2">
+            <div class="col-md-6"><span class="text-muted small">@Localizer["BatchId"]</span><div class="fw-medium">@Model.BatchId</div></div>
+            <div class="col-md-6"><span class="text-muted small">@Localizer["ProductCode"]</span><div>@Model.ProductCode</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["Quantity"]</span><div>@Model.Quantity.ToString(QtyFmt(productUom))</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["Priority"]</span><div>@Model.Priority</div></div>
+            <div class="col-md-6"><span class="text-muted small">@Localizer["PlannedEndDate"]</span><div>@Model.PlannedEndDate.ToString("yyyy-MM-dd")</div></div>
+        </div>
+    </section>
+
+    <section class="mb-3">
+        <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">2</span>@Localizer["SecPreview"]</h6>
+        @if (anyBlocked)
+        {
+            <div class="alert alert-danger py-2"><i class="bi bi-exclamation-octagon me-1"></i>@Localizer["BlockedHint"]</div>
+        }
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered align-middle">
+                <thead class="table-light"><tr>
+                    <th>@Localizer["ColWo"]</th>
+                    <th>@Localizer["ColProduct"]</th>
+                    <th class="text-end">@Localizer["ColPlanned"]</th>
+                    <th class="text-end">@Localizer["ColRecalc"]</th>
+                    <th>@Localizer["ColResult"]</th>
+                </tr></thead>
+                <tbody>
+                    @foreach (var p in previews)
+                    {
+                        var ob = OutcomeBadge(p);
+                        var changed = p.RecalculatedQty != p.PlannedQty;
+                        <tr>
+                            <td>
+                                @p.WorkOrderId
+                                @if (p.IsSemi) { <span class="badge bg-info text-dark ms-1">@Localizer["SemiTag"]</span> }
+                            </td>
+                            <td>@p.ProductCode</td>
+                            <td class="text-end">@p.PlannedQty.ToString(QtyFmt(p.UomCode))</td>
+                            <td class="text-end @(changed ? "fw-bold text-warning-emphasis" : "")">@p.RecalculatedQty.ToString(QtyFmt(p.UomCode))</td>
+                            <td>
+                                <span class="badge @ob.css">@Localizer[ob.key]</span>
+                                @if (p.MaterialRisk) { <span class="badge bg-warning text-dark ms-1" title="@Localizer["RiskTip"]"><i class="bi bi-truck"></i></span> }
+                                @if (p.ShortageProducts.Any())
+                                {
+                                    <div class="small text-danger mt-1">@Localizer["ShortLabel"]：@string.Join(", ", p.ShortageProducts)</div>
+                                    <a class="small" target="_blank"
+                                       href="@Url.Action("Index", "WorkOrderMaterialStatus", new { searchWorkOrder = p.WorkOrderId, onlyShort = true, searched = true })">
+                                        <i class="bi bi-clipboard-data me-1"></i>@Localizer["ViewMaterialStatus"]
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    @if (!previews.Any())
+                    {
+                        <tr><td colspan="5" class="text-center text-muted">@Localizer["NoPlanned"]</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        @if (canRelease && previews.Any())
+        {
+            <button type="button" class="btn btn-success" data-action="releaseBatch" @(anyBlocked ? "disabled" : "")>
+                <i class="bi bi-box-arrow-up"></i> @Localizer["ReleaseBatch"]
+            </button>
+        }
+    </div>
+</div>
+
+@if (canRelease && previews.Any())
+{
+    @Html.AntiForgeryToken()
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    (function () {
+        function tokenVal() {
+            var el = document.querySelector('input[name="__RequestVerificationToken"]');
+            return el ? el.value : '';
+        }
+
+        var releaseUrl = '@Url.Action("ReleaseBatch", new { id = Model.BatchId })';
+        var confirmMsg = "@Localizer["ReleaseConfirm"]";
+        var recalcTpl  = "@Localizer["RecalcPrompt"]";
+        var blockedTpl = "@Localizer["BlockedPrompt"]";
+        var failedMsg  = "@Localizer["ReleaseFailed"]";
+
+        function doReleaseBatch(confirmed) {
+            var url = releaseUrl + (confirmed ? '?confirmed=true' : '');
+            fetch(url, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': tokenVal(), 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.success && d.warning) {
+                    // 有工單本該送審卻沒有簽核流程（A3）：用 alert 確認，免得 toast 一閃即重整
+                    alert(d.message);
+                    location.reload();
+                } else if (d.success) {
+                    if (window.toastSuccess) window.toastSuccess(d.message);
+                    setTimeout(function () { location.reload(); }, 800);
+                } else if (d.materialBlocked) {
+                    var lines = (d.blocked || []).map(function (b) {
+                        return '• ' + b.workOrderId + ': ' + (b.shortages || []).join(', ');
+                    }).join('\n');
+                    alert(blockedTpl + '\n' + lines);
+                } else if (d.needsConfirm) {
+                    var lines = (d.items || []).map(function (it) {
+                        return '• ' + it.workOrderId + ': ' + it.planned + ' → ' + it.recalculated;
+                    }).join('\n');
+                    if (confirm(recalcTpl + '\n' + lines)) doReleaseBatch(true);
+                } else {
+                    alert(d.message || failedMsg);
+                }
+            })
+            .catch(function () { alert(failedMsg); });
+        }
+        window.releaseBatch = function () {
+            if (!confirm(confirmMsg)) return;
+            doReleaseBatch(false);
+        };
+    })();
+    </script>
+}

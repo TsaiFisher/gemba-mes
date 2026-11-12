@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="SecHeader" xml:space="preserve"><value>工單資料</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>工單號</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="Quantity" xml:space="preserve"><value>數量</value></data>
+  <data name="RoutingId" xml:space="preserve"><value>途程</value></data>
+  <data name="Batch" xml:space="preserve"><value>生產批</value></data>
+  <data name="PlannedStart" xml:space="preserve"><value>投產日</value></data>
+  <data name="PlannedEnd" xml:space="preserve"><value>須完成日</value></data>
+  <data name="Parent" xml:space="preserve"><value>上階工單</value></data>
+  <data name="SecOutsource" xml:space="preserve"><value>委外資訊</value></data>
+  <data name="OutsourceSupplier" xml:space="preserve"><value>委外廠商</value></data>
+  <data name="OutsourcePO" xml:space="preserve"><value>委外採購單</value></data>
+  <data name="OutsourceExpected" xml:space="preserve"><value>應交日期</value></data>
+  <data name="SecCosts" xml:space="preserve"><value>生產成本</value></data>
+  <data name="CostHint" xml:space="preserve"><value>標準成本於釋出時計算並鎖定；實際成本於報工/入庫累計。</value></data>
+  <data name="CostMaterial" xml:space="preserve"><value>材料</value></data>
+  <data name="CostLabor" xml:space="preserve"><value>人工</value></data>
+  <data name="CostOverhead" xml:space="preserve"><value>製造費用</value></data>
+  <data name="StandardCost" xml:space="preserve"><value>標準</value></data>
+  <data name="ActualCost" xml:space="preserve"><value>實際</value></data>
+  <data name="SecOperations" xml:space="preserve"><value>工序與用料</value></data>
+  <data name="ColSeq" xml:space="preserve"><value>序</value></data>
+  <data name="ColOpName" xml:space="preserve"><value>工序</value></data>
+  <data name="ColWorkCenter" xml:space="preserve"><value>工作中心</value></data>
+  <data name="ColSetup" xml:space="preserve"><value>整備</value></data>
+  <data name="ColUnit" xml:space="preserve"><value>單位工時</value></data>
+  <data name="ColTimeUnit" xml:space="preserve"><value>時間單位</value></data>
+  <data name="ColOutsource" xml:space="preserve"><value>委外</value></data>
+  <data name="ColMaterials" xml:space="preserve"><value>用料</value></data>
+  <data name="NoOperations" xml:space="preserve"><value>無工序</value></data>
+  <data name="SecChildren" xml:space="preserve"><value>下階工單</value></data>
+  <data name="ColChildWo" xml:space="preserve"><value>工單號</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="Release" xml:space="preserve"><value>釋出工單</value></data>
+  <data name="MrCheck" xml:space="preserve"><value>確認物料備齊</value></data>
+  <data name="MrTitle" xml:space="preserve"><value>物料備齊狀態（開工前確認）</value></data>
+  <data name="MrReady" xml:space="preserve"><value>物料已備齊</value></data>
+  <data name="MrShortage" xml:space="preserve"><value>物料不足</value></data>
+  <data name="MrPartial" xml:space="preserve"><value>部分缺料</value></data>
+  <data name="MrNotChecked" xml:space="preserve"><value>未確認備料</value></data>
+  <data name="MrShortageList" xml:space="preserve"><value>以下物料未備齊（可用/需求）：</value></data>
+  <data name="MrCheckFailed" xml:space="preserve"><value>備料確認失敗，請重試。</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>撤回簽核</value></data>
+  <data name="WithdrawConfirm" xml:space="preserve"><value>確定撤回釋出簽核？工單將退回「已規劃」。</value></data>
+  <data name="ApDraft" xml:space="preserve"><value>未送審</value></data>
+  <data name="ApPending" xml:space="preserve"><value>待審核</value></data>
+  <data name="ApApproved" xml:space="preserve"><value>已核准</value></data>
+  <data name="ApRejected" xml:space="preserve"><value>已退回</value></data>
+  <data name="ReleaseConfirm" xml:space="preserve"><value>確定釋出此工單？釋出後將計算並鎖定標準成本。</value></data>
+  <data name="ReleaseRecalcPrompt" xml:space="preserve"><value>投產量已依即時庫存重算：暫定 {0} → 重算 {1}。確定以重算量投產？</value></data>
+  <data name="ReleaseBlockedPrompt" xml:space="preserve"><value>下列料件不足且在途無法及時補齊，無法投產：{0}</value></data>
+  <data name="ReleaseFailed" xml:space="preserve"><value>投產失敗，請重試。</value></data>
+  <data name="TimeSec" xml:space="preserve"><value>秒</value></data>
+  <data name="TimeMin" xml:space="preserve"><value>分</value></data>
+  <data name="TimeHour" xml:space="preserve"><value>時</value></data>
+  <data name="StatusPlanned" xml:space="preserve"><value>已規劃</value></data>
+  <data name="StatusReleased" xml:space="preserve"><value>已釋出</value></data>
+  <data name="StatusInProgress" xml:space="preserve"><value>生產中</value></data>
+  <data name="StatusCompleted" xml:space="preserve"><value>已完工</value></data>
+  <data name="StatusClosed" xml:space="preserve"><value>已結案</value></data>
+  <data name="StatusVoid" xml:space="preserve"><value>作廢</value></data>
+  <data name="Void" xml:space="preserve"><value>作廢</value></data>
+  <data name="VoidConfirm" xml:space="preserve"><value>確定作廢這張工單？未結束的派工會一併取消、預留的料會釋放，作廢後不能恢復。</value></data>
+</root>

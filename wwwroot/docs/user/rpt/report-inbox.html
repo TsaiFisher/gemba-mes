@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Report Inbox — RPT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>報表收件匣 — RPT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">RPT 目錄</span><span lang="en">RPT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">RPT 畫面</span><span lang="en">RPT screens</span></div>
+    <a href="dashboard.html" class="nav-link"><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></a>
+    <a href="profit-loss.html" class="nav-link"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a>
+    <a href="gross-margin.html" class="nav-link"><span lang="zh">毛利分析</span><span lang="en">Gross Margin Analysis</span></a>
+    <a href="margin-analysis.html" class="nav-link"><span lang="zh">多維度銷售毛利分析</span><span lang="en">Multi-dimensional sales margin analysis</span></a>
+    <a href="contribution-margin.html" class="nav-link"><span lang="zh">產品邊際貢獻分析</span><span lang="en">Product Contribution Margin</span></a>
+    <a href="balance-sheet.html" class="nav-link"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></a>
+    <a href="consolidated-statement.html" class="nav-link"><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></a>
+    <a href="outsource-performance.html" class="nav-link"><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></a>
+    <a href="data-audit.html" class="nav-link"><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></a>
+    <a href="field-telemetry.html" class="nav-link"><span lang="zh">現場遙測</span><span lang="en">Field Telemetry</span></a>
+    <a href="saved-queries.html" class="nav-link"><span lang="zh">常用查詢</span><span lang="en">Saved Queries</span></a>
+    <a href="report-schedule.html" class="nav-link"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>
+    <a href="report-inbox.html" class="nav-link active"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a>
+    <a href="report-run-history.html" class="nav-link"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-inbox-fill me-2 text-primary"></i><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/ReportInbox &nbsp;|&nbsp; 下載排程產生並指定給您的報表</span><span lang="en">Route: /ReportInbox &nbsp;|&nbsp; Download the scheduled reports addressed to you</span></div>
+    </div>
+
+    <p><span lang="zh">排程產生、且指定給您的報表檔案都會出現在這裡。系統不以電子郵件夾帶報表——附件一旦寄出就永遠脫離權限控管，而放在這裡的檔案每次下載都會重新檢查一次權限。</span><span lang="en">Report files produced by schedules and addressed to you appear here. The system never emails reports as attachments — once an attachment is sent it is permanently outside access control, whereas a file kept here has its permission re-checked on every download.</span></p>
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">報表排程跑出來的報表，就是到這裡拿。別和生產排程的「排程紀錄」（<a href="../mfg/schedule.html">生產排程</a>）搞混——那裡記的是機台派工怎麼排，不是報表。</span>
+      <span lang="en">This is where you pick up the reports that your report schedules produced. Not to be confused with the run log on the <a href="../mfg/schedule.html">production schedule</a>, which records how jobs were scheduled onto machines, not reports.</span>
+    </div>
+    <img class="screen-shot" src="img/report-inbox.png" data-src-en="img/en/report-inbox.png" alt="報表收件匣畫面截圖" data-alt-en="Report inbox screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">報表收件匣畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Report inbox screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="how-to-use-it"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">How to use it</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">設定執行日期區間（可留空）後按「查詢」。</span><span lang="en">Set a run-date range (optional) and click Search.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">在清單中找到需要的報表，確認「資料區間」是您要的那一段——排程存的是相對期間（例如「上個月」），每次執行都會換算成當下的絕對日期。</span><span lang="en">Find the report you need and check the data range — a schedule stores a relative period such as "last month", which is converted into absolute dates at each run.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">按「下載」取得檔案。檔名為「排程名稱－執行日期」。</span><span lang="en">Click Download to get the file. It is named after the schedule and the run date.</span></div></div>
+
+    <h2 id="points-to-note"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">注意事項</span><span lang="en">Points to note</span></h2>
+
+    <p><span lang="zh">清單只顯示成功且有檔案的執行；失敗或因權限被略過的執行請看「排程執行紀錄」。檔案超過保留期會被自動清除，此時下載會提示已清除，請重新執行排程。若您對該報表的權限已被取消，即使檔案還在也無法下載。</span><span lang="en">The list only shows successful runs that produced a file; failed or skipped runs are on the Schedule Run History screen. Files are purged automatically once the retention period expires, and a download then tells you so — run the schedule again. If your permission for that report has been revoked you cannot download the file even while it still exists.</span></p>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">執行日期（起）</span><span lang="en">Run Date From</span></td><td><span lang="zh">只看該日期之後產生的報表</span><span lang="en">Only reports produced on or after this date</span></td></tr>
+        <tr><td><span lang="zh">執行日期（迄）</span><span lang="en">Run Date To</span></td><td><span lang="zh">只看該日期之前產生的報表</span><span lang="en">Only reports produced on or before this date</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">清單欄位</span><span lang="en">List fields</span></h3>
+
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">執行時間</span><span lang="en">Run Time</span></td><td><span lang="zh">報表產生的時刻，以廠別時區顯示（與其他畫面一致）</span><span lang="en">When the report was produced, shown in the plant time zone (the same as every other screen)</span></td></tr>
+        <tr><td><span lang="zh">排程名稱</span><span lang="en">Schedule Name</span></td><td><span lang="zh">產生這份報表的排程</span><span lang="en">The schedule that produced this report</span></td></tr>
+        <tr><td><span lang="zh">報表</span><span lang="en">Report</span></td><td><span lang="zh">報表種類</span><span lang="en">Which report it is</span></td></tr>
+        <tr><td><span lang="zh">資料區間</span><span lang="en">Data Range</span></td><td><span lang="zh">相對期間換算後的實際起迄日；無期間條件的報表顯示破折號</span><span lang="en">The actual dates the relative period resolved to; a dash means the report takes no period</span></td></tr>
+        <tr><td><span lang="zh">筆數</span><span lang="en">Rows</span></td><td><span lang="zh">報表內的資料列數；為 0 表示該期間無資料</span><span lang="en">Number of data rows; 0 means there was no data for that period</span></td></tr>
+        <tr><td><span lang="zh">語系</span><span lang="en">Language</span></td><td><span lang="zh">該份檔案的語言。收件人語系不同時會產生多份</span><span lang="en">The language of that file. Several files are produced when recipients use different languages</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+
+    <p><a href="report-schedule.html"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>、<a href="report-run-history.html"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a></p>
+  </main>
+</div>
+</body>
+</html>

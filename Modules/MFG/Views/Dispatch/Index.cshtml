@@ -1,0 +1,234 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.MFG.Controllers
+@using SmartFactory.MES.Modules.BAS.Services
+@inject IViewLocalizer Localizer
+@model PaginatedList<DispatchListVm>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    string statusFilter = ViewBag.StatusFilter as string ?? "";
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+
+    (string css, string key) StatusBadge(DispatchStatus s) => s switch
+    {
+        DispatchStatus.Pending         => ("bg-secondary", "StatusPending"),
+        DispatchStatus.Scheduled       => ("bg-primary",   "StatusScheduled"),
+        DispatchStatus.SetupInProgress => ("bg-warning text-dark", "StatusSetupInProgress"),
+        DispatchStatus.ReadyToStart    => ("bg-info text-dark",    "StatusReadyToStart"),
+        DispatchStatus.InProgress      => ("bg-success",   "StatusInProgress"),
+        DispatchStatus.Closed          => ("bg-dark",      "StatusClosed"),
+        DispatchStatus.OnHold          => ("bg-danger",    "StatusOnHold"),
+        DispatchStatus.PendingFPI      => ("bg-warning text-dark", "StatusPendingFPI"),
+        DispatchStatus.Cancelled       => ("bg-light text-muted border", "StatusCancelled"),
+        _                              => ("bg-secondary", s.ToString())
+    };
+
+    string HoldReasonKey(DispatchHoldReason r) => r switch
+    {
+        DispatchHoldReason.MachineDown => "HoldReasonMachineDown",
+        DispatchHoldReason.FpiFailed   => "HoldReasonFpiFailed",
+        DispatchHoldReason.IpqcFailed  => "HoldReasonIpqcFailed",
+        _                              => r.ToString()
+    };
+
+    bool canUpdate = ViewBag.CanUpdate == true;
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" action="@Url.Action("Index")" class="row g-3 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                <div class="col-md-4">
+                    <label class="form-label">@Localizer["SearchLabel"]</label>
+                    <input type="text" name="searchText" class="form-control" value="@ViewBag.SearchText"
+                           placeholder="@Localizer["SearchPlaceholder"]" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["StatusFilter"]</label>
+                    <select name="statusFilter" class="form-select">
+                        <option value="">@Localizer["StatusAll"]</option>
+                        @foreach (DispatchStatus s in Enum.GetValues(typeof(DispatchStatus)))
+                        {
+                            <option value="@s" selected="@(statusFilter == s.ToString())">@Localizer[StatusBadge(s).key]</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.CurrentSort == "dispatch_id" ? "dispatch_id_desc" : "dispatch_id", searchText = ViewBag.SearchText, statusFilter, searched = true })">
+                            @Localizer["DispatchId"]
+                            @if (ViewBag.CurrentSort == "dispatch_id") { <i class="bi bi-sort-up"></i> }
+                            else if (ViewBag.CurrentSort == "dispatch_id_desc") { <i class="bi bi-sort-down"></i> }
+                        </a>
+                    </th>
+                    <th>
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.CurrentSort == "work_order" ? "work_order_desc" : "work_order", searchText = ViewBag.SearchText, statusFilter, searched = true })">
+                            @Localizer["WorkOrderId"]
+                            @if (ViewBag.CurrentSort == "work_order") { <i class="bi bi-sort-up"></i> }
+                            else if (ViewBag.CurrentSort == "work_order_desc") { <i class="bi bi-sort-down"></i> }
+                        </a>
+                    </th>
+                    <th>@Localizer["ProductCode"]</th>
+                    <th>@Localizer["OperationSeq"]</th>
+                    <th>@Localizer["OperationName"]</th>
+                    <th>@Localizer["WorkCenterId"]</th>
+                    <th>@Localizer["MachineCode"]</th>
+                    <th class="text-end">@Localizer["Quantity"]</th>
+                    <th class="text-end">@Localizer["QtyDone"]</th>
+                    <th>@Localizer["Status"]</th>
+                    <th>
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.CurrentSort == "scheduled_start" ? "scheduled_start_desc" : "scheduled_start", searchText = ViewBag.SearchText, statusFilter, searched = true })">
+                            @Localizer["ScheduledStart"]
+                            @if (ViewBag.CurrentSort == "scheduled_start") { <i class="bi bi-sort-up"></i> }
+                            else if (ViewBag.CurrentSort == "scheduled_start_desc") { <i class="bi bi-sort-down"></i> }
+                        </a>
+                    </th>
+                    <th>@Localizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null) @foreach (var item in Model)
+                {
+                    var sb = StatusBadge(item.Status);
+                    <tr>
+                        <td class="font-monospace small">@item.DispatchId</td>
+                        <td>@item.WorkOrderId</td>
+                        <td>@item.ProductCode</td>
+                        <td class="text-center">@item.OperationSeq</td>
+                        <td class="small">@item.OperationName</td>
+                        <td class="small">@item.WorkCenterId</td>
+                        <td class="small">@item.MachineCode</td>
+                        <td class="text-end">@item.Quantity.ToString(QtyFmt(item.UomCode))</td>
+                        <td class="text-end">@item.QtyDone.ToString(QtyFmt(item.UomCode))</td>
+                        <td><span class="badge @sb.css">@Localizer[sb.key]</span>
+                            @if (item.HoldReason is { } hr) { <span class="small text-danger ms-1">@Localizer[HoldReasonKey(hr)]</span> }
+                            @if (item.IsOutsource) { <i class="bi bi-truck text-primary ms-1" title="@Localizer["Outsource"]"></i> }
+                            @if (item.ToolingPmDue) { <span class="badge bg-danger ms-1" title="@item.ToolingCode"><i class="bi bi-tools me-1"></i>@Localizer["ToolingPmDue"]</span> }
+                        </td>
+                        @* 排程時刻不換算：數字本身就是廠別當地時間，Kind=Utc 只是貼給 Npgsql 的標籤（mfg-domain.md §UTC 地雷）。*@
+                        <td class="small">@(item.ScheduledStart?.ToString("MM/dd HH:mm"))</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                @await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = item.DispatchId }))
+                                <button type="button" class="btn btn-info"
+                                        data-url="@Url.Action("Details", new { id = item.DispatchId })"
+                                        data-label="@Localizer["ViewTitle", item.DispatchId]"
+                                        data-action="openPanel"><i class="bi bi-eye"></i> @Localizer["View"]</button>
+                                @if (canUpdate && item.Status is DispatchStatus.Scheduled or DispatchStatus.ReadyToStart)
+                                {
+                                    <button type="button" class="btn btn-warning"
+                                            data-url="@Url.Action("SetupForm", new { id = item.DispatchId })"
+                                            data-label="@Localizer["SetupTitle", item.DispatchId]"
+                                            data-action="openPanel"
+                                            title="@Localizer["Setup"]">
+                                        <i class="bi bi-tools"></i> @Localizer["Setup"]
+                                    </button>
+                                }
+                                @if (canUpdate && item.Status is DispatchStatus.SetupInProgress)
+                                {
+                                    <button type="button" class="btn btn-warning"
+                                            data-url="@Url.Action("SetupForm", new { id = item.DispatchId })"
+                                            data-label="@Localizer["SetupTitle", item.DispatchId]"
+                                            data-action="openPanel"
+                                            title="@Localizer["SetupDone"]">
+                                        <i class="bi bi-tools"></i> @Localizer["SetupDone"]
+                                    </button>
+                                }
+                                @if (canUpdate && item.Status is DispatchStatus.Scheduled or DispatchStatus.ReadyToStart or DispatchStatus.InProgress)
+                                {
+                                    <button type="button" class="btn btn-success"
+                                            data-url="@Url.Action("SessionForm", new { id = item.DispatchId })"
+                                            data-label="@Localizer["SessionTitle", item.DispatchId]"
+                                            data-action="openPanel"
+                                            title="@Localizer["Session"]">
+                                        <i class="bi bi-person-check"></i> @Localizer["Session"]
+                                    </button>
+                                }
+                                @if (canUpdate && item.Status == DispatchStatus.OnHold)
+                                {
+                                    <button type="button" class="btn btn-danger"
+                                            data-url="@Url.Action("HoldForm", new { id = item.DispatchId })"
+                                            data-label="@Localizer["HoldTitle", item.DispatchId]"
+                                            data-action="openPanel"
+                                            title="@Localizer["HandleHold"]">
+                                        <i class="bi bi-pause-circle"></i> @Localizer["HandleHold"]
+                                    </button>
+                                }
+                                @if (canUpdate && item.Status == DispatchStatus.InProgress)
+                                {
+                                    <button type="button" class="btn btn-primary"
+                                            data-url="@Url.Action("ReportForm", new { id = item.DispatchId })"
+                                            data-label="@Localizer["ReportTitle", item.DispatchId]"
+                                            data-action="openPanel"
+                                            title="@Localizer["Report"]">
+                                        <i class="bi bi-clipboard-check"></i> @Localizer["Report"]
+                                    </button>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-info">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<div class="offcanvas offcanvas-end u-min-width-620px u-max-width-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

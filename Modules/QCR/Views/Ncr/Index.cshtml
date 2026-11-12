@@ -1,0 +1,191 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Models.NonConformanceReport>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched    = ViewBag.Searched as bool? ?? false;
+    bool   canCreate      = ViewBag.CanCreate == true;
+    bool   canPrint       = ViewBag.CanPrint  == true;
+    string searchProduct  = ViewBag.SearchProduct as string ?? "";
+    string searchNcrId    = ViewBag.SearchNcrId   as string ?? "";
+    string ncrStatus      = ViewBag.NcrStatus     as string ?? "";
+    string disposition    = ViewBag.Disposition   as string ?? "";
+    string sortOrder      = ViewBag.CurrentSort   as string ?? "date_desc";
+    int    pageSize       = ViewBag.CurrentPageSize as int? ?? 20;
+    var    productOptions = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h4 mb-0"><i class="bi bi-shield-x me-2 text-danger"></i>@Localizer["PageTitle"]</h1>
+        @if (canCreate)
+        {
+            <button class="btn btn-primary btn-sm"
+                    data-url="@Url.Action("Create")" data-label="@Localizer["CreateNcr"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus me-1"></i>@Localizer["CreateNcr"]
+            </button>
+        }
+    </div>
+
+    <!-- 查詢列 -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body py-2">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@sortOrder" />
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ProductCode"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllProducts"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["NcrId"]</label>
+                    <input type="text" name="searchNcrId" class="form-control form-control-sm"
+                           value="@searchNcrId" placeholder="@Localizer["NcrId"]" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["NcrStatus"]</label>
+                    <select name="ncrStatus" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllStatus"]</option>
+                        @foreach (var s in new[] { NcrStatus.Open, NcrStatus.PendingApproval, NcrStatus.Approved, NcrStatus.Executed, NcrStatus.Closed, NcrStatus.Void })
+                        {
+                            <option value="@s" selected="@(ncrStatus == s)">@Localizer[s]</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Disposition"]</label>
+                    <select name="disposition" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllDisposition"]</option>
+                        @foreach (var d in new[] { "Scrap", "Rework", "UseAsIs", "Return", "ReturnRework" })
+                        {
+                            <option value="@d" selected="@(disposition == d)">@Localizer[d]</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["NcrId"]</th>
+                                <th>@Localizer["SourceType"]</th>
+                                <th>@Localizer["ProductCode"]</th>
+                                <th class="text-end">@Localizer["Qty"]</th>
+                                <th>@Localizer["DefectCode"]</th>
+                                <th>@Localizer["Disposition"]</th>
+                                <th>@Localizer["NcrStatus"]</th>
+                                <th>
+                                    <a asp-action="Index" asp-route-searched="true"
+                                       asp-route-searchProduct="@searchProduct" asp-route-ncrStatus="@ncrStatus"
+                                       asp-route-disposition="@disposition" asp-route-sortOrder="@ViewBag.DateSort"
+                                       asp-route-pageSize="@pageSize"
+                                       class="text-decoration-none text-dark">
+                                        @Localizer["CreatedAt"]
+                                        @if (sortOrder == "date_asc") { <i class="bi bi-caret-up-fill"></i> }
+                                        else if (sortOrder == "date_desc") { <i class="bi bi-caret-down-fill"></i> }
+                                    </a>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var n in Model)
+                            {
+                                var statusBadge = n.NcrStatus switch {
+                                    NcrStatus.Open            => "bg-secondary",
+                                    NcrStatus.PendingApproval => "bg-warning text-dark",
+                                    NcrStatus.Approved        => "bg-info text-dark",
+                                    NcrStatus.Executed        => "bg-primary",
+                                    NcrStatus.Closed          => "bg-success",
+                                    NcrStatus.Void            => "bg-dark",
+                                    _                         => "bg-light text-dark"
+                                };
+                                var dispBadge = n.Disposition switch {
+                                    "Scrap"   => "bg-danger",
+                                    "Rework"  => "bg-warning text-dark",
+                                    "UseAsIs" => "bg-info text-dark",
+                                    "Return"  => "bg-secondary",
+                                    "ReturnRework" => "bg-warning text-dark",
+                                    _         => "bg-light text-dark"
+                                };
+                                var detailUrl = Url.Action("Details", new { id = n.NcrId });
+                                <tr>
+                                    <td class="font-monospace small fw-semibold">@n.NcrId</td>
+                                    <td class="small">@Localizer[n.SourceType]</td>
+                                    <td>@n.ProductCode</td>
+                                    <td class="text-end">@n.Qty.ToString("N2")</td>
+                                    <td class="small">@(n.DefectCode ?? "—")</td>
+                                    <td><span class="badge @dispBadge">@Localizer[n.Disposition]</span></td>
+                                    <td><span class="badge @statusBadge">@Localizer[n.NcrStatus]</span></td>
+                                    <td class="small text-muted">@n.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                    <td>
+                                        @await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = n.NcrId }))
+                                        <button class="btn btn-outline-secondary btn-sm py-0"
+                                                data-url="@detailUrl" data-label="NCR @n.NcrId"
+                                                data-action="openPanel"><i class="bi bi-eye"></i> @Localizer["View"]</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel offcanvas -->
+<div class="offcanvas offcanvas-end u-min-width-560px u-max-width-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

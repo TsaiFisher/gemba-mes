@@ -1,0 +1,161 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Modules.MFG.ViewModels.DefectRateRow>
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched   = ViewBag.Searched as bool? ?? false;
+    bool   canPrint      = ViewBag.CanPrint == true;
+    string fromDate       = ViewBag.FromDate      as string ?? "";
+    string toDate         = ViewBag.ToDate        as string ?? "";
+    string searchProduct  = ViewBag.SearchProduct as string ?? "";
+    var    productOptions = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-bug me-2 text-danger"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && hasSearched && Model != null && Model.Any())
+        {
+            <a asp-action="Export"
+               asp-route-fromDate="@fromDate" asp-route-toDate="@toDate"
+               asp-route-searchProduct="@searchProduct"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    @* 常用查詢入口（§7.9-6）。放在查詢卡片之外——partial 內有按鈕與輸入框，
+       塞進下面那張卡的 <form> 內會變成巢狀表單。 *@
+    @await Html.PartialAsync("_SavedQueries", "DefectRate")
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["FromDate"]</label>
+                    <input type="date" name="fromDate" class="form-control" value="@fromDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ToDate"]</label>
+                    <input type="date" name="toDate" class="form-control" value="@toDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Product"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["Product"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        var totalOk  = Model.Sum(r => r.QtyOk);
+        var totalNg  = Model.Sum(r => r.QtyNg);
+        var totalAll = totalOk + totalNg;
+        var totalRate = totalAll == 0 ? 0m : Math.Round(totalNg / totalAll * 100m, 2);
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card border-0 bg-success text-white shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["TotalOk"]</div>
+                        <div class="fs-4 fw-bold">@totalOk.ToString(moneyFmt)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 bg-danger text-white shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["TotalNg"]</div>
+                        <div class="fs-4 fw-bold">@totalNg.ToString(moneyFmt)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 bg-warning text-dark shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["OverallDefectRate"]</div>
+                        <div class="fs-4 fw-bold">@totalRate%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["ProductCode"]</th>
+                                <th class="text-end">@Localizer["QtyOk"]</th>
+                                <th class="text-end">@Localizer["QtyNg"]</th>
+                                <th class="text-end">@Localizer["TotalQty"]</th>
+                                <th class="u-min-width-150px">@Localizer["DefectRate"]</th>
+                                <th class="text-end">@Localizer["ReportCount"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var paged = ReportPaging.Page(Model, ViewData, Context); }
+                            @foreach (var row in paged)
+                            {
+                                var ratePct = (int)row.DefectRate;
+                                var barClass = row.DefectRate >= 5 ? "bg-danger"
+                                             : row.DefectRate >= 2 ? "bg-warning"
+                                             : "bg-success";
+                                <tr>
+                                    <td class="fw-semibold">@row.ProductCode</td>
+                                    <td class="text-end text-success">@row.QtyOk.ToString(QtyFmt(row.UomCode))</td>
+                                    <td class="text-end text-danger">@row.QtyNg.ToString(QtyFmt(row.UomCode))</td>
+                                    <td class="text-end">@row.TotalQty.ToString(QtyFmt(row.UomCode))</td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="progress flex-grow-1 u-height-14px">
+                                                <div class="progress-bar @barClass"
+                                                     data-pct-width="@Math.Min(ratePct,100)"></div>
+                                            </div>
+                                            <span class="small fw-semibold @(row.DefectRate >= 5 ? "text-danger" : "")">@row.DefectRate%</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-end text-muted">@row.ReportCount</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @await Html.PartialAsync("_Pagination", paged)
+        </div>
+    }
+</div>

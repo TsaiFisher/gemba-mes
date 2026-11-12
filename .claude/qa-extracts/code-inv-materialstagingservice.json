@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/INV/Services/MaterialStagingService.cs",
+  "sourceHash": "f586073c37b5b03759f6438f2885cf735d102ea4c22cff59b9ee784fccaec939",
+  "entries": [
+    {
+      "slug": "code-inv-materialstagingservice-8dffa8af",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 預檢可用量：依品號彙總需求，任一不足立即擋單",
+      "text": "庫存可用量限制與備料規則｜系統會依據品號彙總所有需求，如果任一品項的可用數量不足，系統會立即阻止單據的建立或狀態變更。此外，硬預留的數量不能超過該廠區可用的總庫存量（即在手庫存減去目前已活躍預留的數量）。當工單備料單在物料需求計劃展開時已經鎖定了庫存，這筆預留會同時從廠區可用量中扣除。系統也會確保同一批物料不會被重複計算為兩次預留。此外，系統是逐行檢查工單的，而不是只看表頭資訊，以確保所有相關工單都能正確計算和處理備料需求。",
+      "approved": true,
+      "sourceSectionHash": "1d6b7fa30f8ca54d00ce6e51fc07be81ba3ebf196c6002395d2c976a9349f34b"
+    },
+    {
+      "slug": "code-inv-materialstagingservice-1041a673",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 否則同一批料被鎖兩次，會誤縮其他工單的可用量",
+      "text": "備料轉移時需調整工單預留量｜當備料單接手鎖定某批材料後，系統會等額扣除該行所屬工單原有的物料需求預留數量，以避免同一批材料被重複鎖定而誤影響其他工單的可用庫存計算。",
+      "approved": true,
+      "sourceSectionHash": "54e3ac1970c73705208aba60849472cef7749f091828dcde303bb3cef3fc7e11"
+    },
+    {
+      "slug": "code-inv-materialstagingservice-07bfee8a",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 來源儲位是揀料當下才知道的",
+      "text": "來源儲位必須填寫才能過帳｜系統要求必須知道材料是從哪一個儲位拿出來的，因此在結帳時，如果沒有填寫來源儲位資訊，則無法完成操作。",
+      "approved": true,
+      "sourceSectionHash": "e3398d74c9d30a7eb0ad12302c67221fb850cd173fbdf8f23a7d7c617cd5e8ea"
+    },
+    {
+      "slug": "code-inv-materialstagingservice-7a3cb99b",
+      "lang": "zh",
+      "headingPath": "庫存管理 › +8 廠別在當地凌晨備料時把異動記到前一天",
+      "text": "日期依據廠區當地時間計算｜系統記錄的變更日期會以該廠區當地的日曆日為準，確保與其他單據紀錄的日期一致。",
+      "approved": true,
+      "sourceSectionHash": "7a8f34806893ad3b8cf2202e3db175f036b0ef0ca6286148b566718de13a789a"
+    }
+  ]
+}

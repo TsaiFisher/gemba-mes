@@ -1,0 +1,48 @@
+{
+  "sourcePath": "Services/CurrencyService.cs",
+  "sourceHash": "91f7cda6f6383ea64d6bc0629082fc910240d6c6913659827c078e382e650467",
+  "entries": [
+    {
+      "slug": "code-core-currencyservice-034d7887",
+      "lang": "zh",
+      "headingPath": "系統共用 › 取得幣別設定",
+      "text": "取得幣別設定與限制｜系統會取得目前使用的貨幣設定，並且這個設定包含了解決小數點位數和顯示符號等資訊。此外，即使某些貨幣已經停用，系統在選擇新的單據時仍會進行阻擋，但已存在的單據的計數方式不會因此改變。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-currencyservice-0741306d",
+      "lang": "zh",
+      "headingPath": "系統共用 › 取得指定幣別在單據日期當日或之前最近一筆的指定類型匯率",
+      "text": "取得指定幣別的最新匯率規則｜當查詢的幣別是系統的本幣時，直接回傳數值 1；若找不到對應的匯率，則會回傳空值，呼叫此功能的端點需要自行驗證並通知使用者。此外，如果計算出的匯率為 0，也會視同找不到而回傳空值。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-currencyservice-7c3f740a",
+      "lang": "zh",
+      "headingPath": "系統共用 › 取得實際使用的匯率日期",
+      "text": "匯率日期判斷規則｜當所查詢的貨幣是本國貨幣時，系統會使用單據的日期作為應用的匯率日期。如果找不到對應的匯率日期，則回傳空值。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-currencyservice-c14f98ba",
+      "lang": "zh",
+      "headingPath": "系統共用 › 不是「還能不能挑選」",
+      "text": "幣別設定與可用性判斷的區分｜系統會根據每個貨幣的記數方式來計算金額，即使某個貨幣已經停用，其歷史交易單據的金額也會依照新的記數規則進行調整。不過，在下拉選單中，只有當貨幣是啟用狀態時才能被選擇使用。",
+      "approved": false
+    },
+    {
+      "slug": "code-core-currencyservice-2ca6cbad",
+      "lang": "zh",
+      "headingPath": "系統共用 › 中間價必須兩邊都有值",
+      "text": "中間價的計算規則說明｜當系統需要使用中間價時，必須同時有買入匯率和賣出匯率的值。如果缺少其中任何一個值，則會被視為無法取得匯率，並阻止單據的處理。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-currencyservice-707b90e6",
+      "lang": "zh",
+      "headingPath": "系統共用 › 而它是在存檔路徑深處被呼叫的，等於整張單據 500",
+      "text": "資料驗證規則說明｜系統在儲存時會檢查數值是否為負數，以避免計算過程出錯。",
+      "approved": true
+    }
+  ]
+}

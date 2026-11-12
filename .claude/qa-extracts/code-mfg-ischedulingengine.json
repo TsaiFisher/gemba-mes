@@ -1,0 +1,46 @@
+{
+  "sourcePath": "Modules/MFG/Services/ISchedulingEngine.cs",
+  "sourceHash": "3a1f831f4ce9a35aa4271bdc897010abe277becaad9cf19a48212a31fe07ab2b",
+  "entries": [
+    {
+      "slug": "code-mfg-ischedulingengine-51a4fcef",
+      "lang": "zh",
+      "headingPath": "生產製造 › 預載日曆查表",
+      "text": "規則說明｜系統會將所有工廠的資訊，從最高層級到最低層級依序檢查，並包含預計停機時間來進行排程計算。",
+      "approved": true,
+      "sourceSectionHash": "42e367f6c68f0682d58673abd564659802f501f9c0c8a480f850837d1fae32d6"
+    },
+    {
+      "slug": "code-mfg-ischedulingengine-981d2e57",
+      "lang": "zh",
+      "headingPath": "生產製造 › 移轉方式與移轉批量取自**前工序**——它決定怎麼把半成品交給",
+      "text": "移轉方式與批量取自前工序｜系統決定如何將半成品交給下一站，其移轉的方式和數量是根據前一個工序的資訊來決定的，而不是本工序自身的屬性。",
+      "approved": true,
+      "sourceSectionHash": "3b5487a9a754385ea2f75a2bc62c87ae52576f0363aa2684fd9cece8c01a1e99"
+    },
+    {
+      "slug": "code-mfg-ischedulingengine-80b624fb",
+      "lang": "zh",
+      "headingPath": "生產製造 › 凍結派工重估的輸入",
+      "text": "工單與批號決定重估的範圍｜此輸入資料用於凍結派工的重估，它會根據所屬的工單和生產批次來確定計算的範圍。在同一批次的物料相依性只會在該批次內部發生，跨越不同批次之間不會有物料上的關聯性。",
+      "approved": true,
+      "sourceSectionHash": "7ed90ac9e76263afdc68d1b83f73164f5b094b95194709102c8f0e99afd39e78"
+    },
+    {
+      "slug": "code-mfg-ischedulingengine-cf11f39a",
+      "lang": "zh",
+      "headingPath": "生產製造 › 凍結派工重估結果",
+      "text": "凍結重估結果的判斷依據｜如果未重新計算，系統會沿用帳面時段的紀錄；若委外或剩餘量已為零，或者找不到工序資訊，則呼叫端不會將資料寫回資料庫。",
+      "approved": true,
+      "sourceSectionHash": "4e8248662fc5f16cb1412c9309f87502ec718d7f8f623a5572c7eafea35ddb3f"
+    },
+    {
+      "slug": "code-mfg-ischedulingengine-87a5e254",
+      "lang": "zh",
+      "headingPath": "生產製造 › 校準：與全量排程**同一套時間規則**工序重疊、倒推錨點",
+      "text": "每晚 ETA 校準與重排的差別｜每晚 01:00 系統會做一次 ETA 全量校準：用與全量排程相同的時間規則（工序重疊、倒推、工作日曆、計劃停機、生產中派工依未完成量重估）重新推算時間，可能延後也可能提前；但會維持每張已排派工目前的機台與先後順序，也不會排入待排派工。換機台、改順序、排入新工作要靠重排排程（依各廠的自動重排設定）。校準不會更新排程頁的「上次排程時間」。",
+      "approved": true,
+      "sourceSectionHash": "2fd2941f0b22e0c202a32929b37caf84136a2cce5153fc125da1e12972ca94ca"
+    }
+  ]
+}

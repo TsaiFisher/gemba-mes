@@ -1,0 +1,94 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Models.MenuPermission>
+@using SmartFactory.MES.Services
+@using SmartFactory.MES.Models
+
+@{
+    var role = ViewBag.Role as ApplicationRole;
+    var menus = ViewBag.Menus as List<MenuItem>;
+    ViewData["Title"] = string.Format(Localizer["SetPermissionsFor"].Value, role?.Name);
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-shield-check"></i> @Localizer["PermissionMatrix"]: <span class="text-primary">@role?.Name</span></h1>
+        <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["BackToList"]</a>
+    </div>
+
+    <form asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="roleId" value="@role?.Id" />
+
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-bordered mb-0 align-middle">
+                    <thead class="bg-dark text-white text-center">
+                        <tr>
+                            <th class="text-start ps-4">@Localizer["MenuHeader"]</th>
+                            <th class="u-width-120px">@Localizer["Read"]</th>
+                            <th class="u-width-120px">@Localizer["Create"]</th>
+                            <th class="u-width-120px">@Localizer["Update"]</th>
+                            <th class="u-width-120px">@Localizer["Delete"]</th>
+                            <th class="u-width-120px">@Localizer["Print"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < menus.Count; i++)
+                        {
+                            var menu = menus[i];
+                            var perm = Model.FirstOrDefault(p => p.MenuKey == menu.MenuKey);
+                            <tr>
+                                <td class="ps-4">
+                                    <i class="bi @menu.Icon me-2 text-muted"></i>
+                                    <strong>@menu.Title</strong>
+                                    <input type="hidden" name="permissions[@i].MenuKey" value="@menu.MenuKey" />
+                                </td>
+                                <td class="text-center">
+                                    @if(menu.SupportedActions.Contains("Read")) {
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input" type="checkbox" name="permissions[@i].CanRead" value="true" @(perm?.CanRead == true ? "checked" : "") />
+                                        </div>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    @if(menu.SupportedActions.Contains("Create")) {
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input" type="checkbox" name="permissions[@i].CanCreate" value="true" @(perm?.CanCreate == true ? "checked" : "") />
+                                        </div>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    @if(menu.SupportedActions.Contains("Update")) {
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input" type="checkbox" name="permissions[@i].CanUpdate" value="true" @(perm?.CanUpdate == true ? "checked" : "") />
+                                        </div>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    @if(menu.SupportedActions.Contains("Delete")) {
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input" type="checkbox" name="permissions[@i].CanDelete" value="true" @(perm?.CanDelete == true ? "checked" : "") />
+                                        </div>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    @if(menu.SupportedActions.Contains("Print")) {
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input" type="checkbox" name="permissions[@i].CanPrint" value="true" @(perm?.CanPrint == true ? "checked" : "") />
+                                        </div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer bg-light text-end py-3">
+                <button type="submit" class="btn btn-success btn-lg px-5 shadow-sm">
+                    <i class="bi bi-save"></i> @Localizer["SaveSettings"]
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

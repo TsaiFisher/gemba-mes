@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/BAS/Controllers/CompanyController.cs",
+  "sourceHash": "188daa8d83dd8d12a9593c401626f9a55ce911264694c72f44979367f8cb9aab",
+  "entries": [
+    {
+      "slug": "code-bas-companycontroller-c681b091",
+      "lang": "zh",
+      "headingPath": "基本資料 › 鬆散字串參照，主動查核，避免往來廠商刪除後留下孤兒單據",
+      "text": "資料關聯性檢查規則｜系統會主動檢查所使用的客戶或供應商代碼是否在其他相關業務單據中被使用到，以避免因為對方帳號被刪除而導致留下無法追蹤的孤立單據。",
+      "approved": true,
+      "sourceSectionHash": "3726cdd54cafc877a8281d7ce1cef500678e2c1fefaaf5142d39de3006d973c9"
+    },
+    {
+      "slug": "code-bas-companycontroller-1fd2225d",
+      "lang": "zh",
+      "headingPath": "基本資料 › 往來廠商是否仍被採購/銷售/委外/應收應付等單據引用中",
+      "text": "廠商是否仍在其他業務單據中使用｜此設定決定了該廠商的資料是否還會被採購、銷售、委外或應收應付等各類業務單據所引用，若仍有使用，則系統會進行檢查。",
+      "approved": true,
+      "sourceSectionHash": "7c3b356b2392a83dbe754d431a49ceaea0097fd4f8991bae6090b3e248b19a1a"
+    }
+  ]
+}

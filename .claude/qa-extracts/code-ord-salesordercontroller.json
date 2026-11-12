@@ -1,0 +1,70 @@
+{
+  "sourcePath": "Modules/ORD/Controllers/SalesOrderController.cs",
+  "sourceHash": "d884c79fa824c670a5f7a5a1a59dc41c1a1097cd8a7052704229cabe951869ad",
+  "entries": [
+    {
+      "slug": "code-ord-salesordercontroller-a55e398c",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 服務以狀態判定，非簡化模式或無未展開需求時不做事，",
+      "text": "自動展開需求判斷規則｜只有在訂單進入「已核准」狀態時，系統才會自動執行物料需求規劃的展開作業；若不是簡化模式，或者沒有未展開的需求，則不會進行此動作。",
+      "approved": true,
+      "sourceSectionHash": "b1bc30edd9e2cbf5fedd86fef576414f71e2d83e84ea33b7b75511a312178192"
+    },
+    {
+      "slug": "code-ord-salesordercontroller-91ed8117",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 找不到時保留 vm 原值",
+      "text": "匯率計算規則說明｜系統會根據單據的日期，查詢該外幣最近一次的匯率來進行計算。若找不到對應的匯率，則沿用前端預設的值。",
+      "approved": true,
+      "sourceSectionHash": "dc5bf53d80e4af94ef1fd1adb9fdb0504ce7ae70eb9b9aa677c587f4fae8d469"
+    },
+    {
+      "slug": "code-ord-salesordercontroller-da0165cc",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 明細幣別可各自不同，",
+      "text": "幣別計算規則說明｜明細項目可以各自使用不同的貨幣單位，但表頭的總計金額必須以後端權威匯率重新計算得出本位幣總和，不能採用使用者在前端輸入的金額。",
+      "approved": true,
+      "sourceSectionHash": "0c5197c4dba71f04d458fd87c8727a1216c8456e96461ed92e54c6e57b8b686b"
+    },
+    {
+      "slug": "code-ord-salesordercontroller-c4af7228",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 這兩欄原本是前端送什麼存什麼——與出貨單",
+      "text": "出貨數量以系統資料為準｜實際的出貨數量和單位，會以後端根據品號主檔計算的數值為權威標準，而非依據使用者在前端輸入的值。",
+      "approved": true,
+      "sourceSectionHash": "1feca1e50ed3f46891e1907fe8a04c14328b41c344487e1e938f7c2f6900de3c"
+    },
+    {
+      "slug": "code-ord-salesordercontroller-85f8323d",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 各開一份只會讓兩邊慢慢長出不同的代碼",
+      "text": "貿易條件的適用範圍說明｜此系統使用的貿易條件代碼與採購單所用的代碼類別相同，因此同一組貿易條件可以在兩個地方通用。",
+      "approved": true,
+      "sourceSectionHash": "18c40d4148991582483f5d16ce9d7a39343b6e779e03a253c243c01d909f1f19"
+    },
+    {
+      "slug": "code-ord-salesordercontroller-9feb7889",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 基準值必須由伺服端算出",
+      "text": "出貨數量需依系統計算｜出貨的庫存數量和單位，需要依照庫存的基準單位進行比對，此數值是系統在後台運算出來的。",
+      "approved": false,
+      "sourceSectionHash": "a2e89ddc1bb2a4690ad6380d26bcbea76724235ec24b302ccbb6cb26c57fb109"
+    },
+    {
+      "slug": "code-ord-salesordercontroller-4678da0c",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 無簽核流程／自動跳簽時，送審即終局核准 → 同樣要自動展開",
+      "text": "送審即終局核准的流程自動展開｜當系統在無簽核或自動跳簽的情況下進行送審時，該動作會直接視為最終的核准，因此相關的資料也會同步完成展開。",
+      "approved": true,
+      "sourceSectionHash": "146ab4c09b14816b4eb5e48ab87268f5cf366212ffd47f4cb4e6f1abc50a60ac"
+    },
+    {
+      "slug": "code-ord-salesordercontroller-29e793d1",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 展開的生產批/工單失去需求來源",
+      "text": "無法刪除包含 MRP 執行單的訂單｜如果刪除了這類訂單，會導致相關的需求資訊沒有來源。",
+      "approved": true,
+      "sourceSectionHash": "52980f6592371b52eddc7ac05585d04bb02ccd618f4d1e292222e5b7c60c25c9"
+    }
+  ]
+}

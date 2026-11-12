@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="UserSettings" xml:space="preserve">
+    <value>User Settings</value>
+  </data>
+  <data name="SwitchActiveRole" xml:space="preserve">
+    <value>Switch Active Role</value>
+  </data>
+  <data name="SwitchRoleDescription" xml:space="preserve">
+    <value>Please select your current role. System permissions and organizational views will change accordingly.</value>
+  </data>
+  <data name="SystemRole" xml:space="preserve">
+    <value>System Role</value>
+  </data>
+  <data name="InUse" xml:space="preserve">
+    <value>In Use</value>
+  </data>
+  <data name="SwitchToThis" xml:space="preserve">
+    <value>Switch to This</value>
+  </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>Account Information</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="ActivePlant" xml:space="preserve">
+    <value>Active Plant</value>
+  </data>
+  <data name="SwitchActivePlant" xml:space="preserve">
+    <value>Switch Active Plant</value>
+  </data>
+  <data name="SwitchPlantDescription" xml:space="preserve">
+    <value>Select the plant you want to operate. Data will be filtered by the selected plant.</value>
+  </data>
+  <data name="SwitchToThisPlant" xml:space="preserve">
+    <value>Switch to This Plant</value>
+  </data>
+  <data name="RolePlantRestrictionNotice" xml:space="preserve">
+    <value>The current role has plant restrictions. Only allowed plants are shown.</value>
+  </data>
+  <data name="PersonalTimeZone" xml:space="preserve">
+    <value>Personal Time Zone</value>
+  </data>
+  <data name="PersonalTimeZoneDescription" xml:space="preserve">
+    <value>Set your personal time zone. It applies only when your current plant has no time zone of its own — the plant time zone always wins. If unset, the plant time zone is used; if that is unset too, the system default (Asia/Taipei) applies.</value>
+  </data>
+  <data name="EffectiveTimeZone" xml:space="preserve">
+    <value>Time zone in effect</value>
+  </data>
+  <data name="TimeZoneSourcePlant" xml:space="preserve">
+    <value>from plant setting</value>
+  </data>
+  <data name="TimeZoneSourcePersonal" xml:space="preserve">
+    <value>from personal setting</value>
+  </data>
+  <data name="TimeZoneSourceFallback" xml:space="preserve">
+    <value>system default</value>
+  </data>
+  <data name="PersonalTimeZoneOverridden" xml:space="preserve">
+    <value>Your current plant specifies a time zone ({0}), so your personal setting is not in effect right now. It will apply once you switch to a plant that has none.</value>
+  </data>
+  <data name="FollowPlantTimeZone" xml:space="preserve">
+    <value>Follow plant time zone</value>
+  </data>
+  <data name="SaveTimeZone" xml:space="preserve">
+    <value>Save time zone</value>
+  </data>
+  <data name="TimeZoneSaved" xml:space="preserve">
+    <value>Your personal time zone has been saved.</value>
+  </data>
+  <data name="TimeZoneInvalid" xml:space="preserve">
+    <value>That time zone identifier could not be resolved; nothing was saved. Please pick one from the list.</value>
+  </data>
+</root>

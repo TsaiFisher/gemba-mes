@@ -1,0 +1,46 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/MrpRunController.cs",
+  "sourceHash": "7c6634f4b53bc9baf6ba13916359e0f0bf81808e7f313023b3c5e0a3f681a5cc",
+  "entries": [
+    {
+      "slug": "code-mfg-mrpruncontroller-6487e9a5",
+      "lang": "zh",
+      "headingPath": "生產製造 › 呼叫  展開為生產批/工單/派工，並回呈展開結果",
+      "text": "執行單的修改限制與重跑規則｜已經執行過的生產需求無法再進行編輯；若要重新處理，必須先清除前次未投產的展開結果，且如果工單已經投入生產流程，則無法再次執行。",
+      "approved": true,
+      "sourceSectionHash": "4761a46c0a7b2142c519f572ca8039c30bb2cf17b979a7f05a98ec554fa99971"
+    },
+    {
+      "slug": "code-mfg-mrpruncontroller-cb4b0757",
+      "lang": "zh",
+      "headingPath": "生產製造 › 重跑前置可行性評估：唯讀回傳可執行等級與逐項理由，供畫面在",
+      "text": "重跑前先看可行性等級｜按下重跑之前，系統會先做一次唯讀評估、不異動任何資料，並回報三種等級：L1 表示下游還沒有任何單據消化，重跑可以完全收斂；L2 表示可以重跑，但有些下游單據不會被自動收斂、需要人工處理，系統會逐項列出是哪幾張；L3 表示已經產生實體或財務足跡、或被其他單據引用，重跑會被直接擋下並說明原因。",
+      "approved": true,
+      "sourceSectionHash": "5a83251b16cfca17d03a6ecb340d53a8515727258be375a2ecca10bcdad9433b"
+    },
+    {
+      "slug": "code-mfg-mrpruncontroller-faf50900",
+      "lang": "zh",
+      "headingPath": "生產製造 › 不連鎖作廢下游單據",
+      "text": "無法重跑已展開的MRP執行單｜當下游已經有實體足跡時，系統不會再維護這次的展開作業，而是將其作廢，讓未投產的生產批或工單的需求可以回到可匯入清單供新的單據接手。",
+      "approved": true,
+      "sourceSectionHash": "37f6cdaffc9acc810d27d52fcd950076245ff7f6411496125b68e69adf5b53dd"
+    },
+    {
+      "slug": "code-mfg-mrpruncontroller-487a4c55",
+      "lang": "zh",
+      "headingPath": "生產製造 › 唯一鍵/外鍵衝突轉在地化友善訊息，其餘取最內層例外訊息呈現",
+      "text": "資料庫錯誤的顯示規則｜當發生資料庫儲存變更時出錯，系統會將唯一鍵或外鍵衝突的錯誤，轉換成使用者能理解的在地化友善訊息來呈現；其他類型的資料庫錯誤則會顯示最內層的例外訊息。",
+      "approved": true,
+      "sourceSectionHash": "528bead6d190448635c8826d9069fd0c2a29f71125184ab7eba6c46139a0726c"
+    },
+    {
+      "slug": "code-mfg-mrpruncontroller-d4e0dfac",
+      "lang": "zh",
+      "headingPath": "生產製造 › 可匯入的未結案訂單明細，附**淨需求剩餘量**",
+      "text": "匯入明細的剩餘需求量計算規則｜系統會計算一個「淨需求剩餘量」，這個數值是原始訂單數量減去所有已經執行生產批次所需要的數量，並且只會回傳剩餘量大於零的明細。",
+      "approved": true,
+      "sourceSectionHash": "0df1812eb2e9e8582ece2a553994662e35246d1cc15597198869e1389a155fa5"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>手冊問答</value></data>
+  <data name="HelpText" xml:space="preserve"><value>兩種來源可問：使用手冊（哪個畫面、怎麼操作）與已核可的規則說明（規則是什麼、為什麼）。答案只根據這兩者產生，兩邊都沒寫的一律回覆查無——請務必點開下方來源自行查證。本助理不會查詢你的實際資料（庫存數量、單據金額等），也不會記住你問過什麼。</value></data>
+  <data name="QuestionPlaceholder" xml:space="preserve"><value>例如：要抓出很久沒有進出的料，該看哪個畫面？</value></data>
+  <data name="Send" xml:space="preserve"><value>送出</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="LatencyNote" xml:space="preserve"><value>本機推論，一題約需一分鐘；等待期間可隨時取消。</value></data>
+  <data name="EmptyPrompt" xml:space="preserve"><value>輸入問題後按「送出」</value></data>
+  <data name="You" xml:space="preserve"><value>我</value></data>
+  <data name="Assistant" xml:space="preserve"><value>助理</value></data>
+  <data name="Thinking" xml:space="preserve"><value>思考中…</value></data>
+  <data name="Cancelled" xml:space="preserve"><value>已取消。</value></data>
+  <data name="RequestFailed" xml:space="preserve"><value>發生錯誤，請稍後再試。</value></data>
+  <data name="Sources" xml:space="preserve"><value>來源</value></data>
+  <data name="UnverifiableCitation" xml:space="preserve"><value>（模型引用了本次未提供的頁碼，無從查證，請勿採信這一段）</value></data>
+  <data name="ElapsedFmt" xml:space="preserve"><value>{0} 秒</value></data>
+  <data name="StageSearch" xml:space="preserve"><value>檢索參考資料…</value></data>
+  <data name="StageInferFmt" xml:space="preserve"><value>模型讀取中（{0} 段參考資料 · 約 {1} 字）…</value></data>
+  <data name="NotReady" xml:space="preserve"><value>推論服務尚未就緒，目前無法回答問題。</value></data>
+  <data name="RebuildIndex" xml:space="preserve"><value>重建索引</value></data>
+  <data name="ConfirmRebuild" xml:space="preserve"><value>確定要重建索引嗎？重建期間會佔用推論資源，所有人的提問都會變慢，且可能需要數分鐘。</value></data>
+  <data name="Rebuilding" xml:space="preserve"><value>重建中…</value></data>
+  <data name="StreamIncomplete" xml:space="preserve"><value>回答在傳輸中途中斷，請重試。</value></data>
+  <data name="Mode" xml:space="preserve"><value>提問模式</value></data>
+  <data name="ModeManual" xml:space="preserve"><value>手冊問答</value></data>
+  <data name="ModeData" xml:space="preserve"><value>資料查詢</value></data>
+  <data name="ModeManualHint" xml:space="preserve"><value>回答系統的操作方式與規則，答案附上手冊出處。</value></data>
+  <data name="ModeDataHint" xml:space="preserve"><value>查詢營運資料並產生表格。只查得到您本來就有權限開啟的報表，且查詢條件會一併顯示供核對。</value></data>
+  <data name="ConfirmRun" xml:space="preserve"><value>確認並執行</value></data>
+  <data name="ConfirmDiscard" xml:space="preserve"><value>取消這次查詢</value></data>
+  <data name="ConfirmChooseTool" xml:space="preserve"><value>要執行哪一個查詢？</value></data>
+  <data name="ConfirmUnset" xml:space="preserve"><value>（不指定）</value></data>
+  <data name="ConfirmPending" xml:space="preserve"><value>執行前請先確認</value></data>
+  <data name="SaveQuery" xml:space="preserve"><value>儲存此查詢</value></data>
+  <data name="SaveQueryPlaceholder" xml:space="preserve"><value>例如：上月呆滯料</value></data>
+  <data name="QueryParams" xml:space="preserve"><value>查詢條件</value></data>
+  <data name="NoRows" xml:space="preserve"><value>查無符合條件的資料。</value></data>
+  <data name="RowsFmt" xml:space="preserve"><value>共 {0} 筆</value></data>
+  <data name="TruncatedFmt" xml:space="preserve"><value>顯示前 {0} 筆，共 {1} 筆（完整資料請開啟對應報表畫面）</value></data>
+</root>

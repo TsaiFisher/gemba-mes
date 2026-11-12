@@ -1,0 +1,80 @@
+@*
+    _PrintDocument.cshtml — 共用列印版型（2026-10-27）。內容由 Controller 組成 PrintDocument 傳入，
+    文字皆已依語系取好；本檔只負責版面（與各 Print.cshtml 相同的 print-* class）。
+    用法：return View("~/Views/Shared/_PrintDocument.cshtml", doc);（ViewBag.QrSvg 由 PreparePrintViewBagAsync 準備）
+*@
+@model SmartFactory.MES.Modules._Shared.Printing.PrintDocument
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@{
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div class="print-title-block">
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Model.Title</div>
+        <div class="print-doc-number">
+            @L["Print_DocNo"]：@Model.DocNo
+            @if (!string.IsNullOrEmpty(Model.DateLabel) && !string.IsNullOrEmpty(Model.DateValue))
+            {
+                <text> ／ @Model.DateLabel：@Model.DateValue</text>
+            }
+        </div>
+    </div>
+</div>
+
+@if (Model.Fields.Count > 0)
+{
+    <div class="print-section">
+        <div class="print-section-title">@L["Print_BasicInfo"]</div>
+        <div class="print-field-grid">
+            @foreach (var f in Model.Fields)
+            {
+                <div class="print-field-label">@f.Label</div>
+                <div class="print-field-value">@f.Value</div>
+            }
+        </div>
+    </div>
+}
+
+@foreach (var t in Model.Tables)
+{
+    <div class="print-section">
+        <div class="print-section-title">@(string.IsNullOrEmpty(t.Title) ? L["Print_Details"].Value : t.Title)</div>
+        <table class="print-table">
+            <thead>
+                <tr>
+                    @foreach (var c in t.Columns)
+                    {
+                        <th>@c</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in t.Rows)
+                {
+                    <tr>
+                        @for (var i = 0; i < t.Columns.Count; i++)
+                        {
+                            <td class="@(t.NumericColumns.Contains(i) ? "text-end" : null)">@(i < r.Length ? r[i] : "")</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@if (Model.Totals.Count > 0)
+{
+    <div class="print-section text-end">
+        @foreach (var line in Model.Totals)
+        {
+            <div><strong>@line</strong></div>
+        }
+    </div>
+}
+
+@await Html.PartialAsync("_PrintBase")

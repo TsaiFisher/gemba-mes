@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Services/PermissionGate.cs",
+  "sourceHash": "02ab8f212e9f14e523ae10e4100525b65aeff39d7fc1e5357a18e71c8ee0dfe3",
+  "entries": [
+    {
+      "slug": "code-core-permissiongate-59c4ebc5",
+      "lang": "zh",
+      "headingPath": "系統共用 › 標記「本端點刻意不做權限閘門」，並強制寫下理由",
+      "text": "權限檢查豁免的適用條件說明｜此功能僅在回傳的內容完全不隨角色而異且不包含業務資料時，或是查詢範圍已經被登入者自身鎖定時才適用。若改變角色後預期會看到不同結果，則不能使用此標記。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-permissiongate-6be988a8",
+      "lang": "zh",
+      "headingPath": "系統共用 › 任一  可讀即放行",
+      "text": "可讀權限判斷規則說明｜此查詢端點允許任何有權限的角色存取，因為它會被多個不同的畫面共用。系統必須列出所有可以呼叫此功能的畫面鍵作為白名單，如果角色不在這個名單上，仍然會被禁止存取。",
+      "approved": true
+    }
+  ]
+}

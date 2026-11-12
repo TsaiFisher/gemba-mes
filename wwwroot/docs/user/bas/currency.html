@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Currency Master — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>幣別主檔 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="currency.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link active"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-currency-exchange me-2 text-primary"></i><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/Currency &nbsp;|&nbsp; 幣別定義與每日匯率維護</span><span lang="en">Route: /BAS/Currency &nbsp;|&nbsp; Currency definitions and daily exchange rates</span></div>
+    </div>
+
+    <p><span lang="zh">幣別主檔定義系統中使用的各幣別代碼，並維護每日買入/賣出匯率。採購單、銷售訂單的外幣金額換算均依此匯率計算。</span><span lang="en">The currency master defines the currency codes used in the system and holds the daily buy and sell rates. Foreign-currency amounts on purchase orders and sales orders are converted with these rates.</span></p>
+    <img class="screen-shot" src="img/currency.png" data-src-en="img/en/currency.png" alt="幣別畫面截圖" data-alt-en="Currency screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">幣別畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Currency screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <strong><span lang="zh">匯率方向：</span><span lang="en">Exchange rate direction:</span></strong><span lang="zh">本系統匯率方向為</span><span lang="en"> The exchange rate direction of this system is </span><strong><span lang="zh">本位幣 ÷ 外幣</span><span lang="en">local currency ÷ foreign currency</span></strong><span lang="zh">（乘法換算）。</span><span lang="en"> (multiply to convert).</span><br>
+      <span lang="zh">例：1 USD = 32.5 TWD，則 USD 的買入匯率填 32.5，本位幣金額 = 外幣金額 × 匯率。</span><span lang="en">Example: 1 USD = 32.5 TWD, so enter 32.5 as the buy rate for USD; local amount = foreign amount × rate.</span>
+    </div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">幣別代碼</span><span lang="en">Currency Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">3 碼 ISO 幣別代碼（例：TWD、USD、EUR）</span><span lang="en">3-letter ISO currency code (e.g. TWD, USD, EUR)</span></td></tr>
+        <tr><td><span lang="zh">幣別名稱</span><span lang="en">Currency Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">完整名稱（例：新台幣、美元）</span><span lang="en">Full name (e.g. New Taiwan Dollar, US Dollar)</span></td></tr>
+        <tr><td><span lang="zh">小數位數</span><span lang="en">Decimal Places</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">金額允許的小數位數，建議依各幣別國際慣例設定（TWD=0、USD=2）</span><span lang="en">Decimal places allowed for amounts; follow the international convention of each currency (TWD = 0, USD = 2)</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後無法在新單據中選取該幣別</span><span lang="en">Once inactive, this currency cannot be selected on new documents</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="maintaining-exchange-rates"><i class="bi bi-graph-up me-2 text-primary"></i><span lang="zh">匯率維護</span><span lang="en">Maintaining exchange rates</span></h2>
+    <p><span lang="zh">編輯幣別後，切換至「匯率」分頁可查看及新增每日匯率記錄。</span><span lang="en">After opening a currency, switch to the "Exchange Rate" tab to view and add daily rates.</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">日期</span><span lang="en">Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">匯率適用日期（格式：YYYY-MM-DD）</span><span lang="en">Date the rate applies to (format: YYYY-MM-DD)</span></td></tr>
+        <tr><td><span lang="zh">買入匯率</span><span lang="en">Buy Rate</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">本位幣購入外幣的匯率（本位幣/外幣）</span><span lang="en">Rate for buying foreign currency with local currency (local/foreign)</span></td></tr>
+        <tr><td><span lang="zh">賣出匯率</span><span lang="en">Sell Rate</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">本位幣賣出換取外幣的匯率</span><span lang="en">Rate for selling local currency to obtain foreign currency</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">新增每日匯率步驟</span><span lang="en">Adding a daily rate</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在幣別列表中點擊要維護的幣別，開啟編輯側欄。</span><span lang="en">Click the currency you want to maintain in the list to open the edit panel.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">切換至「匯率」分頁，點擊「新增匯率」。</span><span lang="en">Switch to the "Exchange Rate" tab and click "Add Rate".</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">輸入日期、買入匯率、賣出匯率後，點「儲存」。</span><span lang="en">Enter the date, buy rate and sell rate, then click "Save".</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">點擊匯率列右側「刪除」可移除該日匯率。</span><span lang="en">Click "Delete" at the right of a rate row to remove that day's rate.</span></div></div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">新增幣別</span><span lang="en">Add Currency</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進入「基本資料 &gt; 幣別主檔」，點「新增」。</span><span lang="en">Go to "Basic Data &gt; Currency Master" and click "Add".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">填入幣別代碼、名稱、小數位數後點「儲存」。</span><span lang="en">Enter the currency code, name and decimal places, then click "Save".</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">儲存後在列表找到新幣別，點擊開啟並切換至「匯率」分頁維護匯率。</span><span lang="en">After saving, find the new currency in the list, open it and switch to the "Exchange Rate" tab to maintain rates.</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">本位幣（TWD）無需設定匯率，其他外幣需至少設定一筆匯率才能在採購/銷售單中帶入換算金額。若當日無匯率，系統會自動使用最近一筆有效匯率。</span><span lang="en">The local currency (TWD) needs no rate; every other currency needs at least one rate before converted amounts appear on purchase and sales documents. If there is no rate for the day, the system uses the most recent valid rate.</span>
+    </div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">小數位數設定後，若已有採購/銷售交易資料則不建議修改，可能影響金額顯示精度。</span><span lang="en"> Changing the decimal places is not recommended once purchase or sales transactions exist, as it may affect the display precision of amounts.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

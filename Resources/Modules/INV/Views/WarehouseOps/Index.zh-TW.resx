@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>倉庫作業</value></data>
+  <data name="InboundTab" xml:space="preserve"><value>入庫上架</value></data>
+  <data name="OutboundTab" xml:space="preserve"><value>出庫下架</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>單號或品號關鍵字</value></data>
+  <data name="Refresh" xml:space="preserve"><value>重新載入</value></data>
+  <data name="PendingList" xml:space="preserve"><value>待處理清單</value></data>
+  <data name="PutAwayForm" xml:space="preserve"><value>上架作業</value></data>
+  <data name="PickForm" xml:space="preserve"><value>下架作業</value></data>
+  <data name="DocNo" xml:space="preserve"><value>單號</value></data>
+  <data name="LineNo" xml:space="preserve"><value>行號</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>儲位</value></data>
+  <data name="WhCode" xml:space="preserve"><value>倉庫</value></data>
+  <data name="LotNo" xml:space="preserve"><value>批號</value></data>
+  <data name="Qty" xml:space="preserve"><value>數量</value></data>
+  <data name="Pending" xml:space="preserve"><value>待處理量</value></data>
+  <data name="AvailableStock" xml:space="preserve"><value>儲位庫存</value></data>
+  <data name="Available" xml:space="preserve"><value>在手量</value></data>
+  <data name="PickQty" xml:space="preserve"><value>下架量</value></data>
+  <data name="Total" xml:space="preserve"><value>合計</value></data>
+  <data name="ConfirmPutAway" xml:space="preserve"><value>確定上架</value></data>
+  <data name="ConfirmPick" xml:space="preserve"><value>確定下架</value></data>
+  <data name="NoData" xml:space="preserve"><value>無待處理項目</value></data>
+  <data name="NoStock" xml:space="preserve"><value>此品號無可用庫存</value></data>
+  <data name="SelectDoc" xml:space="preserve"><value>請先選取待處理單據</value></data>
+  <data name="InvalidLocation" xml:space="preserve"><value>儲位不存在</value></data>
+  <data name="LoadFailed" xml:space="preserve"><value>載入失敗</value></data>
+  <data name="PutAwayDone" xml:space="preserve"><value>上架完成</value></data>
+  <data name="PutAwayFailed" xml:space="preserve"><value>上架失敗</value></data>
+  <data name="PickDone" xml:space="preserve"><value>下架完成</value></data>
+  <data name="PickFailed" xml:space="preserve"><value>下架失敗</value></data>
+  <data name="PickQtyRequired" xml:space="preserve"><value>請輸入下架數量</value></data>
+  <data name="ScanBoxPlaceholder" xml:space="preserve"><value>掃箱號：整箱出庫，自動填入該箱的數量</value></data>
+  <data name="BoxNotFound" xml:space="preserve"><value>{0} 不是裝著貨的箱子</value></data>
+  <data name="BoxOtherProduct" xml:space="preserve"><value>箱號 {0} 裝的是品號 {1}，不是這一行的品號</value></data>
+  <data name="BoxNoAvailable" xml:space="preserve"><value>箱號 {0} 的批號 {1} 沒有可用量</value></data>
+  <data name="PutAwayBox" xml:space="preserve"><value>裝入箱號</value></data>
+  <data name="PutAwayBoxPlaceholder" xml:space="preserve"><value>選填：掃空箱，這次上架的量放進這一箱（批號留空由系統產生）</value></data>
+</root>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <data name="PageTitle"><value>Schedule Query</value></data>
+  <data name="WorkCenter"><value>Work Center</value></data>
+  <data name="MachineCode"><value>Machine</value></data>
+  <data name="WorkOrderId"><value>Work Order</value></data>
+  <data name="BatchId"><value>Batch</value></data>
+  <data name="SalesOrderId"><value>Sales Order</value></data>
+  <data name="Status"><value>Status</value></data>
+  <data name="SchedFrom"><value>Sched. Start From</value></data>
+  <data name="SchedTo"><value>Sched. Start To</value></data>
+  <data name="Search"><value>Search</value></data>
+  <data name="Clear"><value>Clear</value></data>
+  <data name="All"><value>All</value></data>
+  <data name="ProductCode"><value>Product Code</value></data>
+  <data name="Operation"><value>Operation</value></data>
+  <data name="ScheduledStart"><value>Sched. Start</value></data>
+  <data name="ScheduledEnd"><value>Sched. End</value></data>
+  <data name="Flags"><value>Flags</value></data>
+  <data name="NoData"><value>No dispatches found</value></data>
+  <data name="DetailsTitle"><value>Dispatch Details</value></data>
+  <data name="NotFound"><value>Dispatch record not found</value></data>
+  <data name="LoadFailed"><value>Load failed, please retry</value></data>
+  <data name="FlagLate"><value>Predicted Late</value></data>
+  <data name="FlagMatRisk"><value>Material Risk</value></data>
+  <data name="StatusPending"><value>Pending</value></data>
+  <data name="StatusScheduled"><value>Scheduled</value></data>
+  <data name="StatusSetupInProgress"><value>Setup In Progress</value></data>
+  <data name="StatusReadyToStart"><value>Ready to Start</value></data>
+  <data name="StatusInProgress"><value>In Progress</value></data>
+  <data name="StatusClosed"><value>Closed</value></data>
+  <data name="StatusOnHold"><value>On Hold</value></data>
+  <data name="StatusPendingFPI"><value>Pending FPI</value></data>
+  <data name="StatusCancelled" xml:space="preserve"><value>Cancelled</value></data>
+</root>

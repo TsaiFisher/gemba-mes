@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/PUR/Controllers/GoodsReturnController.cs",
+  "sourceHash": "f82384c7d1b799f7793c3f681f44f3d7b95e5346e84ed0a0442a204bf5dcd663",
+  "entries": [
+    {
+      "slug": "code-pur-goodsreturncontroller-c7ad7ceb",
+      "lang": "zh",
+      "headingPath": "採購 › 進貨退出「完成」後置：以退貨量負向回沖來源進貨單的應付發票",
+      "text": "應付發票回沖規則說明｜系統只會處理那些有連結到來源進貨明細的退貨項目；計算回傳的金額是尚未被回沖掉的總額，這個金額包含本位幣和稅金。",
+      "approved": true,
+      "sourceSectionHash": "3597eb6a1fde4ed7b532910b48d3b84b1c3f4535abc1fffb17b5138a1db293dd"
+    },
+    {
+      "slug": "code-pur-goodsreturncontroller-1ddbb32e",
+      "lang": "zh",
+      "headingPath": "採購 › 簡化模式：完成即過帳、貨已退出正常倉 → 就地負向回沖來源進貨單",
+      "text": "採購過帳規則說明｜當使用簡化模式完成過帳時，系統會直接進行負向回沖來源進貨單的應付處理；若採用完整模式，則會在貨物實際下架時才執行此回沖動作。",
+      "approved": true,
+      "sourceSectionHash": "078bb4c0feeafa9ab2100bf68669c1218f5c5249b3527988587d285bb230682f"
+    }
+  ]
+}

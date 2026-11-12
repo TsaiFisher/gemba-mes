@@ -1,0 +1,569 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@using SmartFactory.MES.Modules.INV.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.INV.ViewModels.CrossPlantTransferFormVm
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isNew      = string.IsNullOrEmpty(Model?.CrossPlantTransferId);
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    string myPlantId = ViewBag.CurrentPlantId as string ?? "";
+    bool isSourcePlant = isNew || Model?.SourcePlantId == myPlantId;
+    bool isDestPlant   = !isNew && Model?.ToPlantId == myPlantId;
+
+    var products      = ViewBag.ProductOptions        as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uoms          = ViewBag.UomOptions            as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var srcWarehouses = ViewBag.SourceWarehouseOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var dstWarehouses = ViewBag.DestWarehouseOptions   as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var srcLocations  = ViewBag.SourceLocationOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var dstLocations  = ViewBag.DestLocationOptions    as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var plants        = ViewBag.PlantOptions           as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals   = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+}
+
+<form id="xpForm" asp-action="Save" asp-controller="CrossPlantTransfer" method="post"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="CrossPlantTransferId" />
+    <input type="hidden" asp-for="CreatedBy" />
+    <input type="hidden" asp-for="ApprovalStatus" />
+    <input type="hidden" asp-for="SourcePlantId" />
+
+    <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+    <div class="p-3">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+        <div class="row g-3 mb-3">
+            @if (!isNew)
+            {
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold">@Localizer["CrossPlantTransferId"]</label>
+                    <div class="form-control-plaintext fw-bold text-primary">@Model!.CrossPlantTransferId</div>
+                </div>
+            }
+            <div class="col-12 col-md-3">
+                <label asp-for="TransferDate" class="form-label fw-semibold">@Localizer["TransferDate"]</label>
+                <input asp-for="TransferDate" type="date" class="form-control" />
+                <span asp-validation-for="TransferDate" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="ToPlantId" class="form-label fw-semibold">@Localizer["DestPlant"]</label>
+                @if (isNew || (isSourcePlant && Model!.Status == DocStatus.Draft))
+                {
+                    <select asp-for="ToPlantId" class="form-select" id="toPlantSelect" data-action-change="onToPlantChange">
+                        <option value="">--</option>
+                        @foreach (var p in plants)
+                        {
+                            if ((string)p.Id != myPlantId)
+                            {
+                                <option value="@p.Id" selected="@(Model?.ToPlantId == (string)p.Id)">@p.Id — @p.Name</option>
+                            }
+                        }
+                    </select>
+                }
+                else
+                {
+                    <div class="form-control-plaintext">@Model!.ToPlantId</div>
+                    <input type="hidden" asp-for="ToPlantId" />
+                }
+                <span asp-validation-for="ToPlantId" class="text-danger small"></span>
+            </div>
+            <div class="col-6 col-md-2">
+                <label asp-for="FromWhCode" class="form-label fw-semibold">@Localizer["FromWhCode"]</label>
+                <span asp-validation-for="FromWhCode" class="text-danger small"></span>
+                <select asp-for="FromWhCode" class="form-select" id="hdrFromWh">
+                    <option value="">--</option>
+                    @foreach (var w in srcWarehouses)
+                    {
+                        <option value="@w.WhCode" selected="@(Model?.FromWhCode == (string)w.WhCode)">@w.WhCode</option>
+                    }
+                </select>
+                <div class="form-text small">@Localizer["DefaultWhHint"]</div>
+            </div>
+            <div class="col-6 col-md-2">
+                <label asp-for="ToWhCode" class="form-label fw-semibold">@Localizer["ToWhCode"]</label>
+                <span asp-validation-for="ToWhCode" class="text-danger small"></span>
+                <select asp-for="ToWhCode" class="form-select" id="hdrToWh">
+                    <option value="">--</option>
+                    @foreach (var w in dstWarehouses)
+                    {
+                        <option value="@w.WhCode" selected="@(Model?.ToWhCode == (string)w.WhCode)">@w.WhCode</option>
+                    }
+                </select>
+                <div class="form-text small">@Localizer["DefaultWhHint"]</div>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="Remarks" class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+                <input asp-for="Remarks" class="form-control" maxlength="500" />
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0"><i class="bi bi-list-ul me-1"></i>@Localizer["LinesTitle"]</h6>
+            @if (!isReadOnly && isSourcePlant)
+            {
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-action="addLine">
+                    <i class="bi bi-plus-lg"></i> @Localizer["AddLine"]
+                </button>
+            }
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered" id="linesTable">
+                <thead class="table-light">
+                    <tr>
+                        <th class="u-width-30px">#</th>
+                        <th class="u-min-width-240px">@Localizer["ProductCode"]</th>
+                        <th class="text-end u-col-num">@Localizer["Qty"]</th>
+                        <th class="u-col-tiny">@Localizer["UomCode"]</th>
+                        <th class="u-col-code">@Localizer["FromWhCode"]</th>
+                        <th class="u-col-code">@Localizer["FromLocationCode"]</th>
+                        <th class="u-col-code">@Localizer["LotNo"]</th>
+                        <th class="u-col-code">@Localizer["ToWhCode"]</th>
+                        <th class="u-col-code">@Localizer["ToLocationCode"]</th>
+                        <th class="text-end u-col-num">@Localizer["QtyShipped"]</th>
+                        <th class="text-end u-col-num">@Localizer["QtyReceived"]</th>
+                        <th class="u-col-soft">@Localizer["Remarks"]</th>
+                        @if (!isReadOnly && isSourcePlant) { <th class="u-width-30px"></th> }
+                    </tr>
+                </thead>
+                <tbody id="linesTbody">
+                    @for (int i = 0; i < (Model?.Lines.Count ?? 0); i++)
+                    {
+                        var line = Model!.Lines[i];
+                        var srcLocFiltered = string.IsNullOrEmpty(line.FromWhCode)
+                            ? srcLocations
+                            : srcLocations.Where(l => (string)l.WhCode == line.FromWhCode);
+                        var dstLocFiltered = string.IsNullOrEmpty(line.ToWhCode)
+                            ? dstLocations
+                            : dstLocations.Where(l => (string)l.WhCode == line.ToWhCode);
+                        <tr>
+                            <td class="text-center text-muted small">@(i+1)</td>
+                            <td>
+                                <input type="hidden" name="Lines[@i].LineNo" value="@line.LineNo" />
+                                <select name="Lines[@i].ProductCode" class="form-select form-select-sm select2-enable product-select" required data-action-change="onProductChange">
+                                    <option value="">-- @Localizer["SelectProduct"] --</option>
+                                    @foreach (var p in products)
+                                    {
+                                        <option value="@p.ProductCode" selected="@(line.ProductCode == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <input name="Lines[@i].Qty" value="@line.Qty" type="number"
+                                       step="@UomStepHelper.GetStep(uomDecimals, line.UomCode)"
+                                       min="@UomStepHelper.GetMinPositive(uomDecimals, line.UomCode)"
+                                       class="form-control form-control-sm text-end line-qty u-width-90px" />
+                            </td>
+                            <td>
+                                <select name="Lines[@i].UomCode" class="form-select form-select-sm line-uom u-width-80px" data-action-change="onUomChange">
+                                    @foreach (var u in uoms) { <option value="@u.UomCode" selected="@(line.UomCode == (string)u.UomCode)">@u.UomCode</option> }
+                                </select>
+                            </td>
+                            <td>
+                                <select name="Lines[@i].FromWhCode" class="form-select form-select-sm line-from-wh u-width-90px" data-action-change="onSrcWhChange">
+                                    <option value=""></option>
+                                    @foreach (var w in srcWarehouses) { <option value="@w.WhCode" selected="@(line.FromWhCode == (string)w.WhCode)">@w.WhCode</option> }
+                                </select>
+                            </td>
+                            <td>
+                                <div class="input-group input-group-sm u-width-150px">
+                                    <select name="Lines[@i].FromLocationCode" class="form-select form-select-sm line-from-loc">
+                                        <option value=""></option>
+                                        @foreach (var loc in srcLocFiltered) {
+                                            <option value="@loc.LocationCode" selected="@(line.FromLocationCode == (string)loc.LocationCode)">
+                                                @loc.LocationCode@((string?)loc.LocationName != null ? " — " + (string)loc.LocationName : "")
+                                            </option>
+                                        }
+                                    </select>
+                                    <button type="button" class="btn btn-outline-secondary btn-lookup-stock" data-action="lookupStock" data-wh-field="FromWhCode" data-loc-field="FromLocationCode" data-lot-field="LotNo" data-no-product-msg="@Localizer["SelectProductFirst"]" title="@Localizer["LookupStock"]" aria-label="@Localizer["LookupStock"]"><i class="bi bi-search"></i></button>
+                                </div>
+                            </td>
+                            <td><input name="Lines[@i].LotNo" value="@line.LotNo" maxlength="50" class="form-control form-control-sm u-width-130px line-lot" data-action-change="onLotChange" title="@Localizer["LotScanHint"]" /></td>
+                            <td>
+                                <select name="Lines[@i].ToWhCode" class="form-select form-select-sm line-to-wh u-width-90px" data-action-change="onDstWhChange">
+                                    <option value=""></option>
+                                    @foreach (var w in dstWarehouses) { <option value="@w.WhCode" selected="@(line.ToWhCode == (string)w.WhCode)">@w.WhCode</option> }
+                                </select>
+                            </td>
+                            <td>
+                                <select name="Lines[@i].ToLocationCode" class="form-select form-select-sm line-to-loc u-width-150px">
+                                    <option value=""></option>
+                                    @foreach (var loc in dstLocFiltered) {
+                                        <option value="@loc.LocationCode" selected="@(line.ToLocationCode == (string)loc.LocationCode)">
+                                            @loc.LocationCode@((string?)loc.LocationName != null ? " — " + (string)loc.LocationName : "")
+                                        </option>
+                                    }
+                                </select>
+                            </td>
+                            <td class="text-end text-muted small">@line.QtyShipped</td>
+                            <td class="text-end text-muted small">@line.QtyReceived</td>
+                            <td><input name="Lines[@i].Remarks" value="@line.Remarks" class="form-control form-control-sm" /></td>
+                            @if (!isReadOnly && isSourcePlant)
+                            {
+                                <td class="text-center">
+                                    @if (line.QtyShipped == 0)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        </div>
+    </div>
+    </fieldset>
+
+    @if (!isNew)
+    {
+        @await Component.InvokeAsync("ContainerUnitsLeft", new { docNo = Model!.CrossPlantTransferId })
+    }
+
+    <div class="position-sticky bottom-0 bg-white border-top px-3 py-2 d-flex justify-content-between align-items-center gap-2">
+        <div class="d-flex gap-2 align-items-center">
+            @if (!isNew)
+            {
+                <span class="badge @ApprovalBadge(Model!.ApprovalStatus)">@SL["ApprovalLabelPrefix"]@DocStatusLabels.Label(Model!.ApprovalStatus)</span>
+                <span class="badge @StatusBadge(Model!.Status)">@SL["DocLabelPrefix"]@DocStatusLabels.Label(Model!.Status)</span>
+                @if (Model!.Status == DocStatus.InTransit)
+                {
+                    <span class="badge bg-info text-dark"><i class="bi bi-truck me-1"></i>@Localizer["InTransitHint"]</span>
+                }
+            }
+        </div>
+        <div class="d-flex gap-2">
+            @if (!string.IsNullOrEmpty(Model?.CrossPlantTransferId) && (bool?)ViewBag.CanPrint == true)
+            {
+                <a asp-action="Print" asp-route-id="@Model!.CrossPlantTransferId" target="_blank"
+                   class="btn btn-outline-secondary">
+                    <i class="bi bi-printer"></i>
+                </a>
+            }
+            @if (isReadOnly)
+            {
+                @if (isSourcePlant && Model?.Status == DocStatus.Draft && Model?.ApprovalStatus == DocumentApprovalStatus.Approved)
+                {
+                    <button type="button" class="btn btn-success"
+                            data-action="docAction" data-doc-action="Confirm" data-id="@Model!.CrossPlantTransferId" data-msg="@Localizer["ConfirmConfirm"]">
+                        <i class="bi bi-box-arrow-right me-1"></i>@Localizer["Confirm"]
+                    </button>
+                }
+                @if (isSourcePlant && Model?.Status == DocStatus.InTransit)
+                {
+                    <button type="button" class="btn btn-outline-warning"
+                            data-action="docAction" data-doc-action="CancelConfirm" data-id="@Model!.CrossPlantTransferId" data-msg="@Localizer["ConfirmCancelConfirm"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["CancelConfirm"]
+                    </button>
+                }
+                @if (isDestPlant && Model?.Status == DocStatus.InTransit)
+                {
+                    <button type="button" class="btn btn-primary"
+                            data-action="docAction" data-doc-action="Receive" data-id="@Model!.CrossPlantTransferId" data-msg="@Localizer["ConfirmReceive"]">
+                        <i class="bi bi-box-arrow-in-left me-1"></i>@Localizer["Receive"]
+                    </button>
+                }
+                @if (Model?.Status == DocStatus.Posted)
+                {
+                    <button type="button" class="btn btn-outline-danger" data-action="voidDoc" data-id="@Model!.CrossPlantTransferId">
+                        <i class="bi bi-x-octagon me-1"></i>@Localizer["Void"]
+                    </button>
+                }
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+                @if (!isNew && isSourcePlant && (Model!.ApprovalStatus == DocumentApprovalStatus.Draft || Model.ApprovalStatus == DocumentApprovalStatus.Rejected))
+                {
+                    <button type="button" class="btn btn-outline-primary" data-action="docAction" data-doc-action="Submit" data-id="@Model!.CrossPlantTransferId" data-msg="@Localizer["ConfirmSubmit"]">
+                        <i class="bi bi-send me-1"></i>@Localizer["Submit"]
+                    </button>
+                }
+                @if (!isNew && isSourcePlant && Model!.ApprovalStatus == DocumentApprovalStatus.PendingApproval)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="Withdraw" data-id="@Model!.CrossPlantTransferId" data-msg="@Localizer["ConfirmWithdraw"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["Withdraw"]
+                    </button>
+                }
+                @if (isNew || (isSourcePlant && Model?.Status == DocStatus.Draft
+                     && Model?.ApprovalStatus != DocumentApprovalStatus.PendingApproval
+                     && Model?.ApprovalStatus != DocumentApprovalStatus.Approved))
+                {
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-floppy me-1"></i>@Localizer["Save"]
+                    </button>
+                }
+            }
+        </div>
+    </div>
+</form>
+
+@await Html.PartialAsync("_StockPickerModal")
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    window.uomDecimals = Object.assign(window.uomDecimals || {}, @Html.Raw(System.Text.Json.JsonSerializer.Serialize(uomDecimals ?? new Dictionary<string,int>())));
+    function onUomChange(e, sel) {
+        window.applyUomStep(sel.closest('tr').querySelector('.line-qty'), sel.value);
+    }
+
+    // 來源廠儲位資料
+    var allSrcLocations = [@foreach(var loc in srcLocations){
+@:{ wh: '@loc.WhCode', code: '@loc.LocationCode', name: '@((string?)loc.LocationName ?? "")' },
+}];
+
+    // 目的廠儲位資料（初始；AJAX 更新後替換）
+    var allDstLocations = [@foreach(var loc in dstLocations){
+@:{ wh: '@loc.WhCode', code: '@loc.LocationCode', name: '@((string?)loc.LocationName ?? "")' },
+}];
+
+    // 目的廠倉庫資料（初始；AJAX 更新後替換）
+    var allDstWarehouses = [@foreach(var w in dstWarehouses){
+@:{ code: '@w.WhCode', name: '@((string?)w.WhName ?? "")' },
+}];
+
+    // stockLocs（可選）＝ /api/warehouse/stock 回傳的可用量；帶入時有庫存的儲位排到最前面
+    // 並標註可用量。目的廠儲位不傳此參數——那是「要放到哪裡」，來源廠的庫存與它無關。
+    var stockQtyLabel = '@Localizer["StockQtyLabel"]';
+
+    function buildLocOptions(allLocs, selectedWh, selectedLoc, stockLocs) {
+        let list = selectedWh ? allLocs.filter(l => l.wh === selectedWh) : allLocs;
+        if (stockLocs && stockLocs.length > 0) {
+            const stockSet = new Set(stockLocs.map(s => s.locationCode));
+            list = [...list].sort((a, b) => {
+                const as = stockSet.has(a.code);
+                const bs = stockSet.has(b.code);
+                if (as && !bs) return -1;
+                if (!as && bs) return 1;
+                return a.code.localeCompare(b.code);
+            });
+        }
+        return '<option value=""></option>' + list.map(l => {
+            const stock = stockLocs ? stockLocs.find(s => s.locationCode === l.code) : null;
+            const stockText = stock ? ` (${stockQtyLabel}: ${stock.qtyAvailable})` : '';
+            return `<option value="${l.code}"${l.code === selectedLoc ? ' selected' : ''}>${l.code}${l.name ? ' — ' + l.name : ''}${stockText}</option>`;
+        }).join('');
+    }
+
+    function buildWhOptions(allWhs, selectedWh) {
+        return '<option value=""></option>' + allWhs.map(w =>
+            `<option value="${w.code}"${w.code === selectedWh ? ' selected' : ''}>${w.code}${w.name ? ' — ' + w.name : ''}</option>`
+        ).join('');
+    }
+
+    // ToPlantId 變更：AJAX 載入目的廠倉庫 + 儲位，並刷新 header ToWh 及所有明細的 ToWh/ToLoc
+    async function onToPlantChange(e, el) {
+        const plantId = el.value;
+        allDstWarehouses = [];
+        allDstLocations = [];
+        if (plantId) {
+            try {
+                const r = await fetch(`/CrossPlantTransfer/GetPlantOptions?plantId=${encodeURIComponent(plantId)}`);
+                if (r.ok) {
+                    const d = await r.json();
+                    allDstWarehouses = d.warehouses.map(w => ({ code: w.whCode, name: w.whName ?? '' }));
+                    allDstLocations  = d.locations.map(l => ({ wh: l.whCode, code: l.locationCode, name: l.locationName ?? '' }));
+                }
+            } catch (e) { console.error(e); }
+        }
+        // 更新 header ToWh
+        document.getElementById('hdrToWh').innerHTML = buildWhOptions(allDstWarehouses, '');
+        // 更新所有明細的 ToWh 和 ToLoc
+        document.querySelectorAll('#linesTbody tr').forEach(tr => {
+            const toWhSel  = tr.querySelector('.line-to-wh');
+            const toLocSel = tr.querySelector('.line-to-loc');
+            if (toWhSel)  toWhSel.innerHTML  = buildWhOptions(allDstWarehouses, '');
+            if (toLocSel) toLocSel.innerHTML = buildLocOptions(allDstLocations, '', '');
+        });
+    }
+
+    function onSrcWhChange(e, sel) {
+        const tr = sel.closest('tr');
+        const locSel = tr.querySelector('.line-from-loc');
+        if (locSel) locSel.innerHTML = buildLocOptions(allSrcLocations, sel.value, '', readRowStock(tr));
+    }
+
+    function onDstWhChange(e, sel) {
+        const tr = sel.closest('tr');
+        const locSel = tr.querySelector('.line-to-loc');
+        if (locSel) locSel.innerHTML = buildLocOptions(allDstLocations, sel.value, '');
+    }
+
+    var lineIdx = @(Model?.Lines.Count ?? 0);
+    var uomOptions = `@foreach(var u in uoms){
+@:<option value="@u.UomCode">@u.UomCode</option>
+}`;
+    var productOptions = `<option value="">-- @Localizer["SelectProduct"] --</option>@foreach(var p in products){
+@:<option value="@p.ProductCode">@p.ProductCode — @p.ProductName</option>
+}`;
+
+    async function onProductChange(e, inp) {
+        const code = inp.value;
+        if (!code) return;
+        const tr = inp.closest('tr');
+        try {
+            const resp = await fetch(`/api/warehouse/product-detail?productCode=${encodeURIComponent(code)}`);
+            if (resp.ok) {
+                const data = await resp.json();
+                const uomSel = tr.querySelector('.line-uom');
+                if (uomSel && data.stockUom) {
+                    uomSel.value = data.stockUom;
+                    window.applyUomStep(tr.querySelector('.line-qty'), data.stockUom);
+                }
+            }
+        } catch (e) { console.error(e); }
+    }
+
+    // 本列已抓到的來源廠庫存（onSrcWhChange 重建選項時要沿用，否則標註會消失）。
+    function readRowStock(tr) {
+        if (!tr || !tr.dataset.stock) return null;
+        try { return JSON.parse(tr.dataset.stock); } catch (e) { return null; }
+    }
+
+    // 以品號查來源廠各儲位可用量，重建來源儲位下拉（有庫存者排前並標註可用量）。
+    async function updateStockSuggestions(tr, productCode) {
+        try {
+            const resp = await fetch(`/api/warehouse/stock/${encodeURIComponent(productCode)}`);
+            if (!resp.ok) return;
+            const stockData = await resp.json();
+            tr.dataset.stock = JSON.stringify(stockData);
+            const whSel  = tr.querySelector('.line-from-wh');
+            const locSel = tr.querySelector('.line-from-loc');
+            if (locSel) {
+                const prev = locSel.value;
+                locSel.innerHTML = buildLocOptions(allSrcLocations, whSel?.value ?? '', prev, stockData);
+                locSel.value = prev;
+            }
+        } catch (e) { console.error(e); }
+    }
+
+
+    function addLine() {
+        const i = lineIdx++;
+        const hdrFromWh = document.getElementById('hdrFromWh')?.value ?? '';
+        const hdrToWh   = document.getElementById('hdrToWh')?.value   ?? '';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="text-center text-muted small">${i+1}</td>
+            <td><input type="hidden" name="Lines[${i}].LineNo" value="0" /><select name="Lines[${i}].ProductCode" class="form-select form-select-sm select2-enable product-select" required data-action-change="onProductChange">${productOptions}</select></td>
+            <td><input name="Lines[${i}].Qty" type="number" value="1" step="any" class="form-control form-control-sm text-end line-qty u-width-90px" /></td>
+            <td><select name="Lines[${i}].UomCode" class="form-select form-select-sm line-uom u-width-80px" data-action-change="onUomChange">${uomOptions}</select></td>
+            <td><select name="Lines[${i}].FromWhCode" class="form-select form-select-sm line-from-wh u-width-90px" data-action-change="onSrcWhChange">${buildWhOptions(allSrcLocations.reduce((acc, l) => { if (!acc.find(w => w.code === l.wh)) acc.push({code: l.wh, name: ''}); return acc; }, [...allDstWarehouses.length === allDstWarehouses.length ? [] : []].concat(Array.from(new Set(allSrcLocations.map(l => l.wh))).map(wh => ({code: wh, name: ''})))), hdrFromWh)}</select></td>
+            <td><div class="input-group input-group-sm u-width-150px"><select name="Lines[${i}].FromLocationCode" class="form-select form-select-sm line-from-loc">${buildLocOptions(allSrcLocations, hdrFromWh, '')}</select><button type="button" class="btn btn-outline-secondary btn-lookup-stock" data-action="lookupStock" data-wh-field="FromWhCode" data-loc-field="FromLocationCode" data-lot-field="LotNo" data-no-product-msg="@Localizer["SelectProductFirst"]" title="@Localizer["LookupStock"]" aria-label="@Localizer["LookupStock"]"><i class="bi bi-search"></i></button></div></td>
+            <td><input name="Lines[${i}].LotNo" maxlength="50" class="form-control form-control-sm u-width-130px line-lot" data-action-change="onLotChange" title="@Localizer["LotScanHint"]" /></td>
+            <td><select name="Lines[${i}].ToWhCode" class="form-select form-select-sm line-to-wh u-width-90px" data-action-change="onDstWhChange">${buildWhOptions(allDstWarehouses, hdrToWh)}</select></td>
+            <td><select name="Lines[${i}].ToLocationCode" class="form-select form-select-sm line-to-loc u-width-150px">${buildLocOptions(allDstLocations, hdrToWh, '')}</select></td>
+            <td class="text-end text-muted small">0</td>
+            <td class="text-end text-muted small">0</td>
+            <td><input name="Lines[${i}].Remarks" class="form-control form-control-sm" /></td>
+            <td class="text-center"><button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button></td>`;
+        document.getElementById('linesTbody').appendChild(tr);
+        window.armValidation(document.getElementById('xpForm')); // 動態列重註冊 unobtrusive 驗證（R6c）
+        // 來源倉庫 select 改用真實的 srcWarehouses 清單
+        const fromWhSel = tr.querySelector('.line-from-wh');
+        if (fromWhSel) {
+            fromWhSel.innerHTML = buildWhOptions(Array.from(new Set(allSrcLocations.map(l => l.wh))).map(wh => ({code: wh, name: ''})), hdrFromWh);
+        }
+        const uomSel = tr.querySelector('.line-uom');
+        const qtyInp = tr.querySelector('.line-qty');
+        if (uomSel && qtyInp) window.applyUomStep(qtyInp, uomSel.value);
+        initProductSelect2(tr);
+    }
+
+    // 批號欄掃到箱號（container-tracking.md §9）：換成該箱目前的批號，並帶出品號；
+    // 箱子只在一個儲位時一併帶出撥出倉儲與整箱數量。不是箱號（404）就照原樣當批號。
+    async function onLotChange(e, inp) {
+        const code = inp.value.trim();
+        if (!code) return;
+        let box;
+        try {
+            const r = await fetch(`/api/warehouse/container-unit/${encodeURIComponent(code)}`);
+            if (!r.ok) return;
+            box = await r.json();
+        } catch (err) { return; }
+        const tr = inp.closest('tr');
+        inp.value = box.lotNo;
+        const prod = tr.querySelector('.product-select');
+        if (prod && prod.value !== box.productCode) {
+            prod.value = box.productCode;
+            if (window.jQuery) $(prod).trigger('change.select2');   // 只更新 select2 顯示；品號連動直接呼叫，不靠 jQuery 事件
+            await onProductChange(null, prod);
+        }
+        if (box.locations.length === 1) {
+            const loc = box.locations[0];
+            const whSel = tr.querySelector('.line-from-wh');
+            if (whSel) { whSel.value = loc.whCode; onSrcWhChange(null, whSel); }
+            const locSel = tr.querySelector('.line-from-loc');
+            if (locSel) locSel.value = loc.locationCode;
+            const qty = tr.querySelector('.line-qty');
+            if (qty) qty.value = loc.qty;
+        }
+    }
+
+    function removeLine(e, btn) { btn.closest('tr').remove(); }
+
+    function docAction(e, el) {
+        const action = el.dataset.docAction, id = el.dataset.id, msg = el.dataset.msg;
+        if (msg && !confirm(msg)) return;
+        const token = document.querySelector('#xpForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/CrossPlantTransfer/${action}/${id}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => { if (d.success) { window.toastSuccess && window.toastSuccess(); refreshList && refreshList(); } else alert(d.message); });
+    }
+
+    function voidDoc(e, el) {
+        const id = el.dataset.id;
+        const reason = prompt('@Localizer["VoidReason"]');
+        if (reason === null) return;
+        const token = document.querySelector('#xpForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/CrossPlantTransfer/Void/${id}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ reason, __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => { if (d.success) { window.toastSuccess && window.toastSuccess(); refreshList && refreshList(); } else alert(d.message); });
+    }
+
+    // 庫存單位為品號帶出之唯讀欄位：鎖定不可手改（select 仍 enabled，值隨表單送出）
+    (function lockUomReadonly() {
+        var scope = document.getElementById('sidePanelBody');
+        if (!scope) return;
+        var lock = function () {
+            scope.querySelectorAll('select.line-uom').forEach(function (s) {
+                s.classList.add('bg-light');
+                s.style.pointerEvents = 'none';
+                s.tabIndex = -1;
+                s.setAttribute('aria-readonly', 'true');
+            });
+        };
+        lock();
+        new MutationObserver(lock).observe(scope, { childList: true, subtree: true });
+    })();
+
+    // 品號欄位 select2 初始化——本 Partial 經 crud-panel.js 局部注入，site.js 的
+    // DOMContentLoaded 全域初始化不會重跑，故需自行呼叫；dropdownParent 指向表單本身，
+    // 確保下拉選單在側欄(offcanvas)內不被裁切。addLine() 新增列時也呼叫本函式。
+    function initProductSelect2(scope) {
+        if (!window.jQuery || !$.fn.select2) return;
+        var $scope = scope ? $(scope) : $('#xpForm');
+        $scope.find('.product-select').not('.select2-hidden-accessible').each(function () {
+            $(this).select2({ theme: 'bootstrap-5', width: '100%', dropdownParent: $('#xpForm') });
+        });
+    }
+    initProductSelect2();
+</script>
+
+@functions {
+    string StatusBadge(DocStatus s) => s switch {
+        DocStatus.Draft => "bg-secondary", DocStatus.InTransit => "bg-warning text-dark",
+        DocStatus.Posted => "bg-success",  DocStatus.Void => "bg-danger", _ => "bg-secondary" };
+    string ApprovalBadge(DocumentApprovalStatus s) => s switch {
+        DocumentApprovalStatus.Approved => "bg-success", DocumentApprovalStatus.PendingApproval => "bg-warning text-dark",
+        DocumentApprovalStatus.Rejected => "bg-danger",  _ => "bg-secondary" };
+}

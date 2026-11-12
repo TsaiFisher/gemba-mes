@@ -1,0 +1,83 @@
+{
+  "sourcePath": ".claude/specifications/management-reports.md",
+  "sourceHash": "f26c06d51c05731305dd5c25919cab8be0f89729f540eb52370a6a143e50c4c2",
+  "entries": [
+    {
+      "slug": "management-reports-09fadd69",
+      "lang": "zh",
+      "headingPath": "管理分析報表規格 (Management Reports)",
+      "text": "報表資料來源與計算方式說明｜本文件記錄了所有可以製作的管理分析報表的清單，並會追蹤每份報表是從哪些地方取得資料、主要的計算方法是什麼。",
+      "approved": false
+    },
+    {
+      "slug": "management-reports-f5e78fb0",
+      "lang": "zh",
+      "headingPath": "管理分析報表規格 (Management Reports) › 一、現有報表（已實作，無需重建）",
+      "text": "報表功能說明：現有分析報表列表｜系統內已提供應收帳齡、應付帳齡、庫存餘額查詢、庫存異動明細、工單成本差異、毛利分析、月度損益彙總、期末資產負債彙總，以及管理儀表板等現有報表供使用。",
+      "approved": true
+    },
+    {
+      "slug": "management-reports-d371fd1c",
+      "lang": "zh",
+      "headingPath": "管理分析報表規格 (Management Reports) › 二、Phase 1（★★★ 必要）— 新增 6 張報表 › P1 — 採購逾期跟催表",
+      "text": "報表篩選：追蹤未到貨的採購單據｜此報表會列出那些預計交貨日期已經過去，但實際收到的數量還沒有達到訂購總量的採購單明細。這些資料是為了讓相關人員可以追蹤並催促廠商交貨。報表的篩選條件會自動排除尚未通過審核的單據。使用者可以在查詢時指定一個起始日和截止日期來限定查看的時間範圍，也可以選擇特定的供應商或品號進行更精準的查詢。",
+      "approved": true
+    },
+    {
+      "slug": "management-reports-0a6e10dd",
+      "lang": "zh",
+      "headingPath": "管理分析報表規格 (Management Reports) › 二、Phase 1（★★★ 必要）— 新增 6 張報表 › I3 — 缺貨分析",
+      "text": "報表篩選：低於安全存量的品項｜此報表會列出目前可用數量低於設定的安全庫存的品號，目的是讓採購或生產管理人員能提早了解並補足物料。系統只會顯示那些有設定安全庫存且實際可用量不足的品項。報表會計算出缺貨的數量，並依據這個缺貨的數量由多到少進行排序。使用者可以選擇用特定品號、品項類別或特定的倉庫來篩選資料。",
+      "approved": true
+    },
+    {
+      "slug": "management-reports-8ddbe5a7",
+      "lang": "zh",
+      "headingPath": "管理分析報表規格 (Management Reports) › 二、Phase 1（★★★ 必要）— 新增 6 張報表 › I4 — 呆滯庫存分析",
+      "text": "報表篩選：找出長期無動態的庫存｜此報表會列出那些超過設定天數，在庫存記錄中沒有任何進出貨變動的物品。這樣可以讓管理人員了解哪些庫存是「呆滯」的，以便決定是否需要處分、清倉或調撥這些庫存。系統會根據每個品項、儲位和批號計算其最後一次異動的日期，並以此來判斷它已經積壓了多少天沒有任何活動。",
+      "approved": true
+    },
+    {
+      "slug": "management-reports-771d42af",
+      "lang": "zh",
+      "headingPath": "管理分析報表規格 (Management Reports) › 二、Phase 1（★★★ 必要）— 新增 6 張報表 › M1 — 工單進度報表",
+      "text": "工單進度報表規則說明｜此報表用來總覽所有正在進行的工單，讓使用者可以比較預計的進度和實際完成的數量。系統會顯示工單號、品號等資訊，並計算出目前的進度百分比。此外，如果工單的預定完工日期已經過去，但工單狀態不是已結案或作廢，系統會標示為逾期。使用者可以根據不同的工單狀態和品號來篩選報表內容。",
+      "approved": true
+    },
+    {
+      "slug": "management-reports-27086d5d",
+      "lang": "zh",
+      "headingPath": "管理分析報表規格 (Management Reports) › 二、Phase 1（★★★ 必要）— 新增 6 張報表 › M2 — 不良率報表",
+      "text": "報表分析：合格與不良率趨勢｜此報表用來觀察特定時間內，不同產品或生產單位在生產過程中的合格數量和不良數量變化。您必須提供開始日期和結束日期才能使用此功能。系統會根據您指定的期間篩選資料，並以不良率由高到低的方式排列結果。報表中會顯示品號、合格量、不良量、總量、計算出的不良率百分比以及報工筆數等資訊。",
+      "approved": true
+    },
+    {
+      "slug": "management-reports-4520b525",
+      "lang": "zh",
+      "headingPath": "管理分析報表規格 (Management Reports) › 三、Phase 2（★★）— 中優先管理分析（✅ 全數實作完成 2026-07-16）",
+      "text": "報表功能具備查詢與匯出能力｜所有可用的管理分析報表，都具備使用索引進行資料查詢、可以匯出成試算表，並且會根據權限進行檢查。",
+      "approved": true
+    },
+    {
+      "slug": "management-reports-aa2a2fa6",
+      "lang": "zh",
+      "headingPath": "管理分析報表規格 (Management Reports) › 四、Phase 3（★）— 進階預測/分析（✅ 全數實作完成 2026-07-16）",
+      "text": "預測分析報表功能說明｜此系統提供銷售預測、物料需求規劃達成率以及壞帳準備等分析報表，用以協助管理人員了解近 12 個月的平均銷售趨勢與季節影響；同時可比較計畫需要的物料數量與實際備好的物料數量，並依據帳單的年齡計算應提列的損失準備金。",
+      "approved": true
+    },
+    {
+      "slug": "management-reports-e054b9cc",
+      "lang": "zh",
+      "headingPath": "管理分析報表規格 (Management Reports) › 五、現有資料缺口（需補欄位方可實作）",
+      "text": "報表資料的來源與限制｜目前用於過期庫存分析的報表，無法直接取得批次到期日資訊。此外，業務員績效相關的報表也缺乏記錄銷售代表代碼的欄位。進料品質的檢核報告則需要規劃後續階段才能完整呈現。",
+      "approved": false
+    },
+    {
+      "slug": "management-reports-cf09c313",
+      "lang": "zh",
+      "headingPath": "管理分析報表規格 (Management Reports) › 六、實作規範",
+      "text": "報表畫面結構與資料呈現規範｜所有報表的介面設計都必須遵循特定的標準規格，這意味著這些報表在功能上是只供查看的，不包含新增、修改或刪除資料的操作。此外，當使用者需要匯出報表時，只能以 Excel 格式進行下載。",
+      "approved": false
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Cross-Plant Transfer — INV User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>跨廠調撥單 — INV 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">INV 目錄</span><span lang="en">INV Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">INV 畫面</span><span lang="en">INV Screens</span></div>
+    <a href="inventory-balance.html" class="nav-link"><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></a>
+    <a href="stock-movement.html" class="nav-link"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a>
+    <a href="stock-ledger.html" class="nav-link"><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></a>
+    <a href="warehouse-ops.html" class="nav-link"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a>
+    <a href="material-staging.html" class="nav-link"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a>
+    <a href="scrap-doc.html" class="nav-link"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></a>
+    <a href="loan-doc.html" class="nav-link"><span lang="zh">借入借出單</span><span lang="en">Loan Document</span></a>
+    <a href="sample-doc.html" class="nav-link"><span lang="zh">樣品/客供單</span><span lang="en">Sample/Consignment Docs</span></a>
+    <a href="inventory-count.html" class="nav-link"><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></a>
+    <a href="stock-adjustment.html" class="nav-link"><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></a>
+    <a href="../osp/outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="rework-material.html" class="nav-link"><span lang="zh">重工發退料單</span><span lang="en">Rework Material</span></a>
+    <a href="stock-transfer.html" class="nav-link"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a>
+    <a href="cross-plant-transfer.html" class="nav-link active"><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></a>
+    <a href="inventory-valuation.html" class="nav-link"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a>
+    <a href="landed-cost-allocation.html" class="nav-link"><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></a>
+    <a href="stock-shortage.html" class="nav-link"><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></a>
+    <a href="slow-moving-inventory.html" class="nav-link"><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></a>
+    <a href="inventory-aging.html" class="nav-link"><span lang="zh">存貨庫齡分析</span><span lang="en">Inventory Aging Analysis</span></a>
+    <a href="inventory-value.html" class="nav-link"><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></a>
+    <a href="inventory-turnover.html" class="nav-link"><span lang="zh">庫存周轉率</span><span lang="en">Inventory Turnover</span></a>
+    <a href="stock-variance.html" class="nav-link"><span lang="zh">盤差分析</span><span lang="en">Stock Variance</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-arrow-left-right me-2 text-primary"></i><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/CrossPlantTransfer &nbsp;|&nbsp; 跨廠移轉（五階段：出庫 → 在途 → 入庫）</span><span lang="en">Route: /CrossPlantTransfer &nbsp;|&nbsp; Cross-plant transfer (five stages: issue → in transit → receipt)</span></div>
+    </div>
+
+    <p><span lang="zh">跨廠移轉採五階段狀態機：來源廠全部出庫後轉「在途 InTransit」，鎖定移轉成本；目的廠確認入庫後轉已過帳；短溢差異可強制結案（差異自動產生來源廠調整）。目的廠人員以「跨廠入庫」視角查詢在途單據辦理收貨。</span><span lang="en">Cross-plant transfer follows a five-stage state machine: once the source plant has issued everything the document becomes "In Transit" and the transfer cost is locked; after the target plant confirms the receipt it becomes posted. Short or over receipts can be force-closed, and the difference automatically creates an adjustment in the source plant. Staff at the target plant query in-transit documents from the "Cross-Plant Receipt" view to take delivery.</span></p>
+    <img class="screen-shot" src="img/cross-plant-transfer.png" data-src-en="img/en/cross-plant-transfer.png" alt="跨廠調撥單畫面截圖" data-alt-en="Cross-plant transfer screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">跨廠調撥單畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Cross-plant transfer screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">草稿</span><span lang="en">Draft</span></span></td><td><span lang="zh">建單中，可編輯。</span><span lang="en">Being created; editable.</span></td></tr><tr><td><span class='badge bg-primary'><span lang="zh">已確認</span><span lang="en">Confirmed</span></span></td><td><span lang="zh">生效，等待來源廠出庫。</span><span lang="en">Effective, waiting for the source plant to issue the stock.</span></td></tr><tr><td><span class='badge bg-info'><span lang="zh">在途 InTransit</span><span lang="en">In Transit</span></span></td><td><span lang="zh">來源廠已全部出庫，貨在途；不可直接作廢。</span><span lang="en">Everything has been issued by the source plant and the goods are in transit; it cannot be voided directly.</span></td></tr><tr><td><span class='badge bg-success'><span lang="zh">已過帳</span><span lang="en">Posted</span></span></td><td><span lang="zh">目的廠全部入庫（或強制結案）。</span><span lang="en">The target plant has received everything (or the document was force-closed).</span></td></tr><tr><td><span class='badge bg-danger'><span lang="zh">已作廢</span><span lang="en">Cancelled</span></span></td><td><span lang="zh">入庫前反沖出庫。</span><span lang="en">Reverse the issue before receiving.</span></td></tr></tbody>
+    </table>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">跨廠調撥</span><span lang="en">Cross-plant transfer</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">來源廠建單（目的廠、品號、數量）→ 送審/確認。</span><span lang="en">The source plant creates the document (destination plant, product, quantity) → submit or confirm.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">來源廠倉庫出庫（XO），全部出庫後轉在途，鎖定移轉成本。</span><span lang="en">Issue from the source plant warehouse (XO); once everything is issued the goods go in transit and the transfer cost is locked.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">目的廠於本畫面查詢在途單據，辦理入庫（XI），入庫成本＝鎖定移轉成本。</span><span lang="en">The target plant queries in-transit documents on this screen and receives them (XI); the receipt cost is the locked transfer cost.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">全部入庫自動過帳；短收時可強制結案，差異產生來源廠 IA 調整。</span><span lang="en">Everything received posts automatically; a short receipt can be force-closed, and the difference creates an IA adjustment in the source plant.</span></div></div>
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">撤回發出後再確認發出，撥出成本以「再次確認當下」來源廠的單位成本為準；目的廠收貨承接的是這次撥出的成本，不是已撤回那一次的。</span><span lang="en">If dispatch is withdrawn and then confirmed again, the transfer cost is the source plant's unit cost at the time of the new confirmation; the receiving plant takes over that cost, not the cost of the withdrawn dispatch.</span></div>
+
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。列印單的出貨廠、收貨廠與兩端倉庫都印出名稱；收貨廠的倉庫依收貨廠的基本資料查名。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The printout shows the names of both plants and both warehouses; the receiving warehouse name is looked up in the receiving plant's master data.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">表頭</span><span lang="en">Header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">跨廠調撥單號</span><span lang="en">Cross-plant transfer No</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">調撥日期</span><span lang="en">Transfer Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">調撥生效日</span><span lang="en">Transfer effective date</span></td></tr>
+        <tr><td><span lang="zh">來源廠別</span><span lang="en">Source Plant</span></td><td><span lang="zh">發料廠別，固定為目前所屬廠別，不可修改</span><span lang="en">Issuing plant, fixed to your current plant and not editable</span></td></tr>
+        <tr><td><span lang="zh">目的廠別</span><span lang="en">Destination Plant</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">收料廠別；必須與來源廠別不同</span><span lang="en">Receiving plant; must be different from the source plant</span></td></tr>
+        <tr><td><span lang="zh">來源倉庫 / 目的倉庫</span><span lang="en">Source WH / Dest WH</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">兩端的預設倉庫，明細可逐行覆寫</span><span lang="en">Default warehouse for each side; lines can override it individually</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">整張單據的補充說明</span><span lang="en">Notes for the whole document</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">明細</span><span lang="en">Lines</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">要調撥的料件</span><span lang="en">Item to transfer</span></td></tr>
+        <tr><td><span lang="zh">數量 / 單位</span><span lang="en">Qty / UOM</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">調撥數量與計量單位。選了品號後，單位只列該品號的庫存單位與查得到換算的單位（預設庫存單位）；存檔時系統依品號主檔換算成庫存數量入帳，查不到換算的單位會擋下並說明。</span><span lang="en">Transfer quantity and unit of measure. Once a product is chosen, the unit list shows only its stock unit and the units that convert to it (stock unit preselected); on save the system converts to the stock quantity from the product master, and a unit with no conversion is rejected with an explanation.</span></td></tr>
+        <tr><td><span lang="zh">來源倉庫 / 來源儲位</span><span lang="en">Source WH / Source Location</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">發料廠的扣帳位置。也可按欄位旁的放大鏡開啟「選擇庫存」視窗，內含該品號各處的倉庫、儲位、批號、帳上數量、已預留與可用量，選取一列後自動回填倉庫、儲位與批號。若該品號另有保留給訂單／工單的量，視窗上方會以黃色提示列出（這些量不落在儲位上，表格的「可用」沒有扣除；出貨時超過「在手 − 保留」會被擋）。</span><span lang="en">Location the stock is taken from in the issuing plant. You can also click the magnifier beside the field to open the stock picker, which lists the warehouse, location, lot, on-hand, reserved and available quantity everywhere that item is held; selecting a row fills in the warehouse, location and lot for you. If some of the item is also reserved for orders or work orders, a yellow notice at the top of the window lists it (those reservations are not tied to a location, so "Available" in the table does not deduct them; shipping more than on-hand minus reserved is blocked).</span></td></tr>
+        <tr><td><span lang="zh">批號</span><span lang="en">Lot No</span></td><td><span lang="zh">要調撥的是哪一個批號的庫存；兩廠用同一個批號，收貨後原樣出現在目的廠。空白＝調撥沒有批號的庫存。可用量依「儲位＋批號」判斷。箱子貼有固定 QR 時，直接在這一欄掃<a href="../bas/container-unit.html">箱號</a>，系統會換成該箱目前的批號，並帶出品號、來源儲位與整箱數量；箱子跟著貨到目的廠後，在目的廠的箱子畫面「回收」接手。</span><span lang="en">Which lot to send; both plants use the same lot number, and after receipt it appears unchanged in the destination plant. Leave it blank for items without a lot. Availability is checked per location and lot. If a box carries a fixed QR label, scan its <a href="../bas/container-unit.html">box number</a> into this field and the box's current lot, item, source location and full quantity are filled in; when the box arrives with the goods, take it over with "Recover" on the destination plant's Boxes screen.</span></td></tr>
+        <tr><td><span lang="zh">目的倉庫 / 目的儲位</span><span lang="en">Target warehouse / Target location</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">收料廠的入帳位置</span><span lang="en">Receiving location in the receiving plant</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">跨廠調撥同時異動兩個廠別的庫存，權限與查詢皆受廠別隔離約束，需具備兩端廠別的作業權限。</span><span lang="en">A cross-plant transfer moves stock in two plants at once; permissions and queries are both subject to plant isolation, so you need operating rights in both plants.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="stock-transfer.html"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">在途狀態不可直接作廢；需先完成入庫或強制結案。單據明細僅來源/目的兩廠可見。</span><span lang="en"> A document in transit cannot be voided directly; receive it or force-close it first. The lines are visible only to the source and destination plants.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

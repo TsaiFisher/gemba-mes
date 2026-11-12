@@ -1,0 +1,260 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    string defaultDate = ViewBag.DefaultDate as string ?? DateTime.Today.AddDays(1).ToString("yyyy-MM-dd");
+    var workCenters = ViewBag.WorkCenters as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1><i class="bi bi-list-check me-2 text-primary"></i>@Localizer["PageTitle"]</h1>
+        </div>
+    </div>
+
+    @* 篩選列 *@
+    <div class="card mb-3">
+        <div class="card-body py-2">
+            <div class="row g-2 align-items-end">
+                <div class="col-auto">
+                    <label class="form-label mb-0 small fw-semibold">@Localizer["PrepDate"]</label>
+                    <input id="inputPrepDate" type="date" class="form-control form-control-sm u-width-160px"
+                           value="@defaultDate" />
+                </div>
+                <div class="col-auto">
+                    <label class="form-label mb-0 small fw-semibold">@Localizer["WorkCenter"]</label>
+                    <select id="selWc" class="form-select form-select-sm u-width-200px">
+                        <option value="">@Localizer["AllWorkCenters"]</option>
+                        @foreach (var wc in workCenters)
+                        {
+                            <option value="@wc.WorkCenterCode">@wc.WorkCenterCode — @wc.WorkCenterName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button id="btnRefresh" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-arrow-clockwise"></i> @Localizer["Refresh"]
+                    </button>
+                </div>
+                <div class="col-auto ms-auto text-muted small" id="lastRefresh"></div>
+            </div>
+            @* 圖例 *@
+            <div class="d-flex flex-wrap gap-3 mt-2 small">
+                <span><span class="badge u-background-6f42c1">■</span> @Localizer["LegendConflict"]</span>
+                <span><span class="badge bg-warning text-dark">■</span> @Localizer["LegendMatRisk"]</span>
+                <span><span class="badge bg-danger">■</span> @Localizer["LegendLate"]</span>
+                <span><span class="badge bg-success">■</span> @Localizer["LegendMaterialReady"]</span>
+                <span><span class="badge bg-secondary">■</span> @Localizer["LegendMaterialNotReady"]</span>
+            </div>
+        </div>
+    </div>
+
+    @* 統計摘要列 *@
+    <div id="summaryRow" class="row g-3 mb-3 d-none">
+        <div class="col-6 col-md-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body py-2">
+                    <div class="fs-4 fw-bold text-primary" id="cntTotal">—</div>
+                    <div class="small text-muted">@Localizer["SummaryTotal"]</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body py-2">
+                    <div class="fs-4 fw-bold text-danger" id="cntConflict">—</div>
+                    <div class="small text-muted">@Localizer["SummaryConflict"]</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body py-2">
+                    <div class="fs-4 fw-bold text-warning" id="cntMatRisk">—</div>
+                    <div class="small text-muted">@Localizer["SummaryMatRisk"]</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card text-center border-0 shadow-sm">
+                <div class="card-body py-2">
+                    <div class="fs-4 fw-bold text-info" id="cntSetupMin">—</div>
+                    <div class="small text-muted">@Localizer["SummarySetupMin"]</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* 狀態訊息 *@
+    <div id="loadingState" class="text-center text-muted py-5">
+        <div class="spinner-border me-2" role="status"></div>@Localizer["Loading"]
+    </div>
+    <div id="emptyState" class="text-center text-muted py-5 d-none">
+        <i class="bi bi-inbox fs-1 d-block mb-2"></i>@Localizer["NoData"]
+    </div>
+
+    @* 機台看板卡片區 *@
+    <div id="boardContent" class="row g-3"></div>
+</div>
+
+@section Scripts {
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    // 多語字串（Json.Serialize 正確處理引號與特殊字元，避免 Razor HTML encode 問題）
+    const L = {
+        matReady:     @Html.Raw(Json.Serialize(Localizer["MatReady"].Value)),
+        matPartial:   @Html.Raw(Json.Serialize(Localizer["MatPartial"].Value)),
+        matNotReady:  @Html.Raw(Json.Serialize(Localizer["MatNotReady"].Value)),
+        unassigned:   @Html.Raw(Json.Serialize(Localizer["Unassigned"].Value)),
+        flagConflict: @Html.Raw(Json.Serialize(Localizer["FlagConflict"].Value)),
+        flagLate:     @Html.Raw(Json.Serialize(Localizer["FlagLate"].Value)),
+        flagCarryOver: @Html.Raw(Json.Serialize(Localizer["FlagCarryOver"].Value)),
+        flagMatRisk:  @Html.Raw(Json.Serialize(Localizer["FlagMatRisk"].Value)),
+        lastRefresh:  @Html.Raw(Json.Serialize(Localizer["LastRefresh"].Value)),
+        loadFailed:   @Html.Raw(Json.Serialize(Localizer["LoadFailed"].Value)),
+    };
+
+    let _rows = [];
+
+    function esc(s) {
+        return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function fmtTime(iso) {
+        if (!iso) return '—';
+        const d = new Date(iso);
+        return (d.getMonth() + 1) + '/' + d.getDate() + ' '
+             + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    }
+
+    function stagingBadge(row) {
+        if (!row.materialCount) return '';
+        const s = row.stagingStatuses || [];
+        if (s.length && s.every(x => x === 'Staged'))
+            return `<span class="badge bg-success"><i class="bi bi-box-seam me-1"></i>${L.matReady}</span>`;
+        if (s.some(x => x !== 'Staged'))
+            return `<span class="badge bg-warning text-dark"><i class="bi bi-hourglass-split me-1"></i>${L.matPartial}</span>`;
+        return `<span class="badge bg-secondary"><i class="bi bi-box me-1"></i>${L.matNotReady}</span>`;
+    }
+
+    function renderBoard(rows) {
+        const content = document.getElementById('boardContent');
+        const empty   = document.getElementById('emptyState');
+        const summary = document.getElementById('summaryRow');
+        content.innerHTML = '';
+
+        const wcFilter = document.getElementById('selWc').value;
+        const filtered = wcFilter ? rows.filter(r => r.workCenterId === wcFilter) : rows;
+
+        if (!filtered.length) {
+            empty.classList.remove('d-none');
+            summary.classList.add('d-none');
+            return;
+        }
+        empty.classList.add('d-none');
+        summary.classList.remove('d-none');
+
+        // 摘要統計
+        document.getElementById('cntTotal').textContent    = filtered.length;
+        document.getElementById('cntConflict').textContent = filtered.filter(r => r.toolingConflict).length;
+        document.getElementById('cntMatRisk').textContent  = filtered.filter(r => r.materialRisk).length;
+        document.getElementById('cntSetupMin').textContent = filtered.reduce((a, r) => a + (r.setupMin || 0), 0);
+
+        // 依機台分組
+        const byMachine = {};
+        filtered.forEach(r => {
+            const k = r.machineCode || L.unassigned;
+            (byMachine[k] = byMachine[k] || { wc: r.workCenterId, rows: [] }).rows.push(r);
+        });
+
+        Object.entries(byMachine).forEach(([machine, grp]) => {
+            const hasConflict = grp.rows.some(r => r.toolingConflict);
+            const hasMatRisk  = grp.rows.some(r => r.materialRisk);
+            const borderCss   = hasConflict ? 'border-top border-3' : '';
+            const headerBg    = hasConflict ? 'bg-danger bg-opacity-10' : hasMatRisk ? 'bg-warning bg-opacity-10' : 'bg-light';
+
+            const col = document.createElement('div');
+            col.className = 'col-12 col-md-6 col-xl-4';
+
+            let itemsHtml = grp.rows.map(r => {
+                const isConflict = r.toolingConflict;
+                const cardBorder = isConflict ? 'border-start border-4 border-purple ps-2' : '';
+                const cardBg     = isConflict ? 'bg-light-purple' : '';
+
+                let flags = '';
+                if (isConflict)    flags += `<span class="badge me-1 u-background-6f42c1"><i class="bi bi-exclamation-triangle me-1"></i>${L.flagConflict}</span>`;
+                if (r.carryOver)   flags += `<span class="badge bg-info text-dark me-1">${L.flagCarryOver}</span>`;
+                if (r.late)        flags += `<span class="badge bg-danger me-1">${L.flagLate}</span>`;
+                if (r.materialRisk) flags += `<span class="badge bg-warning text-dark me-1">${L.flagMatRisk}</span>`;
+                flags += stagingBadge(r);
+
+                const toolingHtml = r.toolingCode
+                    ? `<span class="badge ${isConflict ? 'u-background-6f42c1' : 'bg-secondary'} me-1"><i class="bi bi-tools me-1"></i>${esc(r.toolingCode)}</span>`
+                    : '';
+                const setupHtml = r.setupMin > 0
+                    ? `<span class="text-muted small"><i class="bi bi-clock me-1"></i>${r.setupMin} min</span>`
+                    : '';
+
+                return `
+                <div class="p-2 border-bottom ${cardBorder} ${cardBg}">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="fw-semibold small">${esc(r.workOrderId)}</div>
+                            <div class="text-muted small">${esc(r.operationName || String(r.operationSeq))} · ${@(Json.Serialize(SL["PiecesFmt"].Value)).replace('{0}', r.qty)}</div>
+                        </div>
+                        <div class="text-end ms-2 small text-muted">${fmtTime(r.scheduledStart)}</div>
+                    </div>
+                    <div class="d-flex flex-wrap gap-1 mt-1 align-items-center">
+                        ${flags}${toolingHtml}${setupHtml}
+                    </div>
+                </div>`;
+            }).join('');
+
+            col.innerHTML = `
+            <div class="card shadow-sm h-100 ${borderCss}">
+                <div class="card-header ${headerBg} py-2 d-flex justify-content-between align-items-center">
+                    <span class="fw-semibold"><i class="bi bi-gear me-1"></i>${esc(machine)}</span>
+                    <small class="text-muted">${esc(grp.wc || '')}</small>
+                </div>
+                <div class="card-body p-0">${itemsHtml}</div>
+                <div class="card-footer py-1 text-muted small text-end">${@(Json.Serialize(SL["RecordsCountFmt"].Value)).replace('{0}', grp.rows.length)}</div>
+            </div>`;
+            content.appendChild(col);
+        });
+    }
+
+    async function loadBoard() {
+        document.getElementById('loadingState').classList.remove('d-none');
+        document.getElementById('emptyState').classList.add('d-none');
+        document.getElementById('boardContent').innerHTML = '';
+        document.getElementById('summaryRow').classList.add('d-none');
+
+        const date = document.getElementById('inputPrepDate').value;
+        try {
+            const data = await fetch('/api/mfg/preparation?date=' + encodeURIComponent(date),
+                { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            const json = await data.json();
+            _rows = json?.rows || [];
+            renderBoard(_rows);
+            document.getElementById('lastRefresh').textContent =
+                L.lastRefresh + ' ' + new Date().toLocaleTimeString();
+        } catch {
+            document.getElementById('boardContent').innerHTML =
+                `<div class="col-12"><div class="alert alert-danger">${L.loadFailed}</div></div>`;
+        } finally {
+            document.getElementById('loadingState').classList.add('d-none');
+        }
+    }
+
+    document.getElementById('inputPrepDate').addEventListener('change', loadBoard);
+    document.getElementById('btnRefresh').addEventListener('click', loadBoard);
+    document.getElementById('selWc').addEventListener('change', () => renderBoard(_rows));
+
+    // 自動輪詢 30 秒
+    loadBoard();
+    setInterval(loadBoard, 30000);
+}());
+</script>
+}

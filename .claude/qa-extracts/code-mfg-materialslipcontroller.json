@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/MaterialSlipController.cs",
+  "sourceHash": "102b51b8029541962e3a3f5423753ccb208f65a584cbe8d0089df4aeebde319a",
+  "entries": [
+    {
+      "slug": "code-mfg-materialslipcontroller-86bdb522",
+      "lang": "zh",
+      "headingPath": "生產製造 › 列表要顯示明細筆數，",
+      "text": "列表顯示明細筆數規則｜如果沒有包含相關的明細資料時，該筆數會預設顯示為 0。",
+      "approved": false,
+      "sourceSectionHash": "3f29b4952ffa76caa719c4baefef6c7c9d36fefd2037ec4ed4d5695df8219635"
+    },
+    {
+      "slug": "code-mfg-materialslipcontroller-ba473532",
+      "lang": "zh",
+      "headingPath": "生產製造 › 這張表單只在面板裡是完整的",
+      "text": "表單送出行為的差異說明｜當使用者透過面板介面進行核准、揀料或過帳等動作時，系統會使用特定的腳本來處理資料提交，這樣才能在操作過程中顯示確認訊息或錯誤提示。但如果使用者是直接輸入網址進入頁面，相關的面板腳本不會載入，導致按鈕點擊後會以原始方式送出資料，這可能會造成單據狀態已經改變，但畫面沒有即時回饋給使用者的情況。",
+      "approved": true,
+      "sourceSectionHash": "3c9a45c7c6dcbd56a75de659f0b357f9e17b30065ede4fa862f00c08eb868212"
+    }
+  ]
+}

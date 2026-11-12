@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>生產批投產</value></data>
+  <data name="PageHint" xml:space="preserve"><value>查詢待投產的生產批，檢視各工單投產重算量與料況後執行整批投產。</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>生產批號 / 品號</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="BatchId" xml:space="preserve"><value>生產批號</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="Quantity" xml:space="preserve"><value>數量</value></data>
+  <data name="PlannedWorkOrders" xml:space="preserve"><value>可投產工單</value></data>
+  <data name="Priority" xml:space="preserve"><value>優先序</value></data>
+  <data name="PredictedLate" xml:space="preserve"><value>預計延遲</value></data>
+  <data name="PlannedEndDate" xml:space="preserve"><value>須完成日</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="Release" xml:space="preserve"><value>投產</value></data>
+  <data name="PanelTitle" xml:space="preserve"><value>投產生產批 {0}</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無待投產的生產批</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入條件後按「查詢」</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>操作成功</value></data>
+</root>

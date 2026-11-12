@@ -1,0 +1,113 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using SmartFactory.MES.Services
+@model List<SmartFactory.MES.Modules.PUR.ViewModels.PurchaseAmountRowVm>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = L["PageTitle"].Value;
+    bool searched  = ViewBag.Searched == true;
+    bool canPrint  = ViewBag.CanPrint == true;
+    string groupBy = ViewBag.GroupBy ?? "Supplier";
+    string source  = ViewBag.Source  ?? "All";
+    int year       = (int)(ViewBag.Year ?? DateTime.Today.Year);
+    var rows       = Model ?? new();
+    decimal grandTotal = rows.Sum(r => r.TotalAmount);
+}
+
+<div class="container-fluid py-3">
+    <h4 class="mb-3">@L["PageTitle"]</h4>
+    @await Html.PartialAsync("_SavedQueries", "PurchaseAmount")
+
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label">@L["Year"]</label>
+                <input type="number" name="year" class="form-control" value="@year" min="2000" max="2099" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">@L["GroupBy"]</label>
+                <select name="groupBy" class="form-select">
+                    <option value="Supplier" selected="@(groupBy == "Supplier")">@L["BySupplier"]</option>
+                    <option value="Product"  selected="@(groupBy == "Product")">@L["ByProduct"]</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                @* 委外加工費原本完全不在這張表裡（只讀進貨單），採購總支出因此被低估。
+                   預設含委外；要回到舊口徑就選「僅採購進貨」。 *@
+                <label class="form-label">@L["SourceLabel"]</label>
+                <select name="source" class="form-select">
+                    <option value="All" selected="@(source == "All")">@L["SourceAll"]</option>
+                    <option value="PO"  selected="@(source == "PO")">@L["SourcePo"]</option>
+                    <option value="OSP" selected="@(source == "OSP")">@L["SourceOsp"]</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" name="searched" value="true" class="btn btn-primary w-100 px-4">
+                    <i class="bi bi-search"></i> @L["Search"]
+                </button>
+            </div>
+        </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @if (!searched)
+    {
+        <div class="alert alert-info">@L["SearchFirst"]</div>
+    }
+    else if (!rows.Any())
+    {
+        <div class="alert alert-warning">@L["NoData"]</div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <strong>@L["ResultTitle"]</strong>
+                <span class="text-muted ms-1">@rows.Count @L["Items"]</span>
+                <span class="ms-3 text-muted">@L["GrandTotal"]：<strong>@grandTotal.ToString(moneyFmt)</strong></span>
+            </div>
+            @if (canPrint)
+            {
+                <a asp-action="Export" asp-route-year="@year" asp-route-groupBy="@groupBy" asp-route-source="@source"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @L["ExportExcel"]
+                </a>
+            }
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>@(groupBy == "Supplier" ? L["SupplierCode"].Value : L["ProductCode"].Value)</th>
+                        <th>@L["YearMonth"]</th>
+                        <th class="text-end">@L["TotalAmount"]</th>
+                        <th class="text-end">@L["ReceiptCount"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                    @foreach (var r in paged)
+                    {
+                        <tr>
+                            <td>@r.GroupKey</td>
+                            <td>@r.YearMonth</td>
+                            <td class="text-end">@r.TotalAmount.ToString(moneyFmt)</td>
+                            <td class="text-end">@r.ReceiptCount</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot class="table-secondary fw-bold">
+                    <tr>
+                        <td colspan="2">@L["GrandTotal"]</td>
+                        <td class="text-end">@grandTotal.ToString(moneyFmt)</td>
+                        <td class="text-end">@rows.Sum(r => r.ReceiptCount)</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        @await Html.PartialAsync("_Pagination", paged)
+    }
+</div>

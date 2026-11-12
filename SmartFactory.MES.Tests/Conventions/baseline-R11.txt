@@ -1,0 +1,6 @@
+# R11 baseline — 應該維持是空的。
+# 分頁 UI 全站走 _Pagination / _PageSizeSelect 兩支共用 partial，沒有既有違規。
+#
+# ⚠️ 不要把違規寫進來。這個檔在 2026-09-11 之前有 7 行，其中
+#    `AccountingPeriod: 缺分頁導航` 不是格式瑕疵——那是使用者翻不到第 2 頁。
+#    規則抓到了，baseline 把它變成永久容忍，於是它在這裡躺了很久沒人再看一眼。

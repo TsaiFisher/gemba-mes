@@ -1,0 +1,169 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.PUR.Models
+@using SmartFactory.MES.Modules.PUR.Services
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.PUR.Models.VendorEvaluation
+
+@{
+    bool isEdit = Model?.Id > 0;
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    var weights = ViewBag.Weights as SrmWeights ?? SrmWeights.Default;
+}
+
+<form id="vendorEvalForm" method="post" action="@Url.Action("Save")"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    @if (isEdit)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+
+    <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+    <div class="offcanvas-body">
+        <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+        <div class="row g-3">
+            <div class="col-12">
+                <label asp-for="SupplierCode" class="form-label">@Localizer["LabelSupplier"] <span class="text-danger">*</span></label>
+                <select asp-for="SupplierCode" class="form-select select2" id="evalSupplier">
+                    <option value="">@Localizer["SelectSupplier"]</option>
+                    @foreach (dynamic s in ViewBag.SupplierOptions ?? Enumerable.Empty<dynamic>())
+                    {
+                        var sel = (string)s.CompanyCode == Model?.SupplierCode;
+                        <option value="@s.CompanyCode" selected="@sel">@s.CompanyCode — @s.CompanyName</option>
+                    }
+                </select>
+                <span asp-validation-for="SupplierCode" class="text-danger small"></span>
+            </div>
+
+            <div class="col-4">
+                <label asp-for="EvaluationYear" class="form-label">@Localizer["LabelYear"] <span class="text-danger">*</span></label>
+                <input asp-for="EvaluationYear" type="number" class="form-control" min="2000" max="2100" step="1" id="evalYear" />
+                <span asp-validation-for="EvaluationYear" class="text-danger small"></span>
+            </div>
+
+            <div class="col-4">
+                <label asp-for="EvaluationQuarter" class="form-label">@Localizer["LabelQuarter"]</label>
+                <select asp-for="EvaluationQuarter" class="form-select" id="evalQuarter">
+                    <option value="">@Localizer["Annual"]</option>
+                    @for (int q = 1; q <= 4; q++)
+                    {
+                        <option value="@q" selected="@(Model?.EvaluationQuarter == q)">Q@(q)</option>
+                    }
+                </select>
+                <span asp-validation-for="EvaluationQuarter" class="text-danger small"></span>
+            </div>
+
+            <div class="col-4">
+                <label asp-for="EvaluationDate" class="form-label">@Localizer["LabelEvalDate"] <span class="text-danger">*</span></label>
+                <input asp-for="EvaluationDate" type="date" class="form-control"
+                       value="@Model?.EvaluationDate.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="EvaluationDate" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12">
+                <div class="d-flex align-items-center justify-content-between border rounded p-2 bg-light">
+                    <div class="small text-muted" id="scoreBasis">
+                        @Localizer["AutoScoreHint"]
+                    </div>
+                    @if (!isReadOnly)
+                    {
+                        <button type="button" class="btn btn-sm btn-outline-primary text-nowrap ms-2"
+                                data-action="computeScores">
+                            <i class="bi bi-calculator"></i> @Localizer["ComputeScores"]
+                        </button>
+                    }
+                </div>
+            </div>
+
+            @* 隱藏欄位是表單送出的憑據；存檔時後端仍會重算覆蓋，這裡只是讓畫面與送出的內容一致。 *@
+            <div class="col-6">
+                <label asp-for="QualityScore" class="form-label">@Localizer["LabelQuality"]</label>
+                <input asp-for="QualityScore" type="number" class="form-control" step="any" readonly id="qualityScore" />
+                <input asp-for="QualityHasData" type="hidden" id="qualityHasData" />
+                @* 期間無進貨時分數欄是佔位的 100，不是評價。不講出來的話，
+                   「從沒往來的廠商」和「零不良的廠商」在這一欄上完全一樣。 *@
+                <span class="badge bg-secondary mt-1 @(Model?.QualityHasData == false ? "" : "d-none")" id="qualityNoData">
+                    @Localizer["ScoreNoData"]
+                </span>
+                <span asp-validation-for="QualityScore" class="text-danger small"></span>
+            </div>
+
+            <div class="col-6">
+                <label asp-for="DeliveryScore" class="form-label">@Localizer["LabelDelivery"]</label>
+                <input asp-for="DeliveryScore" type="number" class="form-control" step="any" readonly id="deliveryScore" />
+                <input asp-for="DeliveryHasData" type="hidden" id="deliveryHasData" />
+                <span class="badge bg-secondary mt-1 @(Model?.DeliveryHasData == false ? "" : "d-none")" id="deliveryNoData">
+                    @Localizer["ScoreNoData"]
+                </span>
+                <span asp-validation-for="DeliveryScore" class="text-danger small"></span>
+            </div>
+
+            <div class="col-6">
+                <label asp-for="PriceScore" class="form-label">@Localizer["LabelPrice"] <span class="text-danger">*</span></label>
+                <input asp-for="PriceScore" type="number" class="form-control" step="any" min="0" max="100" id="priceScore"
+                       data-action-input="updateEvalTotal" />
+                <span asp-validation-for="PriceScore" class="text-danger small"></span>
+            </div>
+
+            <div class="col-6">
+                <label asp-for="ServiceScore" class="form-label">@Localizer["LabelService"] <span class="text-danger">*</span></label>
+                <input asp-for="ServiceScore" type="number" class="form-control" step="any" min="0" max="100" id="serviceScore"
+                       data-action-input="updateEvalTotal" />
+                <span asp-validation-for="ServiceScore" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12">
+                <div class="border rounded p-2 d-flex justify-content-between align-items-center"
+                     id="totalPreviewBox"
+                     data-wq="@weights.Quality" data-wd="@weights.Delivery"
+                     data-wp="@weights.Price"   data-ws="@weights.Service">
+                    <span class="text-muted small">
+                        @Localizer["WeightHint"]：@weights.Quality / @weights.Delivery / @weights.Price / @weights.Service
+                    </span>
+                    <span>
+                        @Localizer["LabelTotal"]：<strong id="totalPreview">@(isEdit || isReadOnly ? Model!.TotalScore.ToString("N2") : "—")</strong>
+                    </span>
+                </div>
+            </div>
+
+            @if (isReadOnly || isEdit)
+            {
+                <div class="col-12">
+                    <label class="form-label">@Localizer["LabelResult"]</label>
+                    <div>
+                        <span class="badge @(Model!.ResultStatus switch { EvaluationResult.Pass => "bg-success", EvaluationResult.Conditional => "bg-warning text-dark", _ => "bg-danger" })">
+                            @Localizer[$"EvalResult{Model.ResultStatus}"]
+                        </span>
+                    </div>
+                </div>
+            }
+
+            <div class="col-12">
+                <label asp-for="FollowUpAction" class="form-label">@Localizer["LabelFollowUp"] <span class="text-muted small">(@Localizer["FollowUpHint"])</span></label>
+                <textarea asp-for="FollowUpAction" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="FollowUpAction" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12">
+                <label asp-for="Remarks" class="form-label">@Localizer["LabelRemarks"]</label>
+                <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+            </div>
+        </div>
+    </div>
+    </fieldset>
+
+    <div class="offcanvas-footer border-top p-3 d-flex justify-content-end gap-2">
+        @if (isReadOnly)
+        {
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            <button type="submit" name="submit" value="save" class="btn btn-primary">
+                <i class="bi bi-check-lg"></i> @Localizer["Save"]
+            </button>
+        }
+    </div>
+</form>

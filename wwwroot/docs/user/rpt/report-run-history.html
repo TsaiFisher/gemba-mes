@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Schedule Run History — RPT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>排程執行紀錄 — RPT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">RPT 目錄</span><span lang="en">RPT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">RPT 畫面</span><span lang="en">RPT screens</span></div>
+    <a href="dashboard.html" class="nav-link"><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></a>
+    <a href="profit-loss.html" class="nav-link"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a>
+    <a href="gross-margin.html" class="nav-link"><span lang="zh">毛利分析</span><span lang="en">Gross Margin Analysis</span></a>
+    <a href="margin-analysis.html" class="nav-link"><span lang="zh">多維度銷售毛利分析</span><span lang="en">Multi-dimensional sales margin analysis</span></a>
+    <a href="contribution-margin.html" class="nav-link"><span lang="zh">產品邊際貢獻分析</span><span lang="en">Product Contribution Margin</span></a>
+    <a href="balance-sheet.html" class="nav-link"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></a>
+    <a href="consolidated-statement.html" class="nav-link"><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></a>
+    <a href="outsource-performance.html" class="nav-link"><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></a>
+    <a href="data-audit.html" class="nav-link"><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></a>
+    <a href="field-telemetry.html" class="nav-link"><span lang="zh">現場遙測</span><span lang="en">Field Telemetry</span></a>
+    <a href="saved-queries.html" class="nav-link"><span lang="zh">常用查詢</span><span lang="en">Saved Queries</span></a>
+    <a href="report-schedule.html" class="nav-link"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>
+    <a href="report-inbox.html" class="nav-link"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a>
+    <a href="report-run-history.html" class="nav-link active"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clock-history me-2 text-primary"></i><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/ReportRunHistory &nbsp;|&nbsp; 每一次排程執行的結果與原因</span><span lang="en">Route: /ReportRunHistory &nbsp;|&nbsp; The result and reason for every schedule run</span></div>
+    </div>
+
+    <p><span lang="zh">每一次排程執行都會留下紀錄，包含失敗與因權限不足而略過的那些。這個畫面存在的理由就是回答「為什麼這期沒有收到報表」——收件匣只給得到成功的結果，答不了這個問題。</span><span lang="en">Every schedule run is recorded, including the ones that failed or were skipped for lack of permission. This screen exists to answer the question "why was no report delivered this period" — the inbox only shows successful runs and cannot answer it.</span></p>
+    <img class="screen-shot" src="img/report-run-history.png" data-src-en="img/en/report-run-history.png" alt="排程執行紀錄畫面截圖" data-alt-en="Schedule run history screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">排程執行紀錄畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Schedule run history screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="how-to-use-it"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">How to use it</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">選擇執行結果（成功／失敗／權限不足略過）與執行日期區間，按「查詢」。要找出問題時，先選「失敗」。</span><span lang="en">Pick a result (success, failed, or skipped for lack of permission) and a run-date range, then click Search. When chasing a problem, start with Failed.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">看「訊息」欄的原因。權限不足略過代表擁有者對該報表的權限已被取消，該排程同時會被自動停用，請到「報表排程」確認並重新指派擁有者。</span><span lang="en">Read the reason in the Message column. "Skipped for lack of permission" means the owner's access to that report was revoked; the schedule is disabled at the same time, so check it on the Report Schedules screen and reassign the owner.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">「筆數」為 0 且結果為成功，代表報表有跑出來但該期間沒有資料——這通常是資料面的問題，不是排程的問題。</span><span lang="en">A successful run with 0 rows means the report ran but there was no data for that period — usually a data issue rather than a scheduling one.</span></div></div>
+
+    <h2 id="points-to-note"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">注意事項</span><span lang="en">Points to note</span></h2>
+
+    <p><span lang="zh">執行紀錄是稽核軌跡，排程被刪除後紀錄仍然保留，此時「排程名稱」會顯示為已刪除。紀錄本身不含報表數字，要取得檔案請到收件匣。</span><span lang="en">The run history is an audit trail: records survive the deletion of the schedule itself, and the schedule name then shows as deleted. The history holds no report figures — go to the inbox for the files.</span></p>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">執行結果</span><span lang="en">Result</span></td><td><span lang="zh">成功／失敗／權限不足略過；留空為全部</span><span lang="en">Success, failed or skipped for lack of permission; blank means all</span></td></tr>
+        <tr><td><span lang="zh">執行日期（起）</span><span lang="en">Run Date From</span></td><td><span lang="zh">只看該日期之後的執行</span><span lang="en">Only runs on or after this date</span></td></tr>
+        <tr><td><span lang="zh">執行日期（迄）</span><span lang="en">Run Date To</span></td><td><span lang="zh">只看該日期之前的執行</span><span lang="en">Only runs on or before this date</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">清單欄位</span><span lang="en">List fields</span></h3>
+
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">執行時間</span><span lang="en">Run Time</span></td><td><span lang="zh">本次執行的時刻，以廠別時區顯示（與其他畫面一致）</span><span lang="en">When this run happened, shown in the plant time zone (the same as every other screen)</span></td></tr>
+        <tr><td><span lang="zh">排程名稱</span><span lang="en">Schedule Name</span></td><td><span lang="zh">對應的排程；排程已刪除時顯示為已刪除</span><span lang="en">The schedule involved; shows as deleted once the schedule is gone</span></td></tr>
+        <tr><td><span lang="zh">報表</span><span lang="en">Report</span></td><td><span lang="zh">報表種類</span><span lang="en">Which report it is</span></td></tr>
+        <tr><td><span lang="zh">觸發方式</span><span lang="en">Trigger</span></td><td><span lang="zh">排程自動觸發、人工立即執行、或由自然語言提問觸發</span><span lang="en">Triggered by the schedule, by a manual run, or by a natural-language question</span></td></tr>
+        <tr><td><span lang="zh">執行結果</span><span lang="en">Result</span></td><td><span lang="zh">成功、失敗、或權限不足略過</span><span lang="en">Success, failed, or skipped for lack of permission</span></td></tr>
+        <tr><td><span lang="zh">筆數</span><span lang="en">Rows</span></td><td><span lang="zh">產出的資料列數</span><span lang="en">Number of data rows produced</span></td></tr>
+        <tr><td><span lang="zh">耗時</span><span lang="en">Duration</span></td><td><span lang="zh">本次執行花費的毫秒數；持續變長代表資料量成長或查詢變慢</span><span lang="en">How many milliseconds the run took; a steady rise means growing data or a slowing query</span></td></tr>
+        <tr><td><span lang="zh">訊息</span><span lang="en">Message</span></td><td><span lang="zh">失敗或略過的原因</span><span lang="en">Why it failed or was skipped</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+
+    <p><a href="report-schedule.html"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>、<a href="report-inbox.html"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a></p>
+  </main>
+</div>
+</body>
+</html>

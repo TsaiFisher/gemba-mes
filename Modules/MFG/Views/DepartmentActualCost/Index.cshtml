@@ -1,0 +1,175 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model PaginatedList<DepartmentActualCost>
+
+@{
+    ViewData["Title"]      = Localizer["PageTitle"].Value;
+    string curPeriod       = ViewBag.PeriodId as string ?? "";
+    string curWorkCenter   = ViewBag.WorkCenterCode as string ?? "";
+    var periodOptions      = ViewBag.PeriodOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    var workCenterOptions  = ViewBag.WorkCenterOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var workCenterNames    = ViewBag.WorkCenterNames as IReadOnlyDictionary<string, string> ?? new Dictionary<string, string>();
+    int baseDp             = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt        = baseDp <= 0 ? "N0" : $"N{baseDp}";
+    int curPageSize        = ViewBag.CurrentPageSize as int? ?? 20;
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        @if (ViewBag.CanCreate)
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                        data-url="@Url.Action("Create")"
+                        data-label="@Localizer["AddTitle"]"
+                        data-action="openPanel">
+                    <i class="bi bi-plus-circle"></i> @Localizer["Add"]
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" action="@Url.Action("Index")" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["Period"]</label>
+                    <select name="periodId" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllPeriods"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in periodOptions)
+                        {
+                            <option value="@p" selected="@(curPeriod == p)">@p</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">@Localizer["WorkCenter"]</label>
+                    <select name="workCenterCode" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllWorkCenters"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var wc in workCenterOptions)
+                        {
+                            <option value="@wc.WorkCenterCode" selected="@(curWorkCenter == (string)wc.WorkCenterCode)">@wc.WorkCenterCode — @wc.WorkCenterName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                </div>
+                <div class="col-auto d-flex align-items-end">
+                    @if (ViewBag.CanPrint == true)
+                    {
+                        <div class="btn-group">
+                            <a class="btn btn-outline-success" href="@Url.Action("Export", new { periodId = curPeriod, workCenterCode = curWorkCenter, format = "xlsx" })">
+                                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                            </a>
+                            <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="@Url.Action("Export", new { periodId = curPeriod, workCenterCode = curWorkCenter, format = "csv" })">CSV</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Export", new { periodId = curPeriod, workCenterCode = curWorkCenter, format = "json" })">JSON</a></li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+                <input type="hidden" name="searched" value="true" />
+            </form>
+        </div>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["ColPeriod"]</th>
+                        <th>@Localizer["ColWorkCenter"]</th>
+                        <th class="text-end">@Localizer["ColActualLaborCost"]</th>
+                        <th class="text-end">@Localizer["ColActualOverheadCost"]</th>
+                        <th>@Localizer["ColUpdatedAt"]</th>
+                        <th class="text-end">@Localizer["ColActions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.PeriodId</td>
+                            <td>
+                                @item.WorkCenterCode
+                                @if (workCenterNames.TryGetValue(item.WorkCenterCode, out var wcName))
+                                {
+                                    <span class="text-muted">— @wcName</span>
+                                }
+                            </td>
+                            <td class="text-end">@item.ActualLaborCost.ToString(moneyFmt)</td>
+                            <td class="text-end">@item.ActualOverheadCost.ToString(moneyFmt)</td>
+                            <td>@item.UpdatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td class="text-end">
+                                @if (ViewBag.CanUpdate)
+                                {
+                                    <button type="button" class="btn btn-sm btn-warning"
+                                            data-url="@Url.Action("Edit", new { id = item.Id })"
+                                            data-label="@Localizer["EditTitle"]"
+                                            data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                }
+                                @if (ViewBag.CanDelete)
+                                {
+                                    <button type="button" class="btn btn-sm btn-danger"
+                                            data-action="deleteItem" data-url="@Url.Action("DeleteConfirmed")" data-id="@item.Id"
+                                            data-confirm="@Localizer["ConfirmDelete"]"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info">@Localizer["NoData"]</div>
+        }
+        else
+        {
+            @await Html.PartialAsync("_Pagination", Model)
+        }
+    }
+</div>
+
+<div class="offcanvas offcanvas-end u-min-width-560px u-max-width-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<form id="__AjaxAntiForgery" class="d-none">@Html.AntiForgeryToken()</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

@@ -1,0 +1,117 @@
+@using SmartFactory.MES.Services
+@model List<SmartFactory.MES.Modules.MFG.ViewModels.UtilizationRowVm>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    ViewData["Title"] = L["PageTitle"].Value;
+    bool searched          = ViewBag.Searched == true;
+    bool canPrint          = ViewBag.CanPrint == true;
+    var rows               = Model ?? new();
+    string curWorkCenter   = ViewBag.WorkCenterId as string ?? "";
+    var workCenterOptions  = ViewBag.WorkCenterOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-3">
+    <h4 class="mb-3">@L["PageTitle"]</h4>
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-2">
+                <label class="form-label">@L["FromDate"]</label>
+                <input type="date" name="fromDate" class="form-control" value="@ViewBag.FromDate" required />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">@L["ToDate"]</label>
+                <input type="date" name="toDate" class="form-control" value="@ViewBag.ToDate" required />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">@L["WorkCenter"]</label>
+                <select name="workCenterId" class="form-select form-select-sm">
+                    <option value="">@L["AllWorkCenters"]</option>
+                    @foreach (var wc in workCenterOptions)
+                    {
+                        <option value="@wc.WorkCenterCode" selected="@(curWorkCenter == (string)wc.WorkCenterCode)">@wc.WorkCenterCode — @wc.WorkCenterName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" name="searched" value="true" class="btn btn-primary w-100 px-4">
+                    <i class="bi bi-search"></i> @L["Search"]
+                </button>
+            </div>
+        </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @* 日期欄位已標 required，這一段是後端的第二道：直接改網址或關掉 JS 時仍要講清楚 *@
+    @if (ViewBag.DateRangeRequired == true)
+    {
+        <div class="alert alert-warning py-2"><i class="bi bi-exclamation-triangle me-1"></i>@L["DateRangeRequired"]</div>
+    }
+
+    @if (!searched)
+    {
+        <div class="alert alert-info">@L["SearchFirst"]</div>
+    }
+    else if (!rows.Any())
+    {
+        <div class="alert alert-warning">@L["NoData"]</div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>@L["ResultTitle"]</strong>
+            @if (canPrint)
+            {
+                <a asp-action="Export"
+                   asp-route-fromDate="@ViewBag.FromDate" asp-route-toDate="@ViewBag.ToDate"
+                   asp-route-workCenterId="@ViewBag.WorkCenterId"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @L["ExportExcel"]
+                </a>
+            }
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["WorkCenter"]</th>
+                        <th class="text-end">@L["PlannedHours"]</th>
+                        <th class="text-end">@L["DowntimeHours"]</th>
+                        <th class="text-end">@L["AvailableHours"]</th>
+                        <th class="text-end">@L["ScheduledHours"]</th>
+                        <th class="text-end">@L["UtilizationRate"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                    @foreach (var r in paged)
+                    {
+                        <tr>
+                            <td>
+                                @r.WorkCenterId
+                                @if (!r.HasCalendar)
+                                {
+                                    @* 沒設日曆時可用工時＝0、稼動率也＝0，與「完全沒稼動」在畫面上
+                                       長得一模一樣。這個標記是兩者唯一的區別。 *@
+                                    <span class="badge bg-secondary ms-1" title="@L["NoWorkCalendar"]">
+                                        <i class="bi bi-calendar-x"></i>
+                                    </span>
+                                }
+                            </td>
+                            <td class="text-end">@r.PlannedHours.ToString("N1")</td>
+                            <td class="text-end text-danger">@r.DowntimeHours.ToString("N1")</td>
+                            <td class="text-end">@r.AvailableHours.ToString("N1")</td>
+                            <td class="text-end">@r.ScheduledHours.ToString("N1")</td>
+                            <td class="text-end">
+                                <span class="badge @(r.UtilizationRate >= 80 ? "bg-success" : r.UtilizationRate >= 60 ? "bg-warning text-dark" : "bg-danger")">
+                                    @r.UtilizationRate%
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @await Html.PartialAsync("_Pagination", paged)
+    }
+</div>

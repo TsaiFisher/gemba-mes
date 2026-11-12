@@ -1,0 +1,54 @@
+{
+  "sourcePath": "Services/HelpDocResolver.cs",
+  "sourceHash": "d1e41c891eba406aaff6a83ec34f451192e03f215ac66123eee4835a1db5245b",
+  "entries": [
+    {
+      "slug": "code-core-helpdocresolver-926f8146",
+      "lang": "zh",
+      "headingPath": "系統共用 › 畫面 → 使用手冊頁對應：頂部導覽列的「?」說明連結由此解析",
+      "text": "畫面 → 使用手冊頁對應：頂部導覽列的「?」說明｜系統的說明連結會根據當前介面所屬的模組和控制器來解析顯示。若用戶尚未登入，則無法顯示對應的說明連結。此外，由於手冊頁是中英雙語共用一頁，因此在使用者介面設定為英文時，該說明連結必須帶有語言參數才能確保直接顯示英文內容。",
+      "approved": true,
+      "sourceSectionHash": "d12bf74df3aadc0ac809751a7b70bcd983716685c7438118d54b51df0b0eef83"
+    },
+    {
+      "slug": "code-core-helpdocresolver-2dee44ca",
+      "lang": "zh",
+      "headingPath": "系統共用 › 使用者是從報表選單走進來的，手冊的分類要跟著使用者的路徑走",
+      "text": "報表手冊依據使用者路徑分類｜系統中顯示的手冊分類，會依照使用者進入系統的路徑來決定，而不是根據程式碼的模組名稱來決定。",
+      "approved": true,
+      "sourceSectionHash": "d98c54979365c54c9305c2a37b221d64178b722de98d72f3e31c7532ad685551"
+    },
+    {
+      "slug": "code-core-helpdocresolver-fbb4b265",
+      "lang": "zh",
+      "headingPath": "系統共用 › 理由是「使用者/角色/權限/代碼維護屬建置階段設定」——但那個前",
+      "text": "未登錄手冊就不顯示說明連結｜畫面右上角的「？」說明連結，只有在該畫面已登錄對應手冊頁時才會出現，沒有登錄就整個不顯示。使用者看到的是「這個功能沒有說明」而不是「這個功能不需要說明」，所以天天會用到的畫面都應該登錄。",
+      "approved": true,
+      "sourceSectionHash": "07536048be47d00889373207c595c26650bc6f0013d0f522b73986dd3470ac0e"
+    },
+    {
+      "slug": "code-core-helpdocresolver-10fccf9b",
+      "lang": "zh",
+      "headingPath": "系統共用 › 個人設定：2026-09-18 補登",
+      "text": "個人設定不需任何權限｜個人設定是唯一不需要任何權限就看得到的畫面，每個人都用得到，用來切換廠別與身分。它同時也是時區三層鏈（廠別、個人、系統預設）唯一講得清楚的地方。",
+      "approved": true,
+      "sourceSectionHash": "f8024897772df73ee2be1118b36b57de662ecf2551a34b743b038e67b3beca45"
+    },
+    {
+      "slug": "code-core-helpdocresolver-57b142c2",
+      "lang": "zh",
+      "headingPath": "系統共用 › 手冊的分類跟著使用者走進來的選單路徑走",
+      "text": "手冊目錄與流程依據使用路徑決定｜系統中的手冊分類會根據使用者進入的選單路徑來決定，而不是獨立成一個模組。",
+      "approved": false,
+      "sourceSectionHash": "da5a4b7cdabe4759740c51ba27cb1582086c19586267f873c91810011b0db8f9"
+    },
+    {
+      "slug": "code-core-helpdocresolver-a603df1e",
+      "lang": "zh",
+      "headingPath": "系統共用 › 用反查而非另建一份對照表",
+      "text": "系統內容判斷規則說明｜當根據手冊頁的路徑來判斷對應的畫面控制項時，如果目錄頁面與手冊首頁沒有直接對應的畫面，則不會回傳任何結果。",
+      "approved": true,
+      "sourceSectionHash": "84742bd8774dd548eeb5ea94d4815df873e665afb77f5fd251624eb6e434c150"
+    }
+  ]
+}

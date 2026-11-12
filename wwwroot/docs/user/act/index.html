@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Closing / IFRS (ACT) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>結帳/IFRS（ACT）— SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">ACT 畫面</span><span lang="en">ACT screens</span></div>
+    <a href="accounting-period.html" class="nav-link"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a>
+    <a href="journal-entry.html" class="nav-link"><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></a>
+    <a href="trial-balance.html" class="nav-link"><span lang="zh">試算表</span><span lang="en">Trial Balance</span></a>
+    <a href="month-end.html" class="nav-link"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>
+    <a href="department-actual-cost.html" class="nav-link"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></a>
+    <a href="nrv-assessment.html" class="nav-link"><span lang="zh">IAS 2 NRV 評估</span><span lang="en">IAS 2 NRV Assessment</span></a>
+    <a href="ecl.html" class="nav-link"><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></a>
+    <a href="bad-debt-provision.html" class="nav-link"><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-calendar-check me-2 text-primary"></i><span lang="zh">結帳/IFRS（ACT）</span><span lang="en">Closing / IFRS (ACT)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">會計期間鎖、日記帳、月結流程與 IFRS 評估（NRV/ECL/匯率重評）</span><span lang="en">The accounting period lock, the journal, the month-end close and the IFRS assessments (NRV / ECL / revaluation)</span></div>
+    </div>
+    <p><span lang="zh">ACT（Accounting）模組負責期間管理與結帳：會計期間開關控制全系統過帳（已關帳期間一律擋單），管理日記帳彙集自動分錄並支援手開，月結作業以檢查清單引導關帳步驟；並提供 IFRS 評估工具：IAS 2 存貨 NRV 減損、IFRS 9 預期信用損失（ECL）呆帳準備、IAS 21 期末匯率重評，以及部門實際費用（供期末實際費率重估回刷工單成本）。</span><span lang="en">The ACT (Accounting) module handles period management and closing: the accounting period switch controls posting across the whole system (a closed period blocks every document), the journal gathers the automatic entries and supports manual ones, and month-end close guides you through the steps with a checklist. It also provides the IFRS tools: IAS 2 inventory NRV impairment, IFRS 9 expected credit loss (ECL) provisioning, IAS 21 period-end revaluation, and departmental actual costs (which feed the period-end actual rate re-estimate that restates work order cost).</span></p>
+
+    <h2 id="suggested-month-end-order"><i class="bi bi-signpost-2 me-2 text-primary"></i><span lang="zh">月結建議順序</span><span lang="en">Suggested month-end order</span></h2>
+    <ol class="lh-lg">
+      <li><span lang="zh">確認各模組單據皆已過帳/結案（月結檢查清單逐項檢核）</span><span lang="en">Confirm every module's documents are posted or closed (tick off the month-end checklist item by item)</span></li>
+      <li><span lang="zh">部門實際費用輸入 → 實際費率重估回刷（工單成本 Final）</span><span lang="en">Entering departmental actual costs → actual rate re-estimate and restatement (work order cost Final)</span></li>
+      <li><span lang="zh">NRV / ECL / 匯率重評 評估入帳</span><span lang="en">Booking the NRV, ECL and revaluation assessments</span></li>
+      <li><span lang="zh">期間轉 Closing（僅允許調整分錄）→ 關帳 Closed</span><span lang="en">Switch the period to Closing (only adjusting entries) → close the period</span></li>
+    </ol>
+    <h2 id="flow"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></h2>
+    <p class="small text-muted mb-2"><span lang="zh">依作業先後順序排列，點擊方塊可開啟該畫面的操作說明。</span><span lang="en">Arranged in the order the work is done; click a box to open the instructions for that screen. </span><strong><span lang="zh">虛線外框</span><span lang="en">A dashed outline</span></strong><span lang="zh">為其他模組的作業（以顏色區分模組）。</span><span lang="en"> marks a step in another module (colour-coded by module).</span></p>
+    <div class="flow">
+      <div class="flow-legend">
+        <span class="flow-legend-item m-act"><i class="flow-dot"></i><span lang="zh">ACT 結帳（本模組）</span><span lang="en">ACT Closing (this module)</span></span>
+        <span class="flow-legend-item m-inv"><i class="flow-dot"></i><span lang="zh">INV 庫存</span><span lang="en">INV Inventory</span></span>
+        <span class="flow-legend-item m-fin"><i class="flow-dot"></i><span lang="zh">FIN 財務</span><span lang="en">FIN Finance</span></span>
+        <span class="flow-legend-item m-mfg"><i class="flow-dot"></i><span lang="zh">MFG 製造</span><span lang="en">MFG Manufacturing</span></span>
+        <span class="flow-legend-item m-rpt"><i class="flow-dot"></i><span lang="zh">RPT 報表</span><span lang="en">RPT Reports</span></span>
+        <span class="flow-legend-item"><i class="flow-dot flow-dot-ext"></i><span lang="zh">虛線＝其他模組作業</span><span lang="en">Dashed = a step in another module</span></span>
+      </div>
+
+      <div class="flow-row" id="flow-act-day-to-day-posting">
+        <div class="flow-row-label"><span lang="zh">平時過帳</span><span lang="en">Day-to-day posting</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-act" href="accounting-period.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">會計期間（Open）</span><span lang="en">Accounting period (Open)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/stock-movement.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存單據過帳</span><span lang="en">Posting inventory documents</span></span></a>
+          <span class="flow-plus">／</span>
+          <a class="flow-node m-fin ext" href="../fin/ap-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應收付過帳</span><span lang="en">Posting AR and AP</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act" href="journal-entry.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">日記帳（自動分錄）</span><span lang="en">Journal (automatic entries)</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-act-month-end-1">
+        <div class="flow-row-label"><span lang="zh">月結 ①</span><span lang="en">Month-end ①</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-act" href="month-end.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">月結檢查清單</span><span lang="en">Month-end checklist</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <span class="flow-node m-ext evt"><span class="flow-mod"><span lang="zh">檢核</span><span lang="en">Check</span></span><span class="flow-name"><span lang="zh">各模組單據皆已過帳／結案</span><span lang="en">Every module's documents are posted or closed</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt ext" href="../rpt/data-audit.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">資料稽核</span><span lang="en">Data audit</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-act-month-end-2">
+        <div class="flow-row-label"><span lang="zh">月結 ②</span><span lang="en">Month-end ②</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-act" href="department-actual-cost.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <span class="flow-node m-act evt"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">實際費率重估</span><span lang="en">Actual Rate Re-estimation</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg ext" href="../mfg/work-order-variance.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">工單成本回刷（Final）</span><span lang="en">Work order cost restatement (Final)</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-act-month-end-3">
+        <div class="flow-row-label"><span lang="zh">月結 ③</span><span lang="en">Month-end ③</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-act" href="nrv-assessment.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">NRV 存貨減損</span><span lang="en">NRV inventory impairment</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-act" href="ecl.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">ECL 預期信用損失</span><span lang="en">ECL expected credit loss</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-act" href="bad-debt-provision.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">呆帳準備</span><span lang="en">Bad debt provision</span></span></a>
+          <span class="flow-plus">｜</span>
+          <span class="flow-node m-act evt"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">期末匯率重評</span><span lang="en">Period-end revaluation</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act" href="journal-entry.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">評估分錄入帳</span><span lang="en">Post the assessment entry</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-act-month-end-4">
+        <div class="flow-row-label"><span lang="zh">月結 ④</span><span lang="en">Month-end ④</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-act" href="accounting-period.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">期間轉 Closing</span><span lang="en">Switch the period to Closing</span></span></a>
+          <span class="flow-cond"><span lang="zh">僅允許調整分錄</span><span lang="en">only adjusting entries are allowed</span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act" href="accounting-period.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">關帳 Closed</span><span lang="en">Closed</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt ext" href="../rpt/profit-loss.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></span></a>
+          <span class="flow-plus">＋</span>
+          <a class="flow-node m-rpt ext" href="../rpt/balance-sheet.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-foot">
+        <i class="bi bi-info-circle me-1"></i><span lang="zh">會計期間鎖是全系統過帳的共同閘口：期間一旦 Closed，該期間的庫存異動、應收付與工單成本皆無法再異動，
+        必要時須以次期沖銷分錄處理。</span><span lang="en">The accounting period lock is the common gate for posting across the whole system: once a period is Closed, its stock movements, receivables and payables and work order costs can no longer be changed,
+        and anything necessary has to be handled with a reversing entry in the following period.</span>
+      </div>
+    </div>
+
+    <h2 id="screen-list"><i class="bi bi-grid me-2 text-primary"></i><span lang="zh">畫面清單</span><span lang="en">Screen list</span></h2>
+    <div class="row g-3">
+      <div class="col-md-6"><a href="accounting-period.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-calendar3 me-1 text-primary"></i><span lang="zh">會計期間</span><span lang="en">Accounting period</span></h6>
+        <div class="text-muted small"><span lang="zh">期間開關與過帳鎖管制</span><span lang="en">The period switch and posting lock</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="journal-entry.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-journal-bookmark me-1 text-primary"></i><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></h6>
+        <div class="text-muted small"><span lang="zh">自動/手動分錄與科目彙總</span><span lang="en">Automatic and manual entries with account summaries</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="trial-balance.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-list-columns me-1 text-primary"></i><span lang="zh">試算表</span><span lang="en">Trial Balance</span></h6>
+        <div class="text-muted small"><span lang="zh">關帳前的科目層級對帳：期初、本期借貸、期末與借貸合計是否相等</span><span lang="en">Account-level reconciliation before closing: opening, movements, closing, and whether debits equal credits</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="month-end.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-check2-square me-1 text-primary"></i><span lang="zh">月結作業</span><span lang="en">Month-end close</span></h6>
+        <div class="text-muted small"><span lang="zh">月結檢查清單工作流</span><span lang="en">The month-end checklist workflow</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="department-actual-cost.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-cash-stack me-1 text-primary"></i><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></h6>
+        <div class="text-muted small"><span lang="zh">部門月實際費用輸入（實際費率重估基礎）</span><span lang="en">Entering monthly departmental actual costs (the basis of the actual rate re-estimate)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="nrv-assessment.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-shield-x me-1 text-primary"></i><span lang="zh">IAS 2 NRV 評估</span><span lang="en">IAS 2 NRV Assessment</span></h6>
+        <div class="text-muted small"><span lang="zh">存貨淨變現價值減損評估</span><span lang="en">Inventory net realisable value impairment assessment</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="ecl.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-percent me-1 text-primary"></i><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></h6>
+        <div class="text-muted small"><span lang="zh">預期信用損失（簡化法）評估</span><span lang="en">Expected credit loss assessment (simplified approach)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="bad-debt-provision.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-shield-x me-1 text-primary"></i><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></h6>
+        <div class="text-muted small"><span lang="zh">備抵呆帳提列與沖銷管理</span><span lang="en">Managing the bad debt allowance and its write-offs</span></div></div></div></a></div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

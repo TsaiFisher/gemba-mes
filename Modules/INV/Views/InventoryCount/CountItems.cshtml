@@ -1,0 +1,292 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Models.InventoryCountItem>
+
+@{
+    var sheet       = ViewBag.Sheet as InventoryCountSheet;
+    bool forRecount = ViewBag.ForRecount as bool? ?? false;
+    bool canUpdate  = ViewBag.CanUpdate == true;
+    bool canPrint   = ViewBag.CanPrint  == true;
+    string filterStatus  = ViewBag.FilterStatus  as string ?? "";
+    string filterProduct = ViewBag.FilterProduct as string ?? "";
+    var productOptions = ViewBag.ProductOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    string sheetId       = sheet?.SheetId ?? "";
+    string pageTitle     = forRecount ? Localizer["RecountTitle"].Value : Localizer["CountItemsTitle"].Value;
+    ViewData["Title"]    = pageTitle;
+
+    var statusBadge = sheet?.SheetStatus switch {
+        "Counting" => "bg-primary", "Closed" => "bg-success", _ => "bg-secondary"
+    };
+}
+
+<div class="container-fluid py-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="h4 mb-0">
+                <i class="bi bi-@(forRecount ? "patch-check" : "clipboard-check") me-2"></i>@pageTitle
+            </h1>
+            <div class="text-muted small mt-1">
+                @sheetId &nbsp;<span class="badge @statusBadge">@(sheet != null ? Localizer[sheet.SheetStatus].Value : "")</span>
+                &nbsp;@Localizer["Snapshot"]：@(sheet?.SnapshotAt?.ToString("yyyy-MM-dd HH:mm") ?? "—")
+            </div>
+        </div>
+        <div class="d-flex gap-2">
+            @if (!forRecount && sheet?.SheetStatus == "Counting")
+            {
+                <a asp-action="CountItems" asp-route-id="@sheetId" asp-route-forRecount="true"
+                   class="btn btn-warning btn-sm">
+                    <i class="bi bi-patch-check me-1"></i>@Localizer["GoToRecount"]
+                </a>
+            }
+            @if (canPrint)
+            {
+                <a asp-action="Export" asp-route-id="@sheetId" class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                </a>
+            }
+            <a asp-action="Index" asp-route-searched="true" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i>@Localizer["BackToList"]
+            </a>
+        </div>
+    </div>
+
+    <!-- 過濾列 -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body py-2">
+            <form asp-action="CountItems" asp-route-id="@sheetId" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="forRecount" value="@forRecount.ToString().ToLower()" />
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ItemStatus"]</label>
+                    <select name="filterStatus" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllStatus"]</option>
+                        @foreach (var s in new[] { "Pending", "Counted", "Recounted", "Finalized" })
+                        { <option value="@s" selected="@(filterStatus == s)">@Localizer[s]</option> }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["ProductCode"]</label>
+                    <select name="filterProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllProducts"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var pc in productOptions)
+                        { <option value="@pc" selected="@(filterProduct == pc)">@pc</option> }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center">@Localizer["NoItems"]</div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-header small text-muted">
+                @Localizer["TotalItems"]：@Model.TotalItems
+                @if (!forRecount)
+                {
+                    var doneCount  = Model.TotalItems - Model.Count(i => i.ItemStatus == "Pending");
+                }
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0" id="itemsTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["SeqNo"]</th>
+                                <th>@Localizer["WhCode"]</th>
+                                <th>@Localizer["LocationCode"]</th>
+                                <th>@Localizer["LotNo"]</th>
+                                <th>@Localizer["ProductCode"]</th>
+                                <th class="text-end">@Localizer["BookQty"]</th>
+                                @if (!forRecount)
+                                {
+                                    <th class="text-end">@Localizer["FirstCountQty"]</th>
+                                }
+                                else
+                                {
+                                    <th class="text-end">@Localizer["FirstCountQty"]</th>
+                                    <th class="text-end">@Localizer["RecountQty"]</th>
+                                }
+                                <th>@Localizer["ItemStatus"]</th>
+                                @if (canUpdate && sheet?.SheetStatus == "Counting")
+                                {
+                                    <th>@Localizer["Action"]</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                var itemBadge = item.ItemStatus switch {
+                                    "Pending"   => "bg-secondary",
+                                    "Counted"   => "bg-primary",
+                                    "Recounted" => "bg-warning text-dark",
+                                    "Finalized" => "bg-success",
+                                    _           => "bg-light text-dark"
+                                };
+                                <tr id="row-@item.ItemId">
+                                    <td>@item.SeqNo</td>
+                                    <td>@item.WhCode</td>
+                                    <td>@item.LocationCode</td>
+                                    <td class="small">@(string.IsNullOrEmpty(item.LotNo) ? "—" : item.LotNo)</td>
+                                    <td class="fw-semibold">@item.ProductCode</td>
+                                    <td class="text-end">@item.BookQty.ToString("N4")</td>
+                                    <td class="text-end">
+                                        @(item.FirstCountQty.HasValue ? item.FirstCountQty.Value.ToString("N4") : "—")
+                                        @if (item.FirstCountedBy != null)
+                                        { <br /><span class="text-muted u-font-size-p7rem">@item.FirstCountedBy</span> }
+                                    </td>
+                                    @if (forRecount)
+                                    {
+                                        <td class="text-end">
+                                            @(item.RecountQty.HasValue ? item.RecountQty.Value.ToString("N4") : "—")
+                                            @if (item.RecountedBy != null)
+                                            { <br /><span class="text-muted u-font-size-p7rem">@item.RecountedBy</span> }
+                                        </td>
+                                    }
+                                    <td><span class="badge @itemBadge">@Localizer[item.ItemStatus]</span></td>
+                                    @if (canUpdate && sheet?.SheetStatus == "Counting")
+                                    {
+                                        <td>
+                                            @if (!forRecount && (item.ItemStatus == "Pending" || item.ItemStatus == "Counted"))
+                                            {
+                                                <button class="btn btn-xs btn-primary u-font-size-p75rem u-padding-1px-8px"
+                                                       
+                                                        data-action="openCountInput"
+                                                        data-item-id="@item.ItemId" data-book-qty="@item.BookQty.ToString("G")"
+                                                        data-product="@item.ProductCode" data-recount="false"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                            }
+                                            @if (forRecount && item.ItemStatus == "Counted")
+                                            {
+                                                <button class="btn btn-xs btn-warning u-font-size-p75rem u-padding-1px-8px"
+                                                       
+                                                        data-action="openCountInput"
+                                                        data-item-id="@item.ItemId" data-book-qty="@item.BookQty.ToString("G")"
+                                                        data-product="@item.ProductCode" data-recount="true">
+                                                    <i class="bi bi-patch-check"></i> @Localizer["Recount"]
+                                                </button>
+                                            }
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model,
+            new ViewDataDictionary(ViewData) {
+                ["action"] = "CountItems",
+                ["routeValues"] = new { id = sheetId, forRecount, filterStatus, filterProduct }
+            })
+    }
+</div>
+
+<!-- 輸入數量 Modal -->
+<div class="modal fade" id="countModal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title" id="countModalTitle">@Localizer["EnterQty"]</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="countItemId" />
+                <input type="hidden" id="countIsRecount" value="false" />
+                <div class="mb-2">
+                    <label class="form-label small">@Localizer["Product"]</label>
+                    <div id="countProduct" class="fw-semibold"></div>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label small">@Localizer["BookQty"]</label>
+                    <div id="countBookQty" class="text-muted"></div>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label small fw-semibold">@Localizer["ActualQty"] <span class="text-danger">*</span></label>
+                    <input type="number" id="countQtyInput" step="any" min="0" class="form-control" />
+                </div>
+                <div class="mb-2">
+                    <label class="form-label small">@Localizer["Note"]</label>
+                    <input type="text" id="countNoteInput" class="form-control form-control-sm" maxlength="200" />
+                </div>
+            </div>
+            <div class="modal-footer py-2">
+                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">@Localizer["Cancel"]</button>
+                <button class="btn btn-primary btn-sm" data-action="submitCount">@Localizer["Confirm"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i><span id="toastMsg">@Localizer["SaveSuccess"]</span></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    const antiForgeryToken = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+
+    function openCountInput(e, el) {
+        const itemId = el.dataset.itemId, bookQty = el.dataset.bookQty,
+              product = el.dataset.product, isRecount = el.dataset.recount === 'true';
+        document.getElementById('countItemId').value   = itemId;
+        document.getElementById('countIsRecount').value = isRecount ? 'true' : 'false';
+        document.getElementById('countProduct').textContent  = product;
+        document.getElementById('countBookQty').textContent  = bookQty;
+        document.getElementById('countQtyInput').value  = '';
+        document.getElementById('countNoteInput').value = '';
+        document.getElementById('countModalTitle').textContent =
+            isRecount ? '@Localizer["RecountTitle"]' : '@Localizer["FirstCountTitle"]';
+        new bootstrap.Modal(document.getElementById('countModal')).show();
+    }
+
+    function submitCount() {
+        const itemId    = document.getElementById('countItemId').value;
+        const isRecount = document.getElementById('countIsRecount').value === 'true';
+        const qty       = parseFloat(document.getElementById('countQtyInput').value);
+        const note      = document.getElementById('countNoteInput').value;
+
+        if (isNaN(qty) || qty < 0) {
+            alert('@Localizer["QtyRequired"]');
+            return;
+        }
+
+        const url = isRecount ? '@Url.Action("SaveRecount")' : '@Url.Action("SaveFirstCount")';
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `itemId=${itemId}&qty=${qty}&note=${encodeURIComponent(note)}&__RequestVerificationToken=${encodeURIComponent(antiForgeryToken)}`
+        })
+        .then(r => r.json())
+        .then(d => {
+            bootstrap.Modal.getInstance(document.getElementById('countModal'))?.hide();
+            if (d.success) {
+                document.getElementById('toastMsg').textContent = d.message ?? '@Localizer["SaveSuccess"]';
+                bootstrap.Toast.getOrCreateInstance(document.getElementById('successToast')).show();
+                setTimeout(() => location.reload(), 900);
+            } else {
+                alert(d.message ?? 'Error');
+            }
+        });
+    }
+    </script>
+}

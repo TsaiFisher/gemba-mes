@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Tooling — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>模具 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="tooling.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link active"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-wrench-adjustable me-2 text-primary"></i><span lang="zh">模具</span><span lang="en">Tooling</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/Tooling &nbsp;|&nbsp; 模具主檔與基本規格維護</span><span lang="en">Route: /BAS/Tooling &nbsp;|&nbsp; Tooling master and basic specifications</span></div>
+    </div>
+    <p><span lang="zh">模具（Tooling）主檔記錄廠內所有模具的基本資料，包含規格、穴數與模具類型。排程引擎在分配射出或沖壓工序時，可依模具穴數計算每模次產量。</span><span lang="en">The tooling master records the basic data of every mold and die in the plant, including specification, cavity count and type. When scheduling injection or stamping operations, the engine uses the cavity count to calculate the output per shot.</span></p>
+    <img class="screen-shot" src="img/tooling.png" data-src-en="img/en/tooling.png" alt="模具畫面截圖" data-alt-en="Tooling screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">模具畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Tooling screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-30pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">模具代碼</span><span lang="en">Tooling</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">廠內唯一識別碼（例：M001、T-COVER-01）</span><span lang="en">Unique code within the plant (e.g. M001, T-COVER-01)</span></td></tr>
+        <tr><td><span lang="zh">模具名稱</span><span lang="en">Tooling Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">完整名稱（例：外蓋沖壓模、底座射出模）</span><span lang="en">Full name (e.g. cover stamping die, base injection mold)</span></td></tr>
+        <tr><td><span lang="zh">規格</span><span lang="en">Spec</span></td><td></td><td><span lang="zh">模具尺寸、材質或其他技術規格說明</span><span lang="en">Tooling dimensions, material or other technical specifications</span></td></tr>
+        <tr><td><span lang="zh">穴數</span><span lang="en">Cavity Count</span></td><td></td><td><span lang="zh">每次成型的穴數（Cavity Count），影響每模次產量計算</span><span lang="en">Cavity count per shot; drives the output calculated for each shot</span></td></tr>
+        <tr><td><span lang="zh">模具類型</span><span lang="en">Tooling Type</span></td><td></td><td><span lang="zh">由代碼維護定義（例：射出模、沖壓模、壓鑄模）</span><span lang="en">Defined in Code Maintenance (e.g. injection mold, stamping die, die-casting mold)</span></td></tr>
+        <tr><td><span lang="zh">每穴產品組合</span><span lang="en">Products per Cavity</span></td><td></td><td><span lang="zh">多品項一模時記錄每穴對應產品（例：A品×2 / B品×2）</span><span lang="en">Records the product in each cavity for multi-product molds (e.g. product A ×2 / product B ×2)</span></td></tr>
+        <tr><td><span lang="zh">保養間隔打次</span><span lang="en">PM Interval (Shots)</span></td><td></td><td><span lang="zh">累計打次達此門檻時，系統自動建立保養停機單（HI）並將機台轉入保養中；空白或 0 = 不做打次保養管控（夾治具以點檢表管控）</span><span lang="en">When the accumulated shots reach this threshold, the system creates a maintenance downtime order (HI) and puts the machine into maintenance; blank or 0 = no shot-based maintenance control (jigs and fixtures are controlled by checklists)</span></td></tr>
+        <tr><td><span lang="zh">累計打次</span><span lang="en">Accumulated Shots</span></td><td></td><td><span lang="zh">唯讀。報工自動累計（（良品＋不良）÷ 穴數）；保養完成（HO 事件、來源單號填模具代碼）後歸零</span><span lang="en">Read-only. Accumulated automatically from production reports ((good + NG) ÷ cavity count); reset to zero once maintenance is completed (an HO event whose source document is the tooling code)</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後不可在工單或派工中選用</span><span lang="en">Once inactive, cannot be selected on work orders or dispatches</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td></td><td><span lang="zh">維護記錄、採購廠商等補充資訊</span><span lang="en">Maintenance history, supplier and other supplementary information</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">若有需要，先至「代碼維護」建立模具類型代碼（分類：tooling_type）。</span><span lang="en">If needed, create the tooling type codes first in Code Maintenance (category: tooling_type).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">進入「基本資料 &gt; 模具」，點「新增」。</span><span lang="en">Go to "Basic Data &gt; Tooling" and click "Add".</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">填入模具代碼、名稱，選擇模具類型，填入穴數。</span><span lang="en">Enter the tooling code and name, pick a tooling type and enter the cavity count.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">填入規格與備註（可選），點「儲存」。</span><span lang="en">Enter the specification and note (optional), then click "Save".</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">穴數正確設定後，排程引擎計算射出工序時可自動將工單量除以穴數，得到實際開機模次數，更精準估算完工時間。</span><span lang="en">With the cavity count set correctly, the scheduling engine divides the work order quantity by the cavities when planning an injection operation, giving the real number of shots and a more accurate completion time.</span>
+    </div>
+    <div class="tip-box"><i class="bi bi-tools me-1 text-primary"></i>
+      <strong><span lang="zh">模具保養排程：</span><span lang="en">Tooling maintenance schedule:</span></strong><span lang="zh">設定「保養間隔打次」後，報工會自動累計打次；達門檻時派工/報工畫面標示「模具需保養」，並自動建立機台保養停機單。保養完成由工程師建立 HO（保養完成）事件、來源單號填入模具代碼，累計打次即歸零並開始下一週期。</span><span lang="en"> Once a "PM interval (shots)" is set, production reports accumulate the shot count; when the threshold is reached the dispatch and reporting screens show "Tooling PM Due" and a machine maintenance downtime order is created automatically. After maintenance the engineer records an HO (maintenance done) event with the tooling code as the source document, and the accumulated shots reset to zero for the next cycle.</span>
+    </div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">模具為廠別設定（PlantId 範圍），各廠獨立維護自己的模具清單，不同廠的模具代碼不互相影響。</span><span lang="en"> Tooling is plant-scoped (PlantId); each plant maintains its own tooling list, and codes in one plant do not affect another.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

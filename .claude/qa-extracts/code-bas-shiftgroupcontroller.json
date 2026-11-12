@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/BAS/Controllers/ShiftGroupController.cs",
+  "sourceHash": "eeae7b234a7bedab1800a5aeb9ecdfe83366fc7c73422e80d3efd33707ebee94",
+  "entries": [
+    {
+      "slug": "code-bas-shiftgroupcontroller-c42e515f",
+      "lang": "zh",
+      "headingPath": "基本資料 › 每廠至多一筆預設班制：設為預設時清除本廠其他預設",
+      "text": "限制每個廠區的預設班制資訊｜當某個廠區的班制資料被設定為預設值時，系統會自動清除該廠區其他所有已經設定的預設班制資料。",
+      "approved": true,
+      "sourceSectionHash": "722a7f8fcf997b3b7336c0ccc69b1b473b85433ce4d723e1c079163715852c8f"
+    },
+    {
+      "slug": "code-bas-shiftgroupcontroller-320d4549",
+      "lang": "zh",
+      "headingPath": "基本資料 › 主動查核，避免班制刪除後留下孤兒設定",
+      "text": "預設班制與工作曆來源的關聯性｜系統在處理工作中心時，其預設的班制和工作曆展開來源是透過一個字串代碼進行參照，這意味著如果刪除了某個班制設定，相關的工作中心可能會因為這個參照而留下無法被正確管理的孤立設定。",
+      "approved": true,
+      "sourceSectionHash": "3363e4dc20406bafde64be0e7f51ad3deb0ecdf7d91f47da0491f3a981a68095"
+    },
+    {
+      "slug": "code-bas-shiftgroupcontroller-7d85e48f",
+      "lang": "zh",
+      "headingPath": "基本資料 › 正班工時/開班/收班一律由所選班別伺服端推算",
+      "text": "班別工時自動計算規則｜正班的工時、開班和收班的時間，會由所選擇的班次系統根據預設邏輯來計算得出；而加班工時則需要使用者手動填寫。",
+      "approved": true,
+      "sourceSectionHash": "53f45f6ccaa737f46fe6feee546bf51f8e9e5d511a2c33e3f9975744720f0090"
+    },
+    {
+      "slug": "code-bas-shiftgroupcontroller-52100d7a",
+      "lang": "zh",
+      "headingPath": "基本資料 › 整週一次儲存",
+      "text": "排班天數的計算方式說明｜正班工時、開班和收班的時間是根據選擇的班別由系統自動計算出來的，而加班工時則需要使用者手動填寫。",
+      "approved": false,
+      "sourceSectionHash": "d547b71d9506637a8738e00f7afbeb5587858c2d18a399d030365b36a2f3f497"
+    }
+  ]
+}

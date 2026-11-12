@@ -1,0 +1,86 @@
+{
+  "sourcePath": "Api/Mobile/MobileInvController.cs",
+  "sourceHash": "785ca54407b9f9f302744ed00decd046f095e1e11cec7f76398b6d0b9da443f4",
+  "entries": [
+    {
+      "slug": "code-mobile-mobileinvcontroller-231b687d",
+      "lang": "zh",
+      "headingPath": "手機 › 帶  時，品號與批量一律由伺服器從派工／工單取得，",
+      "text": "檢驗規格的取得與使用規則｜當透過派工或工單進行操作時，系統會自動從伺服器獲取品號和批次資訊，此時前端介面不會直接使用使用者輸入的品號和批次。",
+      "approved": true,
+      "sourceSectionHash": "6273eadd8f9f0acb8afb7e02e8dcca2aeda48a02b81214a6a12cd9d7a6d8d771"
+    },
+    {
+      "slug": "code-mobile-mobileinvcontroller-199892e4",
+      "lang": "zh",
+      "headingPath": "手機 › ️ 選填的實值型別查詢參數一律寫成可空",
+      "text": "查詢參數不強制填寫時的處理方式｜選填的實值型別查詢參數，系統預設會視為可空，因此若未提供該參數的值，系統不會自動補入任何預設值。",
+      "approved": false,
+      "sourceSectionHash": "cc3bc980efa78d86fb0b4438f9a9a47dc06497e81c4fd2da9609dfdefedb01e8"
+    },
+    {
+      "slug": "code-mobile-mobileinvcontroller-c9f2fcb8",
+      "lang": "zh",
+      "headingPath": "手機 › 手機只提供量測值、抽樣數、不良數與驗證等級",
+      "text": "檢驗結果提交的資料來源限制｜手機端僅能提供量測值、抽樣數、不良數與驗證等級等資訊，品號、批次、應抽樣數、規格上下限以及各項是否符合和合格判定都由後端系統決定。",
+      "approved": true,
+      "sourceSectionHash": "a23db370277ea7ebe35295df8fcd2e64e36261b13932f0054bbb6c7e13ccf834"
+    },
+    {
+      "slug": "code-mobile-mobileinvcontroller-ecb4e528",
+      "lang": "zh",
+      "headingPath": "手機 › 派工必須是本廠的：原本查不到也照建檢驗單",
+      "text": "手機製程檢驗必須對應本廠派工｜在手機送出製程檢驗（IPQC）時，系統只在目前所屬廠別內查找派工；查不到（包括其他廠別的派工或不存在的單號）就不會建立檢驗單，避免憑任意單號掛上一張「合格」的檢驗紀錄。",
+      "approved": true,
+      "sourceSectionHash": "7acf2a9429f9bbcae93e049cbfceafbc2c1e3d4230df6ed38d4e3af2f07d51c6"
+    },
+    {
+      "slug": "code-mobile-mobileinvcontroller-7d58f86f",
+      "lang": "zh",
+      "headingPath": "手機 › 初盤→複盤→PC 結帳的單一資料流程",
+      "text": "庫存盤點規則說明｜當使用清冊進行盤點時，系統會直接比對品項編號與電腦端已產生的盤點數量。若採用自由盤點方式，則會根據使用者和廠別自動尋找或建立正在進行的盤點清單。",
+      "approved": true,
+      "sourceSectionHash": "160a1ff64c74258c0709cb6aa0fb343b34362b3a0fc11263da01decd4ebb9b3f"
+    },
+    {
+      "slug": "code-mobile-mobileinvcontroller-a6bd771d",
+      "lang": "zh",
+      "headingPath": "手機 › 已全部盤完的清冊不列：手機上選了只會看到空清單",
+      "text": "手機只能看到有待處理的清單｜系統只會顯示那些在品項狀態上仍為「待處理」的清單，已全部盤完且沒有任何明細資料的清單不會出現在手機介面。",
+      "approved": true,
+      "sourceSectionHash": "0dea155476c11e724e1021b6cd311b34363f1a55227e1730378c9b547cbc28b0"
+    },
+    {
+      "slug": "code-mobile-mobileinvcontroller-d6193636",
+      "lang": "zh",
+      "headingPath": "手機 › 不帶 → 自由盤點，自動找/建當前",
+      "text": "盤點提交規則說明｜當使用人在本廠進行的清冊盤點，如果找不到對應的明細資料，系統會自動建立新的明細紀錄，並將該筆記錄的數量設定為目前庫存快照。",
+      "approved": true,
+      "sourceSectionHash": "8a06c21514850a2b1af7bf6fbc8d76027fa92953effe5055bc459ed6f09ae864"
+    },
+    {
+      "slug": "code-mobile-mobileinvcontroller-6cba3888",
+      "lang": "zh",
+      "headingPath": "手機 › 覆盤之後不得再改初盤",
+      "text": "覆盤後無法修改初次盤點資料｜一旦完成了覆盤的作業，就不能再修改最初進行的盤點紀錄了。",
+      "approved": true,
+      "sourceSectionHash": "5de0378532280c82ce1997b6b1e2ae9ea82277ccd0102d1f1e406c223862c6ce"
+    },
+    {
+      "slug": "code-mobile-mobileinvcontroller-28090b84",
+      "lang": "zh",
+      "headingPath": "手機 › ── 盤點的離線重送去重 ───────────────────",
+      "text": "盤點資料重送時的庫存計算規則｜系統在處理離線重傳的盤點資料時，所記錄的帳面數量是取用資料到達當下的庫存狀態，而不是盤點執行那一刻的庫存。因此，如果從盤點到資料回傳期間發生了任何庫存變動，這些差異都會包含進來計算。",
+      "approved": true,
+      "sourceSectionHash": "0dcbfd853cc9f137a9c2021984fb012d9254e3c350db8c3b54128ac9536c4ca4"
+    },
+    {
+      "slug": "code-mobile-mobileinvcontroller-758ca1cc",
+      "lang": "zh",
+      "headingPath": "手機 › 快照**只存失敗的明細**",
+      "text": "快照只記錄有錯誤的項目｜系統在儲存快照紀錄時，僅會記錄那些處理失敗的明細資料，這樣可以避免一次性寫入大量成功或失敗的詳細資訊導致資料儲存超限。",
+      "approved": true,
+      "sourceSectionHash": "f8ab31d596d3e9d8706a893c3c60f09fc33e701e231ff9ec9322a9f365fe36a9"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>產品主檔</value></data>
+  <data name="AddEntry" xml:space="preserve"><value>新增產品</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>代號、名稱、規格</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入條件後按「查詢」</value></data>
+  <data name="BasicInfo" xml:space="preserve"><value>基本資料</value></data>
+  <data name="Categories" xml:space="preserve"><value>產品類別</value></data>
+  <data name="CategoryHint" xml:space="preserve"><value>可勾選一或多個類別</value></data>
+  <data name="NoCategoryData" xml:space="preserve"><value>尚無類別設定（請至代碼維護設定 product_category）</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>產品代號</value></data>
+  <data name="ProductCodePlaceholder" xml:space="preserve"><value>例：PROD001</value></data>
+  <data name="ProductName" xml:space="preserve"><value>產品名稱</value></data>
+  <data name="Spec" xml:space="preserve"><value>規格</value></data>
+  <data name="RoutingId" xml:space="preserve"><value>途程代號</value></data>
+  <data name="RoutingIdPlaceholder" xml:space="preserve"><value>日後串接途程模組</value></data>
+  <data name="UomSection" xml:space="preserve"><value>單位設定</value></data>
+  <data name="SalesUom" xml:space="preserve"><value>銷售單位</value></data>
+  <data name="PurchaseUom" xml:space="preserve"><value>採購單位</value></data>
+  <data name="StockUom" xml:space="preserve"><value>庫存單位</value></data>
+  <data name="UomPlaceholder" xml:space="preserve"><value>例：PCS</value></data>
+  <data name="PlanningSection" xml:space="preserve"><value>庫存 / 計劃</value></data>
+  <data name="StockMode" xml:space="preserve"><value>庫存模式</value></data>
+  <data name="AllModes" xml:space="preserve"><value>全部模式</value></data>
+  <data name="MrpMode" xml:space="preserve"><value>產銷模式</value></data>
+  <data name="CodeEntryPlaceholder" xml:space="preserve"><value>請輸入代碼</value></data>
+  <data name="SafetyStock" xml:space="preserve"><value>安全存量</value></data>
+  <data name="StandardCost" xml:space="preserve"><value>標準單價</value></data>
+  <data name="LeadTimeDays" xml:space="preserve"><value>前置期</value></data>
+  <data name="UrgentLeadTimeDays" xml:space="preserve"><value>緊急前置期</value></data>
+  <data name="OutsourceQtyPerDay" xml:space="preserve"><value>委外量（件/天）</value></data>
+  <data name="ShelfLifeDays" xml:space="preserve"><value>有效期限</value></data>
+  <data name="Days" xml:space="preserve"><value>天</value></data>
+  <data name="PackagingSection" xml:space="preserve"><value>重量 / 包裝</value></data>
+  <data name="NetWeight" xml:space="preserve"><value>淨重</value></data>
+  <data name="GrossWeight" xml:space="preserve"><value>毛重</value></data>
+  <data name="BoxQty" xml:space="preserve"><value>單箱數量</value></data>
+  <data name="QualitySection" xml:space="preserve"><value>品質驗收</value></data>
+  <data name="InspectionLevelN" xml:space="preserve"><value>計數驗收水準</value></data>
+  <data name="InspectionLevelR" xml:space="preserve"><value>計量驗收水準</value></data>
+  <data name="InspectionLevelC" xml:space="preserve"><value>連續驗收水準</value></data>
+  <data name="IsLotControlled" xml:space="preserve"><value>批號管控</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="IsActive" xml:space="preserve"><value>啟用</value></data>
+  <data name="Active" xml:space="preserve"><value>啟用</value></data>
+  <data name="Inactive" xml:space="preserve"><value>停用</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>審核狀態</value></data>
+  <data name="Approved" xml:space="preserve"><value>已核准</value></data>
+  <data name="PendingApproval" xml:space="preserve"><value>審核中</value></data>
+  <data name="Rejected" xml:space="preserve"><value>已退回</value></data>
+  <data name="Draft" xml:space="preserve"><value>草稿</value></data>
+  <data name="ViewApproval" xml:space="preserve"><value>查看審核</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="Print" xml:space="preserve"><value>列印</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>匯出 Excel</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>匯出 CSV</value></data>
+  <data name="ExportJson" xml:space="preserve"><value>匯出 JSON</value></data>
+</root>

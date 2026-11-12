@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Receipts — FIN User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>收款作業 — FIN 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">FIN 目錄</span><span lang="en">FIN contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">FIN 畫面</span><span lang="en">FIN screens</span></div>
+    <a href="chart-of-account.html" class="nav-link"><span lang="zh">會計科目</span><span lang="en">Chart of Accounts</span></a>
+    <a href="ap-invoice.html" class="nav-link"><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></a>
+    <a href="ar-invoice.html" class="nav-link"><span lang="zh">應收帳款</span><span lang="en">AR Invoice</span></a>
+    <a href="ar-credit-note.html" class="nav-link"><span lang="zh">銷貨折讓單</span><span lang="en">Sales Credit Note</span></a>
+    <a href="ap-debit-note.html" class="nav-link"><span lang="zh">進貨折讓單</span><span lang="en">Purchase Debit Note</span></a>
+    <a href="ap-payment.html" class="nav-link"><span lang="zh">付款作業</span><span lang="en">AP Payment</span></a>
+    <a href="ar-receipt.html" class="nav-link active"><span lang="zh">收款作業</span><span lang="en">AR Receipt</span></a>
+    <a href="bank-account.html" class="nav-link"><span lang="zh">銀行帳戶</span><span lang="en">Bank Account</span></a>
+    <a href="ap-aging.html" class="nav-link"><span lang="zh">應付帳齡分析</span><span lang="en">AP Aging</span></a>
+    <a href="ar-aging.html" class="nav-link"><span lang="zh">應收帳齡分析</span><span lang="en">AR Aging</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-cash-stack me-2 text-primary"></i><span lang="zh">收款作業</span><span lang="en">AR Receipt</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/ARReceipt &nbsp;|&nbsp; 收款單與應收發票核銷</span><span lang="en">Route: /ARReceipt &nbsp;|&nbsp; Receipts allocated against AR invoices</span></div>
+    </div>
+
+    <p><span lang="zh">登錄客戶匯款並核銷應收發票，確認後增加銀行餘額；外幣收款結算自動認列已實現匯兌損益。流程與付款作業對稱。</span><span lang="en">Records money received from a customer and allocates it against AR invoices; confirming it increases the bank balance, and realised exchange gains and losses on foreign currency receipts are recognised automatically. The flow mirrors Payments.</span></p>
+    <img class="screen-shot" src="img/ar-receipt.png" data-src-en="img/en/ar-receipt.png" alt="收款核銷畫面截圖" data-alt-en="Receipt allocation screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">收款核銷畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Receipt allocation screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">收款</span><span lang="en">Receipt</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」選客戶與收款帳戶，帶出未結清發票。</span><span lang="en">Click "Add", choose the customer and the receiving account, and the open invoices are listed.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">分配核銷金額後儲存、確認；發票結清、餘額增加。</span><span lang="en">Allocate the amount, then save and confirm; the invoice is settled and the balance goes up.</span></div></div>
+    <h3 id="credit-balance"><span lang="zh">多收款的退款與抵用</span><span lang="en">Refunding or applying an overpayment</span></h3>
+    <p><span lang="zh">發票全額收訖之後才開<a href="ar-credit-note.html">銷貨折讓單</a>（例如客戶退貨），客戶就多付了錢：這張發票的「未結金額」會是<strong>負數</strong>，在挑發票清單與<a href="ar-aging.html">應收帳齡分析</a>都看得到。多收的錢用同一張收款單處理，對這張發票填<strong>負數</strong>的核銷金額：</span><span lang="en">If a <a href="ar-credit-note.html">sales credit note</a> is issued after an invoice has been received in full (for example the customer returned goods), the customer has overpaid: the invoice's "Outstanding" becomes <strong>negative</strong>, and it shows up both in the invoice list on this screen and in <a href="ar-aging.html">AR Aging</a>. Handle the overpayment with an ordinary receipt by entering a <strong>negative</strong> allocation against that invoice:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh"><strong>退款給客戶：</strong>只對多收的那張發票填負數（例如 −105），「收款金額」會跟著變成 −105；選退款的銀行帳戶後儲存、確認。銀行餘額減少，總帳借 應收帳款、貸 銀行存款。</span><span lang="en"><strong>Refund the customer:</strong> enter a negative amount (for example −105) against the overpaid invoice only; "Receipt Amount" follows to −105. Choose the bank account the refund is paid from, then save and confirm. The bank balance goes down, and the ledger is debited to Accounts Receivable and credited to Bank.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh"><strong>抵用下一張發票：</strong>同一張收款單裡，新發票填正數、多收的發票填負數（例如 +1000 與 −105），「收款金額」就是實收的 895。</span><span lang="en"><strong>Apply it to another invoice:</strong> on the same receipt, enter a positive amount against the new invoice and a negative amount against the overpaid one (for example +1000 and −105); "Receipt Amount" is then the 895 actually received.</span></div></div>
+    <img class="screen-shot" src="img/ar-receipt-refund.png" data-src-en="img/en/ar-receipt-refund.png" alt="對多收款發票填負數核銷的收款單截圖" data-alt-en="Receipt with a negative allocation against an overpaid invoice" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">多收款發票的未結金額是負數，核銷金額填負數即為退款</span><span lang="en">An overpaid invoice shows a negative outstanding amount; a negative allocation refunds it</span></div>
+    <div class="alert alert-info small"><span lang="zh">負數只能填在未結金額為負的發票上，而且不能超過多收的金額；對還沒收齊的發票填負數會被擋下。退款時銀行帳戶餘額不足也會被擋下。作廢退款單會把發票恢復成多收的狀態。已作廢的發票不能再收款核銷。有退款的發票，要先作廢退款那張，才能作廢原收款。</span><span lang="en">A negative amount is only accepted on an invoice whose outstanding amount is negative, and it cannot exceed the overpayment; a negative amount on an invoice that is not yet fully received is rejected. A refund is also rejected if the bank account balance is not enough. Voiding a refund puts the invoice back to its overpaid state. A voided invoice cannot be settled by a receipt. If an invoice has a refund, void the refund before voiding the original receipt.</span></div>
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。收款單列印含客戶名稱、付款方式、銀行帳戶、幣別與匯率、收款金額與本幣金額，並列出沖銷的發票。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The receipt printout shows the customer name, payment method, bank account, currency and exchange rate, amount and local amount, and lists the invoices it settles.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">客戶代碼</span><span lang="en">Customer Code</span></td><td><span lang="zh">只看單一客戶的收款單；留空為全部</span><span lang="en">Receipts for one customer only; leave blank for all</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">依收款單狀態篩選（草稿／待簽核／已確認／已作廢）</span><span lang="en">Filters by receipt status (draft / pending approval / confirmed / void)</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">收款單表頭</span><span lang="en">Receipt header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">收款單號</span><span lang="en">Receipt No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">客戶代碼</span><span lang="en">Customer Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">付款方；選定後只帶出該客戶的未結清應收發票</span><span lang="en">The payer; once chosen, only that customer's open AR invoices are listed</span></td></tr>
+        <tr><td><span lang="zh">收款日期</span><span lang="en">Receipt date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">款項實際入帳日，決定入帳期間與外幣結算匯率</span><span lang="en">Date the money actually arrived, which decides the accounting period and the settlement rate for foreign currency</span></td></tr>
+        <tr><td><span lang="zh">收款方式</span><span lang="en">Collection Method</span></td><td><span lang="zh">匯款、支票、現金等，由代碼維護提供</span><span lang="en">Transfer, cheque, cash and so on, supplied by code maintenance</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">草稿／待簽核／已確認／已作廢；確認後才沖銷發票並增加銀行餘額</span><span lang="en">Draft / pending approval / confirmed / void; the invoice is only settled and the bank balance increased once it is confirmed</span></td></tr>
+        <tr><td><span lang="zh">金額(本幣)</span><span lang="en">Amount (Local)</span></td><td><span lang="zh">本次收款換算為本位幣的金額。「收款金額」會自動等於各核銷明細的合計，兩者不符的收款單存不進去；退款時為負數</span><span lang="en">The receipt converted to local currency. "Receipt Amount" automatically equals the total of the allocation lines, and a receipt where the two differ cannot be saved; it is negative for a refund</span></td></tr>
+        <tr><td><span lang="zh">匯兌損益</span><span lang="en">Exchange Gain/Loss</span></td><td><span lang="zh">外幣收款時，發票入帳匯率與收款日匯率的差額，結算時自動認列為已實現匯兌損益</span><span lang="en">On a foreign currency receipt, the difference between the rate the invoice was booked at and the rate on the receipt date, recognised automatically as a realised exchange gain or loss on settlement</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">核銷明細</span><span lang="en">Allocation Details</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">發票號碼</span><span lang="en">Invoice No</span></td><td><span lang="zh">被本次收款沖銷的應收發票；可一次選取多張。清單列出還沒收齊的發票，以及收訖後才折讓而多收的發票</span><span lang="en">AR invoices settled by this receipt; several can be chosen at once. The list shows invoices not yet fully received, plus invoices overpaid because a credit note was issued after they were received</span></td></tr>
+        <tr><td><span lang="zh">未結金額</span><span lang="en">Outstanding</span></td><td><span lang="zh">發票總額 − 已收 − 已折讓。負數代表客戶多付</span><span lang="en">Invoice total − amount received − amount credited. A negative figure means the customer has overpaid</span></td></tr>
+        <tr><td><span lang="zh">核銷金額</span><span lang="en">Alloc. Amount</span></td><td><span lang="zh">該張發票本次沖銷的金額，可小於發票餘額（部分核銷）；各行合計須等於收款金額。未結金額為負的發票填負數，用於<a href="#credit-balance">退款或抵用</a></span><span lang="en">Amount settled against this invoice, which may be less than the invoice balance (a partial allocation); the lines must add up to the receipt amount. Enter a negative amount against an invoice with a negative outstanding amount to <a href="#credit-balance">refund or apply the overpayment</a></span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="ar-invoice.html"><span lang="zh">應收帳款</span><span lang="en">AR Invoice</span></a>、<a href="bank-account.html"><span lang="zh">銀行帳戶</span><span lang="en">Bank Account</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

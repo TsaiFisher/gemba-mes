@@ -1,0 +1,201 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject ITimeZoneCatalog TimeZones
+@model SmartFactory.MES.Models.ApplicationUser
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Services
+
+@{
+    ViewData["Title"] = Localizer["UserSettings"];
+    var userRoles  = ViewBag.UserRoles  as List<ApplicationRole>;
+    var userPlants = ViewBag.UserPlants as List<Plant>;
+    bool roleIsRestricted = ViewBag.RoleIsRestricted == true;
+
+    // 生效值由 Controller 自 IUserContext 取得（只有那一份鏈）；這裡只判斷它來自哪一層。
+    var effectiveTz = ViewBag.EffectiveTimeZoneId as string;
+    var plantTz     = Model.ActivePlant?.DefaultTimeZone;
+    var plantWins   = !string.IsNullOrWhiteSpace(plantTz);
+}
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mb-4"><i class="bi bi-person-circle"></i> @Localizer["UserSettings"]</h1>
+
+            <!-- 切換廠別 -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0 text-white">@Localizer["SwitchActivePlant"]</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">@Localizer["SwitchPlantDescription"]</p>
+                    @if (roleIsRestricted)
+                    {
+                        <div class="alert alert-info py-2 small"><i class="bi bi-info-circle me-1"></i>@Localizer["RolePlantRestrictionNotice"]</div>
+                    }
+                    <div class="list-group">
+                        @foreach (var plant in userPlants ?? new List<Plant>())
+                        {
+                            <div class="list-group-item d-flex justify-content-between align-items-center @(Model.ActivePlantId == plant.Id ? "bg-light border-info" : "")">
+                                <div>
+                                    <span class="badge bg-info text-dark me-2">@plant.Id</span>
+                                    @* 英文介面有英文名就用英文名——同 _LoginPartial 的廠別切換 *@
+                                    <span class="fw-semibold">@(System.Globalization.CultureInfo.CurrentUICulture.Name == "en-US" && !string.IsNullOrWhiteSpace(plant.NameEn) ? plant.NameEn : plant.Name)</span>
+                                </div>
+                                @if (Model.ActivePlantId == plant.Id)
+                                {
+                                    <span class="badge bg-success"><i class="bi bi-check-lg"></i> @Localizer["InUse"]</span>
+                                }
+                                else
+                                {
+                                    <form asp-action="SwitchPlant" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="plantId" value="@plant.Id" />
+                                        <button type="submit" class="btn btn-sm btn-outline-info shadow-none">@Localizer["SwitchToThisPlant"]</button>
+                                    </form>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- 切換角色 -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0 text-white">@Localizer["SwitchActiveRole"]</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">@Localizer["SwitchRoleDescription"]</p>
+                    <div class="list-group">
+                        @foreach (var role in userRoles ?? new List<ApplicationRole>())
+                        {
+                            var roleDisplayName = role.GetDisplayName();
+                            <div class="list-group-item d-flex justify-content-between align-items-center @(Model.ActiveRoleId == role.Id ? "bg-light border-primary" : "")">
+                                <div>
+                                    <h6 class="mb-0">@roleDisplayName</h6>
+                                    <small class="text-muted">@(role.OrganizationUnit?.Name ?? Localizer["SystemRole"].Value)</small>
+                                </div>
+                                @if (Model.ActiveRoleId == role.Id)
+                                {
+                                    <span class="badge bg-success"><i class="bi bi-check-lg"></i> @Localizer["InUse"]</span>
+                                }
+                                else
+                                {
+                                    <form asp-action="SwitchRole" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="roleId" value="@role.Id" />
+                                        <button type="submit" class="btn btn-sm btn-outline-primary shadow-none">@Localizer["SwitchToThis"]</button>
+                                    </form>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- 個人時區 -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0 text-white">@Localizer["PersonalTimeZone"]</h5>
+                </div>
+                <div class="card-body">
+                    @if (TempData["TimeZoneSaved"] != null)
+                    {
+                        <div class="alert alert-success py-2 small" role="alert">
+                            <i class="bi bi-check-circle me-1"></i>@Localizer["TimeZoneSaved"]
+                        </div>
+                    }
+                    @if (TempData["TimeZoneError"] != null)
+                    {
+                        <div class="alert alert-danger py-2 small" role="alert">
+                            <i class="bi bi-exclamation-triangle me-1"></i>@Localizer["TimeZoneInvalid"]
+                        </div>
+                    }
+
+                    <p class="text-muted">@Localizer["PersonalTimeZoneDescription"]</p>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-bold">@Localizer["EffectiveTimeZone"]</div>
+                        <div class="col-sm-8">
+                            <span class="badge bg-success">@TimeZones.DisplayOf(effectiveTz)</span>
+                            @if (plantWins)
+                            {
+                                <span class="badge bg-light text-dark border ms-1">@Localizer["TimeZoneSourcePlant"]</span>
+                            }
+                            else if (!string.IsNullOrWhiteSpace(Model.TimeZoneId))
+                            {
+                                <span class="badge bg-light text-dark border ms-1">@Localizer["TimeZoneSourcePersonal"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-light text-dark border ms-1">@Localizer["TimeZoneSourceFallback"]</span>
+                            }
+                        </div>
+                    </div>
+
+                    @* 廠別有設時區時個人設定不生效——不講明就是「設了沒反應」，
+                       而畫面上沒有任何地方看得出原因。這裡照實說，欄位仍可存（換廠就生效）。*@
+                    @if (plantWins)
+                    {
+                        <div class="alert alert-info py-2 small">
+                            <i class="bi bi-info-circle me-1"></i>
+                            @string.Format(Localizer["PersonalTimeZoneOverridden"].Value, TimeZones.DisplayOf(plantTz))
+                        </div>
+                    }
+
+                    <form asp-action="SetTimeZone" method="post" class="row g-2 align-items-end">
+                        @Html.AntiForgeryToken()
+                        <div class="col-sm-8">
+                            <label for="timeZoneId" class="form-label fw-bold">@Localizer["PersonalTimeZone"]</label>
+                            <select id="timeZoneId" name="timeZoneId" class="form-select select2-enable w-100"
+                                    data-placeholder="@Localizer["FollowPlantTimeZone"]" data-allow-clear="true">
+                                <option value="">-- @Localizer["FollowPlantTimeZone"] --</option>
+                                @foreach (var tz in TimeZones.OptionsFor(Model.TimeZoneId))
+                                {
+                                    <option value="@tz.Id" selected="@(tz.Id == Model.TimeZoneId)">@tz.Display</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-success shadow-none w-100">
+                                <i class="bi bi-save me-1"></i>@Localizer["SaveTimeZone"]
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 帳號資訊 -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0 text-white">@Localizer["AccountInfo"]</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-3 fw-bold">@Localizer["UserName"]</div>
+                        <div class="col-sm-9">@Model.UserName</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3 fw-bold">@Localizer["Email"]</div>
+                        <div class="col-sm-9">@Model.Email</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-3 fw-bold">@Localizer["ActivePlant"]</div>
+                        <div class="col-sm-9">
+                            @if (!string.IsNullOrEmpty(Model.ActivePlantId))
+                            {
+                                <span class="badge bg-info text-dark">@Model.ActivePlantId</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

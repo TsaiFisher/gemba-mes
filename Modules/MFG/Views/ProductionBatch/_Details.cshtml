@@ -1,0 +1,185 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@model ProductionBatch
+
+@{
+    bool canUpdate = ViewBag.CanUpdate == true;
+    var workOrders = ViewBag.WorkOrders as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    bool canAdjust = canUpdate && Model.Status != ProductionBatchStatus.Completed && Model.Status != ProductionBatchStatus.Void;
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string? productUom = ViewBag.ProductUom as string;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+
+    (string css, string key) BatchBadge(ProductionBatchStatus s) => s switch
+    {
+        ProductionBatchStatus.Planned    => ("bg-secondary", "StatusPlanned"),
+        ProductionBatchStatus.InProgress => ("bg-info", "StatusInProgress"),
+        ProductionBatchStatus.Completed  => ("bg-success", "StatusCompleted"),
+        _                                => ("bg-danger", "StatusVoid")
+    };
+    (string css, string key) WoBadge(WorkOrderStatus s) => s switch
+    {
+        WorkOrderStatus.Planned    => ("bg-secondary", "StatusPlanned"),
+        WorkOrderStatus.Released   => ("bg-primary", "StatusReleased"),
+        WorkOrderStatus.InProgress => ("bg-info", "StatusInProgress"),
+        WorkOrderStatus.Completed  => ("bg-success", "StatusCompleted"),
+        WorkOrderStatus.Closed     => ("bg-dark", "StatusClosed"),
+        _                          => ("bg-danger", "StatusVoid")
+    };
+    var sb = BatchBadge(Model.Status);
+}
+
+<div class="batch-details">
+    <section class="mb-3">
+        <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">1</span>@Localizer["SecHeader"]</h6>
+        <div class="row g-2">
+            <div class="col-md-6"><span class="text-muted small">@Localizer["BatchId"]</span><div class="fw-medium">@Model.BatchId</div></div>
+            <div class="col-md-6">
+                <span class="text-muted small">@Localizer["Status"]</span>
+                <div>
+                    <span class="badge @sb.css">@Localizer[sb.key]</span>
+                    @if (Model.IsPredictedLate)
+                    {
+                        <span class="badge bg-warning text-dark"><i class="bi bi-exclamation-triangle me-1"></i>@Localizer["PredictedLate"]</span>
+                    }
+                </div>
+            </div>
+            <div class="col-md-6"><span class="text-muted small">@Localizer["ProductCode"]</span><div>@Model.ProductCode</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["Quantity"]</span><div>@Model.Quantity.ToString(QtyFmt(productUom))</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["Priority"]</span><div>@Model.Priority</div></div>
+            <div class="col-md-6"><span class="text-muted small">@Localizer["MrpRunId"]</span><div>@Model.MrpRunId</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["PlannedEnd"]</span><div>@Model.PlannedEndDate.ToString("yyyy-MM-dd")</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["ExpectedEnd"]</span><div>@(Model.ExpectedEndDate?.ToString("yyyy-MM-dd"))</div></div>
+        </div>
+    </section>
+
+    <section class="mb-3">
+        <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">2</span>@Localizer["SecWorkOrders"]</h6>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead class="table-light"><tr>
+                    <th>@Localizer["ColWo"]</th><th>@Localizer["ColProduct"]</th>
+                    <th class="text-end">@Localizer["ColQty"]</th><th>@Localizer["ColStatus"]</th><th>@Localizer["ColOutsource"]</th>
+                </tr></thead>
+                <tbody>
+                    @foreach (var w in workOrders)
+                    {
+                        var wb = WoBadge((WorkOrderStatus)w.Status);
+                        <tr>
+                            <td>@w.WorkOrderId @if (w.ParentWorkOrderId != null) { <i class="bi bi-arrow-return-right text-muted small"></i> }</td>
+                            <td>@w.ProductCode</td>
+                            <td class="text-end">@w.Quantity.ToString(QtyFmt((string?)w.UomCode))</td>
+                            <td><span class="badge @wb.css">@Localizer[wb.key]</span></td>
+                            <td>@if (w.IsOutsource) { <i class="bi bi-truck text-primary"></i> }</td>
+                        </tr>
+                    }
+                    @if (!workOrders.Any())
+                    {
+                        <tr><td colspan="5" class="text-center text-muted">@Localizer["NoWorkOrders"]</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    @if (canAdjust)
+    {
+        <section class="mb-3">
+            <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">3</span>@Localizer["SecPriority"]</h6>
+            <div class="text-muted small mb-2">@Localizer["PriorityHint"]</div>
+            <div class="input-group u-max-width-280px">
+                <input type="number" id="batchPriority" class="form-control" value="@Model.Priority" min="0" step="any" />
+                <button type="button" class="btn btn-primary" data-action="updateBatchPriority">@Localizer["UpdatePriority"]</button>
+            </div>
+        </section>
+    }
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        @if (canUpdate && Model.Status == ProductionBatchStatus.Planned)
+        {
+            <button type="button" class="btn btn-success" data-action="releaseBatch">
+                <i class="bi bi-box-arrow-up"></i> @Localizer["ReleaseBatch"]
+            </button>
+        }
+    </div>
+</div>
+
+@if (canAdjust || (canUpdate && Model.Status == ProductionBatchStatus.Planned))
+{
+    @Html.AntiForgeryToken()
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    (function () {
+        function tokenVal() {
+            var el = document.querySelector('input[name="__RequestVerificationToken"]');
+            return el ? el.value : '';
+        }
+
+        var priorityUrl = '@Url.Action("UpdatePriority", new { id = Model.BatchId })';
+        window.updateBatchPriority = function () {
+            var p = document.getElementById('batchPriority').value;
+            if (p === '' || isNaN(parseInt(p))) return;
+            // crud-panel.js 的 postAction 為 IIFE 內部函式，未曝露於 window（舊 inline
+            // 的 typeof postAction 永遠為 false）；改以直接 fetch 確保按鈕實際可運作。
+            fetch(priorityUrl + '?priority=' + encodeURIComponent(p), {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': tokenVal(), 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.success) {
+                    if (window.toastSuccess) window.toastSuccess(d.message);
+                    setTimeout(function () { location.reload(); }, 800);
+                } else {
+                    alert(d.message || failedMsg);
+                }
+            })
+            .catch(function () { alert(failedMsg); });
+        };
+
+        // §24.1 整批投產（all-or-nothing）
+        var releaseUrl = '@Url.Action("ReleaseBatch", new { id = Model.BatchId })';
+        var releaseMsg = "@Localizer["ReleaseBatchConfirm"]";
+        var recalcTpl = "@Localizer["BatchRecalcPrompt"]";       // 標題；後接逐列 暫定→重算
+        var blockedTpl = "@Localizer["BatchBlockedPrompt"]";     // 標題；後接逐列 缺料
+        var failedMsg = "@Localizer["BatchReleaseFailed"]";
+        function doReleaseBatch(confirmed) {
+            var url = releaseUrl + (confirmed ? '?confirmed=true' : '');
+            fetch(url, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': tokenVal(), 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.success && d.warning) {
+                    // 有工單本該送審卻沒有簽核流程（A3）：用 alert 確認，免得 toast 一閃即重整
+                    alert(d.message);
+                    location.reload();
+                } else if (d.success) {
+                    if (window.toastSuccess) window.toastSuccess(d.message);
+                    setTimeout(function () { location.reload(); }, 800);
+                } else if (d.materialBlocked) {
+                    var lines = (d.blocked || []).map(function (b) {
+                        return '• ' + b.workOrderId + ': ' + (b.shortages || []).join(', ');
+                    }).join('\n');
+                    alert(blockedTpl + '\n' + lines);
+                } else if (d.needsConfirm) {
+                    var lines = (d.items || []).map(function (it) {
+                        return '• ' + it.workOrderId + ': ' + it.planned + ' → ' + it.recalculated;
+                    }).join('\n');
+                    if (confirm(recalcTpl + '\n' + lines)) doReleaseBatch(true);
+                } else {
+                    alert(d.message || failedMsg);
+                }
+            })
+            .catch(function () { alert(failedMsg); });
+        }
+        window.releaseBatch = function () {
+            if (!confirm(releaseMsg)) return;
+            doReleaseBatch(false);
+        };
+    })();
+    </script>
+}

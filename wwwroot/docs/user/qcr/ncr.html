@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Nonconformance Report (NCR) — QCR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>不合格品單（NCR） — QCR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">QCR 目錄</span><span lang="en">QCR contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">QCR 畫面</span><span lang="en">QCR screens</span></div>
+    <a href="defect-code.html" class="nav-link"><span lang="zh">不良項目代碼</span><span lang="en">Defect Codes</span></a>
+    <a href="inspection-spec.html" class="nav-link"><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></a>
+    <a href="inspection-order.html" class="nav-link"><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></a>
+    <a href="ncr.html" class="nav-link active"><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></a>
+    <a href="instrument.html" class="nav-link"><span lang="zh">檢驗儀器</span><span lang="en">Inspection Instruments</span></a>
+    <a href="spc-analysis.html" class="nav-link"><span lang="zh">SPC 製程能力分析</span><span lang="en">SPC Process Capability</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-shield-x me-2 text-primary"></i><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/Ncr &nbsp;|&nbsp; 不合格品處置閉環（報廢/重工/特採/退貨/退件重工）</span><span lang="en">Route: /Ncr &nbsp;|&nbsp; Closed-loop disposition of nonconforming material (scrap / rework / use-as-is / return / return for rework)</span></div>
+    </div>
+
+    <p><span lang="zh">檢驗不合格開立 NCR，記載不良事實與數量，經審理後執行處置並自動連動單據：報廢（Scrap）→ 產生報廢單過帳；重工（Rework）→ 產生重工工單；特採（UseAsIs）→ 放行；退貨（Return）→ 產生採購退貨草稿單（追溯原進貨帶入供應商與估價，與 NCR 雙向連結）；退件重工（ReturnRework）→ 委外 IQC 不合格退回委外廠重工，自動產生委外重工單草稿（預設廠商責任，成本由採購補登）。</span><span lang="en">A failed inspection raises an NCR recording the defect and the quantity; after review the disposition is carried out and the matching document is created automatically: scrap → a scrap document is posted; rework → a rework work order; use-as-is → released; return → a draft purchase return (traced back to the original receipt, with the supplier and valuation filled in, linked to the NCR in both directions); return for rework → outsource material that fails IQC is sent back to the subcontractor for rework and a draft outsource rework order is created (the supplier is liable by default and the cost is entered by purchasing).</span></p>
+    <img class="screen-shot" src="img/ncr.png" data-src-en="img/en/ncr.png" alt="不合格品單（NCR）畫面截圖" data-alt-en="Nonconformance report (NCR) screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">不合格品單（NCR）畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Nonconformance report (NCR) screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">開立</span><span lang="en">Raise</span></span></td><td><span lang="zh">記載不良事實，待品保審理。</span><span lang="en">The defect is recorded and awaits QA review.</span></td></tr><tr><td><span class='badge bg-info'><span lang="zh">處置中</span><span lang="en">Disposition in progress</span></span></td><td><span lang="zh">已決定處置方式，關聯單據處理中。</span><span lang="en">The disposition has been decided and the related documents are being processed.</span></td></tr><tr><td><span class='badge bg-success'><span lang="zh">結案</span><span lang="en">Close</span></span></td><td><span lang="zh">處置單據完成，閉環結束。</span><span lang="en">The disposition document is complete and the loop is closed.</span></td></tr></tbody>
+    </table>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">處置</span><span lang="en">Disposition</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">自檢驗單帶入或手動開立 NCR，填不良數量與原因。</span><span lang="en">Raise an NCR from an inspection order or by hand, entering the defect quantity and the reason.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">選擇處置方式並執行：在列表按「檢視」開啟該 NCR，按面板下方的「執行處置」，系統自動產生對應單據（報廢單/重工工單/退貨草稿/委外重工單草稿）。重工要自動開出重工工單，來源類型須為「報工記錄」或「檢驗單」（系統由此找回原工單）；手動建立的 NCR 執行後只會提示改從工單列表的「建立重工」建立。開出的重工工單數量＝不合格數量，複製原工單的工序，用料依數量等比換算；NCR 有填倉庫與儲位（表示不良品在庫）時，另加一行不良品本身的用料，投產時隨重工發料一起發出。</span><span lang="en">Choose the disposition and carry it out: open the NCR with <b>View</b> in the list and press <b>Execute Disposal</b> at the bottom of the panel; the system creates the matching document automatically (scrap document, rework work order, draft return, draft outsource rework order). For a rework work order to be created automatically the source type must be <b>Production Report</b> or <b>Inspection Order</b> (that is how the original work order is found); an NCR raised manually only shows a reminder to create the rework from <b>Create Rework</b> in the work order list. The rework order is for the nonconforming quantity, copies the original work order's operations, and scales its materials to that quantity; when the NCR has a warehouse and location (meaning the defective items are in stock), a material line for the defective item itself is added and issued with the rework issue on release.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">追蹤關聯單據完成後結案；單據編號互相連結可雙向追溯。</span><span lang="en">Closed once the related documents are complete; the document numbers link to each other so it can be traced both ways.</span></div></div>
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。不合格品報告列印含來源、產品品名、數量與單位、倉庫儲位、不良代碼與名稱、原因分析、矯正措施、處置方式及處置產生的單據。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The NCR printout shows the source, product name, quantity and unit, warehouse and location, defect code and name, root cause, corrective action, disposition and the documents the disposition created.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">欄位</span><span lang="en">Field</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">來源類型 / 來源單號</span><span lang="en">Source type / Source doc No</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">觸發本次不合格的來源（檢驗單、報工等）與單號，供品質追溯</span><span lang="en">The source that raised this nonconformance (inspection order, production report …) and its number, for quality traceability</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">不合格的料件</span><span lang="en">Nonconforming item</span></td></tr>
+        <tr><td><span lang="zh">數量 / 單位</span><span lang="en">Qty / UOM</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">判定不合格的數量</span><span lang="en">Quantity judged nonconforming</span></td></tr>
+        <tr><td><span lang="zh">不良代碼</span><span lang="en">Defect code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">不良現象的分類；僅能選用在該檢驗階段有勾選的代碼</span><span lang="en">Category of the defect; only codes ticked for that inspection stage can be chosen</span></td></tr>
+        <tr><td><span lang="zh">根本原因</span><span lang="en">Root cause</span></td><td><span lang="zh">問題調查後判定的真因，是改善行動的依據</span><span lang="en">The root cause identified by the investigation, on which the improvement action is based</span></td></tr>
+        <tr><td><span lang="zh">矯正措施</span><span lang="en">Corrective action</span></td><td><span lang="zh">為防止再發而採取的行動</span><span lang="en">The action taken to stop it happening again</span></td></tr>
+        <tr><td><span lang="zh">處置方式</span><span lang="en">Disposition</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">不合格品的去向：報廢（產生報廢單）／重工（產生工單）／退貨（產生採購退貨草稿單並回溯原進貨單）</span><span lang="en">Where the nonconforming material goes: scrap (creates a scrap document) / rework (creates a work order) / return (creates a draft purchase return traced back to the original receipt)</span></td></tr>
+        <tr><td><span lang="zh">倉庫 / 儲位</span><span lang="en">WH / Location</span></td><td><span lang="zh">不合格品目前的存放位置。處置選「報廢」時<b>必填</b>，存檔即檢查——報廢執行時要從這個儲位扣庫存。其他處置可留白</span><span lang="en">Where the nonconforming material is now. <b>Required</b> when the disposition is Scrap and checked on save, because executing the scrap deducts stock from this location. Optional for other dispositions</span></td></tr>
+        <tr><td><span lang="zh">批號</span><span lang="en">Lot</span></td><td><span lang="zh">批號管制品的批次</span><span lang="en">Lot of a lot-controlled item</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">補充說明</span><span lang="en">Notes</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="inspection-order.html"><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></a>、<a href="../inv/scrap-doc.html"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></a>、<a href="../pur/goods-return.html"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

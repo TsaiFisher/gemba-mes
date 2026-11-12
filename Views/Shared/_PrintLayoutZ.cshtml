@@ -1,0 +1,40 @@
+@*
+    _PrintLayoutZ.cshtml — ProjectZ 專屬列印 Layout（不改 Core Pages/Shared/_PrintLayout.cshtml）。
+    相較 Core 版的差異：
+      1. <html lang> 依目前 UI 語系（不再寫死 zh-TW）
+      2. 內建本地化的「列印 / 關閉」操作列與頁尾，各 Print 視圖不需重抄
+    各模組 Print.cshtml 改用：Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+*@
+@using System.Globalization
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@{ var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+<!DOCTYPE html>
+<html lang="@lang">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/print.css" asp-append-version="true" />
+</head>
+<body class="print-body">
+    <div class="print-actions no-print">
+        <button class="btn btn-primary btn-sm" data-action="printPage">
+            <i class="bi bi-printer"></i> @L["Print_Print"]
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" data-action="closeWindow">@L["Print_Close"]</button>
+    </div>
+
+    <div class="print-page">
+        @RenderBody()
+    </div>
+
+    <div class="print-footer">
+        @L["Print_PrintedAt"]：@((ViewBag.PrintTime as DateTime? ?? DateTimeSvc.Now).ToString("yyyy-MM-dd HH:mm"))
+        ／ SmartFactory MES
+    </div>
+
+    <script src="~/js/data-action.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

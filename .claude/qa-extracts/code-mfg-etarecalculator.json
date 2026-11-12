@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/MFG/Services/EtaRecalculator.cs",
+  "sourceHash": "c9c33cf2b1f337866cca236c981cf9ea02b8882f83526becd32a671d12e35c6f",
+  "entries": [
+    {
+      "slug": "code-mfg-etarecalculator-af2033fe",
+      "lang": "zh",
+      "headingPath": "生產製造 › 報工後局部平移本派工及受影響的後續派工",
+      "text": "報工後派工時間會依據排程規則調整｜系統在計算預計完成時間時，會考慮到工作日曆的規定，以確保計算的準確性。",
+      "approved": true,
+      "sourceSectionHash": "351c53917455420517836a12c7a2abd2e17d730c7c0e54db4ef2188810f46d94"
+    },
+    {
+      "slug": "code-mfg-etarecalculator-f8ac8646",
+      "lang": "zh",
+      "headingPath": "生產製造 › 新估算結束時刻：優先走",
+      "text": "預設工時計算依據規則說明｜系統會優先依照工作日曆和計劃停機時間來計算新的估算結束時刻；若日曆沒有設定任何時段，則直接以當前時間加上剩餘分鐘數進行計算。",
+      "approved": true,
+      "sourceSectionHash": "872635a117adf0f2f44d468ee14d8bf386392fdee20c592b723968b2f71595ae"
+    },
+    {
+      "slug": "code-mfg-etarecalculator-2d453c20",
+      "lang": "zh",
+      "headingPath": "生產製造 › 否則甘特上「正在做的那條」長度永遠不反映實際進度",
+      "text": "報工後 ETA 重算會調整哪些派工｜重算之後，本派工的開始時間不動、結束時間直接改成新的預計完成時間，甘特圖上「正在做的那一條」才會反映實際進度；受影響的後續派工則整段平移相同的時間差。新舊差距在 1 分鐘以內視為沒有異動，不會寫入。",
+      "approved": true,
+      "sourceSectionHash": "28d69c651fa5b677c1abe9ad1bc2374eb5f5ff34f799335815dab71c064cf61e"
+    }
+  ]
+}

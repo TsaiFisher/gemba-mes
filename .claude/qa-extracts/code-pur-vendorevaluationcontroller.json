@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/PUR/Controllers/VendorEvaluationController.cs",
+  "sourceHash": "19d5c2b2c2667c6d00b39e94f1644a9718643fa4611adff344498beb031929bc",
+  "entries": [
+    {
+      "slug": "code-pur-vendorevaluationcontroller-68934d97",
+      "lang": "zh",
+      "headingPath": "採購 › 合格供應商評分卡— 全域主檔",
+      "text": "評分卡狀態的變更規則說明｜系統會根據供應商的評分，自動將其在公司層級的資格狀態更新為合格、試用或停用。",
+      "approved": true,
+      "sourceSectionHash": "0e69db97d133497a3a39353dd8855e6351c549a8e2b350c7177d6828f23a5c7a"
+    },
+    {
+      "slug": "code-pur-vendorevaluationcontroller-f1a8cf54",
+      "lang": "zh",
+      "headingPath": "採購 › 自動分數以後端重算為準",
+      "text": "自動分數計算的權重規則｜無資料的項目在計算加權時不會被計入，系統會將該欄位顯示為 100 作為佔位，實際判讀依據是品質是否有資料和交期是否有資料。",
+      "approved": true,
+      "sourceSectionHash": "90b5cff6557a438e7d703fed7092d994eec862b5977bea4b0f64710d5c8fd46d"
+    },
+    {
+      "slug": "code-pur-vendorevaluationcontroller-9638735e",
+      "lang": "zh",
+      "headingPath": "採購 › 漏這兩行的話，重新評核後旗標會停在舊值——分數更新了",
+      "text": "重新評核會一併更新有無資料｜重新評核供應商時，除了分數之外，「品質有沒有資料」與「交期有沒有資料」這兩個判定也會一起更新。兩者若不同步，分數換了、判讀的依據卻停在舊值。",
+      "approved": true,
+      "sourceSectionHash": "a47accc8ce0387cb1ed87af5e4716978d67b6ab65e345c09861a7a88ddfe6dce"
+    },
+    {
+      "slug": "code-pur-vendorevaluationcontroller-4eee539a",
+      "lang": "zh",
+      "headingPath": "採購 › 無簽核流程時直接核准並回寫資格狀態",
+      "text": "規則說明｜送出資料後，如果系統設定為無簽核流程，則會直接將資格狀態標記為已核准並寫回資料。",
+      "approved": true,
+      "sourceSectionHash": "d5294b63a5b959fae8865002923a3cff726be4a18927255caef96fef08e45fb3"
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Accounts Payable — FIN User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>應付帳款 — FIN 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">FIN 目錄</span><span lang="en">FIN contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">FIN 畫面</span><span lang="en">FIN screens</span></div>
+    <a href="chart-of-account.html" class="nav-link"><span lang="zh">會計科目</span><span lang="en">Chart of Accounts</span></a>
+    <a href="ap-invoice.html" class="nav-link active"><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></a>
+    <a href="ar-invoice.html" class="nav-link"><span lang="zh">應收帳款</span><span lang="en">AR Invoice</span></a>
+    <a href="ar-credit-note.html" class="nav-link"><span lang="zh">銷貨折讓單</span><span lang="en">Sales Credit Note</span></a>
+    <a href="ap-debit-note.html" class="nav-link"><span lang="zh">進貨折讓單</span><span lang="en">Purchase Debit Note</span></a>
+    <a href="ap-payment.html" class="nav-link"><span lang="zh">付款作業</span><span lang="en">AP Payment</span></a>
+    <a href="ar-receipt.html" class="nav-link"><span lang="zh">收款作業</span><span lang="en">AR Receipt</span></a>
+    <a href="bank-account.html" class="nav-link"><span lang="zh">銀行帳戶</span><span lang="en">Bank Account</span></a>
+    <a href="ap-aging.html" class="nav-link"><span lang="zh">應付帳齡分析</span><span lang="en">AP Aging</span></a>
+    <a href="ar-aging.html" class="nav-link"><span lang="zh">應收帳齡分析</span><span lang="en">AR Aging</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-receipt me-2 text-primary"></i><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/APInvoice &nbsp;|&nbsp; 應付發票管理（自動產生＋手開）</span><span lang="en">Route: /APInvoice &nbsp;|&nbsp; AP invoice management (automatic and manual)</span></div>
+    </div>
+
+    <p><span lang="zh">進貨單與委外收貨確認後自動產生應付發票（進貨金額含稅；委外發票以超耗扣款為負項扣減）。非採購性費用可手開發票。發票經付款作業核銷後狀態自動轉部分/全額結清。</span><span lang="en">Confirming a goods receipt or an outsource receipt creates the AP invoice automatically (the receipt amount includes tax; on an outsource invoice the scrap penalty is deducted as a negative line). Non-purchase costs can be invoiced by hand. Once allocated in Payments, the invoice moves to partly or fully paid automatically.</span></p>
+    <img class="screen-shot" src="img/ap-invoice.png" data-src-en="img/en/ap-invoice.png" alt="應付發票畫面截圖" data-alt-en="AP invoice screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">應付發票畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">AP invoice screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">可依供應商、狀態、到期區間篩選。</span><span lang="en">Can be filtered by supplier, status and due date range.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">未結清 Open</span><span lang="en">Open</span></span></td><td><span lang="zh">尚未收付款或部分沖銷。</span><span lang="en">Not yet paid or received, or only partly settled.</span></td></tr><tr><td><span class='badge bg-info'><span lang="zh">部分沖銷 PartialPaid</span><span lang="en">Partly paid</span></span></td><td><span lang="zh">已收付部分金額。</span><span lang="en">Part of the amount has been paid or received.</span></td></tr><tr><td><span class='badge bg-success'><span lang="zh">已結清 Paid</span><span lang="en">Paid</span></span></td><td><span lang="zh">全額沖銷完畢。</span><span lang="en">Fully settled.</span></td></tr><tr><td><span class='badge bg-danger'><span lang="zh">已作廢 Void</span><span lang="en">Void</span></span></td><td><span lang="zh">發票作廢，不再列入應收付。</span><span lang="en">The invoice is void and no longer counts as a receivable or payable.</span></td></tr></tbody>
+    </table>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">手開發票</span><span lang="en">Invoice raised by hand</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」選供應商，輸入發票日期、幣別與明細金額。</span><span lang="en">Click "Add", choose the supplier and enter the invoice date, currency and line amounts.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">外幣發票以交易日匯率快照換算本位幣。</span><span lang="en">A foreign currency invoice is converted to local currency at the rate snapshotted on the transaction date.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">儲存確認後列入應付，於付款作業沖銷。</span><span lang="en">Once saved and confirmed it becomes a payable and is settled through Payments.</span></div></div>
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">手動發票的明細科目只能選可手動使用的費用類科目；例外是「2153 暫估應付運費」——進料費用分攤確認時貸記它，運費／關稅發票到了就以手動發票指定 2153 沖平（見<a href="../inv/landed-cost-allocation.html#process">進料費用分攤</a>）。</span><span lang="en">Manual invoice lines can only use expense accounts that allow manual entry. The exception is "2153 accrued freight": a landed cost allocation credits it on confirmation, and when the freight or duty invoice arrives you clear it with a manual invoice on 2153 (see <a href="../inv/landed-cost-allocation.html#process">Landed Cost Allocation</a>).</span></div>
+
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">作廢發票前要先沖銷付款，也要先作廢已確認的進貨折讓單——折讓有自己的分錄，作廢發票不會沖它。發票作廢後不能再付款，也不能再確認它的折讓單；來源進貨之後再有貨上架進正常倉時，系統會另開一張新的應付發票；已作廢那部分的數量可在已作廢發票那一列按「依來源重開」，系統以作廢那張的認列量重新認列（扣掉已過帳退出）。作廢之後又過帳了退出時無法自動算準，會擋下請改開手動發票。</span><span lang="en">Before voiding an invoice, reverse its payments and void any confirmed debit notes — a debit note has its own journal, which voiding the invoice does not reverse. Once voided, the invoice can no longer be settled and its debit notes can no longer be confirmed; if more goods from the source receipt are later put away into a normal warehouse, a new AP invoice is issued . To bring back the voided quantity, click "Reissue from source" on the voided invoice row: it re-recognizes the quantity on the voided invoice, less posted returns. If a purchase return was posted after the void, the quantity cannot be worked out automatically and the reissue is refused; create a manual invoice instead.</span></div>
+
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。發票列印含供應商名稱、到期日、幣別與匯率，以及各行品號、品名、數量、單位、單價、金額、稅別與稅額，並印未稅金額、稅額、含稅總額與本幣金額。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The invoice printout shows the supplier name, due date, currency and exchange rate, and for each line the product code and name, quantity, unit, unit price, amount, tax code and tax, with subtotal, tax, total and local amount.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">表頭</span><span lang="en">Header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">應付發票號</span><span lang="en">AP Invoice No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">供應商</span><span lang="en">Supplier</span></td><td><span lang="zh">應付發票的往來供應商</span><span lang="en">Supplier on the AP invoice</span></td></tr>
+        <tr><td><span lang="zh">發票日期</span><span lang="en">Invoice Date</span></td><td><span lang="zh">發票開立日，決定入帳期間</span><span lang="en">Invoice date, which decides the accounting period</span></td></tr>
+        <tr><td><span lang="zh">到期日</span><span lang="en">Due Date</span></td><td><span lang="zh">應付款的期限；帳齡與逾期天數以此起算。由收料／委外收貨自動產生時依廠商主檔的付款條件（結帳日＋收付款天數，見<a href="../bas/company.html#field-reference">公司/廠商主檔</a>）計算，未設定為單據日＋30 天；手動開立時自行填寫</span><span lang="en">When the payable is due; aging and days overdue are counted from it. When created automatically from a goods receipt / outsource receipt, it is calculated from the supplier's payment terms (closing day + credit days, see <a href="../bas/company.html#field-reference">Company master</a>); without terms it is document date + 30 days. Entered by hand on manual invoices</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">未結清／部分結清／已結清；由付款單核銷後自動更新</span><span lang="en">Open / partly paid / paid; updated automatically once a payment is allocated</span></td></tr>
+        <tr><td><span lang="zh">總金額</span><span lang="en">Total amount</span></td><td><span lang="zh">發票的交易幣別含稅總額</span><span lang="en">Total including tax in the invoice's transaction currency</span></td></tr>
+        <tr><td><span lang="zh">已付金額</span><span lang="en">Paid Amount</span></td><td><span lang="zh">累計已被付款單核銷的金額，不可手動修改</span><span lang="en">Cumulative amount allocated by payments; not editable</span></td></tr>
+        <tr><td><span lang="zh">本幣金額</span><span lang="en">Local Amount</span></td><td><span lang="zh">總金額換算為本位幣的金額，帳務入帳與帳齡分析採此欄</span><span lang="en">The total converted to local currency; the ledger and the aging analysis both use this column</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">明細</span><span lang="en">Lines</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">序號</span><span lang="en">Seq</span></td><td><span lang="zh">明細行序</span><span lang="en">Line seq</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">進貨的料件</span><span lang="en">Item received</span></td></tr>
+        <tr><td><span lang="zh">數量 / 單價</span><span lang="en">Qty / Unit price</span></td><td><span lang="zh">進貨數量與未稅單價</span><span lang="en">Received quantity and unit price excluding tax</span></td></tr>
+        <tr><td><span lang="zh">金額</span><span lang="en">Amount</span></td><td><span lang="zh">數量 × 單價，未稅金額</span><span lang="en">Quantity × unit price, excluding tax</span></td></tr>
+        <tr><td><span lang="zh">稅額</span><span lang="en">Tax</span></td><td><span lang="zh">依稅別稅率計算的稅額</span><span lang="en">Tax calculated from the rate of the tax code</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">應付發票由進貨作業自動產生，明細對應進貨單的內容；金額不符時應回頭檢查進貨單而非直接改發票。</span><span lang="en">AP invoices are created automatically by goods receipt and their lines mirror the receipt; if the amount looks wrong, go back and check the receipt rather than editing the invoice.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="ap-payment.html"><span lang="zh">付款作業</span><span lang="en">AP Payment</span></a>、<a href="ap-aging.html"><span lang="zh">應付帳齡分析</span><span lang="en">AP Aging</span></a>、<a href="../pur/goods-receipt.html"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">發票產生與作廢受會計期間鎖管制；自動產生的發票請勿手動修改金額，異常請作廢後由來源單重開。</span><span lang="en"> Creating and voiding invoices is subject to the accounting period lock; do not edit the amount on an automatically created invoice by hand — void it and raise it again from the source document.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

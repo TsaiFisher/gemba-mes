@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/INV/Controllers/MaterialStagingController.cs",
+  "sourceHash": "94b8d64d4f761e7a486d66b73640ca9b5a212513549ef7611a163ba30fc1483a",
+  "entries": [
+    {
+      "slug": "code-inv-materialstagingcontroller-a8a7ac60",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 來源單據下拉：只列本廠尚未結案／作廢者，",
+      "text": "來源單據僅顯示本廠未完成或未作廢的紀錄｜系統只會列出當前所屬工廠尚未結案或作廢的來源單據，這樣可以確保備料作業是基於有效的、可用的單據。",
+      "approved": true,
+      "sourceSectionHash": "46efe0b36ce0943d23cd6fd5c2bce309ae27de3a3487db69a103d0f16f45432c"
+    },
+    {
+      "slug": "code-inv-materialstagingcontroller-b247a6d7",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 已確認之後欄位不可再改，但「揀料完成」「作廢」這類狀態動作仍必須",
+      "text": "資料修改權限的限制說明｜已確認之後，系統會鎖定相關的欄位，使用者無法再進行修改。但是，「揀料完成」或「作廢」這類狀態動作仍然可以執行。純粹的檢視模式下，不會設定任何讀取限制。",
+      "approved": true,
+      "sourceSectionHash": "0fa09a139c4a130739b7275a0d8d036650107fe57ac410c519f6bad36879ec5e"
+    },
+    {
+      "slug": "code-inv-materialstagingcontroller-09a8eccb",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 預留不在此釋放，留到領料過帳才等額退場",
+      "text": "庫存移動的時機點說明｜此系統在揀料完成後，預留的庫存不會立即釋出，而是會等到領料過帳的流程才等額退場。",
+      "approved": true,
+      "sourceSectionHash": "8ce4a0f3faed2ced6ff694f841aea1e93fd7335f22424cc0ded9f8de93a3ae59"
+    }
+  ]
+}

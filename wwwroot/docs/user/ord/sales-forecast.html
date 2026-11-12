@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Sales Forecast — ORD User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>銷售預測 — ORD 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ORD 目錄</span><span lang="en">ORD Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ORD 畫面</span><span lang="en">ORD Screens</span></div>
+    <a href="sales-order.html" class="nav-link"><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></a>
+    <a href="goods-shipment.html" class="nav-link"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></a>
+    <a href="sales-return.html" class="nav-link"><span lang="zh">銷退單</span><span lang="en">Sales Return</span></a>
+    <a href="internal-order.html" class="nav-link"><span lang="zh">內部訂單</span><span lang="en">Internal Order</span></a>
+    <a href="order-overdue.html" class="nav-link"><span lang="zh">訂單逾期跟催</span><span lang="en">Overdue Sales Orders</span></a>
+    <a href="sales-ranking.html" class="nav-link"><span lang="zh">銷售排名</span><span lang="en">Sales Ranking</span></a>
+    <a href="sales-trend.html" class="nav-link"><span lang="zh">銷售趨勢</span><span lang="en">Sales Trend</span></a>
+    <a href="delivery-rate.html" class="nav-link"><span lang="zh">交期達成率</span><span lang="en">Delivery Rate</span></a>
+    <a href="return-rate.html" class="nav-link"><span lang="zh">退貨率分析</span><span lang="en">Return Rate</span></a>
+    <a href="sales-forecast.html" class="nav-link active"><span lang="zh">銷售預測</span><span lang="en">Sales Forecast</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-graph-up-arrow me-2 text-primary"></i><span lang="zh">銷售預測</span><span lang="en">Sales Forecast</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/SalesForecast &nbsp;|&nbsp; 依歷史銷售訂單的銷售預測</span><span lang="en">Route: /SalesForecast &nbsp;|&nbsp; Sales forecast from historical sales orders</span></div>
+    </div>
+
+    <p><span lang="zh">以歷史出貨資料推估未來期間的銷售量/金額趨勢，供備料與產能規劃參考。</span><span lang="en">Estimates sales quantity and amount for future periods from historical shipments, as input to material and capacity planning.</span></p>
+    <img class="screen-shot" src="img/sales-forecast.png" data-src-en="img/en/sales-forecast.png" alt="銷售預測畫面截圖" data-alt-en="Sales forecast screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">銷售預測畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Sales forecast screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">要預測的料件</span><span lang="en">Item to forecast</span></td></tr>
+        <tr><td><span lang="zh">預測月數</span><span lang="en">Forecast Months</span></td><td><span lang="zh">要往後推估的月份數；月數越多不確定性越高</span><span lang="en">Number of months to project forward; the further out, the greater the uncertainty</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">年月</span><span lang="en">Month</span></td><td><span lang="zh">歷史實績或預測的月份</span><span lang="en">Month of the historical actual or the forecast</span></td></tr>
+        <tr><td><span lang="zh">實績金額</span><span lang="en">Actual</span></td><td><span lang="zh">該月銷售訂單的本幣未稅金額（依下單日，不含草稿與駁回的訂單）；沒有銷售的月份顯示 0。只列最近 12 個完整月份，本月未結束不列入；預測月份此欄為「—」</span><span lang="en">Local-currency net amount of sales orders in the month (by order date, excluding draft and rejected orders); months with no sales show 0. Only the last 12 complete months are listed and the current, unfinished month is left out; forecast months show "—"</span></td></tr>
+        <tr><td><span lang="zh">12月均值</span><span lang="en">12M Avg</span></td><td><span lang="zh">最近 12 個完整月份的實績合計 ÷ 12（沒有銷售的月份以 0 計），作為去除季節性後的基準水準</span><span lang="en">Total actuals of the last 12 complete months ÷ 12 (months with no sales count as 0), the base level with seasonality removed</span></td></tr>
+        <tr><td><span lang="zh">季節係數</span><span lang="en">Seasonal Index</span></td><td><span lang="zh">實績月為該月實績 ÷ 12月均值；預測月取去年同月的係數。品號銷售史<b>未滿一年</b>時沒有季節係數（顯示「—」）</span><span lang="en">For actual months, that month's actual ÷ 12M average; for forecast months, the index of the same month last year. Items with <b>less than a year</b> of sales history have no seasonal index (shown as "—")</span></td></tr>
+        <tr><td><span lang="zh">預測值</span><span lang="en">Forecast</span></td><td><span lang="zh">預測月才有：12月均值 × 季節係數；沒有季節係數時即為 12月均值。預測從本月起算</span><span lang="en">Forecast months only: 12M average × seasonal index, or the 12M average itself when there is no index. Forecasting starts from the current month</span></td></tr>
+        <tr><td><span lang="zh">類型</span><span lang="en">Type</span></td><td><span lang="zh">標示該列為「實績」或「預測」</span><span lang="en">Marks the row as actual or forecast</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="sales-trend.html"><span lang="zh">銷售趨勢</span><span lang="en">Sales Trend</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

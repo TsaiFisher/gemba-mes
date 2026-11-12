@@ -1,0 +1,324 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@model MrpRun
+@using System.Text.Json
+
+@{
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    bool isNew = string.IsNullOrEmpty(Model.MrpRunId);
+    bool isDraft = !isReadOnly && Model.Status == MrpRunStatus.Draft;
+
+    var initLines = (Model.Lines ?? new List<MrpRunLine>())
+        .OrderBy(l => l.LineSeq)
+        .Select(l => new
+        {
+            l.ProductCode,
+            l.RequiredQty,
+            RequiredDate = l.RequiredDate.ToString("yyyy-MM-dd"),
+            l.SalesOrderId,
+            l.SalesOrderLineSeq,
+            l.Priority
+        }).ToList();
+    var initLinesJson = JsonSerializer.Serialize(initLines);
+    var importable = ViewBag.ImportableOrderLines as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+
+    string ModeLabel(MrpMode m) => m switch
+    {
+        MrpMode.StockOnly => Localizer["ModeStock"].Value,
+        MrpMode.Purchase => Localizer["ModePurchase"].Value,
+        MrpMode.Outsource => Localizer["ModeOutsource"].Value,
+        _ => Localizer["ModeMake"].Value
+    };
+}
+
+<form id="mrpRunForm" method="post"
+      action="@(isNew ? Url.Action("Create") : Url.Action("Edit", new { id = Model.MrpRunId }))"
+      data-action-submit="submitMrpForm">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="linesJson" id="linesJson" />
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+    <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+        <section class="mb-3">
+            <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">1</span>@Localizer["SecMaster"]</h6>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="mb-3">
+                        <label class="form-label">@Localizer["MrpRunId"]</label>
+                        <input type="hidden" asp-for="MrpRunId" />
+                        <div class="form-control-plaintext fw-bold text-primary">@(isNew ? Localizer["AutoNumberHint"].Value : Model.MrpRunId)</div>
+                    </div>
+                </div>
+                @if (!isNew)
+                {
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label class="form-label">@Localizer["Status"]</label>
+                            <div>
+                                @if (Model.Status == MrpRunStatus.Draft)
+                                {
+                                    <span class="badge bg-secondary">@Localizer["StatusDraft"]</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">@Localizer["StatusExecuted"]</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Localizer["Remarks"]</label>
+                <input type="text" class="form-control" asp-for="Remarks" maxlength="200" />
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+            </div>
+        </section>
+
+        <section class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
+                <h6 class="mb-0 fw-bold"><span class="badge bg-primary me-1">2</span>@Localizer["SecLines"] <span id="linesBadge" class="badge bg-secondary">0</span></h6>
+                @if (isDraft || isNew)
+                {
+                    @* 需求一律從訂單匯入（無手動新增需求列） *@
+                    <button type="button" class="btn btn-sm btn-outline-success" data-action="openImportModal">
+                        <i class="bi bi-box-arrow-in-down"></i> @Localizer["ImportOrders"]
+                    </button>
+                }
+            </div>
+            <div class="text-muted small mb-2">@Localizer["LinesHint"]</div>
+
+            @if (isReadOnly)
+            {
+                @* 已展開：顯示需求列計算結果（QT_Q/PO/OO/WO + 生產批） *@
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["ColSeq"]</th>
+                                <th>@Localizer["ColProduct"]</th>
+                                <th class="text-end u-col-num">@Localizer["ColQty"]</th>
+                                <th class="u-col-date">@Localizer["ColDueDate"]</th>
+                                <th>@Localizer["ColMode"]</th>
+                                <th class="text-end u-col-num">@Localizer["ColStockQty"]</th>
+                                <th class="text-end u-col-num">@Localizer["ColPurchaseQty"]</th>
+                                <th class="text-end u-col-num">@Localizer["ColOutsourceQty"]</th>
+                                <th class="text-end u-col-num">@Localizer["ColMakeQty"]</th>
+                                <th>@Localizer["ColBatch"]</th>
+                                <th>@Localizer["ColError"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var l in (Model.Lines ?? new List<MrpRunLine>()).OrderBy(x => x.LineSeq))
+                            {
+                                <tr class="@(string.IsNullOrEmpty(l.ValidationError) ? "" : "table-danger")">
+                                    <td>@l.LineSeq</td>
+                                    <td>@l.ProductCode</td>
+                                    <td class="text-end">@l.RequiredQty</td>
+                                    <td>@l.RequiredDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@(string.IsNullOrEmpty(l.ValidationError) ? ModeLabel(l.Mode) : "—")</td>
+                                    <td class="text-end">@l.StockQty</td>
+                                    <td class="text-end">@l.PurchaseQty</td>
+                                    <td class="text-end">@l.OutsourceQty</td>
+                                    <td class="text-end">@l.MakeQty</td>
+                                    <td class="small">@l.ProductionBatchId</td>
+                                    <td class="small text-danger">@l.ValidationError</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive mb-2">
+                    <table class="table table-sm table-hover table-bordered" id="linesTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="u-width-50px">@Localizer["ColSeq"]</th>
+                                <th>@Localizer["ColProduct"]</th>
+                                <th class="text-end u-width-120px">@Localizer["ColQty"]</th>
+                                <th class="u-width-150px">@Localizer["ColDueDate"]</th>
+                                <th class="u-width-120px">@Localizer["ColSalesOrder"]</th>
+                                <th class="text-end u-width-90px">@Localizer["ColPriority"]</th>
+                                <th class="u-width-90px">@Localizer["ColActions"]</th>
+                            </tr>
+                        </thead>
+                        <tbody id="linesTbody"></tbody>
+                    </table>
+                </div>
+            }
+        </section>
+    </fieldset>
+
+    <div class="modal-footer">
+        @if (isReadOnly)
+        {
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-secondary" name="cancel" value="cancel" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            <button type="submit" class="btn btn-primary" name="saveDraft" value="1">@Localizer["SaveDraft"]</button>
+            @if (!isNew && isDraft)
+            {
+                <button type="submit" class="btn btn-success" name="doExecute" value="1"
+                        data-action="confirmAction" data-confirm="@Localizer["ExecuteConfirm"]">
+                    <i class="bi bi-play-circle"></i> @Localizer["Execute"]
+                </button>
+            }
+        }
+    </div>
+</form>
+
+@if (isDraft || isNew)
+{
+    <div class="modal fade" id="importOrdersModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@Localizer["ImportTitle"]</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-muted small mb-2">@Localizer["ImportHint"]</div>
+                    @if (!importable.Any())
+                    {
+                        <div class="alert alert-info mb-0">@Localizer["ImportNone"]</div>
+                    }
+                    else
+                    {
+                        <table class="table table-sm table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="u-width-36px"></th>
+                                    <th>@Localizer["ImpKind"]</th>
+                                    <th>@Localizer["ImpSo"]</th>
+                                    <th>@Localizer["ImpProduct"]</th>
+                                    <th class="text-end">@Localizer["ImpOrderQty"]</th>
+                                    <th class="text-end">@Localizer["ImpCommitted"]</th>
+                                    <th class="text-end">@Localizer["ImpRemaining"]</th>
+                                    <th>@Localizer["ImpDate"]</th>
+                                    <th class="u-width-120px">@Localizer["ImpThisQty"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var o in importable)
+                                {
+                                    <tr>
+                                        <td><input type="checkbox" class="imp-chk" data-so="@o.OrderId" data-line="@o.LineNo" data-product="@o.ProductCode" data-date="@o.DeliveryDate" /></td>
+                                        <td><span class="badge bg-light text-dark">@o.Kind</span></td>
+                                        <td>@o.OrderId-@o.LineNo</td>
+                                        <td>@o.ProductCode</td>
+                                        <td class="text-end">@o.OrderQty</td>
+                                        <td class="text-end">@o.Committed</td>
+                                        <td class="text-end fw-bold">@o.Remaining</td>
+                                        <td>@o.DeliveryDate</td>
+                                        <td><input type="number" class="form-control form-control-sm imp-qty" step="any" min="0" value="@o.Remaining" /></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Cancel"]</button>
+                    <button type="button" class="btn btn-primary" data-action="importSelectedLines">@Localizer["ImportAdd"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (!isReadOnly)
+{
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    (function () {
+        var rLines = @Html.Raw(initLinesJson);
+
+        var L = {
+            noLines: "@Localizer["NoLines"]",
+            delConfirm: "@Localizer["JsLineDelConfirm"]"
+        };
+
+        function renderLines() {
+            var tbody = document.getElementById('linesTbody');
+            var rows = rLines.map(function (l, i) {
+                return '<tr>' +
+                    '<td>' + (i + 1) + '</td>' +
+                    '<td>' + l.ProductCode + '</td>' +
+                    '<td class="text-end">' + l.RequiredQty + '</td>' +
+                    '<td>' + (l.RequiredDate || '') + '</td>' +
+                    '<td>' + (l.SalesOrderId || '') + '</td>' +
+                    '<td><input type="number" class="form-control form-control-sm text-end" min="1" step="1" value="' + (l.Priority || 100) + '" data-action-change="setLinePriority" data-idx="' + i + '" /></td>' +
+                    '<td><button type="button" class="btn btn-xs btn-outline-danger" data-action="deleteLine" data-idx="' + i + '"><i class="bi bi-trash"></i> @Localizer["Delete"]</button></td>' +
+                    '</tr>';
+            });
+            tbody.innerHTML = rows.join('') || '<tr><td colspan="7" class="text-center text-muted">' + L.noLines + '</td></tr>';
+            document.getElementById('linesBadge').textContent = rLines.length;
+            if (window.armValidation) window.armValidation(tbody.closest('form')); // 動態列重註冊 unobtrusive 驗證（R6c）
+        }
+
+        window.setLinePriority = function (e, el) {
+            var idx = parseInt(el.dataset.idx);
+            var v = parseInt(el.value);
+            rLines[idx].Priority = (isNaN(v) || v < 1) ? 100 : v;
+        };
+
+        window.deleteLine = function (e, el) {
+            var idx = parseInt(el.dataset.idx);
+            if (!confirm(L.delConfirm)) return;
+            rLines.splice(idx, 1);
+            renderLines();
+        };
+
+        // 匯入 modal：移至 body 再 show（避免巢狀於 offcanvas 內導致 backdrop 灰屏凍結；
+        // 由 crud-panel.js openPanel 的 [data-moved-modal] 清理）。
+        var importModalInst = null;
+        window.openImportModal = function () {
+            var el = document.getElementById('importOrdersModal');
+            if (!el || !window.bootstrap) return;
+            if (el.parentElement !== document.body) {
+                document.body.appendChild(el);
+                el.setAttribute('data-moved-modal', '1');
+            }
+            if (!importModalInst) importModalInst = new bootstrap.Modal(el);
+            importModalInst.show();
+        };
+
+        window.importSelectedLines = function () {
+            var added = 0;
+            document.querySelectorAll('#importOrdersModal .imp-chk:checked').forEach(function (chk) {
+                var row = chk.closest('tr');
+                var qty = parseFloat(row.querySelector('.imp-qty').value);
+                if (isNaN(qty) || qty <= 0) return;
+                rLines.push({
+                    ProductCode: chk.dataset.product,
+                    RequiredQty: qty,
+                    RequiredDate: chk.dataset.date || '',
+                    SalesOrderId: chk.dataset.so,
+                    SalesOrderLineSeq: parseInt(chk.dataset.line),
+                    Priority: 100
+                });
+                added++;
+            });
+            if (added > 0) renderLines();
+            if (importModalInst) importModalInst.hide();
+        };
+
+        window.serializeLines = function () {
+            document.getElementById('linesJson').value = JSON.stringify(rLines);
+        };
+
+        // 取代原本表單送出前先序列化明細再走 submitPanel 的兩段 inline 行為。
+        window.submitMrpForm = function (e, el) {
+            window.serializeLines();
+            window.submitPanel(e, el);
+            return false;
+        };
+
+        renderLines();
+    })();
+    </script>
+}

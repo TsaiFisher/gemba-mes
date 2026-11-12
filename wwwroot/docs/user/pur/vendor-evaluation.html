@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Vendor Evaluation — PUR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>供應商評分卡 — PUR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">PUR 目錄</span><span lang="en">PUR Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">PUR 畫面</span><span lang="en">PUR Screens</span></div>
+    <a href="purchase-request.html" class="nav-link"><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></a>
+    <a href="purchase-order.html" class="nav-link"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></a>
+    <a href="goods-receipt.html" class="nav-link"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></a>
+    <a href="goods-return.html" class="nav-link"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></a>
+    <a href="../osp/outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="../osp/outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="vendor-price-list.html" class="nav-link"><span lang="zh">廠商單價目錄</span><span lang="en">Vendor Price List</span></a>
+    <a href="vendor-evaluation.html" class="nav-link active"><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></a>
+    <a href="purchase-overdue.html" class="nav-link"><span lang="zh">採購逾期跟催</span><span lang="en">Overdue Purchase Orders</span></a>
+    <a href="supplier-delivery-rate.html" class="nav-link"><span lang="zh">供應商交期達成率</span><span lang="en">Supplier Delivery Rate</span></a>
+    <a href="purchase-amount.html" class="nav-link"><span lang="zh">採購金額比較</span><span lang="en">Purchase Amount</span></a>
+    <a href="purchase-price.html" class="nav-link"><span lang="zh">採購價格比較</span><span lang="en">Purchase Price</span></a>
+    <a href="../osp/outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-star-half me-2 text-primary"></i><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/VendorEvaluation &nbsp;|&nbsp; 合格供應商年度/季度評核（SRM）</span><span lang="en">Route: /VendorEvaluation &nbsp;|&nbsp; Annual and quarterly evaluation of qualified suppliers (SRM)</span></div>
+    </div>
+
+    <p><span lang="zh">對供應商進行年度或季度評核：品質、交期分數由系統自動計算，價格、服務分數人工填寫，總分依權重加權平均。評核核准後自動更新公司主檔的「供應商資格狀態」（合格／觀察期／暫停），採購與委外下單時據以警示。</span><span lang="en">Evaluates suppliers annually or quarterly: quality and delivery scores are calculated by the system, price and service scores are entered manually, and the total is a weighted average. Approving an evaluation updates the supplier qualification status on the company master (Qualified / Under Watch / Suspended), which then warns buyers on purchase and outsource orders.</span></p>
+    <img class="screen-shot" src="img/vendor-evaluation.png" data-src-en="img/en/vendor-evaluation.png" alt="供應商評鑑畫面截圖" data-alt-en="Vendor evaluation screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">供應商評鑑畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Vendor evaluation screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="scoring-basis"><i class="bi bi-calculator me-2 text-primary"></i><span lang="zh">分數口徑</span><span lang="en">Scoring basis</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><strong><span lang="zh">品質分數</span><span lang="en">Quality Score</span></strong><span lang="zh">＝(1 − NCR 不良量 ÷ 過帳進貨量) × 100。不良量取 QCR 不合格品單（來源＝進貨單、非作廢）在期間內的數量加總，全公司跨廠彙總。<b>期間內完全沒有進貨時算不出分數</b>，畫面標示「期間無資料」，該構面<b>排除在加權之外</b>，不是給 100 分。</span><span lang="en"> = (1 − NCR reject quantity ÷ posted receipt quantity) × 100. The reject quantity is the sum of QCR non-conformance reports (source = goods receipt, not voided) within the period, summed across all plants. <b>With no receipts at all in the period the score cannot be computed</b>: the screen shows "No data for period" and the dimension is <b>excluded from the weighting</b> rather than scored 100.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><strong><span lang="zh">交期分數</span><span lang="en">Delivery Score</span></strong><span lang="zh">＝交期達成率 × 100，口徑與「供應商交期達成率」報表相同（採購進貨＋委外收貨雙來源，母體是預交日落在期間內的單）。<b>期間內沒有應交的單時同樣算不出分數</b>，標示「期間無資料」並排除在加權之外。</span><span lang="en"> = on-time delivery rate × 100, on the same basis as the "Supplier Delivery Rate" report (both purchase and outsource, with the population being lines whose promised date falls in the period). <b>With nothing due in the period the score again cannot be computed</b>: it shows "No data for period" and is excluded from the weighting.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><strong><span lang="zh">總分權重</span><span lang="en">Score weights</span></strong><span lang="zh">存於系統參數 srm_weight_quality／delivery／price／service（預設 30/30/20/20），可由系統管理員調整。</span><span lang="en"> Stored in the system parameters srm_weight_quality / delivery / price / service (30/30/20/20 by default) and adjustable by the administrator.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">「沒有資料」不等於「滿分」：</span><span lang="en">"No data" is not the same as "full marks":</span></strong><span lang="zh">從未往來的廠商與零不良、全準時的廠商，過去會拿到<b>一模一樣的分數</b>，而後者才是該被加分的那一個。現在算不出來的構面會<b>退出加權，權重在其餘構面之間重新分配</b>；四個構面全都算不出來時總分為 0，而不是除以零。畫面、表單與<b>列印</b>三處都會標示「期間無資料」——列印本是對外文件，更不能讓佔位的分數看起來像評價。</span><span lang="en"> A supplier you have never traded with and a supplier with zero defects and perfect delivery used to receive <b>exactly the same score</b>, although only the latter had earned it. A dimension that cannot be computed now <b>drops out of the weighting, and its weight is redistributed across the rest</b>; when none of the four can be computed the total is 0 rather than a division by zero. The list, the form and the <b>printout</b> all mark it "No data for period" — the printout goes to people outside the company, so a placeholder score must not be allowed to read as an assessment there.</span>
+    </div>
+
+    <h2 id="creating-and-submitting"><i class="bi bi-pencil-square me-2 text-primary"></i><span lang="zh">建立與送簽</span><span lang="en">Creating and submitting</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">「新增評核」選擇廠商與年度（季度留空＝年度評核），按「重新計算」帶入自動分數與計算依據，再填價格、服務分數；總分即時試算。</span><span lang="en">Click "New Evaluation", pick the supplier and year (leave the quarter blank for an annual evaluation), click "Recalculate" to pull in the automatic scores and their basis, then enter the price and service scores; the total is calculated as you type.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">總分 ≥ 80 合格、60–79 有條件合格、&lt; 60 不合格；</span><span lang="en">Total ≥ 80 Qualified, 60–79 Conditional, &lt; 60 Failed; </span><strong><span lang="zh">不合格必須填寫改善措施</span><span lang="en">A follow-up action is mandatory when the result is Failed</span></strong><span lang="zh">。同一廠商同一期間僅能有一筆評核。</span><span lang="en">. A supplier can have only one evaluation per period.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">草稿送簽後依簽核範本跑流程（未設定範本＝直接核准）；核准時自動回寫資格狀態：合格→Qualified、有條件→Probation（觀察期）、不合格→Suspended（暫停，下單時紅色警示）。</span><span lang="en">Once submitted, the draft follows the approval template (no template = approved immediately). Approval writes the qualification status back automatically: Qualified → Qualified, Conditional → Probation, Failed → Suspended (with a red warning when ordering).</span></div></div>
+
+    <h2 id="trend-and-export"><i class="bi bi-graph-up me-2 text-primary"></i><span lang="zh">趨勢與匯出</span><span lang="en">Trend and export</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列選定單一廠商時，清單上方顯示歷年（含季度）核准評核的總分折線圖。</span><span lang="en">When a single supplier is selected, a line chart of approved total scores over the years (including quarters) appears above the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">清單可匯出 Excel；每筆評核可開啟「列印評分卡」以瀏覽器列印或另存 PDF。</span><span lang="en">The list can be exported to Excel; each evaluation can be opened with "Print Scorecard" to print from the browser or save as PDF.</span></div></div>
+
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">廠商</span><span lang="en">Supplier</span></td><td><span lang="zh">只看單一供應商的評核紀錄</span><span lang="en">Shows the evaluation history of a single supplier</span></td></tr>
+        <tr><td><span lang="zh">年度 / 季度</span><span lang="en">Year / Quarter</span></td><td><span lang="zh">依評核期間篩選</span><span lang="en">Filters by evaluation period</span></td></tr>
+        <tr><td><span lang="zh">評核結果</span><span lang="en">Result</span></td><td><span lang="zh">依評核結論篩選（合格／待改善／不合格等）</span><span lang="en">Filters by evaluation result (Qualified / Needs Improvement / Failed …)</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">評核欄位</span><span lang="en">Evaluation fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">廠商</span><span lang="en">Supplier</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">受評核的供應商</span><span lang="en">Supplier being evaluated</span></td></tr>
+        <tr><td><span lang="zh">評核期間</span><span lang="en">Period</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">評核所屬的年度與季度；同一廠商同一期間僅能有一筆（應用層唯一性檢查）</span><span lang="en">Year and quarter the evaluation belongs to; only one per supplier and period is allowed (checked in the application layer)</span></td></tr>
+        <tr><td><span lang="zh">品質</span><span lang="en">Quality</span></td><td><span lang="zh">品質面得分，來源包含 IQC 不良與 NCR 統計；期間無進貨時顯示「期間無資料」</span><span lang="en">Quality score, derived from IQC rejects and NCR statistics; shows "No data for period" when there were no receipts</span></td></tr>
+        <tr><td><span lang="zh">交期</span><span lang="en">Delivery</span></td><td><span lang="zh">交期面得分，取自供應商交期達成率的同一口徑；期間無應交的單時顯示「期間無資料」</span><span lang="en">Delivery score, on the same basis as the supplier delivery rate report; shows "No data for period" when nothing was due</span></td></tr>
+        <tr><td><span lang="zh">價格</span><span lang="en">Price</span></td><td><span lang="zh">價格面得分（價格競爭力、調價合理性）</span><span lang="en">Price score (price competitiveness, reasonableness of price changes)</span></td></tr>
+        <tr><td><span lang="zh">服務</span><span lang="en">Service</span></td><td><span lang="zh">服務面得分（配合度、問題回應速度）</span><span lang="en">Service score (cooperation, speed of response to problems)</span></td></tr>
+        <tr><td><span lang="zh">總分</span><span lang="en">Total</span></td><td><span lang="zh">加權後的總分，決定評核結果級距；標示「期間無資料」的構面不參與加權</span><span lang="en">The weighted total, which determines the result band; dimensions marked "No data for period" do not take part in the weighting</span></td></tr>
+        <tr><td><span lang="zh">結果</span><span lang="en">Result</span></td><td><span lang="zh">評核結論；核准後才回寫供應商的合格資格狀態</span><span lang="en">Evaluation result; the supplier qualification status is written back only after approval</span></td></tr>
+        <tr><td><span lang="zh">簽核</span><span lang="en">Approval</span></td><td><span lang="zh">線上簽核進度</span><span lang="en">Approval progress</span></td></tr>
+        <tr><td><span lang="zh">評核日</span><span lang="en">Eval Date</span></td><td><span lang="zh">評核作業執行日期</span><span lang="en">Date the evaluation was carried out</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="supplier-delivery-rate.html"><span lang="zh">供應商交期達成率</span><span lang="en">Supplier Delivery Rate</span></a>、<a href="vendor-price-list.html"><span lang="zh">廠商單價目錄</span><span lang="en">Vendor Price List</span></a>、<a href="../qcr/ncr.html"><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,573 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Services
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.ORD.ViewModels.SalesOrderFormVm
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isNew      = string.IsNullOrEmpty(Model?.SalesOrderId);
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    bool canEdit = !isReadOnly && (isNew || (
+                      Model?.ApprovalStatus == DocumentApprovalStatus.Draft ||
+                      Model?.ApprovalStatus == DocumentApprovalStatus.Rejected));
+    // 結案/解除結案僅限已核准訂單可執行（與 canEdit 互斥：草稿階段結案對下游 MRP/出貨判斷無意義，
+    // 詳見 mfg-domain.md §21.1、ord-module.md §5.10 的 ApprovalStatus==Approved && !IsClosed 慣例）。
+    bool canClose = !isReadOnly && !isNew && Model?.ApprovalStatus == DocumentApprovalStatus.Approved;
+    var customers   = ViewBag.CustomerOptions   as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var products    = ViewBag.ProductOptions    as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uoms        = ViewBag.UomOptions        as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var currencies  = ViewBag.CurrencyOptions   as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var taxes       = ViewBag.TaxOptions        as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var orderTypes  = ViewBag.OrderTypeOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var tradeTerms  = ViewBag.TradeTermOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals      = ViewBag.UomDecimals      as IReadOnlyDictionary<string, int>;
+    var currencyDecimals = ViewBag.CurrencyDecimals as IReadOnlyDictionary<string, int>;
+    // 本位幣：明細幣別可各自不同，AmountLocal 與表頭合計一律以本位幣精度呈現
+    var baseCurrency = ViewBag.BaseCurrency as string ?? "";
+    int baseDp       = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string baseStep  = baseDp <= 0 ? "1" : "0." + new string('0', baseDp - 1) + "1";
+}
+
+<form id="soForm" asp-action="Save" asp-controller="SalesOrder" method="post"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="SalesOrderId" />
+    <input type="hidden" asp-for="RowVersion" />
+    <input type="hidden" asp-for="CreatedBy" />
+    <input type="hidden" asp-for="ApprovalStatus" />
+
+    <fieldset @(!canEdit ? "disabled=\"disabled\"" : "")>
+    <div class="p-3">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+        <div class="row g-3 mb-3">
+            @if (!isNew)
+            {
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["SalesOrderId"]</label>
+                    <div class="form-control-plaintext fw-bold text-primary">@Model!.SalesOrderId</div>
+                </div>
+            }
+            <div class="col-12 col-md-3">
+                <label asp-for="OrderDate" class="form-label fw-semibold">@Localizer["OrderDate"]</label>
+                <input asp-for="OrderDate" type="date" class="form-control" data-action-change="refreshAllLineRates" />
+                <span asp-validation-for="OrderDate" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="OrderType" class="form-label fw-semibold">@Localizer["OrderType"]</label>
+                <span asp-validation-for="OrderType" class="text-danger small"></span>
+                <select asp-for="OrderType" class="form-select">
+                    <option value="">--</option>
+                    @foreach (var t in orderTypes)
+                    {
+                        <option value="@t.Code" selected="@(Model?.OrderType == (string)t.Code)">@t.Code — @t.DisplayName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="TradeTermCode" class="form-label fw-semibold">@Localizer["TradeTerm"]</label>
+                <span asp-validation-for="TradeTermCode" class="text-danger small"></span>
+                <select asp-for="TradeTermCode" class="form-select">
+                    <option value="">--</option>
+                    @foreach (var t in tradeTerms)
+                    {
+                        <option value="@t.Code" selected="@(Model?.TradeTermCode == (string)t.Code)">@t.Code — @t.DisplayName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-12 col-md-4">
+                <label asp-for="CompanyCode" class="form-label fw-semibold">@Localizer["Customer"] <span class="text-danger">*</span></label>
+                <select asp-for="CompanyCode" class="form-select select2-enable" required>
+                    <option value="">-- @Localizer["SelectCustomer"] --</option>
+                    @foreach (var c in customers)
+                    {
+                        <option value="@c.CompanyCode" selected="@(Model?.CompanyCode == (string)c.CompanyCode)">@c.CompanyCode — @c.CompanyName</option>
+                    }
+                </select>
+                <span asp-validation-for="CompanyCode" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="CustomerOrderNo" class="form-label fw-semibold">@Localizer["CustomerOrderNo"]</label>
+                <span asp-validation-for="CustomerOrderNo" class="text-danger small"></span>
+                <input asp-for="CustomerOrderNo" class="form-control" maxlength="50" />
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="Remarks" class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+                <input asp-for="Remarks" class="form-control" maxlength="500" />
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0"><i class="bi bi-list-ul me-1"></i>@Localizer["LinesTitle"]</h6>
+            <div class="d-flex gap-2">
+                @if (canEdit)
+                {
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-action="addLine">
+                        <i class="bi bi-plus-lg"></i> @Localizer["AddLine"]
+                    </button>
+                }
+                @* 「全部結案」移到頁尾按鈕列（見下方），與 canEdit 的 fieldset 脫鉤，
+                   核准後才啟用（fieldset disabled 會連帶鎖住其內任何 button）。 *@
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered" id="linesTable">
+                <thead class="table-light">
+                    <tr>
+                        <th class="u-width-40px">#</th>
+                        <th class="u-min-width-240px">@Localizer["ProductCode"]</th>
+                        <th class="u-col-date">@Localizer["DeliveryDate"]</th>
+                        <th class="text-end u-col-num">@Localizer["OrderQty"]</th>
+                        <th class="u-col-tiny">@Localizer["UomCode"]</th>
+                        <th class="u-col-tiny">@Localizer["CurrencyCode"]</th>
+                        <th class="text-end u-col-num">@Localizer["UnitPrice"]</th>
+                        <th class="u-col-tiny">@Localizer["TaxCode"]</th>
+                        <th class="text-end u-col-num">@Localizer["LineAmount"]</th>
+                        <th class="text-end u-col-num">@Localizer["TaxAmount"]</th>
+                        <th class="text-end u-col-num">@Localizer["TotalAmount"]</th>
+                        <th class="text-end u-col-num">@Localizer["AmountLocal"]@(string.IsNullOrEmpty(baseCurrency) ? "" : $"（{baseCurrency}）")</th>
+                        <th class="text-end u-col-num">@Localizer["ShippedQty"]</th>
+                        <th class="u-width-50px">@Localizer["IsClosed"]</th>
+                        <th class="u-col-soft">@Localizer["Remarks"]</th>
+                        @if (canEdit) { <th class="u-width-40px"></th> }
+                    </tr>
+                </thead>
+                <tbody id="linesTbody">
+                    @for (int i = 0; i < (Model?.Lines.Count ?? 0); i++)
+                    {
+                        var line  = Model!.Lines[i];
+                        var cdp   = CurrencyStepHelper.GetDp(currencyDecimals, line.CurrencyCode);
+                        <tr>
+                            <td class="text-center text-muted small">@(i+1)</td>
+                            <td>
+                                <input type="hidden" name="Lines[@i].LineNo" value="@line.LineNo" />
+                                <select name="Lines[@i].ProductCode" class="form-select form-select-sm select2-enable" required data-action-change="onProductChange">
+                                    <option value="">--</option>
+                                    @foreach (var p in products)
+                                    {
+                                        <option value="@p.ProductCode" selected="@(line.ProductCode == (string)p.ProductCode)"
+                                                data-sales-uom="@p.SalesUom" data-stock-uom="@p.StockUom">@p.ProductCode — @p.ProductName</option>
+                                    }
+                                </select>
+                            </td>
+                            <td><input name="Lines[@i].DeliveryDate" value="@line.DeliveryDate?.ToString("yyyy-MM-dd")" type="date" class="form-control form-control-sm u-width-130px" /></td>
+                            <td>
+                                <input name="Lines[@i].OrderQty" value="@line.OrderQty" type="number"
+                                       step="@UomStepHelper.GetStep(uomDecimals, line.UomCode)"
+                                       min="@UomStepHelper.GetMinPositive(uomDecimals, line.UomCode)"
+                                       class="form-control form-control-sm text-end line-qty u-width-90px" required data-action-change="calcLineEl" />
+                                <input type="hidden" name="Lines[@i].StockUomCode" value="@line.StockUomCode" />
+                                <input type="hidden" name="Lines[@i].StockQty" value="@line.StockQty" />
+                            </td>
+                            <td>
+                                <select name="Lines[@i].UomCode" data-uom-prefer="sales" class="form-select form-select-sm line-uom u-width-80px" data-action-change="onUomChange">
+                                    @foreach (var u in uoms) { <option value="@u.UomCode" selected="@(line.UomCode == (string)u.UomCode)">@u.UomCode</option> }
+                                </select>
+                            </td>
+                            <td>
+                                <select name="Lines[@i].CurrencyCode" class="form-select form-select-sm line-currency u-width-80px" data-action-change="onCurrencyChange">
+                                    <option value="">--</option>
+                                    @foreach (var c in currencies)
+                                    {
+                                        <option value="@c.CurrencyCode" selected="@(line.CurrencyCode == (string)c.CurrencyCode)">@c.CurrencyCode</option>
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <input name="Lines[@i].UnitPrice" value="@(line.UnitPrice.ToString("F" + cdp))" type="number"
+                                       step="@CurrencyStepHelper.GetStep(currencyDecimals, line.CurrencyCode)"
+                                       class="form-control form-control-sm text-end line-price u-width-100px" data-action-change="calcLineEl" />
+                                <input type="hidden" name="Lines[@i].ExchangeRate" value="@line.ExchangeRate" class="line-exrate" />
+                            </td>
+                            <td>
+                                <select name="Lines[@i].TaxCode" class="form-select form-select-sm line-tax u-width-80px" data-action-change="onTaxChange">
+                                    <option value="">--</option>
+                                    @foreach (var t in taxes) { <option value="@t.TaxCode" selected="@(line.TaxCode == (string)t.TaxCode)" data-rate="@t.TaxRate">@t.TaxCode</option> }
+                                </select>
+                                <input type="hidden" name="Lines[@i].TaxRate" value="@line.TaxRate" class="line-taxrate" />
+                            </td>
+                            <td><input name="Lines[@i].LineAmount" value="@(line.LineAmount.ToString("F" + cdp))" type="number" step="@CurrencyStepHelper.GetStep(currencyDecimals, line.CurrencyCode)" readonly class="form-control form-control-sm text-end line-lineamt u-width-100px" /></td>
+                            <td><input name="Lines[@i].TaxAmount" value="@(line.TaxAmount.ToString("F" + cdp))" type="number" step="@CurrencyStepHelper.GetStep(currencyDecimals, line.CurrencyCode)" readonly class="form-control form-control-sm text-end line-taxamt u-width-100px" /></td>
+                            <td><input name="Lines[@i].TotalAmount" value="@(line.TotalAmount.ToString("F" + cdp))" type="number" step="@CurrencyStepHelper.GetStep(currencyDecimals, line.CurrencyCode)" readonly class="form-control form-control-sm text-end line-totalamt u-width-100px" /></td>
+                            <td><input name="Lines[@i].AmountLocal" value="@(line.AmountLocal.ToString("F" + baseDp))" type="number" readonly step="@baseStep" class="form-control form-control-sm text-end line-amtlocal u-width-100px" /></td>
+                            <td class="text-end text-muted small">@line.ShippedQty</td>
+                            <td class="text-center">
+                                @* 用 <a> 而非 <button>：結案/解除結案不受 canEdit 的 <fieldset disabled> 節制
+                                   （fieldset 只會停用表單關聯元素），核准後（canClose）才可互動。 *@
+                                @if (canClose && line.IsClosed)
+                                {
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-link text-warning p-0"
+                                       data-action="toggleLineClose" data-id="@Model!.SalesOrderId" data-line-no="@line.LineNo" data-closing="false"
+                                       title="@Localizer["Reopen"]">
+                                        <i class="bi bi-lock-fill"></i>
+                                    </a>
+                                }
+                                else if (canClose)
+                                {
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-link text-secondary p-0"
+                                       data-action="toggleLineClose" data-id="@Model!.SalesOrderId" data-line-no="@line.LineNo" data-closing="true"
+                                       title="@Localizer["CloseLine"]"><i class="bi bi-unlock"></i> @Localizer["CloseLine"]</a>
+                                }
+                                else
+                                {
+                                    <i class="bi @(line.IsClosed ? "bi-lock-fill" : "bi-unlock") text-muted"
+                                       title="@(isNew ? "" : Localizer["ClosePendingApprovalHint"].Value)"></i>
+                                }
+                            </td>
+                            <td><input name="Lines[@i].Remarks" value="@line.Remarks" class="form-control form-control-sm" /></td>
+                            @if (canEdit)
+                            {
+                                <td class="text-center">
+                                    @if (line.ShippedQty == 0)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+                    <tfoot class="table-light fw-semibold">
+                        <tr>
+                            <td colspan="8" class="text-end small text-muted">@SL["Total"]</td>
+                            <td class="text-end" id="totalLineAmt">0.00</td>
+                            <td class="text-end" id="totalTaxAmt">0.00</td>
+                            <td class="text-end" id="totalTotalAmt">0.00</td>
+                            <td class="text-end" id="totalAmountLocal">0.00</td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </tfoot>
+            </table>
+        </div>
+    </div>
+    </fieldset>
+
+    <div class="position-sticky bottom-0 bg-white border-top px-3 py-2 d-flex justify-content-between align-items-center gap-2">
+        <div class="d-flex gap-2 align-items-center">
+            @if (!isNew)
+            {
+                <span class="badge @ApprovalBadge(Model!.ApprovalStatus)">@DocStatusLabels.Label(Model!.ApprovalStatus)</span>
+            }
+        </div>
+        <div class="d-flex gap-2">
+            @if (!isNew && (bool?)ViewBag.CanPrint == true)
+            {
+                <a asp-action="Print" asp-controller="SalesOrder" asp-route-id="@Model!.SalesOrderId" target="_blank" class="btn btn-outline-secondary"><i class="bi bi-printer"></i></a>
+            }
+            @if (isReadOnly)
+            {
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+                @if (canClose)
+                {
+                    <button type="button" class="btn btn-outline-warning"
+                            data-action="closeDoc" data-id="@Model!.SalesOrderId">
+                        <i class="bi bi-lock me-1"></i>@Localizer["CloseAll"]
+                    </button>
+                }
+                @if (!isNew && Model!.ApprovalStatus == DocumentApprovalStatus.PendingApproval)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="Withdraw" data-id="@Model!.SalesOrderId" data-msg="@Localizer["ConfirmWithdraw"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["Withdraw"]
+                    </button>
+                }
+                @if (!isNew && (Model!.ApprovalStatus == DocumentApprovalStatus.Draft || Model!.ApprovalStatus == DocumentApprovalStatus.Rejected))
+                {
+                    <button type="button" class="btn btn-outline-primary" data-action="docAction" data-doc-action="Submit" data-id="@Model!.SalesOrderId" data-msg="@Localizer["ConfirmSubmit"]">
+                        <i class="bi bi-send me-1"></i>@Localizer["Submit"]
+                    </button>
+                }
+                @if (Model?.ApprovalStatus != DocumentApprovalStatus.PendingApproval
+                     && Model?.ApprovalStatus != DocumentApprovalStatus.Approved)
+                {
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-floppy me-1"></i>@Localizer["Save"]</button>
+                }
+            }
+        </div>
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    window.uomDecimals      = Object.assign(window.uomDecimals || {}, @Html.Raw(System.Text.Json.JsonSerializer.Serialize(uomDecimals ?? new Dictionary<string,int>())));
+    window.currencyDecimals = Object.assign(window.currencyDecimals || {}, @Html.Raw(System.Text.Json.JsonSerializer.Serialize(currencyDecimals ?? new Dictionary<string,int>())));
+    // 本位幣代號與精度：AmountLocal 及表頭合計專用
+    var baseCurrency = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(baseCurrency));
+    var baseDp       = @baseDp;
+    var baseStep     = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(baseStep));
+
+    async function syncStockQty(row) {
+        const productCode = row.querySelector('select[name$=".ProductCode"]')?.value || row.querySelector('input[name$=".ProductCode"]')?.value;
+        const fromUom     = row.querySelector('select[name$=".UomCode"]')?.value;
+        const toUom       = row.querySelector('input[name$=".StockUomCode"]')?.value;
+        const qty         = parseFloat(row.querySelector('.line-qty')?.value) || 0;
+        if (!productCode || !fromUom || !toUom) return;
+        try {
+            const resp = await fetch(`/Uom/GetConversionRate?productCode=${encodeURIComponent(productCode)}&fromUom=${encodeURIComponent(fromUom)}&toUom=${encodeURIComponent(toUom)}`);
+            const data = await resp.json();
+            if (data.success) {
+                const dp = window.uomDecimals[toUom] != null ? window.uomDecimals[toUom] : 4;
+                const stockQty = window.roundHalfAway ? window.roundHalfAway(qty * data.rate, dp) : +(qty * data.rate).toFixed(dp);
+                const inp = row.querySelector('input[name$=".StockQty"]');
+                if (inp) inp.value = stockQty;
+            }
+        } catch (e) { console.error('Uom conversion error', e); }
+    }
+
+    function onUomChange(e, sel) {
+        const row = sel.closest('tr');
+        window.applyUomStep && window.applyUomStep(row.querySelector('.line-qty'), sel.value);
+        syncStockQty(row);
+    }
+
+    // data-action 委派薄包裝：calcLine 內部以元素為參數，這裡轉接 dispatcher 的 (event, el)。
+    function calcLineEl(e, el) {
+        calcLine(el);
+    }
+
+    function calcLine(el) {
+        const tr      = el.closest('tr');
+        const qty     = parseFloat(tr.querySelector('.line-qty')?.value)    || 0;
+        const price   = parseFloat(tr.querySelector('.line-price')?.value)  || 0;
+        const taxRate = parseFloat(tr.querySelector('.line-taxrate')?.value) || 0;
+        const exRate  = parseFloat(tr.querySelector('.line-exrate')?.value)  || 1;
+        const ccy     = tr.querySelector('.line-currency')?.value || '';
+        const dp      = window.currencyDp ? window.currencyDp(ccy) : 2;
+        const lineAmt  = window.roundHalfAway ? window.roundHalfAway(qty * price, dp) : +(qty * price).toFixed(dp);
+        const taxAmt   = window.roundHalfAway ? window.roundHalfAway(lineAmt * taxRate, dp) : +(lineAmt * taxRate).toFixed(dp);
+        // LineAmount / TaxAmount / TotalAmount 一律為「交易幣」金額，匯率只作用在 AmountLocal。
+        // 本幣 = 外幣 × Rate（見 currency.md §換算方向）。
+        const totalAmt = window.roundHalfAway ? window.roundHalfAway(lineAmt + taxAmt, dp) : +(lineAmt + taxAmt).toFixed(dp);
+        const amtLocal = window.roundHalfAway ? window.roundHalfAway(totalAmt * exRate, baseDp) : +(totalAmt * exRate).toFixed(baseDp);
+        const laEl = tr.querySelector('.line-lineamt');
+        const taEl = tr.querySelector('.line-taxamt');
+        const ttEl = tr.querySelector('.line-totalamt');
+        const alEl = tr.querySelector('.line-amtlocal');
+        if (laEl) laEl.value = lineAmt;
+        if (taEl) taEl.value = taxAmt;
+        if (ttEl) ttEl.value = totalAmt;
+        if (alEl) alEl.value = amtLocal;
+        syncStockQty(tr);
+        calcTotals();
+    }
+
+    function calcTotals() {
+        // 交易幣三欄以行的幣別分群加總；本幣欄已全部換算為本位幣，可直接單一加總 —— 即表頭 TotalAmount。
+        const groups = {};
+        let localSum = 0;
+        document.querySelectorAll('#linesTbody tr').forEach(row => {
+            const ccy = row.querySelector('.line-currency')?.value || '';
+            if (!groups[ccy]) groups[ccy] = { la: 0, ta: 0, tt: 0 };
+            groups[ccy].la += parseFloat(row.querySelector('.line-lineamt')?.value)  || 0;
+            groups[ccy].ta += parseFloat(row.querySelector('.line-taxamt')?.value)   || 0;
+            groups[ccy].tt += parseFloat(row.querySelector('.line-totalamt')?.value) || 0;
+            localSum       += parseFloat(row.querySelector('.line-amtlocal')?.value) || 0;
+        });
+        const join = key => Object.entries(groups).map(([c, v]) =>
+            (c ? c + ' ' : '') + (window.fmtMoney ? window.fmtMoney(v[key], c) : v[key].toFixed(2))).join(' / ') || '0';
+        const laEl = document.getElementById('totalLineAmt');
+        const taEl = document.getElementById('totalTaxAmt');
+        const ttEl = document.getElementById('totalTotalAmt');
+        if (laEl) laEl.textContent = join('la');
+        if (taEl) taEl.textContent = join('ta');
+        if (ttEl) ttEl.textContent = join('tt');
+        const alEl = document.getElementById('totalAmountLocal');
+        if (alEl) alEl.textContent = (baseCurrency ? baseCurrency + ' ' : '')
+            + (window.fmtMoney ? window.fmtMoney(localSum, baseCurrency) : localSum.toFixed(baseDp));
+    }
+
+    function onTaxChange(e, sel) {
+        const rate = parseFloat(sel.selectedOptions[0]?.dataset.rate || 0);
+        const tr = sel.closest('tr');
+        const rateInp = tr.querySelector('.line-taxrate');
+        if (rateInp) rateInp.value = rate;
+        calcLine(sel);
+    }
+
+    function onProductChange(e, sel) {
+        const opt = sel.selectedOptions[0];
+        if (!opt) return;
+        const tr = sel.closest('tr');
+        const salesUom   = opt.dataset.salesUom  || '';
+        const stockUom   = opt.dataset.stockUom  || '';
+        const uomSel     = tr.querySelector('.line-uom');
+        const stockUomIn = tr.querySelector('input[name$=".StockUomCode"]');
+        if (uomSel && salesUom) { uomSel.value = salesUom; window.applyUomStepAsync && window.applyUomStepAsync(tr.querySelector('.line-qty'), salesUom); }
+        if (stockUomIn) stockUomIn.value = stockUom;
+        syncStockQty(tr);
+    }
+
+    function onCurrencyChange(e, sel) {
+        const tr = sel.closest('tr');
+        ['line-price','line-lineamt','line-taxamt','line-totalamt'].forEach(cls => {
+            tr.querySelectorAll('.' + cls).forEach(inp => window.applyCurrencyStep && window.applyCurrencyStep(inp, sel.value));
+        });
+        refreshLineRate(tr).finally(() => calcLine(sel));
+    }
+
+    async function refreshLineRate(row) {
+        const ccy = row.querySelector('.line-currency')?.value || '';
+        const exEl = row.querySelector('.line-exrate');
+        if (!exEl) return;
+        if (!ccy) { exEl.value = 1; return; }
+        const docDate = document.getElementById('OrderDate')?.value;
+        if (!docDate) { exEl.value = 1; return; }
+        try {
+            const resp = await fetch(`/api/currency/rate?currencyCode=${encodeURIComponent(ccy)}&documentDate=${encodeURIComponent(docDate)}&rateType=Sell`,
+                { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            if (!resp.ok) return;
+            const data = await resp.json();
+            exEl.value = data.rate ?? exEl.value ?? 1;
+        } catch { /* 保留原值 */ }
+    }
+
+    async function refreshAllLineRates() {
+        const rows = document.querySelectorAll('tbody tr');
+        for (const row of rows) {
+            if (!row.querySelector('.line-exrate')) continue;
+            await refreshLineRate(row);
+            calcLine(row.querySelector('.line-currency'));
+        }
+    }
+
+    var lineIdx = @(Model?.Lines.Count ?? 0);
+    var productOpts = `<option value="">--</option>@foreach(var p in products){
+@:<option value="@p.ProductCode" data-sales-uom="@p.SalesUom" data-stock-uom="@p.StockUom">@p.ProductCode — @p.ProductName</option>
+}`;
+    var uomOpts = `@foreach(var u in uoms){
+@:<option value="@u.UomCode">@u.UomCode</option>
+}`;
+    var taxOpts = `<option value="">--</option>@foreach(var t in taxes){
+@:<option value="@t.TaxCode" data-rate="@t.TaxRate">@t.TaxCode</option>
+}`;
+    var ccyOpts = `<option value="">--</option>@foreach(var c in currencies){
+@:<option value="@c.CurrencyCode">@c.CurrencyCode</option>
+}`;
+
+    function addLine() {
+        const i = lineIdx++;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="text-center text-muted small">${i+1}</td>
+            <td><input type="hidden" name="Lines[${i}].LineNo" value="0" /><select name="Lines[${i}].ProductCode" class="form-select form-select-sm select2-enable" required data-action-change="onProductChange">${productOpts}</select></td>
+            <td><input name="Lines[${i}].DeliveryDate" type="date" class="form-control form-control-sm u-width-130px" /></td>
+            <td>
+                <input name="Lines[${i}].OrderQty" type="number" value="1" step="any" min="0" class="form-control form-control-sm text-end line-qty u-width-90px" required data-action-change="calcLineEl" />
+                <input type="hidden" name="Lines[${i}].StockUomCode" value="" />
+                <input type="hidden" name="Lines[${i}].StockQty" value="0" />
+            </td>
+            <td><select name="Lines[${i}].UomCode" data-uom-prefer="sales" class="form-select form-select-sm line-uom u-width-80px" data-action-change="onUomChange">${uomOpts}</select></td>
+            <td><select name="Lines[${i}].CurrencyCode" class="form-select form-select-sm line-currency u-width-80px" data-action-change="onCurrencyChange">${ccyOpts}</select></td>
+            <td>
+                <input name="Lines[${i}].UnitPrice" type="number" value="0" step="any" class="form-control form-control-sm text-end line-price u-width-100px" data-action-change="calcLineEl" />
+                <input type="hidden" name="Lines[${i}].ExchangeRate" value="1" class="line-exrate" />
+            </td>
+            <td><select name="Lines[${i}].TaxCode" class="form-select form-select-sm line-tax u-width-80px" data-action-change="onTaxChange">${taxOpts}</select><input type="hidden" name="Lines[${i}].TaxRate" value="0" class="line-taxrate" /></td>
+            <td><input name="Lines[${i}].LineAmount" type="number" value="0" step="any" readonly class="form-control form-control-sm text-end line-lineamt u-width-100px" /></td>
+            <td><input name="Lines[${i}].TaxAmount" type="number" value="0" step="any" readonly class="form-control form-control-sm text-end line-taxamt u-width-100px" /></td>
+            <td><input name="Lines[${i}].TotalAmount" type="number" value="0" step="any" readonly class="form-control form-control-sm text-end line-totalamt u-width-100px" /></td>
+            <td><input name="Lines[${i}].AmountLocal" type="number" value="0" step="${baseStep}" readonly class="form-control form-control-sm text-end line-amtlocal u-width-100px" /></td>
+            <td class="text-end text-muted small">0</td>
+            <td></td>
+            <td><input name="Lines[${i}].Remarks" class="form-control form-control-sm" /></td>
+            <td class="text-center"><button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button></td>`;
+        document.getElementById('linesTbody').appendChild(tr);
+        window.armValidation(document.getElementById('soForm')); // 動態列重註冊 unobtrusive 驗證（R6c）
+        initSelect2(tr);
+    }
+
+    function removeLine(e, btn) { btn.closest('tr').remove(); calcTotals(); }
+
+    function toggleLineClose(e, el) {
+        const docId = el.dataset.id;
+        const lineNo = el.dataset.lineNo;
+        const closing = el.dataset.closing === 'true';
+        const action = closing ? 'CloseLine' : 'ReopenLine';
+        const token = document.querySelector('#soForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/SalesOrder/${action}?id=${encodeURIComponent(docId)}&lineNo=${lineNo}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => {
+            if (d.success) { window.openPanel(`/SalesOrder/Edit/${docId}`); refreshList && refreshList(); }
+            else alert(d.message);
+        });
+    }
+
+    function closeDoc(e, el) {
+        const docId = el.dataset.id;
+        if (!confirm('@Localizer["ConfirmCloseDoc"]')) return;
+        const token = document.querySelector('#soForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/SalesOrder/CloseDoc/${docId}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => {
+            if (d.success) { window.openPanel(`/SalesOrder/Edit/${docId}`); refreshList && refreshList(); }
+            else alert(d.message);
+        });
+    }
+
+    function docAction(e, el) {
+        const action = el.dataset.docAction, id = el.dataset.id, msg = el.dataset.msg;
+        if (msg && !confirm(msg)) return;
+        const token = document.querySelector('#soForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/SalesOrder/${action}/${id}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => {
+            if (d.success) { window.toastSuccess && window.toastSuccess(); refreshList && refreshList(); }
+            else alert(d.message);
+        });
+    }
+
+    (function () {
+        const companySel = document.querySelector('[name="CompanyCode"]');
+        if (!companySel) return;
+        const tbody = document.getElementById('linesTbody');
+        let prevCompanyCode = companySel.value || '';
+        let reverting = false;
+        companySel.addEventListener('change', function () {
+            if (reverting) return;
+            if (this.value === prevCompanyCode) return;
+            if (tbody && tbody.children.length > 0) {
+                if (!confirm('@Localizer["ConfirmCustomerChange"]')) {
+                    reverting = true;
+                    this.value = prevCompanyCode;
+                    if (window.jQuery) window.jQuery(this).trigger('change.select2');
+                    reverting = false;
+                    return;
+                }
+                tbody.innerHTML = '';
+                lineIdx = 0;
+            }
+            prevCompanyCode = this.value;
+        });
+    })();
+    calcTotals();
+    document.querySelectorAll('#linesTbody tr').forEach(row => syncStockQty(row));
+
+    // select2 初始化——本 Partial 經 crud-panel.js 局部注入，site.js 的
+    // DOMContentLoaded 全域初始化不會重跑，故需自行呼叫；dropdownParent 指向表單本身，
+    // 確保下拉選單在側欄(offcanvas)內不被裁切。addLine() 新增列時也呼叫本函式。
+    function initSelect2(scope) {
+        if (!window.jQuery || !$.fn.select2) return;
+        var $scope = scope ? $(scope) : $('#soForm');
+        $scope.find('.select2-enable').not('.select2-hidden-accessible').each(function () {
+            $(this).select2({ theme: 'bootstrap-5', width: '100%', dropdownParent: $('#soForm') });
+        });
+    }
+    initSelect2();
+</script>
+
+@functions {
+    string ApprovalBadge(DocumentApprovalStatus s) => s switch {
+        DocumentApprovalStatus.Approved => "bg-success",
+        DocumentApprovalStatus.PendingApproval => "bg-warning text-dark",
+        DocumentApprovalStatus.Rejected => "bg-danger",
+        _ => "bg-secondary"
+    };
+}

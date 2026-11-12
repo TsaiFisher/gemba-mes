@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Inventory Value — INV User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>庫存價值分析 — INV 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">INV 目錄</span><span lang="en">INV Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">INV 畫面</span><span lang="en">INV Screens</span></div>
+    <a href="inventory-balance.html" class="nav-link"><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></a>
+    <a href="stock-movement.html" class="nav-link"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a>
+    <a href="stock-ledger.html" class="nav-link"><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></a>
+    <a href="warehouse-ops.html" class="nav-link"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a>
+    <a href="material-staging.html" class="nav-link"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a>
+    <a href="scrap-doc.html" class="nav-link"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></a>
+    <a href="loan-doc.html" class="nav-link"><span lang="zh">借入借出單</span><span lang="en">Loan Document</span></a>
+    <a href="sample-doc.html" class="nav-link"><span lang="zh">樣品/客供單</span><span lang="en">Sample/Consignment Docs</span></a>
+    <a href="inventory-count.html" class="nav-link"><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></a>
+    <a href="stock-adjustment.html" class="nav-link"><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></a>
+    <a href="../osp/outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="rework-material.html" class="nav-link"><span lang="zh">重工發退料單</span><span lang="en">Rework Material</span></a>
+    <a href="stock-transfer.html" class="nav-link"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a>
+    <a href="cross-plant-transfer.html" class="nav-link"><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></a>
+    <a href="inventory-valuation.html" class="nav-link"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a>
+    <a href="landed-cost-allocation.html" class="nav-link"><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></a>
+    <a href="stock-shortage.html" class="nav-link"><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></a>
+    <a href="slow-moving-inventory.html" class="nav-link"><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></a>
+    <a href="inventory-aging.html" class="nav-link"><span lang="zh">存貨庫齡分析</span><span lang="en">Inventory Aging Analysis</span></a>
+    <a href="inventory-value.html" class="nav-link active"><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></a>
+    <a href="inventory-turnover.html" class="nav-link"><span lang="zh">庫存周轉率</span><span lang="en">Inventory Turnover</span></a>
+    <a href="stock-variance.html" class="nav-link"><span lang="zh">盤差分析</span><span lang="en">Stock Variance</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-bar-chart me-2 text-primary"></i><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/InventoryValue &nbsp;|&nbsp; 庫存金額結構</span><span lang="en">Route: /InventoryValue &nbsp;|&nbsp; Inventory value structure</span></div>
+    </div>
+
+    <p><span lang="zh">依品項類別彙總目前廠別的庫存金額與佔比，掌握資金積壓在哪些類別；需要看到個別品號時勾選「顯示品號明細」。</span><span lang="en">Summarizes the current plant's inventory value and share by product category, showing which categories tie up capital; tick "Show product detail" to see individual products.</span></p>
+    <img class="screen-shot" src="img/inventory-value.png" data-src-en="img/en/inventory-value.png" alt="庫存價值分析畫面截圖" data-alt-en="Inventory value screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">庫存價值分析畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Inventory value screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">選擇品項類別（可留空）後點「查詢」；清單下方有分頁導航。</span><span lang="en">Choose a category (optional) and click "Search"; the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">預設每列一個類別，依庫存金額由高到低排列，先看出資金集中在哪一類。</span><span lang="en">By default each row is one category, sorted by inventory value from high to low, so you can see first which category holds the most capital.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">勾選「顯示品號明細」再點「查詢」，改為每列一個品號：同類別的品號排在一起並依金額由高到低，每個類別前有一列標題顯示該類別的分類小計；分頁也改成按明細列切。</span><span lang="en">Tick "Show product detail" and click "Search" again to switch to one row per product: products of the same category are grouped together and sorted by value from high to low, and a heading row before each category shows its subtotal. Paging then splits the detail rows.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">點「匯出 Excel」匯出目前的查詢結果（沿用相同的類別與顯示模式）。</span><span lang="en">Click "Export Excel" to export the current result (using the same category and display mode).</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品項類別</span><span lang="en">Category</span></td><td><span lang="zh">只看某一類別；留空為全部類別</span><span lang="en">Limits the result to one category; leave blank for all categories</span></td></tr>
+        <tr><td><span lang="zh">顯示品號明細</span><span lang="en">Show product detail</span></td><td><span lang="zh">不勾選時每列一個類別；勾選後每列一個品號</span><span lang="en">Unchecked: one row per category. Checked: one row per product</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位（依類別，預設）</span><span lang="en">Report fields (by category, default)</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品項類別</span><span lang="en">Category</span></td><td><span lang="zh">產品主檔的類別；沒有設定類別的品號歸在「未分類」</span><span lang="en">The category on the product master; products without one are grouped under "Uncategorized"</span></td></tr>
+        <tr><td><span lang="zh">品號數</span><span lang="en">Items</span></td><td><span lang="zh">該類別目前有庫存的品號數</span><span lang="en">Number of products in the category that currently have stock</span></td></tr>
+        <tr><td><span lang="zh">庫存金額</span><span lang="en">Inventory Value</span></td><td><span lang="zh">該類別所有品號的庫存金額合計</span><span lang="en">Total inventory value of all products in the category</span></td></tr>
+        <tr><td><span lang="zh">佔比%</span><span lang="en">Share%</span></td><td><span lang="zh">該類別庫存金額 ÷ 查詢範圍內庫存總金額；各類別佔比加總等於明細模式下各品號佔比的加總</span><span lang="en">Category inventory value ÷ total inventory value within the query scope; the category shares add up to the same total as the product shares in detail mode</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位（顯示品號明細）</span><span lang="en">Report fields (product detail)</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品項類別</span><span lang="en">Category</span></td><td><span lang="zh">品號所屬類別；類別標題列另顯示分類小計（該類別全部金額，不是當頁幾列的和）</span><span lang="en">The product's category; the category heading row also shows the category subtotal (the whole category, not just the rows on the current page)</span></td></tr>
+        <tr><td><span lang="zh">品號 / 品名</span><span lang="en">Product</span></td><td><span lang="zh">料件代碼與名稱</span><span lang="en">Product code and name</span></td></tr>
+        <tr><td><span lang="zh">庫存量</span><span lang="en">Stock Qty</span></td><td><span lang="zh">目前廠別各倉合計的在庫數量</span><span lang="en">On-hand quantity summed across all warehouses of the current plant</span></td></tr>
+        <tr><td><span lang="zh">單位</span><span lang="en">UOM</span></td><td><span lang="zh">庫存計量單位</span><span lang="en">Stock UOM</span></td></tr>
+        <tr><td><span lang="zh">移動均價</span><span lang="en">Avg Cost</span></td><td><span lang="zh">AVCO 移動加權平均單位成本</span><span lang="en">AVCO moving average unit cost</span></td></tr>
+        <tr><td><span lang="zh">庫存金額</span><span lang="en">Inventory Value</span></td><td><span lang="zh">庫存量 × 移動均價</span><span lang="en">Stock quantity × moving average cost</span></td></tr>
+        <tr><td><span lang="zh">佔比%</span><span lang="en">Share%</span></td><td><span lang="zh">該料件庫存金額 ÷ 查詢範圍內庫存金額總額，用於辨識高值料件（ABC 分析）</span><span lang="en">Inventory value of the item ÷ total inventory value within the query scope, used to identify high-value items (ABC analysis)</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="inventory-valuation.html"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

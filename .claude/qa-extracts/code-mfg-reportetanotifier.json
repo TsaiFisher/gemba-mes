@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/MFG/Services/ReportEtaNotifier.cs",
+  "sourceHash": "f1ee58924e4e4a4eec003b0b17c5dd99ea7010a41d8f930e9026743a8e0497fc",
+  "entries": [
+    {
+      "slug": "code-mfg-reportetanotifier-cf862e19",
+      "lang": "zh",
+      "headingPath": "生產製造 › 這裡不換算才是對的",
+      "text": "時間顯示為當地時區格式｜系統顯示的時間是根據廠別當地的時間來計算，不會再額外進行一次時差轉換。",
+      "approved": true,
+      "sourceSectionHash": "9726ef73cf198aad2b0a7f938f7e0f6b385e894c61367b589313ca06aede26ed"
+    },
+    {
+      "slug": "code-mfg-reportetanotifier-b0459bdb",
+      "lang": "zh",
+      "headingPath": "生產製造 › 從延遲恢復時靜默更新旗標，不發推播",
+      "text": "ETA 重算後是否會觸發警報｜當預計到達時間重新計算後，如果生產批次的狀態從「未延遲」變成了「預計延遲」，系統會更新相關的延遲標記，並向有權限且已訂閱此通知的使用者推送警報。",
+      "approved": true,
+      "sourceSectionHash": "83c8c70a704c927282ecc008bd6df5d50ee0f7517d04c751f802533698487b0a"
+    }
+  ]
+}

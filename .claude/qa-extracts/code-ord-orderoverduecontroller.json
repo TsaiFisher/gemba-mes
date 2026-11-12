@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/ORD/Controllers/OrderOverdueController.cs",
+  "sourceHash": "4d2ac898388140d14efcea20839fa602feebe8a11b5b5c63872096130888e0d4",
+  "entries": [
+    {
+      "slug": "code-ord-orderoverduecontroller-783f2fac",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 動詞一律 ：報表沒有「新增」語意",
+      "text": "報表權限一律看讀取權｜報表沒有「新增」這個語意，所以權限一律以讀取權判定，不拿建立權當成收窄可見範圍的替代做法。哪些角色看得到哪些報表，改由選單權限逐角色設定表達。",
+      "approved": false,
+      "sourceSectionHash": "5a6dca12caf7b49f8d87fc2a048d7e94c0c4ba019f616b2b6504145930081c49"
+    },
+    {
+      "slug": "code-ord-orderoverduecontroller-f2811234",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 期間在本報表只是篩選，所以留白給預設近 30 天而不是擋下來",
+      "text": "訂單出貨報表的期間只是篩選｜訂單出貨相關報表的日期範圍只用來過濾資料，不是計算的分母，所以起訖留白時預設顯示近三十天，而不是強制限制區間，也不是掃遍全部歷史。這裡的「今天」以廠別當地日為準，不是伺服器時區。",
+      "approved": true,
+      "sourceSectionHash": "00c3d74678d94f7603252b599bfdb3f232c8da7e5dbc84f2a68ffc3d545d1cca"
+    },
+    {
+      "slug": "code-ord-orderoverduecontroller-ae3e6536",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 查詢邏輯已抽至",
+      "text": "逾期天數計算基準日說明｜查詢系統時，用來判斷單據是否逾期的基準日期是當天的日期，而不是包含時間的精確時間點。",
+      "approved": true,
+      "sourceSectionHash": "6970cf9b9dd72796b9ef04817eabdb30e95103fa6449bb02134e7a2681145045"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/PUR/Services/OutsourceScrapCalculator.cs",
+  "sourceHash": "229bf3a771e36c0af06da52c16d9f34e30ea7aea1f0eda61fb6b97c9ea91fd81",
+  "entries": [
+    {
+      "slug": "code-pur-outsourcescrapcalculator-a4487f11",
+      "lang": "zh",
+      "headingPath": "採購 › 計算委外超耗扣款金額",
+      "text": "計算委外扣款金額的規則說明｜原料數量必須大於零；收回的成品數量不能是負數。如果實際損耗率小於零，表示收回的成品量超過發出的原料量，這可能是超產或資料輸入錯誤。",
+      "approved": true,
+      "sourceSectionHash": "1f5d223e20ac7292eb2dec6c2550bc1ad481efc83e6e0dff060081bca7474f7a"
+    },
+    {
+      "slug": "code-pur-outsourcescrapcalculator-63207375",
+      "lang": "zh",
+      "headingPath": "採購 › 單一原料的超耗計算參數",
+      "text": "超耗計算的輸入參數說明｜此功能需要知道原料實際發出的數量、該原料在發料時點的平均成本，以及每製造一個成品的標準用量。",
+      "approved": true,
+      "sourceSectionHash": "f475456bec6fca66c567afd24fb0ba5b38318bd6ec46f95e152d7ca1fd1b2824"
+    },
+    {
+      "slug": "code-pur-outsourcescrapcalculator-c37cdec3",
+      "lang": "zh",
+      "headingPath": "採購 › 損耗量   = 實際發料量 − 預期耗用",
+      "text": "超耗計算規則說明｜損耗量的計算是從實際發出的原料數量減去預期消耗的原料數量所得。若計算出來的損耗量超過了根據合約規定的允收損耗率所允許的最大值，系統會依據該原料的平均成本來計算應扣除的罰款金額。",
+      "approved": true,
+      "sourceSectionHash": "f9f56b2108e1a7d9a185decb378e8bc1b9dcabbca22e681af88d7ace133b2c67"
+    }
+  ]
+}

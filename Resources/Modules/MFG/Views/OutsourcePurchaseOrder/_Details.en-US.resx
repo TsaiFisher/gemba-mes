@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="SecHeader" xml:space="preserve"><value>Outsource Purchase Order</value></data>
+  <data name="OutsourcePoId" xml:space="preserve"><value>PO No.</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Supplier" xml:space="preserve"><value>Supplier</value></data>
+  <data name="OrderDate" xml:space="preserve"><value>Order Date</value></data>
+  <data name="ExpectedDate" xml:space="preserve"><value>Expected</value></data>
+  <data name="Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="SecLines" xml:space="preserve"><value>Returned Products &amp; Send Materials</value></data>
+  <data name="ColLineNo" xml:space="preserve"><value>#</value></data>
+  <data name="ColSourceWo" xml:space="preserve"><value>Source WO-Op</value></data>
+  <data name="ColProduct" xml:space="preserve"><value>Returned Product</value></data>
+  <data name="ColQty" xml:space="preserve"><value>Qty</value></data>
+  <data name="ColSendMaterials" xml:space="preserve"><value>Send Materials</value></data>
+  <data name="SendMaterialsHint" xml:space="preserve"><value>Send materials are derived from the source dispatch materials as the issue basis (issuing in Phase F).</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="StatusDraft" xml:space="preserve"><value>Draft</value></data>
+  <data name="StatusConfirmed" xml:space="preserve"><value>Confirmed</value></data>
+  <data name="StatusVoid" xml:space="preserve"><value>Void</value></data>
+</root>

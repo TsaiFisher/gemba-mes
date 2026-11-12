@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="EntryDate" xml:space="preserve"><value>分錄日期</value></data>
+  <data name="EntryDateHint" xml:space="preserve"><value>決定落在哪一個會計期間。期間已關帳或月結中時無法建立。</value></data>
+  <data name="Description" xml:space="preserve"><value>摘要</value></data>
+  <data name="Lines" xml:space="preserve"><value>分錄明細</value></data>
+  <data name="AddLine" xml:space="preserve"><value>新增行</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>刪除</value></data>
+  <data name="AccountCode" xml:space="preserve"><value>科目</value></data>
+  <data name="Debit" xml:space="preserve"><value>借方</value></data>
+  <data name="Credit" xml:space="preserve"><value>貸方</value></data>
+  <data name="CostCenter" xml:space="preserve"><value>成本中心</value></data>
+  <data name="LineDescription" xml:space="preserve"><value>行摘要</value></data>
+  <data name="Total" xml:space="preserve"><value>合計</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="ManualJournalNotice" xml:space="preserve"><value>手動傳票一律以本位幣輸入。科目只列出「可手動選用」的——存貨、暫估應付這類由自動過帳維護餘額的科目不在其中，手動打進去會與子帳對不起來。</value></data>
+  <data name="PasteLines" xml:space="preserve"><value>貼上多行</value></data>
+  <data name="PasteApply" xml:space="preserve"><value>解析並填入</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="PastePlaceholder" xml:space="preserve"><value>6201	1000		水電費
+1130		1000	銀行付款</value></data>
+  <data name="PasteHint" xml:space="preserve"><value>每行一筆：科目代碼、借方、貸方、行摘要，以 Tab 或逗號分隔（金額帶千分位逗號時請用 Tab）。科目必須是「可手動選用」的，否則該行會被略過。期初餘額就用這個功能一次貼入。</value></data>
+  <data name="PasteFilledFmt" xml:space="preserve"><value>已填入 {0} 行。</value></data>
+  <data name="PasteNotFoundFmt" xml:space="preserve"><value>科目不存在而略過：{0}。</value></data>
+  <data name="PasteNotManualFmt" xml:space="preserve"><value>未開放手動選用而略過：{0}（請到「會計科目」勾選「可手動選用」）。</value></data>
+  <data name="PasteNoCodeFmt" xml:space="preserve"><value>沒有科目代碼而略過 {0} 行。</value></data>
+  <data name="ManualAccountNote" xml:space="preserve"><value>科目下拉與貼上只接受會計科目中勾選「可手動選用」的科目。應收、應付、存貨等由單據自動過帳的科目刻意不開放手動輸入，否則總帳會與明細帳對不起來；需要調整請用對應單據，或請會計到「會計科目」開放。</value></data>
+</root>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PageTitle" xml:space="preserve"><value>簽核代理人設定</value></data>
+  <data name="BackToPending" xml:space="preserve"><value>返回待我簽核</value></data>
+  <data name="HelpText" xml:space="preserve"><value>代理期間內，需要您簽核的申請單會自動改派給代理人（含設定當下已在您名下的待簽單）。角色型步驟不適用代理——同角色其他成員即可簽核。代理人簽核時，歷程會註記為代理簽核。</value></data>
+  <data name="DelegatedToMeTitle" xml:space="preserve"><value>我目前代理</value></data>
+  <data name="FormTitleNew" xml:space="preserve"><value>新增代理設定</value></data>
+  <data name="FormTitleEdit" xml:space="preserve"><value>編輯代理設定</value></data>
+  <data name="Delegate" xml:space="preserve"><value>代理人</value></data>
+  <data name="StartDate" xml:space="preserve"><value>開始日期</value></data>
+  <data name="EndDate" xml:space="preserve"><value>結束日期</value></data>
+  <data name="Reason" xml:space="preserve"><value>原因</value></data>
+  <data name="IsActive" xml:space="preserve"><value>啟用</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="CancelEdit" xml:space="preserve"><value>取消編輯</value></data>
+  <data name="MyDelegations" xml:space="preserve"><value>我的代理設定</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="StatusEffective" xml:space="preserve"><value>生效中</value></data>
+  <data name="StatusScheduled" xml:space="preserve"><value>未到期間</value></data>
+  <data name="StatusExpired" xml:space="preserve"><value>已過期</value></data>
+  <data name="StatusDisabled" xml:space="preserve"><value>停用</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="Enable" xml:space="preserve"><value>啟用</value></data>
+  <data name="Disable" xml:space="preserve"><value>停用</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="NoData" xml:space="preserve"><value>尚無代理設定</value></data>
+</root>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="xml:space" use="optional" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Production Schedule</value></data>
+  <data name="LabelDateTo" xml:space="preserve"><value>Show Until</value></data>
+  <data name="LabelRule" xml:space="preserve"><value>Sort Rule</value></data>
+  <data name="LabelColorBy" xml:space="preserve"><value>Colour By</value></data>
+  <data name="ColorByStatus" xml:space="preserve"><value>Status</value></data>
+  <data name="ColorByBatch" xml:space="preserve"><value>Batch</value></data>
+  <data name="Rule_Priority" xml:space="preserve"><value>Priority</value></data>
+  <data name="Rule_EDD" xml:space="preserve"><value>Earliest Due Date</value></data>
+  <data name="Rule_SPT" xml:space="preserve"><value>Shortest Process Time</value></data>
+  <data name="Rule_FIFO" xml:space="preserve"><value>FIFO</value></data>
+  <data name="Rule_LIFO" xml:space="preserve"><value>LIFO</value></data>
+  <data name="BtnLoad" xml:space="preserve"><value>Reload</value></data>
+  <data name="BtnRunSchedule" xml:space="preserve"><value>Run Schedule</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading...</value></data>
+  <data name="NoData" xml:space="preserve"><value>No scheduled dispatches found. Please run the scheduler first.</value></data>
+  <data name="LoadFail" xml:space="preserve"><value>Failed to load data. Please try again.</value></data>
+  <data name="RunFailed" xml:space="preserve"><value>Scheduling failed and nothing was saved. Please try again; if it keeps failing, ask your system administrator to check the logs.</value></data>
+  <data name="WorkHours" xml:space="preserve"><value>Work Min</value></data>
+  <data name="TabGantt" xml:space="preserve"><value>Gantt Chart</value></data>
+  <data name="TabMachineLoad" xml:space="preserve"><value>Machine Load</value></data>
+  <data name="TabPreparation" xml:space="preserve"><value>Preparation Board</value></data>
+  <data name="LabelWeekOf" xml:space="preserve"><value>Week Of</value></data>
+  <data name="LegendInProgress" xml:space="preserve"><value>In Progress</value></data>
+  <data name="LegendLate" xml:space="preserve"><value>Predicted Late</value></data>
+  <data name="LegendMaterialRisk" xml:space="preserve"><value>Material Risk</value></data>
+  <data name="LegendToolingConflict" xml:space="preserve"><value>Tooling Conflict</value></data>
+  <data name="LegendActual" xml:space="preserve"><value>Actual Progress</value></data>
+  <data name="LegendPlanned" xml:space="preserve"><value>Planned</value></data>
+  <data name="LegendShiftRegular" xml:space="preserve"><value>Regular</value></data>
+  <data name="LegendShiftOvertime" xml:space="preserve"><value>Overtime</value></data>
+  <data name="LegendCapacity" xml:space="preserve"><value>Capacity</value></data>
+  <data name="LegendBatchModeHint" xml:space="preserve"><value>In Batch colouring, colours denote batches; status is shown in the tooltip</value></data>
+  <data name="Progress" xml:space="preserve"><value>Qty Done</value></data>
+  <data name="LastRefresh" xml:space="preserve"><value>Last refresh</value></data>
+  <data name="ColMachine" xml:space="preserve"><value>Machine</value></data>
+  <data name="ColWorkCenter" xml:space="preserve"><value>Work Center</value></data>
+  <data name="ColScheduledMin" xml:space="preserve"><value>Sched.(min)</value></data>
+  <data name="ColAvailableMin" xml:space="preserve"><value>Avail.(min)</value></data>
+  <data name="ColUtilization" xml:space="preserve"><value>Utilization</value></data>
+  <data name="ColUnscheduled" xml:space="preserve"><value>Unscheduled</value></data>
+  <data name="ColLate" xml:space="preserve"><value>Late</value></data>
+  <data name="Overloaded" xml:space="preserve"><value>Overloaded</value></data>
+  <data name="LegendClickHint" xml:space="preserve"><value>Click a dispatch bar to open adjustment panel</value></data>
+  <data name="TipClickToAdjust" xml:space="preserve"><value>Click to open adjustment options</value></data>
+  <data name="PanelTitle" xml:space="preserve"><value>Dispatch Adjustment</value></data>
+  <data name="PanelNotFound" xml:space="preserve"><value>This dispatch no longer exists.</value></data>
+  <data name="BtnClose" xml:space="preserve"><value>Close</value></data>
+  <data name="SplitMinTwo" xml:space="preserve"><value>At least two split entries are required.</value></data>
+  <data name="SplitQtySumMismatch" xml:space="preserve"><value>Split quantities must sum to the original dispatch quantity.</value></data>
+  <data name="ToOutsourceConfirm" xml:space="preserve"><value>Convert this dispatch to outsource? The machine slot will be released and rescheduling will be required.</value></data>
+  <data name="SplitQtyPlaceholder" xml:space="preserve"><value>Qty</value></data>
+  <data name="LabelPrepDate" xml:space="preserve"><value>Prep Date</value></data>
+  <data name="ColWorkOrder" xml:space="preserve"><value>Work Order</value></data>
+  <data name="ColOperation" xml:space="preserve"><value>Operation</value></data>
+  <data name="ColQty" xml:space="preserve"><value>Qty</value></data>
+  <data name="ColScheduledStart" xml:space="preserve"><value>Sched. Start</value></data>
+  <data name="ColScheduledEnd" xml:space="preserve"><value>Sched. End</value></data>
+  <data name="ColSetupMin" xml:space="preserve"><value>Setup(min)</value></data>
+  <data name="ColTooling" xml:space="preserve"><value>Tooling</value></data>
+  <data name="ColMaterialStatus" xml:space="preserve"><value>Material Status</value></data>
+  <data name="ToolingConflictHint" xml:space="preserve"><value>This tooling is scheduled on different machines at overlapping times</value></data>
+  <data name="StagingDone" xml:space="preserve"><value>Staged</value></data>
+  <data name="StagingPending" xml:space="preserve"><value>Staging</value></data>
+  <data name="StagingNone" xml:space="preserve"><value>Not Staged</value></data>
+  <data name="StaleLastRun" xml:space="preserve"><value>Last scheduled: {0}</value></data>
+  <data name="StaleNeverRun" xml:space="preserve"><value>Scheduling has not been run for this plant</value></data>
+  <data name="StalePending" xml:space="preserve"><value>{0} pending</value></data>
+  <data name="StaleOnHold" xml:space="preserve"><value>{0} on hold</value></data>
+  <data name="StaleIsStale" xml:space="preserve"><value>Schedule out of date</value></data>
+  <data name="StaleSince" xml:space="preserve"><value>(changes since {0})</value></data>
+  <data name="StaleCalendarChanged" xml:space="preserve"><value>(work calendar or planned downtime changed)</value></data>
+  <data name="StaleUpToDate" xml:space="preserve"><value>Schedule up to date</value></data>
+  <data name="Trigger_Manual" xml:space="preserve"><value>manual</value></data>
+  <data name="Trigger_OnChange" xml:space="preserve"><value>automatic after changes</value></data>
+  <data name="Trigger_BeforeDispatch" xml:space="preserve"><value>automatic before dispatch</value></data>
+  <data name="Trigger_Daily" xml:space="preserve"><value>daily</value></data>
+  <data name="AutoOnLabel" xml:space="preserve"><value>Automatic rescheduling:</value></data>
+  <data name="AutoOnChange" xml:space="preserve"><value>after changes</value></data>
+  <data name="AutoBeforeDispatch" xml:space="preserve"><value>before dispatch</value></data>
+  <data name="AutoDaily" xml:space="preserve"><value>daily {0}</value></data>
+  <data name="AutoOff" xml:space="preserve"><value>Automatic rescheduling is off for this plant; the schedule is only updated when you click Run Schedule (turn it on under System Parameters or the plant parameters).</value></data>
+  <data name="RunConfirmFmt" xml:space="preserve"><value>Running the schedule will re-lay {0} scheduled dispatches ({1} of them tomorrow, which the floor may already have staged or set up for from the preparation alert). Dispatches in setup, ready, pending FPI, in progress or on hold are not affected. Run now?</value></data>
+  <data name="TabHistory" xml:space="preserve"><value>Run History</value></data>
+  <data name="HistoryHint" xml:space="preserve"><value>One row per schedule run (manual and automatic). Click a row to see which dispatches changed. Kept for 60 days.</value></data>
+  <data name="HistoryEmpty" xml:space="preserve"><value>No schedule runs yet.</value></data>
+  <data name="HistoryNoChanges" xml:space="preserve"><value>No dispatches changed in this run.</value></data>
+  <data name="HistoryChangesTitle" xml:space="preserve"><value>Dispatch changes</value></data>
+  <data name="HistoryTruncated" xml:space="preserve"><value>More than 1,000 changes; only the first 1,000 are listed. The counts above cover all of them.</value></data>
+  <data name="LoadFailed" xml:space="preserve"><value>Failed to load. Please try again.</value></data>
+  <data name="ColRunAt" xml:space="preserve"><value>Run at</value></data>
+  <data name="ColTrigger" xml:space="preserve"><value>Trigger</value></data>
+  <data name="ColRule" xml:space="preserve"><value>Rule</value></data>
+  <data name="ColScheduledCount" xml:space="preserve"><value>Scheduled</value></data>
+  <data name="ColTomorrowChanged" xml:space="preserve"><value>Affects tomorrow</value></data>
+  <data name="ColFenced" xml:space="preserve"><value>Kept by freeze window</value></data>
+  <data name="ColChangeKind" xml:space="preserve"><value>Change</value></data>
+  <data name="ColBefore" xml:space="preserve"><value>Old machine · start</value></data>
+  <data name="ColAfter" xml:space="preserve"><value>New machine · start</value></data>
+  <data name="Change_NewlyScheduled" xml:space="preserve"><value>Newly scheduled</value></data>
+  <data name="Change_Moved" xml:space="preserve"><value>Time changed</value></data>
+  <data name="Change_MachineChanged" xml:space="preserve"><value>Machine changed</value></data>
+  <data name="Change_Unscheduled" xml:space="preserve"><value>Back to pending</value></data>
+  <data name="AutoRule" xml:space="preserve"><value>Rule: {0}</value></data>
+  <data name="AutoFreeze" xml:space="preserve"><value>Freeze window {0} h</value></data>
+  <data name="StaleTriggerFmt" xml:space="preserve"><value> ({0})</value></data>
+</root>

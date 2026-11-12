@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="CrossPlantTransferId" xml:space="preserve"><value>調撥單號</value></data>
+  <data name="TransferDate" xml:space="preserve"><value>調撥日期</value></data>
+  <data name="DestPlant" xml:space="preserve"><value>目的廠別</value></data>
+  <data name="FromWhCode" xml:space="preserve"><value>來源倉庫</value></data>
+  <data name="ToWhCode" xml:space="preserve"><value>目的倉庫</value></data>
+  <data name="DefaultWhHint" xml:space="preserve"><value>（預設，可在明細覆蓋）</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>調撥明細</value></data>
+  <data name="AddLine" xml:space="preserve"><value>新增明細</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="SelectProduct" xml:space="preserve"><value>選擇品號</value></data>
+  <data name="SelectProductFirst" xml:space="preserve"><value>請先選擇品號</value></data>
+  <data name="Qty" xml:space="preserve"><value>數量</value></data>
+  <data name="UomCode" xml:space="preserve"><value>單位</value></data>
+  <data name="FromLocationCode" xml:space="preserve"><value>來源儲位</value></data>
+  <data name="ToLocationCode" xml:space="preserve"><value>目的儲位</value></data>
+  <data name="QtyShipped" xml:space="preserve"><value>已發出</value></data>
+  <data name="QtyReceived" xml:space="preserve"><value>已收貨</value></data>
+  <data name="Submit" xml:space="preserve"><value>送審</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>撤回送審</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>確定送出審核？</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>確定撤回審核申請？</value></data>
+  <data name="Confirm" xml:space="preserve"><value>確認發出</value></data>
+  <data name="ConfirmConfirm" xml:space="preserve"><value>確定發出此跨廠調撥？庫存將立即扣減。</value></data>
+  <data name="CancelConfirm" xml:space="preserve"><value>撤回發出</value></data>
+  <data name="ConfirmCancelConfirm" xml:space="preserve"><value>確定撤回發出？已扣減庫存將恢復。</value></data>
+  <data name="Receive" xml:space="preserve"><value>確認收貨</value></data>
+  <data name="ConfirmReceive" xml:space="preserve"><value>確定收貨並過帳？庫存將增加至本廠。</value></data>
+  <data name="InTransitHint" xml:space="preserve"><value>在途</value></data>
+  <data name="Void" xml:space="preserve"><value>作廢</value></data>
+  <data name="VoidReason" xml:space="preserve"><value>請輸入作廢原因（可空白）</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="LookupStock" xml:space="preserve"><value>選擇庫存</value></data>
+  <data name="StockQtyLabel" xml:space="preserve"><value>庫存</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>移除此列</value></data>
+  <data name="LotNo" xml:space="preserve"><value>批號</value></data>
+  <data name="LotScanHint" xml:space="preserve"><value>可輸入批號，或掃箱子上的固定 QR（箱號）自動帶出該箱的批號、品號與撥出儲位</value></data>
+</root>

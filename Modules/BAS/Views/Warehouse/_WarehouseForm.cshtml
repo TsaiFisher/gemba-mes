@@ -1,0 +1,80 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.Warehouse
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    string action = isEdit ? "Edit" : "Create";
+}
+
+<form method="post" asp-action="@action" asp-controller="Warehouse" asp-route-code="@(isEdit ? Model.WhCode : null)"
+      data-ajax="true" class="p-1">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["WhCode"] <span class="text-danger">*</span></label>
+        @if (isEdit)
+        {
+            <input type="text" class="form-control bg-light" value="@Model.WhCode" readonly />
+            <input type="hidden" asp-for="WhCode" />
+            <div class="form-text text-muted">@Localizer["WhCodeReadonlyHint"]</div>
+        }
+        else
+        {
+            <input asp-for="WhCode" class="form-control u-text-transform-uppercase" />
+        }
+        <span asp-validation-for="WhCode" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["WhName"] <span class="text-danger">*</span></label>
+        <input asp-for="WhName" class="form-control" />
+        <span asp-validation-for="WhName" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["WarehouseType"]</label>
+        <select asp-for="WarehouseType" class="form-select">
+            <option value="Raw">@Localizer["WH_Raw"]</option>
+            <option value="Wip">@Localizer["WH_Wip"]</option>
+            <option value="Finished">@Localizer["WH_Finished"]</option>
+            <option value="Quarantine">@Localizer["WH_Quarantine"]</option>
+            <option value="Outsource">@Localizer["WH_Outsource"]</option>
+            <option value="Scrap">@Localizer["WH_Scrap"]</option>
+            <option value="Staging">@Localizer["WH_Staging"]</option>
+            <option value="CustomerSupplied">@Localizer["WH_CustomerSupplied"]</option>
+        </select>
+        <span asp-validation-for="WarehouseType" class="text-danger small"></span>
+        <div class="form-text text-muted">@Localizer["WarehouseTypeHint"]</div>
+    </div>
+
+    <div class="mb-3">
+        <div class="form-check">
+            <input type="checkbox" asp-for="IsMrpWarehouse" class="form-check-input" id="whIsMrp" />
+            <label class="form-check-label fw-semibold" for="whIsMrp">@Localizer["IsMrpWarehouse"]</label>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["Remarks"]</label>
+        <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+        <span asp-validation-for="Remarks" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-4">
+        <div class="form-check">
+            <input type="checkbox" asp-for="IsActive" class="form-check-input" id="whIsActive" />
+            <label class="form-check-label fw-semibold" for="whIsActive">@Localizer["IsActive"]</label>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+            @Localizer["Cancel"]
+        </button>
+    </div>
+</form>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve">
+    <value>各廠參數覆寫一覽</value>
+  </data>
+  <data name="ExportExcel" xml:space="preserve">
+    <value>匯出 Excel</value>
+  </data>
+  <data name="ReadOnlyHint" xml:space="preserve">
+    <value>本畫面唯讀。要調整某一廠的參數，請至「廠別管理」→ 編輯該廠 → 「參數設定」頁籤。</value>
+  </data>
+  <data name="ResolutionHint" xml:space="preserve">
+    <value>取值順序：本廠覆寫 → 全域值 → 程式內建預設。標為「繼承」的廠會跟著全域值一起變動。</value>
+  </data>
+  <data name="NoPlants" xml:space="preserve">
+    <value>沒有可檢視的廠別。</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>參數</value>
+  </data>
+  <data name="GlobalValue" xml:space="preserve">
+    <value>全域值</value>
+  </data>
+  <data name="Inherited" xml:space="preserve">
+    <value>繼承</value>
+  </data>
+  <data name="EmptyValue" xml:space="preserve">
+    <value>（空值）</value>
+  </data>
+  <data name="OverriddenCount" xml:space="preserve">
+    <value>已覆寫 {0} 廠</value>
+  </data>
+  <data name="INVSettings" xml:space="preserve">
+    <value>庫存</value>
+  </data>
+  <data name="MFGSettings" xml:space="preserve">
+    <value>製造</value>
+  </data>
+  <data name="InvSimplifiedMode" xml:space="preserve">
+    <value>庫存簡化模式</value>
+  </data>
+  <data name="MfgSimplifiedMode" xml:space="preserve">
+    <value>製造簡化模式</value>
+  </data>
+  <data name="MfgStandbySchedulable" xml:space="preserve">
+    <value>Standby 機台可排程</value>
+  </data>
+  <data name="MfgMrpAutoCloseObsoletePr" xml:space="preserve">
+    <value>MRP 重跑自動結案失效請購</value>
+  </data>
+  <data name="MfgMaterialGate" xml:space="preserve">
+    <value>開工物料備齊閘口</value>
+  </data>
+  <data name="MfgMachineStatusGate" xml:space="preserve">
+    <value>開工機台狀態閘口</value>
+  </data>
+  <data name="MfgLotPolicy" xml:space="preserve">
+    <value>批量政策</value>
+  </data>
+  <data name="MfgDefaultIssueMethod" xml:space="preserve">
+    <value>預設發料方式</value>
+    <comment>暫時未使用：mfg_default_issue_method 目前無任何讀取點，已依規格 §7 #8 自 PlantParamCatalog 移除。譯文保留原處，等該參數真的接上時只要把目錄那一行加回來。</comment>
+  </data>
+  <data name="MfgWoApprovalThreshold" xml:space="preserve">
+    <value>工單簽核金額閥值</value>
+  </data>
+  <data name="MfgWoApprovalOutsource" xml:space="preserve">
+    <value>委外工單一律送審</value>
+  </data>
+  <data name="MfgWoApprovalRework" xml:space="preserve">
+    <value>重工工單一律送審</value>
+  </data>
+  <data name="MfgWoApprovalOnDelay" xml:space="preserve">
+    <value>延期工單一律送審</value>
+  </data>
+  <data name="MfgFgWarehouse" xml:space="preserve">
+    <value>完工入庫預設成品倉</value>
+  </data>
+  <data name="MfgFgLocation" xml:space="preserve">
+    <value>完工入庫預設儲位</value>
+  </data>
+  <data name="MfgDefaultStagingWh" xml:space="preserve">
+    <value>預設備料倉</value>
+  </data>
+  <data name="MfgDefaultStagingLocation" xml:space="preserve">
+    <value>預設備料儲位</value>
+  </data>
+  <data name="MfgAutoScheduleOnChange" xml:space="preserve"><value>異動後自動重排排程</value></data>
+  <data name="MfgAutoScheduleBeforeDispatch" xml:space="preserve"><value>派工前自動重排排程</value></data>
+  <data name="MfgAutoScheduleDailyTime" xml:space="preserve"><value>每日自動重排時刻（HH:mm）</value></data>
+  <data name="MfgOverReportTolerancePct" xml:space="preserve"><value>廠內超量容許率（%）</value></data>
+  <data name="MfgOverReportAction" xml:space="preserve"><value>廠內超過容許上限時</value></data>
+  <data name="MfgOutsourceOverReceiptTolerancePct" xml:space="preserve"><value>委外超收容許率（%）</value></data>
+  <data name="MfgOutsourceOverReceiptAction" xml:space="preserve"><value>委外超過容許上限時</value></data>
+  <data name="MfgOutsourceOverReceiptFee" xml:space="preserve"><value>委外超收部分的加工費</value></data>
+  <data name="ChoiceSupervisor" xml:space="preserve"><value>需主管確認（超量核准權限）</value></data>
+  <data name="ChoicePay" xml:space="preserve"><value>照付</value></data>
+  <data name="ChoiceNoPay" xml:space="preserve"><value>不付</value></data>
+  <data name="MfgOutsourceIssueOnReceipt" xml:space="preserve"><value>委外送外料於收貨時自動扣</value></data>
+  <data name="MfgOutsourceInspectAtReceipt" xml:space="preserve"><value>委外收料當場驗收</value></data>
+  <data name="MfgOutsourceAutoPo" xml:space="preserve"><value>委外工單投產自動建委外採購單</value></data>
+  <data name="MfgAutoScheduleRule" xml:space="preserve"><value>自動重排的排序規則</value></data>
+  <data name="MfgAutoScheduleFreezeHours" xml:space="preserve"><value>凍結時界（小時）</value></data>
+</root>

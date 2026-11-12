@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/_Shared/PushApprovalNotifier.cs",
+  "sourceHash": "46356c3cc2ebe95c7132b4819d4fd85f0930eabfe458a8152594ddb580b534b7",
+  "entries": [
+    {
+      "slug": "code-core-pushapprovalnotifier-f0b964d5",
+      "lang": "zh",
+      "headingPath": "系統共用 › 目標解析與「待我簽核」判定語意一致：",
+      "text": "目標解析與待我簽核判定規則｜當系統已經指派了負責審核的人員時，會主動通知該人員；如果沒有指派負責審核的人員，則會依據角色和使用者設定的順序進行推播。",
+      "approved": true,
+      "sourceSectionHash": "9bfafe26fa3ce35393113df5d7ae8f1bd086813bb9a28070ac869ca6b7dbad9d"
+    },
+    {
+      "slug": "code-core-pushapprovalnotifier-24c4f886",
+      "lang": "zh",
+      "headingPath": "系統共用 › 內容依收件人語系產生",
+      "text": "通知訊息會根據接收者的語言顯示｜系統發出的待簽核提醒訊息，內容會依照實際收到訊息的人所設定的語言來呈現。",
+      "approved": true,
+      "sourceSectionHash": "0b3627c585eb12aa31ef8d849817bb0a4e236919e40c0e1988f27655639ae778"
+    },
+    {
+      "slug": "code-core-pushapprovalnotifier-426c3905",
+      "lang": "zh",
+      "headingPath": "系統共用 › **推播的落點一定要是手機路由",
+      "text": "推播通知的接收端限制｜所有發出的推播通知都會被當作是手機應用程式（PWA）收到，因此收件人只能透過手機設備接收到此類提醒。",
+      "approved": true,
+      "sourceSectionHash": "569707657bf56fa485281aa2cd62a2ed80308caef3b26141783a7f3007a442de"
+    }
+  ]
+}

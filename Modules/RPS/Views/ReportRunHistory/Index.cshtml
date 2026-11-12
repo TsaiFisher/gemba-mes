@@ -1,0 +1,185 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.RPS.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@inject SmartFactory.MES.Services.IDateTimeService DateTimeSvc
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.RPS.ViewModels.ReportRunHistoryItemVm>
+
+@{
+    var plants = ViewBag.Plants as IReadOnlyDictionary<string, SmartFactory.MES.Modules.RPS.Services.ReportPlantInfo>
+                 ?? new Dictionary<string, SmartFactory.MES.Modules.RPS.Services.ReportPlantInfo>();
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched == true;
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.CurrentSort as string ?? "";
+        if (cur == col + "_asc") return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+
+    var fromDate  = (ViewBag.FromDate as DateTime?)?.ToString("yyyy-MM-dd");
+    var toDate    = (ViewBag.ToDate as DateTime?)?.ToString("yyyy-MM-dd");
+    var curStatus = ViewBag.Status as string;
+
+    var statusOptions = new[]
+    {
+        (Value: ReportRunStatus.Success,              Label: Localizer["StatusSuccess"].Value),
+        (Value: ReportRunStatus.Failed,               Label: Localizer["StatusFailed"].Value),
+        (Value: ReportRunStatus.SkippedNoPermission,  Label: Localizer["StatusSkippedNoPermission"].Value),
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-clock-history"></i> @Localizer["PageTitle"]</h1>
+    </div>
+
+    <div class="alert alert-info small">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["HelpText"]
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+
+                <div class="col-12 col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["Status"]</label>
+                    <select name="status" class="form-select form-select-sm">
+                        <option value="">@Localizer["All"]</option>
+                        @foreach (var opt in statusOptions)
+                        {
+                            <option value="@opt.Value" selected="@(curStatus == opt.Value)">@opt.Label</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["FromDate"]</label>
+                    <input type="date" name="fromDate" class="form-control form-control-sm" value="@fromDate" />
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["ToDate"]</label>
+                    <input type="date" name="toDate" class="form-control form-control-sm" value="@toDate" />
+                </div>
+
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.RunAtSort"
+                                   asp-route-status="@curStatus"
+                                   asp-route-fromDate="@fromDate" asp-route-toDate="@toDate"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["RunAt"] <i class="bi @sortIcon("runat")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["Name"]</th>
+                            <th>@Localizer["Plant"]</th>
+                            <th>@Localizer["ToolKey"]</th>
+                            <th>@Localizer["TriggerType"]</th>
+                            <th>@Localizer["Status"]</th>
+                            <th class="text-end">@Localizer["RowCount"]</th>
+                            <th class="text-end">@Localizer["Duration"]</th>
+                            <th>@Localizer["ErrorMessage"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr><td colspan="9" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>@Localizer["NoData"]
+                            </td></tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="small">@DateTimeSvc.ToLocalTime(item.RunAt).ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td class="fw-medium">
+                                        @if (string.IsNullOrEmpty(item.Name))
+                                        {
+                                            @* 排程已刪，紀錄留存（ReportRun 刻意無 FK）。 *@
+                                            <span class="text-muted fst-italic">@Localizer["DefinitionDeleted"]</span>
+                                        }
+                                        else
+                                        {
+                                            @item.Name
+                                        }
+                                    </td>
+                                    <td class="small text-nowrap">
+                                        @(item.PlantId is not null && plants.TryGetValue(item.PlantId, out var plant) ? plant.Label : item.PlantId)
+                                    </td>
+                                    <td class="text-muted small">@L[item.ToolKey]</td>
+                                    <td class="small">
+                                        @(item.TriggerType switch
+                                        {
+                                            ReportTriggerType.Scheduled => Localizer["TriggerScheduled"].Value,
+                                            ReportTriggerType.Manual    => Localizer["TriggerManual"].Value,
+                                            ReportTriggerType.Nl        => Localizer["TriggerNl"].Value,
+                                            _ => item.TriggerType,
+                                        })
+                                    </td>
+                                    <td>
+                                        @* 失敗與略過必須醒目：這一頁存在的理由就是回答
+                                           「為什麼這個月沒收到報表」（§7.8 S2 不得靜默停止）。 *@
+                                        @if (item.Status == ReportRunStatus.Success)
+                                        {
+                                            <span class="badge bg-success">@Localizer["StatusSuccess"]</span>
+                                        }
+                                        else if (item.Status == ReportRunStatus.SkippedNoPermission)
+                                        {
+                                            <span class="badge bg-warning text-dark">@Localizer["StatusSkippedNoPermission"]</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">@Localizer["StatusFailed"]</span>
+                                        }
+                                    </td>
+                                    <td class="text-end small">@item.RowCount.ToString("N0")</td>
+                                    <td class="text-end small">@item.DurationMs.ToString("N0") ms</td>
+                                    <td class="small text-muted">
+                                        @if (string.IsNullOrEmpty(item.ErrorMessage))
+                                        {
+                                            <span>—</span>
+                                        }
+                                        else
+                                        {
+                                            @item.ErrorMessage
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>

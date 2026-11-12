@@ -1,0 +1,127 @@
+@model SmartFactory.MES.Modules.PUR.Models.OutsourceRework
+@using SmartFactory.MES.Modules.PUR.Models
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+
+@{
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyStep = baseDp <= 0 ? "1" : "0." + new string('0', baseDp - 1) + "1";
+
+    var dispatchOptions = ViewBag.DispatchOptions as IList<string> ?? new List<string>();
+    var ncrOptions      = ViewBag.NcrOptions as IList<string> ?? new List<string>();
+    var opoOptions      = ViewBag.OpoOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="p-3">
+<form id="panelForm" method="post" action="/OutsourceRework/Save"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="OutsourceReworkId" />
+
+    <fieldset @(isReadOnly ? Html.Raw("disabled=\"disabled\"") : Html.Raw(""))>
+    <div class="row g-2 mb-3">
+        <div class="col-6">
+            <label class="form-label small fw-semibold" asp-for="OriginalDispatchId">@L["OriginalDispatch"]</label>
+            <select asp-for="OriginalDispatchId" class="form-select form-select-sm">
+                <option value="">— @L["All"] —</option>
+                @foreach (var d in dispatchOptions)
+                {
+                    <option value="@d" selected="@(Model.OriginalDispatchId == d)">@d</option>
+                }
+            </select>
+            <span asp-validation-for="OriginalDispatchId" class="text-danger small"></span>
+        </div>
+        <div class="col-6">
+            <label class="form-label small fw-semibold" asp-for="SourceNcrId">@L["SourceNcr"]</label>
+            <select asp-for="SourceNcrId" class="form-select form-select-sm">
+                <option value="">— @L["All"] —</option>
+                @foreach (var n in ncrOptions)
+                {
+                    <option value="@n" selected="@(Model.SourceNcrId == n)">@n</option>
+                }
+            </select>
+            <span asp-validation-for="SourceNcrId" class="text-danger small"></span>
+        </div>
+        <div class="col-6">
+            <label class="form-label small fw-semibold" asp-for="OutsourcePurchaseOrderId">@L["ReworkOpo"]</label>
+            <select asp-for="OutsourcePurchaseOrderId" class="form-select form-select-sm">
+                <option value="">— @L["All"] —</option>
+                @foreach (var o in opoOptions)
+                {
+                    <option value="@o.OutsourcePurchaseOrderId" selected="@(Model.OutsourcePurchaseOrderId == (string)o.OutsourcePurchaseOrderId)">
+                        @o.OutsourcePurchaseOrderId — @o.SupplierCode
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="OutsourcePurchaseOrderId" class="text-danger small"></span>
+        </div>
+        <div class="col-3">
+            <label class="form-label small fw-semibold" asp-for="ReworkQty">@L["ReworkQty"] <span class="text-danger">*</span></label>
+            <input asp-for="ReworkQty" type="number" class="form-control form-control-sm" step="any" min="0" />
+            <span asp-validation-for="ReworkQty" class="text-danger small"></span>
+        </div>
+        <div class="col-12">
+            <label class="form-label small fw-semibold" asp-for="ReworkReason">@L["ReworkReason"]</label>
+            <input asp-for="ReworkReason" class="form-control form-control-sm" maxlength="500" />
+            <span asp-validation-for="ReworkReason" class="text-danger small"></span>
+        </div>
+    </div>
+
+    <!-- 成本/索賠（責任歸屬＋雙路徑） -->
+    <h6 class="fw-semibold mb-2">@L["ReworkCostSection"]</h6>
+    <div class="row g-2 mb-3">
+        <div class="col-4">
+            <label class="form-label small fw-semibold" asp-for="LiabilityParty">@L["LiabilityParty"] <span class="text-danger">*</span></label>
+            <select asp-for="LiabilityParty" class="form-select form-select-sm" id="liabilitySelect" data-action-change="onLiabilityChange">
+                <option value="@ReworkLiabilityParty.Vendor" selected="@(Model.LiabilityParty == ReworkLiabilityParty.Vendor)">@L["LiabilityVendor"]</option>
+                <option value="@ReworkLiabilityParty.Us"     selected="@(Model.LiabilityParty == ReworkLiabilityParty.Us)">@L["LiabilityUs"]</option>
+                <option value="@ReworkLiabilityParty.Shared" selected="@(Model.LiabilityParty == ReworkLiabilityParty.Shared)">@L["LiabilityShared"]</option>
+            </select>
+            <span asp-validation-for="LiabilityParty" class="text-danger small"></span>
+        </div>
+        <div class="col-4">
+            <label class="form-label small fw-semibold" asp-for="VendorLiablePct">@L["VendorLiablePct"]</label>
+            <input asp-for="VendorLiablePct" type="number" class="form-control form-control-sm" id="vendorPctInput"
+                   step="any" min="0" max="100" data-action-input="reworkPreview" />
+            <span asp-validation-for="VendorLiablePct" class="text-danger small"></span>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            <label class="form-label small fw-semibold" asp-for="ReworkCost">@L["ReworkCost"]</label>
+            <input asp-for="ReworkCost" type="number" class="form-control form-control-sm" id="reworkCostInput"
+                   step="@moneyStep" min="0" value="@Model.ReworkCost.ToString("F" + baseDp)" data-action-input="reworkPreview" />
+            <span asp-validation-for="ReworkCost" class="text-danger small"></span>
+        </div>
+        <div class="col-4">
+            <label class="form-label small fw-semibold" asp-for="ProcessingFee">@L["ProcessingFee"]</label>
+            <input asp-for="ProcessingFee" type="number" class="form-control form-control-sm" id="processingFeeInput"
+                   step="@moneyStep" min="0" value="@Model.ProcessingFee.ToString("F" + baseDp)" data-action-input="reworkPreview" />
+            <span asp-validation-for="ProcessingFee" class="text-danger small"></span>
+        </div>
+        <div class="col-4">
+            <div class="border rounded p-2 bg-light small">
+                <div>@L["VendorChargebackAmt"]：<span class="fw-bold" id="chargebackPreview">@Model.VendorChargebackAmt.ToString("N" + baseDp)</span></div>
+                <div>@L["ReworkProcessingFee"]：<span class="fw-bold" id="feePreview">@Model.ReworkProcessingFee.ToString("N" + baseDp)</span></div>
+            </div>
+        </div>
+        <div class="col-12">
+            <label class="form-label small fw-semibold" asp-for="Remarks">@L["Remarks"]</label>
+            <input asp-for="Remarks" class="form-control form-control-sm" maxlength="500" />
+            <span asp-validation-for="Remarks" class="text-danger small"></span>
+        </div>
+    </div>
+    </fieldset>
+
+    @if (!isReadOnly)
+    {
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-sm">@L["Save"]</button>
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="offcanvas">@L["Cancel"]</button>
+        </div>
+    }
+    else
+    {
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="offcanvas">@L["Close"]</button>
+    }
+</form>
+</div>

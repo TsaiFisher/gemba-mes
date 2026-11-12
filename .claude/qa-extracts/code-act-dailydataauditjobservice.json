@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/ACT/Services/Jobs/DailyDataAuditJobService.cs",
+  "sourceHash": "33e63da6bd3894a6570aea52f13312fc418987e420ffab183e262df65a162864",
+  "entries": [
+    {
+      "slug": "code-act-dailydataauditjobservice-4b57df4e",
+      "lang": "zh",
+      "headingPath": "帳務 › 每日資料稽核排程",
+      "text": "每日資料稽核執行時機與目的｜系統會每天在伺服器當地時間的凌晨兩點執行一次所有檢核，並將結果儲存下來，這樣異常狀況可以主動顯示出來供查核使用，而不是等到月結才發現。此外，當應用程式啟動時也會補跑一次此排程。",
+      "approved": true,
+      "sourceSectionHash": "e9b4e0f272c7211d18aa0ff0bc3b23b7167f1921d300df6f86b1ee710248432d"
+    },
+    {
+      "slug": "code-act-dailydataauditjobservice-ef5601a9",
+      "lang": "zh",
+      "headingPath": "帳務 › 今天若已有排程觸發的稽核紀錄就不再跑",
+      "text": "排程稽核紀錄判斷規則｜系統會檢查今天是否已經有由排程觸發的稽核紀錄，如果有的話則不會再執行本次的稽核流程。",
+      "approved": true,
+      "sourceSectionHash": "0bde7dbfce24a71852bc3eeed4d3a26699ec1396db4582d728033d25702ea287"
+    },
+    {
+      "slug": "code-act-dailydataauditjobservice-8de772e2",
+      "lang": "zh",
+      "headingPath": "帳務 › 是 ，/稽核服務是 → 每次跑開一個",
+      "text": "系統範圍與資料篩選規則｜稽核服務的查詢預設會忽略任何過濾條件，並且必須明確指定廠別代碼才能進行查詢，因此即使沒有使用者登入的上下文資訊，也可以執行全廠區的稽核。",
+      "approved": true,
+      "sourceSectionHash": "ef2608fdf9ee41b015841c2f953a45fbb611355f3d3ea58b4d949d06257b5026"
+    }
+  ]
+}

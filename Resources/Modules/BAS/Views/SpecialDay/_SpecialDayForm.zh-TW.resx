@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>特殊日維護</value></data>
+  <data name="AddEntry" xml:space="preserve"><value>新增特殊日</value></data>
+  <data name="Year" xml:space="preserve"><value>年度</value></data>
+  <data name="DayType" xml:space="preserve"><value>類型</value></data>
+  <data name="AllTypes" xml:space="preserve"><value>全部類型</value></data>
+  <data name="SelectDayType" xml:space="preserve"><value>請選擇類型</value></data>
+  <data name="Holiday" xml:space="preserve"><value>假日</value></data>
+  <data name="Overtime" xml:space="preserve"><value>加班日</value></data>
+  <data name="Compensation" xml:space="preserve"><value>補班日</value></data>
+  <data name="Date" xml:space="preserve"><value>日期</value></data>
+  <data name="Description" xml:space="preserve"><value>說明</value></data>
+  <data name="CompensatoryDayOfWeek" xml:space="preserve"><value>補班星期</value></data>
+  <data name="CompensatoryHint" xml:space="preserve"><value>僅補班日填寫，對應補班的星期幾</value></data>
+  <data name="Mon" xml:space="preserve"><value>週一</value></data>
+  <data name="Tue" xml:space="preserve"><value>週二</value></data>
+  <data name="Wed" xml:space="preserve"><value>週三</value></data>
+  <data name="Thu" xml:space="preserve"><value>週四</value></data>
+  <data name="Fri" xml:space="preserve"><value>週五</value></data>
+  <data name="Sat" xml:space="preserve"><value>週六</value></data>
+  <data name="Sun" xml:space="preserve"><value>週日</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請選擇年度後按「查詢」</value></data>
+  <data name="ListView" xml:space="preserve"><value>列表</value></data>
+  <data name="CalendarView" xml:space="preserve"><value>月曆</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>匯出 Excel</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>匯出 CSV</value></data>
+  <data name="ExportJson" xml:space="preserve"><value>匯出 JSON</value></data>
+</root>

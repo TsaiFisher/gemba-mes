@@ -1,0 +1,78 @@
+{
+  "sourcePath": "Modules/RPS/Services/RelativePeriodResolver.cs",
+  "sourceHash": "b218a4043c93ffff481cf300bef35dab0c0761e52e5095d9bbff9d0eb9185d12",
+  "entries": [
+    {
+      "slug": "code-rps-relativeperiodresolver-ee9d3645",
+      "lang": "zh",
+      "headingPath": "報表 › 解算單一相對期間",
+      "text": "時間區間計算的規則說明｜系統在計算單一相對期間時，必須明確指定時區；若未指定時區，系統會使用當前使用者設定的時區，但如果是在背景服務中執行且沒有傳入時區，則預設為亞洲/台北時區。",
+      "approved": true,
+      "sourceSectionHash": "27fe1a20f38eebb1066542eb89d4436c06be009366a28c64ebf919b858b2fa69"
+    },
+    {
+      "slug": "code-rps-relativeperiodresolver-f44620a9",
+      "lang": "zh",
+      "headingPath": "報表 › 依請求解出實際查詢區間： 優先，",
+      "text": "查詢區間的判斷優先順序｜系統會先依據請求中提供的期間資訊來決定實際的查詢時間範圍，如果該資訊沒有提供或無法確定，則會再使用使用者當前環境設定的時間時區作為備用。",
+      "approved": true,
+      "sourceSectionHash": "e74042a05507ce932dd632bff7a7ac26e9e1dbb75f4b0718f1a556a4c064722c"
+    },
+    {
+      "slug": "code-rps-relativeperiodresolver-b51b2a75",
+      "lang": "zh",
+      "headingPath": "報表 › 2026-10-07 人工驗收 TZ-3 才在排程「立即執行」撞",
+      "text": "日期轉換為協定時區的開始時間｜當系統需要計算某個日期的開頭時間點時，會將該日期的零點時間轉換成世界標準時間（UTC）的時間點。若未指定時區，則使用使用者目前登入帳號所設定的時區來決定這個起點時間。",
+      "approved": false,
+      "sourceSectionHash": "ccae5efa85522d256d8756ee313420148aa8848c0e2158627c7d0aa50b59f5c4"
+    },
+    {
+      "slug": "code-rps-relativeperiodresolver-e3919537",
+      "lang": "zh",
+      "headingPath": "報表 › 週起始固定為**星期一**，刻意**不**讀",
+      "text": "報表起始日固定為星期一｜系統的週開始日期被設定為星期一，以確保在不同地區或排程語系下計算出的「本週」區間是一致的。",
+      "approved": true,
+      "sourceSectionHash": "e90a3f6c803806d2869b12532adb4810951e019d0940c8b601bc66f4045d4bc2"
+    },
+    {
+      "slug": "code-rps-relativeperiodresolver-12c8ceee",
+      "lang": "zh",
+      "headingPath": "報表 › 那一天實際上從 01:00 開始",
+      "text": "時區時間的處理規則說明｜當系統遇到無法計算的時間點時，會將該日期的時間視為從凌晨一點開始計算。",
+      "approved": false,
+      "sourceSectionHash": "75f32a112c751328695cc5eb0991bbe83e1b5d67c3384bc51c32f84a02545b31"
+    },
+    {
+      "slug": "code-rps-relativeperiodresolver-04fcd458",
+      "lang": "zh",
+      "headingPath": "報表 › 「最近 N 天」含今天今天是未過完的一天",
+      "text": "報表期間計算包含當天日期｜本系統的「最近 N 天」範圍會將當天視為一個未過完的一天，因此計算的區間是包含今天的。",
+      "approved": true,
+      "sourceSectionHash": "dcfdf1cde4aa6eca4a5e7e6899ed89465edab3d4cfd430bcb940580e27367d1e"
+    },
+    {
+      "slug": "code-rps-relativeperiodresolver-8c39f6bb",
+      "lang": "zh",
+      "headingPath": "報表 › 當初要離開的那種設計",
+      "text": "資料傳遞的時區處理規則｜系統在獲取報表資料時，會依據請求所帶入的時間區間來判斷和篩選資料，確保時間計算的準確性。",
+      "approved": true,
+      "sourceSectionHash": "c62199522c340f9c5c2611345ec71744f6e8efebf37d1925e2175e2915873fb0"
+    },
+    {
+      "slug": "code-rps-relativeperiodresolver-0f764b65",
+      "lang": "zh",
+      "headingPath": "報表 › 取「包含今天的會計期間」往前推  期",
+      "text": "取資料範圍時的期間計算規則｜當系統無法找到符合條件的資料時，會直接顯示錯誤訊息，不會回退到使用日曆月來計算日期範圍。",
+      "approved": true,
+      "sourceSectionHash": "97a180f7869855eca164f10919a9f776dd02ffa5799821ad47b0ca9864ad4e41"
+    },
+    {
+      "slug": "code-rps-relativeperiodresolver-a92838c7",
+      "lang": "zh",
+      "headingPath": "報表 › 這裡刻意**不**繞過廠別過濾器：期間依廠別分開之後",
+      "text": "無法跨廠區查看資料｜系統在生成報表時，會依據當前所屬的廠別來篩選會計行事曆的資料，不會合併來自不同廠區的資料。",
+      "approved": true,
+      "sourceSectionHash": "1222c7d7b829a9127d1eca5ac502a820f38c9b3ac6311630b7aba62baa6d84a3"
+    }
+  ]
+}

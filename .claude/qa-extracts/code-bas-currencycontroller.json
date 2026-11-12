@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/BAS/Controllers/CurrencyController.cs",
+  "sourceHash": "72a0ea5388b7cd338f13ae20766f004d91bdad1f5681d07df4ce6506525ae6d4",
+  "entries": [
+    {
+      "slug": "code-bas-currencycontroller-1a1ccd9e",
+      "lang": "zh",
+      "headingPath": "基本資料 › 主動查核，避免刪除後單據幣別懸空",
+      "text": "資料關聯性檢查規則｜系統會檢查所選的貨幣代碼是否在其他已建立的單據中使用，以防止刪除該貨幣代碼時造成相關單據的貨幣資訊懸空。",
+      "approved": true,
+      "sourceSectionHash": "35ac5a509e197c2bc5043bf062a6d6a75c1a09e3aa88a702da44701fc2851092"
+    },
+    {
+      "slug": "code-bas-currencycontroller-7b1746fc",
+      "lang": "zh",
+      "headingPath": "基本資料 › 幣別是否為本幣設定，或仍被各模組單據引用中",
+      "text": "幣別是否為本幣設定與使用情況｜此欄位用來判斷某個貨幣單位是否被系統內各個模組的單據所引用，並且會進行跨廠區的檢查。",
+      "approved": true,
+      "sourceSectionHash": "c8c0ba6a8f90255dd10e0e4c58d362d541c3b485175849125c5148534cdb8fd3"
+    }
+  ]
+}

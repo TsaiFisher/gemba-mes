@@ -1,0 +1,206 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model PaginatedList<MaterialSlip>?
+
+@{
+    ViewData["Title"] = Localizer["Title"].Value;
+    var sortOrder    = ViewBag.CurrentSort as string ?? "date_desc";
+    var searched     = (bool)(ViewBag.Searched ?? false);
+    var searchText   = ViewBag.SearchText as string ?? "";
+    var catFilter    = ViewBag.CategoryFilter as string ?? "InternalIssue";
+    var statusFilter = ViewBag.StatusFilter as string ?? "";
+    var pageSize     = ViewBag.CurrentPageSize as int? ?? 20;
+    var canCreate    = ViewBag.CanCreate as bool? ?? false;
+    var canUpdate    = ViewBag.CanUpdate as bool? ?? false;
+    var canDelete    = ViewBag.CanDelete as bool? ?? false;
+
+    (string css, string locKey) CategoryInfo(MaterialSlipCategory c) => c switch
+    {
+        MaterialSlipCategory.InternalIssue       => ("bg-primary",         "CatInternalIssue"),
+        MaterialSlipCategory.InternalRequisition => ("bg-info",            "CatInternalRequisition"),
+        MaterialSlipCategory.InternalReturn      => ("bg-warning text-dark","CatInternalReturn"),
+        MaterialSlipCategory.OutsourceIssue      => ("bg-success",         "CatOutsourceIssue"),
+        MaterialSlipCategory.OutsourceReturn     => ("bg-secondary",       "CatOutsourceReturn"),
+        MaterialSlipCategory.ReworkIssue         => ("bg-danger",          "CatReworkIssue"),
+        MaterialSlipCategory.ReworkReturn        => ("bg-dark",            "CatReworkReturn"),
+        _                                        => ("bg-light text-dark", "CatInternalIssue")
+    };
+    // 狀態文字一律走 MfgEnumDisplay（共用資源檔）。原本這裡自帶一份只有 4 個狀態的對照、
+    // 鍵還對不上資源檔（StPosted 不存在 → 中文介面直接露出鍵名），其餘 4 個狀態全落到 default
+    // 顯示成「草稿」，查詢下拉因此出現五個「草稿」（2026-10-05 回報）。
+    string StatusCss(MaterialSlipStatus s) => s switch
+    {
+        MaterialSlipStatus.Draft     => "bg-secondary",
+        MaterialSlipStatus.Pending   => "bg-info text-dark",
+        MaterialSlipStatus.Approved  => "bg-primary",
+        MaterialSlipStatus.Picking   => "bg-warning text-dark",
+        MaterialSlipStatus.Confirmed => "bg-primary",
+        MaterialSlipStatus.Posted    => "bg-success",
+        MaterialSlipStatus.Closed    => "bg-dark",
+        MaterialSlipStatus.Cancelled => "bg-danger",
+        _                            => "bg-light text-dark"
+    };
+
+    string SortIcon(string col) => sortOrder == col + "_asc" ? "bi-sort-up"
+                                 : sortOrder == col + "_desc" ? "bi-sort-down"
+                                 : "bi-arrow-down-up text-muted";
+    string NextSort(string col) => sortOrder == col + "_asc" ? col + "_desc" : col + "_asc";
+    string QS(string pg = null) => $"searched=true&categoryFilter={catFilter}&searchText={searchText}&statusFilter={statusFilter}&sortOrder={sortOrder}&pageNumber={pg ?? Model?.PageIndex.ToString()}&pageSize={pageSize}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">@Localizer["Title"]</h4>
+    @if (canCreate)
+    {
+        <button type="button" class="btn btn-primary btn-sm"
+                data-action="openPanel" data-url="@Url.Action("Form")?category=@catFilter">
+            <i class="bi bi-plus-lg"></i> @Localizer["BtnCreate"]
+        </button>
+    }
+</div>
+
+<!-- 查詢列 -->
+<form method="get" class="row g-2 mb-3 align-items-end" id="filterForm">
+    <input type="hidden" name="searched" value="true" />
+    <input type="hidden" name="sortOrder" value="@sortOrder" />
+
+    <!-- 類型 tabs -->
+    <div class="col-12">
+        <div class="btn-group btn-group-sm flex-wrap" role="group">
+            @foreach (MaterialSlipCategory cat in Enum.GetValues<MaterialSlipCategory>())
+            {
+                var info = CategoryInfo(cat);
+                var active = catFilter == cat.ToString() ? "btn-primary active" : "btn-outline-secondary";
+                <button type="submit" class="btn @active" name="categoryFilter" value="@cat">
+                    @Localizer[info.locKey]
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <input type="text" name="searchText" value="@searchText"
+               class="form-control form-control-sm" placeholder="@Localizer["SearchPlaceholder"]" />
+    </div>
+    <div class="col-md-3">
+        <select name="statusFilter" class="form-select form-select-sm">
+            <option value="">@Localizer["AllStatus"]</option>
+            @foreach (MaterialSlipStatus st in Enum.GetValues<MaterialSlipStatus>())
+            {
+                var sel  = statusFilter == st.ToString();
+                <option value="@st" selected="@sel">@MfgEnumDisplay.Text(L, st)</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary btn-sm px-4"><i class="bi bi-search"></i> @Localizer["BtnSearch"]</button>
+    </div>
+@await Html.PartialAsync("_PageSizeSelect")
+</form>
+
+@if (!searched)
+{
+    <div class="alert alert-info">@Localizer["HintSearch"]</div>
+}
+else if (Model == null || !Model.Any())
+{
+    <div class="alert alert-warning">@Localizer["NoData"]</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-sm table-hover table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>
+                        <a href="?@QS()&sortOrder=@NextSort("slip_id")">
+                            @Localizer["ColSlipId"] <i class="bi @SortIcon("slip_id")"></i>
+                        </a>
+                    </th>
+                    <th>@Localizer["ColCategory"]</th>
+                    <th>@Localizer["ColStatus"]</th>
+                    <th>
+                        <a href="?@QS()&sortOrder=@NextSort("date")">
+                            @Localizer["ColSlipDate"] <i class="bi @SortIcon("date")"></i>
+                        </a>
+                    </th>
+                    <th>@Localizer["ColSourceDoc"]</th>
+                    <th class="text-center">@Localizer["ColLines"]</th>
+                    <th>@Localizer["ColRemarks"]</th>
+                    <th class="u-width-80px">@Localizer["ColActions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var s in Model)
+                {
+                    var ci = CategoryInfo(s.Category);
+
+                    <tr>
+                        <td class="fw-medium">@s.SlipId</td>
+                        <td><span class="badge @ci.css">@Localizer[ci.locKey]</span></td>
+                        <td><span class="badge @StatusCss(s.Status)">@MfgEnumDisplay.Text(L, s.Status)</span></td>
+                        <td>@s.SlipDate.ToString("yyyy-MM-dd")</td>
+                        <td class="small text-muted">@(string.IsNullOrEmpty(s.SourceDocId) ? "—" : $"{s.SourceDocType} {s.SourceDocId}")</td>
+                        <td class="text-center">@s.Lines.Count</td>
+                        <td class="small text-truncate u-max-width-140px">@s.Remarks</td>
+                        <td>
+                            @await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = s.SlipId }))
+                            @if (canUpdate && s.Status == MaterialSlipStatus.Draft)
+                            {
+                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                        data-action="openPanel" data-url="@Url.Action("Form")/@s.SlipId"
+                                        title="@Localizer["Edit"]"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                            }
+                            else if (canUpdate)
+                            {
+                                @* 離開草稿之後仍要進得去：核准／開始揀料／確認揀料／過帳四個動作
+                                   全都住在同一張表單裡，而編輯鈕限 Draft。少了這個入口，
+                                   一張單子送出草稿之後就再也點不開，只能手打網址（W2-F3）。 *@
+                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-action="openPanel" data-url="@Url.Action("Form")/@s.SlipId"
+                                        title="@Localizer["View"]"><i class="bi bi-eye"></i> @Localizer["View"]</button>
+                            }
+                            @if (canDelete && (s.Status == MaterialSlipStatus.Draft || s.Status == MaterialSlipStatus.Cancelled))
+                            {
+                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                        data-action="deleteItem" data-url="@Url.Action("DeleteConfirmed")" data-id="@s.SlipId" data-confirm="@Localizer["ConfirmDelete"]"
+                                        title="@Localizer["Delete"]"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 分頁 -->
+    @await Html.PartialAsync("_Pagination", Model)
+    <div class="text-muted small text-center mt-1">
+        @string.Format(Localizer["PagingInfo"].Value, Model.PageIndex, Model.TotalPages, Model.TotalItems)
+    </div>
+}
+
+<!-- Side panel -->
+<div class="offcanvas offcanvas-end u-width-720px" tabindex="-1" id="sidePanel" data-bs-scroll="true">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel">@Localizer["Title"]</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div id="sidePanelBody" class="offcanvas-body p-0"></div>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

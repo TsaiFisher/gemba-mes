@@ -1,0 +1,140 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Text.Json
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.RPT.Models.DashboardKpi
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    var monthLabels = Enumerable.Range(1, 12).Select(m => m.ToString("00")).ToList();
+    var revData     = Model.RevenueTrend.Select(p => p.Amount).ToList();
+    var purData     = Model.PurchaseTrend.Select(p => p.Amount).ToList();
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+}
+
+<div class="container-fluid py-4">
+    <h1 class="mb-4"><i class="bi bi-speedometer2 me-2"></i>@Localizer["PageTitle"]</h1>
+
+    <!-- KPI 卡片 -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-2 col-sm-4">
+            <div class="card border-0 bg-primary text-white shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-cash-coin fs-3 mb-2 d-block"></i>
+                    <div class="small mb-1">@Localizer["MonthlyRevenue"]</div>
+                    <div class="fs-5 fw-bold">@Model.MonthlyRevenue.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-4">
+            <div class="card border-0 bg-info text-white shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-cart3 fs-3 mb-2 d-block"></i>
+                    <div class="small mb-1">@Localizer["MonthlyPurchase"]</div>
+                    <div class="fs-5 fw-bold">@Model.MonthlyPurchase.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-4">
+            <div class="card border-0 bg-secondary text-white shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-boxes fs-3 mb-2 d-block"></i>
+                    <div class="small mb-1">@Localizer["InventoryValue"]</div>
+                    <div class="fs-5 fw-bold">@Model.InventoryValue.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-4">
+            <div class="card border-0 @(Model.WorkOrderOnTimeRate >= 90 ? "bg-success" : Model.WorkOrderOnTimeRate >= 70 ? "bg-warning" : "bg-danger") text-white shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-check2-all fs-3 mb-2 d-block"></i>
+                    <div class="small mb-1">@Localizer["WorkOrderOnTimeRate"]</div>
+                    <div class="fs-5 fw-bold">@Model.WorkOrderOnTimeRate.ToString("N1")%</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-4">
+            <div class="card border-0 bg-warning shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-clipboard-data fs-3 mb-2 d-block"></i>
+                    <div class="small mb-1">@Localizer["OpenWorkOrders"]</div>
+                    <div class="fs-5 fw-bold">@Model.OpenWorkOrders</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-4">
+            <div class="card border-0 @(Model.OverdueAP > 0 ? "bg-danger" : "bg-light") shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-exclamation-triangle fs-3 mb-2 d-block @(Model.OverdueAP > 0 ? "text-white" : "text-muted")"></i>
+                    <div class="small mb-1 @(Model.OverdueAP > 0 ? "text-white" : "text-muted")">@Localizer["OverdueAP"]</div>
+                    <div class="fs-5 fw-bold @(Model.OverdueAP > 0 ? "text-white" : "text-muted")">@Model.OverdueAP</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 趨勢圖 -->
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white fw-semibold">
+                    <i class="bi bi-graph-up me-2"></i>@Localizer["RevenueTrend"]
+                </div>
+                <div class="card-body">
+                    <canvas id="revenueChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white fw-semibold">
+                    <i class="bi bi-graph-down me-2"></i>@Localizer["PurchaseTrend"]
+                </div>
+                <div class="card-body">
+                    <canvas id="purchaseChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/lib/chart.js/chart.umd.min.js" nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)"></script>
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    const labels  = @Html.Raw(JsonSerializer.Serialize(monthLabels));
+    const revData = @Html.Raw(JsonSerializer.Serialize(revData));
+    const purData = @Html.Raw(JsonSerializer.Serialize(purData));
+
+    new Chart(document.getElementById('revenueChart'), {
+        type: 'bar',
+        data: {
+            labels,
+            datasets: [{
+                label: '@Localizer["Revenue"]',
+                data: revData,
+                backgroundColor: 'rgba(13,110,253,0.7)',
+                borderColor: 'rgba(13,110,253,1)',
+                borderWidth: 1
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+
+    new Chart(document.getElementById('purchaseChart'), {
+        type: 'bar',
+        data: {
+            labels,
+            datasets: [{
+                label: '@Localizer["Purchase"]',
+                data: purData,
+                backgroundColor: 'rgba(13,202,240,0.7)',
+                borderColor: 'rgba(13,202,240,1)',
+                borderWidth: 1
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+})();
+</script>
+}

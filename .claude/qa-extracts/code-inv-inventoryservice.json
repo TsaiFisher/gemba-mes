@@ -1,0 +1,78 @@
+{
+  "sourcePath": "Modules/INV/Services/InventoryService.cs",
+  "sourceHash": "99af0e94ae8f10e78c21412bd74276bb2d256490d43aa32d491db322b20e400f",
+  "entries": [
+    {
+      "slug": "code-inv-inventoryservice-f719c331",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 客供倉的儲位代碼",
+      "text": "客供儲位不參與存貨成本計算｜此類儲位的物料屬於客戶財產，因此在進行庫存計價時，必須將其從計算平均成本的基礎數量和寫回範圍中排除。若未正確排除，可能會導致自有物料被錯誤地賦予成本或單價被不當稀釋。",
+      "approved": true,
+      "sourceSectionHash": "45911f3198fd1391b6674d8f739c03fe5c90fe858df3b604fb66c8e6118f3381"
+    },
+    {
+      "slug": "code-inv-inventoryservice-8da43fdb",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 呼叫端不得吞掉該例外",
+      "text": "庫存數量不能為負數｜系統會阻止任何嘗試讓可用庫存量變成負數的動作。",
+      "approved": true,
+      "sourceSectionHash": "5e2752263d15ac05674a1b7d3845aa9d3670b6aeb177e71a9e7576766fef517f"
+    },
+    {
+      "slug": "code-inv-inventoryservice-f5873367",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 客戶的料沒有取得成本，給它一個單價等於把客戶的財產記成我們的存貨",
+      "text": "客供料的成本計算規則｜當入庫的是客戶提供的物料，系統會將其單價設定為零，這代表該物料的價值被視為客戶的財產而非本公司的存貨。",
+      "approved": true,
+      "sourceSectionHash": "0c6b631e032a4c5fff3593a0b5890e2f36ab632b2809129a2403a541e1db3463"
+    },
+    {
+      "slug": "code-inv-inventoryservice-b07294fe",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 均價通常採一致性，這裡取其中一筆或是加權算出的目前均價",
+      "text": "移動平均以廠為單位｜移動平均成本以廠為單位維護：同一個廠內同一個品號，不論存放在哪個儲位，單位成本都保持一致。不同廠之間的成本各自獨立，不互相同步。",
+      "approved": true,
+      "sourceSectionHash": "23f5dfbd06a94aae59f4840bd019aa151a3f703690e9839f6f3d8f55266a8122"
+    },
+    {
+      "slug": "code-inv-inventoryservice-0a34cd4f",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 客供倉一併排除：把自有料的均價寫過去",
+      "text": "客供倉不套用自有料均價｜更新全廠移動平均時，客供倉的儲位一併排除，不會把自有料的均價寫過去。寫過去等於讓客戶的料有了成本，而那筆金額會出現在存貨評價報表裡。",
+      "approved": true,
+      "sourceSectionHash": "d3bb1f3a1b1ea155d0b6415f6242dd4c368a31083471a7d373673b82f7300953"
+    },
+    {
+      "slug": "code-inv-inventoryservice-5e1ea78c",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 均價是**全廠**的，不是儲位的",
+      "text": "全廠平均成本計算規則｜系統計算的平均成本是針對整個工廠範圍，而不是單一儲位所計算；此外，客供料在計算平均成本時不參與計價。",
+      "approved": true,
+      "sourceSectionHash": "2e3445ba2eed83032f1585f9f8b40f76f279a6c087a4e5430e3c4adea72c9bf7"
+    },
+    {
+      "slug": "code-inv-inventoryservice-bf8c3888",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 負均價只可能來自「作廢之前帳就已經不一致」",
+      "text": "負均價來源與後續影響說明｜如果計算出的平均成本是負數，這代表在進行作廢流程之前，帳務資料已經存在不一致的情況，此情況會導致之後每一筆出庫的銷貨成本也會變成負數。",
+      "approved": false,
+      "sourceSectionHash": "30e874e67b6648d7a224c0df1048556abbe2748da9c6f38f2a328abb5414e0e5"
+    },
+    {
+      "slug": "code-inv-inventoryservice-05aeb643",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 新開的儲位庫存承接該廠現行單位成本，不從 0 起算",
+      "text": "儲位庫存的成本計算規則說明｜新建立的儲位庫存，其單位成本會沿用該廠目前已有的單位成本，不會從零開始計算。這是為了確保在沒有單價資訊的入庫時，計價能正確使用現有成本；同時，若不這樣做，全廠可能會出現兩種不同的單位成本，導致後續重算平均成本時，成本會隨資料順序漂移。",
+      "approved": true,
+      "sourceSectionHash": "7d1cf93f5002f35beac5e28e1b091ec04c26f48cd65d61233146a7756b197cd7"
+    },
+    {
+      "slug": "code-inv-inventoryservice-49dd0386",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 該廠該品號的現行單位成本",
+      "text": "單位成本的計算規則說明｜對於全新的品號，如果該品號在任何廠區都沒有庫存記錄，則其現行單位成本會顯示為零。此數值將由負責入庫流程的移動均價或成本層來決定和接管。此外，當系統需要判斷一個有意義的單一成本時，它會優先參考目前庫存量較多的廠區所計算出的成本。",
+      "approved": true,
+      "sourceSectionHash": "132507a586e3dc70754614e23dba9eda0094cd9757022eda274e643f64b257e9"
+    }
+  ]
+}

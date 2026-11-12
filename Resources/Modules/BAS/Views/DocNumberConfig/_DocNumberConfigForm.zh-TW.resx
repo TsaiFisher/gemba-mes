@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>單號設定</value></data>
+  <data name="AddEntry" xml:space="preserve"><value>新增單號設定</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>代號 / 名稱查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>查詢單據類型或前置碼</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入查詢條件後按「查詢」</value></data>
+  <data name="DocType" xml:space="preserve"><value>單據類型代號</value></data>
+  <data name="DocTypeName" xml:space="preserve"><value>顯示名稱</value></data>
+  <data name="Prefix" xml:space="preserve"><value>前置碼</value></data>
+  <data name="FormatPreview" xml:space="preserve"><value>格式預覽</value></data>
+  <data name="ResetCycle" xml:space="preserve"><value>重置週期</value></data>
+  <data name="Reset_Never" xml:space="preserve"><value>永不重置</value></data>
+  <data name="Reset_Yearly" xml:space="preserve"><value>每年重置</value></data>
+  <data name="Reset_Monthly" xml:space="preserve"><value>每月重置</value></data>
+  <data name="Digits" xml:space="preserve"><value>碼</value></data>
+  <data name="SystemTypeHint" xml:space="preserve"><value>系統內建設定不可刪除</value></data>
+  <data name="IsActive" xml:space="preserve"><value>啟用</value></data>
+  <data name="Active" xml:space="preserve"><value>啟用</value></data>
+  <data name="Inactive" xml:space="preserve"><value>停用</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="DocTypePlaceholder" xml:space="preserve"><value>例：GoodsReceipt</value></data>
+  <data name="DocTypeReadonlyHint" xml:space="preserve"><value>單據類型代號建立後無法修改</value></data>
+  <data name="DocTypeNamePlaceholder" xml:space="preserve"><value>例：進貨單</value></data>
+  <data name="FormatSection" xml:space="preserve"><value>單號格式設定</value></data>
+  <data name="Separator" xml:space="preserve"><value>分隔符號</value></data>
+  <data name="SeparatorHint" xml:space="preserve"><value>留空則無分隔符號</value></data>
+  <data name="DateFormat" xml:space="preserve"><value>日期格式</value></data>
+  <data name="DateFormat_None" xml:space="preserve"><value>無日期（前置碼 + 流水碼）</value></data>
+  <data name="DateFormat_YY" xml:space="preserve"><value>YY — 2碼年（e.g. 25）</value></data>
+  <data name="DateFormat_YYMM" xml:space="preserve"><value>YYMM — 年月（e.g. 2503）</value></data>
+  <data name="DateFormat_YYYYMMDD" xml:space="preserve"><value>YYYYMMDD — 完整日期（e.g. 20250327）</value></data>
+  <data name="SeqLength" xml:space="preserve"><value>流水碼位數</value></data>
+  <data name="ResetCycleHint" xml:space="preserve"><value>決定流水碼何時歸零重新計算</value></data>
+  <data name="PreviewLabel" xml:space="preserve"><value>單號預覽</value></data>
+  <data name="ApplicablePlant" xml:space="preserve"><value>適用廠別</value></data>
+  <data name="DefaultAllPlants" xml:space="preserve"><value>預設（全廠適用）</value></data>
+  <data name="ApplicablePlantHint" xml:space="preserve"><value>未建立專屬規則的廠別套用「預設」並共用同一序號（連續編）；勾選廠別則這些廠共用同一套規則、獨立編號，前置碼須與其他設定不同。同一廠別僅能歸屬一筆設定。建立後仍可增減適用廠別，序號會延續不重發。</value></data>
+  <data name="DefaultPlantLockedHint" xml:space="preserve"><value>此為全廠適用的預設規則，適用廠別固定不可變更。</value></data>
+</root>

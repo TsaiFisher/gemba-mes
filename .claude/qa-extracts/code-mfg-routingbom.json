@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/MFG/Models/RoutingBom.cs",
+  "sourceHash": "a365562ce6b647bf0b02816f28fb9cbd7cd14ccc257076b214546bb98346555d",
+  "entries": [
+    {
+      "slug": "code-mfg-routingbom-1bd98090",
+      "lang": "zh",
+      "headingPath": "生產製造 › 損耗率 %：加工過程中消失、無殘值的耗損",
+      "text": "損耗率計算方式說明｜此數值代表加工過程中消失且沒有殘值的耗損量。當與其他損失率一起使用時，會將兩者視為以淨需求為基準向上加的固定比例來計算投入總量。",
+      "approved": true,
+      "sourceSectionHash": "621cf0ef0d828d66a0c8a47d4a12dad3763dea42ee76d1d20866236d60272128"
+    },
+    {
+      "slug": "code-mfg-routingbom-80124991",
+      "lang": "zh",
+      "headingPath": "生產製造 › 下角率 %：投入料裁切/加工後產生的可回收下腳料比率，",
+      "text": "下角料比率的計算規則說明｜此數值是用來計算投入材料時，需要額外考慮可回收的邊料比例，它與純粹的損耗是不同的概念。系統會將這個比例納入總投入量的計算中，以確保扣除這些可回收的邊料後，仍能取得足夠的合格產品數量。",
+      "approved": true,
+      "sourceSectionHash": "a0709cffbbd5cced72aa77ecc89a170000515d0d11aef682145ddc765e655467"
+    },
+    {
+      "slug": "code-mfg-routingbom-eb3ca57d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 依下角率／損耗率把「用量」換算為「投入量」",
+      "text": "換算用量為投入量的規則說明｜將「用量」轉換成「投入量」時，系統會使用全外加法的計算方式，即用量乘以 (1 + 廢料率/100 + 損耗率/100)，此方法確保與現有的損耗率單獨使用的公式相容。",
+      "approved": true,
+      "sourceSectionHash": "85a44aee7249f53323f3f653ca03f893c9d7546cce52ee269fcaf76eaac32916"
+    },
+    {
+      "slug": "code-mfg-routingbom-0b6e30f3",
+      "lang": "zh",
+      "headingPath": "生產製造 › ️  **目前未實作分次沖**：報工時不會產生任何庫存異動，",
+      "text": "後沖時機的計算方式｜報工時不會產生任何庫存異動，實際的庫存變動仍會在完工時一次性處理。",
+      "approved": true,
+      "sourceSectionHash": "9e5fdf5f3059721a92602e757444909ce7a5c604939ba286da7f3b82fd9462ea"
+    }
+  ]
+}

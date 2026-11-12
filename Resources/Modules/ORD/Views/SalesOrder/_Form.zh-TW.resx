@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="SalesOrderId" xml:space="preserve"><value>銷售訂單號</value></data>
+  <data name="OrderDate" xml:space="preserve"><value>訂單日期</value></data>
+  <data name="OrderType" xml:space="preserve"><value>訂單類型</value></data>
+  <data name="Customer" xml:space="preserve"><value>客戶</value></data>
+  <data name="SelectCustomer" xml:space="preserve"><value>請選擇客戶</value></data>
+  <data name="CustomerOrderNo" xml:space="preserve"><value>客戶訂單號</value></data>
+  <data name="CurrencyCode" xml:space="preserve"><value>幣別</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>銷售明細</value></data>
+  <data name="AddLine" xml:space="preserve"><value>新增明細</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="DeliveryDate" xml:space="preserve"><value>預交日期</value></data>
+  <data name="OrderQty" xml:space="preserve"><value>訂購數量</value></data>
+  <data name="UomCode" xml:space="preserve"><value>單位</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>單價</value></data>
+  <data name="TaxCode" xml:space="preserve"><value>稅別</value></data>
+  <data name="LineAmount" xml:space="preserve"><value>金額</value></data>
+  <data name="TaxAmount" xml:space="preserve"><value>稅額</value></data>
+  <data name="TotalAmount" xml:space="preserve"><value>含稅金額</value></data>
+  <data name="AmountLocal" xml:space="preserve"><value>本幣金額</value></data>
+  <data name="ShippedQty" xml:space="preserve"><value>已出貨量</value></data>
+  <data name="IsClosed" xml:space="preserve"><value>結案</value></data>
+  <data name="CloseAll" xml:space="preserve"><value>全部結案</value></data>
+  <data name="CloseLine" xml:space="preserve"><value>結案此行</value></data>
+  <data name="Reopen" xml:space="preserve"><value>重開</value></data>
+  <data name="ClosePendingApprovalHint" xml:space="preserve"><value>尚未核准，無法結案。</value></data>
+  <data name="ConfirmCloseDoc" xml:space="preserve"><value>確定要結案所有未結案明細嗎？結案後將無法再開立新出貨單引用這些明細。</value></data>
+  <data name="Submit" xml:space="preserve"><value>送審</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>撤回</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>確定要送審此銷售訂單嗎？</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>確定要撤回此銷售訂單嗎？</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="ConfirmCustomerChange" xml:space="preserve"><value>更改客戶將清除所有已輸入的明細，確定要繼續嗎？</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>移除此列</value></data>
+  <data name="TradeTerm" xml:space="preserve"><value>貿易條件</value></data>
+</root>

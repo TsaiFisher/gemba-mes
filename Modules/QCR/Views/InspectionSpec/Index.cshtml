@@ -1,0 +1,153 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@inject IViewLocalizer Localizer
+@model PaginatedList<InspectionSpec>
+
+<link rel="stylesheet" href="~/css/panel-table.css" />
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool canCreate = ViewBag.CanCreate == true;
+    bool canUpdate = ViewBag.CanUpdate == true;
+    bool canDelete = ViewBag.CanDelete == true;
+
+    string StateBadge(string state) => state switch
+    {
+        "Tightened" => "bg-danger",
+        "Reduced"   => "bg-info text-dark",
+        "SkipLot"   => "bg-warning text-dark",
+        _           => "bg-success"
+    };
+    string StateKey(string state) => state switch
+    {
+        "Tightened" => "StateTightened",
+        "Reduced"   => "StateReduced",
+        "SkipLot"   => "StateSkipLot",
+        _           => "StateNormal"
+    };
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col"><h1>@ViewData["Title"]</h1></div>
+        @if (canCreate)
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                        data-url="@Url.Action("Create")"
+                        data-label="@Localizer["AddEntry"]"
+                        data-action="openPanel">
+                    <i class="bi bi-plus-circle"></i> @Localizer["Add"]
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" action="@Url.Action("Index")" class="row g-3 align-items-end">
+                <input type="hidden" name="searched"  value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                <div class="col-md-5">
+                    <label class="form-label">@Localizer["SearchLabel"]</label>
+                    <input type="text" name="searchText" class="form-control"
+                           value="@ViewBag.SearchText" placeholder="@Localizer["SearchPlaceholder"]" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>@Localizer["SpecCode"]</th>
+                    <th>@Localizer["SpecName"]</th>
+                    <th>@Localizer["ProductCode"]</th>
+                    <th>@Localizer["SamplingState"]</th>
+                    <th class="text-center">@Localizer["ItemCount"]</th>
+                    <th class="text-center">@Localizer["IsActive"]</th>
+                    <th>@Localizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null) @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="font-monospace fw-semibold">@item.SpecCode</td>
+                        <td>@item.SpecName</td>
+                        <td class="text-muted small">@(item.ProductCode ?? "—")</td>
+                        <td>
+                            <span class="badge @StateBadge(item.SamplingState)">
+                                @Localizer[StateKey(item.SamplingState)]
+                            </span>
+                        </td>
+                        <td class="text-center">@(item.Items?.Count ?? 0)</td>
+                        <td class="text-center">
+                            @if (item.IsActive) { <span class="badge bg-success">✓</span> }
+                            else { <span class="badge bg-secondary">—</span> }
+                        </td>
+                        <td>
+                            @if (canUpdate)
+                            {
+                                <button type="button" class="btn btn-sm btn-warning"
+                                        data-url="@Url.Action("Edit", new { id = item.SpecId })"
+                                        data-label="@Localizer["EditTitle", item.SpecCode]"
+                                        data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                            }
+                            @if (canDelete)
+                            {
+                                <button type="button" class="btn btn-sm btn-danger"
+                                        data-action="deleteItem" data-url="@Url.Action("DeleteConfirmed")" data-id="@item.SpecId"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-info">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel offcanvas -->
+<div class="offcanvas offcanvas-end u-panel-wide" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

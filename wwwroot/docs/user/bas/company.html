@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Company / Vendor Master — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>公司/廠商主檔 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="company.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link active"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-building me-2 text-primary"></i><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/Company &nbsp;|&nbsp; 管理客戶、供應商與公司資料</span><span lang="en">Route: /BAS/Company &nbsp;|&nbsp; Manage customer, supplier and company data</span></div>
+    </div>
+
+    <p><span lang="zh">公司/廠商主檔維護所有往來廠商與客戶的基本資料。同一筆記錄可同時標記為「客戶」與「廠商」。新增廠商需通過簽核流程，核准後方可在採購模組中使用。</span><span lang="en">The company master holds the basic data of every supplier and customer. One record can be flagged as both customer and supplier. New suppliers go through an approval flow and can only be used in purchasing once approved.</span></p>
+    <img class="screen-shot" src="img/company.png" data-src-en="img/en/company.png" alt="公司主檔畫面截圖" data-alt-en="Company master screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">公司主檔畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Company master screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <img class="screen-shot" src="img/company-form.png" data-src-en="img/en/company-form.png" alt="公司主檔編輯畫面截圖" data-alt-en="Company master edit panel screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">編輯畫面：結帳日 5、收付款天數 30 的月結客戶（6/6～7/5 的出貨在 7/5 結帳、8/4 到期）</span><span lang="en">Edit panel: a monthly-billing customer with closing day 5 and 30 credit days (shipments dated 6/6–7/5 close on 7/5 and are due 8/4)</span></div>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">公司代碼</span><span lang="en">Company Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">唯一識別碼，建立後不可變更（例：SUP001）</span><span lang="en">Unique code; cannot be changed once created (e.g. SUP001)</span></td></tr>
+        <tr><td><span lang="zh">公司名稱</span><span lang="en">Company Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">廠商或客戶的完整名稱</span><span lang="en">Full name of the supplier or customer</span></td></tr>
+        <tr><td><span lang="zh">是否客戶</span><span lang="en">Is Customer</span></td><td></td><td><span lang="zh">勾選後可在銷售訂單中選用</span><span lang="en">Once checked, can be selected on sales orders</span></td></tr>
+        <tr><td><span lang="zh">是否廠商</span><span lang="en">Is Supplier</span></td><td></td><td><span lang="zh">勾選後可在採購單中選用</span><span lang="en">Once checked, can be selected on purchase orders</span></td></tr>
+        <tr><td><span lang="zh">稅率</span><span lang="en">Tax Rate</span></td><td></td><td><span lang="zh">預設適用稅率（%），可被採購/銷售單個別覆蓋</span><span lang="en">Default tax rate (%); can be overridden on individual purchase and sales documents</span></td></tr>
+        <tr><td><span lang="zh">結帳日</span><span lang="en">Closing Day</span></td><td></td><td><span lang="zh">每月第幾日結帳（1–31，31 在小月視為月底）。有填＝月結：單據日落在哪一期，到期日就從該期的結帳日起算；空白＝從單據日起算</span><span lang="en">Day of the month the account closes (1–31; 31 means month end in short months). If set, billing is monthly: the due date counts from the closing day of the period the document falls in. Blank = counts from the document date</span></td></tr>
+        <tr><td><span lang="zh">收付款天數</span><span lang="en">Credit Days</span></td><td></td><td><span lang="zh">到期日＝起算日＋天數，未填為 30 天。系統由出貨／收料自動產生應收／應付發票時依此計算到期日。例：結帳日 5、天數 30 → 6/6～7/5 的單據在 7/5 結帳、8/4 到期</span><span lang="en">Due date = start date + these days (30 if blank). Used when shipments and receipts automatically create AR/AP invoices. E.g. closing day 5, 30 days → documents dated 6/6–7/5 close on 7/5 and are due 8/4</span></td></tr>
+        <tr><td><span lang="zh">供應商認證狀態</span><span lang="en">Supplier qualification status</span></td><td></td><td><span lang="zh">未認證 / 認證中 / 已認證，供採購稽核用</span><span lang="en">Not Qualified / In Qualification / Qualified, used for purchasing audits</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後仍保留歷史資料，但無法在新單據中選取</span><span lang="en">History is retained, but it cannot be selected on new documents</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="contact-management"><i class="bi bi-person-lines-fill me-2 text-primary"></i><span lang="zh">聯絡人管理</span><span lang="en">Contact management</span></h2>
+    <p><span lang="zh">編輯公司後，點擊側欄下方「聯絡人」分頁可新增/刪除聯絡人。每筆聯絡人包含姓名、職稱、電話、Email 等資訊。</span><span lang="en">After opening a company, click the "Contacts" tab at the bottom of the panel to add or remove contacts. Each contact holds name, title, phone, e-mail and so on.</span></p>
+
+    <h2 id="approval-flow"><i class="bi bi-check2-circle me-2 text-primary"></i><span lang="zh">簽核流程</span><span lang="en">Approval flow</span></h2>
+    <p><span lang="zh">若系統管理者已啟用「公司/廠商」簽核範本，則新增或修改後需送審。送審前單據狀態為「草稿」，核准後才可正常使用。</span><span lang="en">If the administrator has enabled the approval template for "Company / Vendor", new or changed records must be submitted. The status stays "Draft" until approval, after which the record can be used normally.</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">填寫完公司資料後點「儲存」，狀態顯示「草稿」。</span><span lang="en">Fill in the company data and click "Save"; the status shows "Draft".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「送審」，主管可在「待我簽核」中審閱。</span><span lang="en">Click "Submit"; the manager can then review it under "My Pending Approvals".</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">核准後狀態變為「已核准」，即可在採購/銷售單中選用。</span><span lang="en">Once approved the status becomes "Approved" and the record can be used on purchase and sales documents.</span></div></div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">新增廠商</span><span lang="en">Adding a supplier</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「基本資料 &gt; 公司/廠商主檔」。</span><span lang="en">Choose "Basic Data &gt; Company / Vendor Master" in the left-hand menu.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點右上角「新增」按鈕，右側滑出表單。</span><span lang="en">Click the "Add" button in the top right corner; the form slides out on the right.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">填入公司代碼、公司名稱，勾選「是否廠商」，設定認證狀態。</span><span lang="en">Enter the company code and name, check "Is Supplier" and set the qualification status.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">點「儲存」，視簽核設定決定是否送審。</span><span lang="en">Click "Save", then submit for approval if the approval settings require it.</span></div></div>
+
+    <h3><span lang="zh">查詢廠商</span><span lang="en">Searching suppliers</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在查詢列輸入公司代碼或名稱關鍵字，選擇類型篩選（全部 / 客戶 / 廠商）。</span><span lang="en">Enter a company code or name keyword in the search bar and pick a type filter (All / Customer / Supplier).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「查詢」顯示結果，點擊列表上的公司名稱可查看詳情。</span><span lang="en">Click "Search" to show the results; click a company name in the list to see its details.</span></div></div>
+
+    <h3><span lang="zh">停用廠商</span><span lang="en">Deactivating a supplier</span></h3>
+    <p><span lang="zh">編輯廠商，取消勾選「是否啟用」後儲存。停用後不影響已存在的歷史單據，但新單據無法選取該廠商。</span><span lang="en">Open the supplier, uncheck "Active" and save. Existing documents are unaffected, but the supplier can no longer be selected on new ones.</span></p>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">查詢結果頁面點「匯出」可下載 Excel（.xlsx）格式，包含目前查詢條件篩選後的所有記錄。</span><span lang="en">On the results page click "Export" to download an Excel (.xlsx) file containing every record matching the current query.</span></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">公司代碼一旦建立後不可修改。若代碼輸入錯誤，需停用該筆資料並重新建立正確代碼的記錄。</span><span lang="en"> The company code cannot be changed once created. If it was entered incorrectly, deactivate the record and create a new one with the correct code.</span>
+    </div>
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">同一公司可同時勾選「是否客戶」與「是否廠商」，例如往來廠商也有向本公司採購需求時。</span><span lang="en">The same company can be flagged as both customer and supplier — for example when a supplier also buys from your company.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

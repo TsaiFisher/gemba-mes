@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="System User Manual — SmartFactory MES">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>系統使用手冊 — SmartFactory MES</title>
+<link rel="stylesheet" href="../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="index.page.css">
+    <link rel="stylesheet" href="flow.css">
+    <link rel="stylesheet" href="doc-i18n.css">
+    <script src="doc-i18n.js"></script>
+    <link rel="stylesheet" href="doc-search.css">
+    <script src="doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 系統使用手冊</span><span lang="en">SmartFactory MES — System User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">文件中心</span><span lang="en">Document centre</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">導覽</span><span lang="en">Navigation</span></div>
+    <a href="#overview" class="nav-link active"><span lang="zh">系統概覽</span><span lang="en">System overview</span></a>
+    <a href="#login" class="nav-link"><span lang="zh">登入與登出</span><span lang="en">Logging in and out</span></a>
+    <a href="#layout" class="nav-link"><span lang="zh">畫面說明</span><span lang="en">Screen guide</span></a>
+    <a href="#flow" class="nav-link"><span lang="zh">跨模組流程全景</span><span lang="en">The cross-module process at a glance</span></a>
+    <div class="sidebar-heading"><span lang="zh">作業模組</span><span lang="en">Modules</span></div>
+    <a href="bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+    <a href="mfg/index.html" class="nav-link"><span lang="zh">製造執行（MFG）</span><span lang="en">Manufacturing (MFG)</span></a>
+    <a href="pur/index.html" class="nav-link"><span lang="zh">採購管理（PUR）</span><span lang="en">Purchasing (PUR)</span></a>
+    <a href="osp/index.html" class="nav-link"><span lang="zh">委外管理（OSP）</span><span lang="en">Outsource Management (OSP)</span></a>
+    <a href="ord/index.html" class="nav-link"><span lang="zh">訂單管理（ORD）</span><span lang="en">Order Management (ORD)</span></a>
+    <a href="qcr/index.html" class="nav-link"><span lang="zh">品質管理（QCR）</span><span lang="en">Quality Control (QCR)</span></a>
+    <a href="inv/index.html" class="nav-link"><span lang="zh">庫存管理（INV）</span><span lang="en">Inventory Management (INV)</span></a>
+    <a href="fin/index.html" class="nav-link"><span lang="zh">財務管理（FIN）</span><span lang="en">Finance (FIN)</span></a>
+    <a href="act/index.html" class="nav-link"><span lang="zh">結帳/IFRS（ACT）</span><span lang="en">Closing / IFRS (ACT)</span></a>
+    <a href="rpt/index.html" class="nav-link"><span lang="zh">管理報表（RPT）</span><span lang="en">Management Reports (RPT)</span></a>
+    <div class="sidebar-heading"><span lang="zh">其他</span><span lang="en">Other</span></div>
+    <a href="sys/index.html" class="nav-link"><span lang="zh">系統管理</span><span lang="en">Admin Management</span></a>
+    <a href="apr/index.html" class="nav-link"><span lang="zh">簽核管理</span><span lang="en">Approval Management</span></a>
+    <a href="mobile/index.html" class="nav-link"><span lang="zh">手機版操作說明</span><span lang="en">Mobile guide</span></a>
+    <a href="tutor/index.html" class="nav-link"><span lang="zh">操作教學</span><span lang="en">Guided tutorials</span></a>
+    <div class="sidebar-heading"><span lang="zh">共用功能</span><span lang="en">Common features</span></div>
+    <a href="#approval" class="nav-link"><span lang="zh">線上簽核</span><span lang="en">Online approval</span></a>
+    <a href="#search" class="nav-link"><span lang="zh">查詢與匯出</span><span lang="en">Querying and exporting</span></a>
+    <a href="#manual-search" class="nav-link"><span lang="zh">搜尋手冊</span><span lang="en">Searching the manual</span></a>
+    <a href="#faq" class="nav-link"><span lang="zh">常見問題</span><span lang="en">FAQ</span></a>
+  </nav>
+
+  <!-- Content -->
+  <main class="content">
+
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-person-circle text-success me-2"></i><span lang="zh">系統使用手冊</span><span lang="en">System user manual</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">適用對象：一般使用者 &nbsp;|&nbsp; 版本 1.2 &nbsp;|&nbsp; 最後更新：2026-07</span><span lang="en">For: general users &nbsp;|&nbsp; Version 1.2 &nbsp;|&nbsp; Last updated: 2026-07</span></div>
+    </div>
+
+    <div class="toc-section">
+      <div class="fw-semibold mb-1 small"><span lang="zh">本頁章節</span><span lang="en">On this page</span></div>
+      <div class="row">
+        <div class="col-6"><a href="#overview"><span lang="zh">1. 系統概覽</span><span lang="en">1. System overview</span></a><br><a href="#login"><span lang="zh">2. 登入與登出</span><span lang="en">2. Logging in and out</span></a><br><a href="#layout"><span lang="zh">3. 畫面共用說明</span><span lang="en">3. Common screen elements</span></a><br><a href="#modules"><span lang="zh">4. 作業模組總覽</span><span lang="en">4. Module overview</span></a><br><a href="#flow"><span lang="zh">4-1. 跨模組流程全景</span><span lang="en">4-1. The cross-module process at a glance</span></a></div>
+        <div class="col-6"><a href="#approval"><span lang="zh">5. 線上簽核</span><span lang="en">5. Online approval</span></a><br><a href="#search"><span lang="zh">6. 查詢與匯出</span><span lang="en">6. Querying and exporting</span></a><br><a href="#help"><span lang="zh">7. 畫面即時說明</span><span lang="en">7. In-screen help</span></a><br><a href="#faq"><span lang="zh">8. 常見問題</span><span lang="en">8. FAQ</span></a></div>
+      </div>
+    </div>
+
+    <!-- 1 系統概覽 -->
+    <h2 id="overview"><i class="bi bi-grid-3x3-gap me-2 text-primary"></i><span lang="zh">1. 系統概覽</span><span lang="en">1. System overview</span></h2>
+    <p><span lang="zh">SmartFactory MES 是整合製造執行、採購、庫存、訂單、品質、財務與結帳管理的企業資訊系統，
+       透過統一的瀏覽器介面提供各部門使用，並支援多廠別、多語系與行動裝置作業。
+       各模組間單據自動連動：訂單驅動 MRP 生產與採購、進出貨自動產生應收付發票、
+       所有庫存與帳務異動受會計期間鎖管制，確保帳實一致。</span><span lang="en">SmartFactory MES is an enterprise system that brings manufacturing execution, purchasing, inventory, orders, quality, finance and closing together.
+       Every department uses it through the same browser interface, and it supports multiple plants, multiple languages and mobile devices.
+       Documents flow between modules automatically: orders drive MRP for production and purchasing, receipts and shipments create AP and AR invoices,
+       and every stock and accounting movement is subject to the accounting period lock, so the books and the physical stock stay in step.</span></p>
+    <table class="table table-sm screen-table border">
+      <thead><tr><th><span lang="zh">模組</span><span lang="en">Module</span></th><th><span lang="zh">代號</span><span lang="en">Code</span></th><th><span lang="zh">主要功能</span><span lang="en">Main features</span></th></tr></thead>
+      <tbody>
+        <tr><td><a href="bas/index.html"><span lang="zh">基本資料管理</span><span lang="en">Master Data</span></a></td><td><span class="badge bg-primary badge-module">BAS</span></td><td><span lang="zh">公司/產品/倉庫/工作中心/幣別等共用主檔</span><span lang="en">Shared master data: companies, products, warehouses, work centers, currencies and more</span></td></tr>
+        <tr><td><a href="mfg/index.html"><span lang="zh">製造執行</span><span lang="en">Manufacturing Execution</span></a></td><td><span class="badge bg-warning text-dark badge-module">MFG</span></td><td><span lang="zh">途程、MRP、工單、排程派工、報工、完工入庫、生產分析</span><span lang="en">Routings, MRP, work orders, scheduling and dispatch, production reporting, completion receipt and production analysis</span></td></tr>
+        <tr><td><a href="pur/index.html"><span lang="zh">採購管理</span><span lang="en">Purchasing</span></a></td><td><span class="badge bg-primary badge-module">PUR</span></td><td><span lang="zh">請購、採購、進貨、退貨、供應商評核、採購分析</span><span lang="en">Requisitions, purchase orders, receipts, returns, supplier evaluation and purchasing analysis</span></td></tr>
+        <tr><td><a href="osp/index.html"><span lang="zh">委外管理</span><span lang="en">Outsourcing</span></a></td><td><span class="badge bg-secondary badge-module">OSP</span></td><td><span lang="zh">委外報價、委外採購、發退料、委外收貨（超耗扣款）、重工、進度追蹤</span><span lang="en">Outsource quotation, outsource purchasing, material issue and return, outsource receipt (scrap penalty), rework and progress tracking</span></td></tr>
+        <tr><td><a href="ord/index.html"><span lang="zh">訂單管理</span><span lang="en">Order Management</span></a></td><td><span class="badge bg-info badge-module">ORD</span></td><td><span lang="zh">銷售訂單、出貨、銷退、內部訂單、銷售分析</span><span lang="en">Sales orders, shipments, sales returns, internal orders and sales analysis</span></td></tr>
+        <tr><td><a href="qcr/index.html"><span lang="zh">品質管理</span><span lang="en">Quality Management</span></a></td><td><span class="badge bg-danger badge-module">QCR</span></td><td><span lang="zh">IQC/IPQC/FQC 檢驗、NCR 處置、儀器校正、SPC</span><span lang="en">IQC/IPQC/FQC inspection, NCR disposition, instrument calibration, SPC</span></td></tr>
+        <tr><td><a href="inv/index.html"><span lang="zh">庫存管理</span><span lang="en">Inventory</span></a></td><td><span class="badge bg-success badge-module">INV</span></td><td><span lang="zh">庫存單據、倉庫作業、盤點、調撥、庫存分析</span><span lang="en">Inventory documents, warehouse operations, counting, transfers and inventory analysis</span></td></tr>
+        <tr><td><a href="fin/index.html"><span lang="zh">財務管理</span><span lang="en">Finance</span></a></td><td><span class="badge bg-dark badge-module">FIN</span></td><td><span lang="zh">應收付發票、收付款核銷、銀行帳戶、帳齡</span><span lang="en">AR and AP invoices, payment and receipt allocation, bank accounts and aging</span></td></tr>
+        <tr><td><a href="act/index.html"><span lang="zh">結帳/IFRS</span><span lang="en">Period Close / IFRS</span></a></td><td><span class="badge bg-secondary badge-module">ACT</span></td><td><span lang="zh">會計期間、日記帳、月結、NRV/ECL/匯率重評</span><span lang="en">Accounting periods, the journal, month-end close and NRV / ECL / revaluation</span></td></tr>
+        <tr><td><a href="rpt/index.html"><span lang="zh">管理報表</span><span lang="en">Management Reports</span></a></td><td><span class="badge bg-secondary badge-module">RPT</span></td><td><span lang="zh">儀表板、損益/資產負債、毛利與邊際貢獻分析</span><span lang="en">Dashboard, income statement and balance sheet, margin and contribution analysis</span></td></tr>
+        <tr><td><a href="apr/index.html"><span lang="zh">簽核管理</span><span lang="en">Approval Management</span></a></td><td><span class="badge bg-secondary badge-module">APR</span></td><td><span lang="zh">待我簽核、所有簽核記錄、簽核模板與作業類型簽核設定</span><span lang="en">My pending approvals, all approval requests, approval templates and document approval settings</span></td></tr>
+        <tr><td><a href="sys/index.html"><span lang="zh">系統管理</span><span lang="en">System Administration</span></a></td><td><span class="badge bg-secondary badge-module">SYS</span></td><td><span lang="zh">使用者、角色、組織架構、廠別、功能與手機權限、代碼維護、稽核日誌、系統參數、個人設定</span><span lang="en">Users, roles, organization structure, plants, desktop and mobile permissions, code maintenance, the audit log, system parameters and personal settings</span></td></tr>
+      </tbody>
+    </table>
+
+    <!-- 2 登入 -->
+    <h2 id="login"><i class="bi bi-box-arrow-in-right me-2 text-primary"></i><span lang="zh">2. 登入與登出</span><span lang="en">2. Logging in and out</span></h2>
+    <h3><span lang="zh">2-1 登入</span><span lang="en">2-1 Logging in</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">開啟瀏覽器，輸入系統網址（由系統管理者提供）。</span><span lang="en">Open a browser and go to the system URL (your administrator will give it to you).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">輸入帳號（Email）與密碼，點擊「登入」。</span><span lang="en">Enter your username (email) and password and click "Log in".</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">若帳號有多個廠別，請於下拉選單選擇要使用的廠別，再進入系統。</span><span lang="en">If the account covers more than one plant, choose the plant you want from the dropdown before entering the system.</span></div></div>
+    <h3><span lang="zh">2-2 登出</span><span lang="en">2-2 Logging out</span></h3>
+    <p><span lang="zh">點擊右上角使用者名稱，選擇「登出」。建議在結束工作或離開座位前務必登出。</span><span lang="en">Click your name at the top right and choose "Log out". Always log out when you finish work or leave your desk.</span></p>
+    <h3><span lang="zh">2-3 兩階段驗證（2FA）</span><span lang="en">2-3 Two-factor authentication (2FA)</span></h3>
+    <p><span lang="zh">若帳號已啟用兩階段驗證（管理員角色為強制啟用），輸入帳密驗證成功後會先進入「輸入驗證碼」步驟，需輸入 Authenticator App 顯示的驗證碼才完成登入；手機版登入流程也支援同一套 2FA 步驟，詳見</span><span lang="en">If two-factor authentication is enabled on the account (it is compulsory for administrator roles), a correct username and password take you to the verification step, and the code from your authenticator app has to be entered before you are logged in; the mobile login uses the same 2FA step — see </span><a href="mobile/index.html#login"><span lang="zh">手機版操作說明</span><span lang="en">Mobile guide</span></a>。</p>
+
+    <!-- 3 畫面說明 -->
+    <h2 id="layout"><i class="bi bi-layout-sidebar me-2 text-primary"></i><span lang="zh">3. 畫面共用說明</span><span lang="en">3. Common screen elements</span></h2>
+    <h3><span lang="zh">3-1 畫面架構</span><span lang="en">3-1 Screen layout</span></h3>
+    <ul>
+      <li><strong><span lang="zh">左側選單</span><span lang="en">The left-hand menu</span></strong><span lang="zh">：依模組分組，點選展開子選單進入各功能畫面。</span><span lang="en">: grouped by module; click to expand a submenu and open a screen.</span></li>
+      <li><strong><span lang="zh">頂部導覽列</span><span lang="en">The top navigation bar</span></strong><span lang="zh">：語系切換（中文 / English）、說明文件、使用者資訊。</span><span lang="en">: language switch (Chinese / English), documentation and user information.</span></li>
+      <li><strong><span lang="zh">主內容區</span><span lang="en">Main content area</span></strong><span lang="zh">：列表、查詢、新增/編輯表單。</span><span lang="en">: the list, the query and the add/edit form.</span></li>
+    </ul>
+    <h3><span lang="zh">3-2 列表畫面</span><span lang="en">3-2 List screens</span></h3>
+    <ul>
+      <li><span lang="zh">上方為</span><span lang="en">Above is </span><strong><span lang="zh">查詢條件列</span><span lang="en">The query bar</span></strong><span lang="zh">，設定條件後點「查詢」。</span><span lang="en">, set your criteria and click "Search".</span></li>
+      <li><span lang="zh">每頁筆數可於查詢條件列右側下拉調整（10 / 20 / 50 / 100 筆），預設 20 筆。</span><span lang="en">The number of rows per page can be changed with the dropdown at the right of the query bar (10 / 20 / 50 / 100); the default is 20.</span></li>
+      <li><span lang="zh">表格下方固定顯示分頁列：左邊是「第 X / Y 頁，共 N 筆」，右邊是頁碼。只有一頁時仍會顯示筆數。</span><span lang="en">A pager sits below every table: the left side shows "Page X of Y, N records" and the right side the page numbers. The record count is shown even when there is only one page.</span></li>
+      <li><span lang="zh">列表最右邊的「操作」欄，每個動作都是圖示加文字（例如 <i class="bi bi-pencil"></i> 編輯、<i class="bi bi-trash"></i> 刪除），不需要靠圖示猜。</span><span lang="en">In the "Actions" column on the right of each row, every action shows an icon together with its label (for example <i class="bi bi-pencil"></i> Edit, <i class="bi bi-trash"></i> Delete), so you never have to guess from the icon alone.</span></li>
+      <li><span lang="zh">點擊欄標題可</span><span lang="en">Click a column header to </span><strong><span lang="zh">排序</span><span lang="en">Sort</span></strong><span lang="zh">；再次點擊切換升/降序。</span><span lang="en">; click again to switch between ascending and descending.</span></li>
+      <li><span lang="zh">報表畫面的明細表也有分頁。分頁只影響明細列，上方的統計卡與合計一律是<strong>整筆查詢結果</strong>的數字，不會只算當頁。</span><span lang="en">Report screens paginate their detail tables too. Paging affects only the detail rows — the summary cards and totals above always cover the <strong>whole result set</strong>, not just the current page.</span></li>
+      <li><span lang="zh">金額與數量的小數位數跟著該筆的<strong>幣別</strong>與<strong>單位</strong>走，所以同一欄在不同列可能位數不同；比率、天數、工時則固定位數。</span><span lang="en">Decimal places for amounts and quantities follow each row's <strong>currency</strong> and <strong>unit of measure</strong>, so the same column may show different precision on different rows; rates, day counts and hours use a fixed precision.</span></li>
+    </ul>
+    <h3><span lang="zh">3-3 側欄表單（Side Panel）</span><span lang="en">3-3 Side panel forms</span></h3>
+    <p><span lang="zh">新增或編輯時，畫面右側會滑出側欄。填寫完成後點「儲存」；若需關閉可點右上角 ✕ 或按</span><span lang="en">Adding or editing slides a panel out on the right. Fill it in and click "Save"; to close it, click the ✕ at the top right or press</span> <kbd>Esc</kbd>。</p>
+    <h3><span lang="zh">3-4 線上簽核</span><span lang="en">3-4 Online approval</span></h3>
+    <p><span lang="zh">有簽核流程的單據，儲存後狀態為「草稿」，需點「送審」進入簽核流程，核准後才可進行後續作業。</span><span lang="en">A document with an approval flow is saved as a draft; click "Submit" to send it for approval, and only once it is approved can the next step be taken.</span></p>
+
+    <!-- 4 模組總覽 -->
+    <h2 id="modules"><i class="bi bi-collection me-2 text-primary"></i><span lang="zh">4. 作業模組總覽</span><span lang="en">4. Module overview</span></h2>
+    <p><span lang="zh">各模組的範圍說明、核心流程與畫面操作說明，請點入該模組手冊；每個畫面亦有獨立的操作說明頁。</span><span lang="en">For a module's scope, core flow and screen instructions, open its manual; every screen also has a page of its own.</span></p>
+
+    <h3 id="flow"><span lang="zh">4-1 跨模組作業流程全景</span><span lang="en">4-1 The cross-module process at a glance</span></h3>
+    <p class="small text-muted mb-2"><span lang="zh">下圖以四大循環呈現全系統作業的先後順序，方塊顏色代表所屬模組，點擊可開啟該畫面的操作說明。各模組手冊內另有該模組視角的詳細流程圖。</span><span lang="en">The diagram below sets out the order of work across the system in four cycles; the colour of each box shows the module it belongs to, and clicking one opens the instructions for that screen. Each module manual has a more detailed flow chart from its own point of view.</span></p>
+    <div class="flow">
+      <div class="flow-legend">
+        <span class="flow-legend-item m-bas"><i class="flow-dot"></i><span lang="zh">BAS 基本資料</span><span lang="en">BAS Master Data</span></span>
+        <span class="flow-legend-item m-mfg"><i class="flow-dot"></i><span lang="zh">MFG 製造</span><span lang="en">MFG Manufacturing</span></span>
+        <span class="flow-legend-item m-pur"><i class="flow-dot"></i><span lang="zh">PUR 採購</span><span lang="en">PUR Purchasing</span></span>
+        <span class="flow-legend-item m-ord"><i class="flow-dot"></i><span lang="zh">ORD 訂單</span><span lang="en">ORD Orders</span></span>
+        <span class="flow-legend-item m-osp"><i class="flow-dot"></i><span lang="zh">OSP 委外</span><span lang="en">OSP Outsource</span></span>
+        <span class="flow-legend-item m-qcr"><i class="flow-dot"></i><span lang="zh">QCR 品質</span><span lang="en">QCR Quality</span></span>
+        <span class="flow-legend-item m-inv"><i class="flow-dot"></i><span lang="zh">INV 庫存</span><span lang="en">INV Inventory</span></span>
+        <span class="flow-legend-item m-fin"><i class="flow-dot"></i><span lang="zh">FIN 財務</span><span lang="en">FIN Finance</span></span>
+        <span class="flow-legend-item m-act"><i class="flow-dot"></i><span lang="zh">ACT 結帳</span><span lang="en">ACT Closing</span></span>
+        <span class="flow-legend-item m-rpt"><i class="flow-dot"></i><span lang="zh">RPT 報表</span><span lang="en">RPT Reports</span></span>
+      </div>
+
+      <div class="flow-row" id="flow-main-setup-prerequisites">
+        <div class="flow-row-label"><span lang="zh">建置前置</span><span lang="en">Setup prerequisites</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-bas" href="bas/index.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">主檔建置（幣別／單位／產品／倉庫／廠商）</span><span lang="en">Setting up the master data (currency, unit, product, warehouse, supplier)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg" href="mfg/routing.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">途程／BOM</span><span lang="en">Routing / BOM</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act" href="act/accounting-period.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">會計期間開帳</span><span lang="en">Opening the accounting period</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-main-order-to-cash">
+        <div class="flow-row-label"><span lang="zh">接單到收款</span><span lang="en">From order to cash</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-ord" href="ord/sales-order.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg" href="mfg/mrp-run.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">MRP 展開</span><span lang="en">MRP run</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-ord" href="ord/goods-shipment.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="inv/warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">揀貨出庫</span><span lang="en">Picking and issue</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="fin/ar-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應收發票</span><span lang="en">AR invoice</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="fin/ar-receipt.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">收款核銷</span><span lang="en">Receipt allocation</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-main-requisition-to-payment">
+        <div class="flow-row-label"><span lang="zh">請購到付款</span><span lang="en">From requisition to payment</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-pur" href="pur/purchase-request.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-pur" href="pur/purchase-order.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-pur" href="pur/goods-receipt.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="qcr/inspection-order.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">IQC 檢驗</span><span lang="en">IQC inspection</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="inv/warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">入庫上架</span><span lang="en">Put-Away</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="fin/ap-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應付發票</span><span lang="en">AP Invoice</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="fin/ap-payment.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">付款核銷</span><span lang="en">Payment allocation</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-main-plan-to-production">
+        <div class="flow-row-label"><span lang="zh">計畫到生產</span><span lang="en">From plan to production</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-mfg" href="mfg/work-order.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">工單</span><span lang="en">Work order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg" href="mfg/schedule.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">排程派工</span><span lang="en">Scheduling and dispatch</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="inv/material-staging.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">備料發料</span><span lang="en">Staging and issue</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg" href="mfg/dispatch.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">現場報工</span><span lang="en">Shop-floor reporting</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="qcr/inspection-order.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">FQC 完工檢驗</span><span lang="en">FQC final inspection</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg" href="mfg/production-completion.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg" href="mfg/work-order-variance.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">工單成本</span><span lang="en">Work order cost</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-main-outsource-processing">
+        <div class="flow-row-label"><span lang="zh">委外加工</span><span lang="en">Outsource processing</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-mfg" href="mfg/routing.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">工序設為委外</span><span lang="en">The operation is set as outsourced</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp" href="osp/outsource-purchase-order.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp" href="osp/outsource-material.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外發料</span><span lang="en">Issue to Outsource</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-osp" href="osp/outsource-receipt.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="fin/ap-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">委外應付發票</span><span lang="en">Outsource AP invoice</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-main-period-end-closing">
+        <div class="flow-row-label"><span lang="zh">期末結帳</span><span lang="en">Period-end closing</span></div>
+        <div class="flow-steps">
+          <span class="flow-node m-ext evt"><span class="flow-mod"><span lang="zh">全模組</span><span lang="en">All modules</span></span><span class="flow-name"><span lang="zh">單據過帳</span><span lang="en">Posting the document</span></span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act" href="act/journal-entry.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">日記帳</span><span lang="en">Journal</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act" href="act/month-end.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">月結檢查</span><span lang="en">Month-end checks</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act" href="act/accounting-period.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">期間關帳</span><span lang="en">Closing the period</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-rpt" href="rpt/profit-loss.html"><span class="flow-mod">RPT</span><span class="flow-name"><span lang="zh">財務／管理報表</span><span lang="en">Financial and management reports</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-foot">
+        <i class="bi bi-info-circle me-1"></i><span lang="zh">各模組手冊的「作業流程圖」章節會標出該模組與其他模組的銜接點（虛線外框＝其他模組作業），並以黃底列標示「簡化模式」下的替代路徑（庫存／製造簡化模式由系統參數切換）。</span><span lang="en">The "Process flow chart" section of each module manual marks where the module joins the others (a dashed outline = a step in another module) and shows the alternative path under simplified mode on a yellow background (simplified inventory and manufacturing modes are switched by system parameters).</span>
+      </div>
+    </div>
+
+    <h3 id="module-list"><span lang="zh">4-2 模組手冊入口</span><span lang="en">4-2 Module manuals</span></h3>
+    <div class="row g-3 mb-2">
+      <div class="col-md-6"><a href="bas/index.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-archive me-1 text-primary"></i><span lang="zh">基本資料管理（BAS）</span><span lang="en">Master Data Management (BAS)</span></h6>
+        <div class="text-muted small"><span lang="zh">全系統共用主檔：公司/廠商、產品、倉庫、工作中心、幣別、稅別、班別與單號規則。上線前優先完成設定。</span><span lang="en">The master data shared by the whole system: companies and suppliers, products, warehouses, work centers, currencies, tax codes, shifts and document numbering rules. Set these up first, before going live.</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="mfg/index.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-gear me-1 text-primary"></i><span lang="zh">製造執行（MFG）</span><span lang="en">Manufacturing (MFG)</span></h6>
+        <div class="text-muted small"><span lang="zh">途程/BOM、MRP 展開、生產排程與派工、現場報工、完工入庫與工單成本，及稼動率/OEE 等生產分析。</span><span lang="en">Routings and BOMs, the MRP run, production scheduling and dispatch, shop-floor reporting, completion receipt and work order cost, plus production analysis such as utilisation and OEE.</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="pur/index.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-cart3 me-1 text-primary"></i><span lang="zh">採購管理（PUR）</span><span lang="en">Purchasing (PUR)</span></h6>
+        <div class="text-muted small"><span lang="zh">請購 → 採購 → 進貨（IQC）→ 退貨；交期跟催、供應商評分卡與採購價格分析。</span><span lang="en">Requisition → purchase order → goods receipt (IQC) → return; delivery chasing, the supplier scorecard and purchase price analysis.</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="osp/index.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-diagram-3 me-1 text-primary"></i><span lang="zh">委外管理（OSP）</span><span lang="en">Outsource Management (OSP)</span></h6>
+        <div class="text-muted small"><span lang="zh">委外報價與委外採購、發退料出廠、委外收貨與超耗扣款、委外重工與進度追蹤；收貨自動產生委外應付發票。</span><span lang="en">Outsource quotation and purchasing, issuing and returning material to the subcontractor, outsource receipt with scrap penalty, outsource rework and progress tracking; a receipt creates the outsource AP invoice automatically.</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="ord/index.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-cart-check me-1 text-primary"></i><span lang="zh">訂單管理（ORD）</span><span lang="en">Order Management (ORD)</span></h6>
+        <div class="text-muted small"><span lang="zh">銷售/內部訂單、出貨、銷退；訂單驅動 MRP；銷售排名/趨勢/交期達成率等分析。</span><span lang="en">Sales and internal orders, shipments and sales returns; orders drive MRP; analysis such as sales ranking, trend and delivery attainment.</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="qcr/index.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-shield-check me-1 text-primary"></i><span lang="zh">品質管理（QCR）</span><span lang="en">Quality Control (QCR)</span></h6>
+        <div class="text-muted small"><span lang="zh">IQC/IPQC/FQC 三段檢驗（MIL-STD-1916 抽樣）、NCR 不合格品閉環處置、儀器校正與 SPC 製程能力。</span><span lang="en">The three inspection stages IQC/IPQC/FQC (MIL-STD-1916 sampling), closed-loop NCR disposition, instrument calibration and SPC process capability.</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="inv/index.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-boxes me-1 text-primary"></i><span lang="zh">庫存管理（INV）</span><span lang="en">Inventory Management (INV)</span></h6>
+        <div class="text-muted small"><span lang="zh">庫存單據與倉庫作業（上架/揀貨）、盤點、同廠/跨廠調撥、委外/重工發退料與庫存健康度分析。</span><span lang="en">Inventory documents and warehouse operations (put-away and picking), stock counting, in-plant and cross-plant transfers, outsource and rework material issue and return, and inventory health analysis.</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="fin/index.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-bank me-1 text-primary"></i><span lang="zh">財務管理（FIN）</span><span lang="en">Finance (FIN)</span></h6>
+        <div class="text-muted small"><span lang="zh">進出貨自動產生應收付發票、付款/收款核銷、銀行帳戶餘額與應收付帳齡分析；多幣別匯兌損益。</span><span lang="en">Receipts and shipments create AP and AR invoices automatically, with payment and receipt allocation, bank account balances and AR/AP aging analysis, plus multi-currency exchange gains and losses.</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="act/index.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-calendar-check me-1 text-primary"></i><span lang="zh">結帳/IFRS（ACT）</span><span lang="en">Closing / IFRS (ACT)</span></h6>
+        <div class="text-muted small"><span lang="zh">會計期間鎖、日記帳、月結檢查清單、部門實際費用與 NRV/ECL/匯率重評等 IFRS 評估。</span><span lang="en">The accounting period lock, the journal, the month-end checklist, departmental actual costs and the IFRS assessments (NRV, ECL and revaluation).</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="rpt/index.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-bar-chart-fill me-1 text-primary"></i><span lang="zh">管理報表（RPT）</span><span lang="en">Management Reports (RPT)</span></h6>
+        <div class="text-muted small"><span lang="zh">管理儀表板、損益表/資產負債表、多維度毛利與邊際貢獻分析、委外對帳報表。</span><span lang="en">The management dashboard, income statement and balance sheet, multi-dimensional margin and contribution analysis, and the outsource reconciliation report.</span></div></div></div></a></div>
+    </div>
+
+    <div class="tip-box">
+      <i class="bi bi-play-btn me-1 text-primary"></i><strong><span lang="zh">想照著流程走一遍？</span><span lang="en">Want to be walked through a flow?</span></strong>
+      <span lang="zh">上面每一條流程都有對應的</span><span lang="en">Every flow above has a matching </span><a href="tutor/index.html"><span lang="zh">操作教學</span><span lang="en">guided tutorial</span></a><span lang="zh">，會逐畫面、逐步驟帶您走完，並可開啟語音朗讀。教學是以截圖模擬演示，不會動到真實資料。</span><span lang="en">, which takes you screen by screen and step by step through it, with optional voice narration. The tutorials are simulated with screenshots and never touch real data.</span>
+    </div>
+
+    <!-- 5 共用功能 -->
+    <h2 id="approval"><i class="bi bi-check2-circle me-2 text-primary"></i><span lang="zh">5. 線上簽核</span><span lang="en">5. Online approval</span></h2>
+    <p><span lang="zh">支援多關卡簽核流程。送審後單據進入「待審核」狀態，相關主管會收到通知。</span><span lang="en">Multi-step approval flows are supported. Once submitted, the document moves to "pending approval" and the managers concerned are notified.</span></p>
+    <table class="table table-sm screen-table border">
+      <thead><tr><th><span lang="zh">操作</span><span lang="en">Actions</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th><th><span lang="zh">適用狀態</span><span lang="en">Applies when</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">送審</span><span lang="en">Submit</span></td><td><span lang="zh">將單據送出等待簽核</span><span lang="en">Submits the document for approval</span></td><td><span lang="zh">草稿 / 退回</span><span lang="en">Draft / Returned</span></td></tr>
+        <tr><td><span lang="zh">撤回</span><span lang="en">Withdraw</span></td><td><span lang="zh">取消送審，回到草稿</span><span lang="en">Withdraw the submission and go back to draft</span></td><td><span lang="zh">待審核</span><span lang="en">Pending approval</span></td></tr>
+        <tr><td><span lang="zh">核准</span><span lang="en">Approve</span></td><td><span lang="zh">主管簽核通過</span><span lang="en">Approved by the manager</span></td><td><span lang="zh">待審核（簽核人員）</span><span lang="en">Pending approval (approver)</span></td></tr>
+        <tr><td><span lang="zh">退回</span><span lang="en">Return</span></td><td><span lang="zh">退請修改，回到退回</span><span lang="en">Send it back for amendment, returning it to "returned"</span></td><td><span lang="zh">待審核（簽核人員）</span><span lang="en">Pending approval (approver)</span></td></tr>
+      </tbody>
+    </table>
+    <p><span lang="zh">「待我簽核」清單位於左側選單「簽核管理 &gt; 待我簽核」，點擊單號可直接檢視詳情。</span><span lang="en">The "Pending my approval" list is under "Approvals &gt; Pending my approval" in the left-hand menu; click a document number to see the detail.</span></p>
+    <h3><span lang="zh">5-1 代理人設定（休假委派）</span><span lang="en">5-1 Delegation (cover during leave)</span></h3>
+    <p><span lang="zh">在「待我簽核」畫面右上角點「代理人設定」，可自行設定休假期間由誰代理簽核，不需管理員協助：</span><span lang="en">Click "Delegation" at the top right of the "Pending my approval" screen to set who approves for you while you are away — no administrator help needed:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">選擇代理人、開始日期、結束日期，可填寫原因（選填），儲存。</span><span lang="en">Choose the delegate, the start date and the end date, add a reason if you want, and save.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">設定啟用（勾選）且日期涵蓋今天時立即生效——儲存當下即把「自己既有的待簽單」全部改派給代理人；新產生的簽核單之後也會直接派給代理人，直到設定停用或結束日期已過。</span><span lang="en">It takes effect immediately when it is ticked as active and today falls in the date range — everything already pending in your name is reassigned to your delegate the moment you save, and new approvals go straight to them too, until the setting is switched off or the end date passes.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">清單下方可暫停（不刪除，方便之後重新啟用）或刪除既有設定；狀態欄顯示「生效中／已排程／已停用／已過期」。</span><span lang="en">Below the list you can pause an existing setting (without deleting it, so it can be switched on again later) or delete it; the status column shows active, scheduled, paused or expired.</span></div></div>
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">只能設定「誰代理我」，無法代別人設定；若自己目前正被別人設為代理人，畫面上方會提示「目前代理」的清單。</span><span lang="en">You can only say who covers for you, not set it up for anyone else; if someone has named you as their delegate, a "currently delegating for" list appears at the top of the screen.</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">6. 查詢與匯出</span><span lang="en">6. Querying and exporting</span></h2>
+    <ul>
+      <li><span lang="zh">各列表畫面均支援多條件查詢（日期範圍、關鍵字、狀態等）。</span><span lang="en">Every list screen supports multiple query criteria (date range, keyword, status and so on).</span></li>
+      <li><span lang="zh">有「匯出 Excel」按鈕的畫面可將查詢結果下載為 xlsx 格式。</span><span lang="en">Screens with an "Export Excel" button can download the query result as an xlsx file.</span></li>
+      <li><span lang="zh">列印類報表點「列印」按鈕，系統開啟新視窗供預覽 / 儲存 PDF。</span><span lang="en">For printable reports, click "Print" and a new window opens where you can preview or save a PDF.</span></li>
+      <li><span lang="zh">作業單據的列印單上，品號、往來廠商／客戶、單位、幣別、稅別、倉庫、儲位、工作中心、機台、科目等代碼一律連同名稱印出（例如「USD 美元」）；名稱取自基本資料，查不到時只印代碼。</span><span lang="en">On document printouts, codes such as product, supplier/customer, unit, currency, tax, warehouse, location, work center, machine and account are always printed together with their names (for example "USD US Dollar"); names come from the master data, and only the code is printed when no name is found.</span></li>
+      <li><span lang="zh">列印單底部簽核區：「製作」印建單人（單據沒有建單人時印送審人）；「審核／核准」依最近一次送審的簽核紀錄——只有一位核准者時印在「核准」，多位時最後一位印「核准」、其餘依序印「審核」，簽核中則已核准者印「審核」、「核准」留白；代理簽核印「代理人（代 原簽核人）」。沒有簽核紀錄的格子留白供手簽。「日期」印列印當下的時間，採目前廠別的時區。</span><span lang="en">The sign-off area at the bottom of a printout: "Prepared" shows who created the document (or who submitted it for approval when the document has no creator). "Reviewed" and "Approved" come from the latest approval round — a single approver goes in "Approved"; with several, the last goes in "Approved" and the others in "Reviewed", in order; while approval is still in progress, those who have approved go in "Reviewed" and "Approved" stays blank; a delegate shows as "delegate (for original approver)". Boxes with no approval record are left blank for a hand signature. "Date" is the time of printing, in the current plant's time zone.</span></li>
+    </ul>
+
+    <h2 id="help"><i class="bi bi-question-circle me-2 text-primary"></i><span lang="zh">7. 畫面即時說明</span><span lang="en">7. In-screen help</span></h2>
+    <p><span lang="zh">在系統任一功能畫面，點擊頂部導覽列的</span><span lang="en">On any screen in the system, click the</span> <i class="bi bi-question-circle"></i> <span lang="zh">圖示，
+       即可在新分頁開啟</span><span lang="en">icon
+       to open, in a new tab, </span><strong><span lang="zh">該畫面</span><span lang="en">that screen</span></strong><span lang="zh">的操作說明（即本手冊對應頁面）。</span><span lang="en"> the instructions for that screen (the matching page of this manual).</span></p>
+
+    <h2 id="manual-search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">8. 搜尋手冊</span><span lang="en">8. Searching the manual</span></h2>
+    <ul>
+      <li><span lang="zh">手冊每一頁的頂部都有搜尋框，輸入關鍵字即會列出符合的章節；點擊結果會直接跳到該段落，並把關鍵字標示出來。</span><span lang="en">Every page of the manual has a search box at the top. Type a keyword and the matching sections are listed; choosing a result jumps straight to that section with the keyword highlighted.</span></li>
+      <li><span lang="zh">鍵盤操作：按 <kbd>/</kbd> 跳到搜尋框，<kbd>↑</kbd> <kbd>↓</kbd> 選擇結果，<kbd>Enter</kbd> 開啟，<kbd>Esc</kbd> 關閉。</span><span lang="en">Keyboard: press <kbd>/</kbd> to jump to the search box, <kbd>↑</kbd> <kbd>↓</kbd> to move through the results, <kbd>Enter</kbd> to open and <kbd>Esc</kbd> to close.</span></li>
+      <li><span lang="zh">搜尋的範圍是目前顯示的語言：切換成 English 之後，請以英文關鍵字搜尋。</span><span lang="en">Search covers the language currently displayed: after switching to 中文, search with Chinese keywords.</span></li>
+    </ul>
+
+    <h2 id="faq"><i class="bi bi-patch-question me-2 text-primary"></i><span lang="zh">9. 常見問題</span><span lang="en">9. FAQ</span></h2>
+    <dl>
+      <dt><span lang="zh">Q：我送審後找不到單據了？</span><span lang="en">Q: I submitted a document for approval and now I cannot find it. Where is it?</span></dt>
+      <dd class="mb-2"><span lang="zh">A：送審後單據仍在列表中，以「待審核」狀態顯示。可在查詢條件中選狀態「待審核」查詢。</span><span lang="en">A: A submitted document is still in the list, with the status "pending approval". Select that status in the query criteria to find it.</span></dd>
+      <dt><span lang="zh">Q：儲存後畫面出現紅色錯誤訊息？</span><span lang="en">Q: A red error message appears after I save. What does it mean?</span></dt>
+      <dd class="mb-2"><span lang="zh">A：請依提示訊息修正必填欄位或格式錯誤後重新儲存。</span><span lang="en">A: Fix the required fields or format errors named in the message and save again.</span></dd>
+      <dt><span lang="zh">Q：出貨時顯示「庫存不足」？</span><span lang="en">Q: Shipping says "not enough stock". Why?</span></dt>
+      <dd class="mb-2"><span lang="zh">A：請至「庫存餘額查詢」確認實際餘量，並確認是否有備料單或其他預留佔用了庫存。</span><span lang="en">A: Check the real balance under "Stock Balance Enquiry" and see whether a staging order or another reservation is holding the stock.</span></dd>
+      <dt><span lang="zh">Q：過帳時顯示「期間已關帳」？</span><span lang="en">Q: Posting says "the period is closed". What now?</span></dt>
+      <dd class="mb-2"><span lang="zh">A：異動日期所屬會計期間已由財務關帳。請確認異動日期，或洽財務人員處理。</span><span lang="en">A: The accounting period the transaction date falls in has been closed by finance. Check the date, or ask finance to help.</span></dd>
+      <dt><span lang="zh">Q：如何切換語言？</span><span lang="en">Q: How do I change the language?</span></dt>
+      <dd class="mb-2"><span lang="zh">A：點擊右上角語言圖示，選擇「繁體中文」或「English」即可切換。</span><span lang="en">A: Click the language icon at the top right and choose 繁體中文 or English.</span></dd>
+    </dl>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 v1.2 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual v1.2 &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+
+  </main>
+</div>
+</body>
+</html>

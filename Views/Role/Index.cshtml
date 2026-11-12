@@ -1,0 +1,292 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Models.ApplicationRole>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.SharedResource> SL
+
+@using SmartFactory.MES.Services
+@inject IPermissionService PermissionService
+@{
+    ViewData["Title"] = Localizer["RoleManagement"];
+    var canCreate = await PermissionService.CanCreate("RoleManagement");
+    var canUpdate = await PermissionService.CanUpdate("RoleManagement");
+    var canDelete = await PermissionService.CanDelete("RoleManagement");
+    bool hasSearched = ViewBag.Searched == true;
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-person-badge"></i> @Localizer["RoleManagement"]</h1>
+        @if (canCreate)
+        {
+            <button type="button" class="btn btn-primary"
+                    data-action="openPanel" data-url="@Url.Action("Create", "Role")" data-label="@Localizer["AddRole"]">
+                <i class="bi bi-plus-lg"></i> @Localizer["AddRole"]
+            </button>
+        }
+    </div>
+
+    <!-- 搜尋與分頁設定區塊 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-3 align-items-center">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-7">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" name="searchTerm" class="form-control border-end-0"
+                               placeholder="@Localizer["SearchPlaceholder"]" value="@ViewBag.SearchTerm" />
+                        @if (!string.IsNullOrEmpty(ViewBag.SearchTerm))
+                        {
+                            <a asp-action="Index" asp-route-pageSize="@ViewBag.CurrentPageSize" asp-route-searched="true"
+                               class="btn btn-outline-secondary border-start-0 border-end-0 bg-white text-muted">
+                                <i class="bi bi-x-circle"></i>
+                            </a>
+                        }
+                        <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                        @if (await PermissionService.CanPrint("RoleManagement"))
+                        {
+                            <button type="button" class="btn btn-outline-info ms-2" data-action="printPage">
+                                <i class="bi bi-printer"></i> @Localizer["Print"]
+                            </button>
+                            <div class="btn-group ms-1">
+                                <a asp-action="Export" asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-format="xlsx"
+                                   class="btn btn-outline-success">
+                                    <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                                </a>
+                                <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown"></button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-action="Export" asp-route-searchTerm="@ViewBag.SearchTerm"
+                                           asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-format="csv">
+                                        <i class="bi bi-filetype-csv me-2"></i>@Localizer["ExportCsv"]</a></li>
+                                    <li><a class="dropdown-item" asp-action="Export" asp-route-searchTerm="@ViewBag.SearchTerm"
+                                           asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-format="json">
+                                        <i class="bi bi-filetype-json me-2"></i>@Localizer["ExportJson"]</a></li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="card shadow-sm">
+            <div class="card-body text-center py-5 text-muted">
+                <i class="bi bi-search fs-1 d-block mb-3 opacity-25"></i>
+                <p class="mb-0">@Localizer["SearchFirst"]</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">
+                                <a class="text-dark text-decoration-none" asp-action="Index"
+                                   asp-route-sortOrder="@ViewBag.NameSort"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true">
+                                    @Localizer["RoleName"]
+                                    @if (string.IsNullOrEmpty(ViewBag.CurrentSort) || ViewBag.CurrentSort == "name_asc") { <i class="bi bi-sort-up"></i> }
+                                    else if (ViewBag.CurrentSort == "name_desc") { <i class="bi bi-sort-down"></i> }
+                                </a>
+                            </th>
+                            <th>
+                                <a class="text-dark text-decoration-none" asp-action="Index"
+                                   asp-route-sortOrder="@ViewBag.NameEnSort"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true">
+                                    @Localizer["NormalizedName"]
+                                    @if (ViewBag.CurrentSort == "en_asc") { <i class="bi bi-sort-up"></i> }
+                                    else if (ViewBag.CurrentSort == "en_desc") { <i class="bi bi-sort-down"></i> }
+                                </a>
+                            </th>
+                            <th>
+                                <a class="text-dark text-decoration-none" asp-action="Index"
+                                   asp-route-sortOrder="@ViewBag.OrgSort"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true">
+                                    @Localizer["Organization"]
+                                    @if (ViewBag.CurrentSort == "org_asc") { <i class="bi bi-sort-up"></i> }
+                                    else if (ViewBag.CurrentSort == "org_desc") { <i class="bi bi-sort-down"></i> }
+                                </a>
+                            </th>
+                            <th class="text-end pe-4">@Localizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center py-5 text-muted">@Localizer["NoData"]</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var role in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-bold">@role.GetDisplayName()</td>
+                                    <td>@role.NameEn</td>
+                                    <td>@(role.OrganizationUnit?.Name ?? "-")</td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group">
+                                            @if (canUpdate)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                        data-action="openPanel" data-url="@Url.Action("Edit", "Role", new { id = role.Id })" data-label="@Localizer["Edit"] @role.Name"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                            }
+                                            @if (canDelete)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        data-action="deleteItem" data-url="@Url.Action("Delete", "Role", new { id = role.Id })" data-name="@role.Name"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 分頁導航 -->
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel (Bootstrap Offcanvas) -->
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-520px-95vw" id="crudPanel" tabindex="-1"
+     aria-labelledby="crudPanelLabel">
+    <div class="offcanvas-header border-bottom bg-primary text-white py-3">
+        <h5 class="offcanvas-title mb-0" id="crudPanelLabel">
+            <i class="bi bi-person-badge me-2"></i><span id="crudPanelTitle"></span>
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="crudPanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-check-circle-fill me-2"></i><span id="successToastMsg"></span>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+    <div id="errorToast" class="toast align-items-center text-white bg-danger border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i><span id="errorToastMsg"></span>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Anti-Forgery token for AJAX DELETE -->
+<form class="u-display-none" id="__AjaxAntiForgery">@Html.AntiForgeryToken()</form>
+
+@section Scripts {
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function openPanel(e, el) {
+        const url = el.dataset.url, title = el.dataset.label;
+        document.getElementById('crudPanelTitle').textContent = title;
+        const body = document.getElementById('crudPanelBody');
+        body.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-3 text-muted small">' + @(Json.Serialize(SL["Loading"].Value)) + '</p></div>';
+        new bootstrap.Offcanvas(document.getElementById('crudPanel')).show();
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+            .then(html => { body.innerHTML = DOMPurify.sanitize(html); bindPanelForms(); })
+            .catch(() => { body.innerHTML = '<div class="alert alert-danger m-3">' + @(Json.Serialize(SL["LoadFailedRetry"].Value)) + '</div>'; });
+    }
+
+    function bindPanelForms() {
+        document.querySelectorAll('#crudPanelBody form[data-ajax="true"]').forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                submitPanel(this);
+            });
+        });
+        document.querySelectorAll('#crudPanelBody [data-dismiss-panel]').forEach(btn => {
+            btn.addEventListener('click', () =>
+                bootstrap.Offcanvas.getInstance(document.getElementById('crudPanel'))?.hide());
+        });
+    }
+
+    function submitPanel(form) {
+        const btn = form.querySelector('[type="submit"]');
+        const orig = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> ' + @(Json.Serialize(SL["Saving"].Value));
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(r => {
+            const ct = r.headers.get('Content-Type') || '';
+            return ct.includes('application/json')
+                ? r.json().then(d => ({ isJson: true, data: d }))
+                : r.text().then(h => ({ isJson: false, html: h }));
+        })
+        .then(result => {
+            if (result.isJson && result.data.success) {
+                bootstrap.Offcanvas.getInstance(document.getElementById('crudPanel')).hide();
+                document.getElementById('successToastMsg').textContent = result.data.message;
+                new bootstrap.Toast(document.getElementById('successToast')).show();
+                setTimeout(() => location.reload(), 1200);
+            } else if (result.isJson && !result.data.success) {
+                document.getElementById('errorToastMsg').textContent = result.data.message;
+                new bootstrap.Toast(document.getElementById('errorToast')).show();
+            } else if (!result.isJson) {
+                document.getElementById('crudPanelBody').innerHTML = DOMPurify.sanitize(result.html);
+                bindPanelForms();
+            }
+        })
+        .catch(() => {
+            btn.disabled = false;
+            btn.innerHTML = orig;
+            alert(@(Json.Serialize(SL["SaveFailedRetry"].Value)));
+        });
+    }
+
+    function deleteItem(e, el) {
+        const url = el.dataset.url, name = el.dataset.name;
+        if (!confirm('@Html.Raw(Localizer["ConfirmDelete"].Value)「' + name + '」？')) return;
+        const token = document.querySelector('#__AjaxAntiForgery input[name="__RequestVerificationToken"]').value;
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+            body: '__RequestVerificationToken=' + encodeURIComponent(token)
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                document.getElementById('successToastMsg').textContent = result.message;
+                new bootstrap.Toast(document.getElementById('successToast')).show();
+                setTimeout(() => location.reload(), 1200);
+            } else {
+                document.getElementById('errorToastMsg').textContent = result.message;
+                new bootstrap.Toast(document.getElementById('errorToast')).show();
+            }
+        })
+        .catch(() => alert(@(Json.Serialize(SL["DeleteFailedRetry"].Value))));
+    }
+</script>
+}

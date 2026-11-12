@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/UtilizationController.cs",
+  "sourceHash": "c038724761a3528adaa008672e629daf31095ddea3266ebffd7b02a3a98c04a3",
+  "entries": [
+    {
+      "slug": "code-mfg-utilizationcontroller-491aa04e",
+      "lang": "zh",
+      "headingPath": "生產製造 › 本報表的分母是查詢期間本身",
+      "text": "報表期間計算規則說明｜如果使用者沒有輸入開始日期或結束日期，系統會阻止計算，以避免顯示錯誤的稼動率和查詢所有歷史資料。",
+      "approved": true,
+      "sourceSectionHash": "6442d280c34a3761cf15c40d06396e746fe421ef21dbe60f3c44e898f8cf8021"
+    },
+    {
+      "slug": "code-mfg-utilizationcontroller-4d6bb9e3",
+      "lang": "zh",
+      "headingPath": "生產製造 › 廠別當地日而非伺服器時區",
+      "text": "日期時間判斷依據說明｜系統在處理日期時間時，會以當地的廠別時間為準，而不是使用伺服器的標準時間。",
+      "approved": true,
+      "sourceSectionHash": "38149114fde27a185c6c7b2e36abffdb7d9963da8a1d22386d55a728c9a5591e"
+    },
+    {
+      "slug": "code-mfg-utilizationcontroller-d2ef6910",
+      "lang": "zh",
+      "headingPath": "生產製造 › 必須對齊欄位型別——本報表同時查兩張表",
+      "text": "欄位時間格式需統一，避免資料錯誤｜本報表同時查閱了兩張資料，其中一張的開始和結束時間是以世界標準時間（UTC）記錄，而另一張的則是使用當地時區的時間。由於這兩種時間格式不同，若直接用世界標準時間去查詢包含當地時間的資料，系統會出錯，因此必須分別處理並標記不同的時間類型。",
+      "approved": true,
+      "sourceSectionHash": "6dd8ebc62aaf48f04aab04cc4f46c802154b02be66a58c93d054612dc294bc35"
+    },
+    {
+      "slug": "code-mfg-utilizationcontroller-8dd1149d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 可用工時取自工作日曆，而不是期間的日曆總時數",
+      "text": "工時計算依據為工作日曆｜系統計算的可用工時是根據工作日曆來計算正班和加班時數，而不是直接使用整個期間的總日曆天數來計算。",
+      "approved": true,
+      "sourceSectionHash": "505400673c883be9e6fcc9fa55a1747f55dd50f490a468934ca6630ae474c383"
+    }
+  ]
+}

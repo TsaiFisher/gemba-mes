@@ -1,0 +1,74 @@
+# HardcodedCjkLiteralGuardTests 的刻意例外（Core）。格式：路徑<TAB>字面原文（反斜線與換行已跳脫），或 路徑<TAB>* 表示整檔。
+# 部署專案自己的例外放 HardcodedCjkLiteralBaseline.Local.txt，不要改這個檔。
+# 新增條目前先確認：使用者在英文介面會不會看到它？會的話請改資源檔，不要登錄。
+
+# 授權／機器錨定：訊息對象是授權管理者，刻意只提供中文（2026-10 i18n 清理時決定不納入範圍）
+Services/HostIdentity.cs	*
+Services/LicenseCrl.cs	*
+Services/LicenseCrlService.cs	*
+Services/LicenseDocuments.cs	*
+Services/LicenseState.cs	*
+Services/LeaseDocuments.cs	*
+Services/LeaseRenewalService.cs	*
+Services/LicenseSupport.cs	*
+Services/LicenseValidator.cs	*
+Services/LicenseValidatorAdapter.cs	*
+Services/LicenseWatchdogService.cs	*
+Services/MachineAnchor.cs	*
+Services/SecurityDllErrors.cs	*
+Services/LicenseHostGate.cs	*
+Services/LicenseBlockedHost.cs	*
+Services/ConnectionStringCipher.cs	*
+
+# 寫入稽核紀錄（AuditLog.Description）的文字：屬資料而非介面，存入當下即定稿
+Api/Mobile/MobileAuthController.cs	$"登入失敗（帳號不存在）：{req.Username}"
+Api/Mobile/MobileAuthController.cs	"手機版登入待輸入兩階段驗證碼"
+Api/Mobile/MobileAuthController.cs	"帳號已鎖定"
+Api/Mobile/MobileAuthController.cs	"密碼錯誤"
+Api/Mobile/MobileAuthController.cs	$"登入失敗（{reason}）"
+Api/Mobile/MobileAuthController.cs	"手機版登入成功"
+Api/Mobile/MobileAuthController.cs	"驗證碼錯誤"
+Api/Mobile/MobileAuthController.cs	"手機版登入成功（兩階段驗證）"
+Api/Mobile/MobileAuthController.cs	"手機版登出"
+Areas/Identity/Pages/Account/Login.cshtml.cs	"帳號已鎖定"
+Areas/Identity/Pages/Account/Login.cshtml.cs	"密碼錯誤或帳號不存在"
+
+# 種子資料的中文欄位（NameZh、預設廠名、手機模組名稱）：屬資料，可在畫面上維護
+Program.cs	"預設廠"
+Program.cs	"品質檢驗"
+Program.cs	"備料領料"
+Program.cs	"執行檢驗"
+Program.cs	"判定合格"
+Program.cs	"判定不合格"
+Program.cs	"領料"
+Program.cs	"確認領料"
+Program.cs	"退料"
+Data/ApplicationDbContext.cs	"管理員"
+Data/ApplicationDbContext.cs	"經理"
+Data/ApplicationDbContext.cs	"操機員"
+
+# 給部署／維運人員看的啟動錯誤、健康檢查結果、dotnet ef 設計期錯誤：不隨使用者語系
+Program.cs	"SecurityAnchor.Initialize 回傳 null。"
+Program.cs	"DecryptConnectionString 回傳 null。"
+Program.cs	"Security DLL 格式錯誤：找不到已知類別。"
+Program.cs	"Decrypt 回傳 null。"
+Program.cs	"找不到 Security DLL（Security/SmartFactory.MES.Security.dll），"
+Program.cs	"但 DefaultEncrypted 已設定。\\n"
+Program.cs	"請向您的授權提供者索取此 DLL，或改用明文的 "
+Program.cs	"找不到連線字串。請設定 ConnectionStrings:DefaultConnection（開發）"
+Program.cs	"或 ConnectionStrings:DefaultEncrypted（生產）。"
+Program.cs	$"授權有效（{licCtx.LicenseId}），但尚未設定加密連線字串 ConnectionStrings:DefaultEncrypted，"
+Program.cs	"而此授權不允許明文連線字串（allowPlainConnection = false）。\\n"
+Program.cs	$"請在本機以授權編號 {licCtx.LicenseId} 執行 tools/EncryptConnectionString 加密連線字串，"
+Program.cs	"將輸出的 ENC:v3:…（虛擬機／容器為 ENC:v2:…）填入 DefaultEncrypted，並清空 DefaultConnection。\\n"
+Program.cs	"不需要重新申請授權。"
+Data/DesignTimeDbContextFactory.cs	"找不到有效的 DefaultConnection。請確認 appsettings.json 中已設定明文連線字串（僅供 dotnet ef 使用）。"
+
+# 語言選單／語系下拉裡的語言名稱：依慣例以該語言本身書寫（英文介面也顯示「繁體中文」）
+Pages/Shared/_Layout.cshtml	繁體中文
+Views/Plant/Index.cshtml	["zh-TW"] = "繁體中文", ["en-US"] = "English"
+Views/Plant/_PlantForm.cshtml	<option value="zh-TW">繁體中文 (zh-TW)</option>
+Views/User/_UserForm.cshtml	<option value="zh-TW">繁體中文 (zh-TW)</option>
+
+# 手機 i18n 字典本身：zh-TW 區塊本來就是中文（引擎與 en-US 區塊同檔，整檔豁免）
+wwwroot/mobile/js/i18n.js	*

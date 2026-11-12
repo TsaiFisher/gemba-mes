@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Work Center — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>工作中心 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="work-center.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link active"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-tools me-2 text-primary"></i><span lang="zh">工作中心</span><span lang="en">Work Center</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/WorkCenter &nbsp;|&nbsp; 生產工站、機台與費率設定</span><span lang="en">Route: /BAS/WorkCenter &nbsp;|&nbsp; Work centers, machines and rates</span></div>
+    </div>
+
+    <p><span lang="zh">工作中心（Work Center）是製造執行的基本生產資源單位，包含作業人員、機台或生產線。途程工序指定工作中心，排程引擎依此分配機台產能。</span><span lang="en">A work center is the basic production resource of manufacturing execution — operators, machines or a production line. Routing operations point to a work center, and the scheduling engine allocates machine capacity accordingly.</span></p>
+    <img class="screen-shot" src="img/work-center.png" data-src-en="img/en/work-center.png" alt="工作中心畫面截圖" data-alt-en="Work center screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">工作中心畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Work center screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">工作中心基本資料</span><span lang="en">Work center basics</span></h3>
+    <table class="table table-sm field-table border mb-3">
+      <thead><tr><th class="u-width-30pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">工作中心代碼</span><span lang="en">Work Center Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">唯一識別碼（例：WC01-焊接站）</span><span lang="en">Unique code (e.g. WC01 — Welding Station)</span></td></tr>
+        <tr><td><span lang="zh">工作中心名稱</span><span lang="en">Work Center Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">工站完整名稱</span><span lang="en">Full work center name</span></td></tr>
+        <tr><td><span lang="zh">部門</span><span lang="en">Department</span></td><td></td><td><span lang="zh">所屬部門，供成本歸集用</span><span lang="en">Department the work center belongs to, used for cost collection</span></td></tr>
+        <tr><td><span lang="zh">班別群組</span><span lang="en">Shift Group</span></td><td></td><td><span lang="zh">指定此工站使用的班別群組（影響排程可用工時）</span><span lang="en">Shift group used by this work center (drives the hours available for scheduling)</span></td></tr>
+        <tr><td><span lang="zh">是否生產線</span><span lang="en">Is Production Line</span></td><td></td><td><span lang="zh">勾選後代表流水線作業，排程處理方式不同</span><span lang="en">Marks the work center as a production line; scheduling handles it differently</span></td></tr>
+        <tr><td><span lang="zh">預設備料倉</span><span lang="en">Default Staging Warehouse</span></td><td></td><td><span lang="zh">本工站開立</span><span lang="en">Issued by this work center </span><a href="../inv/material-staging.html"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a><span lang="zh">時預設的移入倉（下拉中備料倉類型會排在最前並標 ★）。未設定時改取系統參數</span><span lang="en"> the default destination warehouse (staging-type warehouses are listed first and marked ★). Falls back to the system parameter when unset</span> <code>mfg_default_staging_wh</code></td></tr>
+        <tr><td><span lang="zh">預設備料儲位</span><span lang="en">Default Staging Location</span></td><td></td><td><span lang="zh">搭配上一欄的儲位，選擇倉庫後自動過濾。未設定時改取系統參數</span><span lang="en">Works together with the location field above; options are filtered once a warehouse is chosen. Falls back to the system parameter when unset</span> <code>mfg_default_staging_location</code></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後不可被途程工序或排程選用</span><span lang="en">Once inactive, cannot be used by routing operations or scheduling</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td></td><td><span lang="zh">工站補充說明</span><span lang="en">Work center notes</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">成本費率</span><span lang="en">Cost rates</span></h3>
+    <table class="table table-sm field-table border mb-3">
+      <thead><tr><th class="u-width-30pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">標準人工成本</span><span lang="en">Std Labor</span></td><td></td><td><span lang="zh">每小時人工費率（元/小時），用於工單成本計算</span><span lang="en">Labor rate per hour, used in work order costing</span></td></tr>
+        <tr><td><span lang="zh">機台小時費率</span><span lang="en">Machine Hourly Rate</span></td><td></td><td><span lang="zh">每小時機台折舊/電費等費率（元/小時）</span><span lang="en">Machine depreciation, power and similar cost per hour</span></td></tr>
+        <tr><td><span lang="zh">附加費率</span><span lang="en">Additional Rate</span></td><td></td><td><span lang="zh">其他間接費用費率（%），以人工成本為基礎計算</span><span lang="en">Other indirect overhead rate (%), calculated on labor cost</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="machines"><i class="bi bi-cpu me-2 text-primary"></i><span lang="zh">機台清單</span><span lang="en">Machines</span></h2>
+    <p><span lang="zh">每個工作中心可包含多台機台。排程引擎依機台個別分配派工時段。</span><span lang="en">A work center can contain several machines. The scheduling engine allocates dispatch slots per machine.</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">機台代碼</span><span lang="en">Machine</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">工站內唯一機台識別碼（例：M001）</span><span lang="en">Machine code, unique within the work center (e.g. M001)</span></td></tr>
+        <tr><td><span lang="zh">機台名稱</span><span lang="en">Machine Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">機台完整名稱</span><span lang="en">Full machine name</span></td></tr>
+        <tr><td><span lang="zh">機台狀態</span><span lang="en">Machine Status</span></td><td></td><td><span lang="zh">可用（Available）/ 待機（Standby）/ 故障（BreakDown）/ 保養（Maintenance）等。只有新增機台時可在這裡設定初始狀態；既有機台的狀態為唯讀，要到「機台狀態異動」變更</span><span lang="en">Available / Standby / BreakDown / Maintenance, and so on. You can set the initial status here only when adding a machine; for an existing machine the status is read-only and is changed under Machine Status Events</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">新增工作中心</span><span lang="en">Add Work Center</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進入「基本資料 &gt; 工作中心」，點「新增」。</span><span lang="en">Go to "Basic Data &gt; Work Center" and click "Add".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">填入代碼、名稱，選擇班別群組（影響排程可用工時）。</span><span lang="en">Enter the code and name, then pick a shift group (it drives the hours available for scheduling).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">填入人工成本、機台費率（若有成本計算需求）。</span><span lang="en">Enter the labor and machine rates (if costing is required). </span><b><span lang="zh">費率為 0 時，該工站的準備工時與生產工時仍會記錄，但成本金額會是 0。</span><span lang="en">When the rate is 0, setup and run time for the work center are still recorded, but the cost amount is 0.</span></b></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">視需要指定「預設備料倉／備料儲位」，現場由派工「備料」一鍵建單時會自動帶入，開單後仍可改。</span><span lang="en">Set the default staging warehouse and location if you wish; they are filled in automatically when the shop floor creates a staging order from a dispatch, and can still be changed on the order.</span></div></div>
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh">在「機台」區塊點「加一行」新增機台，填入代碼與名稱。</span><span lang="en">In the "Machine" section click "Add Row", then enter the code and name.</span></div></div>
+    <div class="step-row"><span class="step-badge">6</span><div><span lang="zh">點「儲存」。</span><span lang="en">Click "Save".</span></div></div>
+
+    <h3><span lang="zh">更新機台狀態</span><span lang="en">Updating machine status</span></h3>
+    <p><span lang="zh">機台發生故障或進行保養時，一律到</span><span lang="en">When a machine breaks down or goes into maintenance, always record the change under </span><a href="../mfg/machine-status-order.html"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a><span lang="zh">（或手機「機台狀態」）登記。那裡會一併處理機台上的派工（已排退回待排、已開始的暫停、恢復時自動恢復）並留下異動紀錄。本畫面的既有機台狀態為唯讀，代號也不能修改。</span><span lang="en"> (or "Machine Status" on mobile). That screen also deals with the dispatches on the machine (scheduled ones go back to pending, started ones go on hold and resume automatically when the machine is back) and keeps a record of the change. On this screen, the status and code of an existing machine are read-only.</span></p>
+    <h3><span lang="zh">刪除機台</span><span lang="en">Removing a machine</span></h3>
+    <p><span lang="zh">在機台清單刪除一列後儲存即移除該機台。機台上還有未結束的派工（含待排、已排、暫停）時無法刪除，系統會列出是哪幾台；請先完成、換機或結案這些派工。</span><span lang="en">Delete a row from the machine list and save to remove the machine. A machine that still has unfinished dispatches (including pending, scheduled and on hold) cannot be removed, and the system lists which machines they are; complete, switch or close those dispatches first.</span></p>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">建議在工作中心設定班別群組前，先完成「班別 → 班別群組 → 特殊日」的設定，確保排程計算的工時正確。</span><span lang="en">Complete "Shift → Shift Group → Special Day" before assigning a shift group to a work center, so that scheduling calculates the right hours.</span>
+    </div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">機台狀態設為「故障」或「保養」時，排程引擎不會將新派工分配至該機台，直到狀態恢復為「可用」。</span><span lang="en"> When a machine is set to "BreakDown" or "Maintenance", the scheduling engine stops assigning new dispatches to it until it returns to "Available".</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

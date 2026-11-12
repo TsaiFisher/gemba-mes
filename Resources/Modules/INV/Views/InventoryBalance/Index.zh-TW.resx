@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>庫存餘額查詢</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="ProductCodePlaceholder" xml:space="preserve"><value>輸入品號關鍵字</value></data>
+  <data name="ProductName" xml:space="preserve"><value>品名</value></data>
+  <data name="WhCode" xml:space="preserve"><value>倉庫</value></data>
+  <data name="AllWarehouses" xml:space="preserve"><value>全部倉庫</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>儲位</value></data>
+  <data name="AllLocations" xml:space="preserve"><value>全部儲位</value></data>
+  <data name="Print" xml:space="preserve"><value>列印</value></data>
+  <data name="LotNo" xml:space="preserve"><value>批號</value></data>
+  <data name="IncludeZero" xml:space="preserve"><value>顯示零庫存</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="Reset" xml:space="preserve"><value>清除</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入查詢條件後按「查詢」</value></data>
+  <data name="QtyOnHand" xml:space="preserve"><value>庫存量</value></data>
+  <data name="QtyReserved" xml:space="preserve"><value>預留量</value></data>
+  <data name="QtyAvailable" xml:space="preserve"><value>可用量</value></data>
+  <data name="StockUom" xml:space="preserve"><value>單位</value></data>
+  <data name="UnitCost" xml:space="preserve"><value>單位成本</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>匯出 Excel</value></data>
+  <data name="ProductSummaryTitle" xml:space="preserve"><value>品號彙總（全廠）</value></data>
+  <data name="PlantOnHand" xml:space="preserve"><value>全廠在手（不含待驗）</value></data>
+  <data name="PlantReserved" xml:space="preserve"><value>全廠預留</value></data>
+  <data name="PlantAvailable" xml:space="preserve"><value>全廠可用</value></data>
+  <data name="ProductSummaryNote" xml:space="preserve"><value>預留是保留給工單、備料或 MRP 需求的數量，記在「廠 × 品號」，不分儲位，所以只在這裡顯示；下方明細是各儲位的實際在手量。全廠可用＝在手 − 預留，與缺貨分析、工單投產的料況檢查同一套算法。</value></data>
+</root>

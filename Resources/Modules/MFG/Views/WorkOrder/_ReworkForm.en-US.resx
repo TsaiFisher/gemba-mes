@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="OriginalWorkOrder" xml:space="preserve"><value>Original Work Order</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Rework Qty</value></data>
+  <data name="QuantityPlaceholder" xml:space="preserve"><value>Enter rework quantity</value></data>
+  <data name="Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="RemarksPlaceholder" xml:space="preserve"><value>Enter remarks (optional)</value></data>
+  <data name="Submit" xml:space="preserve"><value>Create Rework WO</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Note" xml:space="preserve"><value>The rework WO will be created in Planned status. Release and schedule it from the Work Order list.</value></data>
+  <data name="Operations" xml:space="preserve"><value>Operations to redo</value></data>
+  <data name="OperationsHint" xml:space="preserve"><value>Tick only the operations that must be redone; unticked operations and their materials are not copied to the rework order. Materials are scaled to the rework quantity.</value></data>
+  <data name="OperationSeq" xml:space="preserve"><value>Op.</value></data>
+  <data name="OperationName" xml:space="preserve"><value>Operation</value></data>
+  <data name="WorkCenter" xml:space="preserve"><value>Work center</value></data>
+  <data name="MaterialCount" xml:space="preserve"><value>Materials</value></data>
+  <data name="IncludeDefective" xml:space="preserve"><value>The defective items are in stock; issue them to the rework order</value></data>
+  <data name="IncludeDefectiveHint" xml:space="preserve"><value>Adds a material line for the defective item itself, issued with the rework issue on release; at completion the good units go back to inventory at its book value. Leave this unticked if the defective items were rejected during production and never received into stock; otherwise the warehouse would issue good units from stock as if they were the defective ones.</value></data>
+</root>

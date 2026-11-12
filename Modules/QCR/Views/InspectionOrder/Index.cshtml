@@ -1,0 +1,244 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Models.InspectionOrder>
+
+<link rel="stylesheet" href="~/css/panel-table.css" />
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched    = ViewBag.Searched as bool? ?? false;
+    bool   canPrint       = ViewBag.CanPrint == true;
+    bool   canCreate      = ViewBag.CanCreate == true;
+    string inspType       = ViewBag.InspectionType as string ?? "";
+    string status         = ViewBag.Status         as string ?? "";
+    string fromDate       = ViewBag.FromDate        as string ?? "";
+    string toDate         = ViewBag.ToDate          as string ?? "";
+    string searchProduct   = ViewBag.SearchProduct   as string ?? "";
+    string searchSourceDoc = ViewBag.SearchSourceDoc as string ?? "";
+    string sortOrder       = ViewBag.CurrentSort     as string ?? "date_desc";
+    int    pageSize        = ViewBag.CurrentPageSize as int? ?? 20;
+    var    productOptions  = ViewBag.ProductOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var    sourceDocOptions = ViewBag.SourceDocOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    var    userNames       = ViewBag.UserNames as Dictionary<string, string> ?? new();
+}
+
+<div class="container-fluid py-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h4 mb-0"><i class="bi bi-clipboard2-check me-2"></i>@Localizer["PageTitle"]</h1>
+        <div class="d-flex gap-2">
+        @if (canCreate)
+        {
+            <a asp-action="PendingIqc" class="btn btn-primary btn-sm">
+                <i class="bi bi-box-seam"></i> @Localizer["PendingIqc"]
+            </a>
+            <a asp-action="PendingFpi" class="btn btn-primary btn-sm">
+                <i class="bi bi-clipboard2-pulse"></i> @Localizer["PendingFpi"]
+            </a>
+        }
+        @if (canPrint && Model != null && Model.Any())
+        {
+            <a asp-action="Export"
+               asp-route-inspectionType="@inspType" asp-route-status="@status"
+               asp-route-fromDate="@fromDate" asp-route-toDate="@toDate"
+               asp-route-searchProduct="@searchProduct" asp-route-searchSourceDoc="@searchSourceDoc"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+        </div>
+    </div>
+
+    <!-- 查詢列 -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body py-2">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["InspectionType"]</label>
+                    <select name="inspectionType" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllTypes"]</option>
+                        <option value="IQC"  selected="@(inspType == "IQC")">IQC</option>
+                        <option value="IPQC" selected="@(inspType == "IPQC")">IPQC</option>
+                        <option value="FQC"  selected="@(inspType == "FQC")">FQC</option>
+                        <option value="RQC"  selected="@(inspType == "RQC")">RQC</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Status"]</label>
+                    <select name="status" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllStatus"]</option>
+                        <option value="Pending" selected="@(status == "Pending")">@Localizer["Pending"]</option>
+                        <option value="Pass"    selected="@(status == "Pass")">@Localizer["Pass"]</option>
+                        <option value="Fail"    selected="@(status == "Fail")">@Localizer["Fail"]</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["FromDate"]</label>
+                    <input type="date" name="fromDate" class="form-control form-control-sm" value="@fromDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ToDate"]</label>
+                    <input type="date" name="toDate" class="form-control form-control-sm" value="@toDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ProductCode"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllProducts"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["SourceDocId"]</label>
+                    <select name="searchSourceDoc" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllSourceDocs"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var d in sourceDocOptions)
+                        {
+                            <option value="@d" selected="@(searchSourceDoc == d)">@d</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["InspectionOrderId"]</th>
+                                <th>@Localizer["InspectionType"]</th>
+                                <th>@Localizer["SourceDocId"]</th>
+                                <th>
+                                    <a asp-action="Index" asp-route-inspectionType="@inspType"
+                                       asp-route-status="@status" asp-route-fromDate="@fromDate"
+                                       asp-route-toDate="@toDate" asp-route-searchProduct="@searchProduct" asp-route-searchSourceDoc="@searchSourceDoc"
+                                       asp-route-sortOrder="@ViewBag.ProductSort"
+                                       asp-route-searched="true" class="text-decoration-none text-dark">
+                                        @Localizer["ProductCode"]
+                                        @if (sortOrder == "product_asc") { <i class="bi bi-caret-up-fill"></i> }
+                                        else if (sortOrder == "product_desc") { <i class="bi bi-caret-down-fill"></i> }
+                                    </a>
+                                </th>
+                                <th class="text-end">@Localizer["LotSize"]</th>
+                                <th class="text-end">@Localizer["SampleSize"]</th>
+                                <th class="text-end">@Localizer["FailQty"]</th>
+                                <th>@Localizer["StatusCol"]</th>
+                                <th>@Localizer["InspectorId"]</th>
+                                <th>
+                                    <a asp-action="Index" asp-route-inspectionType="@inspType"
+                                       asp-route-status="@status" asp-route-fromDate="@fromDate"
+                                       asp-route-toDate="@toDate" asp-route-searchProduct="@searchProduct" asp-route-searchSourceDoc="@searchSourceDoc"
+                                       asp-route-sortOrder="@ViewBag.DateSort"
+                                       asp-route-searched="true" class="text-decoration-none text-dark">
+                                        @Localizer["InspectedAt"]
+                                        @if (sortOrder == "date_asc") { <i class="bi bi-caret-up-fill"></i> }
+                                        else if (sortOrder == "date_desc") { <i class="bi bi-caret-down-fill"></i> }
+                                    </a>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var row in Model)
+                            {
+                                var typeBadge = row.InspectionType switch
+                                {
+                                    "IQC"  => "bg-primary",
+                                    "IPQC" => "bg-info text-dark",
+                                    "FQC"  => "bg-success",
+                                    "RQC"  => "bg-warning text-dark",
+                                    _      => "bg-secondary"
+                                };
+                                var statusBadge = row.Status switch
+                                {
+                                    "Pass"    => "bg-success",
+                                    "Fail"    => "bg-danger",
+                                    "Pending" => "bg-warning text-dark",
+                                    _         => "bg-secondary"
+                                };
+                                var detailUrl = Url.Action("Details", new { id = row.InspectionOrderId });
+                                <tr>
+                                    <td class="font-monospace small">@row.InspectionOrderId[..8]…</td>
+                                    <td><span class="badge @typeBadge">@row.InspectionType</span></td>
+                                    <td class="small">@row.SourceDocId</td>
+                                    <td>@row.ProductCode</td>
+                                    <td class="text-end">@row.LotSize.ToString("N0")</td>
+                                    <td class="text-end">@row.SampleSize</td>
+                                    <td class="text-end @(row.FailQty > 0 ? "text-danger fw-bold" : "")">@row.FailQty</td>
+                                    <td><span class="badge @statusBadge">@Localizer[row.Status]</span></td>
+                                    <td class="small">@(row.InspectorId != null && userNames.TryGetValue(row.InspectorId, out var inspName) ? inspName : (row.InspectorId ?? "—"))</td>
+                                    <td class="small text-muted">@(row.InspectedAt?.ToString("yyyy-MM-dd HH:mm") ?? "—")</td>
+                                    <td>
+                                        @await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = row.InspectionOrderId }))
+                                        <button class="btn btn-outline-secondary btn-sm py-0"
+                                                data-url="@detailUrl" data-label="@Localizer["Details"]"
+                                                data-action="openPanel">
+                                            <i class="bi bi-list-ul"></i> @Localizer["Details"]
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分頁 -->
+        @await Html.PartialAsync("_Pagination", Model,
+            new ViewDataDictionary(ViewData)
+            {
+                ["action"]        = "Index",
+                ["routeValues"]   = new {
+                    searched = true, inspectionType = inspType, status,
+                    fromDate, toDate, searchProduct, searchSourceDoc, sortOrder, pageSize
+                }
+            })
+    }
+</div>
+
+<!-- Side Panel offcanvas -->
+<div class="offcanvas offcanvas-end u-panel-wide" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["Details"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

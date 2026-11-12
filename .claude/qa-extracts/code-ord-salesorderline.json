@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Modules/ORD/Models/SalesOrderLine.cs",
+  "sourceHash": "729f6483e59b26311aff78ceea0a5753f8ad11d40ace9ae78e93f0ca102dc4e7",
+  "entries": [
+    {
+      "slug": "code-ord-salesorderline-50060ccd",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 已出貨數量，單位為本行的",
+      "text": "出貨數量計算規則說明｜此欄位的出貨數量是根據本行所使用的單位來累加的，因此在計算前會先將所有來源單位的數量換算回本行的單位再進行相加。這樣可以確保計算出來的剩餘可出量與實際情況一致。",
+      "approved": true
+    },
+    {
+      "slug": "code-ord-salesorderline-82ec2bc9",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 已出貨數量的庫存基準單位累計",
+      "text": "庫存數量累計的計算方式說明｜此欄位直接累積出貨行所記錄的庫存數量，採用相同的基準單位進行加總，因此比對的是精確值，不會因為不同單位的換算和四捨五入而產生誤差導致判斷錯誤。",
+      "approved": true
+    }
+  ]
+}

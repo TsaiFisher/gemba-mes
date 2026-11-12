@@ -1,0 +1,147 @@
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@model SmartFactory.MES.Modules.MFG.Models.WorkOrder
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@inject SmartFactory.MES.Services.IDateTimeService DateTimeSvc
+@inject SmartFactory.MES.Modules._Shared.Printing.PrintNameService PrintNameSvc
+@{
+    // 產品單位不在工單上（取自產品主檔），另外補進來配名稱
+    // 用料掛在工序底下（第二層），PrintNameService 只往下走一層，另外把用料傳進去配品名／單位名
+    var materials = Model.Operations.SelectMany(o => o.Materials).ToList();
+    var names = await PrintNameSvc.ForAsync(Model, new { UomCode = ViewBag.ProductUom as string }, materials);
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Localizer["DocTitle"].Value;
+
+    string TimeUnitLabel(OperationTimeUnit u) => u switch
+    {
+        OperationTimeUnit.Second => Localizer["TimeSec"].Value,
+        OperationTimeUnit.Hour   => Localizer["TimeHour"].Value,
+        _                        => Localizer["TimeMin"].Value
+    };
+
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string? productUom = ViewBag.ProductUom as string;
+    string IssueMethodLabel(MaterialIssueMethod m) => m switch
+    {
+        MaterialIssueMethod.Pull      => L["Print_IssueMethod_Pull"].Value,
+        MaterialIssueMethod.Backflush => L["Print_IssueMethod_Backflush"].Value,
+        _                             => L["Print_IssueMethod_Push"].Value
+    };
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div class="print-title-block">
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["DocTitle"]</div>
+        <div class="print-doc-number">@Localizer["DocNo"]：@Model.WorkOrderId ／ @Localizer["PlannedStart"]：@Model.PlannedStartDate.ToString("yyyy-MM-dd")</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-section-title">@L["Print_BasicInfo"]</div>
+    <div class="print-field-grid">
+        <div class="print-field-label">@Localizer["ProductCode"]</div>
+        <div class="print-field-value">@Model.ProductCode</div>
+        <div class="print-field-label">@L["Print_ProductName"]</div>
+        <div class="print-field-value">@names.Product(Model.ProductCode)</div>
+        <div class="print-field-label">@Localizer["Quantity"]</div>
+        <div class="print-field-value">@Model.Quantity.ToString(QtyFmt(productUom)) @names.UomWith(productUom)</div>
+        <div class="print-field-label">@Localizer["RoutingId"]</div>
+        <div class="print-field-value">@Model.RoutingId</div>
+        <div class="print-field-label">@Localizer["Status"]</div>
+        <div class="print-field-value">@SmartFactory.MES.Modules.MFG.MfgEnumDisplay.Text(L, Model.Status)</div>
+        <div class="print-field-label">@Localizer["PlannedStart"]</div>
+        <div class="print-field-value">@Model.PlannedStartDate.ToString("yyyy-MM-dd")</div>
+        <div class="print-field-label">@Localizer["PlannedEnd"]</div>
+        <div class="print-field-value">@Model.PlannedEndDate.ToString("yyyy-MM-dd")</div>
+        @if (!string.IsNullOrEmpty(Model.ParentWorkOrderId))
+        {
+            <div class="print-field-label">@Localizer["ParentWorkOrder"]</div>
+            <div class="print-field-value">@Model.ParentWorkOrderId</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.ReworkFromWorkOrderId))
+        {
+            <div class="print-field-label">@Localizer["ReworkFrom"]</div>
+            <div class="print-field-value">@Model.ReworkFromWorkOrderId</div>
+        }
+        <div class="print-field-label">@Localizer["CreatedAt"]</div>
+        <div class="print-field-value">@DateTimeSvc.ToLocalTime(Model.CreatedAt).ToString("yyyy-MM-dd HH:mm")</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-section-title">@L["Print_Details"]</div>
+    <table class="print-table">
+        <thead>
+            <tr>
+                <th>@Localizer["OpSeq"]</th>
+                <th>@Localizer["OperationName"]</th>
+                <th>@Localizer["WorkCenter"]</th>
+                <th>@Localizer["SetupTime"]</th>
+                <th>@Localizer["UnitTime"]</th>
+                <th>@Localizer["BatchQty"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var op in Model.Operations.OrderBy(o => o.OperationSeq))
+            {
+                <tr>
+                    <td>@op.OperationSeq</td>
+                    <td>@op.OperationName</td>
+                    <td>@names.WorkCenterWith(op.WorkCenterId)</td>
+                    <td>@op.SetupTime.ToString("N2") @TimeUnitLabel(op.SetupTimeUnit)</td>
+                    <td>@op.UnitTime.ToString("N4") @TimeUnitLabel(op.TimeUnit)</td>
+                    <td>@op.BatchQty.ToString(QtyFmt(productUom))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@* 各工序需領料：待發量＝需求 − 已發 ＋ 已退（退回的料要再發一次）；後沖料完工時自動扣，列出但待發量不適用 *@
+@foreach (var op in Model.Operations.OrderBy(o => o.OperationSeq).Where(o => o.Materials.Count > 0))
+{
+    <div class="print-section">
+        <div class="print-section-title">@L["Print_MaterialRequirements"] — @Localizer["OpSeq"] @op.OperationSeq @op.OperationName</div>
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th>@L["Print_Seq"]</th>
+                    <th>@L["Print_ProductCode"]</th>
+                    <th>@L["Print_ProductName"]</th>
+                    <th class="text-end">@L["Print_RequiredQty"]</th>
+                    <th class="text-end">@L["Print_IssuedQty"]</th>
+                    <th class="text-end">@L["Print_ReturnedQty"]</th>
+                    <th class="text-end">@L["Print_ToIssueQty"]</th>
+                    <th>@L["Print_Uom"]</th>
+                    <th>@L["Print_IssueMethod"]</th>
+                    <th>@L["Print_Remarks"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in op.Materials.OrderBy(x => x.BomSeq))
+                {
+                    var toIssue = Math.Max(0m, m.RequiredQty - m.IssuedQty + m.ReturnedQty);
+                    <tr>
+                        <td>@m.BomSeq</td>
+                        <td>@m.ProductCode</td>
+                        <td>@names.Product(m.ProductCode)</td>
+                        <td class="text-end">@m.RequiredQty.ToString(QtyFmt(m.UomCode))</td>
+                        <td class="text-end">@m.IssuedQty.ToString(QtyFmt(m.UomCode))</td>
+                        <td class="text-end">@m.ReturnedQty.ToString(QtyFmt(m.UomCode))</td>
+                        <td class="text-end">@(m.IssueMethod == MaterialIssueMethod.Backflush ? "—" : toIssue.ToString(QtyFmt(m.UomCode)))</td>
+                        <td>@names.UomWith(m.UomCode)</td>
+                        <td>@IssueMethodLabel(m.IssueMethod)</td>
+                        <td>@(string.IsNullOrEmpty(m.ChildWorkOrderId) ? "" : $"{L["Print_ChildWorkOrder"]} {m.ChildWorkOrderId}")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@await Html.PartialAsync("_PrintBase")

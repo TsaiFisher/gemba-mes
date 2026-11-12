@@ -1,0 +1,100 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@model Dispatch
+
+@{
+    var machineOptions = ViewBag.MachineOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var toolingOptions = ViewBag.ToolingOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var openSession      = ViewBag.OpenSession as ProductionSession;
+    bool hasOpen         = openSession != null;
+    bool isProductionLine = ViewBag.IsProductionLine == true;
+    var activeOperators  = ViewBag.ActiveOperatorNames as List<string> ?? new();
+}
+
+<div class="p-3">
+    <dl class="row mb-3">
+        <dt class="col-sm-4">@Localizer["DispatchId"]</dt>
+        <dd class="col-sm-8 font-monospace">@Model.DispatchId</dd>
+        <dt class="col-sm-4">@Localizer["WorkOrderId"]</dt>
+        <dd class="col-sm-8">@Model.WorkOrderId</dd>
+        @if (!string.IsNullOrEmpty(Model.MachineCode))
+        {
+            <dt class="col-sm-4">@Localizer["AssignedMachine"]</dt>
+            <dd class="col-sm-8">@Model.MachineCode</dd>
+        }
+    </dl>
+
+    @if (isProductionLine && activeOperators.Any())
+    {
+        <div class="alert alert-info small mb-3">
+            <i class="bi bi-people me-1"></i>@Localizer["ActiveOperators"]:
+            @string.Join("、", activeOperators)
+        </div>
+    }
+
+    @if (hasOpen)
+    {
+        <div class="alert alert-success">
+            <i class="bi bi-person-check me-1"></i>@Localizer["SessionInProgressMsg"]
+        </div>
+        <p class="small text-muted">@Localizer["SessionStartedAt"]: @DateTimeSvc.ToLocalTime(openSession!.StartAt).ToString("yyyy-MM-dd HH:mm:ss")</p>
+        @if (!string.IsNullOrEmpty(openSession.MachineCode))
+        {
+            <p class="small text-muted">@Localizer["MachineCode"]: @openSession.MachineCode</p>
+        }
+
+        <form id="panelForm" method="post" action="@Url.Action("StopSession", new { sessionId = openSession.SessionId })">
+            @Html.AntiForgeryToken()
+            <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-warning" name="submit" value="stop">
+                    <i class="bi bi-stop-circle me-1"></i>@Localizer["StopSession"]
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-light border">
+            <i class="bi bi-info-circle me-1"></i>@Localizer["NoOpenSessionMsg"]
+        </div>
+
+        <form id="panelForm" method="post" action="@Url.Action("StartSession", new { id = Model.DispatchId })">
+            @Html.AntiForgeryToken()
+            <div class="mb-3">
+                <label class="form-label">@Localizer["MachineCode"]</label>
+                <select name="machineCode" class="form-select">
+                    <option value="">@Localizer["MachinePlaceholder"]</option>
+                    @foreach (dynamic m in machineOptions)
+                    {
+                        <option value="@m.MachineCode" selected="@(Model.MachineCode == (string)m.MachineCode)">@m.MachineCode — @m.MachineName</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Localizer["ToolingCode"]</label>
+                <select name="toolingCode" class="form-select">
+                    <option value="">@Localizer["ToolingPlaceholder"]</option>
+                    @foreach (dynamic t in toolingOptions)
+                    {
+                        <option value="@t.ToolingCode" selected="@(Model.ToolingCode == (string)t.ToolingCode)">@t.ToolingCode — @t.ToolingName</option>
+                    }
+                </select>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-success" name="submit" value="start">
+                    <i class="bi bi-play-circle me-1"></i>@Localizer["StartSession"]
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            </div>
+        </form>
+    }
+</div>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    document.getElementById('panelForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitPanel(this, this.querySelector('[type=submit]'));
+    });
+</script>

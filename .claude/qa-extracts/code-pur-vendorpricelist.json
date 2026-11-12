@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/PUR/Models/VendorPriceList.cs",
+  "sourceHash": "61d4737e19a6d38dc166962b61396c321f7db8505fcedfb16666a5c504cafcbf",
+  "entries": [
+    {
+      "slug": "code-pur-vendorpricelist-43a4a0ac",
+      "lang": "zh",
+      "headingPath": "採購 › 採購單建行時自動帶入最接近有效的議定單價",
+      "text": "採購單行預設使用廠商通用價格｜系統在建立採購單的每一行時，會自動帶入與該筆資料最接近且有效的議定單價作為參考價格。",
+      "approved": true,
+      "sourceSectionHash": "2a38940b6fc62a3c6782439958cc646b3f338c262d999ae03eb07de0f9a7b44b"
+    },
+    {
+      "slug": "code-pur-vendorpricelist-6ceae010",
+      "lang": "zh",
+      "headingPath": "採購 › 生效區間不得倒置",
+      "text": "生效區間日期不能倒過來｜如果開始日期晚於結束日期，系統在查詢價格或途程時會找不到資料，導致雖然主檔看起來已經建立完成但實際上無法使用。",
+      "approved": true,
+      "sourceSectionHash": "8b24a61eaf45432382eedcb7ba10d862070614e3a51bc83a2077c8a3584de659"
+    }
+  ]
+}

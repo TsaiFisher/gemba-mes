@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/MFG/Services/IWorkOrderReleaseService.cs",
+  "sourceHash": "2e4410d3be82f620b52a9b2c9b4979b8d600714fffb68fe0204a2a798e5cd802",
+  "entries": [
+    {
+      "slug": "code-mfg-iworkorderreleaseservice-8b31bd20",
+      "lang": "zh",
+      "headingPath": "生產製造 › 投產試算：回傳重算量與料況閘口結果",
+      "text": "投產試算回傳重算量與料況閘口結果｜此功能用於提供一個可供人工確認的「暫定」或「重算」結果，並且會使用批次層級的全部或全不（all-or-nothing）預檢機制。",
+      "approved": true,
+      "sourceSectionHash": "416b6448db48d2c64cfbe27303c55451201bc93bc089be1b51355d6db50d0994"
+    },
+    {
+      "slug": "code-mfg-iworkorderreleaseservice-3eeeaab1",
+      "lang": "zh",
+      "headingPath": "生產製造 › 實際投產：重算量 → 硬料閘→ 鎖庫出 → 標準成本快照 → 送",
+      "text": "重算量與暫定量不一致時的處理規則｜如果計算出來的實際投產數量和目前記錄的暫定數量不一樣，並且尚未確認，系統會回傳需要使用者進一步確認的狀態；若材料閘道無法通過，則會顯示材料被鎖定的訊息。",
+      "approved": true,
+      "sourceSectionHash": "ae0114a28807ba01d633cbd842457d405cde7fc70d5ddf5dde9ea9200b8bf3a6"
+    },
+    {
+      "slug": "code-mfg-iworkorderreleaseservice-5ec530c7",
+      "lang": "zh",
+      "headingPath": "生產製造 › 跳過淨量重算、硬料閘、簽核判定",
+      "text": "自動投產流程簡化規則說明｜系統在執行自動投產時，會直接將工單狀態推送到已發行狀態，並且會保留在途的物料、標準成本快照、推送的領料單以及委外採購的自動建立。此流程會跳過淨量重算、硬體閘門檢查和簽核判定，缺料時不會阻擋工單，而是由開工時的軟性閘門來處理，缺料品項仍會回報供記錄。",
+      "approved": true,
+      "sourceSectionHash": "a192845895ad525cb7c29c22c97fe2d20562109f8c93dbcdd05bd14c78bdbe07"
+    },
+    {
+      "slug": "code-mfg-iworkorderreleaseservice-fdf10d2f",
+      "lang": "zh",
+      "headingPath": "生產製造 › 全數通過才逐張定案",
+      "text": "批次投產規則說明｜若批次內任一工單缺少物料，則整個批次無法進行投產；如果任何一個工單的計算量有變動但尚未確認，則整個批次會進入待確認狀態。只有當所有工單都通過檢核後，才會依序為每一張工單定案，且半成品會先於成品的工單完成定案。",
+      "approved": false,
+      "sourceSectionHash": "a77a632ca5b7b96a664a48268e04617294efd1d629f4373ff2beccb37b43908f"
+    }
+  ]
+}

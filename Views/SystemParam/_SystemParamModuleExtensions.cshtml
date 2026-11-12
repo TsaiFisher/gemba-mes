@@ -1,0 +1,9 @@
+@*
+    Core 擴充點：系統參數頁面的模組專屬設定區塊（Core 版本為空注解）。
+
+    ⚠️ 本檔為 Core 既有檔（列於 scripts/core-drift-baseline.txt），刻意只保留這一行委派——
+    所有 ProjectZ 專屬設定一律加在 _ProjectZSystemParams.cshtml，不要加在這裡。
+    如此本檔對 Core 的漂移永久固定為一行，Core 日後改動此檔時 merge 成本趨近於零。
+    （與 Views/Approval/_DocDetailsUrls.cshtml 的既有模式一致。）
+*@
+@await Html.PartialAsync("_ProjectZSystemParams")

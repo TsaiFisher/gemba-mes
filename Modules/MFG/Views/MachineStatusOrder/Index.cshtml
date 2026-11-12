@@ -1,0 +1,135 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model PaginatedList<MachineStatusOrder>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool canCreate = ViewBag.CanCreate == true;
+    var machines = ViewBag.Machines as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var userNames = ViewBag.UserNames as Dictionary<string, string> ?? new();
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col"><h1>@ViewData["Title"]</h1></div>
+        @if (canCreate)
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                        data-url="@Url.Action("CreateForm")"
+                        data-label="@Localizer["NewTitle"]"
+                        data-action="openPanel">
+                    <i class="bi bi-plus-lg me-1"></i>@Localizer["New"]
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" action="@Url.Action("Index")" class="row g-3 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                <div class="col-md-4">
+                    <label class="form-label">@Localizer["SearchLabel"]</label>
+                    <input type="text" name="searchText" class="form-control" value="@ViewBag.SearchText"
+                           placeholder="@Localizer["SearchPlaceholder"]" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["MachineFilter"]</label>
+                    <select name="machineCode" class="form-select">
+                        <option value="">@Localizer["AllMachines"]</option>
+                        @foreach (var m in machines)
+                        {
+                            <option value="@m.MachineCode" selected="@(ViewBag.MachineCode == (string)m.MachineCode)">
+                                @m.MachineCode — @m.MachineName
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>@Localizer["OrderId"]</th>
+                    <th>@Localizer["EventType"]</th>
+                    <th>@Localizer["EventAt"]</th>
+                    <th>@Localizer["Machine"]</th>
+                    <th>@Localizer["TargetStatus"]</th>
+                    <th>@Localizer["RequestedBy"]</th>
+                    <th>@Localizer["Note"]</th>
+                    <th>@Localizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null) @foreach (var item in Model)
+                {
+                    var firstLine = item.Lines.FirstOrDefault();
+                    <tr>
+                        <td class="font-monospace small">@item.OrderId</td>
+                        <td><span class="badge bg-secondary">@MfgEnumDisplay.Text(L, item.EventType)</span></td>
+                        <td class="small">@DateTimeSvc.ToLocalTime(item.EventAt).ToString("MM/dd HH:mm")</td>
+                        <td class="small">@(firstLine?.MachineCode ?? "—")</td>
+                        <td class="small">@(firstLine != null ? MfgEnumDisplay.Text(L, firstLine.TargetStatus) : "—")</td>
+                        <td class="small">@(item.RequestedBy != null && userNames.TryGetValue(item.RequestedBy, out var rby) ? rby : item.RequestedBy ?? "—")</td>
+                        <td class="small text-muted">@item.Note</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-info"
+                                    data-url="@Url.Action("Details", new { id = item.OrderId })"
+                                    data-label="@Localizer["ViewTitle", item.OrderId]"
+                                    data-action="openPanel"><i class="bi bi-eye"></i> @Localizer["View"]</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-info">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<div class="offcanvas offcanvas-end u-min-width-500px u-max-width-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

@@ -1,0 +1,146 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.ApprovalTemplate
+
+@{
+    var roles = ViewBag.Roles as Microsoft.AspNetCore.Mvc.Rendering.SelectList;
+    var users = ViewBag.Users as Microsoft.AspNetCore.Mvc.Rendering.SelectList;
+    var sortedSteps = Model.Steps.OrderBy(s => s.Sequence).ToList();
+}
+
+<div class="mb-2">
+    <span class="text-muted small">@Localizer["Template"]：</span>
+    <strong>@Model.Name</strong>
+    @if (!string.IsNullOrEmpty(Model.TargetDocumentType))
+    {
+        <span class="badge bg-secondary ms-2">@Model.TargetDocumentType</span>
+    }
+</div>
+
+<!-- 現有步驟清單 -->
+<div class="mb-4">
+    <h6 class="fw-semibold mb-2"><i class="bi bi-list-ol"></i> @Localizer["ApprovalSteps"]</h6>
+    @if (!sortedSteps.Any())
+    {
+        <div class="text-muted fst-italic small p-3 border rounded bg-light">@Localizer["NoSteps"]</div>
+    }
+    else
+    {
+        <div class="list-group">
+            @foreach (var step in sortedSteps)
+            {
+                <div class="list-group-item d-flex align-items-center gap-3 py-2">
+                    <span class="badge bg-primary rounded-pill u-min-width-2rem">@step.Sequence</span>
+                    <div class="flex-grow-1">
+                        @{
+                            string approverLabel = step.ApproverType == SmartFactory.MES.Models.ApproverType.Supervisor
+                                ? Localizer["Supervisor"].Value
+                                : step.ApproverType == SmartFactory.MES.Models.ApproverType.Role
+                                    ? Localizer["RoleApprover"].Value
+                                    : Localizer["UserApprover"].Value;
+                        }
+                        <span class="fw-semibold">@approverLabel</span>
+                        @if (step.ApproverType == SmartFactory.MES.Models.ApproverType.Role && roles != null)
+                        {
+                            var roleName = roles.FirstOrDefault(r => r.Value == step.TargetRoleId)?.Text;
+                            <span class="ms-1 text-muted">：@(roleName ?? step.TargetRoleId ?? "—")</span>
+                        }
+                        else if (step.ApproverType == SmartFactory.MES.Models.ApproverType.User && users != null)
+                        {
+                            var userName = users.FirstOrDefault(u => u.Value == step.TargetUserId)?.Text;
+                            <span class="ms-1 text-muted">：@(userName ?? step.TargetUserId ?? "—")</span>
+                        }
+                    </div>
+                    <div class="btn-group btn-group-sm">
+                        <form method="post" asp-action="MoveStep" asp-controller="ApprovalTemplate"
+                              asp-route-id="@step.Id" asp-route-templateId="@Model.Id" asp-route-direction="up"
+                              class="d-inline" data-ajax="true" data-reload-panel="true">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-outline-secondary" title="@Localizer["MoveUp"]"
+                                    @(step.Sequence == 1 ? "disabled" : "")>
+                                <i class="bi bi-arrow-up"></i>
+                            </button>
+                        </form>
+                        <form method="post" asp-action="MoveStep" asp-controller="ApprovalTemplate"
+                              asp-route-id="@step.Id" asp-route-templateId="@Model.Id" asp-route-direction="down"
+                              class="d-inline" data-ajax="true" data-reload-panel="true">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-outline-secondary" title="@Localizer["MoveDown"]"
+                                    @(step.Sequence == sortedSteps.Count ? "disabled" : "")>
+                                <i class="bi bi-arrow-down"></i>
+                            </button>
+                        </form>
+                        <button type="button" class="btn btn-outline-secondary"
+                                data-edit-step="true"
+                                data-step-id="@step.Id"
+                                data-template-id="@Model.Id"
+                                data-approver-type="@((int)step.ApproverType)"
+                                data-target-role-id="@(step.TargetRoleId ?? "")"
+                                data-target-user-id="@(step.TargetUserId ?? "")"
+                                title="@Localizer["Edit"]">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger"
+                                data-delete-step-url="@Url.Action("DeleteStep", "ApprovalTemplate", new { id = step.Id, templateId = Model.Id })"
+                                data-confirm-msg="@string.Format(Localizer["ConfirmDeleteStepFmt"].Value, step.Sequence)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<!-- 新增步驟表單 -->
+<hr />
+<h6 class="fw-semibold mb-3"><i class="bi bi-plus-circle"></i> @Localizer["AddStep"]</h6>
+<form method="post" asp-action="AddStep" asp-controller="ApprovalTemplate" data-ajax="true" data-reload-panel="true">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="TemplateId" value="@Model.Id" />
+
+    <div class="row g-3 mb-3">
+        <div class="col-md-4">
+            <label class="form-label fw-semibold">@Localizer["ApproverType"] <span class="text-danger">*</span></label>
+            <select name="ApproverType" id="approverType" class="form-select">
+                <option value="@((int)SmartFactory.MES.Models.ApproverType.Supervisor)">@Localizer["Supervisor"]</option>
+                <option value="@((int)SmartFactory.MES.Models.ApproverType.Role)">@Localizer["RoleApprover"]</option>
+                <option value="@((int)SmartFactory.MES.Models.ApproverType.User)">@Localizer["UserApprover"]</option>
+            </select>
+        </div>
+
+        <div class="col-md-4 u-display-none" id="targetRoleDiv">
+            <label class="form-label fw-semibold">@Localizer["Role"]</label>
+            <select name="TargetRoleId" class="form-select">
+                <option value="">@Localizer["SelectOption"]</option>
+                @if (roles != null)
+                {
+                    @foreach (var r in roles)
+                    {
+                        <option value="@r.Value">@r.Text</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="col-md-4 u-display-none" id="targetUserDiv">
+            <label class="form-label fw-semibold">@Localizer["User"]</label>
+            <select name="TargetUserId" class="form-select">
+                <option value="">@Localizer["SelectOption"]</option>
+                @if (users != null)
+                {
+                    @foreach (var u in users)
+                    {
+                        <option value="@u.Value">@u.Text</option>
+                    }
+                }
+            </select>
+        </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-success btn-sm">
+        <i class="bi bi-plus-lg"></i> @Localizer["AddStepBtn"]
+    </button>
+</form>
+

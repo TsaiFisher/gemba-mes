@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="/mobile/manifest.json">
+    <link rel="apple-touch-icon" href="/mobile/icons/apple-touch-icon-180.png">
+    <title data-i18n="offline.page_title">需要連線 — SmartFactory MES</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+</head>
+<!--
+  sw.js 在「導覽請求連不上網、快取裡也沒有這一頁」時回傳本頁。
+  在此之前這個情境會掉到瀏覽器原生錯誤頁，現場看到的是英文的
+  「無法連上這個網站」，完全看不出報工佇列其實還在。
+
+  本頁只依賴已預快取的資源（bootstrap、bootstrap-icons、mobile.css、i18n.js），
+  不得引用任何未進 STATIC_ASSETS 的檔案——否則離線時本頁自己也會缺樣式。
+  同理不得使用內聯 <style>／onclick：手機頁面受 CSP 管制，內聯會被擋掉。
+-->
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary mobile-navbar px-3">
+    <span class="navbar-brand fw-bold mb-0 h1 flex-grow-1" data-i18n="offline.title">需要連線</span>
+    <button class="btn btn-outline-light btn-sm" data-action="toggleLang" data-lang-toggle data-i18n-title="common.lang_switch" title="Language">EN</button>
+</nav>
+
+<div class="container-fluid py-5 px-3 text-center">
+    <i class="bi bi-wifi-off text-secondary display-1"></i>
+    <h1 class="h4 mt-3" data-i18n="offline.title">需要連線</h1>
+    <p class="text-muted mt-3" data-i18n="offline.desc">
+        目前連不上伺服器，這個畫面無法開啟。恢復連線後重新開啟即可；斷線時暫存的資料仍在手機裡，會自動送出。
+    </p>
+    <div class="d-grid gap-2 col-10 mx-auto mt-4">
+        <button type="button" class="btn btn-primary" data-action="reloadPage" data-i18n="common.retry">重試</button>
+        <a href="/mobile/home.html" class="btn btn-outline-secondary" data-i18n="offline.home">回首頁</a>
+    </div>
+</div>
+
+<script src="/js/data-action.js"></script>
+<script src="/mobile/js/nav.js"></script>
+<script src="/mobile/js/i18n.js"></script>
+<script src="/mobile/js/i18n.modules.js"></script>
+</body>
+</html>

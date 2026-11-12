@@ -1,0 +1,167 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["LineStatus"].Value;
+
+    // 頁面專用 JS 標籤字典（比照 uom-step.js/currency-format.js 既有慣例：頁面自帶 resx 序列化給 JS 用，
+    // 不動全域共用的 _JsLocalization.cshtml，避免把單一畫面的字串塞進跨頁共用清單）。
+    string[] jsKeys =
+    {
+        "Producing", "SettingUp", "Idle", "ActiveOperators", "SettingUpOperators",
+        "NoActiveDispatch", "LoadFailed", "Refresh"
+    };
+    var jsLabels = jsKeys.ToDictionary(k => k, k => Localizer[k].Value);
+}
+
+<div class="container-fluid p-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0"><i class="bi bi-broadcast me-1"></i>@Localizer["LineStatus"]</h1>
+        <button type="button" id="btnRefresh" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-arrow-clockwise me-1"></i>@Localizer["Refresh"]
+        </button>
+    </div>
+
+    <div id="lineStatusContainer">
+        @* loading 與 content 分開兩個常駐子元素——每次重繪只清空 content，
+           loading 不會被 innerHTML='' 連帶銷毀（教訓：Schedule/Index.cshtml 曾因兩者共用
+           同一個父層元素、重繪把 loading 一併清掉，第二次呼叫時 getElementById 拿 null 噴例外）。 *@
+        <div id="lineStatusLoading" class="text-center text-muted p-5">
+            <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+            @Localizer["Loading"]
+        </div>
+        <div id="lineStatusContent" class="row g-3"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+        window.lineStatusLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(jsLabels));
+
+        (function () {
+            const dataUrl   = '@Url.Action("Data")';
+            const loadingEl = document.getElementById('lineStatusLoading');
+            const contentEl = document.getElementById('lineStatusContent');
+            const L = window.lineStatusLabels;
+            let pollTimer = null;
+
+            function stateBadge(state) {
+                if (state === 'Producing') return { cls: 'bg-success', text: L.Producing };
+                if (state === 'SettingUp') return { cls: 'bg-warning text-dark', text: L.SettingUp };
+                return { cls: 'bg-secondary', text: L.Idle };
+            }
+
+            function fmtElapsed(startAtIso) {
+                const startMs = new Date(startAtIso).getTime();
+                const mins = Math.max(0, Math.round((Date.now() - startMs) / 60000));
+                const h = Math.floor(mins / 60), m = mins % 60;
+                return h > 0 ? `${h}h${m}m` : `${m}m`;
+            }
+
+            function operatorList(operators) {
+                if (!operators || operators.length === 0) return '';
+                const items = operators.map(o =>
+                    `<li>${escapeHtml(o.operatorName)}<span class="text-muted small ms-1">(${fmtElapsed(o.startAt)})</span></li>`
+                ).join('');
+                return `<ul class="mb-2 ps-3">${items}</ul>`;
+            }
+
+            function escapeHtml(s) {
+                const div = document.createElement('div');
+                div.textContent = s ?? '';
+                return div.innerHTML;
+            }
+
+            function dispatchBlock(d) {
+                const pct = d.quantity > 0 ? Math.min(100, Math.round((d.qtyDone / d.quantity) * 100)) : 0;
+                const opHtml = d.activeOperators.length
+                    ? `<div class="small fw-semibold mt-2">${L.ActiveOperators}</div>${operatorList(d.activeOperators)}`
+                    : '';
+                const setupHtml = d.activeSetupOperators.length
+                    ? `<div class="small fw-semibold mt-2">${L.SettingUpOperators}</div>${operatorList(d.activeSetupOperators)}`
+                    : '';
+                return `
+                    <div class="border rounded p-2 mb-2 bg-light">
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-semibold">${escapeHtml(d.workOrderId)}</span>
+                            <span class="text-muted small">${escapeHtml(d.productCode)}</span>
+                        </div>
+                        <div class="progress u-height-6px my-1" role="progressbar"
+                             aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar js-progress-fill" data-pct="${pct}"></div>
+                        </div>
+                        <div class="small text-muted">${d.qtyDone} / ${d.quantity}（${pct}%）</div>
+                        ${opHtml}${setupHtml}
+                    </div>`;
+            }
+
+            // 生產線登錄多條線別時，派工帶 lineCode（Dispatch.MachineCode）——依線別分組、
+            // 每組加線別標頭；未登錄線別（單一資源模式）lineCode 為空，維持原樣不分組。
+            function dispatchGroups(dispatches) {
+                const groups = new Map();
+                dispatches.forEach(d => {
+                    const key = d.lineCode || '';
+                    if (!groups.has(key)) groups.set(key, []);
+                    groups.get(key).push(d);
+                });
+                return [...groups.entries()]
+                    .sort((a, b) => a[0].localeCompare(b[0]))
+                    .map(([lineCode, ds]) => {
+                        const header = lineCode
+                            ? `<div class="small fw-bold text-primary border-bottom mb-1">
+                                   <i class="bi bi-diagram-3 me-1"></i>${escapeHtml(lineCode)}</div>`
+                            : '';
+                        return header + ds.map(dispatchBlock).join('');
+                    }).join('');
+            }
+
+            function lineCard(line) {
+                const badge = stateBadge(line.lineState);
+                const body = line.activeDispatches.length
+                    ? dispatchGroups(line.activeDispatches)
+                    : `<p class="text-muted small mb-0">${L.NoActiveDispatch}</p>`;
+                return `
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <div class="fw-bold">${escapeHtml(line.workCenterCode)}</div>
+                                        <div class="small text-muted">${escapeHtml(line.workCenterName)}</div>
+                                    </div>
+                                    <span class="badge ${badge.cls}">${badge.text}</span>
+                                </div>
+                                ${body}
+                            </div>
+                        </div>
+                    </div>`;
+            }
+
+            async function load() {
+                loadingEl.classList.remove('d-none');
+                try {
+                    const res = await fetch(dataUrl, {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                        cache: 'no-store'
+                    });
+                    const json = await res.json();
+                    if (!json.success) throw new Error(json.message || L.LoadFailed);
+
+                    contentEl.innerHTML = json.data.lines.length
+                        ? json.data.lines.map(lineCard).join('')
+                        : `<div class="col-12 text-muted">${L.NoActiveDispatch}</div>`;
+                    contentEl.querySelectorAll('.js-progress-fill').forEach(el => {
+                        el.style.width = el.dataset.pct + '%';
+                    });
+                } catch (err) {
+                    contentEl.innerHTML = `<div class="col-12"><div class="alert alert-danger">${escapeHtml(L.LoadFailed)}</div></div>`;
+                } finally {
+                    loadingEl.classList.add('d-none');
+                }
+            }
+
+            document.getElementById('btnRefresh').addEventListener('click', load);
+            load();
+            pollTimer = setInterval(load, 30000);
+        })();
+    </script>
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Production Putaway</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Work Order / Product</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>Work Order</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Plan Qty</value></data>
+  <data name="QtyDone" xml:space="preserve"><value>Done Qty</value></data>
+  <data name="PlannedEndDate" xml:space="preserve"><value>Due Date</value></data>
+  <data name="StandardCost" xml:space="preserve"><value>Std Cost</value></data>
+  <data name="ActualCost" xml:space="preserve"><value>Actual Cost</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="ConfirmTitle" xml:space="preserve"><value>Confirm Putaway — {0}</value></data>
+  <data name="NoData" xml:space="preserve"><value>No work orders pending putaway</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>Enter search criteria and click Search</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>Putaway succeeded</value></data>
+  <data name="BatchId" xml:space="preserve"><value>Batch</value></data>
+  <data name="Rework" xml:space="preserve"><value>Rework</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+</root>

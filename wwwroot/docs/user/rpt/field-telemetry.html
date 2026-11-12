@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Field Telemetry — RPT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>現場遙測 — RPT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">RPT 目錄</span><span lang="en">RPT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">RPT 畫面</span><span lang="en">RPT screens</span></div>
+    <a href="dashboard.html" class="nav-link"><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></a>
+    <a href="profit-loss.html" class="nav-link"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a>
+    <a href="gross-margin.html" class="nav-link"><span lang="zh">毛利分析</span><span lang="en">Gross Margin Analysis</span></a>
+    <a href="margin-analysis.html" class="nav-link"><span lang="zh">多維度銷售毛利分析</span><span lang="en">Multi-dimensional sales margin analysis</span></a>
+    <a href="contribution-margin.html" class="nav-link"><span lang="zh">產品邊際貢獻分析</span><span lang="en">Product Contribution Margin</span></a>
+    <a href="balance-sheet.html" class="nav-link"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></a>
+    <a href="consolidated-statement.html" class="nav-link"><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></a>
+    <a href="outsource-performance.html" class="nav-link"><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></a>
+    <a href="data-audit.html" class="nav-link"><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></a>
+    <a href="field-telemetry.html" class="nav-link active"><span lang="zh">現場遙測</span><span lang="en">Field Telemetry</span></a>
+    <a href="saved-queries.html" class="nav-link"><span lang="zh">常用查詢</span><span lang="en">Saved Queries</span></a>
+    <a href="report-schedule.html" class="nav-link"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>
+    <a href="report-inbox.html" class="nav-link"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a>
+    <a href="report-run-history.html" class="nav-link"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-broadcast me-2 text-primary"></i><span lang="zh">現場遙測</span><span lang="en">Field Telemetry</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/FieldTelemetry &nbsp;|&nbsp; 手機上發生、伺服器看不到的事：頁面錯誤、API 慢或連不上、斷線、未送出的資料</span><span lang="en">Route: /FieldTelemetry &nbsp;|&nbsp; What happens on the phones that the server cannot see: page errors, slow or unreachable APIs, disconnections, unsent data</span></div>
+    </div>
+
+    <p><span lang="zh">現場回報「手機很慢」「按了沒反應」「報工不見了」時，伺服器的紀錄只看得到<strong>請求到了</strong>的那一半。頁面腳本出錯、請求根本沒送到、訊號弱到每支 API 都要等十幾秒、手機裡卡著好幾筆沒送出的報工——這些都發生在手機上。每支手機每分鐘會把這些狀況回報一次，本畫面把它們彙總起來。</span><span lang="en">When the floor reports "the phone is slow", "nothing happens when I tap" or "my report disappeared", the server's records only show the half where <strong>the request arrived</strong>. A script error on the page, a request that never got through, a signal so weak that every API takes over ten seconds, entries stuck unsent on a phone — all of that happens on the phone. Every phone reports these once a minute, and this screen brings them together.</span></p>
+
+    <h2 id="screen-contents"><i class="bi bi-speedometer2 me-2 text-primary"></i><span lang="zh">畫面內容</span><span lang="en">Screen contents</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">右上角選期間：最近 24 小時、7 天或 30 天。</span><span lang="en">Pick the period at the top right: the last 24 hours, 7 days or 30 days.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">四張 KPI 卡：<strong>頁面錯誤</strong>次數；<strong>API 超過 3 秒</strong>的比例（下方附連不上或失敗的次數，超過 5% 轉黃）；<strong>斷線</strong>次數與合計分鐘；<strong>有資料未送出的手機</strong>數（有就轉黃）。</span><span lang="en">Four KPI cards: the number of <strong>page errors</strong>; the share of <strong>API calls over 3 seconds</strong> (with the number that were unreachable or failed underneath; turns amber above 5%); the number of <strong>disconnections</strong> and their total minutes; and the number of <strong>phones with unsent data</strong> (amber if there are any).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh"><strong>手機現況</strong>：每支手機最後一次回報的時間、使用者、網路類型與延遲、版本，以及<strong>還有幾筆沒送出、最舊的等了幾分鐘</strong>。有未送出資料的排在最上面、以黃底標示——那支手機的人可能以為已經報過了。</span><span lang="en"><strong>Phones</strong>: for each phone, when it last reported, who was using it, network type and latency, version, and <strong>how many entries are still unsent and how long the oldest has waited</strong>. Phones with unsent data are listed first with an amber background — the person using it may believe the work has already been reported.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh"><strong>頁面錯誤排行</strong>：同一則錯誤在哪一頁、發生幾次、幾支手機遇到、最後一次是什麼時候。同一則錯誤很多支手機都遇到，通常是程式問題而不是個別手機的問題。</span><span lang="en"><strong>Top page errors</strong>: for each error, the page, how often it happened, on how many phones and when it was last seen. An error that many phones hit is usually a software problem rather than a problem with one phone.</span></div></div>
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh"><strong>API 耗時與失敗</strong>：各支 API 的呼叫數、平均與最長耗時、3～10 秒與 10 秒以上的次數、連不上或失敗的次數，以及<strong>衝突</strong>次數（別人同一刻改了同一張單、系統自動重試 3 次仍衝突；那一筆沒存進去，手機會再送一次）。衝突常出現在某幾條線，表示那幾條線常有多人同時操作同一張派工。有失敗或超過 10 秒的整列標紅。網址裡的單號、機台代號等一律顯示成 <code>{id}</code>，同一支 API 才彙總得起來。</span><span lang="en"><strong>API response times and failures</strong>: for each API, the number of calls, average and longest time, how many took 3–10 seconds or over 10 seconds, how many were unreachable or failed, and how many <strong>conflicts</strong> there were (someone else changed the same document at the same moment and three automatic retries still conflicted; that entry was not saved and the phone sends it again). Conflicts concentrated on a few lines mean several people there often work on the same dispatch at once. Rows with failures or calls over 10 seconds are shown in red. Document numbers, machine codes and the like in the address are shown as <code>{id}</code>, so that calls to the same API add up.</span></div></div>
+    <div class="step-row"><span class="step-badge">6</span><div><span lang="zh"><strong>最近事件</strong>：逐筆列出錯誤、斷線與佇列回報，可依種類篩選；錯誤可展開「細節」看堆疊。</span><span lang="en"><strong>Recent events</strong>: each error, disconnection and queue report one by one, filterable by kind; expand "Details" on an error to see the stack trace.</span></div></div>
+
+    <h2 id="how-to-read"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">怎麼看</span><span lang="en">How to read it</span></h2>
+    <ul>
+      <li><span lang="zh"><strong>某條產線一直說慢</strong>：看「手機現況」那幾支的網路與延遲；延遲幾百毫秒以上、或 API 表裡同一時段大量 3 秒以上，多半是那一區的 Wi-Fi 訊號，不是系統。</span><span lang="en"><strong>One line keeps saying it is slow</strong>: check network and latency for those phones under "Phones"; latency of several hundred milliseconds, or many calls over 3 seconds in the API table at the same time, usually points to the Wi-Fi in that area rather than the system.</span></li>
+      <li><span lang="zh"><strong>只有一支 API 慢</strong>：其他 API 都正常、只有它慢，是伺服器端那支查詢的問題，請轉給系統維護。</span><span lang="en"><strong>Only one API is slow</strong>: if everything else is fine and only that one is slow, the query behind it on the server is the problem — pass it to system maintenance.</span></li>
+      <li><span lang="zh"><strong>手機有未送出的資料很久了</strong>：請那位使用者打開手機首頁的待送出清單；超過 30 分鐘的會停在「待確認」，要本人按「確認送出」或「捨棄」（見手機手冊「斷線保護」）。</span><span lang="en"><strong>A phone has had unsent data for a long time</strong>: ask that user to open the waiting list on the phone's home page; anything older than 30 minutes stops at "awaiting confirmation" until they tap "Confirm and send" or "Discard" (see "Disconnection protection" in the mobile manual).</span></li>
+    </ul>
+
+    <h2 id="points-to-note"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">注意事項</span><span lang="en">Points to note</span></h2>
+    <p><span lang="zh">時間一律是<strong>伺服器收到回報的時間</strong>（手機時鐘不可信），所以斷線期間發生的錯誤會在恢復連線後才出現。畫面顯示目前廠別，加上沒有廠別的回報（例如登入頁出錯、工作階段已過期時）。不收任何請求內容；手機代號是手機瀏覽器自己產生的隨機碼，不是硬體識別碼，清除瀏覽器資料後會換一個。資料保留 30 天，逾期自動清除。本畫面預設只有管理者、總部、經理與財務角色看得到。</span><span lang="en">All times are <strong>when the server received the report</strong> (phone clocks are not trusted), so errors that happen while a phone is offline only appear after it reconnects. The screen shows your current plant plus reports with no plant (for example errors on the sign-in page, or after a session expired). No request content is collected; the phone code is a random value the phone's browser generates itself, not a hardware identifier, and it changes if the browser data is cleared. Data is kept for 30 days and then cleared automatically. By default only the Admin, HQ, manager and finance roles can see this screen.</span></p>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="data-audit.html"><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></a>、<a href="../mobile/index.html#offline"><span lang="zh">手機斷線保護</span><span lang="en">Mobile disconnection protection</span></a></p>
+
+  </main>
+</div>
+</body>
+</html>

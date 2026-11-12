@@ -1,0 +1,173 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.INV.ViewModels.InventoryValuationRow>
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool canPrint    = ViewBag.CanPrint == true;
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    int  curPageSize = ViewBag.CurrentPageSize as int? ?? 20;
+    decimal grandTotal   = ViewBag.GrandTotal as decimal? ?? 0m;
+    var productOptions   = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    string searchProduct = ViewBag.SearchProduct as string ?? "";
+    var warehouseOptions = ViewBag.WarehouseOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    string curWarehouse  = ViewBag.SearchWarehouse as string ?? "";
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.SortOrder as string ?? "";
+        if (cur == col + "_asc")  return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-bar-chart-line me-2"></i>@Localizer["PageTitle"]</h1>
+    </div>
+
+    @* 常用查詢入口（§7.9-6）。放在查詢卡片之外——partial 內有按鈕與輸入框，
+       塞進下面那張卡的 <form> 內會變成巢狀表單。 *@
+    @await Html.PartialAsync("_SavedQueries", "InventoryValuation")
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-12 col-md-4">
+                    <label class="form-label small">@Localizer["SearchProduct"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["SearchProduct"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@Localizer["SearchWarehouse"]</label>
+                    <select name="searchWarehouse" class="form-select">
+                        <option value="">@Localizer["AllWarehouses"]</option>
+                        @foreach (dynamic w in warehouseOptions)
+                        {
+                            <option value="@w.WhCode" selected="@(curWarehouse == (string)w.WhCode)">@w.WhCode — @w.WhName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+                @if (canPrint)
+                {
+                    <div class="col-auto">
+                        <div class="btn-group">
+                            <a asp-action="Export" asp-route-searchProduct="@ViewBag.SearchProduct"
+                               asp-route-searchWarehouse="@ViewBag.SearchWarehouse"
+                               asp-route-sortOrder="@ViewBag.SortOrder" asp-route-format="xlsx"
+                               class="btn btn-outline-secondary">
+                                <i class="bi bi-file-earmark-excel me-1"></i>@Localizer["ExportExcel"]
+                            </a>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Export" asp-route-format="csv"
+                                       asp-route-searchProduct="@ViewBag.SearchProduct" asp-route-searchWarehouse="@ViewBag.SearchWarehouse">
+                                    <i class="bi bi-filetype-csv me-1"></i>@Localizer["ExportCsv"]</a></li>
+                                <li><a class="dropdown-item" asp-action="Export" asp-route-format="json"
+                                       asp-route-searchProduct="@ViewBag.SearchProduct" asp-route-searchWarehouse="@ViewBag.SearchWarehouse">
+                                    <i class="bi bi-filetype-json me-1"></i>@Localizer["ExportJson"]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-searchProduct="@ViewBag.SearchProduct" asp-route-searchWarehouse="@ViewBag.SearchWarehouse"
+                               asp-route-pageSize="@curPageSize" asp-route-sortOrder="@ViewBag.ProductSort"
+                               class="text-decoration-none text-dark">
+                                @Localizer["ProductCode"] <i class="bi @sortIcon("product")"></i>
+                            </a>
+                        </th>
+                        <th>@Localizer["ProductName"]</th>
+                        <th>@Localizer["LocationCode"]</th>
+                        <th>@Localizer["LotNo"]</th>
+                        <th class="text-end">@Localizer["QtyOnHand"]</th>
+                        <th class="text-end">@Localizer["UnitCost"]</th>
+                        <th class="text-end">
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-searchProduct="@ViewBag.SearchProduct" asp-route-searchWarehouse="@ViewBag.SearchWarehouse"
+                               asp-route-pageSize="@curPageSize" asp-route-sortOrder="@ViewBag.ValueSort"
+                               class="text-decoration-none text-dark">
+                                @Localizer["TotalValue"] <i class="bi @sortIcon("value")"></i>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        <td><code>@r.ProductCode</code></td>
+                        <td>@r.ProductName</td>
+                        <td class="text-muted small">@r.LocationCode</td>
+                        <td class="text-muted small">@r.LotNo</td>
+                        <td class="text-end">@r.QtyOnHand.ToString("N4")</td>
+                        <td class="text-end">@r.UnitCost.ToString(moneyFmt)</td>
+                        <td class="text-end fw-semibold">@r.TotalValue.ToString(moneyFmt)</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot class="table-light">
+                    <tr>
+                        <td colspan="6" class="text-end fw-bold">@Localizer["GrandTotal"]</td>
+                        <td class="text-end fw-bold text-primary">@grandTotal.ToString(moneyFmt)</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_Pagination", Model)
+    }
+
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

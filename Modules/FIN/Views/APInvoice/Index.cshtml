@@ -1,0 +1,196 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.FIN.Models.APInvoice>
+
+<link rel="stylesheet" href="~/css/panel-table.css" />
+@using SmartFactory.MES.Modules.FIN.Models
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = L["APInvoice"];
+    bool canUpdate      = ViewBag.CanUpdate == true;
+    bool hasSearched    = ViewBag.Searched as bool? ?? false;
+    int  curPageSize    = ViewBag.CurrentPageSize as int? ?? 20;
+    string curSupplier  = ViewBag.SearchSupplier as string ?? "";
+    var supplierOptions = ViewBag.SupplierOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+
+    string SortIcon(string f) {
+        var s = (string?)ViewBag.SortOrder ?? "";
+        return s == f + "_asc" ? "bi-sort-up" : s == f + "_desc" ? "bi-sort-down" : "bi-arrow-down-up opacity-25";
+    }
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-receipt me-2"></i>@L["APInvoice"]</h1>
+        @if (ViewBag.CanCreate == true)
+        {
+            <button class="btn btn-primary btn-sm" data-action="openPanel"
+                    data-url="/APInvoice/CreateManual" data-label="@L["ManualInvoice"]">
+                <i class="bi bi-plus-lg me-1"></i>@L["ManualInvoice"]
+            </button>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@L["SupplierCode"]</label>
+                    <select name="searchSupplier" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@L["AllSuppliers"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var s in supplierOptions)
+                        {
+                            <option value="@s.CompanyCode" selected="@(curSupplier == (string)s.CompanyCode)">@s.CompanyCode — @s.CompanyName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-2">
+                    <label class="form-label small">@L["Status"]</label>
+                    <select name="searchStatus" class="form-select">
+                        <option value="">@L["All"]</option>
+                        @foreach (APInvoiceStatus s in Enum.GetValues<APInvoiceStatus>())
+                        { <option value="@s" selected="@(ViewBag.SearchStatus?.ToString() == s.ToString())">@FinEnumDisplay.Text(L, s)</option> }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@L["Search"]</button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@L["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@L["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["APInvoiceId"]</th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.SupplierSort" asp-route-searched="true"
+                               asp-route-searchSupplier="@ViewBag.SearchSupplier" asp-route-searchStatus="@ViewBag.SearchStatus"
+                               asp-route-pageSize="@curPageSize" class="text-decoration-none text-dark">
+                                @L["SupplierCode"] <i class="bi @SortIcon("supplier")"></i>
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.DateSort" asp-route-searched="true"
+                               asp-route-searchSupplier="@ViewBag.SearchSupplier" asp-route-searchStatus="@ViewBag.SearchStatus"
+                               asp-route-pageSize="@curPageSize" class="text-decoration-none text-dark">
+                                @L["InvoiceDate"] <i class="bi @SortIcon("date")"></i>
+                            </a>
+                        </th>
+                        <th>@L["DueDate"]</th>
+                        <th class="text-end">@L["TotalAmount"]</th>
+                        <th class="text-end">@L["PaidAmount"]</th>
+                        <th>@L["Status"]</th>
+                        <th>@L["SourceDocId"]</th>
+                        <th>@L["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var inv in Model)
+                {
+                    var badgeCls = inv.Status switch {
+                        APInvoiceStatus.Paid        => "bg-success",
+                        APInvoiceStatus.Void        => "bg-secondary",
+                        APInvoiceStatus.PartialPaid => "bg-warning text-dark",
+                        _                           => "bg-primary"
+                    };
+                    <tr>
+                        <td><code>@inv.APInvoiceId</code></td>
+                        <td>@inv.SupplierCode</td>
+                        <td>@inv.InvoiceDate.ToString("yyyy-MM-dd")</td>
+                        <td>@inv.DueDate.ToString("yyyy-MM-dd")</td>
+                        <td class="text-end">@inv.TotalAmount.ToString(moneyFmt)</td>
+                        <td class="text-end">@inv.PaidAmount.ToString(moneyFmt)</td>
+                        <td><span class="badge @badgeCls">@FinEnumDisplay.Text(L, inv.Status)</span></td>
+                        <td class="text-muted small">@inv.SourceDocId</td>
+                        <td>
+                            @await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = inv.APInvoiceId }))
+                            <button class="btn btn-sm btn-outline-secondary me-1"
+                                    data-url="/APInvoice/Details/@inv.APInvoiceId" data-label="@inv.APInvoiceId"
+                                    data-action="openPanel"><i class="bi bi-eye"></i> @L["View"]</button>
+                            @if (canUpdate && inv.Status == APInvoiceStatus.Open)
+                            {
+                                <button class="btn btn-sm btn-outline-danger" data-action="voidInvoice" data-id="@inv.APInvoiceId"><i class="bi bi-x-circle"></i> @L["Void"]</button>
+                            }
+                            @if (canUpdate && inv.Status == APInvoiceStatus.Void && inv.SourceDocType == "GoodsReceipt")
+                            {
+                                <button class="btn btn-sm btn-outline-primary" data-action="reissueInvoice" data-id="@inv.APInvoiceId"><i class="bi bi-arrow-repeat"></i> @L["ReissueFromSource"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_Pagination", Model)
+    }
+
+</div>
+
+<div class="offcanvas offcanvas-end shadow-lg u-panel-wide" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="sidePanelBody"></div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@L["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+    @await Html.PartialAsync("_ManualInvoiceLineScripts")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function voidInvoice(e, el) {
+        const id = el.dataset.id;
+        if (!confirm(window.i18n.t('ConfirmVoidInvoice'))) return;
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/APInvoice/Void/${id}`, { method: 'POST', headers: { 'RequestVerificationToken': token, 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(async r => {
+                const d = await r.json().catch(() => ({ success: false, message: window.i18n.t('VoidFailed') }));
+                if (d.success) { window.toastSuccess && window.toastSuccess(); setTimeout(() => location.reload(), 800); }
+                else alert(d.message || window.i18n.t('VoidFailed'));
+            }).catch(() => alert(window.i18n.t('VoidFailed')));
+    }
+    function reissueInvoice(e, el) {
+        const id = el.dataset.id;
+        if (!confirm(window.i18n.t('ConfirmReissueInvoice'))) return;
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/APInvoice/Reissue/${id}`, { method: 'POST', headers: { 'RequestVerificationToken': token, 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(async r => {
+                const d = await r.json().catch(() => ({ success: false, message: window.i18n.t('ReissueFailed') }));
+                if (d.success) { alert(d.message); location.reload(); }
+                else alert(d.message || window.i18n.t('ReissueFailed'));
+            }).catch(() => alert(window.i18n.t('ReissueFailed')));
+    }
+</script>
+}

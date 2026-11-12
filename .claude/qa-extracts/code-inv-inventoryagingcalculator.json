@@ -1,0 +1,27 @@
+{
+  "sourcePath": "Modules/INV/Services/InventoryAgingCalculator.cs",
+  "sourceHash": "7f4b3d4a50fd65b1fa9d250acaba49bbb68f7f76e22558a913ea863e0f6efbbc",
+  "entries": [
+    {
+      "slug": "code-inv-inventoryagingcalculator-5d7f3f70",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 存貨庫齡分桶計算",
+      "text": "庫存分桶計算規則說明｜系統會根據在手庫存的呆滯天數，將其金額歸入固定的六個區間內，並計算出每個區間所佔的比例。",
+      "approved": true
+    },
+    {
+      "slug": "code-inv-inventoryagingcalculator-d8f567db",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 依上界升冪排列",
+      "text": "排序依據與分類規則｜系統會根據「呆滯天數」來區分不同的儲存區間，並以升冪順序排列。其中，負值的呆滯天數會被歸入第一個區間，而從未變動的資料則會被歸類到 360 天以上的區間。",
+      "approved": true
+    },
+    {
+      "slug": "code-inv-inventoryagingcalculator-fb91a3ce",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 將  明細彙總為六個庫齡區間列",
+      "text": "庫存明細彙總成六個庫齡區間｜系統會將所有庫存的明細資料，依據其呆滯天數和金額，彙總成固定包含六個庫齡區間的列表。如果某一個庫齡區間沒有相關的庫存資料，該區間對應的金額和筆數都會顯示為零。",
+      "approved": true
+    }
+  ]
+}

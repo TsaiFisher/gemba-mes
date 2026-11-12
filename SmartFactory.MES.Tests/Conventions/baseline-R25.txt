@@ -1,0 +1,13 @@
+# R25 baseline — 空的，且應該維持是空的。
+#
+# 2026-08-03 一次補完 112 支無閘門的 GET action（36 Details／34 Create+Edit GET／
+# 37 JSON 查詢／5 支 Core）。Core 那 5 支，加上另外 3 支自我限縮的
+# （ApprovalDelegation/Index、UserSettings/Index、Error/Index），
+# 已於 Core PR #15 處理並同步回來，故此處無存量可凍結。
+#
+# 新的 GET action 若沒有閘門，會直接讓建置失敗——這是刻意的：
+# 讀取端漏閘門不會有任何徵兆（畫面正常、測試全綠、選單照樣依權限隱藏），
+# 只有「知道網址的人直接輸入」會穿過去，事後很難靠 code review 補回來。
+#
+# 確定不需要擋（純查表／只讀自己的資料）請在該 action 加
+# [PermissionGateExempt("理由")]，不要往這個檔案加行。

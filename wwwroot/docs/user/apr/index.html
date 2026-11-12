@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Approval Management — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>簽核管理 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">簽核管理畫面</span><span lang="en">Approval Management Screens</span></div>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核／所有簽核記錄</span><span lang="en">My Pending / All Approval Requests</span></a>
+    <a href="approval-template.html" class="nav-link"><span lang="zh">簽核模板設定</span><span lang="en">Approval Template Settings</span></a>
+    <a href="document-approval-config.html" class="nav-link"><span lang="zh">作業類型簽核設定</span><span lang="en">Document Approval Settings</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../sys/index.html" class="nav-link"><span lang="zh">系統管理（SYS）</span><span lang="en">System Administration (SYS)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-pen me-2 text-primary"></i><span lang="zh">簽核管理</span><span lang="en">Approval Management</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">單據的送審、簽核與退回，以及決定哪些單據要簽、由誰簽的設定</span><span lang="en">Submitting, approving and returning documents, and the settings that decide which documents need signing and by whom</span></div>
+    </div>
+
+    <p><span lang="zh">簽核由三個部分組成，設定的順序是</span><span lang="en">Approval has three parts, and the order to set them up in is </span><b><span lang="zh">先建模板、再綁作業類型、最後才有單可簽</span><span lang="en">first the template, then the document type it is attached to, and only then are there requests to sign</span></b><span lang="zh">：</span><span lang="en">:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><b><span lang="zh">簽核模板</span><span lang="en">The approval template</span></b><span lang="zh">定義一條路線由哪些步驟、哪些簽核人組成。</span><span lang="en"> defines the steps of a route and who signs each one.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><b><span lang="zh">作業類型簽核設定</span><span lang="en">The document approval setting</span></b><span lang="zh">決定哪一種單據要走哪一條路線——沒設定的單據不送審，存檔即生效。</span><span lang="en"> decides which kind of document follows which route; a type that is not set up is never submitted and takes effect on save.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><b><span lang="zh">待我簽核</span><span lang="en">My Pending Approvals</span></b><span lang="zh">是簽核者每天實際使用的清單；管理者則從「所有簽核記錄」綜覽與救援卡住的單。</span><span lang="en"> is the list approvers use day to day, while managers oversee everything — and rescue stuck requests — from "All Approval Requests".</span></div></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">簽核設定是分廠的：</span><span lang="en">Approval settings are per plant:</span></strong><span lang="zh">作業類型簽核設定只對建立當下所在的廠生效。多廠都要簽核，就得切換到每一廠各設定一次。</span><span lang="en"> a document approval setting applies only to the plant you were in when you created it. If several plants need approval, switch to each and set it up there.</span>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <a href="approval.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="my-pending-all-approval-requests" class="h6 fw-bold mt-0"><i class="bi bi-pen me-2 text-primary"></i><span lang="zh">待我簽核／所有簽核記錄</span><span lang="en">My Pending / All Approval Requests</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">簽核、拒絕、退回修改、查歷程、撤回申請、代理人設定，以及管理者的重新指派。</span><span lang="en">Approving, rejecting, returning for revision, viewing the history, withdrawing a request, setting a delegate, and reassigning as a manager.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="approval-template.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="approval-template-settings" class="h6 fw-bold mt-0"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">簽核模板設定</span><span lang="en">Approval Template Settings</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">一條簽核路線由哪些步驟組成：主管、指定角色或指定人員，以及自動跳簽。</span><span lang="en">What steps make up an approval route: supervisor, a named role or a named person, plus skipping a repeated approver.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="document-approval-config.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="document-approval-settings" class="h6 fw-bold mt-0"><i class="bi bi-gear-wide-connected me-2 text-primary"></i><span lang="zh">作業類型簽核設定</span><span lang="en">Document Approval Settings</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">哪一種單據需要簽核、走哪一份模板；設定分廠獨立。</span><span lang="en">Which kinds of document need approval and which template they follow; the settings are per plant.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="tip-box mt-4"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <span lang="zh">簽核路線取決於組織架構與角色設定，相關說明見</span><span lang="en">Approval routes depend on the organization structure and the roles, which are covered under </span><a href="../sys/index.html"><span lang="zh">系統管理（SYS）</span><span lang="en">System Administration (SYS)</span></a><span lang="zh">。</span><span lang="en">.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

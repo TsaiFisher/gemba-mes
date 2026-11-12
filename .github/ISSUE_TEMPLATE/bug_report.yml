@@ -1,0 +1,63 @@
+name: 回報問題 / Bug report
+description: 系統行為與預期不符
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **資安問題請不要開這裡**，改用 Security → Report a vulnerability（見 SECURITY.md）。
+
+        **授權檔申請也不在這裡**，請到
+        [smartfactory-licensing](https://github.com/TsaiFisher/smartfactory-licensing)。
+
+  - type: textarea
+    id: what
+    attributes:
+      label: 發生了什麼
+      description: 實際看到的行為。有錯誤訊息或截圖請一併附上。
+    validations: {required: true}
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 預期是什麼
+      description: |
+        如果這條規則寫在 `.claude/specifications/` 裡，請附上章節編號——
+        那能讓我很快判斷是「實作錯了」還是「規格本來就這樣」。
+    validations: {required: true}
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 重現步驟
+      placeholder: |
+        1. 進入「…」畫面
+        2. 按下「…」
+        3. …
+    validations: {required: true}
+
+  - type: input
+    id: version
+    attributes:
+      label: 版本
+      description: commit SHA 或 release 標籤
+    validations: {required: true}
+
+  - type: textarea
+    id: env
+    attributes:
+      label: 環境
+      placeholder: |
+        OS：
+        .NET：
+        PostgreSQL：
+        瀏覽器（若與畫面有關）：
+    validations: {required: true}
+
+  - type: checkboxes
+    id: modified
+    attributes:
+      label: 你改過原始碼嗎
+      options:
+        - label: 這是未修改的上游版本
+        - label: 我改過，且已確認在未修改的版本上也會發生

@@ -1,0 +1,193 @@
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@inject IViewLocalizer Localizer
+@model IEnumerable<SmartFactory.MES.Models.ApprovalDelegation>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    var userNames = ViewBag.UserNames as Dictionary<string, string> ?? new();
+    var userOptions = ViewBag.UserOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var delegatedToMe = ViewBag.DelegatedToMe as List<ApprovalDelegation> ?? new();
+    var editModel = ViewBag.EditModel as ApprovalDelegation;
+    var today = ViewBag.Today as DateOnly? ?? DateOnly.FromDateTime(DateTime.UtcNow);
+    bool isEdit = editModel != null;
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-person-check"></i> @Localizer["PageTitle"]</h1>
+        <a asp-action="PendingIndex" asp-controller="Approval" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-pen"></i> @Localizer["BackToPending"]
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] is string success)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            <i class="bi bi-check-circle-fill me-2"></i>@success
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] is string error)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>@error
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="alert alert-info small">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["HelpText"]
+    </div>
+
+    @if (delegatedToMe.Any())
+    {
+        <div class="alert alert-warning small">
+            <i class="bi bi-person-fill-check me-1"></i>@Localizer["DelegatedToMeTitle"]：
+            @string.Join("、", delegatedToMe.Select(d =>
+                $"{userNames.GetValueOrDefault(d.DelegatorId, d.DelegatorId)}（{d.StartDate:yyyy/MM/dd} ~ {d.EndDate:yyyy/MM/dd}）"))
+        </div>
+    }
+
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light fw-semibold">
+                    <i class="bi bi-@(isEdit ? "pencil" : "plus-circle") me-1"></i>
+                    @(isEdit ? Localizer["FormTitleEdit"] : Localizer["FormTitleNew"])
+                </div>
+                <div class="card-body">
+                    <form asp-action="Save" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="Id" value="@(editModel?.Id)" />
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">@Localizer["Delegate"] <span class="text-danger">*</span></label>
+                            <select name="DelegateId" class="form-select select2-enable w-100" required>
+                                <option value=""></option>
+                                @foreach (var u in userOptions)
+                                {
+                                    <option value="@u.Id" selected="@(editModel?.DelegateId == (string)u.Id)">@u.UserName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="form-label fw-bold">@Localizer["StartDate"] <span class="text-danger">*</span></label>
+                                <input type="date" name="StartDate" class="form-control" required
+                                       value="@((editModel?.StartDate ?? today).ToString("yyyy-MM-dd"))" />
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label fw-bold">@Localizer["EndDate"] <span class="text-danger">*</span></label>
+                                <input type="date" name="EndDate" class="form-control" required
+                                       value="@((editModel?.EndDate ?? today).ToString("yyyy-MM-dd"))" />
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">@Localizer["Reason"]</label>
+                            <input type="text" name="Reason" class="form-control" maxlength="200"
+                                   value="@(editModel?.Reason)" />
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" name="IsActive" value="true" class="form-check-input" id="chkActive"
+                                   checked="@(editModel?.IsActive ?? true)" />
+                            <input type="hidden" name="IsActive" value="false" />
+                            <label class="form-check-label fw-bold" for="chkActive">@Localizer["IsActive"]</label>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-save"></i> @Localizer["Save"]
+                            </button>
+                            @if (isEdit)
+                            {
+                                <a asp-action="Index" class="btn btn-secondary">@Localizer["CancelEdit"]</a>
+                            }
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light fw-semibold d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-list-ul me-1"></i>@Localizer["MyDelegations"]</span>
+                    @* 這支畫面沒有查詢列，每頁筆數自成一個 GET 表單掛在卡片標題列右側。 *@
+                    <form method="get" asp-action="Index" class="row g-0">
+                        @await Html.PartialAsync("_PageSizeSelect")
+                    </form>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">@Localizer["Delegate"]</th>
+                                <th>@Localizer["StartDate"]</th>
+                                <th>@Localizer["EndDate"]</th>
+                                <th>@Localizer["Reason"]</th>
+                                <th>@Localizer["Status"]</th>
+                                <th class="text-end pe-4">@Localizer["Actions"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!Model.Any())
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center py-5 text-muted">
+                                        <i class="bi bi-person-x fs-1 d-block mb-3 opacity-25"></i>
+                                        @Localizer["NoData"]
+                                    </td>
+                                </tr>
+                            }
+                            @{ var paged = ReportPaging.Page(Model, ViewData, Context); }
+                            @foreach (var d in paged)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-semibold">@userNames.GetValueOrDefault(d.DelegateId, d.DelegateId)</td>
+                                    <td>@d.StartDate.ToString("yyyy/MM/dd")</td>
+                                    <td>@d.EndDate.ToString("yyyy/MM/dd")</td>
+                                    <td class="text-muted small">@d.Reason</td>
+                                    <td>
+                                        @if (!d.IsActive)
+                                        {
+                                            <span class="badge bg-secondary">@Localizer["StatusDisabled"]</span>
+                                        }
+                                        else if (d.EndDate < today)
+                                        {
+                                            <span class="badge bg-light text-muted border">@Localizer["StatusExpired"]</span>
+                                        }
+                                        else if (d.StartDate > today)
+                                        {
+                                            <span class="badge bg-info text-dark">@Localizer["StatusScheduled"]</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">@Localizer["StatusEffective"]</span>
+                                        }
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="d-inline-flex gap-1">
+                                            <a asp-action="Index" asp-route-edit="@d.Id" class="btn btn-sm btn-outline-primary" title="@Localizer["Edit"]"><i class="bi bi-pencil"></i> @Localizer["Edit"]</a>
+                                            <form asp-action="Toggle" asp-route-id="@d.Id" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                                        title="@(d.IsActive ? Localizer["Disable"] : Localizer["Enable"])">
+                                                    <i class="bi bi-@(d.IsActive ? "pause" : "play")"></i> @(d.IsActive ? Localizer["Disable"] : Localizer["Enable"])
+                                                </button>
+                                            </form>
+                                            <form asp-action="Delete" asp-route-id="@d.Id" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="@Localizer["Delete"]"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @await Html.PartialAsync("_Pagination", paged)
+        </div>
+    </div>
+</div>

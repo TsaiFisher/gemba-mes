@@ -1,0 +1,26 @@
+@inject SmartFactory.MES.Services.IUserContext UserContextForPanel
+@*
+    _CrudPanelScripts.cshtml — Index 畫面共用腳本組合。
+    取代每個 Index.cshtml 各自手抄的 openPanel/submitPanel/... 與
+    驗證腳本載入（重複 40+ 份、易漂移）。
+
+    用法：在各 Index 的 @@section Scripts 內第一行呼叫
+        @@await Html.PartialAsync("_CrudPanelScripts")
+    其後再放該畫面專屬的 <script>。
+
+    DOM 契約見 wwwroot/js/crud-panel.js 檔頭註解。
+*@
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+<script src="~/js/module-validation.js" asp-append-version="true"></script>
+@await Html.PartialAsync("_JsLocalization")
+<script src="~/js/crud-panel.js" data-nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)" asp-append-version="true"></script>
+<form id="__AjaxAntiForgery">@Html.AntiForgeryToken()</form>
+@*
+    這個畫面是在哪個廠別渲染的。submitPanel 會把它當 X-Plant-Context 標頭送出，
+    StalePlantContextFilter 比對它與送出當下的作用廠別。
+
+    為什麼需要：ApplyGlobalValues 是在 SaveChanges 當下才填 PlantId ??= CurrentPlantId，
+    取的是**送出當下**的廠別而不是**渲染當下**的。所以「電腦上開著 A 廠的新增表單 →
+    在手機把廠別切到 B → 回電腦按存檔」會把單據建到 B 廠，畫面上沒有任何提示。
+*@
+<span id="__PlantContext" data-plant="@(UserContextForPanel.PlantId ?? "")" hidden></span>

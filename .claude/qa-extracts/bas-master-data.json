@@ -1,0 +1,139 @@
+{
+  "sourcePath": ".claude/specifications/bas-master-data.md",
+  "sourceHash": "9ba1e973c6e3fcfc4d08df611b73db11dd7c5eeaf4834a4a1913a41094fd0429",
+  "entries": [
+    {
+      "slug": "bas-master-data-62607300",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md）",
+      "text": "基礎資料的權責與適用範圍｜此模組彙整了全系統共用的主要資料和系統參數，用來作為編碼和同步的依據。各個主檔是否屬於特定廠別的歸屬判斷，需遵循既定的資料範圍規範。",
+      "approved": false
+    },
+    {
+      "slug": "bas-master-data-48590724",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 1. 模組結構與分類總覽",
+      "text": "主檔資料的分類與使用範圍｜本系統的主檔資料會根據其適用範圍進行區分。有些資料是全公司通用的，所有廠別都可以共用這些主檔資訊；但也有一些資料僅供特定廠別使用，每個廠別必須獨立維護自己的相關主檔資料。此外，有些資料的關聯性是透過特定的代碼來隔離和管理的，而不是直接依附於某個單一的主體上。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-a9611882",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 2. 往來公司（Company / CompanyContact）— 全域，對應 COMP › 2.1 業務說明",
+      "text": "公司資料的身份判斷規則｜客戶和供應商會共用同一份主檔記錄，系統會透過特定的標記來區分該筆記錄是代表客戶還是代表供應商。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-495acdb4",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 2. 往來公司（Company / CompanyContact）— 全域，對應 COMP › 2.2 關鍵欄位",
+      "text": "公司基本資料的設定規則｜每家公司必須同時填寫其代碼和名稱；此外，系統會根據是否為客戶或供應商來標記該公司的角色；系統也會預設一套收付款方式、一個主要的幣別以及一個稅別給這家公司。若要記錄同一公司有多個聯絡人，則需要分別填寫每個聯絡人的職稱、姓名、電話和電子郵件。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-86c3c99e",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 3. 幣別與匯率（Currency / CurrencyRate）— 全域，對應 CRN",
+      "text": "匯率與貨幣設定規則說明｜系統會根據您所選擇的貨幣，決定該貨幣的記號、小數位數以及是否為本公司主要使用的貨幣。此外，系統會記錄不同日期下的買入和賣出匯率，所有貨幣間的換算計算都遵循「本幣等於外幣乘以特定匯率」的原則。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-891cc536",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 4. 稅別（Tax）— 全域，對應 TAX",
+      "text": "稅別資料的基礎資訊與使用範圍｜此系統會根據設定好的稅別代碼、名稱和稅率來計算採購或銷售單據上的稅金金額。每個稅別都會標示是否目前是啟用狀態，只有啟用狀態的稅別才會被用於計算單據的稅額。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-9d18723f",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 5. 計量單位（Uom / UomConversion）— 全域，對應 UM",
+      "text": "計量單位設定與換算規則｜系統會根據每個計量單位的定義，決定數量欄位的小數位數，這個小數位數會影響到數量輸入的最小步進間距。此外，當需要將一個計量單位轉換成另一個計量單位時，系統會使用特定的分子和分母比例進行換算計算。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-d6303b5d",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 6. 產品主檔（Product / ProductCategory / ProductCategoryTag）— 全域，對應 PROD / PC › 6.1 `Product`",
+      "text": "產品基本資料的設定規則｜每筆產品都必須設定一個庫存基準單位，這個單位是用來計算庫存和成本、以及進行換算的基礎標準。此外，系統會要求您填寫該產品的安全存量數量。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-ab8c269c",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 6. 產品主檔（Product / ProductCategory / ProductCategoryTag）— 全域，對應 PROD / PC › 6.2 `ProductCategory`（含庫存預設）",
+      "text": "產品類別的基礎設定規則｜當建立一個產品類別時，系統會根據該類別的設定，自動為新產品帶入一些預設值。這些預設值包括是否需要管理批號、預設的倉庫地點、預設的庫存單位以及計算成本的方式。此外，還可以透過「類別標籤」來輔助分類產品。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-a5c7fb46",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 7. 倉儲設施（Warehouse / WarehouseType / StorageLocation / Container）— 對應 WH / CONT",
+      "text": "倉庫設施的基礎資料定義｜每個倉庫的資訊，包括其代碼、名稱以及系統行為相關的類型判斷，都必須與特定的廠別關聯。此外，儲存位置的設定是依據所屬的倉庫來區分的，而容器的容量限制則是獨立於特定倉庫和地點之外進行全域定義的。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-f777ffc8",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 8. 工作中心與機台（WorkCenter / WorkCenterMachine）— 廠別，對應 WC",
+      "text": "工作中心與機台的費用計算規則｜每個工作中心都會設定其人工費率和機台費率，這些費率會用來進行成本的計算。此外，如果一個工作中心不是用於生產線的，它也可以關聯到多個不同的機台。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-59b44080",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 9. 班別與日曆（Shift / ShiftGroup / ShiftGroupDay / SpecialDay）— 廠別，對應 SH / SI / SD",
+      "text": "班別定義規則說明｜系統會根據不同的工作時段來定義班次，每個班次都包含開始時間、結束時間以及午休的起訖時間。此外，系統也會計算出實際的工作分鐘數，這個數字是從班次的總間隔減去休息的時間所算出來的。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-b2113fe2",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 10. 模具/治具（Tooling）— 廠別，對應 MOLD",
+      "text": "設備類型與穴位數的定義｜每個工具或治具都必須指定其種類，該種類會決定它屬於模具、治具還是夾具。此外，系統也會記錄這個工具或治具所能容納的數量，也就是它的穴位數。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-74e4ed1e",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 11. 庫存異動類別（InventoryTransactionType）— 全域，對應 IY",
+      "text": "單據類別決定單據前綴與移動方向｜此規則說明了不同庫存異動的分類方式，它會決定產生的單據名稱的前綴字樣，以及該筆交易是屬於增加庫存（入庫）還是減少庫存（出庫）。此外，系統也會根據這些分類來判斷是否強制要求填寫批號或來源單號。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-f3cd6082",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 12. 單號規則（DocNumberConfig / DocNumberSequence）— 對應單號產生器 › 12.1 `DocNumberConfig`（全域，全系統共用不套廠別過濾）",
+      "text": "單號結構與生成規則說明｜每個單據類型都會設定一套固定的單號前綴、日期格式和流水碼的位數。系統會根據這些預設的規則來組合出唯一的單號。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-23f88f71",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 12. 單號規則（DocNumberConfig / DocNumberSequence）— 對應單號產生器 › 12.2 `DocNumberSequence`（每廠 + 每週期原子計數）",
+      "text": "單號生成規則與範圍限制｜單據的編號會根據單據類型、廠別和週期來決定，確保每個組合都是獨一無二的。系統會使用一個原子計數器來持續增加這個編號，以保證生成的單號不會重複。此外，週期編號的格式是固定的：年度級別使用四位數字（例如「2025」），月度級別使用六位數字（例如「202503」），而如果不需要指定週期，則會顯示特定的標記。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-b5ebf67b",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 13. 服務與共用元件",
+      "text": "單位與貨幣的計算規則說明｜系統會根據您所使用的單位和貨幣，自動處理數量和小數點位數的取捨，並在進行換算時遵循既定的標準。此外，若要刪除某個基礎資料主檔紀錄，系統會先檢查是否有其他地方引用了該紀錄，以確保資料的一致性。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-fc4c00a4",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 14. 編碼注意事項",
+      "text": "主檔資料的篩選與顯示規則｜全域主檔在查詢時，系統會自動根據使用者的廠別來過濾資料；而當處理廠別相關的主檔時，系統會自動填入該筆資料所屬的廠別資訊，使用者不能手動更改。此外，如果資料包含數量或金額的欄位，系統會依照其類型分別套用三層小數點的規範進行顯示與計算。",
+      "approved": true
+    },
+    {
+      "slug": "bas-master-data-00fc5cd9",
+      "lang": "zh",
+      "headingPath": "基礎資料領域規格（bas-master-data.md） › 15. 關聯文件",
+      "text": "關聯文件資料的範圍與規範｜系統會參考多個領域的基礎資料來決定相關資訊的呈現方式，例如關於數量和金額的小數點位數、哪些欄位可以被查詢等。此外，在處理貨幣換算時，會依據特定的幣別進行轉換；對於庫存管理，則會根據倉庫、儲位以及異動類別的定義來使用相關資訊。同時，系統也會參考關於生產班次和日曆的規定，以及工作中心費率和模具清單的資料，並會依照供應商的資格狀態來判斷其有效性。",
+      "approved": false
+    }
+  ]
+}

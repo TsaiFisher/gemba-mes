@@ -1,0 +1,22 @@
+# systemd-journald 日誌上限設定（安裝至 /etc/systemd/journald.conf）
+#
+# 問題：預設安裝的 journald.conf 只有一行 [Journal]，所有項目走預設值——
+# SystemMaxUse 是「/var/log 所在檔案系統的 10%，上限 4GB」。開發機根分割區
+# 大（本機 1TB）所以看不出問題，但同一份設定搬到 /var 只切數十 GB 的生產機，
+# journal 就會安靜地吃掉 4GB 才停。
+#
+# 另外 rsyslog 會把同一批訊息再寫一份到 /var/log/syslog（該份已由
+# /etc/logrotate.d/rsyslog 納管），所以 journal 這邊不需要留長週期。
+
+[Journal]
+# 硬上限：不論磁碟多大都不超過此值
+SystemMaxUse=500M
+
+# 單一 journal 檔上限（預設是 SystemMaxUse 的 1/8；明確設定讓輪替顆粒度可預期）
+SystemMaxFileSize=50M
+
+# 時間上限：超過一個月的紀錄一律回收，即使還沒到 SystemMaxUse
+MaxRetentionSec=1month
+
+# 每個 journal 檔最長涵蓋一天，方便按日期定位
+MaxFileSec=1day

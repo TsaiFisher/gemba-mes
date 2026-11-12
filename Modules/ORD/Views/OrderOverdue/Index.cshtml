@@ -1,0 +1,171 @@
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Modules.ORD.ViewModels.OrderOverdueRowVm>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched     = ViewBag.Searched as bool? ?? false;
+    bool   canPrint        = ViewBag.CanPrint == true;
+    string fromDate        = ViewBag.FromDate       as string ?? "";
+    string toDate          = ViewBag.ToDate         as string ?? "";
+    string searchCustomer   = ViewBag.SearchCustomer as string ?? "";
+    string searchProduct    = ViewBag.SearchProduct  as string ?? "";
+    var customerOptions     = ViewBag.CustomerOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var productOptions      = ViewBag.ProductOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-exclamation-triangle me-2 text-danger"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && hasSearched && Model != null && Model.Any())
+        {
+            <a asp-action="Export"
+               asp-route-fromDate="@fromDate" asp-route-toDate="@toDate"
+               asp-route-searchCustomer="@searchCustomer" asp-route-searchProduct="@searchProduct"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    @* 常用查詢入口（§7.9-6）。放在查詢卡片之外——partial 內有按鈕與輸入框，
+       塞進下面那張卡的 <form> 內會變成巢狀表單。 *@
+    @await Html.PartialAsync("_SavedQueries", "OrderOverdue")
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["FromDate"]</label>
+                    <input type="date" name="fromDate" class="form-control" value="@fromDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ToDate"]</label>
+                    <input type="date" name="toDate" class="form-control" value="@toDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Customer"]</label>
+                    <select name="searchCustomer" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllCustomers"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var c in customerOptions)
+                        {
+                            <option value="@c.CompanyCode" selected="@(searchCustomer == (string)c.CompanyCode)">@c.CompanyCode — @c.CompanyName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Product"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllProducts"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-success text-center"><i class="bi bi-check-circle me-1"></i>@Localizer["NoData"]</div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">@Localizer["ResultTitle"] (@Model.Count @Localizer["Items"])</span>
+                <span class="badge bg-danger">@Localizer["TotalPending"]：@Model.Sum(r => r.PendingQty).ToString("N0")</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["SalesOrderId"]</th>
+                                <th>@Localizer["CompanyCode"]</th>
+                                <th>@Localizer["OrderDate"]</th>
+                                <th>@Localizer["ProductCode"]</th>
+                                <th>@Localizer["LineNo"]</th>
+                                <th>@Localizer["DeliveryDate"]</th>
+                                <th class="text-end">@Localizer["OrderQty"]</th>
+                                <th class="text-end">@Localizer["ShippedQty"]</th>
+                                <th class="text-end">@Localizer["PendingQty"]</th>
+                                <th class="text-center">@Localizer["OverdueDays"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var paged = ReportPaging.Page(Model, ViewData, Context); }
+                            @foreach (var row in paged)
+                            {
+                                var badgeClass = row.OverdueDays >= 30 ? "bg-danger"
+                                               : row.OverdueDays >= 14 ? "bg-warning text-dark"
+                                               : "bg-secondary";
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-link btn-sm p-0 fw-semibold text-decoration-none"
+                                                data-action="openPanel" data-url="@Url.Action("Details", "SalesOrder", new { id = row.SalesOrderId })" data-label="@Localizer["ViewTitle", row.SalesOrderId]">
+                                            @row.SalesOrderId
+                                        </button>
+                                    </td>
+                                    <td>@row.CompanyCode</td>
+                                    <td>@row.OrderDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@row.ProductCode</td>
+                                    <td>@row.LineNo</td>
+                                    <td class="text-danger fw-semibold">@row.DeliveryDate.ToString("yyyy-MM-dd")</td>
+                                    <td class="text-end">@row.OrderQty.ToString("N2")</td>
+                                    <td class="text-end">@row.ShippedQty.ToString("N2")</td>
+                                    <td class="text-end fw-bold">@row.PendingQty.ToString("N2")</td>
+                                    <td class="text-center"><span class="badge @badgeClass">@row.OverdueDays @Localizer["Days"]</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @await Html.PartialAsync("_Pagination", paged)
+        </div>
+    }
+</div>
+
+<!-- Side Panel -->
+<div class="offcanvas offcanvas-end u-width-60pct" tabindex="-1" id="sidePanel" aria-labelledby="sidePanelLabel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="sidePanelBody">
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="spinner-border text-secondary" role="status"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

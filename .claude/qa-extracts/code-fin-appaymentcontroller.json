@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/FIN/Controllers/APPaymentController.cs",
+  "sourceHash": "36716b8c9cc70d359a0cf6eb4b207b483c2a10470c5b1a15997e7ba34ff13b5b",
+  "entries": [
+    {
+      "slug": "code-fin-appaymentcontroller-64c5d16b",
+      "lang": "zh",
+      "headingPath": "財務會計 › 於是「有讀取權、沒有建立權」的角色**看得到選單",
+      "text": "角色權限決定可見的選單功能｜只有擁有讀取權限的角色才能看到該選單，但若僅有讀取權而沒有建立權，點擊後仍會被系統阻擋。",
+      "approved": false,
+      "sourceSectionHash": "e1f1de41dae78127fb12b43ec42fef8853e236732a37a8f16e2d156bbe9d5325"
+    },
+    {
+      "slug": "code-fin-appaymentcontroller-82ed3a3c",
+      "lang": "zh",
+      "headingPath": "財務會計 › 另一張付款單同時核銷了同一張發票",
+      "text": "重複核銷同一發票的限制｜系統會阻止使用相同發票進行第二次核銷，以確保每張發票只能被成功扣款一次。",
+      "approved": true,
+      "sourceSectionHash": "0234a89a05731f3950bf4212490759a0554d1106dfdc08a3d73439e7d047b6e9"
+    },
+    {
+      "slug": "code-fin-appaymentcontroller-d5678b22",
+      "lang": "zh",
+      "headingPath": "財務會計 › 早就接住了， 沒跟上，撞到就是 500",
+      "text": "系統資料處理的衝突判斷規則｜當進行作廢或確認操作時，如果同時有兩張付款單試圖核銷同一張發票，系統會判定發生資料衝突。",
+      "approved": true,
+      "sourceSectionHash": "bb0bd71f792a810f274952dc41c4fac9a68ef495b26617613e46fd9a16c9d62d"
+    },
+    {
+      "slug": "code-fin-appaymentcontroller-5836ab6d",
+      "lang": "zh",
+      "headingPath": "財務會計 › 未核准的發票不得出現在核銷清單：手動發票加了簽核之後， 仍是",
+      "text": "未核准發票無法在清單中顯示｜如果手動新增的發票雖然已經經過簽核，但其狀態仍為未付款，則該筆發票不會出現在核銷清單中。只有當認列型的發票時，才會以已核准的狀態計算。",
+      "approved": true,
+      "sourceSectionHash": "957fc8ddfb0951dad4b3854537b7d4fd7fc68c4c34fa3e72da604541efe53c00"
+    }
+  ]
+}

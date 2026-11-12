@@ -1,0 +1,153 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Models.MenuPermission>
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Services
+
+@{
+    var role     = ViewBag.Role as ApplicationRole;
+    var menus    = ViewBag.Menus as List<MenuItem>;    // flat list — drives form indices
+    var menuTree = ViewBag.MenuTree as List<MenuItem>; // tree — drives visual grouping
+
+    // Build index map: MenuKey → flat index (for correct form field names)
+    var indexMap = new Dictionary<string, int>();
+    for (int i = 0; i < menus!.Count; i++)
+        indexMap[menus[i].MenuKey] = i;
+}
+
+<form id="permissionPanelForm" action="/Permission/Edit" method="post"
+      data-action-submit="submitPermissionPanel">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="roleId" value="@role?.Id" />
+    <div class="alert alert-info small py-2 mx-3 mt-2 mb-0"><i class="bi bi-info-circle me-1"></i>@Localizer["AdminOnlyNote"]</div>
+
+    @* Hidden MenuKey inputs — must always be present for correct form binding, even when rows are collapsed *@
+    @for (int i = 0; i < menus.Count; i++)
+    {
+        <input type="hidden" name="permissions[@i].MenuKey" value="@menus[i].MenuKey" />
+    }
+
+    <div class="table-responsive u-max-height-calc-100vh-140px u-overflow-y-auto">
+        <table class="table table-bordered table-sm mb-0 align-middle" id="permTable">
+            <thead class="bg-dark text-white text-center sticky-top">
+                <tr>
+                    <th class="text-start ps-3 u-min-width-200px">@Localizer["MenuHeader"]</th>
+                    <th class="u-width-72px">@Localizer["Read"]</th>
+                    <th class="u-width-72px">@Localizer["Create"]</th>
+                    <th class="u-width-72px">@Localizer["Update"]</th>
+                    <th class="u-width-72px">@Localizer["Delete"]</th>
+                    <th class="u-width-72px">@Localizer["Print"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var module in menuTree!)
+                {
+                    @* Determine the items to show for this module *@
+                    var leafItems = module.SubItems.Count > 0
+                        ? module.SubItems.Where(m => indexMap.ContainsKey(m.MenuKey)).ToList()
+                        : (indexMap.ContainsKey(module.MenuKey) ? new List<MenuItem> { module } : new List<MenuItem>());
+
+                    if (!leafItems.Any()) { continue; }
+
+                    var modCss = "mod-" + module.MenuKey;
+
+                    @* Module header row *@
+                    <tr class="table-secondary fw-semibold module-header-row">
+                        <td colspan="6" class="py-1 px-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-1 toggle-module"
+                                        data-mod="@modCss" title="@Localizer["ExpandCollapse"]" aria-label="@Localizer["ExpandCollapse"]">
+                                    <i class="bi bi-chevron-down small"></i>
+                                </button>
+                                <i class="bi @module.Icon text-primary"></i>
+                                <span>@module.Title</span>
+                                <div class="ms-auto d-flex gap-1">
+                                    <button type="button" class="btn btn-sm btn-outline-primary py-0 px-2"
+                                            data-mod="@modCss" data-bulk="select-all">
+                                        <i class="bi bi-check-all"></i> @Localizer["SelectAll"]
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2"
+                                            data-mod="@modCss" data-bulk="deselect-all">
+                                        <i class="bi bi-square"></i> @Localizer["DeselectAll"]
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    @* Item rows for this module *@
+                    @foreach (var item in leafItems)
+                    {
+                        var idx  = indexMap[item.MenuKey];
+                        var perm = Model.FirstOrDefault(p => p.MenuKey == item.MenuKey);
+                        <tr class="@modCss module-item-row">
+                            <td class="ps-4">
+                                <i class="bi @item.Icon me-1 text-muted"></i>
+                                @item.Title
+                            </td>
+                            <td class="text-center">
+                                @if (item.SupportedActions.Contains("Read"))
+                                {
+                                    <div class="form-check form-switch d-inline-block">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="permissions[@idx].CanRead" value="true"
+                                               @(perm?.CanRead == true ? "checked" : "") />
+                                    </div>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (item.SupportedActions.Contains("Create"))
+                                {
+                                    <div class="form-check form-switch d-inline-block">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="permissions[@idx].CanCreate" value="true"
+                                               @(perm?.CanCreate == true ? "checked" : "") />
+                                    </div>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (item.SupportedActions.Contains("Update"))
+                                {
+                                    <div class="form-check form-switch d-inline-block">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="permissions[@idx].CanUpdate" value="true"
+                                               @(perm?.CanUpdate == true ? "checked" : "") />
+                                    </div>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (item.SupportedActions.Contains("Delete"))
+                                {
+                                    <div class="form-check form-switch d-inline-block">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="permissions[@idx].CanDelete" value="true"
+                                               @(perm?.CanDelete == true ? "checked" : "") />
+                                    </div>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (item.SupportedActions.Contains("Print"))
+                                {
+                                    <div class="form-check form-switch d-inline-block">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="permissions[@idx].CanPrint" value="true"
+                                               @(perm?.CanPrint == true ? "checked" : "") />
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="p-3 border-top bg-light d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">
+            @Localizer["Cancel"]
+        </button>
+        <button type="submit" class="btn btn-success px-4">
+            <i class="bi bi-save"></i> @Localizer["SaveSettings"]
+        </button>
+    </div>
+</form>

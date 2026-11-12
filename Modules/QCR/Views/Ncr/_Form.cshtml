@@ -1,0 +1,249 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.NonConformanceReport
+
+@{
+    bool isNew      = string.IsNullOrEmpty(Model.NcrId);
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    // 這四個動作鈕只畫在唯讀（明細）面板上（見下方「操作按鈕」）。條件原本都帶 !isReadOnly，
+    // 與渲染位置互斥——自 2026-06 建檔起 NCR 從畫面上執行不了處置、送不了審、結不了案、刪不了（2026-10-15 修正）。
+    bool canExecute = !isNew
+        && (Model.NcrStatus == NcrStatus.Open || Model.NcrStatus == NcrStatus.Approved)
+        && ViewBag.CanUpdate == true;
+    bool canSubmit  = !isNew
+        && Model.Disposition == "UseAsIs"
+        && Model.NcrStatus == NcrStatus.Open
+        && ViewBag.CanUpdate == true;
+    bool canClose   = !isNew
+        && Model.NcrStatus == NcrStatus.Executed
+        && ViewBag.CanUpdate == true;
+    bool canDelete  = !isNew
+        && Model.NcrStatus == NcrStatus.Open
+        && ViewBag.CanDelete == true;
+    var defectOptions  = ViewBag.DefectCodeOptions  as IEnumerable<dynamic>;
+    var whOptions      = ViewBag.WarehouseOptions   as IEnumerable<dynamic>;
+}
+
+<form id="sideForm" method="post"
+      action="@Url.Action(isNew ? "Create" : $"Edit/{Model.NcrId}")"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    @if (!isNew) { <input type="hidden" name="id" value="@Model.NcrId" /> }
+
+    <div class="offcanvas-body">
+
+        @if (!isNew && isReadOnly)
+        {
+            <!-- 狀態列 -->
+            var statusBadge = Model.NcrStatus switch {
+                NcrStatus.Open => "bg-secondary", NcrStatus.PendingApproval => "bg-warning text-dark",
+                NcrStatus.Approved => "bg-info text-dark", NcrStatus.Executed => "bg-primary",
+                NcrStatus.Closed => "bg-success", _ => "bg-dark"
+            };
+            <div class="mb-3 p-2 bg-light rounded d-flex gap-2 align-items-center">
+                <span class="badge @statusBadge">@Localizer[Model.NcrStatus]</span>
+                @if (!string.IsNullOrEmpty(Model.ScrapDocId))
+                { <span class="text-muted small">@Localizer["ScrapDoc"]：@Model.ScrapDocId</span> }
+                @if (!string.IsNullOrEmpty(Model.ReworkWorkOrderId))
+                { <span class="text-muted small">@Localizer["ReworkWO"]：@Model.ReworkWorkOrderId</span> }
+                @if (!string.IsNullOrEmpty(Model.GoodsReturnId))
+                { <span class="text-muted small">@Localizer["GoodsReturnDoc"]：@Model.GoodsReturnId</span> }
+                @if (!string.IsNullOrEmpty(Model.OutsourceReworkId))
+                { <span class="text-muted small">@Localizer["OutsourceReworkDoc"]：@Model.OutsourceReworkId</span> }
+                @if (Model.ExecutedAt.HasValue)
+                { <span class="text-muted small">@Model.ExecutedAt.Value.ToString("yyyy-MM-dd HH:mm")</span> }
+                @if (Model.ClosedAt.HasValue)
+                { <span class="text-muted small">@Localizer["Closed"]：@Model.ClosedAt.Value.ToString("yyyy-MM-dd")</span> }
+            </div>
+        }
+
+        <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+
+            <!-- 來源 -->
+            <h6 class="fw-semibold mb-2 text-muted small">@Localizer["SourceSection"]</h6>
+            <div class="row g-2 mb-3">
+                <div class="col-5">
+                    <label class="form-label small">@Localizer["SourceType"]</label>
+                    <select asp-for="SourceType" class="form-select form-select-sm">
+                        @foreach (var s in new[] { "Manual", "ProductionReport", "InspectionOrder", "GoodsReceipt" })
+                        { <option value="@s" selected="@(Model.SourceType == s)">@Localizer[s]</option> }
+                    </select>
+                    <span asp-validation-for="SourceType" class="text-danger small"></span>
+                </div>
+                <div class="col-7">
+                    <label class="form-label small">@Localizer["SourceId"]</label>
+                    <input asp-for="SourceId" class="form-control form-control-sm" maxlength="60" />
+                    <span asp-validation-for="SourceId" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <!-- 品號與不良 -->
+            <h6 class="fw-semibold mb-2 text-muted small">@Localizer["DefectSection"]</h6>
+            <div class="row g-2 mb-3">
+                <div class="col-5">
+                    <label class="form-label small">@Localizer["ProductCode"] <span class="text-danger">*</span></label>
+                    <input asp-for="ProductCode" class="form-control form-control-sm" required maxlength="30" />
+                    <span asp-validation-for="ProductCode" class="text-danger small"></span>
+                </div>
+                <div class="col-4">
+                    <label class="form-label small">@Localizer["Qty"] <span class="text-danger">*</span></label>
+                    <input asp-for="Qty" type="number" step="any" min="0.0001" class="form-control form-control-sm" required />
+                    <span asp-validation-for="Qty" class="text-danger small"></span>
+                </div>
+                <div class="col-3">
+                    <label class="form-label small">@Localizer["UomCode"]</label>
+                    <input asp-for="UomCode" class="form-control form-control-sm" maxlength="20" />
+                    <span asp-validation-for="UomCode" class="text-danger small"></span>
+                </div>
+                <div class="col-7">
+                    <label class="form-label small">@Localizer["DefectCode"]</label>
+                    <select asp-for="DefectCode" class="form-select form-select-sm">
+                        <option value="">— @Localizer["SelectDefect"] —</option>
+                        @if (defectOptions != null)
+                        { @foreach (dynamic d in defectOptions)
+                          { <option value="@d.Code" selected="@(Model.DefectCode == d.Code)">@d.Code — @d.Name</option> }
+                        }
+                    </select>
+                    <span asp-validation-for="DefectCode" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <!-- 根本原因 -->
+            <div class="mb-2">
+                <label class="form-label small">@Localizer["RootCause"]</label>
+                <textarea asp-for="RootCause" class="form-control form-control-sm" rows="2" maxlength="1000"></textarea>
+                <span asp-validation-for="RootCause" class="text-danger small"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label small">@Localizer["CorrectiveAction"]</label>
+                <textarea asp-for="CorrectiveAction" class="form-control form-control-sm" rows="2" maxlength="1000"></textarea>
+                <span asp-validation-for="CorrectiveAction" class="text-danger small"></span>
+            </div>
+
+            <!-- 處置方式 -->
+            <h6 class="fw-semibold mb-2 text-muted small">@Localizer["DispositionSection"]</h6>
+            <div class="row g-2 mb-2">
+                <div class="col-12">
+                    <label class="form-label small">@Localizer["Disposition"] <span class="text-danger">*</span></label>
+                    <select asp-for="Disposition" class="form-select form-select-sm" id="dispositionSel" data-action-change="toggleScrapFields">
+                        @foreach (var d in new[] { "Scrap", "Rework", "UseAsIs", "Return", "ReturnRework" })
+                        { <option value="@d" selected="@(Model.Disposition == d)">@Localizer[d] — @Localizer[$"{d}Desc"]</option> }
+                    </select>
+                    <span asp-validation-for="Disposition" class="text-danger small"></span>
+                </div>
+            </div>
+            <!-- Scrap 專屬：倉庫/儲位 -->
+            <div id="scrapFields" class="row g-2 mb-3 @(Model.Disposition != "Scrap" ? "d-none" : "")">
+                <div class="col-5">
+                    <label class="form-label small">@Localizer["WhCode"] <span class="text-danger" id="whReq">*</span></label>
+                    <select asp-for="WhCode" class="form-select form-select-sm" id="whSel">
+                        <option value="">— @Localizer["SelectWarehouse"] —</option>
+                        @if (whOptions != null)
+                        { @foreach (dynamic w in whOptions)
+                          { <option value="@w.WhCode" selected="@(Model.WhCode == w.WhCode)">@w.WhCode — @w.WhName</option> }
+                        }
+                    </select>
+                    <span asp-validation-for="WhCode" class="text-danger small"></span>
+                </div>
+                <div class="col-5">
+                    <label class="form-label small">@Localizer["LocationCode"] <span class="text-danger">*</span></label>
+                    <input asp-for="LocationCode" class="form-control form-control-sm" maxlength="20" />
+                    <span asp-validation-for="LocationCode" class="text-danger small"></span>
+                </div>
+                <div class="col-2">
+                    <label class="form-label small">@Localizer["LotNo"]</label>
+                    <input asp-for="LotNo" class="form-control form-control-sm" maxlength="50" />
+                    <span asp-validation-for="LotNo" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label small">@Localizer["Remarks"]</label>
+                <input asp-for="Remarks" class="form-control form-control-sm" maxlength="500" />
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+            </div>
+        </fieldset>
+
+        <hr class="my-2" />
+
+        <!-- 操作按鈕 -->
+        <div class="d-flex flex-wrap gap-2 justify-content-end">
+            @if (isReadOnly)
+            {
+                <!-- 唯讀狀態下的執行按鈕 -->
+                @if (canExecute)
+                {
+                    <button type="button" class="btn btn-success btn-sm"
+                            data-action="executeNcr" data-id="@Model.NcrId">
+                        <i class="bi bi-play-circle me-1"></i>@Localizer["ExecuteBtn"]
+                    </button>
+                }
+                @if (canSubmit)
+                {
+                    <button type="button" class="btn btn-warning btn-sm"
+                            data-action="submitNcr" data-id="@Model.NcrId">
+                        <i class="bi bi-send me-1"></i>@Localizer["SubmitBtn"]
+                    </button>
+                }
+                @if (canClose)
+                {
+                    <button type="button" class="btn btn-dark btn-sm"
+                            data-action="closeNcr" data-id="@Model.NcrId">
+                        <i class="bi bi-check2-square me-1"></i>@Localizer["CloseBtn"]
+                    </button>
+                }
+                @if (canDelete)
+                {
+                    <button type="button" class="btn btn-outline-danger btn-sm"
+                            data-action="deleteItem" data-url="@Url.Action("DeleteConfirmed")" data-id="@Model.NcrId" data-confirm="@Localizer["DeleteConfirm"]">
+                        <i class="bi bi-trash me-1"></i>@Localizer["Delete"]
+                    </button>
+                }
+                <button type="button" class="btn btn-secondary btn-sm" data-action="closeSidePanel">@Localizer["Close"]</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-secondary btn-sm" data-action="closeSidePanel">@Localizer["Cancel"]</button>
+                <button type="submit" name="_action" value="save" class="btn btn-primary btn-sm">
+                    <i class="bi bi-save me-1"></i>@Localizer["Save"]
+                </button>
+            }
+        </div>
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+function toggleScrapFields() {
+    var disp = document.getElementById('dispositionSel')?.value;
+    var scrapDiv = document.getElementById('scrapFields');
+    if (scrapDiv) scrapDiv.classList.toggle('d-none', disp !== 'Scrap');
+}
+
+function executeNcr(e, el) {
+    const id = el.dataset.id;
+    if (!confirm(window.i18n?.t('NcrExecuteConfirm') ?? 'Execute NCR disposal?')) return;
+    postAction('@Url.Action("Execute")', { id });
+}
+function submitNcr(e, el) {
+    const id = el.dataset.id;
+    if (!confirm(window.i18n?.t('NcrSubmitConfirm') ?? 'Submit for approval?')) return;
+    postAction('@Url.Action("Submit")', { id });
+}
+function closeNcr(e, el) {
+    const id = el.dataset.id;
+    if (!confirm(window.i18n?.t('NcrCloseConfirm') ?? 'Close NCR?')) return;
+    postAction('@Url.Action("Close")', { id });
+}
+function postAction(url, params) {
+    const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+    const body  = Object.entries({ ...params, __RequestVerificationToken: token })
+        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+    fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body })
+        .then(r => r.json())
+        .then(d => {
+            if (d.success) { window.toastSuccess?.(d.message); setTimeout(() => location.reload(), 900); }
+            else { alert(d.message ?? (window.i18n?.t('OperationFailed') ?? 'Error')); }
+        });
+}
+</script>

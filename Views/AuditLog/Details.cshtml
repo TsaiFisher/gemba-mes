@@ -1,0 +1,83 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.AuditLog
+
+@{
+    ViewData["Title"] = Localizer["AuditLogDetails"];
+}
+
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-clock-history"></i> @Localizer["AuditLogDetails"]</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>@Localizer["Timestamp"]:</strong>
+                            <p>@DateTimeSvc.ToLocalTime(Model.Timestamp).ToString("yyyy-MM-dd HH:mm:ss")</p>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>@Localizer["User"]:</strong>
+                            <p>@(Model.UserName ?? "-") <small class="text-muted">(@(Model.UserId ?? "-"))</small></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>@Localizer["Action"]:</strong>
+                            <p>
+                                @await Html.PartialAsync("_ActionBadge", Model.Action)
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <strong>@Localizer["EntityType"]:</strong>
+                            <p>@Model.EntityType</p>
+                        </div>
+                        <div class="col-md-4">
+                            <strong>@Localizer["EntityId"]:</strong>
+                            <p><code>@(Model.EntityId ?? "-")</code></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>@Localizer["IpAddress"]:</strong>
+                            <p>@(Model.IpAddress ?? "-")</p>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>@Localizer["UserAgent"]:</strong>
+                            <p class="text-truncate" title="@Model.UserAgent">@(Model.UserAgent ?? "-")</p>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.PlantId))
+                    {
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <strong>@Localizer["Plant"]:</strong>
+                                <p><span class="badge bg-info text-dark">@Model.PlantId</span></p>
+                            </div>
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Changes))
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>@Localizer["Changes"]:</strong>
+                                <pre class="bg-light p-3 rounded"><code>@Model.Changes</code></pre>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="mt-4">
+                        <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["BackToList"]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

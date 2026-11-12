@@ -1,0 +1,294 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@using SmartFactory.MES.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using System.Text.Json
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.RPT.Models.DataAuditReportVm
+@inject SmartFactory.MES.Modules.ACT.Services.IAuditMessageFormatter AuditMsg
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool canRunNow = ViewBag.CanRunNow == true;
+    bool hasRuns   = Model.LatestRunAtLocal != null;
+
+    // 稽核類型在 DataAuditService 裡是英文常數（PO_OVER_RECEIPT…），原本直接印出來，
+    // 篩選下拉與明細欄位因此永遠是英文。查無對應鍵時退回原始代碼——新增檢核類型而
+    // 忘了補資源時，畫面會退化成原本的樣子，而不是顯示一個 "AuditType_XXX" 的鍵名。
+    Func<string, string> auditTypeName = t =>
+    {
+        if (string.IsNullOrEmpty(t)) return t;
+        // 用 GetString 而非索引子：索引子回的是 LocalizedHtmlString，沒有 ResourceNotFound。
+        var s = Localizer.GetString("AuditType_" + t);
+        return s.ResourceNotFound ? t : s.Value;
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-shield-check me-2 text-primary"></i>@Localizer["PageTitle"]</h1>
+        @if (canRunNow)
+        {
+            <button type="button" id="runNowBtn" class="btn btn-primary btn-sm">
+                <i class="bi bi-play-circle"></i> @Localizer["RunNow"]
+            </button>
+        }
+    </div>
+
+    @Html.AntiForgeryToken()
+    <div class="form-text mb-3">@Localizer["MethodHint"]</div>
+
+    @{ var repairs = ViewBag.RepairProposals as List<SmartFactory.MES.Modules.ACT.Services.DerivedFieldRepairProposal> ?? new(); }
+    @if (repairs.Any())
+    {
+        <!-- 可自動修正的累計欄位（由來源單據推回；需異動權限、人工勾選核可） -->
+        <div class="card shadow-sm mb-4 border-warning" id="repairCard">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-semibold"><i class="bi bi-wrench-adjustable me-1"></i>@Localizer["RepairTitle"]（@repairs.Count）</span>
+                @if (canRunNow)
+                {
+                    <button type="button" id="repairBtn" class="btn btn-warning btn-sm" data-confirm="@Localizer["RepairConfirm"]">
+                        <i class="bi bi-check2-square"></i> @Localizer["RepairApply"]
+                    </button>
+                }
+            </div>
+            <div class="card-body pb-0"><div class="form-text mb-2">@Localizer["RepairHint"]</div></div>
+            <div class="table-responsive">
+                <table class="table table-sm table-hover align-middle mb-0" id="repairTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="u-width-40px">@if (canRunNow) { <input type="checkbox" class="form-check-input" id="repairAll" title="@Localizer["RepairSelectAll"]" /> }</th>
+                            <th>@Localizer["RepairType"]</th>
+                            <th>@Localizer["DocId"]</th>
+                            <th>@Localizer["ProductCode"]</th>
+                            <th class="text-end">@Localizer["RepairCurrent"]</th>
+                            <th class="text-end">@Localizer["RepairExpected"]</th>
+                            <th class="text-end">@Localizer["Difference"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var r in repairs)
+                    {
+                        <tr>
+                            <td>@if (canRunNow) { <input type="checkbox" class="form-check-input repair-key" value="@r.Key" /> }</td>
+                            <td>@(r.RepairType == SmartFactory.MES.Modules.ACT.Services.DerivedFieldRepairService.PoReceivedQty
+                                    ? Localizer["RepairType_PO_RECEIVED_QTY"] : Localizer["RepairType_SO_SHIPPED_QTY"])</td>
+                            <td><strong>@r.DocId</strong> #@r.LineNo</td>
+                            <td>@r.ProductCode</td>
+                            <td class="text-end">@r.Current.ToString("0.####")</td>
+                            <td class="text-end fw-semibold">@r.Expected.ToString("0.####")</td>
+                            <td class="text-end text-danger">@r.Difference.ToString("+0.####;-0.####;0")</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+
+    @if (!hasRuns)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-hourglass-split fs-4 d-block mb-2"></i>@Localizer["NoRunsYet"]
+        </div>
+    }
+    else
+    {
+    <!-- KPI 卡 -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 bg-secondary text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["LatestRunAt"]</div>
+                    <div class="fs-5 fw-bold">@Model.LatestRunAtLocal!.Value.ToString("yyyy-MM-dd HH:mm")</div>
+                    <div class="small">@(Model.TriggerType == "Manual" ? Localizer["TriggerManual"] : Localizer["TriggerScheduled"])</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 @(Model.FailureCount > 0 ? "bg-danger" : "bg-success") text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["FailureCount"]</div>
+                    <div class="fs-5 fw-bold">@Model.FailureCount.ToString("N0")</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-info text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["AuditTypeCount"]</div>
+                    <div class="fs-5 fw-bold">@Model.AuditTypeCount.ToString("N0")</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-primary text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["Duration"]</div>
+                    <div class="fs-5 fw-bold">@((Model.DurationMs / 1000m).ToString("N1")) s</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 趨勢圖 -->
+    @if (Model.Trend.Count > 1)
+    {
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h6 class="mb-3">@Localizer["TrendTitle"]</h6>
+                <canvas id="trendChart" height="70"></canvas>
+            </div>
+        </div>
+    }
+
+    <!-- 異常明細 -->
+    <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span class="fw-semibold">@Localizer["Findings"]</span>
+            <form asp-action="Index" method="get" class="d-flex align-items-center gap-2">
+                <label class="form-label small mb-0">@Localizer["AuditType"]</label>
+                <select name="auditType" class="form-select form-select-sm w-auto">
+                    <option value="">@Localizer["AllTypes"]</option>
+                    @foreach (var t in Model.AuditTypes)
+                    {
+                        <option value="@t" selected="@(t == Model.SelectedAuditType)">@auditTypeName(t)</option>
+                    }
+                </select>
+                <button type="submit" class="btn btn-outline-primary btn-sm">@Localizer["Apply"]</button>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+        @if (!Model.Findings.Any())
+        {
+            <div class="card-body text-center text-success py-4">
+                <i class="bi bi-check-circle fs-4 d-block mb-2"></i>@Localizer["NoFindings"]
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover table-sm align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Localizer["AuditType"]</th>
+                            <th>@Localizer["Severity"]</th>
+                            <th>@Localizer["DocId"]</th>
+                            <th>@Localizer["ProductCode"]</th>
+                            <th>@Localizer["Plant"]</th>
+                            <th class="text-end">@Localizer["Difference"]</th>
+                            <th>@Localizer["Description"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @* 稽核是「全公司 × 20 餘種檢核 × 所有未結單據」，異常一旦破千整頁就垮。
+                       上方的統計卡走 Model.FailureCount（完整結果），這裡只切當頁。 *@
+                    @{ var paged = ReportPaging.Page(Model.Findings, ViewData, Context); }
+                    @foreach (var f in paged)
+                    {
+                        <tr>
+                            @* title 保留原始代碼：對照日誌／規格時要找得回那個英文常數 *@
+                            <td><span class="badge @(f.IsBlocking ? "text-bg-danger" : "text-bg-secondary")" title="@f.AuditType">@auditTypeName(f.AuditType)</span></td>
+                            @* 擋關帳 vs 僅提示：關帳訊息只數擋關帳的那些，清單得對得起來 *@
+                            <td>
+                                @if (f.IsBlocking)
+                                {
+                                    <span class="badge text-bg-danger">@Localizer["SeverityBlocking"]</span>
+                                }
+                                else
+                                {
+                                    <span class="badge text-bg-warning text-dark">@Localizer["SeverityAdvisory"]</span>
+                                }
+                            </td>
+                            <td><strong>@f.DocId</strong></td>
+                            <td>@f.ProductCode</td>
+                            <td>@f.PlantId</td>
+                            <td class="text-end fw-semibold">@f.DifferenceAmount.ToString(moneyFmt)</td>
+                            <td class="small">@AuditMsg.Format(f.MessageKey, f.MessageArgs, f.ErrorDescription)</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            @await Html.PartialAsync("_Pagination", paged)
+        }
+    </div>
+    }
+</div>
+
+@section Scripts {
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    // 手動觸發稽核（AntiForgery）
+    const btn = document.getElementById('runNowBtn');
+    if (btn) btn.addEventListener('click', function () {
+        btn.disabled = true;
+        const fd = new FormData();
+        fd.append('__RequestVerificationToken', document.querySelector('input[name="__RequestVerificationToken"]').value);
+        fetch('@Url.Action("RunNow")', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: fd })
+            .then(r => r.json())
+            .then(d => {
+                alert(d.message || 'OK');
+                window.location.reload();
+            })
+            .catch(() => { alert('Error'); btn.disabled = false; });
+    });
+
+    // 累計欄位修正：勾選 → 確認 → 送出（伺服器端會重新計算應為值）
+    const repairAll = document.getElementById('repairAll');
+    if (repairAll) repairAll.addEventListener('change', function () {
+        document.querySelectorAll('.repair-key').forEach(function (c) { c.checked = repairAll.checked; });
+    });
+    const repairBtn = document.getElementById('repairBtn');
+    if (repairBtn) repairBtn.addEventListener('click', function () {
+        const keys = Array.from(document.querySelectorAll('.repair-key:checked')).map(function (c) { return c.value; });
+        if (keys.length && !confirm(repairBtn.dataset.confirm)) return;
+        repairBtn.disabled = true;
+        const fd = new FormData();
+        fd.append('__RequestVerificationToken', document.querySelector('input[name="__RequestVerificationToken"]').value);
+        keys.forEach(function (k) { fd.append('keys', k); });
+        fetch('@Url.Action("RepairDerivedFields")', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: fd })
+            .then(r => r.json())
+            .then(d => {
+                alert(d.message || 'OK');
+                if (d.success) window.location.reload(); else repairBtn.disabled = false;
+            })
+            .catch(() => { alert('Error'); repairBtn.disabled = false; });
+    });
+
+    // 篩選下拉即選即查
+    const sel = document.querySelector('select[name="auditType"]');
+    if (sel) sel.addEventListener('change', function () { sel.form.submit(); });
+})();
+</script>
+@if (Model.Trend.Count > 1)
+{
+<script src="~/lib/chart.js/chart.umd.min.js" nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)"></script>
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    const labels = @Html.Raw(JsonSerializer.Serialize(Model.Trend.Select(t => t.Label)));
+    const values = @Html.Raw(JsonSerializer.Serialize(Model.Trend.Select(t => t.Count)));
+    // 單一序列 magnitude：無圖例、單一色相（dataviz 單序列規則）
+    new Chart(document.getElementById('trendChart'), {
+        type: 'line',
+        data: { labels, datasets: [{
+            label: '@Localizer["FailureCount"]',
+            data: values,
+            borderColor: 'rgba(220,53,69,0.85)',
+            backgroundColor: 'rgba(220,53,69,0.15)',
+            fill: true, tension: 0.3, pointRadius: 3,
+        }]},
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: 'rgba(0,0,0,0.06)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+})();
+</script>
+}
+}

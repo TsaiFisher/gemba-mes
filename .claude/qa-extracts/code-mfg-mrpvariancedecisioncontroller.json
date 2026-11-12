@@ -1,0 +1,27 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/MrpVarianceDecisionController.cs",
+  "sourceHash": "1ab519e229402a6126bed1f049428210ab327f8719a6d7ea340e1ea4ff627c48",
+  "entries": [
+    {
+      "slug": "code-mfg-mrpvariancedecisioncontroller-c92ec61b",
+      "lang": "zh",
+      "headingPath": "生產製造 › 重跑後「本次已無需求、但既有請購單仍留著」這類落差",
+      "text": "差異項目將變為待辦事項持續顯示｜系統會將採購對帳的差異項變成必須被結清的待辦，並且會持續在介面呈現，直到使用者完成處理。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-mrpvariancedecisioncontroller-90f6d076",
+      "lang": "zh",
+      "headingPath": "生產製造 › 伺服器端一律重新驗證，不信任前端送來的 id**——差異項是重跑",
+      "text": "一鍵結案退場的條件判斷｜系統會重新驗證每個請購明細的現況，只有那些尚未轉採購、尚未結案，且單據目前不在簽核中的明細，才會被實際標記為已結案。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-mrpvariancedecisioncontroller-fd84440b",
+      "lang": "zh",
+      "headingPath": "生產製造 › 只有「本次已無需求」的兩類才是退場對象",
+      "text": "退場條件限制與排除範圍｜只有當單據的類型是「本次已無需求」這兩種類型時，才能使用結案處理的方式。數量變動或新增的需求不能用結案處理來進行。",
+      "approved": true
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Special Day — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>特殊日 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="special-day.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link active"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-calendar-x me-2 text-primary"></i><span lang="zh">特殊日</span><span lang="en">Special Day</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/SpecialDay &nbsp;|&nbsp; 假日、補班日與特殊排班設定</span><span lang="en">Route: /BAS/SpecialDay &nbsp;|&nbsp; Holidays, compensatory workdays and special schedules</span></div>
+    </div>
+    <p><span lang="zh">特殊日用於覆蓋班別群組的常規排班。排程引擎在計算工作日曆時，會以特殊日設定優先取代週間規則，確保假日不排產、補班日照常計算產能。</span><span lang="en">Special days override the regular schedule of a shift group. When building the work calendar, the scheduling engine applies special days ahead of the weekly rules, so nothing is scheduled on holidays and compensatory workdays still contribute capacity.</span></p>
+    <img class="screen-shot" src="img/special-day.png" data-src-en="img/en/special-day.png" alt="特殊日畫面截圖" data-alt-en="Special day screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">特殊日畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Special day screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-32pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">日期</span><span lang="en">Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">特殊日的具體日期（例：2026-01-01）</span><span lang="en">The date of the special day (e.g. 2026-01-01)</span></td></tr>
+        <tr><td><span lang="zh">日期類型</span><span lang="en">Date Type</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">假日（Holiday）/ 補班日（Compensatory）；詳見下方說明</span><span lang="en">Holiday / Compensatory workday; see the notes below</span></td></tr>
+        <tr><td><span lang="zh">說明</span><span lang="en">Guide</span></td><td></td><td><span lang="zh">備註（例：元旦、補上 12/28 假期）</span><span lang="en">Note (e.g. New Year's Day, makeup for the 12/28 holiday)</span></td></tr>
+        <tr><td><span lang="zh">補班對應星期</span><span lang="en">Compensatory Weekday</span></td><td></td><td><span lang="zh">僅「補班日」需填，指定以哪一天的班別群組為準（1=週一 … 7=週日）</span><span lang="en">Required for compensatory workdays only: which weekday's shift group applies (1 = Mon … 7 = Sun)</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">日期類型說明</span><span lang="en">Date types</span></h3>
+    <div class="cal-legend">
+      <div class="d-flex align-items-center gap-2"><div class="cal-dot u-background-dc3545"></div><span><strong><span lang="zh">假日（Holiday）</span><span lang="en">Holiday</span></strong><span lang="zh">：全日不排產，工作日曆該日可用分鐘 = 0。</span><span lang="en">: nothing is scheduled all day; available minutes in the work calendar = 0.</span></span></div>
+      <div class="d-flex align-items-center gap-2"><div class="cal-dot u-background-198754"></div><span><strong><span lang="zh">補班日（Compensatory）</span><span lang="en">Compensatory workday</span></strong><span lang="zh">：原本休假日但需上班，依「補班對應星期」的班別計算可用時間。</span><span lang="en">: a normal day off on which work takes place; available time is taken from the shift of the "Compensatory Weekday".</span></span></div>
+    </div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">新增假日</span><span lang="en">Adding a holiday</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進入「基本資料 &gt; 特殊日」。</span><span lang="en">Go to "Basic Data &gt; Special Day".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「新增」，選擇日期，日期類型選「假日」，填入說明（如「元旦」）。</span><span lang="en">Click "Add", pick the date, set the date type to "Holiday" and enter a description (such as "New Year's Day").</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點「儲存」。</span><span lang="en">Click "Save".</span></div></div>
+
+    <h3><span lang="zh">新增補班日</span><span lang="en">Adding a compensatory workday</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」，選擇補班日期，日期類型選「補班日」。</span><span lang="en">Click "Add", pick the makeup date and set the date type to "Compensatory".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">在「補班對應星期」欄選擇以哪天的班別為準（例：週日補班，選「1」代表以週一班別計算工時）。</span><span lang="en">In the "Compensatory Weekday" field choose which weekday's shift applies (for a Sunday makeup day, choose "1" to use the Monday hours).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">填入說明後點「儲存」。</span><span lang="en">Enter the description, then click "Save".</span></div></div>
+
+    <h3><span lang="zh">查看月曆視圖</span><span lang="en">Viewing the calendar</span></h3>
+    <p><span lang="zh">清單上方提供月曆切換器，已設定的假日以紅底標示，補班日以綠底標示，方便整月確認。</span><span lang="en">A calendar switch above the list shows holidays on a red background and compensatory workdays on green, making a whole month easy to check.</span></p>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">建議每年底集中建立次年度的假日清單，可依官方行政院人事總處公告的行事曆批次輸入，避免年初排程計算錯誤。</span><span lang="en">Enter the next year's holidays in one batch at the end of each year, following the official government calendar, to avoid scheduling errors in January.</span>
+    </div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">特殊日為廠級設定（PlantId 範圍），不同廠別（如不同生產地）可各自維護不同假日。</span><span lang="en"> Special days are plant-scoped (PlantId), so plants in different locations can keep different holidays.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

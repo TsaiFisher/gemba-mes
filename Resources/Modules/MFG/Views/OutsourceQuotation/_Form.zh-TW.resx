@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="LabelSupplier" xml:space="preserve"><value>委外廠商</value></data>
+  <data name="SelectSupplier" xml:space="preserve"><value>— 請選擇廠商 —</value></data>
+  <data name="LabelProduct" xml:space="preserve"><value>品號（選填，空白 = 適用廠商所有品號）</value></data>
+  <data name="OptAllProducts" xml:space="preserve"><value>— 所有品號 —</value></data>
+  <data name="HintProduct" xml:space="preserve"><value>留空代表此廠商通用報價，填入品號代表品號專屬報價（優先度較高）</value></data>
+  <data name="LabelRouting" xml:space="preserve"><value>工藝路線（選填）</value></data>
+  <data name="OptAllRoutings" xml:space="preserve"><value>— 所有工藝 —</value></data>
+  <data name="LabelOperationSeq" xml:space="preserve"><value>工序序號（選填）</value></data>
+  <data name="LabelAllowedScrapRate" xml:space="preserve"><value>合約允收損耗率</value></data>
+  <data name="PlaceholderAllowedScrapRate" xml:space="preserve"><value>留白＝未約定損耗條款</value></data>
+  <data name="HelpAllowedScrapRate" xml:space="preserve"><value>0–1 之間（0.05 ＝ 5%）。留白代表合約沒有約定損耗條款，收貨時不向廠商扣款；填 0 代表明確約定零容忍，短交即全額求償。</value></data>
+  <data name="LabelUnitPrice" xml:space="preserve"><value>委外加工單價</value></data>
+  <data name="LabelCurrency" xml:space="preserve"><value>幣別</value></data>
+  <data name="LabelUom" xml:space="preserve"><value>計量單位</value></data>
+  <data name="LabelMinQty" xml:space="preserve"><value>最小訂購量</value></data>
+  <data name="LabelMaxQty" xml:space="preserve"><value>最大訂購量</value></data>
+  <data name="LabelLeadDays" xml:space="preserve"><value>委外交期（天）</value></data>
+  <data name="LabelEffectiveFrom" xml:space="preserve"><value>有效起日</value></data>
+  <data name="LabelEffectiveTo" xml:space="preserve"><value>有效迄日（留空 = 永久有效）</value></data>
+  <data name="LabelRemarks" xml:space="preserve"><value>備註</value></data>
+  <data name="LabelIsActive" xml:space="preserve"><value>有效中</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+</root>

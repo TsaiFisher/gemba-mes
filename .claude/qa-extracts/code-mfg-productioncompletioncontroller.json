@@ -1,0 +1,46 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/ProductionCompletionController.cs",
+  "sourceHash": "49b8c178d82ef6cf663a7261998ee78d28a824f4722bf8b4e5176c9f417c2672",
+  "entries": [
+    {
+      "slug": "code-mfg-productioncompletioncontroller-418dca95",
+      "lang": "zh",
+      "headingPath": "生產製造 › 取預設成品倉",
+      "text": "取預設成品倉的規則說明｜系統會根據當前所屬的廠區來決定預設的成品倉庫，如果沒有進行廠別驗證，可能會導致在某些廠區選擇到一個實際上不存在的倉庫代碼。",
+      "approved": false,
+      "sourceSectionHash": "d9ff3d4ba151565e51b0051d233b9673361757fc71994a50944513f08ee85688"
+    },
+    {
+      "slug": "code-mfg-productioncompletioncontroller-3812c243",
+      "lang": "zh",
+      "headingPath": "生產製造 › 產品類別的預設倉儲優先於系統參數",
+      "text": "產品出貨的倉庫以品類為準｜系統會根據產品所屬的類別，決定使用該類別預設指定的倉儲位置來處理半成品入庫。這樣能確保後續在母件工單沖銷時，所有相關的數量計算和移動都指向同一個來源，避免了因不同流程指引到不同倉庫而產生的資料不一致問題。",
+      "approved": true,
+      "sourceSectionHash": "21fce591e88f5187fae988ec03b413509fd764a3822c9ec41f90d504d8e9d411"
+    },
+    {
+      "slug": "code-mfg-productioncompletioncontroller-53d2ea77",
+      "lang": "zh",
+      "headingPath": "生產製造 › 分箱：每箱數量照產品庫存單位捨入",
+      "text": "分箱數量依庫存單位計算｜系統會根據產品的庫存單位來決定每箱應包含多少件，這個計算結果與實際完工量所使用的單位是相同的。",
+      "approved": true,
+      "sourceSectionHash": "5b1aeda3a38e512dd089596dbbece2d0ad150374134788f20c9d2c3cdc2ff035"
+    },
+    {
+      "slug": "code-mfg-productioncompletioncontroller-1296297f",
+      "lang": "zh",
+      "headingPath": "生產製造 › 分箱入庫「帶入空箱」：本廠該種類可用的空箱號",
+      "text": "分箱入庫可用空箱數量限制｜此功能只能使用該廠別目前可用的空箱號，且一次最多只能帶入指定數量的空箱。此外，這些帶入的空箱會排在裝有本工單產品的箱子最前面。",
+      "approved": true,
+      "sourceSectionHash": "99ee1812d4d3def992512b320df3043599ee06884095745ca9e08e5311cf4ea0"
+    },
+    {
+      "slug": "code-mfg-productioncompletioncontroller-58f50624",
+      "lang": "zh",
+      "headingPath": "生產製造 › 批號箱標籤：**只給沒綁箱號的分箱入庫用**——有綁箱號時箱子已",
+      "text": "分箱入庫的批號箱標籤｜批號箱標籤只用在「沒有填箱號」的分箱入庫：入庫成功後面板會出現「列印箱標籤」，每箱（每個批號）一張，QR 內容就是該箱的批號，之後掃標籤就等於輸入這一箱的批號。有填箱號時，箱子身上已貼著固定 QR（箱號，在箱子畫面預先列印），入庫後不再提供批號箱標籤。標籤依實際庫存異動的批號淨額產生，作廢回沖掉的批號不會再印，入庫後隨時可以重印。",
+      "approved": true,
+      "sourceSectionHash": "6e8007e6b618bfef5d2f5634248d05f3b6b2f1e35742527e4afb1c856a45b073"
+    }
+  ]
+}

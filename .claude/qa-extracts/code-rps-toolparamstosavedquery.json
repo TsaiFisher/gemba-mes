@@ -1,0 +1,34 @@
+{
+  "sourcePath": "Modules/RPS/Services/ToolParamsToSavedQuery.cs",
+  "sourceHash": "d4a72ca3b57b259adb5140d2423fa8509aa732e80b3dadea09e568f67e0f62a0",
+  "entries": [
+    {
+      "slug": "code-rps-toolparamstosavedquery-7ed0d18b",
+      "lang": "zh",
+      "headingPath": "報表 › 一次翻譯的結果",
+      "text": "翻譯結果與常用查詢關聯性｜如果沒有帶入常用的查詢工具參數名稱，則代表這張常用查詢等於那一題的內容。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-toolparamstosavedquery-e3978fbb",
+      "lang": "zh",
+      "headingPath": "報表 › 把一次自然語言查詢用過的**工具參數**翻成**常用查詢**的輸",
+      "text": "參數轉換成常用查詢的規則｜系統會將使用者在自然語言查詢中使用的工具參數，轉換為常用查詢的輸入。如果發現有任何不匹配的參數，系統會丟棄這些參數，並且必須回報哪些參數被丟棄了。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-toolparamstosavedquery-5ee19db4",
+      "lang": "zh",
+      "headingPath": "報表 › 列舉一律以**名稱**解析：以序數存下來的舊查詢，",
+      "text": "報表查詢依據名稱解析規則｜系統會根據您輸入的名稱來解析舊有的查詢紀錄，而不是使用其原始的序數編號。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-toolparamstosavedquery-21b5fc79",
+      "lang": "zh",
+      "headingPath": "報表 › 對不上的一律丟掉並回報",
+      "text": "資料不一致會被排除與回報｜系統會自動將無法比對的資料排除掉，並在報告中說明這些被排除的項目。",
+      "approved": true
+    }
+  ]
+}

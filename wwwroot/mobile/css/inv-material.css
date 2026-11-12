@@ -1,0 +1,12 @@
+/* 料件作業（工單發退料／備料作業／委外收料／領料退料申請）共用樣式。
+   CSP style-src 不允許內聯 <style>，故外部化；四頁共用同一組 class，不與其他頁衝突。 */
+.mat-line { border: 1px solid #dee2e6; border-radius: 10px; padding: .6rem .7rem; margin-bottom: .6rem; background: #fff; }
+.mat-line.mat-done { border-color: #198754; background: #f3fbf6; }
+.mat-line .mat-product { font-weight: 600; }
+.stock-chip { display: inline-flex; flex-direction: column; align-items: flex-start; border: 1px solid #ced4da;
+              border-radius: 8px; padding: .25rem .5rem; margin: .2rem .3rem .2rem 0; font-size: .8rem;
+              background: #fff; cursor: pointer; }
+.stock-chip.active { border-color: #0d6efd; background: #e7f1ff; }
+.stock-chip .chip-qty { font-weight: 600; }
+.slip-item { cursor: pointer; }
+.qty-input { max-width: 9rem; }

@@ -1,0 +1,178 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.ACT
+@using SmartFactory.MES.Modules.ACT.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.ACT.Models.AccountingPeriod>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool canCreate   = ViewBag.CanCreate == true;
+    bool canUpdate   = ViewBag.CanUpdate == true;
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    int  curPageSize = ViewBag.CurrentPageSize as int? ?? 20;
+    var  userNames   = ViewBag.UserNames as Dictionary<string, string> ?? new();
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-calendar-check me-2"></i>@Localizer["PageTitle"]</h1>
+        @if (canCreate)
+        {
+            <button class="btn btn-primary" data-action="createNext">
+                <i class="bi bi-plus-lg"></i> @Localizer["CreateNext"]
+            </button>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-auto">
+                    <label class="form-label small fw-semibold">@Localizer["Year"]</label>
+                    <select name="year" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllYears"]</option>
+                        @foreach (var y in ViewBag.YearOptions as List<int> ?? new List<int>())
+                        {
+                            <option value="@y" selected="@(ViewBag.Year as int? == y)">@y</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label class="form-label small fw-semibold">@Localizer["Status"]</label>
+                    <select name="statusFilter" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllStatuses"]</option>
+                        @foreach (PeriodStatus st in Enum.GetValues<PeriodStatus>())
+                        {
+                            <option value="@st" selected="@(ViewBag.StatusFilter as PeriodStatus? == st)">@ActEnumDisplay.Text(L, st)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["PeriodId"]</th>
+                        <th>@Localizer["StartDate"]</th>
+                        <th>@Localizer["EndDate"]</th>
+                        <th>@Localizer["Status"]</th>
+                        <th>@Localizer["ClosedAt"]</th>
+                        <th>@Localizer["ClosedBy"]</th>
+                        @if (canUpdate) { <th>@Localizer["Actions"]</th> }
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var p in Model)
+                {
+                    var badge = p.Status switch {
+                        PeriodStatus.Open     => "bg-success",
+                        PeriodStatus.Closing  => "bg-warning text-dark",
+                        PeriodStatus.Closed   => "bg-secondary",
+                        PeriodStatus.Reopened => "bg-info text-dark",
+                        _                     => "bg-light text-dark"
+                    };
+                    var label = ActEnumDisplay.Text(L, p.Status);
+                    <tr>
+                        <td><strong>@p.PeriodId</strong></td>
+                        <td>@p.StartDate.ToString("yyyy-MM-dd")</td>
+                        <td>@p.EndDate.ToString("yyyy-MM-dd")</td>
+                        <td><span class="badge @badge">@label</span></td>
+                        <td class="small text-muted">@(p.ClosedAt?.ToString("yyyy-MM-dd HH:mm") ?? "—")</td>
+                        <td class="small text-muted">@(p.ClosedBy != null && userNames.TryGetValue(p.ClosedBy, out var closedByName) ? closedByName : (p.ClosedBy ?? "—"))</td>
+                        @if (canUpdate)
+                        {
+                            <td>
+                                @if (p.Status == PeriodStatus.Open || p.Status == PeriodStatus.Reopened)
+                                {
+                                    <button class="btn btn-sm btn-outline-warning me-1" data-action="startClosing" data-id="@p.PeriodId">
+                                        <i class="bi bi-lock"></i> @Localizer["StartClosing"]
+                                    </button>
+                                }
+                                @if (p.Status == PeriodStatus.Closing)
+                                {
+                                    <button class="btn btn-sm btn-outline-danger me-1" data-action="closePeriod" data-id="@p.PeriodId">
+                                        <i class="bi bi-lock-fill"></i> @Localizer["Close"]
+                                    </button>
+                                    @* 回頭路必須跟〈開始月結〉在同一個畫面：關帳要稽核全過，
+                                       稽核沒過又只能靠過帳去修，而過帳正被 Closing 擋著（W4-F8）。 *@
+                                    <button class="btn btn-sm btn-outline-warning me-1" data-action="cancelClosing" data-id="@p.PeriodId">
+                                        <i class="bi bi-arrow-counterclockwise"></i> @Localizer["CancelClosing"]
+                                    </button>
+                                }
+                                @if (p.Status == PeriodStatus.Closed)
+                                {
+                                    <button class="btn btn-sm btn-outline-secondary" data-action="reopenPeriod" data-id="@p.PeriodId">
+                                        <i class="bi bi-unlock"></i> @Localizer["Reopen"]
+                                    </button>
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @* 2026-09-11 補：這支 controller 本來就每頁 20 筆、View 也宣告 PaginatedList，
+       但畫面上一個分頁控制項都沒有——第 21 期以後的期間永遠進不去。 *@
+    @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["OperationSucceeded"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function postAction(url, confirmMsg) {
+        if (confirmMsg && !confirm(confirmMsg)) return;
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(url, { method: 'POST', headers: { 'RequestVerificationToken': token, 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(async r => {
+                const d = await r.json().catch(() => ({ success: false, message: window.i18n.t('OperationFailed') }));
+                if (d.success) { window.toastSuccess && window.toastSuccess(); setTimeout(() => location.reload(), 800); }
+                else alert(d.message);
+            });
+    }
+    const _msgConfirmCreateNext   = '@Html.Raw(Localizer["ConfirmCreateNext"].Value.Replace("'", "\\'"))';
+    const _msgConfirmStartClosing = '@Html.Raw(Localizer["ConfirmStartClosing"].Value.Replace("'", "\\'"))';
+    const _msgConfirmClose        = '@Html.Raw(Localizer["ConfirmClose"].Value.Replace("'", "\\'"))';
+    const _msgConfirmReopen       = '@Html.Raw(Localizer["ConfirmReopen"].Value.Replace("'", "\\'"))';
+    const _msgConfirmCancelClosing = '@Html.Raw(Localizer["ConfirmCancelClosing"].Value.Replace("'", "\\'"))';
+
+    function createNext()         { postAction('/AccountingPeriod/CreateNext', _msgConfirmCreateNext); }
+    function startClosing(e, el)  { postAction(`/AccountingPeriod/StartClosing/${el.dataset.id}`, _msgConfirmStartClosing); }
+    function closePeriod(e, el)   { postAction(`/AccountingPeriod/Close/${el.dataset.id}`, _msgConfirmClose); }
+    function cancelClosing(e, el) { postAction(`/AccountingPeriod/CancelClosing/${el.dataset.id}`, _msgConfirmCancelClosing); }
+    function reopenPeriod(e, el)  { postAction(`/AccountingPeriod/Reopen/${el.dataset.id}`, _msgConfirmReopen); }
+</script>
+}

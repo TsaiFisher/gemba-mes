@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Landed Cost Allocation — INV User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>進料費用分攤 — INV 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">INV 目錄</span><span lang="en">INV Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">INV 畫面</span><span lang="en">INV Screens</span></div>
+    <a href="inventory-balance.html" class="nav-link"><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></a>
+    <a href="stock-movement.html" class="nav-link"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a>
+    <a href="stock-ledger.html" class="nav-link"><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></a>
+    <a href="warehouse-ops.html" class="nav-link"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a>
+    <a href="material-staging.html" class="nav-link"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a>
+    <a href="scrap-doc.html" class="nav-link"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></a>
+    <a href="loan-doc.html" class="nav-link"><span lang="zh">借入借出單</span><span lang="en">Loan Document</span></a>
+    <a href="sample-doc.html" class="nav-link"><span lang="zh">樣品/客供單</span><span lang="en">Sample/Consignment Docs</span></a>
+    <a href="inventory-count.html" class="nav-link"><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></a>
+    <a href="stock-adjustment.html" class="nav-link"><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></a>
+    <a href="../osp/outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="rework-material.html" class="nav-link"><span lang="zh">重工發退料單</span><span lang="en">Rework Material</span></a>
+    <a href="stock-transfer.html" class="nav-link"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a>
+    <a href="cross-plant-transfer.html" class="nav-link"><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></a>
+    <a href="inventory-valuation.html" class="nav-link"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a>
+    <a href="landed-cost-allocation.html" class="nav-link active"><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></a>
+    <a href="stock-shortage.html" class="nav-link"><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></a>
+    <a href="slow-moving-inventory.html" class="nav-link"><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></a>
+    <a href="inventory-aging.html" class="nav-link"><span lang="zh">存貨庫齡分析</span><span lang="en">Inventory Aging Analysis</span></a>
+    <a href="inventory-value.html" class="nav-link"><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></a>
+    <a href="inventory-turnover.html" class="nav-link"><span lang="zh">庫存周轉率</span><span lang="en">Inventory Turnover</span></a>
+    <a href="stock-variance.html" class="nav-link"><span lang="zh">盤差分析</span><span lang="en">Stock Variance</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-truck-flatbed me-2 text-primary"></i><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/LandedCostAllocation &nbsp;|&nbsp; 運費/關稅等進口費用分攤入成本</span><span lang="en">Route: /LandedCostAllocation &nbsp;|&nbsp; Allocating freight, duty and other import costs into inventory cost</span></div>
+    </div>
+
+    <p><span lang="zh">將運費、關稅、保險等進料附加費用依金額/數量/重量基準分攤至進貨明細，調增存貨單位成本並產生對應分錄。</span><span lang="en">Allocates freight, duty, insurance and other landed costs to receipt lines by amount, quantity or weight, increasing the unit cost of the stock and creating the matching journal entry.</span></p>
+    <img class="screen-shot" src="img/landed-cost-allocation.png" data-src-en="img/en/landed-cost-allocation.png" alt="到岸成本分攤畫面截圖" data-alt-en="Landed cost allocation screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">到岸成本分攤畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Landed cost allocation screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">分攤</span><span lang="en">Allocation</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」選擇要分攤的進貨單（可多張）。</span><span lang="en">Click "Add" and choose the receipts to allocate over (more than one is allowed).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">輸入費用項目與金額，選擇分攤基準，系統計算各明細分攤額。</span><span lang="en">Enter the cost items and amounts and choose the allocation basis; the system works out how much is allocated to each line.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">確認過帳：更新存貨成本並產生費用分錄。</span><span lang="en">Confirm and post: the inventory cost is updated and the expense journal entry is created.</span></div></div>
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">只有仍在庫的部分會加進存貨成本：同一張分攤單裡同料號、同儲位的各行，以這些行的進貨量合計對比目前在手量算出在庫比例，比例內資本化、其餘記「進料費用差異」（5151）。費用以外幣輸入時，以單據日的買匯換成本幣後才進存貨與總帳；查無匯率會擋下確認，請先維護匯率。</span><span lang="en">Only the part still in stock is added to inventory cost: for lines of the same item and location in one allocation, the in-stock ratio is the current on-hand quantity over the total receipt quantity of those lines. That share is capitalized and the rest goes to landed cost variance (5151). When the cost is entered in a foreign currency it is converted to local currency at the buying rate on the document date before it reaches inventory and the ledger; confirmation is blocked if no rate exists, so maintain the rate first.</span></div>
+    <h3><span lang="zh">費用發票到了</span><span lang="en">When the cost invoice arrives</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">確認分攤時，費用先貸記「暫估應付運費」（2153）。</span><span lang="en">On confirmation the cost is first credited to accrued freight (2153).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">運費／關稅發票到了，到<a href="../fin/ap-invoice.html">應付發票</a>開手動發票，明細科目選「2153 暫估應付運費」，金額填發票未稅額；過帳後借 2153／貸應付帳款，暫估就沖平了。</span><span lang="en">When the freight or duty invoice arrives, create a manual invoice in <a href="../fin/ap-invoice.html">AP Invoice</a> and choose "2153 accrued freight" as the line account, entering the amount before tax. Posting debits 2153 and credits accounts payable, which clears the accrual.</span></div></div>
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">外幣費用：分攤用單據日匯率估列，發票用發票日匯率入帳，兩者匯率不同時 2153 會留下匯差，請以手動傳票轉入匯兌損益。</span><span lang="en">Foreign-currency costs: the allocation accrues at the document-date rate and the invoice books at the invoice-date rate. If the two rates differ, a small exchange difference is left on 2153; move it to exchange gain or loss with a manual journal entry.</span></div>
+    <h3><span lang="zh">作廢</span><span lang="en">Void</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點單號開啟已確認的分攤單，按「作廢」並輸入原因。</span><span lang="en">Open the confirmed allocation from its number, click "Void" and enter a reason.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">系統開立反向傳票（借 2153／貸 存貨、進料費用差異），並把當初加進均價（或成本層）的金額扣回。</span><span lang="en">The system posts a reversing journal entry (debit 2153, credit inventory and landed cost variance) and takes back out of the average cost (or cost layers) what the allocation added.</span></div></div>
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">確認後該料號在該儲位已有出庫（先進先出品則是任何異動），表示分攤進去的成本已有一部分隨出庫轉走，系統會擋下作廢。這時請改開一張負數金額的分攤單或以存貨調整處理。若這筆暫估已經用手動應付發票沖過 2153，作廢後 2153 會留下借方餘額，請一併作廢那張應付發票。作廢日受會計期間鎖管制。</span><span lang="en">If the item has been issued from that location since confirmation (or, for FIFO items, has had any movement), part of the allocated cost has already left with that stock and the void is refused; create a negative allocation or a stock adjustment instead. If the accrual was already cleared by a manual AP invoice on 2153, voiding leaves a debit balance on 2153, so void that AP invoice as well. The void date is subject to the accounting period lock.</span></div>
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。列印單含分攤基準、費用類別、到岸成本總額，以及各進貨行的品號、品名、進貨金額、分攤成本與新舊單位成本。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The printout shows the allocation basis, cost type and total landed cost, and for each receipt line the product code and name, purchase amount, allocated cost and the original and new unit cost.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">查詢</span><span lang="en">Search</span></td><td><span lang="zh">分攤單號或來源單號的模糊比對</span><span lang="en">Partial match on the allocation number or the source document number</span></td></tr>
+        <tr><td><span lang="zh">日期起 / 迄</span><span lang="en">Date from / to</span></td><td><span lang="zh">依單據日期區間篩選</span><span lang="en">Filters by document date range</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">清單欄位</span><span lang="en">List columns</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">分攤單號</span><span lang="en">Allocation No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">單據日期</span><span lang="en">Doc Date</span></td><td><span lang="zh">費用分攤的認列日期，決定入帳期間</span><span lang="en">Recognition date of the allocation, which decides the accounting period</span></td></tr>
+        <tr><td><span lang="zh">分攤基準</span><span lang="en">Allocation Basis</span></td><td><span lang="zh">費用攤入各進貨明細的分配依據（依金額、依數量、依重量等）</span><span lang="en">Basis on which the cost is spread over the receipt lines (by amount, by quantity, by weight …)</span></td></tr>
+        <tr><td><span lang="zh">待分攤費用總額</span><span lang="en">Total Landed Cost</span></td><td><span lang="zh">本次要攤入存貨成本的進貨附加費用合計（運費、關稅、保險等）</span><span lang="en">Total incidental purchase costs to be allocated into inventory cost (freight, duty, insurance …)</span></td></tr>
+        <tr><td><span lang="zh">幣別</span><span lang="en">Currency</span></td><td><span lang="zh">費用發生的交易幣別；換算本位幣後才攤入成本</span><span lang="en">Transaction currency in which the cost was incurred; it is converted to local currency before being allocated into cost</span></td></tr>
+        <tr><td><span lang="zh">明細筆數</span><span lang="en">Lines</span></td><td><span lang="zh">本單涵蓋的進貨明細行數</span><span lang="en">Number of receipt lines covered by this document</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">分攤單的執行進度；確認後費用併入存貨單位成本，影響後續出庫成本</span><span lang="en">Progress of the allocation document; once confirmed the cost is added to the unit cost of the stock and affects later outbound costs</span></td></tr>
+        <tr><td><span lang="zh">簽核狀態</span><span lang="en">Approval</span></td><td><span lang="zh">線上簽核的進度</span><span lang="en">Online approval progress</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="../pur/goods-receipt.html"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

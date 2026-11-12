@@ -1,0 +1,19 @@
+# R24 baseline — 只放「Core 主體檔案」的既有 action。
+#
+# ProjectZ 自己的 /api/… 端點一律不進 baseline：需要豁免就在該 action 上加
+# [PermissionGateExempt("理由")]，讓決定留在程式裡。baseline 存在的唯一理由是
+# 下面兩支控制器屬於 Core（git ls-tree upstream/main Api/ 只有這兩檔），
+# 就地加註記會造成 core drift；依 CLAUDE.md「Core 檔案變更須 upstream-first」，
+# 要改得先進 Core repo。
+#
+# 這 4 支目前的實際防護（2026-08-03 逐支確認）：
+#   MobileAuth.Logout / Me            — 只操作／只回傳「目前登入者自己」的資料
+#   MobileModule.GetModules           — 依 _userContext.ActiveRoleId 過濾，回傳的就是呼叫者自己的權限
+#   MobileModule.GetAllowedActions    — 同上；這兩支本身就是權限查詢端點，再套閘門會變成循環
+#
+# ⚠️ Core 若日後在這兩檔新增端點，會是「不在 baseline 的新違規」而讓建置失敗——
+#    那是刻意的：新端點必須有人判斷要不要擋，不該因為檔案屬於 Core 就自動放行。
+Api/Mobile/MobileAuthController.cs::Logout 缺少權限閘門（補 if (!await …Can…) return Forbid(); / RequireMobilePermissionAsync；確定不需要則加 [PermissionGateExempt("理由")]）
+Api/Mobile/MobileAuthController.cs::Me 缺少權限閘門（補 if (!await …Can…) return Forbid(); / RequireMobilePermissionAsync；確定不需要則加 [PermissionGateExempt("理由")]）
+Api/Mobile/MobileModuleController.cs::GetAllowedActions 缺少權限閘門（補 if (!await …Can…) return Forbid(); / RequireMobilePermissionAsync；確定不需要則加 [PermissionGateExempt("理由")]）
+Api/Mobile/MobileModuleController.cs::GetModules 缺少權限閘門（補 if (!await …Can…) return Forbid(); / RequireMobilePermissionAsync；確定不需要則加 [PermissionGateExempt("理由")]）

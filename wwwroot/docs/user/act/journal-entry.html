@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Journal — ACT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>管理日記帳 — ACT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ACT 目錄</span><span lang="en">ACT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ACT 畫面</span><span lang="en">ACT screens</span></div>
+    <a href="accounting-period.html" class="nav-link"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a>
+    <a href="journal-entry.html" class="nav-link active"><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></a>
+    <a href="trial-balance.html" class="nav-link"><span lang="zh">試算表</span><span lang="en">Trial Balance</span></a>
+    <a href="month-end.html" class="nav-link"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>
+    <a href="department-actual-cost.html" class="nav-link"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></a>
+    <a href="nrv-assessment.html" class="nav-link"><span lang="zh">IAS 2 NRV 評估</span><span lang="en">IAS 2 NRV Assessment</span></a>
+    <a href="ecl.html" class="nav-link"><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></a>
+    <a href="bad-debt-provision.html" class="nav-link"><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-journal-bookmark me-2 text-primary"></i><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/JournalEntry &nbsp;|&nbsp; 自動/手動分錄、手動傳票與期初餘額</span><span lang="en">Route: /JournalEntry &nbsp;|&nbsp; Automatic and manual entries, manual journals and opening balances</span></div>
+    </div>
+
+    <p><span lang="zh">彙集各模組自動產生的分錄（進銷存過帳、人工/製費吸收、費用分攤等），並支援手開與調整分錄。Closing 期間僅允許 Adjustment 類型入帳。</span><span lang="en">Gathers the entries created automatically by every module (inventory postings, labour and overhead absorption, cost allocation and so on) and also supports manual and adjusting entries. Only the Adjustment type can be posted in a Closing period.</span></p>
+    <img class="screen-shot" src="img/journal-entry.png" data-src-en="img/en/journal-entry.png" alt="日記帳畫面截圖" data-alt-en="Journal screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">日記帳畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Journal screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">可依期間、科目、來源單號篩選。</span><span lang="en">Can be filtered by period, account and source document number.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">手動傳票</span><span lang="en">Manual journal entry</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點右上角「手動傳票」，輸入分錄日期與摘要。日期決定落在哪一個會計期間。</span><span lang="en">Click "Manual journal" at the top right and enter the entry date and a description. The date decides which accounting period the entry falls in.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">逐行選科目並填借方<b>或</b>貸方——<b>同一行不可兩邊都填</b>。下拉只列出科目主檔中勾選「可手動選用」的科目：存貨、進貨暫估應付這類由自動過帳維護餘額的科目不在其中。</span><span lang="en">For each line pick an account and enter a debit <b>or</b> a credit — <b>never both on the same line</b>. The drop-down lists only the accounts flagged as manually selectable in the chart of accounts: inventory, the GR/IR accrual and the like, whose balances are maintained by automatic postings, are not offered.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">表尾即時顯示借貸合計與差額。按「儲存」，借貸不平衡或期間已關帳時會退回表單並顯示原因。</span><span lang="en">The footer shows the running debit and credit totals and the difference. Click "Save"; if the entry does not balance, or the period is closed, the form comes back with the reason.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">月結中（Closing）不收手動傳票：</span><span lang="en">A Closing period does not accept manual journals:</span></strong><span lang="zh">該狀態只允許調整分錄（Adjustment），而調整分錄是由匯率重評、NRV 減損、實際費率重估等月結作業自己產生的，不是從這個畫面手開。需要在月結中補一筆，請先取消月結。</span><span lang="en"> that status only allows adjusting entries, and those are produced by the month-end tasks themselves — revaluation, NRV impairment, the actual-rate re-estimate — not raised by hand from this screen. To add one while closing, cancel the close first.</span>
+    </div>
+
+    <h3><span lang="zh">更正手動傳票：沖銷</span><span lang="en">Correcting a manual journal: reversal</span></h3>
+    <p><span lang="zh">傳票一經儲存即為正式帳，<b>不能修改也不能刪除</b>；開錯了請用沖銷更正：</span><span lang="en">A saved journal is part of the books and <b>can be neither edited nor deleted</b>; to correct a mistake, reverse it:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在清單點開該傳票的明細，按「沖銷」並指定沖銷日期（預設今天，須落在可入帳的期間）。</span><span lang="en">Open the journal's details from the list, click "Reverse" and pick the reversal date (today by default; it must fall in a period open for posting).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">系統產生一張借貸對調的新傳票，來源單號指回原傳票；原傳票保留，明細會顯示「已由 X 沖銷」。再另開一張正確的手動傳票即可。</span><span lang="en">The system creates a new journal with debits and credits swapped, whose source number points back to the original; the original stays and its details show "Reversed by X". Then enter a correct manual journal.</span></div></div>
+    <p class="text-muted small"><span lang="zh">只有手動傳票能沖銷；每張只能沖一次，沖銷傳票本身不能再沖。需具本畫面的新增權限。自動分錄的更正請回到來源單據作廢或重做。</span><span lang="en">Only manual journals can be reversed; each can be reversed once and a reversal cannot itself be reversed. Requires create permission on this screen. To correct an automatic entry, void or redo the source document.</span></p>
+
+    <h3><span lang="zh">期初餘額（年中上線）</span><span lang="en">Opening balances (going live mid-year)</span></h3>
+    <p><span lang="zh">期初餘額就是一張多行的手動傳票：借方列出全部資產科目餘額，貸方列出負債與權益。</span><span lang="en">Opening balances are simply a manual journal with many lines: the assets on the debit side, the liabilities and equity on the credit side.</span><span lang="zh">幾十個科目一行一行按「新增行」並不可行，所以表單提供</span><span lang="en"> Adding dozens of lines one at a time is not practical, so the form provides </span><b><span lang="zh">「貼上多行」</span><span lang="en">"Paste lines"</span></b><span lang="zh">：從 Excel 複製「科目代碼、借方、貸方、行摘要」四欄直接貼入即可。</span><span lang="en">: copy the four columns — account code, debit, credit, line description — straight from Excel and paste them in.</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">分錄日期填<b>上線日的前一天</b>，讓期初餘額落在正式作業開始之前。</span><span lang="en">Date the entry the <b>day before go-live</b> so the opening balances sit before live operations begin.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">貼上後畫面會顯示「已填入幾行、略過幾行」。<b>被略過的是科目主檔查無、或未勾選「可手動選用」的代碼</b>——請先到「<a href="../fin/chart-of-account.html">財務管理 &gt; 會計科目</a>」補建或開放，再貼一次。</span><span lang="en">After pasting, the screen reports how many lines were filled and how many were skipped. <b>A line is skipped when the code is not in the chart of accounts, or is not flagged as manually selectable</b> — create it or tick the flag under "<a href="../fin/chart-of-account.html">Finance &gt; Chart of Accounts</a>" first, then paste again.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">確認表尾的借貸合計相等再儲存。</span><span lang="en">Check that the debit and credit totals in the footer match, then save.</span></div></div>
+    <p class="text-muted small"><span lang="zh">為什麼有些科目不能手動選：應收、應付、存貨等科目由出貨、收料、發料等單據自動過帳，有各自的明細帳；手動打一筆進去，總帳就會與明細帳對不起來。這類科目刻意不開放（表單上方也有常駐說明），調整請用對應的單據；確實需要時由會計到「會計科目」開放。</span><span lang="en">Why some accounts cannot be selected manually: receivables, payables, inventory and similar accounts are posted automatically by shipments, receipts, issues and other documents, each with its own subledger; a manual entry would leave the general ledger out of agreement with the subledger. They are deliberately closed (the form also says so above the lines); make adjustments through the corresponding document, or have accounting enable the account under Chart of Accounts if it is really needed.</span></p>
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。傳票列印逐行列出科目代碼與名稱（英文介面印英文科目名稱）、摘要、幣別與原幣金額、借貸方，並印借貸合計。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The voucher printout lists, line by line, the account code and name (English account names on the English interface), description, currency and original amount, and debit and credit, with debit and credit totals.</span></p>
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">期間（YYYYMM）</span><span lang="en">Period (YYYYMM)</span></td><td><span lang="zh">以會計期間篩選，如 202607</span><span lang="en">Filters by accounting period, e.g. 202607</span></td></tr>
+        <tr><td><span lang="zh">來源類型</span><span lang="en">Source type</span></td><td><span lang="zh">產生此分錄的來源模組／單別（如進貨、出貨、成本結轉）</span><span lang="en">Source module and document type that produced the entry (goods receipt, shipment, cost transfer …)</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">傳票表頭</span><span lang="en">Voucher header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">傳票號</span><span lang="en">Journal No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">期間</span><span lang="en">Period</span></td><td><span lang="zh">依入帳日自動歸屬的會計期間</span><span lang="en">Accounting period the entry falls in, derived automatically from its date</span></td></tr>
+        <tr><td><span lang="zh">入帳日</span><span lang="en">Entry Date</span></td><td><span lang="zh">分錄的會計認列日，決定歸屬期間</span><span lang="en">Accounting date of the entry, which decides the period it falls in</span></td></tr>
+        <tr><td><span lang="zh">來源類型</span><span lang="en">Source type</span></td><td><span lang="zh">自動分錄的來源模組；手開分錄為手動類別</span><span lang="en">Source module of an automatic entry; entries raised by hand are of the manual type</span></td></tr>
+        <tr><td><span lang="zh">來源單號</span><span lang="en">Source doc No</span></td><td><span lang="zh">追溯回原始單據的單號，可回查來源作業</span><span lang="en">Number of the original document, for looking up the operation it came from</span></td></tr>
+        <tr><td><span lang="zh">類型</span><span lang="en">Type</span></td><td><span lang="zh">一般分錄 / 調整分錄（Adjustment）。Closing 期間僅允許調整分錄入帳</span><span lang="en">Normal entry or adjusting entry. Only adjusting entries can be posted in a Closing period</span></td></tr>
+        <tr><td><span lang="zh">說明</span><span lang="en">Guide</span></td><td><span lang="zh">傳票摘要</span><span lang="en">Voucher description</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">借貸明細</span><span lang="en">Debit / Credit Lines</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">科目代碼 / 科目名稱</span><span lang="en">Account code / Account name</span></td><td><span lang="zh">會計科目；自動分錄由各模組的科目對應規則決定</span><span lang="en">The account; for automatic entries it comes from each module's account mapping rules</span></td></tr>
+        <tr><td><span lang="zh">借方 / 貸方</span><span lang="en">Debit / Credit</span></td><td><span lang="zh">該行的借貸金額，全單借貸合計必須相等才能儲存</span><span lang="en">The debit or credit on the line; the document can only be saved when total debits equal total credits</span></td></tr>
+        <tr><td><span lang="zh">本位幣</span><span lang="en">Local Amount</span></td><td><span lang="zh">以交易匯率換算後的本位幣金額，供帳務彙總使用</span><span lang="en">The amount converted to local currency at the transaction rate, used in the accounting summary</span></td></tr>
+        <tr><td><span lang="zh">成本中心</span><span lang="en">Cost Center</span></td><td><span lang="zh">費用歸屬的部門，供部門實際費用與分攤使用。手動傳票只能選<b>目前所在廠</b>的組織單位（含未設廠別、從上層繼承到本廠的部門）；全公司層與他廠的部門不在清單中</span><span lang="en">Department the cost belongs to, used for departmental actual costs and allocation. A manual journal can only use organization units of the <b>plant you are in</b> (including departments that inherit the plant from a parent unit); company-level units and other plants' departments are not offered</span></td></tr>
+        <tr><td><span lang="zh">說明</span><span lang="en">Guide</span></td><td><span lang="zh">該明細行的個別摘要</span><span lang="en">Description of the individual line</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="accounting-period.html"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a>、<a href="../rpt/profit-loss.html"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

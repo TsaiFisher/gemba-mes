@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Modules/INV/Models/MaterialStagingOrder.cs",
+  "sourceHash": "6d7e96a13fbee22b7eea0db45fe6f9c56a987920523ced47e49625749010f719",
+  "entries": [
+    {
+      "slug": "code-inv-materialstagingorder-5653c403",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 本行料件是為哪張工單備的",
+      "text": "備料來源的工單關聯規則｜生產批次的備料單雖然可以橫跨多張工單，但無論是轉移還是領用消耗，都必須依照每一行資料分別指定到特定的工單上。",
+      "approved": true
+    },
+    {
+      "slug": "code-inv-materialstagingorder-b835e180",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 本行料件對應的派工單",
+      "text": "派工單用來追蹤物料需求｜此欄位是用於記錄本行物料所對應的派工單，當在備料層級填寫時，系統會利用這個資訊回溯到物料的需求。",
+      "approved": true
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.DocumentApprovalConfig
+
+@{
+    var templates = ViewBag.Templates as Microsoft.AspNetCore.Mvc.Rendering.SelectList;
+    bool isEdit = ViewBag.IsEdit == true;
+    string action = isEdit ? "Edit" : "Create";
+}
+
+<form method="post" asp-action="@action" asp-controller="DocumentApprovalConfig" data-ajax="true">
+    @Html.AntiForgeryToken()
+    @if (isEdit) { <input type="hidden" asp-for="Id" /> }
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["DocumentTypeName"] <span class="text-danger">*</span></label>
+        <input asp-for="DocumentTypeName" class="form-control" placeholder="@Localizer["DocumentTypeNamePlaceholder"]" />
+        <span asp-validation-for="DocumentTypeName" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["DocumentType"] <span class="text-danger">*</span></label>
+        @if (isEdit)
+        {
+            <input type="text" class="form-control" value="@Model.DocumentType" readonly />
+            <input type="hidden" asp-for="DocumentType" />
+            <div class="form-text">@Localizer["DocumentTypeReadonlyHint"]</div>
+        }
+        else
+        {
+            <input asp-for="DocumentType" class="form-control" placeholder="@Localizer["DocumentTypePlaceholder"]" />
+            <div class="form-text">@Localizer["DocumentTypeHint"]</div>
+        }
+        <span asp-validation-for="DocumentType" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3 form-check">
+        <input type="checkbox" asp-for="IsApprovalRequired" class="form-check-input" id="isApprovalRequired" />
+        <label class="form-check-label fw-semibold" for="isApprovalRequired">@Localizer["RequireApproval"]</label>
+        <div class="form-text">@Localizer["RequireApprovalHint"]</div>
+    </div>
+
+    <div class="mb-3 @(Model.IsApprovalRequired ? "" : "d-none")" id="templateDiv">
+        <label class="form-label fw-semibold">@Localizer["ApprovalTemplate"] <span class="text-danger">*</span></label>
+        <select asp-for="ApprovalTemplateId" asp-items="templates" class="form-select">
+            <option value="">@Localizer["SelectTemplate"]</option>
+        </select>
+        @* 沒有這個 span 的話，後端 ValidateTemplateRequired 加的欄位級錯誤
+           在 AJAX 換回 partial 之後會整個消失——看起來就像「按了存檔沒反應」。 *@
+        <span asp-validation-for="ApprovalTemplateId" class="text-danger small"></span>
+        <div class="form-text">@Localizer["ApprovalTemplateHint"]</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+            @Localizer["Cancel"]
+        </button>
+    </div>
+</form>

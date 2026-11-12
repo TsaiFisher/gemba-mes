@@ -1,0 +1,12 @@
+@*
+    _PrintButton.cshtml — 清單列的列印鈕（2026-10-27 補齊作業單據列印時共用）。
+    Model＝該單 Print 的網址；沒有列印權限（ViewBag.CanPrint 不是 true）時不輸出。
+    用法：@await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = row.XxxId }))
+*@
+@model string
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@if (ViewBag.CanPrint is true)
+{
+    <a class="btn btn-sm btn-outline-secondary me-1" href="@Model" target="_blank"
+       title="@L["Print_Print"]" aria-label="@L["Print_Print"]"><i class="bi bi-printer"></i></a>
+}

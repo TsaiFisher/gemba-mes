@@ -1,0 +1,151 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model PaginatedList<PlannedDowntime>
+
+@{
+    ViewData["Title"]   = Localizer["PageTitle"].Value;
+    string curWorkCenter  = ViewBag.WorkCenterId as string ?? "";
+    var workCenterOptions = ViewBag.WorkCenterOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        @if (ViewBag.CanCreate)
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                        data-url="@Url.Action("Create")"
+                        data-label="@Localizer["AddTitle"]"
+                        data-action="openPanel">
+                    <i class="bi bi-plus-circle"></i> @Localizer["Add"]
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" action="@Url.Action("Index")" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["FromDate"]</label>
+                    <input type="date" name="fromDate" class="form-control" value="@ViewBag.FromDate" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["ToDate"]</label>
+                    <input type="date" name="toDate" class="form-control" value="@ViewBag.ToDate" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">@Localizer["WorkCenter"]</label>
+                    <select name="workCenterId" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllWorkCenters"]</option>
+                        @foreach (var wc in workCenterOptions)
+                        {
+                            <option value="@wc.WorkCenterCode" selected="@(curWorkCenter == (string)wc.WorkCenterCode)">@wc.WorkCenterCode — @wc.WorkCenterName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+                <input type="hidden" name="searched" value="true" />
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>@Localizer["ColStart"]</th>
+                    <th>@Localizer["ColEnd"]</th>
+                    <th>@Localizer["ColWorkCenter"]</th>
+                    <th>@Localizer["ColMachine"]</th>
+                    <th>@Localizer["ColType"]</th>
+                    <th>@Localizer["ColReason"]</th>
+                    <th>@Localizer["ColActive"]</th>
+                    <th>@Localizer["ColActions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null) @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.StartTime.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@item.EndTime.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@(item.WorkCenterId ?? Localizer["AllPlant"].Value)</td>
+                        <td>@(item.MachineCode ?? "—")</td>
+                        <td>@(item.DowntimeType ?? "—")</td>
+                        <td>@item.Reason</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success">@Localizer["Yes"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@Localizer["No"]</span>
+                            }
+                        </td>
+                        <td>
+                            @if (ViewBag.CanUpdate)
+                            {
+                                <button type="button" class="btn btn-sm btn-warning"
+                                        data-url="@Url.Action("Edit", new { id = item.Id })"
+                                        data-label="@Localizer["EditTitle"]"
+                                        data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                            }
+                            @if (ViewBag.CanDelete)
+                            {
+                                <button type="button" class="btn btn-sm btn-danger"
+                                        data-action="deleteItem" data-url="@Url.Action("DeleteConfirmed")" data-id="@item.Id"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-info">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<div class="offcanvas offcanvas-end u-min-width-560px u-max-width-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

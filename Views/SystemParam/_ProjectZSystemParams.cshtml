@@ -1,0 +1,170 @@
+@*
+    ProjectZ 系統參數頁面的模組專屬設定區塊（ProjectZ 自有檔，非 Core）。
+    由 Core 擴充點 _SystemParamModuleExtensions.cshtml 單行委派載入。
+
+    此 Partial 在 <form> 標籤內，輸出的 input/select 會隨表單一起提交。
+    新增模組設定一律加在本檔，不需修改 Index.cshtml，也不要回頭改 Core 擴充點檔。
+    對應多語資源：Resources/Views/SystemParam/_ProjectZSystemParams.{zh-TW,en-US}.resx
+    對應後端讀寫：Filters/SystemParamEnhancementFilter.cs（Index 投影 / Save 持久化）
+*@
+
+<!-- 庫存設定 -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-bold bg-light">
+        <i class="bi bi-box-seam me-2"></i>@Localizer["InventorySettings"]
+    </div>
+    <div class="card-body row g-3">
+        <div class="col-md-6">
+            @{
+                var invSimplified = ViewData["InvSimplifiedMode"] as bool? ?? false;
+            }
+            <div class="form-check form-switch">
+                <input type="hidden" name="InvSimplifiedMode" value="false" />
+                <input class="form-check-input" type="checkbox" name="InvSimplifiedMode" value="true"
+                       id="invSimplifiedMode" @(invSimplified ? "checked" : "") />
+                <label class="form-check-label" for="invSimplifiedMode">@Localizer["InvSimplifiedMode"]</label>
+            </div>
+            <div class="form-text">@Localizer["InvSimplifiedModeHint"]</div>
+        </div>
+        <div class="col-md-6">
+            @{
+                var invCostMethod = ViewData["InvDefaultCostMethod"] as string ?? "MA";
+            }
+            <label class="form-label">@Localizer["InvDefaultCostMethod"]</label>
+            <select name="InvDefaultCostMethod" class="form-select">
+                <option value="MA" selected="@(invCostMethod == "MA")">@Localizer["MovingAverage"]</option>
+                <option value="FIFO" selected="@(invCostMethod == "FIFO")">@Localizer["Fifo"]</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- 製造設定 -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-bold bg-light">
+        <i class="bi bi-gear-wide-connected me-2"></i>@Localizer["MfgSettings"]
+    </div>
+    <div class="card-body row g-3">
+        <div class="col-md-6">
+            @{
+                var mfgSimplified = ViewData["MfgSimplifiedMode"] as bool? ?? false;
+            }
+            <div class="form-check form-switch">
+                <input type="hidden" name="MfgSimplifiedMode" value="false" />
+                <input class="form-check-input" type="checkbox" name="MfgSimplifiedMode" value="true"
+                       id="mfgSimplifiedMode" @(mfgSimplified ? "checked" : "") />
+                <label class="form-check-label" for="mfgSimplifiedMode">@Localizer["MfgSimplifiedMode"]</label>
+            </div>
+            <div class="form-text">@Localizer["MfgSimplifiedModeHint"]</div>
+        </div>
+
+        @* 自動重排排程（全域預設；各廠可於廠別參數頁籤覆寫） *@
+        @{
+            var autoOnChange = ViewData["MfgAutoScheduleOnChange"] as bool? ?? false;
+            var autoBefore   = ViewData["MfgAutoScheduleBeforeDispatch"] as bool? ?? false;
+            var autoDaily    = ViewData["MfgAutoScheduleDailyTime"] as string ?? "";
+            var autoRule     = ViewData["MfgAutoScheduleRule"] as string ?? "";
+            var autoFreeze   = ViewData["MfgAutoScheduleFreezeHours"] as string ?? "";
+        }
+        <div class="col-12">
+            <div class="fw-semibold">@Localizer["MfgAutoScheduleHeader"]</div>
+            <div class="form-text mt-0">@Localizer["MfgAutoScheduleHint"]</div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-check form-switch">
+                <input type="hidden" name="MfgAutoScheduleOnChange" value="false" />
+                <input class="form-check-input" type="checkbox" name="MfgAutoScheduleOnChange" value="true"
+                       id="mfgAutoScheduleOnChange" @(autoOnChange ? "checked" : "") />
+                <label class="form-check-label" for="mfgAutoScheduleOnChange">@Localizer["MfgAutoScheduleOnChange"]</label>
+            </div>
+            <div class="form-text">@Localizer["MfgAutoScheduleOnChangeHint"]</div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-check form-switch">
+                <input type="hidden" name="MfgAutoScheduleBeforeDispatch" value="false" />
+                <input class="form-check-input" type="checkbox" name="MfgAutoScheduleBeforeDispatch" value="true"
+                       id="mfgAutoScheduleBeforeDispatch" @(autoBefore ? "checked" : "") />
+                <label class="form-check-label" for="mfgAutoScheduleBeforeDispatch">@Localizer["MfgAutoScheduleBeforeDispatch"]</label>
+            </div>
+            <div class="form-text">@Localizer["MfgAutoScheduleBeforeDispatchHint"]</div>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="mfgAutoScheduleDailyTime">@Localizer["MfgAutoScheduleDailyTime"]</label>
+            <input type="time" class="form-control" name="MfgAutoScheduleDailyTime" id="mfgAutoScheduleDailyTime" value="@autoDaily" />
+            <div class="form-text">@Localizer["MfgAutoScheduleDailyTimeHint"]</div>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="mfgAutoScheduleRule">@Localizer["MfgAutoScheduleRule"]</label>
+            <select class="form-select" name="MfgAutoScheduleRule" id="mfgAutoScheduleRule">
+                <option value="" selected="@(autoRule == "")">@Localizer["MfgAutoScheduleRuleNotSet"]</option>
+                @foreach (var r in SmartFactory.MES.Modules.BAS.Models.PlantParamCatalog.AutoScheduleRuleChoices)
+                {
+                    <option value="@r" selected="@(autoRule == r)">@Localizer["Rule_" + r]</option>
+                }
+            </select>
+            <div class="form-text">@Localizer["MfgAutoScheduleRuleHint"]</div>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="mfgAutoScheduleFreezeHours">@Localizer["MfgAutoScheduleFreezeHours"]</label>
+            <input type="number" class="form-control" min="0" max="168" step="0.5"
+                   name="MfgAutoScheduleFreezeHours" id="mfgAutoScheduleFreezeHours" value="@autoFreeze" />
+            <div class="form-text">@Localizer["MfgAutoScheduleFreezeHoursHint"]</div>
+        </div>
+    </div>
+</div>
+
+<!-- 財務設定 -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-bold bg-light">
+        <i class="bi bi-cash-coin me-2"></i>@Localizer["FinanceSettings"]
+    </div>
+    <div class="card-body row g-3">
+        <div class="col-md-4">
+            @{
+                var baseCurrency = ViewData["BaseCurrency"] as string;
+                var currencyCodes = ViewData["CurrencyCodes"] as List<string> ?? new List<string>();
+            }
+            <label class="form-label">@Localizer["BaseCurrency"]</label>
+            <select name="BaseCurrency" class="form-select">
+                <option value="">— @Localizer["NotSet"] —</option>
+                @foreach (var code in currencyCodes)
+                {
+                    <option value="@code" selected="@(baseCurrency == code)">@code</option>
+                }
+            </select>
+            <div class="form-text">@Localizer["BaseCurrencyHint"]</div>
+        </div>
+    </div>
+</div>
+
+<!-- 採購（SRM）設定 -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-bold bg-light">
+        <i class="bi bi-star-half me-2"></i>@Localizer["SrmSettings"]
+    </div>
+    <div class="card-body row g-3">
+        @{
+            var srmWq = ViewData["SrmWeightQuality"]  as string ?? "30";
+            var srmWd = ViewData["SrmWeightDelivery"] as string ?? "30";
+            var srmWp = ViewData["SrmWeightPrice"]    as string ?? "20";
+            var srmWs = ViewData["SrmWeightService"]  as string ?? "20";
+        }
+        <div class="col-md-3">
+            <label class="form-label">@Localizer["SrmWeightQuality"]</label>
+            <input type="number" name="SrmWeightQuality" class="form-control" min="0" step="1" value="@srmWq" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">@Localizer["SrmWeightDelivery"]</label>
+            <input type="number" name="SrmWeightDelivery" class="form-control" min="0" step="1" value="@srmWd" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">@Localizer["SrmWeightPrice"]</label>
+            <input type="number" name="SrmWeightPrice" class="form-control" min="0" step="1" value="@srmWp" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">@Localizer["SrmWeightService"]</label>
+            <input type="number" name="SrmWeightService" class="form-control" min="0" step="1" value="@srmWs" />
+        </div>
+        <div class="col-12"><div class="form-text">@Localizer["SrmWeightHint"]</div></div>
+    </div>
+</div>

@@ -1,0 +1,142 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/ScheduleController.cs",
+  "sourceHash": "40004b5864918c21a150c8ed348851f016341242eacb81c15e04b5cedbd3119f",
+  "entries": [
+    {
+      "slug": "code-mfg-schedulecontroller-c13cb0db",
+      "lang": "zh",
+      "headingPath": "生產製造 › 時間序列化地雷，",
+      "text": "甘特圖資料的時間顯示規則｜系統內部處理日期時間的方式是將所有時間都視為該廠別的當地時間，因此在生成時段資訊時，不會再進行額外的時區轉換，以確保所呈現的排程與實際產能數據能夠正確對應。",
+      "approved": true,
+      "sourceSectionHash": "d1f46169ec6b0f6a58d164e3828c96bdebe5704dc4cc601c00e3b67beba3394e"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-dd28bafa",
+      "lang": "zh",
+      "headingPath": "生產製造 › 取排程後的派工——用「時段與視窗重疊」而非「起點落在視窗內」：",
+      "text": "時段重疊判斷取代單點檢查｜系統判定一個工作是否在特定時間區間內，是依據兩個時間區間是否有任何交集來判斷，而不是僅看工作的開始時間點是否落在該區間內。這樣做確保了即使工作是在前一天開始、到現在仍在進行的工序，也能正確顯示在排程圖上佔用機台的時間。",
+      "approved": true,
+      "sourceSectionHash": "846b7d2eba6db955ee604340efd776d0afd3d8bdf683f352ff97cff3c1c9b33e"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-187ece6d",
+      "lang": "zh",
+      "headingPath": "生產製造 › ，全廠共用同一份日曆",
+      "text": "預設使用全廠共享的生產日曆｜當系統只根據設備代碼來查詢時，它會採用一個所有設備共用的生產日曆，因此無法針對個別設備或工作中心維護的特定日曆資料。",
+      "approved": true,
+      "sourceSectionHash": "bb3a1d6ae93ab961253ae2075959b4c5b79e284d5ec8646ea8caf6c6dc0d5d3d"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-b6548bdd",
+      "lang": "zh",
+      "headingPath": "生產製造 › 三個呼叫端：/、/，以及**手機**",
+      "text": "準備看板資料的查看權限｜準備看板的資料由桌機準備看板、排程畫面與手機準備看板共用，只要有「準備看板」或「排程」任一個查看權限就能讀取；兩者都沒有時系統會拒絕存取。",
+      "approved": true,
+      "sourceSectionHash": "b3c6f9f72a6d1ee398fa6d9a05b814e03c8b22f10b31b121c4e8ad0d084e3b95"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-30b96a7c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 凌晨 0～8 點開工的派工落到前一天、隔天凌晨的又被算進來",
+      "text": "日期區間計算規則說明｜系統會將輸入的本地日期，轉換為 UTC 時間範圍，該範圍包含從當日開始到次日凌晨 08:00 之前的所有時間。",
+      "approved": false,
+      "sourceSectionHash": "99d39023ab4bc1f0cfc8f41ea478bfece10a98d0241a1997de93947d545d21b4"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-96a2e884",
+      "lang": "zh",
+      "headingPath": "生產製造 › 優先序：進行中 &gt",
+      "text": "派工狀態的顏色分類規則說明｜系統根據不同的排程狀態來決定顯示的顏色層級，其優先順序依序為：進行中、延遲預測、模具衝突、待料風險，最後是一般已排程。此處回傳的代碼用於前端色表識別，而文字描述僅供圖例和工具提示參考。",
+      "approved": true,
+      "sourceSectionHash": "fa342ae8b310e68b72a3cae2815c240c23c41c820c3b757e58a516e0cfdf2beb"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-bf86a71c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 確保產能列畫出來的就是排程引擎真正拿來排的時段",
+      "text": "產能計算依據多層級時間範圍｜系統會依照機台、工作中心和全廠三個層級，以相同的規則來確定可用的時間區間，確保顯示的產能排程時段與排程引擎實際使用的時段一致。",
+      "approved": true,
+      "sourceSectionHash": "b65043cfaa4fe6c9185851eab77a571f8ead8a474da3ba0f4c807754086f42d5"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-608e935f",
+      "lang": "zh",
+      "headingPath": "生產製造 › 全廠共用同一份日曆時只會有全廠層資料，",
+      "text": "產能計算的資料範圍限制說明｜當使用全廠共用的日曆時，系統只能顯示全廠層級的資料，此時相關的機台或工作中心欄位都會是空值。但即使如此情況下，系統仍必須能夠解析到機台層級的產能資訊，不能僅依賴機台層級的資料來判斷。",
+      "approved": true,
+      "sourceSectionHash": "c2310f1388a2cbbaeb1e745acad3e03b93491afd7d83d904498c1238adad2d30"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-4ec18c39",
+      "lang": "zh",
+      "headingPath": "生產製造 › 只顯示這個工作中心底下「查詢時段內真的有派工」的機台——工作中心",
+      "text": "篩選顯示有派工的設備資訊｜系統只會顯示在查詢的時間範圍內，確實有被安排了作業的設備資料，這樣可以避免產生一整排沒有任何作業內容的空欄位。",
+      "approved": true,
+      "sourceSectionHash": "a608982a7d9f789655f8e1baf8fb21f687b4eb94695074f33d060266d4298664"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-ac25b1af",
+      "lang": "zh",
+      "headingPath": "生產製造 › 生產中的先畫，其餘依排程起點——正在佔用機台的",
+      "text": "生產排程顯示順序規則｜系統會將「生產中的先畫」放在最前面顯示，其他排程項目則依據預定的起點時間排序，即使歷史資料的時間段有重疊，後續的計畫條目也不會覆蓋掉已顯示的資訊。",
+      "approved": true,
+      "sourceSectionHash": "04def41326a0580ce7e7c43379da1cc06a1de15fec2a89bfd90595745ce6e0f3"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-f26ff0a3",
+      "lang": "zh",
+      "headingPath": "生產製造 › 預設走狀態分類",
+      "text": "顯示狀態分類規則｜系統預設使用固定的顏色來區分不同的走狀態分類；只有在特殊情況下才會改變顏色。",
+      "approved": true,
+      "sourceSectionHash": "65e760c041397596eb7ef51253e04e146a197d587efa7f38c7b1b0abb8beeb2b"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-97755e3e",
+      "lang": "zh",
+      "headingPath": "生產製造 › 實際進度條——畫到「現在」：",
+      "text": "進度顯示超過預定結束時間｜當實際生產的時間已經超過了原定的計劃結束時間，系統不會將進度條畫到計畫終點，超出計畫範圍的部分代表的是目前仍在進行且已超時的生產狀態。",
+      "approved": true,
+      "sourceSectionHash": "a81d67bf1fa1ae206597a966d572e21ff922e7ae150fa90a0bc49ca22bb4e4ca"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-e7e2604b",
+      "lang": "zh",
+      "headingPath": "生產製造 › 實際進度列的 y 軸列名",
+      "text": "進度圖表Y軸名稱顯示規則｜此處顯示的項目名稱是直接使用後端資料，而非系統預設的區段值，目的是確保在介面呈現時，所有項目名稱都能統一為中文，避免出現中英文混雜的列名。",
+      "approved": false,
+      "sourceSectionHash": "cd186e257620be46a0fe169a63e13b8118c328e35ff3066ec6d29e25bca88509"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-6d890575",
+      "lang": "zh",
+      "headingPath": "生產製造 › 這是排程引擎唯一認得的產能來源，畫面與排程結果才不會各說各話",
+      "text": "產能來源與顯示規則說明｜此系統排程引擎只認可此處所提供的產能資料作為唯一參考標準，因此畫面呈現的結果會以此為準，確保排程計算與實際展示的一致性。此外，產能資料在視覺上會固定使用灰階色，這樣可以避免它與後續派工時使用的顏色區分混淆。",
+      "approved": true,
+      "sourceSectionHash": "e0fa6180efc58e2d8b9e53cbca1a50b31b57f2e8cc7f4aef62f57ce6987b3866"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-7f60e92d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 至少不讓產能列整片消失",
+      "text": "生產資料顯示的範圍限制｜在尚未將物料化為實際工單時，系統會以概略的方式呈現產能資訊，此時的日曆介面不會包含午休時間，與排程規劃可能會有輕微的差異。",
+      "approved": true,
+      "sourceSectionHash": "8e06a6adf499546ee94f7161a8f9a41e6eda0d6112ece0f893a5e20660ade6aa"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-3995516d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 加班接在正班最後一段之後",
+      "text": "加班時段的位置｜當日的加班接在正常班別最後一段之後開始。排程與甘特圖用的是同一個位置，所以甘特上看到的加班灰帶，就是排程實際可以排進去的時段。",
+      "approved": true,
+      "sourceSectionHash": "2c515467d7fb782140c39569a3680e0e264855939998cfa30689e99c87394d16"
+    },
+    {
+      "slug": "code-mfg-schedulecontroller-ba407dba",
+      "lang": "zh",
+      "headingPath": "生產製造 › 委外列與機台列走同一套狀態分類",
+      "text": "狀態分類統一，避免顯示混亂｜因為委外和機台的資料使用相同的狀態分類，所以在一張派工單上，這兩個類別的資料都會呈現同一個樣式的顏色。",
+      "approved": true,
+      "sourceSectionHash": "5352d06944067423d4e749fbb464ccdbb0954c53fba617b8890f4925f20c830f"
+    }
+  ]
+}

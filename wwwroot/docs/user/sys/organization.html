@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Organization Structure — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>組織架構 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System Administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link active"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：管理系統 → 組織架構 &nbsp;|&nbsp; 權限：目前身份為 Admin</span><span lang="en">Menu: System Administration → Organization Structure &nbsp;|&nbsp; Permission: current role is Admin</span></div>
+    </div>
+
+    <p><span lang="zh">組織架構維護公司的</span><span lang="en">Organization structure maintains the company's </span><b><span lang="zh">部門樹</span><span lang="en">department tree</span></b><span lang="zh">。它有兩個實際作用：一是角色掛在組織單位上，二是</span><span lang="en">. It does two things in practice: roles are attached to organization units, and </span><b><span lang="zh">主管簽核沿著這棵樹往上找人</span><span lang="en">supervisor approval walks up this tree to find the person above</span></b><span lang="zh">。因此組織架構畫得對不對，直接決定簽核流程跑不跑得動。</span><span lang="en">. Whether the tree is drawn correctly therefore decides directly whether approval flows can run at all.</span></p>
+
+    <img class="screen-shot" src="img/organization.png" data-src-en="img/en/organization.png" alt="組織架構畫面截圖" data-alt-en="Organization structure screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">組織架構畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Organization structure screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">組織名稱</span><span lang="en">Organization name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">部門名稱，例如「生產部」「採購課」。</span><span lang="en">The department name, for example "Production" or "Purchasing".</span></td></tr>
+        <tr><td><span lang="zh">上層組織</span><span lang="en">Parent organization</span></td><td></td><td><span lang="zh">留空即為</span><span lang="en">Left empty it becomes a </span><b><span lang="zh">最上層節點</span><span lang="en">top-level node</span></b><span lang="zh">（通常是公司或廠）。編輯時，下拉清單會自動排除自己與自己的所有下層，避免把樹接成迴圈。</span><span lang="en"> (usually the company or the plant). While editing, the drop-down automatically leaves out the unit itself and everything beneath it, so the tree cannot be looped back on itself.</span></td></tr>
+        <tr><td><span lang="zh">廠別</span><span lang="en">Plant</span></td><td></td><td><span lang="zh">這個單位隸屬的廠。</span><span lang="en">The plant this unit belongs to. </span><b><span lang="zh">可以留空</span><span lang="en">It may be left empty</span></b><span lang="zh">——留空時沿用上層組織的廠別，一路往上找到第一個有填的為止。清單上顯示的是這個往上繼承後的結果。</span><span lang="en">: left empty, the plant of the parent unit applies, walking up until one is found that has a value. The list shows the result after that inheritance.</span></td></tr>
+        <tr><td><span lang="zh">排序</span><span lang="en">Sort order</span></td><td></td><td><span lang="zh">同一層之中的顯示順序，數字小的在前；相同時再依名稱排列。</span><span lang="en">The display order within one level: smaller numbers come first, and units with the same number are ordered by name.</span></td></tr>
+        <tr><td><span lang="zh">目前路徑</span><span lang="en">Current path</span></td><td></td><td><span lang="zh"><b>唯讀，由系統自動組成</b>：上層路徑 + 「/」 + 本單位名稱。改了名稱或搬了上層，存檔時路徑會跟著重算。</span><span lang="en"><b>Read-only and composed by the system</b>: the parent's path, a slash, then this unit's name. Rename it or move it, and the path is recalculated on save.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="two-display-modes"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">兩種顯示模式</span><span lang="en">Two display modes</span></h2>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">情況</span><span lang="en">Situation</span></th><th><span lang="zh">畫面呈現</span><span lang="en">What the screen shows</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">查詢條件留空</span><span lang="en">The search box is empty</span></td><td><b><span lang="zh">樹狀模式</span><span lang="en">Tree mode</span></b><span lang="zh">：從最上層節點逐層展開整棵樹，並顯示每個單位繼承後的廠別。</span><span lang="en">: the whole tree is drawn from the top-level nodes down, showing each unit's plant after inheritance.</span></td></tr>
+        <tr><td><span lang="zh">有輸入關鍵字</span><span lang="en">A keyword is entered</span></td><td><b><span lang="zh">搜尋模式</span><span lang="en">Search mode</span></b><span lang="zh">：改以平面清單列出名稱或路徑符合關鍵字的單位，此時不顯示樹狀層次。</span><span lang="en">: the units whose name or path matches are listed flat, without the tree levels.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">樹上的標記怎麼讀</span><span lang="en">How to read the markers on the tree</span></h3>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">標記</span><span lang="en">Marker</span></th><th><span lang="zh">意義</span><span lang="en">What it means</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">單位名稱旁的<b>淺藍色</b>廠別徽章</span><span lang="en">A <b>light blue</b> plant badge beside the name</span></td><td><span lang="zh">這個單位<b>自己指定</b>了廠別。</span><span lang="en">The unit <b>has a plant of its own</b>.</span></td></tr>
+        <tr><td><span lang="zh">單位名稱旁的<b>灰色</b>廠別徽章</span><span lang="en">A <b>grey</b> plant badge beside the name</span></td><td><span lang="zh">這個廠別是<b>從上層繼承</b>來的，本身沒有指定（滑鼠停留會顯示提示）。</span><span lang="en">The plant is <b>inherited from the parent</b>; the unit itself has none (hovering shows a hint).</span></td></tr>
+        <tr><td><span lang="zh">沒有廠別徽章</span><span lang="en">No plant badge</span></td><td><span lang="zh">這個單位與它的所有上層都沒有指定廠別。</span><span lang="en">Neither the unit nor any unit above it has a plant.</span></td></tr>
+        <tr><td><span lang="zh">名稱後方括號中的數字</span><span lang="en">The number in brackets after the name</span></td><td><span lang="zh"><b>直屬子單位</b>的個數（只算下一層，不含更深層）。</span><span lang="en">How many <b>direct child units</b> it has — the next level only, not deeper ones.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">用路徑關鍵字搜尋很好用：輸入上層部門的名稱，就會一次列出該部門底下所有層級的單位（因為它們的路徑都含有那段名稱）。</span><span lang="en">Searching by path is useful: type the name of a higher department and every unit beneath it is listed at once, at any depth, because they all carry that name in their path.</span>
+    </div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">建立部門</span><span lang="en">Creating a department</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「管理系統 &gt; 組織架構」，按「查詢」載入整棵樹。</span><span lang="en">Choose "System Administration &gt; Organization Structure" in the left-hand menu and click "Search" to load the whole tree.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「新增」，填組織名稱，選上層組織（建最上層則留空）。</span><span lang="en">Click "Add", enter the name and choose the parent (leave it empty for a top-level unit).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">需要固定在特定廠時才選廠別；同一廠底下的子部門通常留空由上層繼承即可。</span><span lang="en">Choose a plant only when the unit is fixed to one; child departments within the same plant are usually left empty to inherit it.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">填排序後按「儲存」，路徑由系統自動產生。</span><span lang="en">Enter the sort order and click "Save"; the path is generated automatically.</span></div></div>
+
+    <h3><span lang="zh">搬移部門</span><span lang="en">Moving a department</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">編輯該單位，把「上層組織」改成新的上層後儲存。</span><span lang="en">Open the unit, change "Parent organization" to the new parent and save.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">本單位的路徑會立即重算。</span><span lang="en">This unit's path is recalculated at once. </span><b><span lang="zh">但底下子單位的路徑不會自動跟著更新</span><span lang="en">The paths of the units beneath it, however, are not updated automatically</span></b><span lang="zh">——搬移有子單位的部門後，請逐一開啟子單位存一次檔，讓它們的路徑重新產生。</span><span lang="en">: after moving a department that has children, open each child and save it once so that its path is regenerated.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">搬移會改變主管簽核的對象：</span><span lang="en">Moving a unit changes who signs as supervisor:</span></strong><span lang="zh">主管取的是</span><span lang="en"> the supervisor is taken from the </span><b><span lang="zh">上層組織單位底下的人</span><span lang="en">people under the parent unit</span></b><span lang="zh">，換了上層就等於換了簽核人。已經送出、還在跑的簽核單不受影響（簽核人在送審當下就已決定），但之後送出的單會走新的路線。</span><span lang="en">, so a new parent means a new approver. Requests already submitted and still running are unaffected — their approver was decided at the moment of submission — but everything submitted afterwards follows the new route.</span>
+    </div>
+
+    <h2 id="deleting-an-organization-unit"><i class="bi bi-trash me-2 text-primary"></i><span lang="zh">刪除組織單位</span><span lang="en">Deleting an organization unit</span></h2>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">擋下的原因</span><span lang="en">Reason it is blocked</span></th><th><span lang="zh">處理方式</span><span lang="en">What to do</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">底下還有子組織單位</span><span lang="en">It still has child units</span></td><td><span lang="zh">先把子單位搬到別的上層或一併刪除，由最底層往上刪。</span><span lang="en">Move the children to another parent or delete them too, working from the bottom up.</span></td></tr>
+        <tr><td><span lang="zh">有角色掛在這個單位</span><span lang="en">Roles are attached to it</span></td><td><span lang="zh">到「角色管理」把那些角色改掛其他組織單位。</span><span lang="en">Reattach those roles to another organization unit under "Role Management".</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">可匯出 Excel（.xlsx）、CSV 或 JSON，內容為組織名稱、路徑與排序。匯出的是</span><span lang="en">Excel (.xlsx), CSV or JSON can be exported, containing the name, path and sort order. The export covers </span><b><span lang="zh">全部組織單位</span><span lang="en">every organization unit</span></b><span lang="zh">，不受畫面上查詢條件影響。</span><span lang="en">, regardless of what is in the search box on screen.</span></p>
+  </main>
+</div>
+</body>
+</html>

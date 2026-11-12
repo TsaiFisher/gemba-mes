@@ -1,0 +1,494 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@using SmartFactory.MES.Modules.INV.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.INV.ViewModels.StockAdjustmentFormVm
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isNew      = string.IsNullOrEmpty(Model?.StockAdjustmentId);
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    var products    = ViewBag.ProductOptions   as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uoms        = ViewBag.UomOptions       as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var warehouses  = ViewBag.WarehouseOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var reasons     = ViewBag.AdjustReasonOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var locations   = ViewBag.LocationOptions     as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyStep = baseDp <= 0 ? "1" : "0." + new string('0', baseDp - 1) + "1";
+    string sourceTypeCode = ViewBag.SourceTypeCode as string ?? "";
+    bool hasSource = !string.IsNullOrEmpty(sourceTypeCode);
+}
+
+<form id="adjustForm" asp-action="Save" asp-controller="StockAdjustment" method="post"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="StockAdjustmentId" />
+    <input type="hidden" asp-for="CreatedBy" />
+    <input type="hidden" asp-for="ApprovalStatus" />
+
+    <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+    <div class="p-3">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+        <div class="row g-3 mb-3">
+            @if (!isNew)
+            {
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["StockAdjustmentId"]</label>
+                    <div class="form-control-plaintext fw-bold text-primary">@Model!.StockAdjustmentId</div>
+                </div>
+            }
+            <div class="col-12 col-md-3">
+                <label asp-for="AdjustDate" class="form-label fw-semibold">@Localizer["AdjustDate"]</label>
+                <input asp-for="AdjustDate" type="date" class="form-control" />
+                <span asp-validation-for="AdjustDate" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="DepartmentCode" class="form-label fw-semibold">@Localizer["DepartmentCode"]</label>
+                <select asp-for="DepartmentCode" class="form-select">
+                    <option value="">-- @Localizer["SelectDepartment"] --</option>
+                    @foreach (var d in (ViewBag.DeptOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>()))
+                    {
+                        <option value="@d.Id" selected="@(Model?.DepartmentCode == (string)d.Id)">@d.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="DepartmentCode" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="AdjustReasonCode" class="form-label fw-semibold">@Localizer["AdjustReasonCode"]</label>
+                <span asp-validation-for="AdjustReasonCode" class="text-danger small"></span>
+                <select asp-for="AdjustReasonCode" class="form-select">
+                    <option value="">-- @Localizer["SelectReason"] --</option>
+                    @foreach (var r in reasons)
+                    {
+                        <option value="@r.Code" selected="@(Model?.AdjustReasonCode == (string)r.Code)">@r.Code — @r.DisplayName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="Remarks" class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+                <input asp-for="Remarks" class="form-control" maxlength="500" />
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0"><i class="bi bi-list-ul me-1"></i>@Localizer["LinesTitle"]</h6>
+            @if (!isReadOnly)
+            {
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-action="addLine">
+                    <i class="bi bi-plus-lg"></i> @Localizer["AddLine"]
+                </button>
+            }
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered" id="linesTable">
+                <thead class="table-light">
+                    <tr>
+                        <th class="u-width-40px">#</th>
+                        <th class="u-col-code">@Localizer["ProductCode"]</th>
+                        <th class="source-col u-col-code @(hasSource ? "" : "d-none")">@Localizer["SourceDoc"]</th>
+                        <th class="u-col-tiny">@Localizer["Direction"]</th>
+                        <th class="text-end u-col-num">@Localizer["Qty"]</th>
+                        <th class="u-col-tiny">@Localizer["UomCode"]</th>
+                        <th class="text-end d-none u-col-num">@Localizer["UnitPrice"]</th>
+                        <th class="u-col-code">@Localizer["WhCode"]</th>
+                        <th class="u-col-code">@Localizer["LocationCode"]</th>
+                        <th class="text-end u-col-num">@Localizer["QtyPutAway"]</th>
+                        <th class="u-col-soft">@Localizer["Remarks"]</th>
+                        @if (!isReadOnly) { <th class="u-width-40px"></th> }
+                    </tr>
+                </thead>
+                <tbody id="linesTbody">
+                    @for (int i = 0; i < (Model?.Lines.Count ?? 0); i++)
+                    {
+                        var line = Model!.Lines[i];
+                        <tr>
+                            <td class="text-center text-muted small">@(i+1)</td>
+                            <td>
+                                <input type="hidden" name="Lines[@i].LineNo" value="@line.LineNo" />
+                                <select name="Lines[@i].ProductCode" class="form-select form-select-sm select2-enable product-select" required data-action-change="onProductChange">
+                                    <option value="">-- @Localizer["SelectProduct"] --</option>
+                                    @foreach (var p in products)
+                                    {
+                                        <option value="@p.ProductCode" selected="@(line.ProductCode == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                                    }
+                                </select>
+                            </td>
+                            <td class="source-col @(hasSource ? "" : "d-none")">
+                                <div class="input-group input-group-sm u-width-150px">
+                                    <input name="Lines[@i].SourceDocId" value="@line.SourceDocId" class="form-control form-control-sm line-source-id" readonly />
+                                    <input type="hidden" name="Lines[@i].SourceLineNo" value="@line.SourceLineNo" class="line-source-line" />
+                                    <button type="button" class="btn btn-outline-secondary btn-lookup-source" data-action="lookupSource" title="@Localizer["LookupSource"]" aria-label="@Localizer["LookupSource"]"><i class="bi bi-search"></i></button>
+                                </div>
+                            </td>
+                            <td>
+                                <select name="Lines[@i].Direction" class="form-select form-select-sm u-width-100px" data-action-change="onDirectionChange">
+                                    <option value="1"  selected="@(line.Direction == 1)">@Localizer["DirPositive"]</option>
+                                    <option value="-1" selected="@(line.Direction == -1)">@Localizer["DirNegative"]</option>
+                                </select>
+                            </td>
+                            <td><input name="Lines[@i].Qty" value="@line.Qty" type="number" step="any" min="@UomStepHelper.GetMinPositive(uomDecimals, line.UomCode)" class="form-control form-control-sm text-end line-qty u-width-90px" /></td>
+                            <td>
+                                <select name="Lines[@i].UomCode" class="form-select form-select-sm line-uom u-width-80px" data-action-change="onUomChange">
+                                    @foreach (var u in uoms) { <option value="@u.UomCode" selected="@(line.UomCode == (string)u.UomCode)">@u.UomCode</option> }
+                                </select>
+                            </td>
+                            <td class="d-none"><input name="Lines[@i].UnitPrice" value="@line.UnitPrice" type="number" step="@moneyStep" class="form-control form-control-sm text-end u-width-100px" /></td>
+                            <td>
+                                <select name="Lines[@i].WhCode" class="form-select form-select-sm u-width-90px" data-action-change="onWhChange">
+                                    <option value=""></option>
+                                    @foreach (var w in warehouses) { <option value="@w.WhCode" selected="@(line.WhCode == (string)w.WhCode)">@w.WhCode</option> }
+                                </select>
+                            </td>
+                            @{ var lineLocOpts = string.IsNullOrEmpty(line.WhCode) ? locations : locations.Where(l => (string)l.WhCode == line.WhCode); }
+                            <td>
+                                <div class="input-group input-group-sm u-width-130px">
+                                    <select name="Lines[@i].LocationCode" class="form-select form-select-sm" data-action-change="onLocChange">
+                                        <option value=""></option>
+                                        @foreach (var loc in (string.IsNullOrEmpty(line.WhCode) ? locations : locations.Where(l => (string)l.WhCode == line.WhCode))) {
+                                            <option value="@loc.LocationCode" selected="@(line.LocationCode == (string)loc.LocationCode)">
+                                                @loc.LocationCode@((string?)loc.LocationName != null ? " — " + (string)loc.LocationName : "")
+                                            </option>
+                                        }
+                                    </select>
+                                    <button type="button" class="btn btn-outline-secondary btn-lookup-stock @(line.Direction == -1 ? "" : "d-none")" data-action="lookupStock" data-wh-field="WhCode" data-loc-field="LocationCode" data-no-product-msg="@Localizer["SelectProductFirst"]" title="@Localizer["LookupStock"]" aria-label="@Localizer["LookupStock"]"><i class="bi bi-search"></i></button>
+                                </div>
+                            </td>
+                            <td class="text-end text-muted small">@line.QtyPutAway</td>
+                            <td><input name="Lines[@i].Remarks" value="@line.Remarks" class="form-control form-control-sm" /></td>
+                            @if (!isReadOnly)
+                            {
+                                <td class="text-center">
+                                    @if (line.QtyPutAway == 0)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </fieldset>
+
+    <div class="position-sticky bottom-0 bg-white border-top px-3 py-2 d-flex justify-content-between align-items-center gap-2">
+        <div class="d-flex gap-2 align-items-center">
+            @if (!isNew)
+            {
+                <span class="badge @ApprovalBadge(Model!.ApprovalStatus)">@SL["ApprovalLabelPrefix"]@DocStatusLabels.Label(Model!.ApprovalStatus)</span>
+                <span class="badge @StatusBadge(Model!.Status)">@SL["DocLabelPrefix"]@DocStatusLabels.Label(Model!.Status)</span>
+            }
+        </div>
+        <div class="d-flex gap-2">
+            @if (!string.IsNullOrEmpty(Model?.StockAdjustmentId) && (bool?)ViewBag.CanPrint == true)
+            {
+                <a asp-action="Print" asp-route-id="@Model!.StockAdjustmentId" target="_blank"
+                   class="btn btn-outline-secondary">
+                    <i class="bi bi-printer"></i>
+                </a>
+            }
+            @if (isReadOnly)
+            {
+                @if (Model?.Status == DocStatus.Posted)
+                {
+                    <button type="button" class="btn btn-outline-danger" data-action="voidDoc" data-id="@Model!.StockAdjustmentId">
+                        <i class="bi bi-x-octagon me-1"></i>@Localizer["Void"]
+                    </button>
+                    <button type="button" class="btn btn-danger" data-action="voidAndReopenDoc" data-id="@Model!.StockAdjustmentId">
+                        <i class="bi bi-arrow-clockwise me-1"></i>@Localizer["VoidAndReopen"]
+                    </button>
+                }
+                @if (!isNew && Model!.Status == DocStatus.Confirmed && (bool?)ViewBag.CanUpdate == true)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="CancelConfirm" data-id="@Model!.StockAdjustmentId" data-msg="@Localizer["ConfirmCancelConfirm"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["CancelConfirm"]
+                    </button>
+                }
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+                @if (!isNew && (Model!.ApprovalStatus == DocumentApprovalStatus.Draft || Model.ApprovalStatus == DocumentApprovalStatus.Rejected))
+                {
+                    <button type="button" class="btn btn-outline-primary" data-action="docAction" data-doc-action="Submit" data-id="@Model!.StockAdjustmentId" data-msg="@Localizer["ConfirmSubmit"]">
+                        <i class="bi bi-send me-1"></i>@Localizer["Submit"]
+                    </button>
+                }
+                @if (!isNew && Model!.ApprovalStatus == DocumentApprovalStatus.PendingApproval)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="Withdraw" data-id="@Model!.StockAdjustmentId" data-msg="@Localizer["ConfirmWithdraw"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["Withdraw"]
+                    </button>
+                }
+                @if (!isNew && Model!.Status == DocStatus.Draft && Model.ApprovalStatus == DocumentApprovalStatus.Approved)
+                {
+                    <button type="button" class="btn btn-outline-success" data-action="docAction" data-doc-action="Confirm" data-id="@Model!.StockAdjustmentId" data-msg="@Localizer["ConfirmConfirm"]">
+                        <i class="bi bi-check2-circle me-1"></i>@Localizer["Confirm"]
+                    </button>
+                }
+                @if (!isNew && Model!.Status == DocStatus.Confirmed)
+                {
+                    <button type="button" class="btn btn-outline-warning" data-action="docAction" data-doc-action="CancelConfirm" data-id="@Model!.StockAdjustmentId" data-msg="@Localizer["ConfirmCancelConfirm"]">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@Localizer["CancelConfirm"]
+                    </button>
+                }
+                @if (Model?.ApprovalStatus != DocumentApprovalStatus.PendingApproval
+                     && Model?.ApprovalStatus != DocumentApprovalStatus.Approved
+                     && (isNew || Model?.Status == DocStatus.Draft))
+                {
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-floppy me-1"></i>@Localizer["Save"]
+                    </button>
+                }
+            }
+        </div>
+    </div>
+</form>
+
+@await Html.PartialAsync("_StockPickerModal")
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    window.uomDecimals = Object.assign(window.uomDecimals || {}, @Html.Raw(System.Text.Json.JsonSerializer.Serialize(uomDecimals ?? new Dictionary<string,int>())));
+    function onUomChange(e, sel) {
+        var qty = sel.closest('tr').querySelector('.line-qty');
+        window.applyUomStep(qty, sel.value);
+    }
+    var lineIdx = @(Model?.Lines.Count ?? 0);
+    var uomOptions = `@foreach(var u in uoms){
+@:<option value="@u.UomCode">@u.UomCode</option>
+}`;
+    var productOptions = `<option value="">-- @Localizer["SelectProduct"] --</option>@foreach(var p in products){
+@:<option value="@p.ProductCode">@p.ProductCode — @p.ProductName</option>
+}`;
+    var whOptions  = `<option value=""></option>@foreach(var w in warehouses){
+@:<option value="@w.WhCode">@w.WhCode</option>
+}`;
+    var allLocations = [@foreach(var loc in locations){
+@:{ wh: '@loc.WhCode', code: '@loc.LocationCode', name: '@((string?)loc.LocationName ?? "")' },
+}];
+
+    var stockQtyLabel = '@Localizer["StockQtyLabel"]';
+
+    function buildLocOpts(whCode, stockLocs) {
+        let list = whCode ? allLocations.filter(l => l.wh === whCode) : allLocations;
+        if (stockLocs && stockLocs.length > 0) {
+            const stockSet = new Set(stockLocs.map(s => s.locationCode));
+            list = [...list].sort((a, b) => {
+                const as = stockSet.has(a.code);
+                const bs = stockSet.has(b.code);
+                if (as && !bs) return -1;
+                if (!as && bs) return 1;
+                return a.code.localeCompare(b.code);
+            });
+        }
+        return '<option value=""></option>' + list.map(l => {
+            const stock = stockLocs ? stockLocs.find(s => s.locationCode === l.code) : null;
+            const stockText = stock ? ` (${stockQtyLabel}: ${stock.qtyAvailable})` : '';
+            return `<option value="${l.code}">${l.code}${l.name ? ' \u2014 ' + l.name : ''}${stockText}</option>`;
+        }).join('');
+    }
+
+    async function onProductChange(e, inp) {
+        const code = inp.value;
+        if (!code) return;
+        const tr = inp.closest('tr');
+        try {
+            const resp = await fetch(`/api/warehouse/product-detail?productCode=${encodeURIComponent(code)}`);
+            if (resp.ok) {
+                const data = await resp.json();
+                const priceInp = tr.querySelector('[name*="UnitPrice"]');
+                if (priceInp) priceInp.value = data.standardCost || 0;
+                const uomSel = tr.querySelector('.line-uom');
+                if (uomSel && data.stockUom) {
+                    uomSel.value = data.stockUom;
+                    window.applyUomStep(tr.querySelector('.line-qty'), data.stockUom);
+                }
+            }
+            const dirSel = tr.querySelector('[name*="Direction"]');
+            if (dirSel && dirSel.value === "-1") await updateStockSuggestions(tr, code);
+        } catch (e) { console.error(e); }
+    }
+
+    function onDirectionChange(e, sel) {
+        const tr = sel.closest('tr');
+        const btn = tr.querySelector('.btn-lookup-stock');
+        if (sel.value === "-1") {
+            btn?.classList.remove('d-none');
+            const productCode = tr.querySelector('[name*="ProductCode"]').value;
+            if (productCode) updateStockSuggestions(tr, productCode);
+        } else {
+            btn?.classList.add('d-none');
+            const whSel = tr.querySelector('[name*="WhCode"]');
+            const locSel = tr.querySelector('[name*="LocationCode"]');
+            if (locSel) {
+                const prev = locSel.value;
+                locSel.innerHTML = buildLocOpts(whSel?.value);
+                locSel.value = prev;
+            }
+        }
+    }
+
+    async function updateStockSuggestions(tr, productCode) {
+        try {
+            const resp = await fetch(`/api/warehouse/stock/${encodeURIComponent(productCode)}`);
+            if (resp.ok) {
+                const stockData = await resp.json();
+                tr.dataset.stock = JSON.stringify(stockData);
+                const whSel = tr.querySelector('[name*="WhCode"]');
+                const locSel = tr.querySelector('[name*="LocationCode"]');
+                if (locSel) {
+                    const prev = locSel.value;
+                    locSel.innerHTML = buildLocOpts(whSel?.value, stockData);
+                    locSel.value = prev;
+                }
+            }
+        } catch (e) { console.error(e); }
+    }
+
+
+    async function lookupSource(e, btn) {
+        const sourceTypeCode = '@sourceTypeCode';
+        if (!sourceTypeCode) return;
+        const entityCode = document.querySelector('[name="DepartmentCode"]').value;
+        if (!entityCode) { alert(@(Json.Serialize(SL["SelectDepartmentFirst"].Value))); return; }
+        const lines = await window.lookupSourceLines(sourceTypeCode, entityCode);
+        if (!lines.length) return;
+        window.showSourcePicker(lines, sel => window.fillSourceLine(btn.closest('tr'), sel));
+    }
+
+    // 本列已抓到的庫存（「選擇庫存」按過之後存在 tr.dataset.stock）。換倉時要沿用，
+    // 否則重建選項會把可用量標註洗掉，看起來像查詢失效了。
+    function readRowStock(tr) {
+        if (!tr || !tr.dataset.stock) return null;
+        try { return JSON.parse(tr.dataset.stock); } catch (e) { return null; }
+    }
+
+    function onWhChange(e, sel) {
+        const tr = sel.closest('tr');
+        const locSel = tr.querySelector(`[name="${sel.name.replace(/WhCode$/, 'LocationCode')}"]`);
+        if (!locSel) return;
+        const prev = locSel.value;
+        locSel.innerHTML = buildLocOpts(sel.value, readRowStock(tr));
+        if (sel.value && prev && allLocations.find(l => l.code === prev && l.wh === sel.value)) locSel.value = prev;
+        else locSel.value = "";
+    }
+    function onLocChange(e, sel) {
+        if (!sel.value) return;
+        const tr = sel.closest('tr');
+        const whSel = tr.querySelector(`[name="${sel.name.replace(/LocationCode$/, 'WhCode')}"]`);
+        if (!whSel || whSel.value) return;
+        const loc = allLocations.find(l => l.code === sel.value);
+        if (!loc) return;
+        whSel.value = loc.wh;
+        sel.innerHTML = buildLocOpts(loc.wh);
+        sel.value = loc.code;
+    }
+
+    function addLine() {
+        const i = lineIdx++;
+        const srcHidden = document.querySelector('thead .source-col')?.classList.contains('d-none');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="text-center text-muted small">${i+1}</td>
+            <td><input type="hidden" name="Lines[${i}].LineNo" value="0" /><select name="Lines[${i}].ProductCode" class="form-select form-select-sm select2-enable product-select" required data-action-change="onProductChange">${productOptions}</select></td>
+            <td class="source-col${srcHidden ? ' d-none' : ''}"><div class="input-group input-group-sm u-width-150px"><input name="Lines[${i}].SourceDocId" class="form-control form-control-sm line-source-id" readonly /><input type="hidden" name="Lines[${i}].SourceLineNo" class="line-source-line" /><button type="button" class="btn btn-outline-secondary btn-lookup-source" data-action="lookupSource" title="@Localizer["LookupSource"]" aria-label="@Localizer["LookupSource"]"><i class="bi bi-search"></i></button></div></td>
+            <td><select name="Lines[${i}].Direction" class="form-select form-select-sm u-width-100px" data-action-change="onDirectionChange"><option value="1" selected>@Localizer["DirPositive"]</option><option value="-1">@Localizer["DirNegative"]</option></select></td>
+            <td><input name="Lines[${i}].Qty" type="number" value="1" class="form-control form-control-sm text-end line-qty u-width-90px" /></td>
+            <td><select name="Lines[${i}].UomCode" class="form-select form-select-sm line-uom u-width-80px" data-action-change="onUomChange">${uomOptions}</select></td>
+            <td class="d-none"><input name="Lines[${i}].UnitPrice" type="number" step="@moneyStep" class="form-control form-control-sm text-end u-width-100px" /></td>
+            <td><select name="Lines[${i}].WhCode" class="form-select form-select-sm u-width-90px" data-action-change="onWhChange">${whOptions}</select></td>
+            <td>
+                <div class="input-group input-group-sm u-width-130px">
+                    <select name="Lines[${i}].LocationCode" class="form-select form-select-sm" data-action-change="onLocChange">${buildLocOpts('')}</select>
+                    <button type="button" class="btn btn-outline-secondary btn-lookup-stock d-none" data-action="lookupStock" data-wh-field="WhCode" data-loc-field="LocationCode" data-no-product-msg="@Localizer["SelectProductFirst"]" title="@Localizer["LookupStock"]" aria-label="@Localizer["LookupStock"]"><i class="bi bi-search"></i></button>
+                </div>
+            </td>
+            <td class="text-end text-muted small">0</td>
+            <td><input name="Lines[${i}].Remarks" class="form-control form-control-sm" /></td>
+            <td class="text-center"><button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]"><i class="bi bi-x-lg"></i></button></td>`;
+        document.getElementById('linesTbody').appendChild(tr);
+        window.armValidation(document.getElementById('adjustForm')); // 動態列重註冊 unobtrusive 驗證（R6c）
+        const uomSel = tr.querySelector('.line-uom');
+        const qtyInp = tr.querySelector('.line-qty');
+        if (uomSel && qtyInp) window.applyUomStep(qtyInp, uomSel.value);
+        initProductSelect2(tr);
+    }
+
+    function removeLine(e, btn) { btn.closest('tr').remove(); }
+
+    function docAction(e, el) {
+        const action = el.dataset.docAction, id = el.dataset.id, msg = el.dataset.msg;
+        if (msg && !confirm(msg)) return;
+        const token = document.querySelector('#adjustForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/StockAdjustment/${action}/${id}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => { if (d.success) { window.toastSuccess && window.toastSuccess(); refreshList && refreshList(); } else alert(d.message); });
+    }
+
+    function voidDoc(e, el) {
+        const id = el.dataset.id;
+        const reason = prompt('@Localizer["VoidReason"]');
+        if (reason === null) return;
+        const token = document.querySelector('#adjustForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/StockAdjustment/Void/${id}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ reason, __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => { if (d.success) { window.toastSuccess && window.toastSuccess(); refreshList && refreshList(); } else alert(d.message); });
+    }
+
+    function voidAndReopenDoc(e, el) {
+        const id = el.dataset.id;
+        const reason = prompt('@Localizer["VoidReason"]');
+        if (reason === null) return;
+        const token = document.querySelector('#adjustForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/StockAdjustment/VoidAndReopen/${id}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ reason, __RequestVerificationToken: token })
+        }).then(async r => {
+            if (r.ok) { const html = await r.text(); const body = document.getElementById('sidePanelBody'); if (body) { body.innerHTML = html; if (window.execScripts) execScripts(body); } }
+            else { const d = await r.json(); alert(d.message || @(Json.Serialize(SL["VoidFailed"].Value))); }
+        });
+    }
+
+    // 品號欄位 select2 初始化——本 Partial 經 crud-panel.js 局部注入，site.js 的
+    // DOMContentLoaded 全域初始化不會重跑，故需自行呼叫；dropdownParent 指向表單本身，
+    // 確保下拉選單在側欄(offcanvas)內不被裁切。addLine() 新增列時也呼叫本函式。
+    function initProductSelect2(scope) {
+        if (!window.jQuery || !$.fn.select2) return;
+        var $scope = scope ? $(scope) : $('#adjustForm');
+        $scope.find('.product-select').not('.select2-hidden-accessible').each(function () {
+            $(this).select2({ theme: 'bootstrap-5', width: '200px', dropdownParent: $('#adjustForm') });
+        });
+    }
+    initProductSelect2();
+
+    // 庫存單位為品號帶出之唯讀欄位：鎖定不可手改（select 仍 enabled，值隨表單送出）
+    (function lockUomReadonly() {
+        var scope = document.getElementById('sidePanelBody');
+        if (!scope) return;
+        var lock = function () {
+            scope.querySelectorAll('select.line-uom').forEach(function (s) {
+                s.classList.add('bg-light');
+                s.style.pointerEvents = 'none';
+                s.tabIndex = -1;
+                s.setAttribute('aria-readonly', 'true');
+            });
+        };
+        lock();
+        new MutationObserver(lock).observe(scope, { childList: true, subtree: true });
+    })();
+</script>
+
+@functions {
+    string StatusBadge(DocStatus s) => s switch { DocStatus.Draft => "bg-secondary", DocStatus.Confirmed => "bg-info text-dark", DocStatus.Posted => "bg-success", DocStatus.Void => "bg-danger", _ => "bg-secondary" };
+    string ApprovalBadge(DocumentApprovalStatus s) => s switch { DocumentApprovalStatus.Approved => "bg-success", DocumentApprovalStatus.PendingApproval => "bg-warning text-dark", DocumentApprovalStatus.Rejected => "bg-danger", _ => "bg-secondary" };
+}

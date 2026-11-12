@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/PUR/Services/OutsourceReworkCostCalculator.cs",
+  "sourceHash": "058b3ff3de88cc69a401ad584c84a47b2a584f88ba05d09ce3df06843e239cc0",
+  "entries": [
+    {
+      "slug": "code-pur-outsourcereworkcostcalculator-d81e65f3",
+      "lang": "zh",
+      "headingPath": "採購 › 委外重工成本/索賠計算器",
+      "text": "責任歸屬決定成本流向｜根據責任歸屬的判定，如果由廠商負責，則會全額從廠商處扣除重工成本，而不會產生加工費。若由我方負責，則會全額計算應付的加工費，且不進行任何扣款。若為共同責任，則會依據各方的比例來分別計算需要扣除的重工成本和應付的加工費。",
+      "approved": true,
+      "sourceSectionHash": "bc75a16045d50469fd258c2b6026a444c8a183ebfaa77375b0ac1f030e61f2cd"
+    },
+    {
+      "slug": "code-pur-outsourcereworkcostcalculator-885e8b63",
+      "lang": "zh",
+      "headingPath": "採購 › 廠商責任占比0–100",
+      "text": "計算結果的組成與比例｜此功能會計算出廠商需要負擔的責任比例，該比例範圍介於 0 到 100 之間；當廠商全權負責時，其責任比例為 100，而系統方不需負責時，則為 0。此外，也會計算向廠商扣款或索賠的金額，以及本方應支付的重工加工費用。",
+      "approved": true,
+      "sourceSectionHash": "ebff44e609b1557db8d31c2cbe25f71f099700c782441f107840e5c89f6800c0"
+    },
+    {
+      "slug": "code-pur-outsourcereworkcostcalculator-f7bd4f31",
+      "lang": "zh",
+      "headingPath": "採購 › 依責任歸屬計算雙路徑金額",
+      "text": "計算雙路徑的費用分攤規則｜當使用「共享」方式時，廠商需要依據設定的分攤比例來計算其應負責的金額；若選擇了其他歸屬方式，則由責任歸屬決定該筆費用的分配。此外，重工成本會全額作為扣款的基礎，而重工加工費則是全額作為應付計算的基礎。",
+      "approved": true,
+      "sourceSectionHash": "c3b75c6dd85a58161d549ef579ac3e1687f5c87a2d24d2aeb2262178cc0c5b83"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+/* IPQC 製程量測
+   自 mfg/ipqc-process.html 內聯 <style> 外部化：CSP style-src 已移除 'unsafe-inline'（Program.cs），
+   內聯 <style> 區塊會被瀏覽器整段擋掉。各頁 class 名稱互有衝突（如 .dispatch-card），故一頁一檔。 */
+
+.std-banner  { background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px; }
+.ac-re-grid  { display: grid; grid-template-columns: repeat(3,1fr); gap: .4rem; text-align: center; }
+.ac-re-cell  { border-radius: 8px; padding: .3rem .5rem; font-size: .8rem; font-weight: 700; }
+.cell-n      { background: #e8deff; color: #5a2d82; }
+.cell-ac     { background: #d1fae5; color: #065f46; }
+.cell-re     { background: #fee2e2; color: #7f1d1d; }
+.spec-row    { background: #fff; border-radius: 8px; border: 1px solid #dee2e6; }
+.spec-row .conform-ok  { color: #198754; }
+.spec-row .conform-ng  { color: #dc3545; }
+.qty-input   { font-size: 1.4rem !important; text-align: center; font-weight: 700; }
+.result-pass { background: #d1e7dd; color: #0a3622; border-radius: 8px; padding: .4rem .8rem; }
+.result-fail { background: #f8d7da; color: #58151c; border-radius: 8px; padding: .4rem .8rem; }

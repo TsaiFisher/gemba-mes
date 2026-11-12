@@ -1,0 +1,233 @@
+@using SmartFactory.MES.Services
+@using System.Text.Json
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.RPT.Models.ContributionMarginReport
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched = ViewBag.Searched as bool? ?? false;
+    bool   canPrint    = ViewBag.CanPrint == true;
+    string fromDate    = ViewBag.FromDate as string ?? DateTime.Today.AddMonths(-1).ToString("yyyy-MM-dd");
+    string toDate      = ViewBag.ToDate   as string ?? DateTime.Today.ToString("yyyy-MM-dd");
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+
+    var rows    = Model?.Rows ?? new();
+    bool hasData = rows.Count > 0;
+
+    // 圖表：貢獻前/後 15 大產品（單一序列、magnitude），依 dataviz 單序列規則（無圖例、單一色相、直接標值）
+    var chartRows = rows.OrderByDescending(r => r.ContributionMargin).Take(15).ToList();
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-graph-up me-2 text-success"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && hasSearched && hasData)
+        {
+            <a asp-action="Export" asp-route-fromDate="@fromDate" asp-route-toDate="@toDate"
+               asp-route-matVar="@Model!.MaterialVariable" asp-route-laborVar="@Model.LaborVariable" asp-route-ohVar="@Model.OverheadVariable"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    @Html.AntiForgeryToken()
+    @* 常用查詢入口（§7.9-6）。放在查詢卡片之外——partial 內有按鈕與輸入框，
+       塞進下面那張卡的 <form> 內會變成巢狀表單。 *@
+    @await Html.PartialAsync("_SavedQueries", "ContributionMargin")
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-3 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["DateFrom"]</label>
+                    <input type="date" name="fromDate" value="@fromDate" class="form-control form-control-sm" required />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["DateTo"]</label>
+                    <input type="date" name="toDate" value="@toDate" class="form-control form-control-sm" required />
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label small fw-semibold d-block">@Localizer["VariableElements"]</label>
+                    <div class="d-flex gap-3">
+                        <div class="form-check">
+                            <input type="hidden" name="matVar" value="false" />
+                            <input class="form-check-input" type="checkbox" id="matVar" name="matVar" value="true" @(Model!.MaterialVariable ? "checked" : "") />
+                            <label class="form-check-label" for="matVar">@Localizer["Material"]</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="hidden" name="laborVar" value="false" />
+                            <input class="form-check-input" type="checkbox" id="laborVar" name="laborVar" value="true" @(Model.LaborVariable ? "checked" : "") />
+                            <label class="form-check-label" for="laborVar">@Localizer["Labor"]</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="hidden" name="ohVar" value="false" />
+                            <input class="form-check-input" type="checkbox" id="ohVar" name="ohVar" value="true" @(Model.OverheadVariable ? "checked" : "") />
+                            <label class="form-check-label" for="ohVar">@Localizer["Overhead"]</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                    <button type="button" id="saveDefaultsBtn" class="btn btn-outline-secondary btn-sm">@Localizer["SaveAsDefault"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+
+            @* 日期欄位已標 required，這一段是後端的第二道：直接改網址或關掉 JS 時仍要講清楚 *@
+            @if (ViewBag.DateRangeRequired == true)
+            {
+                <div class="alert alert-warning py-2"><i class="bi bi-exclamation-triangle me-1"></i>@Localizer["DateRangeRequired"]</div>
+            }
+            <div class="form-text mt-2"><i class="bi bi-info-circle me-1"></i>@Localizer["MethodHint"]</div>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (!hasData)
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 bg-primary text-white shadow-sm"><div class="card-body text-center">
+                <div class="fs-6 mb-1">@Localizer["TotalRevenue"]</div>
+                <div class="fs-5 fw-bold">@Model!.TotalRevenue.ToString(moneyFmt)</div>
+            </div></div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-secondary text-white shadow-sm"><div class="card-body text-center">
+                <div class="fs-6 mb-1">@Localizer["TotalVariableCost"]</div>
+                <div class="fs-5 fw-bold">@Model.TotalVariableCost.ToString(moneyFmt)</div>
+            </div></div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-success text-white shadow-sm"><div class="card-body text-center">
+                <div class="fs-6 mb-1">@Localizer["TotalContribution"]</div>
+                <div class="fs-5 fw-bold">@Model.TotalContribution.ToString(moneyFmt)</div>
+            </div></div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-info text-white shadow-sm"><div class="card-body text-center">
+                <div class="fs-6 mb-1">@Localizer["TotalContributionRate"]</div>
+                <div class="fs-5 fw-bold">@Model.TotalContributionRate.ToString("N2")%</div>
+            </div></div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header py-2 fw-semibold">@Localizer["ChartTitle"]</div>
+        <div class="card-body"><canvas id="cmChart" height="@(Math.Max(120, chartRows.Count * 26))"></canvas></div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["Product"]</th>
+                        <th class="text-end">@Localizer["Revenue"]</th>
+                        <th class="text-end">@Localizer["Cost"]</th>
+                        <th class="text-end">@Localizer["VariableRatio"]</th>
+                        <th class="text-end">@Localizer["VariableCost"]</th>
+                        <th class="text-end">@Localizer["Contribution"]</th>
+                        <th class="text-end u-width-18pct">@Localizer["ContributionRate"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                @foreach (var r in paged)
+                {
+                    var negative = r.ContributionMargin < 0;
+                    <tr>
+                        <td>
+                            <span class="fw-semibold">@r.ProductCode</span>
+                            @if (!string.IsNullOrEmpty(r.ProductName)) { <div class="small text-muted">@r.ProductName</div> }
+                        </td>
+                        <td class="text-end">@r.Revenue.ToString(moneyFmt)</td>
+                        <td class="text-end">@r.Cost.ToString(moneyFmt)</td>
+                        <td class="text-end">
+                            @((r.VariableRatio * 100m).ToString("N1"))%
+                            @if (!r.HasCostBasis) { <i class="bi bi-exclamation-triangle text-warning ms-1" title="@Localizer["NoCostBasis"]"></i> }
+                        </td>
+                        <td class="text-end">@r.VariableCost.ToString(moneyFmt)</td>
+                        <td class="text-end @(negative ? "text-danger fw-bold" : "")">@r.ContributionMargin.ToString(moneyFmt)</td>
+                        <td class="text-end">@r.ContributionRate.ToString("N2")%</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot class="table-secondary">
+                    <tr>
+                        <td class="fw-bold">@Localizer["Total"]</td>
+                        <td class="text-end fw-bold">@Model.TotalRevenue.ToString(moneyFmt)</td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-end fw-bold">@Model.TotalVariableCost.ToString(moneyFmt)</td>
+                        <td class="text-end fw-bold">@Model.TotalContribution.ToString(moneyFmt)</td>
+                        <td class="text-end fw-bold">@Model.TotalContributionRate.ToString("N2")%</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    @await Html.PartialAsync("_Pagination", paged)
+    <div class="form-text mt-2">@Localizer["BasisLegend"]</div>
+    }
+</div>
+
+@section Scripts {
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    // 儲存為系統預設（AntiForgery）
+    const btn = document.getElementById('saveDefaultsBtn');
+    if (btn) btn.addEventListener('click', function () {
+        const fd = new FormData();
+        fd.append('matVar',   document.getElementById('matVar').checked);
+        fd.append('laborVar', document.getElementById('laborVar').checked);
+        fd.append('ohVar',    document.getElementById('ohVar').checked);
+        fd.append('__RequestVerificationToken', document.querySelector('input[name="__RequestVerificationToken"]').value);
+        fetch('@Url.Action("SaveDefaults")', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: fd })
+            .then(r => r.json())
+            .then(d => { alert(d.message || 'OK'); })
+            .catch(() => alert('Error'));
+    });
+})();
+</script>
+@if (hasSearched && hasData)
+{
+<script src="~/lib/chart.js/chart.umd.min.js" nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)"></script>
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    const labels = @Html.Raw(JsonSerializer.Serialize(chartRows.Select(r => r.ProductCode)));
+    const values = @Html.Raw(JsonSerializer.Serialize(chartRows.Select(r => r.ContributionMargin)));
+    // 單一序列 magnitude：單一色相；負值（虧損）以狀態紅標示，數值直接標於軸旁（非僅靠顏色）
+    const base = 'rgba(25,135,84,0.85)', neg = 'rgba(220,53,69,0.85)';
+    new Chart(document.getElementById('cmChart'), {
+        type: 'bar',
+        data: { labels, datasets: [{
+            label: '@Localizer["Contribution"]',
+            data: values,
+            backgroundColor: values.map(v => v < 0 ? neg : base),
+            borderRadius: 4, borderSkipped: false, barPercentage: 0.7,
+        }]},
+        options: {
+            indexAxis: 'y', responsive: true,
+            plugins: { legend: { display: false },
+                       tooltip: { callbacks: { label: c => c.parsed.x.toLocaleString() } } },
+            scales: { x: { grid: { color: 'rgba(0,0,0,0.06)' } }, y: { grid: { display: false } } }
+        }
+    });
+})();
+</script>
+}
+}

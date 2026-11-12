@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/ORD/Reporting/OrderOverdueTool.cs",
+  "sourceHash": "28a525bfb790ce1e4a6b01ebd058c498c4a589df7e8fa305480ca6dbed872adb",
+  "entries": [
+    {
+      "slug": "code-ord-orderoverduetool-50d132ff",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 「照抄畫面、不套統一慣例」這條規則本身不變，變的是被照抄的那一端",
+      "text": "畫面權限的參考依據已更新｜此功能目前會依照「照抄畫面、不套統一慣例」這條規則來判斷，而變動的是被參考畫面的權限設定。",
+      "approved": false,
+      "sourceSectionHash": "aa002d5c7bfca3d3a6339bd2037b28c7e46f87315d45ec3e35dd24f86299327f"
+    },
+    {
+      "slug": "code-ord-orderoverduetool-8f356e66",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 不含金額→ 屬 §八「內部」級，可進自然語言目錄",
+      "text": "不含金額的報表只顯示數量和逾期天數｜此報表在計算時，不會包含任何與金錢相關的數值。",
+      "approved": false,
+      "sourceSectionHash": "e66779f487dbd6b03767eadde3aca5b7e305c53e61eae952bdcb233e38a0d920"
+    },
+    {
+      "slug": "code-ord-orderoverduetool-a02ed1f7",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 逾期天數的基準日",
+      "text": "逾期天數計算的基準日設定｜系統計算逾期天數時，會使用傳入的、考慮到特定時間區的日期作為起算點，以確保跨時區環境下的準確性。",
+      "approved": true,
+      "sourceSectionHash": "97b9445db5a89c7bcc86829e1f80f0fa36c5be10b0df3b2650a70bc08c2aa53e"
+    },
+    {
+      "slug": "code-ord-orderoverduetool-7b66e37b",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 逐欄照抄該報表畫面現行的匯出輸出**，不增不刪不改順序：",
+      "text": "報表匯出欄位與畫面一致｜系統匯出的欄位順序會完全依照該報表畫面上顯示的順序，不會增加、刪除或更改任何欄位的排列次序。",
+      "approved": true,
+      "sourceSectionHash": "a1ae1c90c0292643fcb89e4abbe3cf5eb9c27e8d593a31926bdec88989a4d1a2"
+    }
+  ]
+}

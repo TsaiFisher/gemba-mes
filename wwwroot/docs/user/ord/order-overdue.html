@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Order Overdue — ORD User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>訂單逾期跟催 — ORD 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ORD 目錄</span><span lang="en">ORD Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ORD 畫面</span><span lang="en">ORD Screens</span></div>
+    <a href="sales-order.html" class="nav-link"><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></a>
+    <a href="goods-shipment.html" class="nav-link"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></a>
+    <a href="sales-return.html" class="nav-link"><span lang="zh">銷退單</span><span lang="en">Sales Return</span></a>
+    <a href="internal-order.html" class="nav-link"><span lang="zh">內部訂單</span><span lang="en">Internal Order</span></a>
+    <a href="order-overdue.html" class="nav-link active"><span lang="zh">訂單逾期跟催</span><span lang="en">Overdue Sales Orders</span></a>
+    <a href="sales-ranking.html" class="nav-link"><span lang="zh">銷售排名</span><span lang="en">Sales Ranking</span></a>
+    <a href="sales-trend.html" class="nav-link"><span lang="zh">銷售趨勢</span><span lang="en">Sales Trend</span></a>
+    <a href="delivery-rate.html" class="nav-link"><span lang="zh">交期達成率</span><span lang="en">Delivery Rate</span></a>
+    <a href="return-rate.html" class="nav-link"><span lang="zh">退貨率分析</span><span lang="en">Return Rate</span></a>
+    <a href="sales-forecast.html" class="nav-link"><span lang="zh">銷售預測</span><span lang="en">Sales Forecast</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">訂單逾期跟催</span><span lang="en">Overdue Sales Orders</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/OrderOverdue &nbsp;|&nbsp; 逾交期未出貨訂單行列表</span><span lang="en">Route: /OrderOverdue &nbsp;|&nbsp; Order lines past their delivery date and not yet shipped</span></div>
+    </div>
+
+    <p><span lang="zh">列出已逾交期仍未出貨（或部分出貨）的訂單行，含逾期天數與生產進度，供業務跟催與答交。</span><span lang="en">Lists order lines past their delivery date that are not shipped (or only partly shipped), with the overdue days and production progress, for sales follow-up and re-promising.</span></p>
+    <img class="screen-shot" src="img/order-overdue.png" data-src-en="img/en/order-overdue.png" alt="訂單逾期分析畫面截圖" data-alt-en="Overdue order analysis screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">訂單逾期分析畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Overdue order analysis screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">預交日（起 / 迄）</span><span lang="en">Delivery date (from / to)</span></td><td><span lang="zh">依訂單明細的預計交貨日區間篩選。留白時預設<b>近 30 天</b>，不是「不限起日」</span><span lang="en">Filters by the expected delivery date range on the order lines. Left blank, it defaults to the <b>last 30 days</b> rather than to no lower bound.</span></td></tr>
+        <tr><td><span lang="zh">客戶代號 / 品號</span><span lang="en">Customer / Product</span></td><td><span lang="zh">各自縮小查詢範圍</span><span lang="en">each narrows the query scope</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">訂單號 / 行號</span><span lang="en">Sales Order / Line</span></td><td><span lang="zh">逾期的銷貨訂單與其明細行</span><span lang="en">The overdue sales order and its lines</span></td></tr>
+        <tr><td><span lang="zh">客戶代號</span><span lang="en">Customer</span></td><td><span lang="zh">訂單的往來客戶</span><span lang="en">Customer the order belongs to</span></td></tr>
+        <tr><td><span lang="zh">訂單日 / 預交日</span><span lang="en">Order Date / Delivery Date</span></td><td><span lang="zh">接單日期與承諾交貨日</span><span lang="en">Order date and promised delivery date</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">訂購的料件</span><span lang="en">Item ordered</span></td></tr>
+        <tr><td><span lang="zh">訂購量 / 已出量 / 未出量</span><span lang="en">Order Qty / Shipped Qty / Pending Qty</span></td><td><span lang="zh">訂單數量、累計已出貨量，以及仍待出貨的差額</span><span lang="en">Ordered quantity, cumulative shipped quantity and the balance still to ship</span></td></tr>
+        <tr><td><span lang="zh">逾期天數</span><span lang="en">Overdue Days</span></td><td><span lang="zh"><b>廠別當地日</b> － 預交日；天數越大交期壓力越高，應優先安排出貨或與客戶協調。基準日取的是<b>該廠時區的今天</b>而不是伺服器時區，廠別與伺服器不同時區時才不會整批差一天</span><span lang="en">The <b>plant's local date</b> − the promised delivery date; the larger it is, the greater the delivery pressure, so ship or renegotiate with the customer first. The baseline is <b>today in the plant's own time zone</b>, not the server's, so a plant in another zone is not out by a day across the board</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="../mfg/work-order-progress.html"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

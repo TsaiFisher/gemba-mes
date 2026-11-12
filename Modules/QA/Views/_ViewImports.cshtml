@@ -1,0 +1,7 @@
+@* ⚠️ 模組 Views 不繼承根 /Views/_ViewImports.cshtml——它依**實體目錄**套用。
+   缺了 @addTagHelper 的症狀是靜默的：asp-for 不產生 name、asp-action 不產生 action，
+   表單永遠送空值、ModelState 永遠無效，而且沒有任何編譯錯誤。 *@
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Modules.QA.ViewModels
+@using Microsoft.AspNetCore.Mvc.Localization
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

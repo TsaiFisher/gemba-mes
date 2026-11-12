@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/INV/Controllers/StockLedgerController.cs",
+  "sourceHash": "079ce19a57ce512f8703557fb528e7d5b2195ca0382fc7e075dd4c8e22223b8d",
+  "entries": [
+    {
+      "slug": "code-inv-stockledgercontroller-d3a5d598",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 庫存異動帳本",
+      "text": "帳本顯示規則說明｜此帳本僅供查閱，會根據指定的品項編號和時間區間，展示該品項從期初結存開始，所有單筆的入庫與出庫紀錄，以及每次操作後的即時結存數量。使用者可以選擇性地縮小查看儲位或批號的範圍。",
+      "approved": true,
+      "sourceSectionHash": "e3ebcb392c9848ebbb519b57595e72acc935cfa6bc98c2d18cfc1e8b8ba5bd3a"
+    },
+    {
+      "slug": "code-inv-stockledgercontroller-441dfda7",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 建立帳本：期初結存 + 期間逐筆入/出/結存",
+      "text": "帳本建立範圍限制與篩選條件｜系統會根據所屬的廠別進行資料篩選，並且可以進一步以品號、以及可選擇的儲位或批號來限定帳本的內容。",
+      "approved": true,
+      "sourceSectionHash": "9783c07382d80be9deeda3d97df37b9e0fe256558e154f73281519870f525658"
+    },
+    {
+      "slug": "code-inv-stockledgercontroller-1df71d2f",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 即使明細因上限被截斷，頁尾數字仍為全期間正確值",
+      "text": "總結數值不受明細顯示限制影響｜即使系統在列出明細資料時因為上限而被截斷，頁面底部的彙總數字仍會計算出整個期間的正確總值。",
+      "approved": true,
+      "sourceSectionHash": "3099b0085106245d5600566a8336f934cb3defa74072fb94d347e8824591e95f"
+    }
+  ]
+}

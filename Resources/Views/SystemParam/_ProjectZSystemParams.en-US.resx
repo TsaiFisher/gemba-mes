@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="FinanceSettings" xml:space="preserve"><value>Finance Settings</value></data>
+  <data name="BaseCurrency" xml:space="preserve"><value>Base Currency</value></data>
+  <data name="BaseCurrencyHint" xml:space="preserve"><value>Exchange rates are relative to the base currency (1 base = X foreign). Set up currencies in Currency Maintenance first.</value></data>
+  <data name="NotSet" xml:space="preserve"><value>Not set</value></data>
+  <data name="InventorySettings" xml:space="preserve"><value>Inventory Settings</value></data>
+  <data name="InvSimplifiedMode" xml:space="preserve"><value>Simplified Mode</value></data>
+  <data name="InvSimplifiedModeHint" xml:space="preserve"><value>When enabled, goods receipt/return documents are automatically posted using default locations on save, without separate warehouse operations. When disabled, uses two-stage process: business creates document → warehouse performs put-away/pick.</value></data>
+  <data name="MfgSettings" xml:space="preserve"><value>Manufacturing Settings</value></data>
+  <data name="MfgSimplifiedMode" xml:space="preserve"><value>Simplified Manufacturing Mode</value></data>
+  <data name="MfgSimplifiedModeHint" xml:space="preserve"><value>When enabled, work orders are released automatically right after the MRP run, skipping the release gate and release approval. Standard cost snapshot, push-material issue slips, outsourcing POs and in-transit pegging are still created; material shortages are surfaced by the start-work material gate instead. Suited to small plants that produce on receipt of order without capacity scheduling. Unset = full flow.</value></data>
+  <data name="InvDefaultCostMethod" xml:space="preserve"><value>Default Costing Method</value></data>
+  <data name="MovingAverage" xml:space="preserve"><value>Moving Average (MA)</value></data>
+  <data name="Fifo" xml:space="preserve"><value>FIFO</value></data>
+  <data name="SrmSettings" xml:space="preserve"><value>Procurement (SRM) Settings</value></data>
+  <data name="SrmWeightQuality" xml:space="preserve"><value>Score Weight — Quality</value></data>
+  <data name="SrmWeightDelivery" xml:space="preserve"><value>Score Weight — Delivery</value></data>
+  <data name="SrmWeightPrice" xml:space="preserve"><value>Score Weight — Price</value></data>
+  <data name="SrmWeightService" xml:space="preserve"><value>Score Weight — Service</value></data>
+  <data name="SrmWeightHint" xml:space="preserve"><value>Vendor evaluation total = weighted average of the four scores (weights need not sum to 100; all-zero or blank falls back to defaults 30/30/20/20).</value></data>
+  <data name="MfgAutoScheduleOnChange" xml:space="preserve"><value>Reschedule automatically after changes</value></data>
+  <data name="MfgAutoScheduleBeforeDispatch" xml:space="preserve"><value>Reschedule automatically before dispatch</value></data>
+  <data name="MfgAutoScheduleDailyTime" xml:space="preserve"><value>Daily automatic rescheduling time (HH:mm)</value></data>
+  <data name="MfgAutoScheduleHeader" xml:space="preserve"><value>Automatic rescheduling</value></data>
+  <data name="MfgAutoScheduleHint" xml:space="preserve"><value>When off, the schedule is only updated when someone clicks Run Schedule. Automatic runs work like manual ones: dispatches in setup, ready, pending FPI, in progress or on hold stay where they are, and the rest are re-laid. Each plant can override these on the parameter tab of the Plant screen.</value></data>
+  <data name="MfgAutoScheduleOnChangeHint" xml:space="preserve"><value>After a release, split, machine switch, completion, cancellation, machine status change, work calendar change or planned downtime change, the schedule is re-run once things have been quiet for 90 seconds (at most 10 minutes while changes keep coming).</value></data>
+  <data name="MfgAutoScheduleBeforeDispatchHint" xml:space="preserve"><value>If the schedule is out of date, it is re-run (a few seconds) before Dispatch Operations, the mobile dispatch list, the Preparation Board or Production Schedule opens, and before the 17:00 preparation alert is sent.</value></data>
+  <data name="MfgAutoScheduleDailyTimeHint" xml:space="preserve"><value>A full re-run once a day at this time, for example 16:00 (before the 17:00 preparation alert). Leave blank to turn it off. If the time is missed (for example the server was off), it runs later the same day.</value></data>
+  <data name="MfgAutoScheduleRule" xml:space="preserve"><value>Sequencing rule for automatic runs</value></data>
+  <data name="MfgAutoScheduleRuleNotSet" xml:space="preserve"><value>Not set (Priority)</value></data>
+  <data name="MfgAutoScheduleRuleHint" xml:space="preserve"><value>Automatic runs sequence production batches by this rule. It is also the default rule on the Production Schedule screen; a manual run can still pick another.</value></data>
+  <data name="MfgAutoScheduleFreezeHours" xml:space="preserve"><value>Freeze window (hours)</value></data>
+  <data name="MfgAutoScheduleFreezeHoursHint" xml:space="preserve"><value>In automatic runs, scheduled dispatches starting within this many hours keep their machine and time slot (the shop floor may already be staging material and tooling for them). Blank or 0 turns it off; at most 168. Manual runs ignore it.</value></data>
+  <data name="Rule_Priority" xml:space="preserve"><value>Priority</value></data>
+  <data name="Rule_EDD" xml:space="preserve"><value>Earliest Due Date</value></data>
+  <data name="Rule_SPT" xml:space="preserve"><value>Shortest Process Time</value></data>
+  <data name="Rule_FIFO" xml:space="preserve"><value>FIFO</value></data>
+  <data name="Rule_LIFO" xml:space="preserve"><value>LIFO</value></data>
+</root>

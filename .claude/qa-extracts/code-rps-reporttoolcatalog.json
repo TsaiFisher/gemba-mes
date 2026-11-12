@@ -1,0 +1,34 @@
+{
+  "sourcePath": "Modules/RPS/Services/ReportToolCatalog.cs",
+  "sourceHash": "8c443e18990242d9ba003ccc09e14c59db231056eaa012044caa45844418bad5",
+  "entries": [
+    {
+      "slug": "code-rps-reporttoolcatalog-12fc6da6",
+      "lang": "zh",
+      "headingPath": "報表 › 一支工具加上「目前使用者可否執行」的判定結果",
+      "text": "工具可見性判斷規則｜系統會顯示哪些功能可以執行，而不是將無法執行的項目從清單中移除，以避免使用者誤以為資料遺失。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reporttoolcatalog-0f454301",
+      "lang": "zh",
+      "headingPath": "報表 › 目前使用者可否執行該工具",
+      "text": "權限判斷規則｜系統會檢查使用者是否可以執行某個工具，如果找不到該工具的紀錄，則一律判定為無法執行。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reporttoolcatalog-b0f8309a",
+      "lang": "zh",
+      "headingPath": "報表 › 兩支工具搶同一鍵時「存下來的查詢會執行到哪一支」取決於註冊順序—",
+      "text": "兩支工具搶同一鍵時「存下來的查詢會執行到哪一支」｜重複工具識別碼設定錯誤，系統會依據工具的註冊順序來決定執行哪一個查詢。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reporttoolcatalog-670fdda0",
+      "lang": "zh",
+      "headingPath": "報表 › 把判定寫死等於讓「某支畫面日後另立閘門」變成無痕放寬",
+      "text": "權限判斷的規則說明｜系統目前判定某個報表畫面的可讀性時，是根據其是否具有建立權限來判定的。這代表如果使用者有權限建立相關單據，那麼在查看該報表時也視為可以閱讀。",
+      "approved": true
+    }
+  ]
+}

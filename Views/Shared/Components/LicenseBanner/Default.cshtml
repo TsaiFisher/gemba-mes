@@ -1,0 +1,6 @@
+@model SmartFactory.MES.Services.LicenseStatus
+<div class="alert @(Model.IsWriteBlocked ? "alert-danger" : "alert-warning") d-flex align-items-center mb-3" role="alert">
+    <i class="bi @(Model.IsWriteBlocked ? "bi-lock" : "bi-exclamation-triangle") me-2"></i>
+    <div class="flex-grow-1">@Localizer["Banner_" + Model.State]</div>
+    <a class="alert-link ms-3" href="/License">@Localizer["Details"]</a>
+</div>

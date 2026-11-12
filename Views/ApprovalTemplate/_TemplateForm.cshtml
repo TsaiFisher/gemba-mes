@@ -1,0 +1,47 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.ApprovalTemplate
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    var formAction = isEdit
+        ? Url.Action("Edit", "ApprovalTemplate", new { id = Model.Id })
+        : Url.Action("Create", "ApprovalTemplate");
+}
+
+<form id="panelForm" action="@formAction" method="post" data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    @if (isEdit)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+    <div class="p-4">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label fw-bold">@Localizer["TemplateName"] <span class="text-danger">*</span></label>
+            <input asp-for="Name" class="form-control" placeholder="@Localizer["TemplateNamePlaceholder"]" />
+            <span asp-validation-for="Name" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="TargetDocumentType" class="form-label fw-bold">@Localizer["DocumentType"]</label>
+            <input asp-for="TargetDocumentType" class="form-control"
+                   placeholder="@Localizer["DocumentTypePlaceholder"]" />
+            <div class="form-text">@Localizer["DocumentTypeHelp"]</div>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input asp-for="SkipSameApprover" class="form-check-input" />
+            <label asp-for="SkipSameApprover" class="form-check-label fw-bold">@Localizer["SkipSameApprover"]</label>
+            <div class="form-text">@Localizer["SkipSameApproverHelp"]</div>
+        </div>
+    </div>
+
+    <div class="p-3 border-top bg-light d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+        <button type="submit" class="btn btn-success px-4">
+            <i class="bi bi-save"></i> @(isEdit ? Localizer["SaveChanges"] : Localizer["Create"])
+        </button>
+    </div>
+</form>

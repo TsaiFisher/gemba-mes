@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SmartFactory MES — 文件中心</title>
+<link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="index.page.css">
+</head>
+<body>
+<nav class="navbar navbar-light bg-white border-bottom px-4">
+  <span class="navbar-brand fw-bold"><i class="bi bi-book me-2 text-primary"></i>SmartFactory MES 文件中心</span>
+  <a href="/" class="btn btn-sm btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>返回系統</a>
+</nav>
+<div class="container py-5">
+  <p class="text-muted mb-5">請依您的角色選擇對應手冊。</p>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <a href="user/index.html" class="text-decoration-none">
+        <div class="card h-100 doc-card border-0 shadow-sm">
+          <div class="card-body text-center py-5">
+            <div class="doc-icon text-success mb-3"><i class="bi bi-person-circle"></i></div>
+            <h4 class="fw-bold">系統使用手冊</h4>
+            <p class="text-muted small mt-2">適用對象：一般使用者<br>各模組畫面操作說明、常見作業流程</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="admin/index.html" class="text-decoration-none">
+        <div class="card h-100 doc-card border-0 shadow-sm">
+          <div class="card-body text-center py-5">
+            <div class="doc-icon text-warning mb-3"><i class="bi bi-gear-wide-connected"></i></div>
+            <h4 class="fw-bold">系統管理手冊</h4>
+            <p class="text-muted small mt-2">適用對象：系統管理者<br>上線前設定、權限規劃、系統參數</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="maintenance/index.html" class="text-decoration-none">
+        <div class="card h-100 doc-card border-0 shadow-sm">
+          <div class="card-body text-center py-5">
+            <div class="doc-icon text-info mb-3"><i class="bi bi-tools"></i></div>
+            <h4 class="fw-bold">系統維護手冊</h4>
+            <p class="text-muted small mt-2">適用對象：顧問 / 企業 MIS<br>架構說明、模組開發、DB 維護</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

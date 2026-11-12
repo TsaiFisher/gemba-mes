@@ -1,0 +1,134 @@
+{
+  "sourcePath": "Services/RolePermissionSeeder.cs",
+  "sourceHash": "93472207592fc677468b2dc8fd8d340aa2c5ea5c020cf77955e7a02f49421bf5",
+  "entries": [
+    {
+      "slug": "code-core-rolepermissionseeder-0db28e1b",
+      "lang": "zh",
+      "headingPath": "系統共用 › 由  走訪實際選單樹，",
+      "text": "權限設定自動化與預設值說明｜系統會根據模組和角色之間的關係，自動建立或更新使用者的選單存取權限紀錄，這樣就不用再依賴人員手動在權限設定畫面勾選了。此機制不會覆蓋使用者已經在權限設定畫面手動調整過的任何權限。",
+      "approved": true,
+      "sourceSectionHash": "f86f4b2bd825701ea4844cde0dbd6a80a92888427a4a781930e028c7e715c85f"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-41c176e7",
+      "lang": "zh",
+      "headingPath": "系統共用 › 「從未出現過的選單鍵」自動補給角色",
+      "text": "權限自動分配規則說明｜系統會自動為每個作業員賦予助理的權限，即使沒有任何人手動操作任何按鈕。",
+      "approved": false,
+      "sourceSectionHash": "571cd238fb07275e67e6f467f20469af9239c4f1cfda05a6bf71d6c914c51946"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-0313d93c",
+      "lang": "zh",
+      "headingPath": "系統共用 › ── 報表工具三支畫面：授權依**畫面性質**而非所屬選單群組",
+      "text": "授權判斷以畫面性質為準｜系統工具的查詢層限制了只能查看自己是擁有者或收件人相關的資料，並且在下載時會根據目標報表的設定再次檢查權限，因此不會發生越權的情況。",
+      "approved": true,
+      "sourceSectionHash": "038098134cb2d885580280b98fe8e112abca82d638124255f77ec026d890a635"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-27390f0c",
+      "lang": "zh",
+      "headingPath": "系統共用 › 看得到別人的排程與收件人＝看得到「誰在定期收哪些機密報表」，",
+      "text": "權限限制：僅能查看特定人員的排程與收件人資訊｜只有具有高階、財務或管理職位的人員，才能看到其他人的定期報表接收清單，以及執行紀錄（包含失敗原因和報表名稱）。",
+      "approved": true,
+      "sourceSectionHash": "8c50c1761ef5ca4863b496d52e95a5d8982fffb5139868a4fb0b57f2dfdaa770"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-9d6662ff",
+      "lang": "zh",
+      "headingPath": "系統共用 › ── 機密報表分級業務裁決 2026-08-04",
+      "text": "報表機密性依金額判斷｜若單據包含金額資料，則該報表被判定為機密級別；否則，其可見範圍維持現有的內部層級權限。",
+      "approved": true,
+      "sourceSectionHash": "8495bfba1429322151c92a2c3b9d72d19489988d1a930ce70fb5b1895ecb5e1b"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-f2e75cb4",
+      "lang": "zh",
+      "headingPath": "系統共用 › 機密報表恆可見的角色：高階管理、管理人員、財務",
+      "text": "報表可見的權限範圍說明｜只有高階管理、管理人員和財務這三類角色，可以看得到所有模組的機密報表；其他角色只能在特定模組的矩陣設定為「完整」時，才能看到該模組的資料。",
+      "approved": true,
+      "sourceSectionHash": "411e5b36d2fa11f0206df5d2e801b88b25fec12ec8f8b975228ea6b551a970e7"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-87935d4e",
+      "lang": "zh",
+      "headingPath": "系統共用 › ── 資料可見範圍───────────────────────",
+      "text": "資料可見範圍規則說明｜系統會根據使用者的角色和組織單位權限來決定可以查看的資料範圍，若使用者被賦予了「看全部資料」的角色，則可以檢視所有資料。",
+      "approved": true,
+      "sourceSectionHash": "2d04b412fe893e94f4c1d98b48d4a4f4cb0d0630cd51b9c4fe6e8f6715157a0c"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-32e87030",
+      "lang": "zh",
+      "headingPath": "系統共用 › 3b) 既有部署補授權：新增畫面上線時",
+      "text": "授權規則的補正與判定｜系統在新增畫面時，會根據現有角色的權限來決定是否需要重新賦予新畫面的使用權。只有那些全系統從未出現過的選單鍵才會自動補足到所有相關角色，而如果某個畫面是管理者手動移除給其他角色，則不會再重新賦予該權限，以尊重管理者的原始設定。",
+      "approved": true,
+      "sourceSectionHash": "07dde35ae9da2686862601a7c9278bff9e4e2dd1bacfe2b66c67416f5bf2c319"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-3f0f247d",
+      "lang": "zh",
+      "headingPath": "系統共用 › 3c) 一次性機密報表可見範圍校正",
+      "text": "報表可見範圍校正規則說明｜執行一次性機密報表的範圍校正後，系統會寫入一個標記。如果沒有設定這個標記，管理者在權限維護畫面手動將某角色的閱讀權限開回來，下次啟動時該權限仍會被關閉。",
+      "approved": true,
+      "sourceSectionHash": "b96e89b975d8fd01b3375b06768853d86eea8ca94b4b682c7f72bbf24e6a993d"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-e2dfb4da",
+      "lang": "zh",
+      "headingPath": "系統共用 › 冪等、不覆蓋手動設定",
+      "text": "權限範圍預設為全公司資料｜系統建立的最高層級組織單位，其權限會自動設定為可以查看所有資料，這適用於系統管理員、高階管理員或管理人員等角色。",
+      "approved": true,
+      "sourceSectionHash": "c8895633d952076f9ad2e9e457394b5b7ec7f9dd4fa8d246f98d535ea0aef696"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-edd3718a",
+      "lang": "zh",
+      "headingPath": "系統共用 › 確保根 OU 存在",
+      "text": "根單位存在性檢查與建置規則｜系統會確保一個根級的組織單位是存在的。如果這個根單位在建立時，沒有被指定任何廠別，則不會因為後續的資料篩選機制而導致無法找到或重複建立此根單位。",
+      "approved": true,
+      "sourceSectionHash": "493123e939da64e638b97377af7e57646619536b88b83036f34307c3b8ef37ae"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-c72d5db4",
+      "lang": "zh",
+      "headingPath": "系統共用 › 放在種子這一層，乾淨部署的權限列從一開始就是對的，",
+      "text": "報表權限限制與預設值｜只有總部、經理或財務人員，以及該模組擁有完整權限的角色才能查看包含金額的機密報表；其他角色連閱讀權限都沒有。",
+      "approved": true,
+      "sourceSectionHash": "98c6f5a3ddc2f067017696ad539c7e2ae3a0e9d6c748c6dd80f367180d731c40"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-2b3ed42d",
+      "lang": "zh",
+      "headingPath": "系統共用 › 檢視權是其餘一切動詞的前提",
+      "text": "檢視權決定是否能使用功能｜所有要使用的功能，都必須先擁有「可讀取」的權限才能進入畫面或看到相關按鈕。",
+      "approved": true,
+      "sourceSectionHash": "67038505bf9c3b1cf2a9b5728662389f9b447026048a89c7f036acbe7bce4974"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-aa1d505f",
+      "lang": "zh",
+      "headingPath": "系統共用 › 一次性機密報表可見範圍校正：從既有權限列中，",
+      "text": "報表權限調整的必要性說明｜此校正步驟是為了確保在將報表的動詞權限從「可建立」統一改為「可讀」時，不會導致原本僅供總部使用的 12 張報表瞬間擴散到整個模組範圍。",
+      "approved": false,
+      "sourceSectionHash": "597bf904d5bfebe54d7cc9eb67e0a3bd6b5b70460312fcb6f55c1419dba316b9"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-40f815d3",
+      "lang": "zh",
+      "headingPath": "系統共用 › 選單鍵 → 授權模組",
+      "text": "選單權限判斷依所屬群組決定｜系統的畫面顯示和功能權限主要根據該畫面所歸屬的選單群組來決定，只有少數幾種特殊性質的報表工具會採用不同的判定方式。",
+      "approved": true,
+      "sourceSectionHash": "9137ce034ebd61529c1b3848dca7592117ea8d54378042a903f1ab00da302657"
+    },
+    {
+      "slug": "code-core-rolepermissionseeder-25fcca13",
+      "lang": "zh",
+      "headingPath": "系統共用 › 手冊 Q&A 助理",
+      "text": "權限差異決定功能使用範圍｜詢問問題只需要讀取權限；若需要手動重建索引，則必須具備更新權限。",
+      "approved": true,
+      "sourceSectionHash": "8e9021a83737d243bb3b8b4c96b1a94ffbe7d2ff4f210955f01d61fc1f3bb073"
+    }
+  ]
+}

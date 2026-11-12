@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="My Approvals (Mobile) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>待我簽核（手機） — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link active"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-pen me-2 text-primary"></i><span lang="zh">待我簽核（手機）</span><span lang="en">My Approvals (Mobile)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/approval/list.html &nbsp;|&nbsp; 在手機上查看並簽核輪到自己的單據</span><span lang="en">Path: /mobile/approval/list.html &nbsp;|&nbsp; Seeing and approving the documents that are waiting for you, on a phone</span></div>
+    </div>
+
+    <p><span lang="zh">首頁點<strong>「待我簽核」</strong>進入。圖示上的數字是目前輪到你的單據筆數，沒有待簽時不顯示數字。這個入口<strong>不需要手機模組權限</strong>——看得到哪些單，完全由簽核流程決定誰是這一關的簽核人，與桌機的「待我簽核」是同一份清單。</span><span lang="en">Tap <strong>"My Approvals"</strong> on the home page. The number on the tile is how many documents are waiting for you right now, and no number is shown when there are none. This entry point <strong>does not need a mobile module permission</strong> — what you see is decided entirely by who the approval flow says the approver for this step is, and it is the same list as "My Pending Approvals" on the desktop.</span></p>
+
+    <img class="screen-shot" src="img/approval.png" data-src-en="img/en/approval.png" alt="手機待我簽核清單截圖" data-alt-en="Mobile approval list screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">待我簽核清單（此處為「目前沒有待您簽核的單據」的空清單狀態；有待簽時每張單各一張卡片，欄位見下表）</span><span lang="en">The approval list (shown here in its empty state, "Nothing is waiting for your approval"; when there is something, each document gets its own card — the fields are listed below)</span></div>
+
+    <h2 id="card"><i class="bi bi-card-list me-2 text-primary"></i><span lang="zh">清單上看得到什麼</span><span lang="en">What the list shows</span></h2>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-25pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Notes</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">單別（灰色標籤）</span><span lang="en">Document type (grey badge)</span></td><td><span lang="zh">單別名稱，依介面語系顯示，例如「請購單」、「工單」。<strong>與桌機的「待我簽核」用的是同一份名稱</strong>，同一張單在電腦和手機上叫法一致。</span><span lang="en">The document type name in the interface language, such as "Purchase Request" or "Work Order". <strong>It comes from the same list as the desktop pending list</strong>, so a document is named the same on the computer and the phone.</span></td></tr>
+    <tr><td><span lang="zh">第 N 關</span><span lang="en">Step N</span></td><td><span lang="zh">這張單目前停在簽核流程的第幾關。</span><span lang="en">Which step of the approval flow the document is sitting at.</span></td></tr>
+    <tr><td><span lang="zh">單號</span><span lang="en">Document number</span></td><td><span lang="zh">卡片上最大的一行。</span><span lang="en">The largest line on the card.</span></td></tr>
+    <tr><td><span lang="zh">申請人 · 申請時間</span><span lang="en">Requester · date</span></td><td><span lang="zh">誰送的審、什麼時候送的。</span><span lang="en">Who submitted it and when.</span></td></tr>
+    </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">清單只列<strong>目前廠別</strong>的單據。切換廠別後清單會跟著換，切換方式見<a href="index.html#plant">手機版概覽的「切換廠別」</a>。</span><span lang="en">The list only shows documents in your <strong>current plant</strong>. Switching plant switches the list too — see <a href="index.html#plant">"Switching plant" in the mobile overview</a>.</span></div>
+
+    <h2 id="steps"><i class="bi bi-list-ol me-2 text-primary"></i><span lang="zh">簽核步驟</span><span lang="en">Steps</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在清單上點該張單的<strong>「查看並簽核」</strong>，畫面彈出<strong>「簽核內容」</strong>視窗。</span><span lang="en">Tap <strong>"Review and approve"</strong> on the card and the <strong>"For approval"</strong> dialog opens.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">確認視窗上方的<strong>金額</strong>、<strong>廠別</strong>與主檔欄位（例如供應商、客戶、需求日），下方的<strong>「明細」</strong>列出品項與數量。</span><span lang="en">Check the <strong>amount</strong>, <strong>plant</strong> and the header fields at the top (supplier, customer, required date and so on); <strong>"Lines"</strong> below lists the items and quantities.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">需要看完整單據時點<strong>「以電腦版開啟單據」</strong>，會另開一個分頁到桌機畫面（手機摘要本來就只是摘要）。</span><span lang="en">Tap <strong>"Open in desktop app"</strong> when you need the whole document; it opens the desktop screen in a new tab (the mobile summary is a summary by design).</span></div></div>
+
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">在<strong>「意見（選填）」</strong>填寫說明，可留空。</span><span lang="en">Type anything you want to say in <strong>"Comment (optional)"</strong>, or leave it blank.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh">點<strong>「核准」</strong>或<strong>「駁回」</strong>，再於確認訊息按確定。送出後清單自動重新載入，該單消失。</span><span lang="en">Tap <strong>"Approve"</strong> or <strong>"Reject"</strong> and confirm. The list reloads itself afterwards and the document is gone from it.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">手機上只有<strong>核准</strong>與<strong>駁回</strong>兩個動作，<strong>沒有桌機的「退回修改」</strong>。要退回給申請人修改請用電腦版——駁回會讓流程就此結束，退回修改則保留流程讓對方改完再送，兩者結果不同。</span><span lang="en">The phone offers only <strong>Approve</strong> and <strong>Reject</strong>; the desktop's <strong>"Return for revision" is not available</strong>. Use the desktop when you want the requester to amend and resubmit: a rejection ends the flow, whereas returning it keeps the flow open, and the outcomes are not the same.</span></div>
+
+    <h2 id="summary"><i class="bi bi-file-text me-2 text-primary"></i><span lang="zh">「簽核內容」視窗怎麼讀</span><span lang="en">Reading the "For approval" dialog</span></h2>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-25pct"><span lang="zh">區塊</span><span lang="en">Area</span></th><th><span lang="zh">說明</span><span lang="en">Notes</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">金額</span><span lang="en">Amount</span></td><td><span lang="zh">最上方的大字，含幣別。<strong>沒有金額概念的單別</strong>（例如請購單、工單）顯示<strong>「此單別無金額」</strong>——這與「金額 0 元」是兩回事，畫面刻意分開表示。</span><span lang="en">The large figure at the top, with its currency. Document types that <strong>have no amount at all</strong> (a purchase request or a work order, for example) show <strong>"No amount for this document type"</strong> — that is not the same thing as an amount of zero, and the screen deliberately keeps them apart.</span></td></tr>
+    <tr><td><span lang="zh">廠別與主檔欄位</span><span lang="en">Plant and header fields</span></td><td><span lang="zh">每個單別各自決定要顯示哪幾個欄位，挑的是「不看就簽不下去」的那幾個。</span><span lang="en">Each document type decides which header fields to show, and the ones chosen are those you cannot sensibly approve without.</span></td></tr>
+    <tr><td><span lang="zh">明細</span><span lang="en">Lines</span></td><td><span lang="zh">品項、數量與單位、金額。明細很多時只顯示前面幾筆，並在最後明說<strong>「另有 N 筆未顯示」</strong>，要看完整明細請用電腦版。</span><span lang="en">Item, quantity with its unit, and amount. On a long document only the first few lines are shown and the dialog says <strong>"N more line(s) not shown"</strong> at the bottom; open the desktop app for the full list.</span></td></tr>
+    </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh">摘要是為了讓你<strong>在手機上做得了決定</strong>，不是單據的完整內容。金額大、或明細被截斷的單，建議先用電腦版開起來看過再簽。</span><span lang="en">The summary exists so that you <strong>can make the decision on a phone</strong>; it is not the complete document. For large amounts, or when the lines are truncated, open it on the desktop before you decide.</span></div>
+
+    <h2 id="which"><i class="bi bi-phone me-2 text-primary"></i><span lang="zh">哪些單別可以在手機簽</span><span lang="en">Which document types can be approved on mobile</span></h2>
+
+    <p><span lang="zh">目前有 <strong>14 個</strong>單別可以在手機上直接簽核：</span><span lang="en">There are <strong>14</strong> document types that can be approved on the phone today:</span></p>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-20pct"><span lang="zh">模組</span><span lang="en">Module</span></th><th><span lang="zh">單別</span><span lang="en">Document types</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">採購（PUR）</span><span lang="en">Purchasing (PUR)</span></td><td><span lang="zh">請購單、採購單、進貨單、進貨退出、委外收貨、供應商評分卡</span><span lang="en">Purchase Request, Purchase Order, Goods Receipt, Goods Return, Outsource Receipt, Vendor Evaluation</span></td></tr>
+    <tr><td><span lang="zh">訂單（ORD）</span><span lang="en">Orders (ORD)</span></td><td><span lang="zh">銷售訂單、出貨單、銷退單、內部訂單</span><span lang="en">Sales Order, Goods Shipment, Sales Return, Internal Order</span></td></tr>
+    <tr><td><span lang="zh">製造（MFG）</span><span lang="en">Manufacturing (MFG)</span></td><td><span lang="zh">工單</span><span lang="en">Work Order</span></td></tr>
+    <tr><td><span lang="zh">品保（QCR）</span><span lang="en">Quality (QCR)</span></td><td><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Report</span></td></tr>
+    <tr><td><span lang="zh">財務（FIN）</span><span lang="en">Finance (FIN)</span></td><td><span lang="zh">應付帳款、應收帳款</span><span lang="en">AP Invoice, AR Invoice</span></td></tr>
+    </tbody>
+    </table>
+
+    <p><span lang="zh">其餘單別在手機上<strong>看得到、但簽不了</strong>，卡片下方會明說<strong>「此單別目前無法在手機上簽核，請用電腦版」</strong>，並附上電腦版連結。這是刻意的降級，不是故障：</span><span lang="en">The remaining types are <strong>visible but cannot be approved</strong> on the phone. The card says <strong>"This document type cannot be approved on mobile yet; please use the desktop app"</strong> and offers a desktop link. This is a deliberate limitation, not a fault:</span></p>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-30pct"><span lang="zh">類型</span><span lang="en">Kind</span></th><th><span lang="zh">為什麼不在手機簽</span><span lang="en">Why not on mobile</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">主檔異動<br><code>Company</code>、<code>Product</code>、<code>Tax</code></span><span lang="en">Master data changes<br><code>Company</code>, <code>Product</code>, <code>Tax</code></span></td><td><span lang="zh">不是交易單據，沒有金額與明細，摘要能提供的資訊與清單上看到的一樣多。</span><span lang="en">These are not transactions: there is no amount and no line detail, so a summary would say no more than the list already does.</span></td></tr>
+    <tr><td><span lang="zh">倉庫作業類<br>報廢、借出、樣品、庫存調整、調撥、跨廠調撥、委外領退料、重工領料、備料單、進貨費用分攤</span><span lang="en">Warehouse documents<br>Scrap, loan, sample, stock adjustment, transfer, cross-plant transfer, outsource material, rework material, staging order, landed cost allocation</span></td><td><span lang="zh">判斷依據是<strong>實體庫存與儲位</strong>（或整張差異表、分攤比例），摘要上的品號數量不足以支撐決定。在手機上放一顆核准鈕，等於鼓勵盲簽。</span><span lang="en">The decision rests on <strong>the physical stock and its locations</strong> (or on a whole variance sheet, or allocation ratios); an item-and-quantity summary is not enough to support it. Putting an approve button on the phone would be inviting blind approval.</span></td></tr>
+    </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">若單別連電腦版的單據連結都沒有登錄，卡片會顯示<strong>「這個單別尚未登錄單據連結，請改用電腦版查看」</strong>——這是明說，不是按了沒反應。</span><span lang="en">When a type has no desktop document link registered either, the card says <strong>"No document link is registered for this type; please use the desktop app"</strong> — it tells you, rather than silently doing nothing.</span></div>
+
+    <h2 id="offline"><i class="bi bi-wifi-off me-2 text-primary"></i><span lang="zh">斷線與狀態變動</span><span lang="en">No connection and state changes</span></h2>
+
+    <p><span lang="zh"><strong>簽核不會暫存補送。</strong>沒有網路時按核准或駁回，畫面會立刻提示<strong>「目前沒有網路連線。簽核不會排隊補送，請等連線恢復後再簽。」</strong>與報工、盤點不同——那些是現場事實的回報，晚幾分鐘送出沒有差別；簽核是一個當下的決定，排隊等於在使用者不知情的狀況下延後生效。</span><span lang="en"><strong>Approvals are never queued.</strong> Tapping approve or reject with no connection shows <strong>"No connection. Approvals are never queued for later — please wait until the connection is back."</strong> straight away. This differs from production reporting or stock counting: those record something that happened on the floor and a few minutes' delay changes nothing, whereas an approval is a decision made now, and queuing it would delay its effect without the approver knowing.</span></p>
+
+    <p><span lang="zh">若在你開著視窗的期間這張單<strong>已被撤回、或被其他簽核人處理掉</strong>，送出會被擋下並顯示原因，清單隨即重新載入——你看到的會是「現在」真正待簽的清單，而不是剛才那一份。</span><span lang="en">If the document is <strong>withdrawn, or handled by another approver</strong> while your dialog is open, the submission is rejected with an explanation and the list reloads — what you then see is the list as it stands now, not the one you opened.</span></p>
+
+    <p><span lang="zh">單據若已不存在、或不在你目前的廠別，視窗會顯示<strong>「這張單已不存在，或不在你目前的廠別。」</strong>並且不提供核准與駁回按鈕——<strong>看不到內容就不給簽</strong>。</span><span lang="en">When the document no longer exists, or is not in your current plant, the dialog says <strong>"This document no longer exists, or is not in your current plant."</strong> and offers no approve or reject buttons — <strong>if you cannot see it, you cannot sign it</strong>.</span></p>
+
+    <h2 id="desktop"><i class="bi bi-display me-2 text-primary"></i><span lang="zh">與桌機的分工</span><span lang="en">Mobile and desktop</span></h2>
+
+    <p><span lang="zh">手機與桌機的<strong>「待我簽核」是同一份清單</strong>，在哪一邊簽都一樣，簽完另一邊就會少一張。桌機另外提供手機沒有的功能：完整單據內容、簽核歷程、以及管理者用的<strong>「所有簽核記錄」</strong>（追查卡住的單、重新指派簽核人），見</span><span lang="en">Mobile and desktop share <strong>the same pending list</strong>: sign on either one and the other loses that document. The desktop offers what the phone does not — the full document, the approval history, and the manager's <strong>"All Approval Requests"</strong> view for tracking down stuck requests and reassigning approvers; see </span><a href="../apr/approval.html"><span lang="zh">線上簽核</span><span lang="en">Approvals</span></a><span lang="zh">。</span><span lang="en">.</span></p>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

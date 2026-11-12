@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="/mobile/manifest.json">
+    <link rel="apple-touch-icon" href="/mobile/icons/apple-touch-icon-180.png">
+    <title data-i18n="osr.title">委外收料</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+    <link rel="stylesheet" href="/mobile/css/inv-material.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary mobile-navbar px-3">
+    <button type="button" data-action="historyBack" data-fallback="/mobile/inv/list.html"
+            class="btn btn-link text-white p-0 me-2" data-i18n-title="common.back_prev" title="返回">
+        <i class="bi bi-arrow-left fs-5"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.back_prev">返回</span>
+    </button>
+    <span class="navbar-brand fw-bold mb-0 h1 flex-grow-1">
+        <i class="bi bi-truck me-2"></i><span data-i18n="osr.title">委外收料</span>
+    </span>
+    <a href="/mobile/home.html" class="btn btn-outline-light btn-sm me-1" data-i18n-title="common.back" title="回首頁"><i class="bi bi-house-door"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="nav.home">首頁</span></a>
+    <button class="btn btn-outline-light btn-sm me-1" data-action="toggleLang" data-lang-toggle title="Language">EN</button>
+    <button class="btn btn-outline-light btn-sm" data-action="logout" data-i18n-title="common.logout" title="登出">
+        <i class="bi bi-box-arrow-right"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.logout">登出</span>
+    </button>
+</nav>
+
+<div class="container-fluid py-3 px-3">
+    <div id="listCard">
+        <div class="card shadow-sm mb-3 u-display-none" id="approvedCard">
+            <div class="card-header bg-white py-2"><span class="fw-semibold small" data-i18n="osr.approved">已核准待確認的收貨單</span></div>
+            <div class="card-body py-2" id="approvedList"></div>
+        </div>
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-white py-2"><span class="fw-semibold small" data-i18n="osr.pick_opo">選擇委外採購單</span></div>
+            <div class="card-body py-2">
+                <div class="input-group mb-2">
+                    <input type="text" id="opoSearch" class="form-control btn-mobile" placeholder="單號或廠商" data-i18n-placeholder="osr.search_ph">
+                    <button class="btn btn-outline-secondary" data-action="openOpoScanner" data-i18n-title="common.scan" title="掃描"><i class="bi bi-upc-scan"></i><span class="ms-1" data-i18n="common.scan">掃描</span></button>
+                    <button class="btn btn-outline-primary" data-action="searchOpos" data-i18n-title="common.search" title="搜尋"><i class="bi bi-search"></i><span class="ms-1" data-i18n="common.search">搜尋</span></button>
+                </div>
+                <div id="opoList"></div>
+            </div>
+        </div>
+    </div>
+    <div id="detailCard" class="card shadow-sm mb-3 u-display-none">
+        <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+            <span class="fw-semibold small" id="detailTitle">—</span>
+            <button class="btn btn-sm btn-outline-secondary" data-action="backToList" data-i18n-title="common.close" title="關閉"><i class="bi bi-x-lg"></i><span class="ms-1" data-i18n="common.close">關閉</span></button>
+        </div>
+        <div class="card-body py-2">
+            <div class="small text-muted mb-2" id="detailMeta"></div>
+            <div class="alert alert-info py-2 small u-display-none" id="locHint" data-i18n="osr.loc_required">簡化模式：收料即入庫，每一行都要指定入庫儲位。</div>
+            <div class="alert alert-info py-2 small u-display-none" id="inspectHint" data-i18n="osr.inspect_hint">收料當場驗收：每一行填不良數（抽到的不良件數）。不良 0＝合格，直接入一般倉；有不良＝整批入待驗倉，等不合格處置。儲位可不填（用品號類別預設儲位）。</div>
+            <div class="alert alert-info py-2 small u-display-none" id="opHint" data-i18n="osr.op_hint">工序委外：收回的是在製品，不入庫，直接回寫該工序派工的完工量；該工序的投料於此時自動扣（已領過的不重扣）。</div>
+            <div id="lineRows"></div>
+            <div class="form-check my-2">
+                <input class="form-check-input" type="checkbox" id="isFinal">
+                <label class="form-check-label small" for="isFinal" data-i18n="osr.final">這是最後一批（廠商已交完）</label>
+            </div>
+            <div class="alert alert-warning py-2 small" data-i18n="osr.online_note">委外收料會同時產生應付發票，只能在連線時送出。</div>
+            <div class="d-grid">
+                <button class="btn btn-primary btn-lg" id="btnReceive" data-action="submitReceive">
+                    <i class="bi bi-box-arrow-in-down me-2"></i><span data-i18n="osr.submit">確認收料</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 儲位掃描 Modal -->
+<div class="modal fade" id="scannerModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title" data-i18n="osr.scan_title">掃描條碼</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-0"><div id="reader"></div></div>
+        </div>
+    </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="/mobile/js/telemetry.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/data-action.js"></script>
+<script src="/mobile/js/nav.js"></script>
+<script src="/mobile/js/libs/html5-qrcode.min.js"></script>
+<script src="/mobile/js/i18n.js"></script>
+<script src="/mobile/js/i18n.modules.js"></script>
+<script src="/mobile/js/api.js"></script>
+<script src="/mobile/js/auth.js"></script>
+<script src="/mobile/js/scanner.js"></script>
+<script src="/mobile/js/offline-queue.js"></script>
+<script src="/mobile/js/material-common.js"></script>
+<script src="/mobile/inv/outsource-receive.page.js"></script>
+</body>
+</html>

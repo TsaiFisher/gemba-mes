@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- 加密格式與主機識別碼單一來源（§18.15.9）：與 Security DLL、LicenseAuthority 共用同一份原始檔 -->
+  <ItemGroup>
+    <Compile Include="..\..\Services\ConnectionStringCipher.cs" Link="ConnectionStringCipher.cs" />
+    <Compile Include="..\..\Services\HostIdentity.cs" Link="HostIdentity.cs" />
+    <Compile Include="..\..\Services\LicenseBindingModes.cs" Link="LicenseBindingModes.cs" />
+    <!-- 省略指紋參數時取本機指紋（容器內沒有 get-fingerprint.sh 的使用情境） -->
+    <Compile Include="..\..\Services\MachineAnchor.cs" Link="MachineAnchor.cs" />
+  </ItemGroup>
+
+  <!-- MachineAnchor.cs 的 Windows DPAPI 封裝；與其他 Link 了 MachineAnchor 的專案一致 -->
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="LicenseStatus" xml:space="preserve"><value>授權狀態</value></data>
+  <data name="State_Normal" xml:space="preserve"><value>授權有效</value></data>
+  <data name="State_Warning" xml:space="preserve"><value>授權有事項需要處理</value></data>
+  <data name="State_ReadOnly" xml:space="preserve"><value>唯讀</value></data>
+  <data name="State_Disabled" xml:space="preserve"><value>已停用</value></data>
+  <data name="State_Unlocked" xml:space="preserve"><value>授權控管已解除</value></data>
+  <data name="ExpiresAt" xml:space="preserve"><value>到期日</value></data>
+  <data name="Perpetual" xml:space="preserve"><value>永久</value></data>
+  <data name="ReadOnlySince" xml:space="preserve"><value>唯讀起始</value></data>
+  <data name="DisabledAt" xml:space="preserve"><value>停用日</value></data>
+  <data name="LicenseId" xml:space="preserve"><value>授權編號</value></data>
+  <data name="ClientName" xml:space="preserve"><value>授權對象</value></data>
+  <data name="BindingMode" xml:space="preserve"><value>綁定方式</value></data>
+  <data name="Binding_lease" xml:space="preserve"><value>定期確認（每 90 天）</value></data>
+  <data name="Binding_tpm" xml:space="preserve"><value>TPM 綁定</value></data>
+  <data name="Binding_offline" xml:space="preserve"><value>綁定本機（不需連線）</value></data>
+  <data name="Binding_ci" xml:space="preserve"><value>CI</value></data>
+  <data name="Seats" xml:space="preserve"><value>座數</value></data>
+  <data name="ObtainLicense" xml:space="preserve"><value>申請或換發授權</value></data>
+  <data name="AnchorMissing" xml:space="preserve"><value>讀不到本機錨定檔，無法計算指紋。請以 SmartFactory.MES.MachineId --init 建立。</value></data>
+  <data name="Fingerprint" xml:space="preserve"><value>本機環境指紋：</value></data>
+  <data name="FingerprintHint" xml:space="preserve"><value>申請時只會送出指紋與主機識別碼（皆為雜湊），不會送出錨定碼、主機板序號原值或任何業務資料。</value></data>
+  <data name="Register" xml:space="preserve"><value>申請授權（開啟登記頁）</value></data>
+  <data name="RenewOffline" xml:space="preserve"><value>申請換發（換電腦、換主機板）</value></data>
+  <data name="ImportLicense" xml:space="preserve"><value>匯入授權檔</value></data>
+  <data name="ImportHint" xml:space="preserve"><value>上傳收到的 license.json。系統會先驗證，通過後才取代現行授權（舊檔自動備份），不需重新啟動。</value></data>
+  <data name="Import" xml:space="preserve"><value>匯入</value></data>
+  <data name="DeployKind" xml:space="preserve"><value>部署類型</value></data>
+  <data name="Deploy_physical" xml:space="preserve"><value>實體機</value></data>
+  <data name="Deploy_vm" xml:space="preserve"><value>虛擬機</value></data>
+  <data name="Deploy_wsl" xml:space="preserve"><value>WSL</value></data>
+  <data name="Deploy_container" xml:space="preserve"><value>容器</value></data>
+  <data name="Deploy_unknown" xml:space="preserve"><value>無法判斷</value></data>
+  <data name="HostId" xml:space="preserve"><value>主機識別碼</value></data>
+  <data name="HostIdUnavailable" xml:space="preserve"><value>讀不到</value></data>
+  <data name="SuggestedBinding" xml:space="preserve"><value>適用的授權方式</value></data>
+  <data name="Suggested_offline" xml:space="preserve"><value>綁定這台電腦，不需連線、永久有效</value></data>
+  <data name="Suggested_lease" xml:space="preserve"><value>每 90 天由管理員在本頁確認一次（系統本身不連外）</value></data>
+  <data name="HostCheck" xml:space="preserve"><value>主機比對</value></data>
+  <data name="HostCheck_Match" xml:space="preserve"><value>符合</value></data>
+  <data name="HostCheck_Mismatch" xml:space="preserve"><value>不符：此授權不屬於這台電腦</value></data>
+  <data name="HostCheck_Unavailable" xml:space="preserve"><value>無法確認（讀不到主機識別碼）</value></data>
+  <data name="RequestCode" xml:space="preserve"><value>申請碼（請提供給授權提供者）</value></data>
+  <data name="Copy" xml:space="preserve"><value>複製</value></data>
+  <data name="Copied" xml:space="preserve"><value>已複製</value></data>
+  <data name="CheckinTitle" xml:space="preserve"><value>授權確認（每 90 天）</value></data>
+  <data name="CheckinHint" xml:space="preserve"><value>需要線上確認的授權（虛擬機，或已啟用「線上授權確認」）每 90 天要確認一次，確認後即可繼續使用；到期前 14 天開始提醒。按下按鈕會開啟授權伺服器的確認頁，完成後自動回到這裡更新。系統本身不會連線到外部。</value></data>
+  <data name="CheckinDirectHint" xml:space="preserve"><value>本系統設定為自動續租（License:Lease:Transport = direct），平常不需手動確認；必要時仍可在此確認。</value></data>
+  <data name="CheckinButton" xml:space="preserve"><value>確認授權</value></data>
+  <data name="CheckinWaiting" xml:space="preserve"><value>已開啟確認頁，請在該分頁完成確認……</value></data>
+  <data name="CheckinFailed" xml:space="preserve"><value>無法把確認結果送回系統，請改用下方「匯入確認回覆」。</value></data>
+  <data name="CheckinCopyLink" xml:space="preserve"><value>複製確認連結（給能上網的裝置）</value></data>
+  <data name="CheckinWhatIsSent" xml:space="preserve"><value>確認時會送出什麼？</value></data>
+  <data name="CheckinWhatIsSentHint" xml:space="preserve"><value>下面是確認時送出的完整內容：授權檔、機器指紋（雜湊）、啟用碼、版本、作業系統與時間。不含錨定碼、主機板序號、連線字串或任何業務資料。</value></data>
+  <data name="CheckinImportHint" xml:space="preserve"><value>這台電腦不能上網時：把確認連結傳到手機或其他能上網的裝置開啟，下載回覆檔後在這裡匯入。</value></data>
+  <data name="CheckinImport" xml:space="preserve"><value>匯入確認回覆</value></data>
+  <data name="OnlineCheckTitle" xml:space="preserve"><value>線上授權確認</value></data>
+  <data name="OnlineCheckHint" xml:space="preserve"><value>啟用後，這台電腦的授權每 90 天要確認一次（按上方「確認授權」，經瀏覽器送出，系統本身不連外）。整台複製到別處的副本無法通過確認。連不上不會影響使用，超過確認期限才轉為唯讀。</value></data>
+  <data name="OnlineCheckEffective" xml:space="preserve"><value>目前</value></data>
+  <data name="OnlineCheckForced" xml:space="preserve"><value>已啟用（虛擬環境強制）</value></data>
+  <data name="OnlineCheckOn" xml:space="preserve"><value>已啟用</value></data>
+  <data name="OnlineCheckOff" xml:space="preserve"><value>未啟用（僅離線驗證）</value></data>
+  <data name="OnlineCheckValidUntil" xml:space="preserve"><value>確認有效至</value></data>
+  <data name="OnlineCheckForcedHint" xml:space="preserve"><value>偵測到本機為虛擬機器或容器。虛擬環境的主機識別碼可被複製，必須線上確認，無法停用。</value></data>
+  <data name="OnlineCheckEnable" xml:space="preserve"><value>啟用線上授權確認</value></data>
+  <data name="OnlineCheckDisable" xml:space="preserve"><value>停用線上授權確認</value></data>
+  <data name="OnlineCheckConfirmFirst" xml:space="preserve"><value>啟用前請先按上方「確認授權」完成一次確認。</value></data>
+  <data name="Summary_HostBound" xml:space="preserve"><value>已綁定本機</value></data>
+  <data name="Summary_Perpetual" xml:space="preserve"><value>永久有效</value></data>
+  <data name="Summary_ValidUntil" xml:space="preserve"><value>有效至 {0}</value></data>
+  <data name="Summary_CheckinUntil" xml:space="preserve"><value>線上確認有效至 {0}</value></data>
+  <data name="Summary_Separator" xml:space="preserve"><value>，</value></data>
+</root>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="MRP Reconciliation Decisions — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MRP 對帳差異決策 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link active"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clipboard-check me-2 text-primary"></i><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/MrpVarianceDecision &nbsp;|&nbsp; MRP 重跑後既有請購單與最新展開結果的落差清單</span><span lang="en">Route: /MrpVarianceDecision &nbsp;|&nbsp; List of the gaps between existing purchase requisitions and the latest MRP run</span></div>
+    </div>
+
+    <p><span lang="zh">MRP 重跑會刪除並重建未投產的工單，但</span><span lang="en">Re-running MRP deletes and rebuilds work orders that have not been released, but </span><strong><span lang="zh">已送審或已核准的請購單不會被自動覆寫</span><span lang="en">Purchase requisitions already submitted or approved are not overwritten automatically</span></strong><span lang="zh">——簽核過的單據由簽核治理接管，MRP 收不回來。兩邊因此可能脫鉤，最典型的情況是某個品號由「採購」改為「自製」後重跑：需求已移轉到工單，但原本的請購單仍留在原地。</span><span lang="en"> — approved documents are governed by the approval flow and MRP cannot take them back. The two sides can therefore drift apart; the classic case is an item switched from "buy" to "make" and then re-run: the demand has moved to a work order, but the original purchase requisition is still sitting there.</span></p>
+    <p><span lang="zh">本清單把這類落差變成</span><span lang="en">This list turns such gaps into </span><strong><span lang="zh">必須被結清的待辦</span><span lang="en">outstanding items that have to be cleared</span></strong><span lang="zh">，持續呈現直到處理完畢，而不是只在重跑當下閃一則訊息。</span><span lang="en">, which stay on the list until they have been dealt with instead of flashing up a single message at the moment of the re-run.</span></p>
+    <img class="screen-shot" src="img/mrp-variance-decision.png" data-src-en="img/en/mrp-variance-decision.png" alt="MRP 對帳差異決策畫面截圖" data-alt-en="MRP reconciliation decision screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">MRP 對帳差異決策畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">MRP reconciliation decision screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="kind"><i class="bi bi-list-ul me-2 text-primary"></i><span lang="zh">差異類型</span><span lang="en">Kind</span></h2>
+    <table class="table table-sm table-bordered">
+      <thead class="table-light"><tr><th><span lang="zh">類型</span><span lang="en">Type</span></th><th><span lang="zh">意義</span><span lang="en">Meaning</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">改自製／委外</span><span lang="en">Switched to make/outsource</span></td><td><span lang="zh">本次已無此採購需求，且同一次展開有該品號的工單——需求只是換了供給通道。說明欄會指出接手的工單號。</span><span lang="en">The purchase is no longer needed and the same run produced a work order for the item — the demand has simply moved to another supply route. The notes column shows the work order that has taken it over.</span></td></tr>
+        <tr><td><span lang="zh">需求消失</span><span lang="en">Demand removed</span></td><td><span lang="zh">本次已無此採購需求，也沒有對應工單（例如訂單縮量）。</span><span lang="en">The purchase is no longer needed and there is no matching work order either (the order was cut back, for example).</span></td></tr>
+        <tr><td><span lang="zh">增量／減量</span><span lang="en">Increase / decrease</span></td><td><span lang="zh">品號仍需採購但數量改變。已核准的請購單不會被自動改量。</span><span lang="en">The item still has to be purchased but the quantity has changed. Approved purchase requisitions are not re-quantified automatically.</span></td></tr>
+        <tr><td><span lang="zh">新增</span><span lang="en">Add</span></td><td><span lang="zh">本次新增的採購需求，既有請購單已進入後續流程無法自動加入，須另行請購。</span><span lang="en">A newly added purchase requirement; the existing requisition has already moved on and cannot take it, so a separate requisition is needed.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="disposition"><i class="bi bi-check2-square me-2 text-primary"></i><span lang="zh">處置方式</span><span lang="en">Disposition</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><strong><span lang="zh">結案退場</span><span lang="en">Close &amp; retire</span></strong><span lang="zh">：勾選「改自製／委外」或「需求消失」的項目後點擊，系統會把對應的請購明細標記為結案（不再轉採購）。</span><span lang="en">: tick the items marked "switched to make or outsource" or "demand gone" and click it; the system marks the matching requisition lines as closed so they are never converted to a purchase. </span><strong><span lang="zh">不會刪除單據</span><span lang="en">does not delete the document</span></strong><span lang="zh">，簽核軌跡完整保留。</span><span lang="en">, and the approval trail is kept in full.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><strong><span lang="zh">標記已處理</span><span lang="en">Mark handled</span></strong><span lang="zh">：已轉採購、簽核中等無法自動處理的項目，請先至請購單／採購單依實際情況處理，再回本清單標記，避免待辦長期堆積。</span><span lang="en">: items that cannot be handled automatically — already converted to a purchase, or in approval — should be dealt with on the requisition or purchase order first and then marked here, so that the to-do list does not pile up.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-shield-check me-1 text-success"></i>
+      <strong><span lang="zh">安全機制：</span><span lang="en">Safeguards:</span></strong><span lang="zh">差異項是重跑當下的快照。按下「結案退場」時系統會</span><span lang="en"> The variance list is a snapshot taken when MRP was re-run. When you click "Close and drop", the system </span><strong><span lang="zh">重新驗證每一筆</span><span lang="en">re-checks every</span></strong><span lang="zh">的現況——期間已被轉採購、或請購單正在簽核中的明細會被自動略過並列在結果訊息中，不會被誤結案。</span><span lang="en"> as it stands — lines that have since been converted to a purchase, or whose requisition is in approval, are skipped automatically and listed in the result message, so nothing is closed by mistake.</span>
+    </div>
+
+    <h2 id="automatic-closing-system-parameter"><i class="bi bi-gear me-2 text-primary"></i><span lang="zh">自動結案（系統參數）</span><span lang="en">Automatic closing (system parameter)</span></h2>
+    <p><span lang="zh">系統參數</span><span lang="en">System Parameters</span> <code>mfg_mrp_auto_close_obsolete_pr</code> <span lang="zh">設為</span><span lang="en">Set to</span> <code>true</code> <span lang="zh">時，重跑當下就會自動把「未轉採購且本次已無需求」的明細結案，不需再到本清單處理；此類項目會以「已自動結案」狀態留存供追溯。預設為關閉（僅提示、由人工確認）。</span><span lang="en">is on, the re-run automatically closes lines that were never converted to a purchase and are no longer needed, so they do not have to be handled from this list; such items are kept with the status "closed automatically" for traceability. It is off by default (the system only prompts and someone confirms).</span></p>
+
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">只看單一料件的差異</span><span lang="en">Differences for one item only</span></td></tr>
+        <tr><td><span lang="zh">MRP 執行單</span><span lang="en">MRP Run</span></td><td><span lang="zh">只看某次 MRP 展開造成的差異</span><span lang="en">Differences caused by one particular MRP run</span></td></tr>
+        <tr><td><span lang="zh">僅顯示未結清</span><span lang="en">Open only</span></td><td><span lang="zh">只列出尚待處置的差異（預設勾選）；取消勾選可回看已結清紀錄</span><span lang="en">Lists only differences still to be dealt with (ticked by default); untick it to look back at records already settled</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">清單欄位</span><span lang="en">List columns</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">MRP 執行單</span><span lang="en">MRP Run</span></td><td><span lang="zh">偵測出此差異的 MRP 展開批次</span><span lang="en">The MRP run that detected this difference</span></td></tr>
+        <tr><td><span lang="zh">差異類型</span><span lang="en">Kind</span></td><td><span lang="zh">落差的性質（如產銷模式由採購改自製、需求量變動、需求消失等）</span><span lang="en">Nature of the gap (the item switched from buy to make, the demand quantity changed, the demand disappeared …)</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">受影響的料件</span><span lang="en">Item affected</span></td></tr>
+        <tr><td><span lang="zh">請購單／行</span><span lang="en">PR / Line</span></td><td><span lang="zh">與最新展開結果脫鉤的既有請購單與行號；已送審或已核准者 MRP 不會自動覆寫</span><span lang="en">The existing requisition and line that no longer match the latest run; MRP does not overwrite one that has been submitted or approved</span></td></tr>
+        <tr><td><span lang="zh">原數量</span><span lang="en">Previous Qty</span></td><td><span lang="zh">請購單上目前的數量</span><span lang="en">Quantity currently on the purchase requisition</span></td></tr>
+        <tr><td><span lang="zh">本次數量</span><span lang="en">Current Qty</span></td><td><span lang="zh">最新一次 MRP 展開算出的應有數量；與原數量的落差即待處置金額</span><span lang="en">Quantity the latest MRP run says there should be; the gap against the original quantity is what has to be dealt with</span></td></tr>
+        <tr><td><span lang="zh">處置</span><span lang="en">Disposition</span></td><td><span lang="zh">人工決策結果：可安全退場者直接結案，其餘至各自單據處理後標記為已處理</span><span lang="en">Manual decision: items that can safely be dropped are closed directly, the rest are marked as handled once they have been dealt with on their own documents</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">未結清／已結清；未結清者會持續呈現直到被處理，不會只在重跑當下閃一次</span><span lang="en">Outstanding / settled; outstanding items keep showing until they are dealt with, rather than flashing up only at the moment of the re-run</span></td></tr>
+        <tr><td><span lang="zh">偵測時間</span><span lang="en">Detected At</span></td><td><span lang="zh">此差異被偵測出來的時間戳</span><span lang="en">Timestamp when the difference was detected</span></td></tr>
+        <tr><td><span lang="zh">說明</span><span lang="en">Guide</span></td><td><span lang="zh">差異的具體描述與建議處理方向</span><span lang="en">Description of the difference and the suggested way to handle it</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="mrp-run.html"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>、<a href="../pur/purchase-request.html"><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></a>、<a href="work-order.html"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">本清單只處理「請購單」側的落差。已投產工單、已收貨採購單等下游單據不會被 MRP 連鎖作廢，請依各自的沖銷／結案流程處理。</span><span lang="en"> This list only deals with gaps on the purchase requisition side. Downstream documents such as released work orders and received purchase orders are not voided in a chain by MRP; handle them through their own reversal or closing process.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

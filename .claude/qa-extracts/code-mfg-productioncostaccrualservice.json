@@ -1,0 +1,34 @@
+{
+  "sourcePath": "Modules/MFG/Services/ProductionCostAccrualService.cs",
+  "sourceHash": "c3016391feb4301865cc29a644750f49a43097db067fc54b34ea01be430067ef",
+  "entries": [
+    {
+      "slug": "code-mfg-productioncostaccrualservice-0d8bfcd2",
+      "lang": "zh",
+      "headingPath": "生產製造 › 人工成本：不論一般機台或生產線，都是每人各自工時直接累加",
+      "text": "工時計算方式說明｜人工成本會根據每個人實際花費的時間，將其個別的工時與標準工時成本相乘後累加。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-productioncostaccrualservice-5d241ca4",
+      "lang": "zh",
+      "headingPath": "生產製造 › 改成「這張派工單最後一人下工」時，",
+      "text": "派工單上工計算規則說明｜機台或產線費用會依據整個工作時段來計算，不會根據每個人上工的時間疊加計算。當結算時，系統會以自上次結算後到本次最早上工時間為起點，計算一次總運轉時間的費用。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-productioncostaccrualservice-c2696dca",
+      "lang": "zh",
+      "headingPath": "生產製造 › 人工：逐人各自的備料時長加總",
+      "text": "備料工時歸屬給記錄者｜此筆工時會計入到記錄該工時人員的帳戶中，以確保相關成本能正確追蹤。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-productioncostaccrualservice-42fa53b7",
+      "lang": "zh",
+      "headingPath": "生產製造 › 製造費用：機台/產線在準備期間就占用一次，依時間窗結算",
+      "text": "機台準備費用計算規則｜機台或產線的準備期間所產生的製造費用會被記錄並計算一次，其計算是依據時間區間來劃分的，不會根據人員數量進行疊加計算。",
+      "approved": true
+    }
+  ]
+}

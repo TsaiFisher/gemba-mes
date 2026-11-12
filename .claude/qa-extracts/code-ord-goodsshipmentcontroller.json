@@ -1,0 +1,62 @@
+{
+  "sourcePath": "Modules/ORD/Controllers/GoodsShipmentController.cs",
+  "sourceHash": "d4077e09b36a9f820f44f8019e54dcbda1683bd26cf56400321acad87fd49a1c",
+  "entries": [
+    {
+      "slug": "code-ord-goodsshipmentcontroller-741ef894",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 明細幣別可各自不同，",
+      "text": "明細幣別計算規則說明｜每筆出貨明細的金額會根據其各自的幣別進行換算，而表頭的總計金額則必須使用後端權威匯率重新計算。",
+      "approved": false,
+      "sourceSectionHash": "6aba7ecf9e218cda1f651a1c0d446810b56ed63f53c0852a9cdff683cba8dcff"
+    },
+    {
+      "slug": "code-ord-goodsshipmentcontroller-8877b1f0",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 唯讀面板上的「取消確認」依此顯示",
+      "text": "權限控制與操作介面顯示｜系統會根據使用者的權限來決定是否在「取消確認」按鈕上顯示該功能。只有當使用者有權限時，才會看到此按鈕的顯示。",
+      "approved": false,
+      "sourceSectionHash": "14e0144c321d91fd91e47e63fbfcdeea29f4534bb25467f5bb84f7cd4b97d9fb"
+    },
+    {
+      "slug": "code-ord-goodsshipmentcontroller-8c7aa3c7",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 審核中不得改內容",
+      "text": "出貨單審核後內容無法修改｜一旦送件進入審核流程，系統會限制使用者修改品項或數量等內容，以確保資料的正確性。",
+      "approved": true,
+      "sourceSectionHash": "95131299704d6d4cfbd11e67c6ffda1626b1c9ffe37932ecec8737b7dfa43e73"
+    },
+    {
+      "slug": "code-ord-goodsshipmentcontroller-38770e80",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 庫存單位與庫存量於伺服端權威換算：",
+      "text": "庫存計算的單位與數量轉換規則｜系統會根據品號主檔所設定的單位來決定，而實際的庫存數量則是經過換算後再依據該單位進行四捨五入。",
+      "approved": true,
+      "sourceSectionHash": "d73039a0a7ad0b1b744522b6d5c9c51cabbbde42d889f26d35f980240cdfb39c"
+    },
+    {
+      "slug": "code-ord-goodsshipmentcontroller-bd463ce7",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 上限＝訂購量，比對優先在庫存基準單位上進行",
+      "text": "上限＝訂購量，比對優先在庫存基準單位上進行｜出貨數量以訂購量為上限，並依據庫存的基準單位進行比對。系統會將出貨量的計算基礎設定為與訂單行相同的單位，並且在比較時，會考慮到已經出貨的數量來計算剩餘可出貨的總量。",
+      "approved": true,
+      "sourceSectionHash": "e664e67a92514b845dd421978cc15effb058a749109a1ca403e5f769ccb34f8d"
+    },
+    {
+      "slug": "code-ord-goodsshipmentcontroller-cd213cdb",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 同單位時直接回傳出貨量，不繞換算——這是絕大多數情形",
+      "text": "出貨數量單位轉換規則說明｜當出貨單據和訂單行所使用的單位都是相同的時，系統會直接回傳實際的出貨數量，而不會進行任何換算處理。這是為了避免不必要的捨入誤差，並符合大多數的正常使用情境。",
+      "approved": true,
+      "sourceSectionHash": "898ccd1aeba2e5896b0f34b3a1d85e4df4b753ecb850b9c4197d21c39d88dfe9"
+    },
+    {
+      "slug": "code-ord-goodsshipmentcontroller-898b8e18",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 下限 0：已出貨量是「累計」語意，負值沒有意義",
+      "text": "出貨數量計算的規則說明｜已出貨的數量是累計的數值，因此不能出現負數。此外，系統會計算「訂購數量減去已出貨數量」作為剩餘可出量，如果這個計算結果超過了原始的訂購數量，超出部分的差異不會被任何機制阻止。",
+      "approved": true,
+      "sourceSectionHash": "a8a3e2aac7f077ca80335153c09cb31c88aeef1ca398d85b41c5affa08713911"
+    }
+  ]
+}

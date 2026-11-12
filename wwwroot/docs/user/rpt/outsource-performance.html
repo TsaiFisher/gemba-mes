@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Outsource Reconciliation &amp; Scrap Analysis — RPT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>委外加工對帳與損耗分析 — RPT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">RPT 目錄</span><span lang="en">RPT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">RPT 畫面</span><span lang="en">RPT screens</span></div>
+    <a href="dashboard.html" class="nav-link"><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></a>
+    <a href="profit-loss.html" class="nav-link"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a>
+    <a href="gross-margin.html" class="nav-link"><span lang="zh">毛利分析</span><span lang="en">Gross Margin Analysis</span></a>
+    <a href="margin-analysis.html" class="nav-link"><span lang="zh">多維度銷售毛利分析</span><span lang="en">Multi-dimensional sales margin analysis</span></a>
+    <a href="contribution-margin.html" class="nav-link"><span lang="zh">產品邊際貢獻分析</span><span lang="en">Product Contribution Margin</span></a>
+    <a href="balance-sheet.html" class="nav-link"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></a>
+    <a href="consolidated-statement.html" class="nav-link"><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></a>
+    <a href="outsource-performance.html" class="nav-link active"><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></a>
+    <a href="data-audit.html" class="nav-link"><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></a>
+    <a href="field-telemetry.html" class="nav-link"><span lang="zh">現場遙測</span><span lang="en">Field Telemetry</span></a>
+    <a href="saved-queries.html" class="nav-link"><span lang="zh">常用查詢</span><span lang="en">Saved Queries</span></a>
+    <a href="report-schedule.html" class="nav-link"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>
+    <a href="report-inbox.html" class="nav-link"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a>
+    <a href="report-run-history.html" class="nav-link"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/OutsourcePerformance &nbsp;|&nbsp; 加工廠對帳單與損耗率排名</span><span lang="en">Route: /OutsourcePerformance &nbsp;|&nbsp; Subcontractor reconciliation statement and scrap rate ranking</span></div>
+    </div>
+
+    <p><span lang="zh">依加工廠彙總期間委外收貨的加工費、超耗扣款與損耗率，供每月對帳與加工廠績效評比。</span><span lang="en">Summarises the processing charges, scrap penalties and scrap rate of outsource receipts by subcontractor for the period, for monthly reconciliation and supplier performance review.</span></p>
+    <img class="screen-shot" src="img/outsource-performance.png" data-src-en="img/en/outsource-performance.png" alt="委外加工對帳與損耗分析畫面截圖" data-alt-en="Outsource reconciliation and scrap analysis screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">委外加工對帳與損耗分析畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Outsource reconciliation and scrap analysis screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">可依加工廠、期間篩選；損耗率超過允收標準者標示。</span><span lang="en">Can be filtered by subcontractor and period; a scrap rate above the acceptable standard is flagged.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">起始日期 / 結束日期</span><span lang="en">Date from / Date to</span></td><td><span lang="zh">納入統計的委外收貨日期區間</span><span lang="en">Outsource receipt date range included in the statistics</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">委外廠商 / 廠商名稱</span><span lang="en">Subcontractor / Supplier name</span></td><td><span lang="zh">承接加工的廠商</span><span lang="en">The subcontractor doing the work</span></td></tr>
+        <tr><td><span lang="zh">收貨筆數</span><span lang="en">Receipts</span></td><td><span lang="zh">區間內的委外收貨明細行數</span><span lang="en">Number of outsource receipt lines in the period</span></td></tr>
+        <tr><td><span lang="zh">準時率</span><span lang="en">On-time rate</span></td><td><span lang="zh">收貨日未晚於預交日的筆數比率</span><span lang="en">Proportion of lines received on or before the promised delivery date</span></td></tr>
+        <tr><td><span lang="zh">收回成品量</span><span lang="en">Received Qty</span></td><td><span lang="zh">廠商加工後交回的良品數量合計</span><span lang="en">Total good quantity returned by the subcontractor</span></td></tr>
+        <tr><td><span lang="zh">加工費</span><span lang="en">Processing Fee</span></td><td><span lang="zh">應付該廠商的委外加工費用合計</span><span lang="en">Total outsource processing charges payable to the subcontractor</span></td></tr>
+        <tr><td><span lang="zh">超耗扣款</span><span lang="en">Scrap Penalty</span></td><td><span lang="zh">廠商實際耗用材料超過標準用量部分的扣款金額（以發料當時凍結的 AVCO 計價）</span><span lang="en">The amount charged for material the subcontractor used above the standard usage (valued at the AVCO frozen when it was issued)</span></td></tr>
+        <tr><td><span lang="zh">超耗佔比</span><span lang="en">Scrap penalty share</span></td><td><span lang="zh">超耗扣款 ÷ 加工費；比率偏高代表廠商用料控管待改善</span><span lang="en">Scrap penalty ÷ processing charge; a high ratio means the subcontractor's material control needs improving</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="../osp/outsource-receipt.html"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>、<a href="../osp/outsource-purchase-order.html"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

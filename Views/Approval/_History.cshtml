@@ -1,0 +1,90 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@inject IViewLocalizer Localizer
+@inject SmartFactory.MES.Services.IApprovalDocumentTypeLabels DocTypeLabels
+@model IEnumerable<SmartFactory.MES.Models.ApprovalLog>
+
+@{
+    var request = ViewBag.Request as ApprovalRequest;
+    var approverNames = ViewBag.ApproverNames as Dictionary<string, string> ?? new();
+}
+
+@if (request != null)
+{
+    <div class="mb-3 p-3 bg-light rounded">
+        <div class="row g-1 small">
+            <div class="col-4 text-muted">@Localizer["DocumentType"]</div>
+            <div class="col-8"><span class="badge bg-secondary">@DocTypeLabels.Get(request.DocumentType)</span></div>
+            <div class="col-4 text-muted">@Localizer["DocumentId"]</div>
+            <div class="col-8 fw-semibold">@request.DocumentId</div>
+            <div class="col-4 text-muted">@Localizer["CurrentStatus"]</div>
+            <div class="col-8">
+                @switch (request.Status)
+                {
+                    case ApprovalStatus.Pending:
+                        <span class="badge bg-warning text-dark">@Localizer["StatusPending"]</span>
+                        break;
+                    case ApprovalStatus.Approved:
+                        <span class="badge bg-success">@Localizer["StatusApproved"]</span>
+                        break;
+                    case ApprovalStatus.Rejected:
+                        <span class="badge bg-danger">@Localizer["StatusRejected"]</span>
+                        break;
+                }
+            </div>
+        </div>
+    </div>
+}
+
+<h6 class="fw-semibold mb-3">@Localizer["ReviewHistory"]</h6>
+
+@if (!Model.Any())
+{
+    <div class="text-muted fst-italic text-center py-3">@Localizer["NoHistory"]</div>
+}
+else
+{
+    <div class="timeline">
+        @foreach (var log in Model)
+        {
+            var (badgeColor, badgeIcon, badgeLabel) = log.Action switch
+            {
+                ApprovalStatus.Approved            => ("success", "check", Localizer["Approved"].Value),
+                ApprovalStatus.ReturnedForRevision => ("warning text-dark", "arrow-return-left", Localizer["ReturnedForRevision"].Value),
+                ApprovalStatus.Rejected            => ("danger", "x", Localizer["Rejected"].Value),
+                ApprovalStatus.Withdrawn           => ("secondary", "arrow-counterclockwise", Localizer["Withdrawn"].Value),
+                ApprovalStatus.Skipped             => ("secondary", "skip-forward", Localizer["Skipped"].Value),
+                _                                  => ("info text-dark", "send", Localizer["Submitted"].Value) // Pending＝送審/改派事件
+            };
+            <div class="d-flex gap-3 mb-3">
+                <div class="flex-shrink-0 mt-1">
+                    <span class="badge rounded-circle p-2 bg-@badgeColor u-width-2rem u-height-2rem">
+                        <i class="bi bi-@badgeIcon"></i>
+                    </span>
+                </div>
+                <div class="flex-grow-1 border rounded p-2">
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-semibold">
+                            @(approverNames.GetValueOrDefault(log.ApproverId, log.ApproverId))
+                            @if (!string.IsNullOrEmpty(log.OnBehalfOfUserId))
+                            {
+                                <span class="badge bg-info text-dark ms-1">
+                                    @string.Format(Localizer["OnBehalfOf"].Value,
+                                        approverNames.GetValueOrDefault(log.OnBehalfOfUserId, log.OnBehalfOfUserId))
+                                </span>
+                            }
+                        </span>
+                        <span class="text-muted small">@DateTimeSvc.ToLocalTime(log.ActionTime).ToString("yyyy/MM/dd HH:mm")</span>
+                    </div>
+                    <div>
+                        <span class="badge bg-@badgeColor me-2">@badgeLabel</span>
+                        @if (!string.IsNullOrEmpty(log.Comment))
+                        {
+                            <span class="text-muted small">@SmartFactory.MES.Services.CoreText.Render(log.Comment)</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

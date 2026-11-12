@@ -1,0 +1,99 @@
+/* 側面板明細表 —— 欄寬依「欄位語意」分級。
+ *
+ * 刻意獨立成 ProjectZ 專屬檔案，而不是往 wwwroot/css/csp-utilities.css 加：
+ * 那份是 Core 檔案，就地修改會被 Core 漂移守門擋下（scripts/check-core-drift.sh），
+ * 依 CLAUDE.md「新需求一律走擴充點或上送 Core」。比照 gantt-overrides.css 的先例。
+ *
+ * 為什麼是語意 class（u-col-num）而不是既有的 u-min-width-150px 命名：
+ * 門檻是從**實際資料**量出來的（見下），品號編碼規則一改就要重算。
+ * 語意 class 讓那次重算只改這一支檔案，不必回頭掃 28 份 _Form.cshtml。
+ *
+ * 門檻怎麼來的（2026-08-16 實機量測，1440×900、zh-TW、實際字型 canvas 量測）：
+ *   數值欄 需 102px ← "99,999,999.00"（千萬級金額含千分位與小數）
+ *   代號欄 需 116px ← 產品主檔實際最長品號 13 碼
+ * 量到的缺口：金額欄只有 71–81px、品號欄只有 103px，備料單品號甚至是 -2px（整欄看不到）。
+ *
+ * 分級的用意不是「全部加寬」——那只會把表格撐更寬、更需要左右捲。
+ * 而是關鍵欄（代號／數量／金額）給足，次要欄（備註／名稱）讓位、允許截斷。
+ * 驗證結果：實測 13 個面板，關鍵欄不合格 0 個，左右捲都在一次以內（最差 1.53 個畫面）。
+ * 序號與勾選欄（#、結案）維持既有的 40–50px，套上分級只會白白撐寬表格。
+ *
+ * 載入方式：各 Index.cshtml 以 <link rel="stylesheet" href="~/css/panel-table.css" />。
+ */
+
+/* 面板本體。原本 480–960px 共 15 種寬度、4 種寫法，收斂成這一個。
+ * max-width 95vw 讓小螢幕不會被 min-width 推到超出視窗。 */
+.u-panel-wide { min-width: 1280px !important; max-width: 95vw !important; }
+
+/* 合計列不換行。
+ *
+ * 這不是美觀問題，是會讓存檔點不到的版面位移：單價／數量的 change 事件要**失焦**
+ * 才觸發，而使用者按下存檔鈕的那一下就是失焦本身。於是重算合計 → 合計欄文字自
+ * "0.00" 變成 "E2E-CUR 1,575.00"（JS 會補上幣別）→ 在沒有欄寬 class 的 tfoot 儲存格
+ * 裡換行 → 整列長高一行 → 下方 position-sticky 的頁尾（含儲存鈕）被往下推。
+ * 位移發生在「滑鼠座標已算好、事件還沒送出」之間，於是點擊落在頁尾 padding 上被
+ * 吃掉：沒有 JS 錯誤、沒有驗證訊息、什麼都不會發生。
+ *
+ * 2026-08-19 實測（1440×900，新增一筆明細後按存檔）：form.offsetHeight 462 → 486，
+ * 儲存鈕 top 495 → 519，click 落在 (1369,514) 打在頁尾容器上，
+ * /SalesOrder/Save 一次都沒送出。nightly 的 OrderToCash 與 ProcureToPay
+ * 兩支流程測試連紅兩晚就是這個成因（表面症狀是「匯入數量超過可出貨量」，差了五步）。 */
+.u-panel-wide .table-responsive tfoot td { white-space: nowrap; }
+
+/* ── 關鍵欄：資料必須完整可讀 ─────────────────────────────── */
+
+/* 數量／金額／單價／稅額／成本。150px 扣掉 td 與 input 內距後仍 > 102px。 */
+.u-col-num { min-width: 150px !important; }
+
+/* 品號／單號／儲位／科目代碼。180px 而非 150px，是因為這類欄位多半是 <select>，
+ * 下拉箭頭比 <input> 多吃約 20px——實測 160px 時可用寬只剩 103px，仍然不足。 */
+.u-col-code { min-width: 180px !important; }
+
+/* ── 次要欄：允許截斷，把寬度讓給關鍵欄 ───────────────────── */
+
+/* 備註／說明／名稱。刻意不給足——這類欄位要全顯示會把表格推寬一倍。 */
+.u-col-soft { min-width: 90px !important; }
+
+/* 單位／幣別／稅別／方向。內容是短代碼（PCS、KG、TX5）。
+ *
+ * 90px 而不是更小：這些是 <select>，下拉箭頭與內距就吃掉約 57px。
+ * 一度設成 62px，實測可用寬只剩 5px——單位代碼整個看不見，比原本的 89px 還糟。
+ * 90px 留下約 32px 可用，剛好放得下 3–4 個半形字元，涵蓋實際資料
+ * （真實單位是 1–3 碼：g／KG／PCS；主檔裡 13 碼那幾筆是 E2E 測試種子，不是真的單位）。
+ */
+.u-col-tiny { min-width: 90px !important; }
+
+/* 日期。type=date 的原生控制項約需 130px 才不會擠掉年份。 */
+.u-col-date { min-width: 130px !important; }
+
+/* ── 讓控制項填滿儲存格 ───────────────────────────────────────
+ *
+ * 這條是整組規則能生效的關鍵，少了它上面全部白做。
+ *
+ * 明細列的 <input>/<select> 自帶固定寬度 class（u-width-90px、u-width-80px…），
+ * 那是 width 不是 min-width。只給 <th> 加 min-width 的話：欄位確實被撐寬了，
+ * 但控制項還是停在自己的 90px，右邊空一片、數字照樣被截——
+ * 實測就是這樣，th 已經 150px 而 input 可用寬仍只有 70px。
+ *
+ * 這裡只覆蓋 width（不動 min-width），讓控制項跟著儲存格長，
+ * 欄寬便單點由 <th> 的語意 class 決定，不必回頭改上百個控制項的 class。
+ * 特異性 (0,3,2) 高於 .u-width-90px 的 (0,1,0)，兩邊都是 !important 時由特異性決勝。
+ *
+ * 限定在 .table-responsive 內，避免影響面板上半部主檔欄位的版面。
+ */
+.u-panel-wide .table-responsive td > .form-control,
+.u-panel-wide .table-responsive td > .form-select,
+.u-panel-wide .table-responsive td > .input-group > .form-control,
+.u-panel-wide .table-responsive td > .input-group > .form-select { width: 100% !important; }
+
+/* 帶按鈕的欄位（儲位＋查庫存放大鏡）外層是 .input-group，固定寬度掛在**容器**上
+ * （u-width-130px），卡住的是整組而不是裡面的 select——只放寬 select 沒有用，
+ * 實測調整單儲位仍只有 70px 可用。容器也要跟著儲存格長。 */
+.u-panel-wide .table-responsive td > .input-group { width: 100% !important; }
+
+/* 但光是容器 100% 還不夠：按鈕與 select 平分那 100%，按鈕吃掉約 40px，
+ * 於是 180px 的欄位只剩 111px 可用——離代號需要的 116px 還差 5px。
+ * 給 select 一個保底寬度（116px 內容 + 約 64px 內距與箭頭），按鈕便另外佔位，
+ * 儲存格會被撐到該有的寬度。這樣就不必為「帶按鈕的代號欄」另外標一種 class。
+ * 180 而非 173：select 的實際內距比估的多 3px，173 量出來只有 113px 可用、差 3px。 */
+.u-panel-wide .table-responsive td > .input-group > .form-select { min-width: 180px !important; }

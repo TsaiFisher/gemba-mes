@@ -1,0 +1,354 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Modules.INV.Services
+@using SmartFactory.MES.Modules.PUR.Models
+@inject IViewLocalizer Localizer
+@model PaginatedList<SmartFactory.MES.Modules.PUR.Models.VendorEvaluation>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    var suppliers = ViewBag.SupplierOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var sort      = ViewBag.CurrentSort as string ?? "date_desc";
+    bool searched = ViewBag.Searched is bool sb && sb;
+    string searchSupplier = ViewBag.SearchSupplier as string ?? "";
+    int?   year           = ViewBag.Year as int?;
+    string quarter        = ViewBag.Quarter as string ?? "";
+    string resultStatus   = ViewBag.ResultStatus as string ?? "";
+    int    pageSize       = ViewBag.CurrentPageSize as int? ?? 20;
+    var trendPoints = ViewBag.TrendPoints as List<object[]>;
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="col-auto d-flex gap-2">
+            @if (searched && ViewBag.CanPrint == true)
+            {
+                <a class="btn btn-outline-success"
+                   href="@Url.Action("Export", new { searchSupplier, year, quarter, resultStatus })">
+                    <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                </a>
+            }
+            @if (ViewBag.CanCreate == true)
+            {
+                <button type="button" class="btn btn-primary"
+                        data-url="@Url.Action("Create")"
+                        data-label="@Localizer["AddTitle"]"
+                        data-action="openPanel">
+                    <i class="bi bi-plus-circle"></i> @Localizer["AddTitle"]
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body py-2">
+            <form method="get" action="@Url.Action("Index")" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@sort" />
+                <div class="col-md-3">
+                    <label class="form-label mb-0">@Localizer["LabelSupplier"]</label>
+                    <select name="searchSupplier" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllSuppliers"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (dynamic s in suppliers)
+                        {
+                            <option value="@s.CompanyCode" selected="@(searchSupplier == (string)s.CompanyCode)">@s.CompanyCode — @s.CompanyName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label mb-0">@Localizer["LabelYear"]</label>
+                    <input type="number" name="year" value="@year" min="2000" max="2100" step="1"
+                           class="form-control form-control-sm" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label mb-0">@Localizer["LabelQuarter"]</label>
+                    <select name="quarter" class="form-select form-select-sm">
+                        <option value="" selected="@(quarter == "")">@Localizer["AllQuarters"]</option>
+                        <option value="Y" selected="@(quarter == "Y")">@Localizer["AnnualOnly"]</option>
+                        @for (int q = 1; q <= 4; q++)
+                        {
+                            <option value="@q" selected="@(quarter == q.ToString())">Q@(q)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label mb-0">@Localizer["LabelResult"]</label>
+                    <select name="resultStatus" class="form-select form-select-sm">
+                        <option value="" selected="@(resultStatus == "")">@Localizer["AllResults"]</option>
+                        @foreach (var r in Enum.GetNames<EvaluationResult>())
+                        {
+                            <option value="@r" selected="@(resultStatus == r)">@Localizer[$"EvalResult{r}"]</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (searched && trendPoints != null && trendPoints.Count > 0)
+    {
+        <div class="card mb-3">
+            <div class="card-header py-2 fw-bold">
+                <i class="bi bi-graph-up me-1"></i>@Localizer["TrendTitle"]
+            </div>
+            <div class="card-body">
+                <canvas id="evalTrendChart" height="80"></canvas>
+            </div>
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-hover table-sm align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th><a href="@Url.Action("Index", new { sortOrder = sort == "supplier_asc" ? "supplier_desc" : "supplier_asc", searched = true, searchSupplier, year, quarter, resultStatus, pageSize })">@Localizer["ColSupplier"] @SortIcon(sort, "supplier_asc", "supplier_desc")</a></th>
+                    <th><a href="@Url.Action("Index", new { sortOrder = sort == "date_desc" ? "date_asc" : "date_desc", searched = true, searchSupplier, year, quarter, resultStatus, pageSize })">@Localizer["ColPeriod"] @SortIcon(sort, "date_asc", "date_desc")</a></th>
+                    <th class="text-end">@Localizer["ColQuality"]</th>
+                    <th class="text-end">@Localizer["ColDelivery"]</th>
+                    <th class="text-end">@Localizer["ColPrice"]</th>
+                    <th class="text-end">@Localizer["ColService"]</th>
+                    <th class="text-end"><a href="@Url.Action("Index", new { sortOrder = sort == "total_desc" ? "total_asc" : "total_desc", searched = true, searchSupplier, year, quarter, resultStatus, pageSize })">@Localizer["ColTotal"] @SortIcon(sort, "total_asc", "total_desc")</a></th>
+                    <th>@Localizer["ColResult"]</th>
+                    <th>@Localizer["ColApproval"]</th>
+                    <th>@Localizer["ColEvalDate"]</th>
+                    <th>@Localizer["ColActions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null) @foreach (var item in Model)
+                {
+                    var resultBadge = item.ResultStatus switch
+                    {
+                        EvaluationResult.Pass        => "bg-success",
+                        EvaluationResult.Conditional => "bg-warning text-dark",
+                        _                            => "bg-danger",
+                    };
+                    var apprBadge = item.ApprovalStatus switch
+                    {
+                        DocumentApprovalStatus.Approved        => "bg-success",
+                        DocumentApprovalStatus.PendingApproval => "bg-warning text-dark",
+                        DocumentApprovalStatus.Rejected        => "bg-danger",
+                        _                                      => "bg-secondary",
+                    };
+                    bool editable = item.ApprovalStatus is DocumentApprovalStatus.Draft or DocumentApprovalStatus.Rejected;
+                    <tr>
+                        <td>@item.SupplierCode<br /><small class="text-muted">@item.Supplier?.CompanyName</small></td>
+                        <td>@item.EvaluationYear @(item.EvaluationQuarter.HasValue ? $"Q{item.EvaluationQuarter}" : Localizer["Annual"].Value)</td>
+                        <td class="text-end">
+                            @if (item.QualityHasData) { @item.QualityScore.ToString("N2") }
+                            else { <span class="text-muted" title="@Localizer["ScoreNoData"]">—</span> }
+                        </td>
+                        <td class="text-end">
+                            @if (item.DeliveryHasData) { @item.DeliveryScore.ToString("N2") }
+                            else { <span class="text-muted" title="@Localizer["ScoreNoData"]">—</span> }
+                        </td>
+                        <td class="text-end">@item.PriceScore.ToString("N2")</td>
+                        <td class="text-end">@item.ServiceScore.ToString("N2")</td>
+                        <td class="text-end fw-bold">@item.TotalScore.ToString("N2")</td>
+                        <td><span class="badge @resultBadge">@Localizer[$"EvalResult{item.ResultStatus}"]</span></td>
+                        <td><span class="badge @apprBadge">@DocStatusLabels.Label(item.ApprovalStatus)</span></td>
+                        <td>@item.EvaluationDate.ToString("yyyy-MM-dd")</td>
+                        <td class="text-nowrap">
+                            @if (editable && ViewBag.CanUpdate == true)
+                            {
+                                <button type="button" class="btn btn-sm btn-warning me-1"
+                                        data-url="@Url.Action("Edit", new { id = item.Id })"
+                                        data-label="@Localizer["EditTitle"]"
+                                        data-action="openPanel" title="@Localizer["EditTitle"]"><i class="bi bi-pencil"></i> @Localizer["EditTitle"]</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary me-1"
+                                        data-action="submitEval" data-id="@item.Id" title="@Localizer["SubmitApproval"]"><i class="bi bi-send"></i> @Localizer["SubmitApproval"]</button>
+                            }
+                            @if (!editable)
+                            {
+                                <button type="button" class="btn btn-sm btn-outline-secondary me-1"
+                                        data-url="@Url.Action("Details", new { id = item.Id })"
+                                        data-label="@Localizer["DetailsTitle"]"
+                                        data-action="openPanel" title="@Localizer["DetailsTitle"]"><i class="bi bi-eye"></i> @Localizer["DetailsTitle"]</button>
+                            }
+                            @if (item.ApprovalStatus == DocumentApprovalStatus.PendingApproval && ViewBag.CanUpdate == true)
+                            {
+                                <button type="button" class="btn btn-sm btn-outline-warning me-1"
+                                        data-action="withdrawEval" data-id="@item.Id" title="@Localizer["WithdrawApproval"]"><i class="bi bi-arrow-counterclockwise"></i> @Localizer["WithdrawApproval"]</button>
+                            }
+                            @if (ViewBag.CanPrint == true)
+                            {
+                                <a class="btn btn-sm btn-outline-secondary me-1" target="_blank"
+                                   href="@Url.Action("Print", new { id = item.Id })" title="@Localizer["PrintTitle"]"><i class="bi bi-printer"></i> @Localizer["PrintTitle"]</a>
+                            }
+                            @if (editable && ViewBag.CanDelete == true)
+                            {
+                                <button type="button" class="btn btn-sm btn-danger"
+                                        data-action="deleteEval" data-id="@item.Id" title="@Localizer["Delete"]"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center py-3">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel offcanvas -->
+<div class="offcanvas offcanvas-end u-min-width-560px u-max-width-90vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+    @if (trendPoints != null && trendPoints.Count > 0)
+    {
+        <script src="~/lib/chart.js/chart.umd.min.js" nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)"></script>
+    }
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function postAction(url, confirmMsg) {
+        if (confirmMsg && !confirm(confirmMsg)) return;
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(url, { method: 'POST', headers: { 'RequestVerificationToken': token, 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(async r => {
+                const d = await r.json().catch(() => ({ success: false, message: window.i18n.t('OperationFailed') }));
+                if (d.success) { window.toastSuccess && window.toastSuccess(); setTimeout(() => location.reload(), 800); }
+                else alert(d.message || window.i18n.t('OperationFailed'));
+            }).catch(() => alert(window.i18n.t('OperationFailed')));
+    }
+
+    // data-action dispatcher 以 (event, el) 呼叫；id 自 el.dataset.id 取得。
+    function submitEval(e, el)   { postAction(`/VendorEvaluation/Submit/${el.dataset.id}`,   window.i18n.t('ConfirmSubmitApproval')); }
+    function withdrawEval(e, el) { postAction(`/VendorEvaluation/Withdraw/${el.dataset.id}`, window.i18n.t('ConfirmWithdraw')); }
+    function deleteEval(e, el)   { postAction(`/VendorEvaluation/Delete/${el.dataset.id}`,   window.i18n.t('ConfirmDeleteSimple')); }
+
+    // ── _Form（side panel）handlers：面板 HTML 內不放 script，一律定義於此 ──
+    function evalWeights() {
+        const box = document.getElementById('totalPreviewBox');
+        return box
+            ? { q: +box.dataset.wq, d: +box.dataset.wd, p: +box.dataset.wp, s: +box.dataset.ws }
+            : { q: 30, d: 30, p: 20, s: 20 };
+    }
+
+    // 與後端 VendorEvaluationCalculator.Total 同一套規則：算不出來的項目不計入加權，
+    // 權重在剩下的項目之間重新分配。兩邊若不一致，畫面預覽和存檔後的總分會是兩個數字。
+    function updateEvalTotal() {
+        const w = evalWeights();
+        if (w.q + w.d + w.p + w.s <= 0) return;
+        const v    = id => parseFloat(document.getElementById(id)?.value) || 0;
+        const has  = id => document.getElementById(id)?.value === 'True'
+                        || document.getElementById(id)?.value === 'true';
+
+        let weighted = v('priceScore') * w.p + v('serviceScore') * w.s;
+        let divisor  = w.p + w.s;
+        if (has('qualityHasData'))  { weighted += v('qualityScore')  * w.q; divisor += w.q; }
+        if (has('deliveryHasData')) { weighted += v('deliveryScore') * w.d; divisor += w.d; }
+
+        const el = document.getElementById('totalPreview');
+        if (el) el.textContent = divisor > 0 ? (weighted / divisor).toFixed(2) : '0.00';
+    }
+
+    function computeScores(e, el) {
+        const sup     = document.getElementById('evalSupplier')?.value;
+        const year    = document.getElementById('evalYear')?.value;
+        const quarter = document.getElementById('evalQuarter')?.value;
+        if (!sup) { alert(window.i18n.t('VendorEvalSelectSupplierFirst')); return; }
+        const qs = new URLSearchParams({ supplierCode: sup, year: year || '' });
+        if (quarter) qs.set('quarter', quarter);
+        fetch(`/VendorEvaluation/ComputeScores?${qs}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => r.json())
+            .then(d => {
+                if (!d.success) { alert(d.message || window.i18n.t('OperationFailed')); return; }
+                document.getElementById('qualityScore').value  = d.qualityScore;
+                document.getElementById('deliveryScore').value = d.deliveryScore;
+                // API 一直有回這兩個旗標，只是沒有人用——於是「無資料」的 100 分
+                // 和真的拿 100 分在畫面上完全一樣。
+                document.getElementById('qualityHasData').value  = d.hasQualityData  ? 'True' : 'False';
+                document.getElementById('deliveryHasData').value = d.hasDeliveryData ? 'True' : 'False';
+                document.getElementById('qualityNoData')?.classList.toggle('d-none', d.hasQualityData);
+                document.getElementById('deliveryNoData')?.classList.toggle('d-none', d.hasDeliveryData);
+                const basis = document.getElementById('scoreBasis');
+                if (basis) basis.textContent =
+                    window.i18n.t('VendorEvalBasisFmt')
+                        .replace('{0}', d.receiptQty).replace('{1}', d.ngQty)
+                        .replace('{2}', d.otdTotalLines).replace('{3}', d.otdOnTimeLines);
+                updateEvalTotal();
+            })
+            .catch(() => alert(window.i18n.t('OperationFailed')));
+    }
+
+    @if (trendPoints != null && trendPoints.Count > 0)
+    {
+        <text>
+    // 歷年評核趨勢（§6.3）：單一廠商總分折線（單序列免圖例、單色相）
+    (function () {
+        const pts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(trendPoints));
+        new Chart(document.getElementById('evalTrendChart'), {
+            type: 'line',
+            data: {
+                labels: pts.map(p => p[0]),
+                datasets: [{
+                    data: pts.map(p => p[1]),
+                    borderColor: '#0d6efd',
+                    backgroundColor: 'rgba(13,110,253,.12)',
+                    tension: .2,
+                    fill: true,
+                    pointRadius: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { min: 0, max: 100 }
+                }
+            }
+        });
+    })();
+        </text>
+    }
+</script>
+}
+
+@functions {
+    Microsoft.AspNetCore.Html.IHtmlContent SortIcon(string current, string asc, string desc)
+    {
+        if (current == asc)  return new Microsoft.AspNetCore.Html.HtmlString("<i class=\"bi bi-sort-up\"></i>");
+        if (current == desc) return new Microsoft.AspNetCore.Html.HtmlString("<i class=\"bi bi-sort-down\"></i>");
+        return Microsoft.AspNetCore.Html.HtmlString.Empty;
+    }
+}

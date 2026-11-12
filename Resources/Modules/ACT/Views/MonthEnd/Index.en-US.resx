@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Month-End Close</value></data>
+  <data name="PeriodId" xml:space="preserve"><value>Period</value></data>
+  <data name="Step" xml:space="preserve"><value>Step</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="CompletedAt" xml:space="preserve"><value>Completed At</value></data>
+  <data name="CompletedBy" xml:space="preserve"><value>Completed By</value></data>
+  <data name="Notes" xml:space="preserve"><value>Notes</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="Init" xml:space="preserve"><value>Initialize Checklist</value></data>
+  <data name="Complete" xml:space="preserve"><value>Complete</value></data>
+  <data name="RunEclBatch" xml:space="preserve"><value>Run ECL</value></data>
+  <data name="RunBatch" xml:space="preserve"><value>Run Batch</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="StepName" xml:space="preserve"><value>Step Description</value></data>
+  <data name="SearchFirst" xml:space="preserve"><value>Enter a period then click Search</value></data>
+  <data name="NoData" xml:space="preserve"><value>Checklist not initialized for this period. Click Initialize.</value></data>
+  <data name="Skip" xml:space="preserve"><value>Skip</value></data>
+  <data name="CancelClosing" xml:space="preserve"><value>Cancel Closing</value></data>
+  <data name="FxRatesTitle" xml:space="preserve"><value>Enter Period-End Rates</value></data>
+  <data name="FxRatesHint" xml:space="preserve"><value>Format: one currency per line, e.g. USD:33.5 (base currency not required)</value></data>
+  <data name="DeptCostTitle" xml:space="preserve"><value>Enter Department Actual Costs</value></data>
+  <data name="DeptCostHint" xml:space="preserve"><value>Format: one work center per line as code:labor:overhead, e.g. WC01:120000:60000. These are the numerators of the actual rates.</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="ConfirmRun" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Step1Name" xml:space="preserve"><value>Confirm all receipts and shipments are posted</value></data>
+  <data name="Step2Name" xml:space="preserve"><value>Count variance adjustments completed</value></data>
+  <data name="Step3Name" xml:space="preserve"><value>Take the WIP valuation snapshot</value></data>
+  <data name="Step4Name" xml:space="preserve"><value>Calculate work order actual cost</value></data>
+  <data name="Step5Name" xml:space="preserve"><value>Update the AVCO average cost</value></data>
+  <data name="Step6Name" xml:space="preserve"><value>Period-end revaluation of AR and AP (IAS 21)</value></data>
+  <data name="Step7Name" xml:space="preserve"><value>IAS 2 NRV inventory impairment assessment</value></data>
+  <data name="Step8Name" xml:space="preserve"><value>Freeze stock movements (period status = Closing)</value></data>
+  <data name="Step9Name" xml:space="preserve"><value>Create the period-end adjusting entries</value></data>
+  <data name="Step10Name" xml:space="preserve"><value>Close the period (period status = Closed)</value></data>
+  <data name="Note_WoFinalized" xml:space="preserve"><value>Locked {0} work order cost(s) as Final.</value></data>
+  <data name="Note_Skipped" xml:space="preserve"><value>[Skipped] {0}</value></data>
+  <data name="Note_FxNone" xml:space="preserve"><value>FX revaluation: no results this period, nothing posted</value></data>
+  <data name="Note_FxNoDiff" xml:space="preserve"><value>FX revaluation: already posted, no difference</value></data>
+  <data name="Note_FxPosted" xml:space="preserve"><value>FX revaluation {0} (reversed at the start of next period: {1})</value></data>
+  <data name="Note_NrvNone" xml:space="preserve"><value>NRV write-down: no assessment this period, nothing posted</value></data>
+  <data name="Note_NrvNoDiff" xml:space="preserve"><value>NRV write-down: allowance already equals the assessment of {0}, no difference</value></data>
+  <data name="Note_NrvIncrease" xml:space="preserve"><value>NRV write-down {0} (increase {1})</value></data>
+  <data name="Note_NrvReverse" xml:space="preserve"><value>NRV write-down {0} (reversal {1})</value></data>
+  <data name="Note_EclNone" xml:space="preserve"><value>ECL allowance: no assessment this period, nothing posted</value></data>
+  <data name="Note_EclNoDiff" xml:space="preserve"><value>ECL allowance: allowance already equals the assessment of {0}, no difference</value></data>
+  <data name="Note_EclIncrease" xml:space="preserve"><value>ECL allowance {0} (increase {1})</value></data>
+  <data name="Note_EclReverse" xml:space="preserve"><value>ECL allowance {0} (reversal {1})</value></data>
+</root>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Dispatch — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>派工作業 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link active"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-person-check me-2 text-primary"></i><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/Dispatch &nbsp;|&nbsp; 派工單管理與現場報工</span><span lang="en">Route: /Dispatch &nbsp;|&nbsp; Dispatch management and shop-floor reporting</span></div>
+    </div>
+
+    <p><span lang="zh">派工單是工序層級的執行單據（一道工序可拆多張派工到不同機台）。本畫面管理派工的開工/報工/完工：報工輸入良品/不良品數與工時，系統即時累計 QtyDone、計算實際人工與製費（工時 × 工作中心費率），不良品需選擇不良原因代碼。派工因機台停用或檢驗不合格而暫停時，也在這裡恢復、換機續做或結案剩餘量。亦支援行動裝置掃碼報工。</span><span lang="en">A dispatch is the execution document at operation level (one operation can be split across several dispatches on different machines). This screen manages starting, reporting and completing a dispatch: reporting takes the good and defective quantities and the hours, and the system accumulates QtyDone in real time and works out actual labour and overhead (hours × work center rate); defective pieces need a defect reason code. When a dispatch is put on hold because its machine went down or an inspection failed, it is also resumed, switched to another machine or closed here. Reporting by barcode from a mobile device is also supported.</span></p>
+    <img class="screen-shot" src="img/dispatch.png" data-src-en="img/en/dispatch.png" alt="派工作業畫面截圖" data-alt-en="Dispatch screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">派工作業畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Dispatch screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">查詢欄可輸入派工單號、工單號或品號，並可依狀態篩選。未選狀態時不列「已取消」的派工（工單作廢、或暫停後未產出即結案者）；要看這些請在狀態選「已取消」。</span><span lang="en">The search box matches the dispatch number, work order number or item, and you can filter by status. Without a status filter, cancelled dispatches (from a voided work order, or closed while on hold with nothing produced) are left out; select "Cancelled" in the status filter to see them.</span></div></div>
+    <div class="tip-box"><i class="bi bi-arrow-repeat me-1"></i><span lang="zh">若本廠開啟「派工前自動重排排程」，打開時排程已過時會先自動重排，約數秒後才顯示，看到的就是最新的派工順序與機台（見</span><span lang="en">If the plant has "Reschedule automatically before dispatch" turned on and the schedule is out of date when you search, it is re-run first and the list appears a few seconds later with the latest order and machines (see </span><a href="schedule.html#auto-schedule"><span lang="zh">自動重排排程</span><span lang="en">Automatic rescheduling</span></a><span lang="zh">）。</span><span lang="en">).</span></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">備料</span><span lang="en">Staging</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「備料」開啟側欄，畫面列出本派工</span><span lang="en">Click "Staging" to open the panel, which lists this dispatch's </span><b><span lang="zh">尚未備妥的用料</span><span lang="en">Material not yet ready</span></b><span lang="zh">與已開立的備料單狀態。</span><span lang="en"> and the status of any staging slip already raised.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「</span><span lang="en">Click " </span><b><span lang="zh">建立備料單</span><span lang="en">Create Staging Order</span></b><span lang="zh">」由本派工未發料用料開出草稿備料單（備料倉預設取自工作中心設定）；確認鎖料與揀料移入備料倉在</span><span lang="en"> " creates a draft staging order from the material on this dispatch that has not been issued (the staging warehouse defaults to the work center setting); locking the stock on confirmation and picking it into the staging warehouse are done on the </span><a href="../inv/material-staging.html"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a><span lang="zh">畫面完成。</span><span lang="en"> screen.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">機台準備（換模、換線）另按「開始備料 / 備料完成」計時。</span><span lang="en">Machine setup (tooling or line changeover) is timed separately with "Start setup" and "Setup done". </span><b><span lang="zh">模具不需回報</span><span lang="en">No tooling to report</span></b><span lang="zh">——沿用排程時指定的模具。工序未設定準備工時者顯示「免機台準備」，可直接開工。</span><span lang="en"> — the tooling assigned during scheduling is used. Operations with no setup time defined show "no machine setup" and can start straight away.</span></div></div>
+    <h3><span lang="zh">開工、報工與完工</span><span lang="en">Starting, reporting and finishing</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">選擇派工單點「開工」（記錄開始時間；生產線可多人同時開工）。工單須為「已投產」或「生產中」才能開工：仍在送審中、簽核被駁回，或已撤回回到「已規劃」的工單都無法開工。工序若設定</span><span lang="en">Select a dispatch and click "Start" (the start time is recorded; on a production line several people can start at once). The work order must be Released or In production: a work order still awaiting approval, rejected, or withdrawn back to Planned cannot be started. If the operation has </span><b><span lang="zh">需首件檢查（FPI）</span><span lang="en">First-piece inspection (FPI) required</span></b><span lang="zh">，未通過前無法開工——備料完成後派工會停在「待首件」，須先由品管於</span><span lang="en">, and work cannot start until it passes — once staging is done the dispatch stops at "awaiting first piece", and QC first has to </span><a href="../qcr/inspection-order.html"><span lang="zh">檢驗單</span><span lang="en">Inspection Order</span></a><span lang="zh">的「FPI 待檢登錄」（或手機首件量測）判定通過才解鎖。</span><span lang="en"> "FPI pending registration" (or the first-piece measurement on mobile) has to be passed before it is unlocked. </span><b><span lang="zh">直接開工也擋得住</span><span lang="en">work started directly is still blocked</span></b><span lang="zh">：閘口看的是「有沒有通過的首件檢驗單」，不是派工目前狀態，所以跳過備料無法繞過。</span><span lang="en">: the gate looks at whether a passing first-piece inspection exists, not at the dispatch's current status, so skipping the staging step does not get round it.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">生產過程可</span><span lang="en">During production you can </span><b><span lang="zh">多次報工</span><span lang="en">multiple production reports</span></b><span lang="zh">（例如每完成一批轉移就回報一次）：輸入良品數、不良品數與不良原因。報工後</span><span lang="en"> (for example once per transfer batch): enter the good quantity, the defective quantity and the defect reason. After reporting, </span><b><span lang="zh">人仍在線上繼續生產</span><span lang="en">people stay online and keep producing</span></b>。</div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">本次作業結束時點「</span><span lang="en">At the end of the session, " </span><b><span lang="zh">完工（結束本次上工）</span><span lang="en">Complete (End This Session)</span></b><span lang="zh">」：可一併回報最後一批數量（不填則為純下工），系統關閉本次上工並結算人工／製造費用。</span><span lang="en"> ": you can report the final quantity at the same time (leave it blank to just clock out); the system closes the session and settles the labour and overhead cost.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">尚未生產完可再次開工，形成下一輪「開工 → 報工 → 完工」循環；</span><span lang="en">If production is not finished you can start again, going round the "start → report → finish" cycle once more; </span><b><span lang="zh">累計良品數達派工量時派工自動結案</span><span lang="en">The dispatch closes automatically when the cumulative good quantity reaches the dispatched quantity</span></b><span lang="zh">。生產線多人時各自完工、各報各的量，最後一人完工且數量達標才結案。</span><span lang="en">. On a production line each operator completes and reports their own quantity; the dispatch is closed only when the last person finishes and the quantity target has been met.</span></div></div>
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh">最末工序完工且需 FQC 者，由品保建立檢驗單。</span><span lang="en">When the last operation is finished and FQC is required, QA creates the inspection document.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-lightning-charge me-1 text-warning"></i>
+      <strong><span lang="zh">已開啟「製造簡化模式」的工廠：</span><span lang="en">Plants with "Simplified Manufacturing Mode" switched on:</span></strong><span lang="zh">派工不需要先排程，狀態停在「待排程」也能直接開工，
+      清單與手機待辦都會顯示這些派工。相對地，報工時系統會檢查</span><span lang="en"> A dispatch does not have to be scheduled first — work can start even while it is still "To be scheduled",
+      and such dispatches appear both in the list and in the mobile to-do list. In return, when production is reported the system checks </span><b><span lang="zh">本工序累計完成量不得超過前一工序</span><span lang="en">The cumulative quantity completed at an operation cannot exceed that of the previous one</span></b>
+      <span lang="zh">（第一道工序不受限），因為少了排程就沒有東西保證前工序先做。此設定由系統管理員於</span><span lang="en">(the first operation is exempt), because without a schedule there is nothing to guarantee that earlier operations are done first. The setting is maintained by the system administrator under</span>
+      <a href="../sys/system-param.html"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a> <span lang="zh">開關，未開啟時上述兩點都不適用。</span><span lang="en">switch; with it off, neither of the two points above applies.</span>
+    </div>
+
+    <h3><span lang="zh">拆分派工</span><span lang="en">Split dispatch</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">產量需分機台生產時，在</span><span lang="en">When the quantity has to be produced on more than one machine, use the dispatch panel on </span><a href="schedule.html"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a><span lang="zh">的派工側欄「拆分」，輸入各份數量與機台，系統建立子派工單（序號續編）。只有待排或已排的派工可以拆分。</span><span lang="en"> and click "Split", entering the quantity and machine for each part; the system creates child dispatches with continued sequence numbers. Only pending or scheduled dispatches can be split.</span></div></div>
+
+    <h3 id="hold"><span lang="zh">暫停處理</span><span lang="en">Handling a dispatch on hold</span></h3>
+    <p><span lang="zh">派工在下列情況會自動轉為「暫停」，狀態旁會標示原因：</span><span lang="en">A dispatch goes on hold automatically in the cases below, and the reason is shown next to its status:</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">暫停原因</span><span lang="en">Hold reason</span></th><th><span lang="zh">何時發生</span><span lang="en">When it happens</span></th><th class="u-width-28pct"><span lang="zh">如何解除</span><span lang="en">How it is released</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">機台停用</span><span lang="en">Machine down</span></td><td><span lang="zh">機台轉為故障、保養、外修等不可生產狀態（含模具打次到期自動轉保養）。該機台上準備中、準備完成、待首件與生產中的派工一律暫停；只是已排還沒開始的則退回待排，等重新排程。</span><span lang="en">The machine moves to a status where it cannot run, such as breakdown, maintenance or external repair (including the automatic maintenance when tooling reaches its shot limit). Dispatches on that machine that are in setup, ready, pending FPI or in progress all go on hold; dispatches that were only scheduled and not started return to pending and wait to be rescheduled.</span></td><td><span lang="zh">機台恢復正常或待機時<b>自動恢復</b>；急件可改用「換機續做」。</span><span lang="en">They <b>resume automatically</b> when the machine is back to available or standby; for urgent work use "Switch machine".</span></td></tr>
+        <tr><td><span lang="zh">首件檢查不合格</span><span lang="en">First-piece inspection failed</span></td><td><span lang="zh">首件（FPI）判定不合格。</span><span lang="en">The first-piece inspection (FPI) fails.</span></td><td><span lang="zh">重新調機後由品管恢復，派工回到「待首件」重新量測。</span><span lang="en">After the machine is re-adjusted, QC resumes it and the dispatch returns to "Pending FPI" to be measured again.</span></td></tr>
+        <tr><td><span lang="zh">巡檢不合格</span><span lang="en">In-process inspection failed</span></td><td><span lang="zh">生產中的派工製程巡檢（IPQC）判定不合格。</span><span lang="en">An in-process inspection (IPQC) of a running dispatch fails.</span></td><td><span lang="zh">品管確認後恢復，回到生產中。</span><span lang="en">QC confirms and resumes it, and it goes back to in progress.</span></td></tr>
+      </tbody>
+    </table>
+    <p><span lang="zh">暫停的派工<b>不參與排程重排</b>，仍保留在原機台上。點清單上的「</span><span lang="en">A dispatch on hold is <b>not moved by rescheduling</b> and stays on its machine. Click "</span><b><span lang="zh">暫停處理</span><span lang="en">Handle hold</span></b><span lang="zh">」開啟側欄，有三種處理方式：</span><span lang="en">" in the list to open the panel, which offers three ways to deal with it:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><b><span lang="zh">恢復</span><span lang="en">Resume</span></b><span lang="zh">：回到暫停前的狀態，在原機台繼續（首件不合格者回到「待首件」）。原機台仍停用時不能恢復。因品質不合格而暫停的，須由具「檢驗單」更新權限的人員恢復。</span><span lang="en">: the dispatch returns to its status before the hold and continues on the same machine (one held for a failed first piece returns to "Pending FPI"). It cannot resume while the machine is still down. A dispatch held for a quality failure can only be resumed by someone with update permission on inspection orders.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><b><span lang="zh">換機續做</span><span lang="en">Switch machine</span></b><span lang="zh">：選一台可生產的機台（同工作中心的排在前面，也可跨工作中心）。尚未產出的整張派工改到新機台；已有產出的，原派工以已完成量完工，剩餘量另開一張續做派工（單號為原單號加 -s 序號）。續做的派工回到「待排」，要重新換模與首件檢查，</span><span lang="en">: pick a machine that can run (machines in the same work center are listed first, and other work centers are allowed). If nothing has been produced, the whole dispatch moves to the new machine; if some has, the original dispatch completes at the quantity done and the remainder goes to a new continuation dispatch (numbered as the original plus -s and a sequence). The continuation returns to "Pending" and needs a new setup and first-piece inspection; </span><b><span lang="zh">重新排程時只會排在選定的機台</span><span lang="en">rescheduling keeps it on the selected machine</span></b><span lang="zh">。原機台上沒按下工的上工紀錄會一併結束，工時照實入帳。</span><span lang="en">. Any session left open on the old machine is closed at the same time and its hours are booked as worked.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><b><span lang="zh">剩餘量結案</span><span lang="en">Close remaining quantity</span></b><span lang="zh">：剩餘量不再生產。已有產出的以已完成量完工；沒有產出的轉為「已取消」。此動作無法復原。</span><span lang="en">: the remaining quantity will not be produced. If some has been produced the dispatch completes at that quantity; if nothing has, it becomes "Cancelled". This cannot be undone.</span></div></div>
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <strong><span lang="zh">工單何時自動完工：</span><span lang="en">When a work order completes automatically:</span></strong><span lang="zh">工單的派工全部為「完工」或「已取消」（且至少一張完工）時，工單才自動轉完工。</span><span lang="en"> A work order completes automatically only when all its dispatches are "Closed" or "Cancelled" (with at least one closed). </span><b><span lang="zh">暫停的派工不算完成</span><span lang="en">A dispatch on hold does not count as finished</span></b><span lang="zh">——剩餘量要恢復生產，或以「剩餘量結案」明確結束。</span><span lang="en"> — its remaining quantity has to be resumed or explicitly closed with "Close remaining quantity".</span>
+    </div>
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。派工單列印含工單、工序、產品品名、工作中心與機台名稱、派工數量與排程時間，並附用料明細（品號、品名、需求量、已發量），可隨料送到現場。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The dispatch printout shows the work order, operation, product name, work center and machine names, dispatch quantity and scheduled times, plus the materials list (product code and name, required and issued quantities) to travel with the material to the floor.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">查詢</span><span lang="en">Search</span></td><td><span lang="zh">派工單號、工單號或品號的模糊比對</span><span lang="en">Partial match on the dispatch number, work order number or item</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">依派工單狀態篩選（待開工／進行中／已完工等）</span><span lang="en">Filters by dispatch status (not started / in progress / completed …)</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">清單欄位</span><span lang="en">List columns</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">派工單號</span><span lang="en">Dispatch No</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">工單號 / 品號</span><span lang="en">WO No. / Product</span></td><td><span lang="zh">本次派工所屬的工單與生產品號</span><span lang="en">The work order and produced item this dispatch belongs to</span></td></tr>
+        <tr><td><span lang="zh">工序 / 工序名稱</span><span lang="en">Operation / Operation name</span></td><td><span lang="zh">派工對應的途程工序序號與名稱</span><span lang="en">Routing operation sequence and name the dispatch belongs to</span></td></tr>
+        <tr><td><span lang="zh">工作中心 / 機台</span><span lang="en">Work center / Machine</span></td><td><span lang="zh">實際執行的工作中心與機台</span><span lang="en">Work center and machine that actually did the work</span></td></tr>
+        <tr><td><span lang="zh">派工量</span><span lang="en">Dispatched qty</span></td><td><span lang="zh">本張派工單指派的加工數量</span><span lang="en">Quantity assigned to this dispatch</span></td></tr>
+        <tr><td><span lang="zh">完工量</span><span lang="en">Completed qty</span></td><td><span lang="zh">已回報的累計完工數量；達到派工量後該派工單完工。累計合格數不能超過派工量，除非廠別設了「廠內超量容許率」；再超過時依「廠內超過容許上限時」拒收（預設），或只讓具「超量核准」權限的主管報（見<a href="../sys/plant.html">廠別管理</a>）。多做的量請在最後一次報工一起報。</span><span lang="en">Cumulative quantity reported as complete; the dispatch finishes once it reaches the dispatched quantity. The cumulative good quantity cannot exceed the dispatch quantity unless the plant sets an "In-plant over-production tolerance"; beyond that, "In-plant: beyond the tolerance" rejects it (the default) or lets only a supervisor with the over-quantity approval right report it (see <a href="../sys/plant.html">Plants</a>). Report any extra quantity together with the last report.</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">派工單的執行進度；暫停時旁邊標示暫停原因</span><span lang="en">Progress of the dispatch; when it is on hold, the reason is shown next to it</span></td></tr>
+        <tr><td><span lang="zh">排程開始</span><span lang="en">Sched. Start</span></td><td><span lang="zh">排程計算出的預計開工時間</span><span lang="en">Estimated start time from the scheduler</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">上工／整備欄位</span><span lang="en">Start-work / setup fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">機台代碼</span><span lang="en">Machine</span></td><td><span lang="zh">本次上工使用的機台；同一生產線可多人同時上工</span><span lang="en">Machine used for this session; several people can be on the same line at once</span></td></tr>
+        <tr><td><span lang="zh">模具代碼</span><span lang="en">Tooling</span></td><td><span lang="zh">本次使用的模具；系統據此累計模具打次並在達門檻時觸發保養</span><span lang="en">Tooling used this time; the system counts the shots against it and triggers maintenance when the threshold is reached</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報工欄位</span><span lang="en">Production report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">目前操作員</span><span lang="en">Operator</span></td><td><span lang="zh">本次報工歸屬的上工紀錄（Session），決定工時歸屬</span><span lang="en">The session this production report belongs to, which decides where the hours are charged</span></td></tr>
+        <tr><td><span lang="zh">合格數量</span><span lang="en">Qty OK</span></td><td><span lang="zh">本次回報的良品數，累加至完工量</span><span lang="en">Good pieces reported this time; they are added to the completed quantity</span></td></tr>
+        <tr><td><span lang="zh">不良數量</span><span lang="en">Qty NG</span></td><td><span lang="zh">本次回報的不良品數，不計入完工量</span><span lang="en">Defective pieces reported this time; they do not count towards the completed quantity</span></td></tr>
+        <tr><td><span lang="zh">不良原因</span><span lang="en">Defect reason</span></td><td><span lang="zh">不良數量大於 0 時必填，供不良率分析與品質追溯</span><span lang="en">Required when the defect quantity is greater than 0, for defect rate analysis and quality traceability</span></td></tr>
+        <tr><td><span lang="zh">容器代碼</span><span lang="en">Container</span></td><td><span lang="zh">完工品裝載的容器，供後段工序接續與現場追蹤；從<a href="../bas/container.html">容器主檔</a>選取，預設帶出該工序的完工容器，可改選或留空</span><span lang="en">Container the finished pieces are loaded into, for the next operation and shop-floor tracking; picked from the <a href="../bas/container.html">Container Master</a>, prefilled with the operation's output container, and may be left blank</span></td></tr>
+        <tr><td><span lang="zh">箱號</span><span lang="en">Box No.</span></td><td><span lang="zh">選填。掃<a href="../bas/container-unit.html#wip">箱子</a>上的 QR 碼，合格數就記在這個箱子上（容器種類以箱子為準）；下一道工序整箱接手時掃同一個箱號。箱子裝著別張工單的在製品或庫存批號時，整筆報工會被擋下</span><span lang="en">Optional. Scan the QR code on a <a href="../bas/container-unit.html#wip">box</a> and the good quantity is recorded on that box (the container type follows the box); when the next operation takes over the whole box, it scans the same box number. If the box already holds some other work order's work in process, or an inventory lot, the whole report is rejected</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="production-completion.html"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>、<a href="defect-rate.html"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>、<a href="../qcr/inspection-order.html"><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></a>、<a href="../inv/material-staging.html"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a>、<a href="material-slip.html"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a></p>
+
+    <div class="note-box"><i class="bi bi-cash-coin me-1 text-warning"></i>
+      <strong><span lang="zh">準備工時成本：</span><span lang="en">Setup time cost:</span></strong><span lang="zh">備料（機台準備）的實際工時由系統依起訖時間自動計算，不需人工填寫。
+      人工成本</span><span lang="en"> The actual hours for staging (machine setup) are calculated by the system from the start and end times and do not have to be entered.
+      Labour cost </span><b><span lang="zh">逐人</span><span lang="en">per person</span></b><span lang="zh">計（備料人員與生產人員可能不是同一人，各自的工時分別入帳）；
+      製造費用依「最早開始備料 → 備料完成」的時間窗</span><span lang="en"> is counted per person (the person who sets up and the person who produces may not be the same, and their hours are booked separately);
+      overhead is settled over the window from the earliest setup start to setup completion </span><b><span lang="zh">只結算一次</span><span lang="en">settled only once</span></b><span lang="zh">，不隨備料人數疊加。</span><span lang="en">, and it does not multiply with the number of people doing the setup.</span>
+    </div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">IPQC 巡檢不合格會自動暫停生產中的派工（見</span><span lang="en"> A failed IPQC inspection automatically puts a running dispatch on hold (see </span><a href="#hold"><span lang="zh">暫停處理</span><span lang="en">Handling a dispatch on hold</span></a><span lang="zh">）；FQC 為完工入庫的硬性閘口。</span><span lang="en">); FQC is a hard gate on completion into stock.</span>
+    </div>
+    <div class="note-box"><i class="bi bi-tools me-1 text-warning"></i>
+      <strong><span lang="zh">模具保養：</span><span lang="en">Tooling maintenance:</span></strong><span lang="zh">派工引用的模具若累計打次達保養門檻，清單狀態欄與報工面板會標示「模具需保養」；跨越門檻的那次報工會自動建立機台保養停機單（機台轉保養中、該機台上已開始的派工暫停）。保養完成後由工程師建立 HO 事件（來源單號填模具代碼）恢復機台並將打次歸零，因機台停用而暫停的派工隨之自動恢復。</span><span lang="en"> If the tooling used by a dispatch reaches its maintenance threshold in accumulated shots, the status column in the list and the reporting panel show "tooling needs maintenance"; the production report that crosses the threshold automatically creates a machine maintenance downtime document (the machine goes into maintenance and the dispatches already started on it go on hold). Once the maintenance is done an engineer creates an HO event (with the tooling code as the source document number) to bring the machine back and reset the shot count to zero, and the dispatches held because the machine was down resume automatically.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

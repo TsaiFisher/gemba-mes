@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Month-End Close — ACT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>月結作業 — ACT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ACT 目錄</span><span lang="en">ACT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ACT 畫面</span><span lang="en">ACT screens</span></div>
+    <a href="accounting-period.html" class="nav-link"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a>
+    <a href="journal-entry.html" class="nav-link"><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></a>
+    <a href="trial-balance.html" class="nav-link"><span lang="zh">試算表</span><span lang="en">Trial Balance</span></a>
+    <a href="month-end.html" class="nav-link active"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>
+    <a href="department-actual-cost.html" class="nav-link"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></a>
+    <a href="nrv-assessment.html" class="nav-link"><span lang="zh">IAS 2 NRV 評估</span><span lang="en">IAS 2 NRV Assessment</span></a>
+    <a href="ecl.html" class="nav-link"><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></a>
+    <a href="bad-debt-provision.html" class="nav-link"><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-check2-square me-2 text-primary"></i><span lang="zh">月結作業</span><span lang="en">Month-end close</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/MonthEnd &nbsp;|&nbsp; 月結檢查清單工作流</span><span lang="en">Route: /MonthEnd &nbsp;|&nbsp; The month-end checklist workflow</span></div>
+    </div>
+
+    <p><span lang="zh">以檢查清單引導月結：各模組未結單據檢核、成本重估、評估入帳到期間關帳，逐項打勾留跡，確保關帳前置完整。</span><span lang="en">Guides the month-end close with a checklist: unposted documents in each module, cost re-estimation, booking the assessments and finally closing the period — each item ticked off and recorded, so that nothing is missed before closing.</span></p>
+    <img class="screen-shot" src="img/month-end.png" data-src-en="img/en/month-end.png" alt="月結作業畫面截圖" data-alt-en="Month-end close screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">月結作業畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Month-end close screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">執行月結</span><span lang="en">Run the month-end close</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">輸入期間按「查詢」；第一次請按「初始化清單」建立 10 個步驟。</span><span lang="en">Enter the period and click "Search"; the first time, click "Initialize Checklist" to create the 10 steps.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">依序處理每一步：有「執行批次」的步驟先執行再按「完成」；不適用的步驟按「略過」。前面的步驟沒完成（或略過），後面的按不下去。</span><span lang="en">Work through the steps in order: for a step with "Run Batch", run it first and then click "Complete"; click "Skip" for a step that does not apply. A later step cannot be completed until every earlier one is completed or skipped.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh"><strong>步驟 4</strong>「執行批次」會帶出<a href="department-actual-cost.html">部門實際費用</a>已存的本期資料（每行「工作中心:實際人工:實際製費」），確認後以實際費率重估工單成本並產生調整分錄。本期有報工或換線工時、卻沒有輸入部門費用的工作中心會被擋下並列出——確實沒有費用請輸入 0。</span><span lang="en"><strong>Step 4</strong> "Run Batch" pre-fills this period's figures already saved in <a href="department-actual-cost.html">Department Actual Cost</a> (one line per work center: "work center:actual labour:actual overhead"); confirming re-costs work orders at the actual rates and posts the adjusting entry. A work center that has labour or setup hours this period but no department cost is rejected and listed — enter 0 if it genuinely had no cost.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh"><strong>步驟 6</strong>「執行批次」輸入期末匯率（每行「幣別:匯率」）做外幣重評；同一步的「執行 ECL」計算預期信用損失（基準日＝期末）。<strong>步驟 7</strong>「執行批次」做 NRV 評估。這幾步只算出評估結果，還不入帳。</span><span lang="en"><strong>Step 6</strong> "Run Batch" takes the period-end rates (one line per currency: "currency:rate") and revalues foreign currency balances; "Run ECL" on the same step calculates expected credit losses as at the period end. <strong>Step 7</strong> "Run Batch" runs the NRV assessment. These steps only calculate results; nothing is posted yet.</span></div></div>
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh"><strong>步驟 8</strong> 完成後期間進入月結中（只接受調整分錄）；關帳前若要退回修資料，按步驟 8 的「取消月結」。</span><span lang="en">Once <strong>step 8</strong> is completed the period is in closing and accepts only adjusting entries; to go back and fix data before closing, click "Cancel Closing" on step 8.</span></div></div>
+    <div class="step-row"><span class="step-badge">6</span><div><span lang="zh"><strong>步驟 9</strong> 按「完成」時，系統把外幣重評、NRV、ECL 的結果入總帳（見下方〈期末調整分錄〉），結果寫在該步驟的備註。<strong>步驟 10</strong> 按「完成」即關帳。</span><span lang="en">Clicking "Complete" on <strong>step 9</strong> posts the foreign currency revaluation, NRV and ECL results to the ledger (see "Period-end adjusting entries" below), and the outcome is written to that step's notes. Clicking "Complete" on <strong>step 10</strong> closes the period.</span></div></div>
+    <img class="screen-shot" src="img/month-end-step9.png" data-src-en="img/en/month-end-step9.png" alt="月結清單步驟 9 完成後的備註" data-alt-en="Month-end checklist with step 9 notes after completion" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">步驟 9 完成後，備註列出開出的分錄單號或略過原因</span><span lang="en">After step 9 is completed, its notes list the journal numbers posted or why an item was skipped</span></div>
+    <h3 id="adjusting-entries"><span lang="zh">期末調整分錄（步驟 9）</span><span lang="en">Period-end adjusting entries (step 9)</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">項目</span><span lang="en">Item</span></th><th class="u-width-28pct"><span lang="zh">分錄</span><span lang="en">Entry</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">外幣重評</span><span lang="en">Foreign currency revaluation</span></td><td><span lang="zh">利益：借 1170 應收／2100 應付，貸 4190 匯兌利益<br>損失：借 5199 匯兌損失，貸 1170／2100</span><span lang="en">Gain: Dr 1170 AR / 2100 AP, Cr 4190 FX gain<br>Loss: Dr 5199 FX loss, Cr 1170 / 2100</span></td><td><span lang="zh">每張發票一行。期末次日自動開一張反向分錄沖回——收付款時的匯兌損益是以發票入帳匯率計算，不沖回會重複認列</span><span lang="en">One line per invoice. A reversing entry dated the day after the period end is posted automatically — exchange differences on receipts and payments are measured from the invoice's booking rate, so without the reversal they would be recognised twice</span></td></tr>
+        <tr><td><span lang="zh">NRV 存貨跌價</span><span lang="en">NRV inventory write-down</span></td><td><span lang="zh">借 5240 存貨跌價損失，貸 1419 備抵存貨跌價損失</span><span lang="en">Dr 5240 Inventory write-down loss, Cr 1419 Allowance for inventory valuation loss</span></td><td><span lang="zh">把備抵調整到等於本期評估額；評估變小時反向沖回差額</span><span lang="en">Adjusts the allowance to equal this period's assessment; if the assessment falls, the difference is reversed</span></td></tr>
+        <tr><td><span lang="zh">ECL 備抵</span><span lang="en">ECL allowance</span></td><td><span lang="zh">借 6250 預期信用減損損失，貸 1179 備抵損失-應收帳款</span><span lang="en">Dr 6250 Expected credit impairment loss, Cr 1179 Loss allowance – AR</span></td><td><span lang="zh">同 NRV：備抵調整到等於本期評估額</span><span lang="en">As for NRV: the allowance is adjusted to equal this period's assessment</span></td></tr>
+      </tbody>
+    </table>
+    <div class="alert alert-info small"><span lang="zh">可以重做，只會補差額，不會重複入帳。本期沒有執行的評估會略過（不當成 0，否則會把前期提列的備抵整筆沖掉）。步驟 9 完成之後若又在 NRV／ECL 畫面重算，步驟 10 關帳前會自動再補一次差額；步驟 9 選「略過」則完全不入帳。外幣重評與 ECL 一律以<strong>期末當時</strong>評估：只算期末日（含）以前開立的發票，期末之後才確認的收付款與折讓會加回未結——所以反關帳後重做上一期月結，下一期的交易不會影響上一期的評估。</span><span lang="en">It can be run again and only posts the difference, never a duplicate. An assessment that was not run this period is skipped (it is not treated as zero, which would reverse the whole allowance provided in earlier periods). If NRV or ECL is recalculated on its own screen after step 9, step 10 posts the difference once more before closing; if step 9 was skipped, nothing is posted. Foreign currency revaluation and ECL are always assessed <strong>as at the period end</strong>: only invoices dated on or before the end date count, and payments, receipts and notes confirmed after the end date are added back to the open balance — so when a closed period is reopened and its month-end redone, transactions from the following period do not affect it.</span></div>
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">期間</span><span lang="en">Period</span></td><td><span lang="zh">要執行月結的會計期間（YYYYMM）；未建立檢查清單時會自動初始化 10 個步驟</span><span lang="en">The accounting period (YYYYMM) to close; where no checklist exists yet, the 10 steps are created automatically</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">檢查清單欄位</span><span lang="en">Checklist fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">步驟</span><span lang="en">Step</span></td><td><span lang="zh">固定 1–10 的執行順序，不可跳號</span><span lang="en">A fixed order from 1 to 10; no step can be skipped</span></td></tr>
+        <tr><td><span lang="zh">作業項目</span><span lang="en">Step Description</span></td><td><span lang="zh">該步驟的月結工作內容（見下表）</span><span lang="en">What the step involves at month end (see the table below)</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">未完成 / 已完成；部分步驟由系統作業自動回寫</span><span lang="en">Not done / done; some steps are ticked automatically by the system</span></td></tr>
+        <tr><td><span lang="zh">完成時間</span><span lang="en">Completed At</span></td><td><span lang="zh">該步驟標記完成的時間戳</span><span lang="en">Timestamp when the step was marked done</span></td></tr>
+        <tr><td><span lang="zh">執行人</span><span lang="en">Completed By</span></td><td><span lang="zh">標記完成的使用者</span><span lang="en">The user who marked it done</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">該步驟的補充說明或例外情形</span><span lang="en">Notes or exceptions for the step</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">月結十步驟</span><span lang="en">The ten month-end steps</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">步驟</span><span lang="en">Step</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">1　確認所有進貨/出貨已過帳</span><span lang="en">1　Confirm all receipts and shipments are posted</span></td><td><span lang="zh">避免有單據停在未過帳狀態導致成本不完整</span><span lang="en">so that no document is left unposted and the cost stays complete</span></td></tr>
+        <tr><td><span lang="zh">2　盤點差異調整完成</span><span lang="en">2　Count variance adjustments completed</span></td><td><span lang="zh">盤點單差異需先轉為庫存調整並過帳</span><span lang="en">Count sheet differences have to be turned into stock adjustments and posted first</span></td></tr>
+        <tr><td><span lang="zh">3　完成 WIP 評估快照</span><span lang="en">3　Take the WIP valuation snapshot</span></td><td><span lang="zh">凍結在製品金額，供期末評價與比較</span><span lang="en">Freezes the WIP value for period-end valuation and comparison</span></td></tr>
+        <tr><td><span lang="zh">4　計算工單實際成本</span><span lang="en">4　Calculate work order actual cost</span></td><td><span lang="zh">「執行批次」以部門實際費用重估工單人工／製費並開調整分錄；「完成」把工單成本鎖定為 Final</span><span lang="en">"Run Batch" re-costs work order labour and overhead from department actual costs and posts the adjusting entry; "Complete" locks the work order costs as Final</span></td></tr>
+        <tr><td><span lang="zh">5　更新 AVCO 均價</span><span lang="en">5　Update the AVCO average cost</span></td><td><span lang="zh">重算移動加權平均成本</span><span lang="en">Recalculate the moving average cost</span></td></tr>
+        <tr><td><span lang="zh">6　應收/應付期末匯率重評（IAS 21）</span><span lang="en">6　Period-end revaluation of AR and AP (IAS 21)</span></td><td><span lang="zh">外幣債權債務以期末匯率重評，算出匯兌損益（扣除折讓；收付清後才折讓的多收付也會重評）；同一步可執行 ECL。結果於步驟 9 入帳</span><span lang="en">Foreign currency receivables and payables are revalued at the period-end rate to work out the exchange gain or loss (net of credit notes; overpayments created by a credit note after settlement are revalued too); ECL can also be run on this step. The results are posted at step 9</span></td></tr>
+        <tr><td><span lang="zh">7　IAS 2 NRV 存貨減損評估</span><span lang="en">7　IAS 2 NRV inventory impairment assessment</span></td><td><span lang="zh">比較帳面成本與淨變現價值算出減損（見 NRV 評估畫面）；結果於步驟 9 入帳</span><span lang="en">Compare book cost with net realisable value to work out the impairment (see the NRV assessment screen); the result is posted at step 9</span></td></tr>
+        <tr><td><span lang="zh">8　封鎖庫存異動</span><span lang="en">8　Freeze stock movements (period status = Closing)</span></td><td><span lang="zh">期間狀態切為 Closing，之後僅允許調整分錄</span><span lang="en">The period is switched to Closing, after which only adjusting entries are allowed</span></td></tr>
+        <tr><td><span lang="zh">9　產生期末調整分錄</span><span lang="en">9　Create the period-end adjusting entries</span></td><td><span lang="zh">按「完成」時把外幣重評、NRV、ECL 的結果入總帳（見<a href="#adjusting-entries">期末調整分錄</a>）</span><span lang="en">Clicking "Complete" posts the foreign currency revaluation, NRV and ECL results to the ledger (see <a href="#adjusting-entries">period-end adjusting entries</a>)</span></td></tr>
+        <tr><td><span lang="zh">10　關帳</span><span lang="en">10　Close the period (period status = Closed)</span></td><td><span lang="zh">先跑關帳前稽核，通過後期間狀態切為 Closed，該期不再接受任何入帳；步驟 9 已完成時會先補入評估差額</span><span lang="en">Runs the pre-closing audit first; once it passes the period is switched to Closed and accepts no further postings. If step 9 was completed, any assessment difference is posted first</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="accounting-period.html"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a>、<a href="../mfg/wip-report.html"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>、<a href="department-actual-cost.html"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></a>、<a href="nrv-assessment.html"><span lang="zh">NRV 評估</span><span lang="en">NRV Assessment</span></a>、<a href="ecl.html"><span lang="zh">預期信用損失</span><span lang="en">Expected Credit Loss</span></a>、<a href="journal-entry.html"><span lang="zh">日記帳</span><span lang="en">Journal Entry</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

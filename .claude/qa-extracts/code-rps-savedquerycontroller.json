@@ -1,0 +1,41 @@
+{
+  "sourcePath": "Modules/RPS/Controllers/SavedQueryController.cs",
+  "sourceHash": "582a50579b4033bb7603745ab3667ddecd344d153fb8a13135a8fc6d3fe25272",
+  "entries": [
+    {
+      "slug": "code-rps-savedquerycontroller-eb5e3841",
+      "lang": "zh",
+      "headingPath": "報表 › 為一個附屬功能新增權限維度只會讓授權矩陣更難維護",
+      "text": "常用查詢的權限判斷機制｜此功能不獨立擁有選單鍵，其可使用性會根據使用者目前正在檢視的目標報表的選單鍵來判定。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-savedquerycontroller-c53900d0",
+      "lang": "zh",
+      "headingPath": "報表 › 而「權限檢查藏在下一層」正是它要防的樣態",
+      "text": "權限檢查需在多層次進行｜系統會執行兩層次的權限檢查，一層是在處理動作時進行，另一層是針對非透過網頁介面呼叫的場景所設的防護機制，這兩個檢查都必須保留。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-savedquerycontroller-0576619b",
+      "lang": "zh",
+      "headingPath": "報表 › 刪除自己的常用查詢",
+      "text": "常用查詢只能刪除自己的｜系統只允許使用者刪除自己建立的常用查詢紀錄，無法刪除其他使用者的紀錄。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-savedquerycontroller-4222b30e",
+      "lang": "zh",
+      "headingPath": "報表 › 「不是你的」與「不存在」一律回同一個結果：分開回報等於提供一個",
+      "text": "刪除常用查詢時的回應規則｜要刪除的常用查詢不是你的、或那筆查詢根本不存在，系統一律回同一種結果，不會分辨是哪一種情況。",
+      "approved": false
+    },
+    {
+      "slug": "code-rps-savedquerycontroller-cf1286b3",
+      "lang": "zh",
+      "headingPath": "報表 › 執行：解析成目標報表畫面的網址後轉導",
+      "text": "報表執行後轉址的規則說明｜系統在完成解析目標報表的網址後，會直接跳轉到該網址，此過程僅是讀取定義、解算期間和組建網址，不會寫入任何資料。使用者權限的檢查會在執行時根據當下登入的使用者重新進行一次驗證。",
+      "approved": true
+    }
+  ]
+}

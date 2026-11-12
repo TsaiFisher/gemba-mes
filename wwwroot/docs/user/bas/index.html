@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Basic Data (BAS) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>基本資料維護（BAS）— SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="index.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-database me-2 text-primary"></i><span lang="zh">基本資料維護（BAS）</span><span lang="en">Basic Data (BAS)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">系統各模組共用的主檔資料，須在使用前完成設定</span><span lang="en">Master data shared by every module; complete it before use</span></div>
+    </div>
+    <p><span lang="zh">BAS（Basic Data）模組包含所有跨模組共用的主檔與設定，例如廠商、產品、倉庫、計量單位等。這些資料是採購、庫存、製造各模組正常運作的基礎，建議依以下優先順序完成初始設定。</span><span lang="en">The BAS (Basic Data) module holds every master record and setting shared across modules — suppliers, products, warehouses, units of measure and so on. This data is the foundation on which purchasing, inventory and manufacturing operate, so complete the initial setup in the order below.</span></p>
+
+    <h2 id="recommended-setup-order"><i class="bi bi-list-ol me-2 text-primary"></i><span lang="zh">建議設定順序</span><span lang="en">Recommended setup order</span></h2>
+    <ol class="lh-lg">
+      <li><span lang="zh">幣別主檔（Currency）</span><span lang="en">Currency Master</span></li>
+      <li><span lang="zh">稅別（Tax）</span><span lang="en">Tax</span></li>
+      <li><span lang="zh">計量單位（Uom）</span><span lang="en">Unit of Measure</span></li>
+      <li><span lang="zh">倉庫（Warehouse）</span><span lang="en">Warehouse</span></li>
+      <li><span lang="zh">產品類別（ProductCategory）</span><span lang="en">Product Category</span></li>
+      <li><span lang="zh">產品主檔（Product）</span><span lang="en">Product Master</span></li>
+      <li><span lang="zh">公司/廠商主檔（Company）</span><span lang="en">Company / Vendor Master</span></li>
+      <li><span lang="zh">班別（Shift）→ 班別群組（ShiftGroup）→ 特殊日（SpecialDay）</span><span lang="en">Shift → Shift Group → Special Day</span></li>
+      <li><span lang="zh">工作中心（WorkCenter）</span><span lang="en">Work Center</span></li>
+      <li><span lang="zh">單號設定（DocNumberConfig）</span><span lang="en">Doc Number Config</span></li>
+    </ol>
+
+    <h2 id="flow"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">作業流程圖（建置順序與下游用途）</span><span lang="en">Process flow (setup order and downstream use)</span></h2>
+    <p class="small text-muted mb-2"><span lang="zh">箭頭代表「須先完成才能設定／使用」的先後順序，點擊方塊可開啟該畫面的操作說明。</span><span lang="en">The arrows show what must be completed before something else can be set up or used. Click a box to open the user guide of that screen. </span><strong><span lang="zh">虛線外框</span><span lang="en">A dashed outline</span></strong><span lang="zh">為其他模組的作業（以顏色區分模組）。</span><span lang="en"> marks a step in another module (colour-coded by module).</span></p>
+    <div class="flow">
+      <div class="flow-legend">
+        <span class="flow-legend-item m-bas"><i class="flow-dot"></i><span lang="zh">BAS 基本資料（本模組）</span><span lang="en">BAS Basic Data (this module)</span></span>
+        <span class="flow-legend-item m-mfg"><i class="flow-dot"></i><span lang="zh">MFG 製造</span><span lang="en">MFG Manufacturing</span></span>
+        <span class="flow-legend-item m-pur"><i class="flow-dot"></i><span lang="zh">PUR 採購</span><span lang="en">PUR Purchasing</span></span>
+        <span class="flow-legend-item m-ord"><i class="flow-dot"></i><span lang="zh">ORD 訂單</span><span lang="en">ORD Orders</span></span>
+        <span class="flow-legend-item m-inv"><i class="flow-dot"></i><span lang="zh">INV 庫存</span><span lang="en">INV Inventory</span></span>
+        <span class="flow-legend-item m-act"><i class="flow-dot"></i><span lang="zh">ACT 結帳</span><span lang="en">ACT Closing</span></span>
+        <span class="flow-legend-item"><i class="flow-dot flow-dot-ext"></i><span lang="zh">虛線＝其他模組作業</span><span lang="en">Dashed = a step in another module</span></span>
+      </div>
+
+      <div class="flow-row" id="flow-bas-1-financial-and-measurement">
+        <div class="flow-row-label"><span lang="zh">① 財務計量</span><span lang="en">① Financial and measurement</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-bas" href="currency.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">幣別與匯率</span><span lang="en">Currency and exchange rates</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-bas" href="tax.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">稅別</span><span lang="en">Tax</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-bas" href="uom.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act ext" href="../act/accounting-period.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-bas-2-products">
+        <div class="flow-row-label"><span lang="zh">② 產品</span><span lang="en">② Products</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-bas" href="product-category.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">產品類別</span><span lang="en">Product Category</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-bas" href="product.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">產品主檔（MRP 模式／前置天數）</span><span lang="en">Product Master (MRP mode / lead time)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg ext" href="../mfg/routing.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">途程主檔（工序＋BOM）</span><span lang="en">Routing master (operations + BOM)</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-bas-3-plant-facilities">
+        <div class="flow-row-label"><span lang="zh">③ 廠別設施</span><span lang="en">③ Plant facilities</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-bas" href="warehouse.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">倉庫／儲位</span><span lang="en">Warehouse / Location</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-bas" href="shift.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">班別</span><span lang="en">Shift</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-bas" href="shift-group.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-bas" href="special-day.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">特殊日</span><span lang="en">Special Day</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-bas" href="work-center.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">工作中心（費率）</span><span lang="en">Work Center (rates)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg ext" href="../mfg/work-calendar.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-bas-4-partners-and-doc-numbers">
+        <div class="flow-row-label"><span lang="zh">④ 往來與單號</span><span lang="en">④ Partners and doc numbers</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-bas" href="company.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">公司／客戶／供應商</span><span lang="en">Company / Customer / Supplier</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-bas" href="doc-number-config.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-bas" href="inventory-transaction-type.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-bas-5-production-aids">
+        <div class="flow-row-label"><span lang="zh">⑤ 生產輔具</span><span lang="en">⑤ Production aids</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-bas" href="tooling.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">模具</span><span lang="en">Tooling</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-bas" href="container.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">容器</span><span lang="en">Container</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg ext" href="../mfg/schedule.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">生產排程（模具衝突檢查）</span><span lang="en">Production scheduling (tooling conflict check)</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-bas-downstream-use">
+        <div class="flow-row-label"><span lang="zh">下游使用</span><span lang="en">Downstream use</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-bas" href="product.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">主檔完成</span><span lang="en">Master data complete</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-pur ext" href="../pur/purchase-request.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">請購／採購</span><span lang="en">Purchase request / purchase order</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-ord ext" href="../ord/sales-order.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-mfg ext" href="../mfg/work-order.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">工單生產</span><span lang="en">Work order production</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv ext" href="../inv/inventory-balance.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">庫存異動</span><span lang="en">Inventory Movement</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-foot">
+        <i class="bi bi-info-circle me-1"></i><span lang="zh">幣別、稅別、計量單位、產品與往來廠商為全公司共用（不分廠別）；倉庫、工作中心、班別、單號設定屬各廠獨立維護。</span><span lang="en">Currencies, tax codes, units of measure, products and business partners are shared company-wide (no plant split); warehouses, work centers, shifts and doc number configs are maintained per plant.</span>
+      </div>
+    </div>
+
+    <h2 id="screen-list"><i class="bi bi-grid me-2 text-primary"></i><span lang="zh">畫面清單</span><span lang="en">Screen list</span></h2>
+    <div class="row g-3">
+      <div class="col-md-6"><a href="company.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-building me-1 text-primary"></i><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></h6>
+        <div class="text-muted small"><span lang="zh">客戶、廠商、公司資料維護；含聯絡人管理、有簽核流程</span><span lang="en">Customer, supplier and company data, including contacts; goes through approval</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="currency.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-currency-exchange me-1 text-primary"></i><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></h6>
+        <div class="text-muted small"><span lang="zh">幣別代碼與匯率維護，含每日買/賣匯率記錄</span><span lang="en">Currency codes and exchange rates, including daily buy/sell rates</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="product.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box me-1 text-primary"></i><span lang="zh">產品主檔</span><span lang="en">Product Master</span></h6>
+        <div class="text-muted small"><span lang="zh">產品基本資料、計量單位、成本、MRP 參數；有簽核流程</span><span lang="en">Product basics, unit of measure, cost and MRP parameters; goes through approval</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="product-category.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-tag me-1 text-primary"></i><span lang="zh">產品類別</span><span lang="en">Product Category</span></h6>
+        <div class="text-muted small"><span lang="zh">產品分類維護，可設定預設倉庫、儲位與計量單位</span><span lang="en">Product category maintenance, with default warehouse, location and unit of measure</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="warehouse.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-house me-1 text-primary"></i><span lang="zh">倉庫</span><span lang="en">Warehouse</span></h6>
+        <div class="text-muted small"><span lang="zh">倉庫與儲位管理，含 MRP 倉、倉庫類型設定</span><span lang="en">Warehouse and location management, including the MRP warehouse flag and warehouse type</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="work-center.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-tools me-1 text-primary"></i><span lang="zh">工作中心</span><span lang="en">Work Center</span></h6>
+        <div class="text-muted small"><span lang="zh">工作站與機台管理，含工時費率、班別群組設定</span><span lang="en">Work station and machine management, including hourly rates and shift groups</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="uom.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-rulers me-1 text-primary"></i><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></h6>
+        <div class="text-muted small"><span lang="zh">計量單位維護，含單位間換算率設定</span><span lang="en">Unit of measure maintenance, including conversion ratios between units</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="tax.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-percent me-1 text-primary"></i><span lang="zh">稅別</span><span lang="en">Tax</span></h6>
+        <div class="text-muted small"><span lang="zh">稅率代碼維護，供採購與銷售模組選用</span><span lang="en">Tax rate codes for use in purchasing and sales</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="shift.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-clock me-1 text-primary"></i><span lang="zh">班別</span><span lang="en">Shift</span></h6>
+        <div class="text-muted small"><span lang="zh">日班/夜班等班別定義，含可用工時分鐘數</span><span lang="en">Shift definitions such as day and night, with the available work minutes</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="shift-group.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-calendar-week me-1 text-primary"></i><span lang="zh">班別群組</span><span lang="en">Shift Group</span></h6>
+        <div class="text-muted small"><span lang="zh">每週各日班別組合設定，供工作中心排程使用</span><span lang="en">Weekly shift combination used by work center scheduling</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="special-day.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-calendar-x me-1 text-primary"></i><span lang="zh">特殊日</span><span lang="en">Special Day</span></h6>
+        <div class="text-muted small"><span lang="zh">假日與補班日設定，月曆視圖管理</span><span lang="en">Holiday and compensatory workday setup with a calendar view</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="doc-number-config.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-hash me-1 text-primary"></i><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></h6>
+        <div class="text-muted small"><span lang="zh">各類單據的單號格式（前置碼、日期、序號）設定</span><span lang="en">Document number format (prefix, date, sequence) for each document type</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="plant-param-overview.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-diagram-3 me-1 text-primary"></i><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></h6>
+        <div class="text-muted small"><span lang="zh">唯讀報表：一次看完各廠系統參數的覆寫值與繼承狀態（選單位於「管理系統」）</span><span lang="en">Read-only report showing each plant’s parameter overrides and inherited values side by side (found under Admin Management in the menu)</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="tooling.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-hammer me-1 text-primary"></i><span lang="zh">模具</span><span lang="en">Tooling</span></h6>
+        <div class="text-muted small"><span lang="zh">生產用模具主檔，含規格、模穴數、類型</span><span lang="en">Production tooling master with specification, cavity count and type</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="container.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box2 me-1 text-primary"></i><span lang="zh">容器主檔</span><span lang="en">Container Master</span></h6>
+        <div class="text-muted small"><span lang="zh">包裝容器類型維護（棧板、紙箱等）</span><span lang="en">Packaging container types (pallets, cartons and so on)</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="container-unit.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-qr-code me-1 text-primary"></i><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></h6>
+        <div class="text-muted small"><span lang="zh">重複使用的實體箱子：固定 QR 標籤、目前內容與歷程</span><span lang="en">Reusable physical boxes: fixed QR labels, current contents and history</span></div></div></div></a></div>
+
+      <div class="col-md-6"><a href="inventory-transaction-type.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-arrow-left-right me-1 text-primary"></i><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></h6>
+        <div class="text-muted small"><span lang="zh">庫存進出類型代碼維護，控制批號與單據需求</span><span lang="en">Stock in/out type codes, controlling lot and source-document requirements</span></div></div></div></a></div>
+    </div>
+
+    <hr class="mt-4"/>
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 使用手冊 — BAS 基本資料維護</span><span lang="en">SmartFactory MES User Manual — BAS Basic Data</span></div>
+  </main>
+</div>
+</body>
+</html>

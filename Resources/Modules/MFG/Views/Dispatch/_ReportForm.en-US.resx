@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="DispatchId" xml:space="preserve"><value>Dispatch ID</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>Work Order</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Dispatch Qty</value></data>
+  <data name="QtyDone" xml:space="preserve"><value>Done</value></data>
+  <data name="Remaining" xml:space="preserve"><value>Remaining</value></data>
+  <data name="Operator" xml:space="preserve"><value>Operator</value></data>
+  <data name="QtyOk" xml:space="preserve"><value>Qty OK</value></data>
+  <data name="QtyOkPlaceholder" xml:space="preserve"><value>Enter qty OK</value></data>
+  <data name="QtyNg" xml:space="preserve"><value>Qty NG</value></data>
+  <data name="QtyNgPlaceholder" xml:space="preserve"><value>Enter qty NG (can be 0)</value></data>
+  <data name="ContainerCode" xml:space="preserve"><value>Container</value></data>
+  <data name="ContainerDefaultHint" xml:space="preserve"><value>Defaults to the output container set on this operation; you may change it or leave it blank</value></data>
+  <data name="Submit" xml:space="preserve"><value>Submit Report</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="NoOpenSession" xml:space="preserve"><value>No active session. Please start a session before reporting.</value></data>
+  <data name="ToolingPmDueAlert" xml:space="preserve"><value>Tooling {0} has reached its PM shot threshold. A maintenance downtime order has been (or will be) created automatically; please contact the tooling engineer.</value></data>
+  <data name="NgReasonCode" xml:space="preserve"><value>NG Reason</value></data>
+  <data name="SubmitReport" xml:space="preserve"><value>Report (Keep Producing)</value></data>
+  <data name="CompleteSession" xml:space="preserve"><value>Complete (End This Session)</value></data>
+  <data name="ReportVsCompleteHint" xml:space="preserve"><value>You can report multiple times while producing (e.g. once per transferred batch). "Complete" ends this work session and accrues labor cost; the dispatch closes automatically once the reported quantity reaches the target.</value></data>
+  <data name="ContainerUnitId" xml:space="preserve"><value>Box No.</value></data>
+  <data name="ContainerUnitIdPlaceholder" xml:space="preserve"><value>Scan the QR code on the box</value></data>
+  <data name="ContainerUnitIdHint" xml:space="preserve"><value>Good quantity goes into this box and is recorded on it. When the next operation takes over the whole box, scan the same box number there.</value></data>
+</root>

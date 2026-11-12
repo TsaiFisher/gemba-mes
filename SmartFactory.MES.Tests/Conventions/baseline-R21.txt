@@ -1,0 +1,5 @@
+﻿# R21 baseline — 既有違規清單。
+# mapped 的 decimal 欄位不得落在無界的 PostgreSQL numeric（未宣告 [Column(TypeName)]）。
+# 各 scale 的適用範圍見 Modules/BAS/Services/DecimalPrecision.cs。
+# 目前零違規：10 個無界欄位已於 AlignUnboundedNumericColumns migration 對齊。
+# 檢驗量測值 9 欄刻意維持無界，寫在規則的 allowedUnbounded 白名單裡（不進 baseline）。

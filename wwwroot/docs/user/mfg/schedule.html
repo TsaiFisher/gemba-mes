@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Production Scheduling — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>生產排程 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="schedule.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link active"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-bar-chart-steps me-2 text-primary"></i><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/Schedule &nbsp;|&nbsp; 機台甘特圖排程與衝突警示</span><span lang="en">Route: /Schedule &nbsp;|&nbsp; Machine Gantt scheduling with conflict warnings</span></div>
+    </div>
+
+    <p><span lang="zh">以甘特圖呈現各機台的派工安排，支援重排程。排程引擎依工作日曆＋班別（真實可用時段）排列，已凍結（投產）工單不受重排影響；待料風險與模具衝突（同時段同模具跨機台使用）會以顏色標示，但不硬性阻擋，詳見下方〈甘特圖顏色〉。</span><span lang="en">Shows the dispatches on each machine as a Gantt chart and supports rescheduling. The scheduling engine lays work out on the work calendar and shift pattern (genuinely available time); frozen (released) work orders are not moved by a reschedule. Material risk and tooling conflicts (the same tooling claimed by more than one machine in the same period) are marked by colour but not blocked — see "Gantt chart colours" below.</span></p>
+    <img class="screen-shot" src="img/schedule.png" data-src-en="img/en/schedule.png" alt="生產排程畫面截圖" data-alt-en="Production scheduling screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">生產排程畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Production scheduling screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">排程操作</span><span lang="en">Scheduling actions</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">選擇日期區間載入甘特圖，檢視各機台負載與佇列。</span><span lang="en">Choose a date range to load the Gantt chart and see the load and queue on each machine.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">畫面上方的提示列顯示排程</span><span lang="en">The bar at the top shows whether the schedule is </span><b><span lang="zh">是否已過時</span><span lang="en">out of date</span></b><span lang="zh">（上次排程之後有投產、拆分、換機、完工、取消、機台狀態、工作日曆或計劃停機等異動就算過時，並標出從何時起）、上次排程時間與觸發方式、待排與暫停筆數，以及本廠的自動重排設定（含排序規則與凍結時界）。過時時提示列轉為黃色。</span><span lang="en"> (any release, split, machine switch, completion, cancellation, machine status change, work calendar or planned downtime change since the last run makes it out of date, and the bar says since when), the time and trigger of the last run, the number of pending and on-hold dispatches, and this plant's automatic rescheduling settings (including the sequencing rule and freeze window). The bar turns yellow when the schedule is out of date.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點「執行排程」由引擎重排待排與已排的派工；執行前會提示將重新配置幾筆已排派工、其中幾筆排在明天（現場可能已依準備提醒備料或換模），確認後才執行。準備中、準備完成、待首件、生產中與暫停的派工不移動。換機台、拆分時指定的機台，以及換機續做的機台會被保留，只有那台不能生產時才改排到其他機台。同一廠同時只能有一次排程在執行，別人正在排時會提示稍後再試；排程期間若派工剛好被報工等作業異動，本次不寫入，重按即可。若出現「無法在 90 天內完成排程…請確認工作日曆已設定」，表示有派工所在的工作中心或機台沒有可用的工作日曆（例如沒設班別群組），本次不寫入；補好日曆後再執行。</span><span lang="en">Click "Run Schedule" to have the engine re-lay pending and scheduled dispatches. Before it runs, you are told how many scheduled dispatches will be re-laid and how many of them are tomorrow's (the floor may already have staged or set up for them from the preparation alert), and it runs only after you confirm. Dispatches in setup, ready, pending FPI, in progress or on hold are not moved. A machine chosen when reassigning, splitting or switching machine is kept, and the dispatch moves to another machine only if that one cannot run. Only one scheduling run per plant can be in progress at a time; if someone else is running it you are asked to try again shortly. If a dispatch is changed during the run (by a production report, for example), nothing is saved and you simply run it again. If you see "Scheduling could not finish within 90 days… Check that the work calendar is set up.", a work center or machine that a dispatch needs has no usable work calendar (for example, no shift group); nothing is saved, so set up the calendar and run it again.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">檢查橘色（待料風險）、紫色（模具衝突）與紅色（預測延遲）標記，必要時人工調整。</span><span lang="en">Check the orange (material risk), purple (tooling conflict) and red (predicted late) marks and adjust by hand where necessary.</span></div></div>
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh">排程確定後，各派工單 ETA 回寫工單預計完工日。</span><span lang="en">Once the schedule is settled, each dispatch's ETA is written back as the work order's estimated completion date.</span></div></div>
+    <h2 id="auto-schedule"><i class="bi bi-arrow-repeat me-2 text-primary"></i><span lang="zh">自動重排排程</span><span lang="en">Automatic rescheduling</span></h2>
+    <p><span lang="zh">預設排程只在按「執行排程」時更新。在</span><span lang="en">By default the schedule is only updated when someone clicks "Run Schedule". Under </span><a href="../sys/system-param.html#manufacturing-settings"><span lang="zh">系統參數 → 製造設定</span><span lang="en">System Parameters → Manufacturing Settings</span></a><span lang="zh">（或各廠的</span><span lang="en"> (or each plant's </span><a href="../sys/plant.html"><span lang="zh">廠別參數</span><span lang="en">plant parameters</span></a><span lang="zh">）可開啟三種自動重排，可以並用：</span><span lang="en">) you can turn on three kinds of automatic rescheduling, which can be combined:</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">時機</span><span lang="en">When</span></th><th><span lang="zh">怎麼運作</span><span lang="en">How it works</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">異動後</span><span lang="en">After changes</span></td><td><span lang="zh">系統每分鐘檢查一次排程是否過時；過時且最後一筆異動已安靜 90 秒就重排。現場持續報工、異動不斷時，最多等 10 分鐘也會重排。</span><span lang="en">The system checks every minute whether the schedule is out of date; when it is and the last change was 90 seconds ago, it re-runs. If changes keep coming (continuous production reporting, for example), it re-runs after at most 10 minutes anyway.</span></td></tr>
+        <tr><td><span lang="zh">派工前</span><span lang="en">Before dispatch</span></td><td><span lang="zh">開啟派工作業（查詢時）、手機派工清單、生產準備看板（桌機與手機）、本畫面，以及 17:00 生產準備提醒送出前，排程若已過時就先重排，約數秒後才顯示。重排失敗時畫面照常顯示既有排程。</span><span lang="en">When Dispatch Operations is searched, the mobile dispatch list or the Preparation Board (desktop and mobile) or this screen is opened, and before the 17:00 preparation alert is sent, an out-of-date schedule is re-run first, so the page appears a few seconds later. If the re-run fails, the page still shows the existing schedule.</span></td></tr>
+        <tr><td><span lang="zh">每日定時</span><span lang="en">Daily</span></td><td><span lang="zh">每天設定的時刻全量重排一次（不論是否過時），建議早於 17:00 的準備提醒。伺服器在那個時刻沒開機，當天之內開機後補跑；同一天不會重跑。</span><span lang="en">A full re-run once a day at the set time, whether or not the schedule is out of date; set it before the 17:00 preparation alert. If the server was off at that time it runs once it is back the same day, and it never runs twice on one day.</span></td></tr>
+      </tbody>
+    </table>
+    <h3 id="auto-schedule-rule-freeze"><span lang="zh">排序規則與凍結時界</span><span lang="en">Sequencing rule and freeze window</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><b><span lang="zh">排序規則</span><span lang="en">Sequencing rule</span></b><span lang="zh">：自動重排依系統參數「自動重排的排序規則」排序生產批，未設定時為「優先順序」。本畫面的「排程規則」下拉預設也是這個規則，手動執行時不會不小心用另一套規則把自動重排的結果翻掉；需要時仍可手動改選。</span><span lang="en">: automatic runs sequence production batches by the "Sequencing rule for automatic runs" system parameter, Priority when it is not set. The rule selector on this screen defaults to the same rule, so a manual run does not accidentally undo an automatic run with a different rule; you can still pick another when you need to.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><b><span lang="zh">凍結時界</span><span lang="en">Freeze window</span></b><span lang="zh">：設定後，自動重排時已排、且在這個時數內開工的派工保留原機台與時段，就像已開工的派工一樣不被搬動——現場可能已照排程備料、備模。插單會排在它們之後。機台已不能生產的、或整段時段已過去卻沒開工的，照常重排。</span><span lang="en">: when set, scheduled dispatches starting within that many hours keep their machine and time slot in automatic runs, just like dispatches already under way — the shop floor may already be staging material and tooling for them. Rush orders go after them. Dispatches on a machine that can no longer run, or whose whole slot has passed without starting, are rescheduled as usual.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">凍結時界</span><span lang="en">The freeze window </span><b><span lang="zh">只套用在自動重排</span><span lang="en">only applies to automatic runs</span></b><span lang="zh">；按「執行排程」由生管全權重排，時界內的派工也會移動。另請注意：時界內若有派工被取消或提早完工，那段空檔要等時界過了才會被補上。</span><span lang="en">; clicking "Run Schedule" gives the planner full control, and dispatches inside the window can move. Note also that if a dispatch inside the window is cancelled or finishes early, the gap it leaves is only filled once the window has passed.</span></div></div>
+    <p><span lang="zh">自動重排與手動相同：準備中、準備完成、待首件、生產中與暫停的派工不移動，人指定的機台會保留。自動重排在 17:00 之後若改到</span><span lang="en">Automatic runs work like manual ones: dispatches in setup, ready, pending FPI, in progress or on hold stay where they are, and machines chosen by people are kept. If an automatic run after 17:00 changes the machine or time of any of </span><b><span lang="zh">明天派工的機台或時段</span><span lang="en">tomorrow's dispatches</span></b><span lang="zh">，會推播「明日派工已異動」給生產準備提醒的同一角色，請到</span><span lang="en">, a "tomorrow's dispatches changed" notification goes to the same role as the preparation alert; check staging and setup on the </span><a href="preparation-board.html"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a><span lang="zh">確認備料與換模。</span><span lang="en">.</span></p>
+    <h3 id="eta-update"><span lang="zh">計畫時間如何隨進度更新</span><span lang="en">How planned times follow progress</span></h3>
+    <p><span lang="zh">不必重排排程，派工的計畫時間也會跟著現場進度調整，分兩層：</span><span lang="en">Even without rescheduling, planned dispatch times follow shop-floor progress, in two layers:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><b><span lang="zh">每次報工後</span><span lang="en">After each production report</span></b><span lang="zh">：依剩餘數量重算這張派工的預計完工，並把同機台後續、同工單後續工序與上階工單的派工一起前後平移——只處理未來 48 小時內、最多 50 張，維持報工速度。生產批若因此轉為預計延遲，會推播給有生產排程權限的人員。</span><span lang="en">: the dispatch's expected finish is recalculated from the remaining quantity, and the following dispatches on the same machine, the later operations of the same work order and the parent work order's dispatches are shifted with it — only those within the next 48 hours, at most 50, so reporting stays fast. If a production batch becomes predicted late as a result, people with access to Production Schedule get a notification.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><b><span lang="zh">每晚 01:00 校準</span><span lang="en">Nightly calibration at 01:00</span></b><span lang="zh">：補上 48 小時以外的部分，並且</span><span lang="en">: covers what lies beyond 48 hours, and </span><b><span lang="zh">與執行排程用同一套規則</span><span lang="en">uses the same rules as Run Schedule</span></b><span lang="zh">計算時間（工序重疊、工作日曆、計劃停機、已開工派工依剩餘量重估）：前面延誤就往後順延，前面提早完成就跟著提前，起點已過卻還沒開工的移到現在。差別只在</span><span lang="en"> to calculate times (operation overlap, work calendar, planned downtime, started dispatches re-estimated from their remaining quantity): when earlier work runs late, later work moves later; when it finishes early, later work moves earlier; and dispatches whose start has passed without starting move to now. The only difference is that it </span><b><span lang="zh">不換機台、不改先後、不排入待排派工</span><span lang="en">does not change machines, change the order, or place pending dispatches</span></b><span lang="zh">——那是重排排程的事，依各廠的自動重排設定或手動執行。校準後重新判定各生產批是否預計延遲，新轉為延遲的推播給生管。</span><span lang="en"> — that is rescheduling, which follows each plant's automatic rescheduling settings or a manual run. Afterwards each production batch is re-checked for predicted lateness, and newly late batches are notified to production planning.</span></div></div>
+
+    <h2 id="run-history"><i class="bi bi-clock-history me-2 text-primary"></i><span lang="zh">排程紀錄</span><span lang="en">Run history</span></h2>
+    <p><span lang="zh">「排程紀錄」頁籤列出每一次執行排程（手動與自動都算），保留 60 天。開啟自動重排後不再有人親手按排程，派工為什麼移動要從這裡看。</span><span lang="en">The "Run History" tab lists every schedule run, manual or automatic, for 60 days. Once automatic rescheduling is on, nobody clicks Run Schedule by hand any more, so this is where you see why dispatches moved.</span></p>
+    <img class="screen-shot" src="img/schedule-history.png" data-src-en="img/en/schedule-history.png" alt="排程紀錄頁籤截圖" data-alt-en="Run History tab screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">排程紀錄頁籤：上方每次排程一列，點選一列後下方列出該次的派工異動</span><span lang="en">The Run History tab: one row per run at the top; click a row to list that run's dispatch changes underneath</span></div>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">欄位</span><span lang="en">Column</span></th><th><span lang="zh">說明</span><span lang="en">Meaning</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">執行時間、觸發方式、規則</span><span lang="en">Run at, Trigger, Rule</span></td><td><span lang="zh">何時、由誰或哪一種自動時機（異動後／派工前／每日定時）、用哪一個排序規則執行。</span><span lang="en">When the run happened, who started it or which automatic trigger did (after changes / before dispatch / daily), and which sequencing rule it used.</span></td></tr>
+        <tr><td><span lang="zh">排入</span><span lang="en">Scheduled</span></td><td><span lang="zh">這次配置到時段的派工數（含位置沒變的）。</span><span lang="en">Dispatches given a slot in this run, including ones whose slot did not change.</span></td></tr>
+        <tr><td><span lang="zh">新排入／改時段／換機台／退回待排</span><span lang="en">Newly scheduled / Time changed / Machine changed / Back to pending</span></td><td><span lang="zh">與這次排程前相比真正有變的派工數：原本待排這次排入、同機台開始時刻改變、改到另一台機台、原本已排這次排不進而退回待排。</span><span lang="en">Dispatches that actually changed compared with before the run: pending ones now placed, ones whose start moved on the same machine, ones moved to another machine, and scheduled ones that could not be placed and went back to pending.</span></td></tr>
+        <tr><td><span lang="zh">影響明天</span><span lang="en">Affects tomorrow</span></td><td><span lang="zh">上述異動中，原本或改後落在明天的派工數；大於 0 時以紅字標示，請到生產準備看板確認備料與換模。</span><span lang="en">How many of those changes were, or now are, on tomorrow; shown in red when above 0 — check staging and setup on the Preparation Board.</span></td></tr>
+        <tr><td><span lang="zh">時界保留</span><span lang="en">Kept by freeze window</span></td><td><span lang="zh">因凍結時界而保留原機台與時段的派工數；沒有使用時界的執行顯示「—」。</span><span lang="en">Dispatches kept in place by the freeze window; "—" for runs without one.</span></td></tr>
+      </tbody>
+    </table>
+    <p><span lang="zh">點選一列，下方列出該次每張派工的異動（工單、工序、原機台與開始、新機台與開始）。單次異動超過 1000 筆時只列前 1000 筆，上方筆數仍是全部。每晚 01:00 的校準不換機台、不改先後，不記在排程紀錄。</span><span lang="en">Click a row to list each dispatch that changed in that run (work order, operation, old machine and start, new machine and start). If a run changed more than 1,000 dispatches only the first 1,000 are listed; the counts above still cover all of them. The 01:00 nightly calibration does not change machines or order and is not recorded here.</span></p>
+
+    <h2 id="gantt-chart-colours"><i class="bi bi-palette me-2 text-primary"></i><span lang="zh">甘特圖顏色</span><span lang="en">Gantt chart colours</span></h2>
+    <h3><span lang="zh">著色依據</span><span lang="en">Colour by</span></h3>
+    <p><span lang="zh">甘特圖上方的「著色依據」可切換兩種著色方式，切換時會重新載入資料：</span><span lang="en">The "Colour By" selector above the chart switches between two ways of colouring, and reloads the data when you change it:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh"><strong>狀態</strong>（預設）：依派工單目前的狀況上色，用來一眼找出需要處理的派工。</span><span lang="en"><strong>Status</strong> (default): colours each dispatch by its current condition, so the ones needing attention stand out.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh"><strong>批號</strong>：同一生產批的派工用同一顏色，用來追蹤某一批貨在各機台之間的流動；此模式下狀態改由滑鼠提示（tooltip）顯示。</span><span lang="en"><strong>Batch</strong>: dispatches in the same production batch share a colour, which is how you follow one batch as it moves between machines; in this mode the status is shown in the tooltip instead.</span></div></div>
+
+    <h3><span lang="zh">狀態色表</span><span lang="en">Status colours</span></h3>
+    <p><span lang="zh">一張派工單只會有一個顏色。同時符合多個狀況時，依下表由上而下取第一個符合的（例如已在進行中的派工即使延遲，仍顯示為綠色，延遲另以滑鼠提示標註）。</span><span lang="en">A dispatch only ever carries one colour. When more than one condition applies, the first match from the top of this table wins — a dispatch already in progress stays green even if it is late, and the lateness is called out in the tooltip instead.</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-12pct"><span lang="zh">顏色</span><span lang="en">Colour</span></th><th class="u-width-20pct"><span lang="zh">圖例</span><span lang="en">Legend</span></th><th><span lang="zh">代表意義</span><span lang="en">Meaning</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="gantt-swatch gantt-swatch-inprogress"></span></td><td><span lang="zh">進行中</span><span lang="en">In progress</span></td><td><span lang="zh">派工狀態為「進行中」。準備中、待首件檢驗、暫停不算，那些仍顯示為計畫色</span><span lang="en">The dispatch status is "In progress". Setup, awaiting first-piece inspection and on-hold do not count and still show in the planned colour</span></td></tr>
+        <tr><td><span class="gantt-swatch gantt-swatch-late"></span></td><td><span lang="zh">預測延遲</span><span lang="en">Predicted late</span></td><td><span lang="zh">此派工<strong>所屬生產批</strong>被預測會延遲：該批所有未完工派工的最晚排定結束時間，已晚於生產批的預計完工日。因為是批次層級的判定，該批的每一張派工都會轉紅，不是只有拖到的那一張。判定在每次報工後與每晚 01:00 校準時更新（見下方「計畫時間如何隨進度更新」）</span><span lang="en">The <strong>production batch</strong> this dispatch belongs to is predicted to be late: the latest scheduled finish among the batch's unclosed dispatches falls after the batch's planned completion date. The judgement is made per batch, so every dispatch in that batch turns red, not only the one that overran. It is refreshed after each production report and by the 01:00 nightly calibration (see "How planned times follow progress" below)</span></td></tr>
+        <tr><td><span class="gantt-swatch gantt-swatch-toolconflict"></span></td><td><span lang="zh">模具衝突</span><span lang="en">Tooling conflict</span></td><td><span lang="zh">同一時段同一模具被另一台機台的派工佔用</span><span lang="en">The same tooling is claimed by a dispatch on another machine in the same period</span></td></tr>
+        <tr><td><span class="gantt-swatch gantt-swatch-matrisk"></span></td><td><span lang="zh">待料風險</span><span lang="en">Material risk</span></td><td><span lang="zh">用料尚未備妥，即使已排程仍可能開不了工</span><span lang="en">Material is not staged, so the operation may not be able to start even though it is scheduled</span></td></tr>
+        <tr><td><span class="gantt-swatch gantt-swatch-planned"></span></td><td><span lang="zh">計畫</span><span lang="en">Planned</span></td><td><span lang="zh">已排程且無上述任何狀況——正常</span><span lang="en">Scheduled with none of the conditions above — normal</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">產能列與實際進度列</span><span lang="en">Capacity and actual-progress rows</span></h3>
+    <p><span lang="zh">每台機台除了派工列之外，還會依資料多寡帶出另外兩列。它們刻意用固定顏色，不隨「著色依據」變動。</span><span lang="en">Besides its dispatch row, each machine may show two further rows depending on the data. These keep fixed colours and do not follow the "Colour By" selector.</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-12pct"><span lang="zh">顏色</span><span lang="en">Colour</span></th><th class="u-width-20pct"><span lang="zh">列</span><span lang="en">Row</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="gantt-swatch gantt-swatch-shiftregular"></span></td><td><span lang="zh">正班產能</span><span lang="en">Regular capacity</span></td><td><span lang="zh">工作日曆的正班可用時段。中間的空白即為午休與班距，排程不會排進去</span><span lang="en">Regular working time from the work calendar. The gaps are meal breaks and the space between shifts, into which the scheduler will not place work</span></td></tr>
+        <tr><td><span class="gantt-swatch gantt-swatch-shiftovertime"></span></td><td><span lang="zh">加班產能</span><span lang="en">Overtime capacity</span></td><td><span lang="zh">工作日曆的加班時段，顏色較深以與正班區分，接在當日正班的最後一段之後。<strong>排程引擎會把作業排進加班</strong>：可用時段含加班，所以這一列畫得出來的時間也排得進去。加班時數在〈工作日曆〉逐日維護</span><span lang="en">Overtime from the work calendar, in a darker shade to separate it from regular time, placed directly after the last regular segment of the day. <strong>The scheduling engine does place work into overtime</strong>: available time includes overtime, so anything this row can draw can also be scheduled. Overtime hours are maintained day by day on the Work Calendar screen</span></td></tr>
+        <tr><td><span class="gantt-swatch gantt-swatch-actual"></span></td><td><span lang="zh">實際進度</span><span lang="en">Actual progress</span></td><td><span lang="zh">見下方說明</span><span lang="en">See below</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-warning"></i>
+      <span lang="zh"><strong>「實際進度」列的意思是「此刻正在做」，不是「累計做了多少」。</strong>
+      它只在派工<strong>正在進行中且有一筆尚未收工的生產工時記錄</strong>時才會出現，畫的是該筆記錄的<strong>開工時刻到現在</strong>。
+      因此：收工後這條線就會消失；已完成一部分但目前無人在做的派工不會有這條線。
+      要看累計完成量請改看滑鼠提示中的「完成量／數量」，或〈工單進度報表〉。
+      這條線可能超出計畫條的右端，那正是「已超出預定結束時間卻還在生產」的訊號，屬刻意不截斷。</span>
+      <span lang="en"><strong>The "actual progress" row means "being worked on right now", not "how much has been done in total".</strong>
+      It appears only while a dispatch is <strong>in progress and has a production time record that has not been closed</strong>, and it is drawn from that record's <strong>start time to now</strong>.
+      So the line disappears once the operator clocks off, and a dispatch that is partly done but currently untouched has no line at all.
+      For cumulative quantity, read "completed / quantity" in the tooltip, or the Work Order Progress report.
+      The line may extend past the right-hand end of the planned bar; that is deliberately not clipped, because it is precisely the signal that work is running beyond its scheduled finish.</span>
+    </div>
+
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">機台負荷欄位</span><span lang="en">Machine load fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">機台 / 工作中心</span><span lang="en">Machine / Work center</span></td><td><span lang="zh">負荷統計的對象</span><span lang="en">Subject of the load statistics</span></td></tr>
+        <tr><td><span lang="zh">已排(分)</span><span lang="en">Sched.(min)</span></td><td><span lang="zh">該機台本週已被排入的作業時間合計（含準備時間）。只算落在上班時段內的分鐘：夜間、假日、計劃停機不算；跨週或從前幾週一直生產中的派工只算本週那一段</span><span lang="en">Total time scheduled on the machine this week (setup time included). Only minutes inside working hours count: nights, holidays and planned downtime are excluded, and a dispatch that spans weeks (or has been running since earlier weeks) counts only its part in this week</span></td></tr>
+        <tr><td><span lang="zh">可用(分)</span><span lang="en">Avail.(min)</span></td><td><span lang="zh">依工作日曆的班別時段（正班＋加班，與排程引擎排工時用的是同一份）扣除計畫停機後的可用產能分鐘數</span><span lang="en">Available capacity in minutes from the work calendar shift segments (regular + overtime, the same segments the scheduling engine uses) after planned downtime has been deducted</span></td></tr>
+        <tr><td><span lang="zh">利用率</span><span lang="en">Utilization</span></td><td><span lang="zh">已排 ÷ 可用；超過 100% 代表超載，需調整排程或加班</span><span lang="en">Scheduled ÷ available; over 100% means overload and calls for rescheduling or overtime</span></td></tr>
+        <tr><td><span lang="zh">未排</span><span lang="en">Unscheduled</span></td><td><span lang="zh">尚未指派到機台的作業數</span><span lang="en">Number of operations not yet assigned to a machine</span></td></tr>
+        <tr><td><span lang="zh">延遲</span><span lang="en">Late</span></td><td><span lang="zh">排定結束時間已晚於須完成日的作業數，是交期風險的直接指標</span><span lang="en">Number of operations scheduled to finish after the required completion date, a direct measure of delivery risk</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">排程作業欄位</span><span lang="en">Scheduled operation fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">機台</span><span lang="en">Machine</span></td><td><span lang="zh">作業指派到的機台；未指派者列於「未排」</span><span lang="en">Machine the operation is assigned to; unassigned operations are listed under "Unscheduled"</span></td></tr>
+        <tr><td><span lang="zh">工單 / 作業</span><span lang="en">Work order / Operation</span></td><td><span lang="zh">排程的工單號與工序</span><span lang="en">Work order number and operation being scheduled</span></td></tr>
+        <tr><td><span lang="zh">數量</span><span lang="en">Count</span></td><td><span lang="zh">本次作業的加工數量</span><span lang="en">Quantity processed in this session</span></td></tr>
+        <tr><td><span lang="zh">排定開始 / 排定結束</span><span lang="en">Scheduled start / Scheduled end</span></td><td><span lang="zh">排程計算出的作業起訖時間，依可用產能與前後工序相依關係推算</span><span lang="en">Start and end times of the operation from the scheduler, derived from available capacity and the dependency between operations</span></td></tr>
+        <tr><td><span lang="zh">準備(分)</span><span lang="en">Setup(min)</span></td><td><span lang="zh">本作業的換模／換線時間；同機台連續相同模具可省去重複換模</span><span lang="en">Tooling or line changeover time for this operation; running the same tooling back to back on a machine avoids changing over again</span></td></tr>
+        <tr><td><span lang="zh">模具/治具</span><span lang="en">Tooling / fixture</span></td><td><span lang="zh">本作業需使用的模具；同一時段同一模具被兩張派工佔用即為模具衝突</span><span lang="en">Tooling this operation needs; the same tooling claimed by two dispatches in the same period is a tooling conflict</span></td></tr>
+        <tr><td><span lang="zh">備料狀態</span><span lang="en">Material Status</span></td><td><span lang="zh">已備料／備料中／未備料。未備料的作業即使已排程也存在待料風險</span><span lang="en">Staged / staging / not staged. An operation that is not staged carries a material risk even if it has been scheduled</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-box-arrow-up-right me-1 text-primary"></i><span lang="zh"><strong>轉為委外（臨時外包一道工序）：</strong>待排或已排的派工可在派工面板按「轉為委外」，機台時段釋放、改由委外廠加工。之後到「委外採購單」的轉委外清單轉單、確認；廠商交回時用委外收貨（手機委外收料亦可）：收回的是在製品，<b>不入庫</b>，直接回寫這道派工的完工量，該工序的投料同時自動扣，加工費計入工單成本。</span><span lang="en"><strong>Convert to Outsource (subcontracting one operation as a one-off):</strong> a pending or scheduled dispatch can be converted with "Convert to Outsource" in the dispatch panel; its machine slot is released and a subcontractor does the work. Then convert it from the outsource suggestion list on "Outsource purchase order" and confirm the PO; when the supplier returns the goods, use Outsource receipt (or mobile Outsource Receiving): what comes back is work in progress and is <b>not stocked</b>; it is added straight to this dispatch's completed quantity, the operation's input materials are deducted at the same time, and the processing fee is charged to the work order's cost.</span></div>
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="schedule-query.html"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>、<a href="preparation-board.html"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>、<a href="dispatch.html"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a></p>
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">機台負荷視圖會顯示每機台等候佇列（已排未開工派工＋預估等候時間），可搭配「工作中心稼動率」判斷瓶頸。</span><span lang="en">The machine load view shows the queue on each machine (dispatches scheduled but not started, plus the estimated wait), which together with "Work Center Utilisation" identifies the bottleneck.</span>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,110 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.MFG.ViewModels.ScheduleQueryRowVm
+
+@{
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+    (string css, string key) StatusBadge(DispatchStatus s) => s switch
+    {
+        DispatchStatus.Pending         => ("bg-secondary",           "StatusPending"),
+        DispatchStatus.Scheduled       => ("bg-primary",             "StatusScheduled"),
+        DispatchStatus.SetupInProgress => ("bg-warning text-dark",   "StatusSetupInProgress"),
+        DispatchStatus.ReadyToStart    => ("bg-info text-dark",      "StatusReadyToStart"),
+        DispatchStatus.InProgress      => ("bg-success",             "StatusInProgress"),
+        DispatchStatus.Closed          => ("bg-dark",                "StatusClosed"),
+        DispatchStatus.OnHold          => ("bg-danger",              "StatusOnHold"),
+        DispatchStatus.Cancelled       => ("bg-light text-muted border", "StatusCancelled"),
+        _                              => ("bg-warning text-dark",   "StatusPendingFPI")
+    };
+    var (badgeCss, badgeKey) = StatusBadge(Model.Status);
+    decimal pct = Model.Quantity > 0 ? Math.Round(Model.QtyDone / Model.Quantity * 100, 1) : 0;
+}
+
+<div class="p-3">
+    @* 狀態標頭 *@
+    <div class="d-flex justify-content-between align-items-start mb-3">
+        <div>
+            <div class="fw-bold fs-6">@Model.DispatchId</div>
+            <div class="text-muted small">@Localizer["DispatchId"]</div>
+        </div>
+        <span class="badge @badgeCss fs-6">@Localizer[badgeKey]</span>
+    </div>
+
+    @* 警示旗標 *@
+    @if (Model.IsPredictedLate || Model.MaterialRisk)
+    {
+        <div class="d-flex flex-wrap gap-1 mb-3">
+            @if (Model.IsPredictedLate) { <span class="badge bg-danger"><i class="bi bi-clock-history me-1"></i>@Localizer["FlagLate"]</span> }
+            @if (Model.MaterialRisk)    { <span class="badge bg-warning text-dark"><i class="bi bi-exclamation-triangle me-1"></i>@Localizer["FlagMatRisk"]</span> }
+        </div>
+    }
+
+    <table class="table table-sm table-borderless">
+        <tbody>
+            <tr>
+                <th class="text-muted fw-normal u-width-38pct">@Localizer["WorkOrderId"]</th>
+                <td class="fw-semibold">@Model.WorkOrderId</td>
+            </tr>
+            <tr>
+                <th class="text-muted fw-normal">@Localizer["BatchId"]</th>
+                <td>@Model.ProductionBatchId</td>
+            </tr>
+            @if (!string.IsNullOrEmpty(Model.SalesOrderId))
+            {
+                <tr>
+                    <th class="text-muted fw-normal">@Localizer["SalesOrderId"]</th>
+                    <td>@Model.SalesOrderId</td>
+                </tr>
+            }
+            <tr>
+                <th class="text-muted fw-normal">@Localizer["ProductCode"]</th>
+                <td>@Model.ProductCode</td>
+            </tr>
+            <tr>
+                <th class="text-muted fw-normal">@Localizer["Operation"]</th>
+                <td>@Model.OperationSeq — @Model.OperationName</td>
+            </tr>
+            <tr>
+                <th class="text-muted fw-normal">@Localizer["WorkCenter"]</th>
+                <td>@Model.WorkCenterId</td>
+            </tr>
+            <tr>
+                <th class="text-muted fw-normal">@Localizer["MachineCode"]</th>
+                <td>@(Model.MachineCode ?? "—")</td>
+            </tr>
+            @if (!string.IsNullOrEmpty(Model.ToolingCode))
+            {
+                <tr>
+                    <th class="text-muted fw-normal">@Localizer["ToolingCode"]</th>
+                    <td><span class="badge bg-secondary"><i class="bi bi-tools me-1"></i>@Model.ToolingCode</span></td>
+                </tr>
+            }
+            <tr>
+                <th class="text-muted fw-normal">@Localizer["ScheduledStart"]</th>
+                @* 排程時刻不換算：數字本身就是廠別當地時間，Kind=Utc 只是貼給 Npgsql 的標籤（mfg-domain.md §UTC 地雷）。*@
+                <td>@(Model.ScheduledStart.HasValue ? Model.ScheduledStart.Value.ToString("yyyy/MM/dd HH:mm") : "—")</td>
+            </tr>
+            <tr>
+                <th class="text-muted fw-normal">@Localizer["ScheduledEnd"]</th>
+                <td>@(Model.ScheduledEnd.HasValue ? Model.ScheduledEnd.Value.ToString("yyyy/MM/dd HH:mm") : "—")</td>
+            </tr>
+            <tr>
+                <th class="text-muted fw-normal">@Localizer["Qty"]</th>
+                <td>@Model.Quantity.ToString(QtyFmt(Model.UomCode))</td>
+            </tr>
+            <tr>
+                <th class="text-muted fw-normal">@Localizer["QtyDone"]</th>
+                <td>@Model.QtyDone.ToString(QtyFmt(Model.UomCode)) <span class="text-muted small">(@pct%)</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    @* 進度條 *@
+    <div class="progress u-height-6px">
+        <div class="progress-bar bg-success" data-pct-width="@pct"></div>
+    </div>
+</div>

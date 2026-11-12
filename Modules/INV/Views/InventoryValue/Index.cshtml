@@ -1,0 +1,185 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@using SmartFactory.MES.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@model List<SmartFactory.MES.Modules.INV.ViewModels.InventoryValueRowVm>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    var moneyFmt      = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = L["PageTitle"].Value;
+    bool searched     = ViewBag.Searched == true;
+    bool canPrint     = ViewBag.CanPrint == true;
+    bool showDetail   = ViewBag.ShowDetail == true;
+    var rows          = Model ?? new();
+    decimal grand     = rows.Sum(r => r.TotalValue);
+    var categories    = ViewBag.Categories as List<string> ?? new();
+    var catRows       = ViewBag.CategoryRows
+        as List<SmartFactory.MES.Modules.INV.ViewModels.InventoryValueCategoryVm> ?? new();
+    // 明細模式的分類小計：取自完整結果集，不是當頁。當頁被切一半時標題仍顯示該分類的真實金額。
+    var catTotals     = catRows.ToDictionary(c => c.CategoryCode ?? "", c => c);
+    var curCategory   = ViewBag.CategoryCode as string ?? "";
+}
+
+<div class="container-fluid py-3">
+    <h4 class="mb-3">@L["PageTitle"]</h4>
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">@L["CategoryCode"]</label>
+                <select name="categoryCode" class="form-select">
+                    <option value="">@L["AllCategories"]</option>
+                    @foreach (var c in categories)
+                    {
+                        <option value="@c" selected="@(curCategory == c)">@c</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" id="showDetail"
+                           name="showDetail" value="true" checked="@showDetail">
+                    <label class="form-check-label" for="showDetail">@L["ShowDetail"]</label>
+                    <div class="form-text">@L["ShowDetailHint"]</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" name="searched" value="true" class="btn btn-primary w-100 px-4">
+                    <i class="bi bi-search"></i> @L["Search"]
+                </button>
+            </div>
+        </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @if (!searched)
+    {
+        <div class="alert alert-info">@L["SearchFirst"]</div>
+    }
+    else if (!rows.Any())
+    {
+        <div class="alert alert-warning">@L["NoData"]</div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <strong>@L["ResultTitle"]</strong>
+                <span class="text-muted ms-1">
+                    @(showDetail ? rows.Count : catRows.Count)
+                    @(showDetail ? L["Items"].Value : L["Categories"].Value)
+                </span>
+                <span class="ms-3 text-muted">@L["GrandTotal"]：<strong>@grand.ToString(moneyFmt)</strong></span>
+            </div>
+            @if (canPrint)
+            {
+                <a asp-action="Export" asp-route-categoryCode="@curCategory"
+                   asp-route-showDetail="@showDetail"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @L["ExportExcel"]
+                </a>
+            }
+        </div>
+
+        @if (!showDetail)
+        {
+            @* 彙總模式：一列一個分類，分頁切的就是分類。 *@
+            var pagedCats = ReportPaging.Page(catRows, ViewData, Context);
+            <div class="table-responsive">
+                <table class="table table-sm table-hover table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@L["CategoryCode"]</th>
+                            <th class="text-end">@L["ItemCount"]</th>
+                            <th class="text-end">@L["TotalValue"]</th>
+                            <th class="text-end">@L["ValuePct"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var c in pagedCats)
+                        {
+                            <tr>
+                                <td>@(string.IsNullOrEmpty(c.CategoryCode) ? L["Uncategorized"].Value : c.CategoryCode)</td>
+                                <td class="text-end">@c.ItemCount</td>
+                                <td class="text-end">@c.TotalValue.ToString(moneyFmt)</td>
+                                <td class="text-end">@c.ValuePct%</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-secondary fw-bold">
+                        <tr>
+                            <td>@L["GrandTotal"]</td>
+                            <td class="text-end">@rows.Count</td>
+                            <td class="text-end">@grand.ToString(moneyFmt)</td>
+                            <td class="text-end">100%</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            @await Html.PartialAsync("_Pagination", pagedCats)
+        }
+        else
+        {
+            @* 明細模式：一列一個品號，分頁切的是明細列。分類標題在當頁內容換分類時重印，
+               標題上的小計是該分類的**全部**金額，不是當頁那幾列的和。 *@
+            var pagedRows = ReportPaging.Page(rows, ViewData, Context);
+            string? lastCat = null;
+            <div class="table-responsive">
+                <table class="table table-sm table-hover table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@L["CategoryCode"]</th>
+                            <th>@L["ProductCode"]</th>
+                            <th>@L["ProductName"]</th>
+                            <th class="text-end">@L["QtyOnHand"]</th>
+                            <th>@L["StockUom"]</th>
+                            <th class="text-end">@L["UnitCost"]</th>
+                            <th class="text-end">@L["TotalValue"]</th>
+                            <th class="text-end">@L["ValuePct"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in pagedRows)
+                        {
+                            var key = r.CategoryCode ?? "";
+                            if (lastCat != key)
+                            {
+                                lastCat = key;
+                                catTotals.TryGetValue(key, out var ct);
+                                <tr class="table-light">
+                                    <td colspan="8">
+                                        <strong>@(string.IsNullOrEmpty(key) ? L["Uncategorized"].Value : key)</strong>
+                                        @if (ct != null)
+                                        {
+                                            <span class="text-muted ms-2">
+                                                @L["CategorySubtotal"]：@ct.TotalValue.ToString(moneyFmt)
+                                                (@ct.ValuePct% / @ct.ItemCount @L["Items"])
+                                            </span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td>@r.CategoryCode</td>
+                                <td>@r.ProductCode</td>
+                                <td>@r.ProductName</td>
+                                <td class="text-end">@r.QtyOnHand.ToString("N2")</td>
+                                <td>@r.StockUom</td>
+                                <td class="text-end">@r.UnitCost.ToString(moneyFmt)</td>
+                                <td class="text-end">@r.TotalValue.ToString(moneyFmt)</td>
+                                <td class="text-end">@r.ValuePct%</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-secondary fw-bold">
+                        <tr>
+                            <td colspan="6">@L["GrandTotal"]</td>
+                            <td class="text-end">@grand.ToString(moneyFmt)</td>
+                            <td class="text-end">100%</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            @await Html.PartialAsync("_Pagination", pagedRows)
+        }
+    }
+</div>

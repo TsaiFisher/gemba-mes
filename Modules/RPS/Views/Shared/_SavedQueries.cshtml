@@ -1,0 +1,123 @@
+@using System.Text.Json
+@using SmartFactory.MES.Modules.RPS.Contracts
+@using SmartFactory.MES.Modules.RPS.Services
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model string
+
+@*
+    常用查詢（§7.9 L2）的共用入口。報表畫面只需一行：
+
+        @await Html.PartialAsync("_SavedQueries", "SalesRanking")
+
+    ——參數是該報表的 ToolKey。其餘（吃不吃日期區間、可存哪些查詢欄位）
+    一律由 ReportScreenBindings 決定，報表 Controller 完全不必改。
+
+    ⚠️ 本 partial 不含 <form>：它會被放在報表查詢表單的**外面**，
+    巢狀 form 在 HTML 是無效的，瀏覽器會直接把內層拆掉，送出的欄位會少一半。
+    存檔時要送的查詢條件由 saved-queries.js 從頁面上的 GET 表單讀取。
+
+    ⚠️ 所有顯示文字都以 data-* 傳給 JS（見下方 data-msgs）：
+    saved-queries.js 內不得出現任何中文字面（Cx7）。
+*@
+
+@{
+    var toolKey = Model;
+}
+
+@if (ReportScreenBindings.Find(toolKey) is { } binding)
+{
+    // 財報畫面吃會計期間，只提供會計期間類的選項：日曆類的「上月」也跑得動
+    // （把那段日期對應回落在的期間），但在自訂期間起訖的廠別，那不是使用者
+    // 以為的「上一個會計期間」。選項裡沒有，就不會有人誤選。
+    var fiscalOnly = binding.PeriodStyle == ReportPeriodStyle.FiscalRange
+                  || binding.PeriodStyle == ReportPeriodStyle.FiscalAsOf;
+    // 年度型畫面（採購金額分析）同理：存「上月」跑得動但會靜靜變成一整年。
+    var yearOnly = binding.PeriodStyle == ReportPeriodStyle.Year;
+    RelativePeriod[] periods = fiscalOnly
+        ? new[] { RelativePeriod.ThisFiscalPeriod, RelativePeriod.LastFiscalPeriod }
+        : yearOnly
+        ? new[] { RelativePeriod.ThisYear, RelativePeriod.LastYear }
+        : Enum.GetValues<RelativePeriod>();
+    var msgs = JsonSerializer.Serialize(new Dictionary<string, string>
+    {
+        ["empty"]                    = L["SavedQuery_Empty"].Value,
+        ["loadFailed"]               = L["SavedQuery_LoadFailed"].Value,
+        ["saved"]                    = L["SavedQuery_Saved"].Value,
+        ["deleteConfirm"]            = L["SavedQuery_DeleteConfirm"].Value,
+        ["noPermission"]             = L["SavedQuery_NoPermissionBadge"].Value,
+        ["invalid"]                  = L["SavedQuery_InvalidBadge"].Value,
+        ["delete"]                   = L["Delete"].Value,
+        ["SavedQuery_NameRequired"]  = L["SavedQuery_NameRequired"].Value,
+        ["SavedQuery_NameTooLong"]   = L["SavedQuery_NameTooLong"].Value,
+        ["SavedQuery_PeriodRequired"]= L["SavedQuery_PeriodRequired"].Value,
+        ["SavedQuery_Forbidden"]     = L["SavedQuery_Forbidden"].Value,
+        ["SavedQuery_UnknownTool"]   = L["SavedQuery_UnknownTool"].Value,
+        ["SavedQuery_Invalid"]       = L["SavedQuery_Invalid"].Value,
+        ["SavedQuery_NoUser"]        = L["SavedQuery_LoadFailed"].Value,
+        ["SavedQuery_NoFiscalPeriod"]= L["SavedQuery_NoFiscalPeriod"].Value,
+    });
+
+    <div class="rps-saved-queries d-flex flex-wrap gap-2 align-items-center mb-3"
+         data-tool-key="@toolKey"
+         data-uses-daterange="@(binding.UsesDateRange ? "true" : "false")"
+         data-filter-keys="@string.Join(",", binding.FilterKeys)"
+         data-list-url="/SavedQuery/List"
+         data-save-url="/SavedQuery/Save"
+         data-delete-url="/SavedQuery/Delete"
+         data-run-url="/SavedQuery/Run"
+         data-msgs="@msgs">
+
+        @Html.AntiForgeryToken()
+
+        <div class="dropdown">
+            <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                    data-bs-toggle="dropdown" data-action="rpsLoadSavedQueries" aria-expanded="false">
+                <i class="bi bi-bookmark-star me-1"></i>@L["SavedQuery_MyQueries"]
+            </button>
+            <ul class="dropdown-menu rps-sq-list u-min-width-18rem">
+                <li><span class="dropdown-item-text text-muted small">@L["SavedQuery_Loading"]</span></li>
+            </ul>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary btn-sm" data-action="rpsToggleSaveForm">
+            <i class="bi bi-bookmark-plus me-1"></i>@L["SavedQuery_SaveThis"]
+        </button>
+
+        <div class="rps-sq-form d-none w-100">
+            <div class="card card-body bg-light py-2">
+                <div class="row g-2 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-semibold mb-1">@L["SavedQuery_Name"]</label>
+                        <input type="text" class="form-control form-control-sm rps-sq-name"
+                               maxlength="100" placeholder="@L["SavedQuery_NamePlaceholder"]" />
+                    </div>
+                    @if (binding.UsesDateRange)
+                    {
+                        <div class="col-md-4">
+                            @* §7.9-1：有日期區間的報表一律存相對期間，不存畫面上那組絕對日期。 *@
+                            <label class="form-label small fw-semibold mb-1">@L["SavedQuery_Period"]</label>
+                            <select class="form-select form-select-sm rps-sq-period">
+                                @foreach (var p in periods)
+                                {
+                                    <option value="@p">@L["RelativePeriod_" + p]</option>
+                                }
+                            </select>
+                            <div class="form-text small">@L["SavedQuery_PeriodHint"]</div>
+                        </div>
+                    }
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-primary btn-sm" data-action="rpsSubmitSaveQuery">
+                            <i class="bi bi-check-lg me-1"></i>@L["Save"]
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-action="rpsToggleSaveForm">
+                            @L["Cancel"]
+                        </button>
+                    </div>
+                </div>
+                <div class="rps-sq-msg small mt-1"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/saved-queries.js" asp-append-version="true"></script>
+}

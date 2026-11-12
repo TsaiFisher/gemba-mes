@@ -1,0 +1,126 @@
+{
+  "sourcePath": "Modules/ACT/Services/IDataAuditService.cs",
+  "sourceHash": "c105373d6e67b4cc39aaa574221405f707ae19f7f7ede0ddc75a928216ce99ce",
+  "entries": [
+    {
+      "slug": "code-act-idataauditservice-2459ecea",
+      "lang": "zh",
+      "headingPath": "帳務 › 錯誤描述，**正體中文固定值**",
+      "text": "錯誤描述的呈現方式說明｜此處的錯誤描述會使用預設的中性資源組來生成內容，因此修改文字時需要透過修改資源檔，而不是直接手動撰寫句子。這樣做是為了確保與關帳失敗訊息、日誌以及舊資料能夠保持一致性。",
+      "approved": false,
+      "sourceSectionHash": "38f7d974fdc20f275d1c4ff8710e5b70ff73f760bcf22f23675533634e7c83dd"
+    },
+    {
+      "slug": "code-act-idataauditservice-990cd58b",
+      "lang": "zh",
+      "headingPath": "帳務 › 逐筆覆寫嚴重度",
+      "text": "嚴重度可逐筆覆寫｜異常的嚴重程度預設依類型的對照規則判定；需要時可以逐筆覆寫。目前唯一用到覆寫的情形是早於該廠最早會計期間的出貨單：那些單據仍然列在稽核報表上讓人看得到，但不會用它擋住一個它本來就管不到的期間。",
+      "approved": true,
+      "sourceSectionHash": "f7952c01b447dd088bddd649d0b27d3579a5fb26cfff5da5e6a9a727f21cbeeb"
+    },
+    {
+      "slug": "code-act-idataauditservice-e57e4350",
+      "lang": "zh",
+      "headingPath": "帳務 › 分界線是「錯的是本系統的帳，還是對外介面的狀態」",
+      "text": "稽核嚴重度決定關帳是否受阻｜本系統的帳務錯誤必須修正才能結帳，但對外介面的狀態差異不影響本系統的帳務完整性，因此不會阻止結帳作業。",
+      "approved": true,
+      "sourceSectionHash": "319d6578627958afe5d055a771a37bf4c17a1351e5d3b103808203a76ee587fc"
+    },
+    {
+      "slug": "code-act-idataauditservice-1d881cf5",
+      "lang": "zh",
+      "headingPath": "帳務 › 只看擋關帳的那些——提示類異常照樣列在  裡給人看，",
+      "text": "判斷是否可結帳的依據｜系統會將所有異常提示都列出給使用者看，但是這些提示本身無法決定能否完成關帳作業。",
+      "approved": true,
+      "sourceSectionHash": "6880bc78aa45d888743e14f7fd454ccd0bccd26bac20973e9eb5a44c11647f3a"
+    },
+    {
+      "slug": "code-act-idataauditservice-13512886",
+      "lang": "zh",
+      "headingPath": "帳務 › 擋關帳的異常",
+      "text": "關帳異常的錯誤訊息範圍限制｜系統在無法完成關帳時，僅應回報特定類型的失敗訊息，以確保顯示的錯誤數量與後續計算的「還需要修復筆數」能夠保持一致。",
+      "approved": true,
+      "sourceSectionHash": "b0019e4918fab6ad62333320194f3cf30363f1569c4beb4cda3b90a5213241b2"
+    },
+    {
+      "slug": "code-act-idataauditservice-3b6afc1b",
+      "lang": "zh",
+      "headingPath": "帳務 › 業務資料流一致性稽核服務",
+      "text": "資料查詢的廠別範圍限制說明｜所有查詢都會忽略預設的篩選條件，並以明確指定的廠別進行過濾；若未指定廠別，則會稽核全部廠別。",
+      "approved": true,
+      "sourceSectionHash": "464e5b2dc01926c0515720fe1a979e347107b72645066db4a6ce22d15fb1ca8b"
+    },
+    {
+      "slug": "code-act-idataauditservice-6b6c0d27",
+      "lang": "zh",
+      "headingPath": "帳務 › 月結前稽核：執行全部檢核，任何異常即不通過",
+      "text": "關帳前必須指定廠別進行檢核｜系統在執行關帳前的稽核時，需要知道是哪個廠區的資料，因此每次執行此功能都必須提供一個特定的廠區代碼。這樣做可以確保不同廠區的異常狀況不會互相影響，避免一個廠區的問題導致其他廠區無法順利完成關帳作業。",
+      "approved": true,
+      "sourceSectionHash": "434137393c034053eef1e2e1506f1e4261877c71e8ddf6df7aab46cf40d09dea"
+    },
+    {
+      "slug": "code-act-idataauditservice-d87bd46b",
+      "lang": "zh",
+      "headingPath": "帳務 › 之後出庫會扣到不存在的層",
+      "text": "成本層總量必須等於在手數量｜出庫時，系統會根據先進先出（FIFO）的原則從成本層扣減數量。如果成本層記錄的總量少於實際的在手數量，後續的出庫操作將無法完成；反之，如果成本層記錄的總量多於在手數量，多餘的成本將會留在帳上，且未來出庫時可能會使用過期的單價。",
+      "approved": true,
+      "sourceSectionHash": "81e75c1b1347337b8e9168a97004b2e18f943a95f533fe62b0e9d9f7ab4f9ed1"
+    },
+    {
+      "slug": "code-act-idataauditservice-7910cd0b",
+      "lang": "zh",
+      "headingPath": "帳務 › 客供異動落在不屬客供倉的儲位：移動平均的成本池是「全廠×品號」，",
+      "text": "客供料必須存放在客供倉｜客戶提供的物料，其進貨與退回必須落在客供倉型別的儲位。放到一般倉會讓客供數量進到移動平均的分母，自有料單價被壓低，並擴散到之後每一張出貨的銷貨成本；分批號沒有用，成本池是以廠別加品號為鍵的。發現放錯時的處置是把該批庫存調撥到客供倉。",
+      "approved": true,
+      "sourceSectionHash": "7e69bc353966579d1e667f6e85edcc77178237147ea5f362604feed73887ba2c"
+    },
+    {
+      "slug": "code-act-idataauditservice-e200f39c",
+      "lang": "zh",
+      "headingPath": "帳務 › 快照不指向非在製工單、分量不得為負",
+      "text": "快照資料的生成規則說明｜在進行期末結帳審核時，系統會檢查工單的完工成本是否已完成計算，並且要求所有在製的工單都必須有本期的快照紀錄。此外，快照不能指向非在製狀態的工單，且記錄的分量數值不得為負數。",
+      "approved": true,
+      "sourceSectionHash": "98ff50d0f437b00f34f769258f1c607ace41a940563cb6f2b4eee817504f28ee"
+    },
+    {
+      "slug": "code-act-idataauditservice-d0abe756",
+      "lang": "zh",
+      "headingPath": "帳務 › §3.11 逐工單成本回溯：",
+      "text": "成本回溯的計算基礎與來源｜材料成本是根據實際發生的物料消耗，減去庫存異動子帳淨成本後沖入工單的生產移動來計算；人工和製費成本則是將勞務和間接費用，扣除已歸集的完工吸收分錄以及期末重估調整後的逐工單拆行總額作為基礎。",
+      "approved": true,
+      "sourceSectionHash": "f0cf8d648b58c12472c414c3af94bd89756ba87f240308d7dae529a696009332"
+    },
+    {
+      "slug": "code-act-idataauditservice-76a4d0b9",
+      "lang": "zh",
+      "headingPath": "帳務 › 為什麼需要：報工完全不看領料，報滿即自動結案、工單自動完工",
+      "text": "工單完工時必須有材料領用紀錄｜當工單完成結案時，系統會判斷如果該工單的材料領用數量為零，但原先需要使用材料的情況下，這代表可能漏掉了發料這個動作。",
+      "approved": true,
+      "sourceSectionHash": "0b35f2d7e0ad4b68a22e1015082bb718107107f87fc290230dcc08c8f2452aa7"
+    },
+    {
+      "slug": "code-act-idataauditservice-9c1f7e0e",
+      "lang": "zh",
+      "headingPath": "帳務 › §3.13 銷退入庫計價偏離",
+      "text": "銷退入庫成本計算的差異說明｜此功能是用來檢核已完成的銷貨退回入庫單據，因為這些單據上沒有直接記錄單位成本，系統需要從其他地方找出成本。如果計算出成本有偏離，這代表過去的帳務處理可能導致存貨科目和庫存明細帳都錯誤地使用了售價來計價，進而影響了後續所有出貨的成本計算，雖然單獨看借貸平衡或數量上看起來沒問題，但實際的成本基礎是錯的。",
+      "approved": true,
+      "sourceSectionHash": "73239141911d6461d17351a354af7e45e8988d12d01b5958e4f849e4039b123e"
+    },
+    {
+      "slug": "code-act-idataauditservice-f593e249",
+      "lang": "zh",
+      "headingPath": "帳務 › 退貨已過帳，但來源發票的應收／應付**沒有被回沖**",
+      "text": "退貨未回沖時的帳務檢查規則｜當發生了退貨過帳，但來源發票的應收或應付金額沒有被回沖的情況時，系統會進行檢查。此檢查是為了追蹤實際情況：雖然貨物已經退回，但相關款項在帳上仍未結清，導致公司實際上欠客戶（或廠商欠公司）一筆錢。",
+      "approved": true,
+      "sourceSectionHash": "ae370fafbf9cf6450d577dbfb600b597ebdd736ff9537b605b99b7d713fee79b"
+    },
+    {
+      "slug": "code-act-idataauditservice-7526c149",
+      "lang": "zh",
+      "headingPath": "帳務 › 孤兒過帳：過帳資料所指向的來源單據已不存在",
+      "text": "來源單據不存在時的過帳規則｜當系統要處理那些原始憑證已經被刪除，但仍有相關庫存異動或傳票記錄的情況時，系統會依賴各個流程控制點來進行檢查。如果這些檢查環節有疏漏，可能會導致留下無法追溯的錯誤資料，因此此處的邏輯是作為最後一道防線來處理這種情況。",
+      "approved": true,
+      "sourceSectionHash": "5aa842ffc3cff1908607a0c9766728bdae0ff4e641e9faf1a36a685f51084448"
+    }
+  ]
+}

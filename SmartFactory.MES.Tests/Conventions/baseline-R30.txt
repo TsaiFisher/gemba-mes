@@ -1,0 +1,12 @@
+# R30 baseline — 既有違規清單。
+# 規則：查詢 StorageLocations 必須表態廠別範圍（ForCurrentPlant／IgnoreQueryFilters／
+# Join Warehouses／WhCode == 四選一）。
+#
+# 以下兩處是**刻意保留**的跨廠查詢，不是待修項：
+# ProductCategory 是全域主檔（沒有實作 IPlantEntity），它的「預設儲位」在設定時
+# 本來就必須能指到任何一個廠的儲位；該值是否對當前廠可用，由
+# PlantDefaultLocationResolver 在**使用時**逐廠驗證（驗不過就退回未設定），
+# 而不是在設定時就把選項砍掉。若在此處收斂到本廠，多廠部署下就再也無法替別廠
+# 的產品類別設定預設儲位。
+Modules/BAS/Controllers/ProductCategoryController.cs:49: 查 StorageLocations 未表態廠別範圍
+Modules/BAS/Controllers/ProductCategoryController.cs:265: 查 StorageLocations 未表態廠別範圍

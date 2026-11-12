@@ -1,0 +1,46 @@
+{
+  "sourcePath": "Services/LocalizedValidationExtensions.cs",
+  "sourceHash": "cac46e724620f235cabbdd73aa8b97dfdfd5e8b101fdcc86c6b62fa63b2652a0",
+  "entries": [
+    {
+      "slug": "code-core-localizedvalidationextensions-bb8ca7c0",
+      "lang": "zh",
+      "headingPath": "系統共用 › 驗證訊息在地化的「根」設定",
+      "text": "系統共用驗證訊息的來源設定｜當資料驗證規則沒有明確指定錯誤訊息時，系統會使用預設的訊息字串作為查找鍵，並將其回填為預設訊息。此外，屬性名稱也會透過共享資源解析成在地化的顯示名稱，確保使用者在不同語言環境下都能看到正確的中文驗證訊息。",
+      "approved": true,
+      "sourceSectionHash": "62fa195d8fe87292f72593ecd85f122f793ea26cdbdddbee309c989ddb27ab40"
+    },
+    {
+      "slug": "code-core-localizedvalidationextensions-27af036c",
+      "lang": "zh",
+      "headingPath": "系統共用 › 前者因去重機制",
+      "text": "前者因去重機制｜在處理多種語言的設定時，如果沒有特別指定，系統預設會使用英文顯示。",
+      "approved": true,
+      "sourceSectionHash": "7b769cc7e248caee12a8bd4a3ac6714479e8955e9c8ea105cff98fe8eb5cbcf0"
+    },
+    {
+      "slug": "code-core-localizedvalidationextensions-71bb4f81",
+      "lang": "zh",
+      "headingPath": "系統共用 › 部署專案登記自己的補充資源型別",
+      "text": "資源型別優先級與查找順序｜系統會先檢查核心的共用資源型別，如果找不到，才會依據專案登記的順序往後尋找其他補充資源型別。",
+      "approved": true,
+      "sourceSectionHash": "da2684b1b06a6fa3d03ae507686e1e3db0cb4219a00ab75e7988dd8845aff922"
+    },
+    {
+      "slug": "code-core-localizedvalidationextensions-541ce93d",
+      "lang": "zh",
+      "headingPath": "系統共用 › 全部查無則回傳",
+      "text": "查找資源時的優先順序規則｜系統會依序檢查多個地方尋找資料，只要在第一個找到符合條件的結果就會使用該結果；如果所有地方都找不到相關資料，則會回傳一個特定的「找不到」的標記。",
+      "approved": true,
+      "sourceSectionHash": "51c73c59a29be846e09265439f8a8f064c4aef493ab34e90b08b0dc6c5962991"
+    },
+    {
+      "slug": "code-core-localizedvalidationextensions-817876d7",
+      "lang": "zh",
+      "headingPath": "系統共用 › 訊息的 {0} 隨語系顯示在地化欄位名",
+      "text": "訊息顯示的欄位名稱處理規則｜當系統無法為某個資料屬性找到對應的語言化名稱時，會使用該屬性的原始名稱來顯示。這樣做確保了即使找不到特定的翻譯名稱，使用者仍然能看到一個可識別的欄位名稱。",
+      "approved": true,
+      "sourceSectionHash": "2df93b4ddd04fe26a5b45345b7628f971103725b2e6cfe5a3d3ce3192eb36db3"
+    }
+  ]
+}

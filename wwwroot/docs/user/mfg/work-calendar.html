@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Work Calendar — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>工作日曆 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link active"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-calendar-event me-2 text-primary"></i><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/WorkCalendar &nbsp;|&nbsp; 廠別工作日/非工作日與可用工時維護</span><span lang="en">Route: /WorkCalendar &nbsp;|&nbsp; Maintenance of working and non-working days and available hours per plant</span></div>
+    </div>
+
+    <p><span lang="zh">工作日曆決定 MRP 排程與產能計算可用的工作日與每日可用工時（結合班別群組），也是 OEE「計畫稼動時間」的資料來源。特殊假日、補班日請於 BAS「特殊日」維護後在此檢視結果。</span><span lang="en">The work calendar decides which days are working days and how many hours are available each day (together with the shift group) for MRP scheduling and capacity calculation, and it is also the source of the "planned run time" used in OEE. Maintain special holidays and make-up working days under "Special Days" in BAS, then review the result here.</span></p>
+    <img class="screen-shot" src="img/work-calendar.png" data-src-en="img/en/work-calendar.png" alt="工作日曆畫面截圖" data-alt-en="Work calendar screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">工作日曆畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Work calendar screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">可切換月份檢視各日班別與可用分鐘數。</span><span lang="en">Switch month to see the shift and available minutes for each day.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">開始日期 / 結束日期</span><span lang="en">Start date / End date</span></td><td><span lang="zh">要檢視或維護的日曆區間</span><span lang="en">Calendar range to view or maintain</span></td></tr>
+        <tr><td><span lang="zh">工作中心</span><span lang="en">Work Center</span></td><td><span lang="zh">只看單一工作中心的日曆；留空為全部</span><span lang="en">The calendar of one work center only; leave blank for all</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">日曆欄位</span><span lang="en">Calendar fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">日期</span><span lang="en">Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">此筆日曆設定所屬的日期</span><span lang="en">Date this calendar entry applies to</span></td></tr>
+        <tr><td><span lang="zh">班制</span><span lang="en">Shift pattern</span></td><td><span lang="zh">展開此日曆的來源班別群組；由班別群組批次展開時自動帶入</span><span lang="en">Shift group the calendar was generated from; filled in automatically when a shift group is expanded in bulk</span></td></tr>
+        <tr><td><span lang="zh">工作中心</span><span lang="en">Work Center</span></td><td><span lang="zh">設定適用的工作中心；留空表示廠級通用設定</span><span lang="en">Work center the setting applies to; leave blank for a plant-wide setting</span></td></tr>
+        <tr><td><span lang="zh">機台代碼</span><span lang="en">Machine</span></td><td><span lang="zh">設定適用的特定機台。廠別／工作中心／機台三層由細至粗 fallback，最細者優先</span><span lang="en">The specific machine the setting applies to. Plant, work center and machine form three levels from fine to coarse, and the most specific one wins</span></td></tr>
+        <tr><td><span lang="zh">開班 / 收班</span><span lang="en">Shift start / Shift end</span></td><td><span lang="zh">正班的起訖時刻。留空表示全天 24 小時；收班時刻小於開班時刻代表跨午夜班</span><span lang="en">Start and end time of the regular shift. Leave blank for a full 24 hours; an end time earlier than the start time means the shift runs past midnight</span></td></tr>
+        <tr><td><span lang="zh">正班工時</span><span lang="en">Regular hours</span></td><td><span lang="zh">該日可用的正常班別工時（小時）。排程可用產能與 OEE 的計畫時間都以正班＋加班為分母</span><span lang="en">Regular shift hours available that day. Scheduling capacity and the planned time in OEE both use regular plus overtime as their denominator</span></td></tr>
+        <tr><td><span lang="zh">加班工時</span><span lang="en">Overtime hours</span></td><td><span lang="zh">該日額外可動用的加班工時（小時）。<strong>排程會把作業排進加班</strong>，加班時段接在當日正班的最後一段之後，甘特圖上以較深的顏色畫出。<strong>當日沒有正班班別時（假日、週末）不會產生加班時段</strong>，即使此欄有值也一樣——沒有正班可接的加班沒有起點</span><span lang="en">Extra overtime hours available that day. <strong>The scheduler does place work into overtime</strong>; the overtime block follows the last regular segment of the day and is drawn in a darker shade on the Gantt chart. <strong>No overtime is produced on a day with no regular shift</strong> (holidays and weekends), even when this field has a value — overtime with no regular time to follow has no starting point</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">如國定假日、歲修等說明</span><span lang="en">Notes such as public holidays or the annual overhaul</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="schedule.html"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>、<a href="oee.html"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a></p>
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">MRP 倒推遇非工作日會自動跳過；日曆缺漏會導致排程集中在錯誤日期，上線前請先確認全年日曆。</span><span lang="en">Back-scheduling automatically skips non-working days; gaps in the calendar push the schedule onto the wrong dates, so confirm the whole year's calendar before going live.</span>
+    </div>
+
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-warning"></i>
+      <span lang="zh"><strong>改了加班時數之後，排程要看得到它，得先重建當月的可用時段。</strong>
+      在本畫面直接編輯某一日的加班時數（或搬動它的日期、班制、工作中心、機台）時，系統會自動重建，存檔即生效，不必再做別的事。
+      但<strong>本功能啟用前就已經產生的日曆，可用時段仍是舊的、只含正班</strong>——請對該年月按一次「批次產生」，不勾「重產即覆蓋既有資料」也會重建可用時段，
+      已經存在的日曆列與你調整過的加班時數都會原樣保留，不會被班制的預設值蓋回去。</span><span lang="en"><strong>After changing overtime hours, the available time for that month has to be rebuilt before the scheduler can see them.</strong>
+      When you edit a day's overtime here (or move its date, shift pattern, work center or machine), the rebuild happens automatically and takes effect on save; nothing else is needed.
+      However, <strong>calendars generated before this feature existed still carry the old regular-time-only segments</strong> — run Batch Generate once for that year and month. Even without ticking "Overwrite existing on regenerate" the available time is rebuilt,
+      while the existing calendar rows and any overtime you adjusted are kept exactly as they are and are never reset to the shift pattern's defaults.</span>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

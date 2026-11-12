@@ -1,0 +1,236 @@
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.MFG.Services
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Modules.MFG.ViewModels.WorkOrderMaterialStatusRowVm>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched     = ViewBag.Searched as bool? ?? false;
+    bool   canPrint        = ViewBag.CanPrint == true;
+    bool   onlyShort       = ViewBag.OnlyShort as bool? ?? false;
+    string searchBatch     = ViewBag.SearchBatch     as string ?? "";
+    string searchWorkOrder = ViewBag.SearchWorkOrder as string ?? "";
+    string searchMaterial  = ViewBag.SearchMaterial  as string ?? "";
+    var    batchOptions     = ViewBag.BatchOptions     as IEnumerable<string> ?? Enumerable.Empty<string>();
+    var    workOrderOptions = ViewBag.WorkOrderOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    var    productOptions   = ViewBag.ProductOptions   as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    int QtyDp(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? v : 4;
+    // 需求量可能因損耗率算出超過 UOM 小數位的值（如 PCS 0 位卻得 110.25）。
+    // 若逕以 UOM 位數格式化，需求 110.25 與可用 110 都會顯示「110」，看起來備齊卻判缺料；
+    // 故超出 UOM 精度時顯示真值。
+    string QtyText(decimal val, string? uom)
+    {
+        var dp = QtyDp(uom);
+        if (Math.Round(val, dp) != val) return val.ToString("0.######");
+        return val.ToString(dp <= 0 ? "N0" : $"N{dp}");
+    }
+
+    (string css, string key) ReadinessBadge(MaterialLineReadiness s) => s switch
+    {
+        MaterialLineReadiness.Ready               => ("bg-success", "StateReady"),
+        MaterialLineReadiness.PendingSubassembly  => ("bg-warning text-dark", "StatePendingSub"),
+        _                                         => ("bg-danger", "StateShortage")
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-clipboard-data me-2 text-primary"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && hasSearched && Model != null && Model.Any())
+        {
+            <a asp-action="Export"
+               asp-route-searchBatch="@searchBatch" asp-route-searchWorkOrder="@searchWorkOrder"
+               asp-route-searchMaterial="@searchMaterial" asp-route-onlyShort="@onlyShort"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["Batch"]</label>
+                    <select name="searchBatch" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["Batch"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var b in batchOptions)
+                        {
+                            <option value="@b" selected="@(searchBatch == b)">@b</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["WorkOrderId"]</label>
+                    <select name="searchWorkOrder" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["WorkOrderId"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var w in workOrderOptions)
+                        {
+                            <option value="@w" selected="@(searchWorkOrder == w)">@w</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["MaterialCode"]</label>
+                    <select name="searchMaterial" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["MaterialCode"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchMaterial == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-check mt-4">
+                        <input class="form-check-input" type="checkbox" name="onlyShort" value="true"
+                               id="onlyShort" checked="@onlyShort" />
+                        <label class="form-check-label small" for="onlyShort">@Localizer["OnlyShort"]</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        var shortCount   = Model.Count(r => r.ReadinessState == MaterialLineReadiness.Shortage);
+        var pendingCount = Model.Count(r => r.ReadinessState == MaterialLineReadiness.PendingSubassembly);
+        var openCount    = Model.Count(r => r.OpenQty > 0);
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card border-0 bg-primary text-white shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["TotalLines"]</div>
+                        <div class="fs-4 fw-bold">@Model.Count</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 bg-danger text-white shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["ShortLines"]</div>
+                        <div class="fs-4 fw-bold">@shortCount</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 bg-warning text-dark shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["PendingSubLines"]</div>
+                        <div class="fs-4 fw-bold">@pendingCount</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 bg-secondary text-white shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="fs-6 mb-1">@Localizer["OpenLines"]</div>
+                        <div class="fs-4 fw-bold">@openCount</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["Batch"]</th>
+                                <th>@Localizer["WorkOrderId"]</th>
+                                <th>@Localizer["Status"]</th>
+                                <th>@Localizer["OutputProduct"]</th>
+                                <th class="text-end">@Localizer["OperationSeq"]</th>
+                                <th>@Localizer["MaterialCode"]</th>
+                                <th>@Localizer["ProductName"]</th>
+                                <th>@Localizer["IssueMethod"]</th>
+                                <th class="text-end">@Localizer["RequiredQty"]</th>
+                                <th class="text-end">@Localizer["IssuedQty"]</th>
+                                <th class="text-end">@Localizer["ReturnedQty"]</th>
+                                <th class="text-end">@Localizer["NetIssuedQty"]</th>
+                                <th class="text-end">@Localizer["OpenQty"]</th>
+                                <th class="text-end">@Localizer["AvailableQty"]</th>
+                                <th>@Localizer["ReadinessState"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var paged = ReportPaging.Page(Model, ViewData, Context); }
+                            @foreach (var row in paged)
+                            {
+                                var rb  = ReadinessBadge(row.ReadinessState);
+                                var trClass = row.ReadinessState == MaterialLineReadiness.Shortage ? "table-danger"
+                                            : row.ReadinessState == MaterialLineReadiness.PendingSubassembly ? "table-warning" : "";
+                                <tr class="@trClass">
+                                    <td>@row.ProductionBatchId</td>
+                                    <td class="fw-semibold">@row.WorkOrderId</td>
+                                    <td><span class="badge bg-light text-dark">@Localizer[row.Status.ToString()]</span></td>
+                                    <td>@row.ParentProductCode</td>
+                                    <td class="text-end">@row.OperationSeq</td>
+                                    <td>@row.ProductCode</td>
+                                    <td class="small">@row.ProductName</td>
+                                    <td>
+                                        <span class="badge bg-light text-dark">@Localizer[row.IssueMethod.ToString()]</span>
+                                        @if (!string.IsNullOrEmpty(row.ChildWorkOrderId))
+                                        {
+                                            <span class="badge bg-info text-dark ms-1" title="@row.ChildWorkOrderId">
+                                                <i class="bi bi-diagram-2"></i> @row.ChildWorkOrderId
+                                            </span>
+                                        }
+                                    </td>
+                                    <td class="text-end">@QtyText(row.RequiredQty, row.UomCode) <span class="text-muted small">@row.UomCode</span></td>
+                                    <td class="text-end">@QtyText(row.IssuedQty, row.UomCode)</td>
+                                    <td class="text-end">@QtyText(row.ReturnedQty, row.UomCode)</td>
+                                    <td class="text-end">@QtyText(row.NetIssuedQty, row.UomCode)</td>
+                                    <td class="text-end @(row.OpenQty > 0 ? "fw-semibold" : "text-muted")">@QtyText(row.OpenQty, row.UomCode)</td>
+                                    <td class="text-end">
+                                        @if (row.IssueMethod == MaterialIssueMethod.Backflush || !string.IsNullOrEmpty(row.ChildWorkOrderId))
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                        else if (row.ReadinessState == MaterialLineReadiness.Shortage)
+                                        {
+                                            <span class="text-danger fw-semibold">@QtyText(row.AvailableQty, row.UomCode)</span>
+                                            <div class="small text-danger">@Localizer["ShortBy"] @QtyText(row.RequiredQty - row.AvailableQty, row.UomCode)</div>
+                                        }
+                                        else
+                                        {
+                                            @QtyText(row.AvailableQty, row.UomCode)
+                                        }
+                                    </td>
+                                    <td><span class="badge @rb.css">@Localizer[rb.key]</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @await Html.PartialAsync("_Pagination", paged)
+        </div>
+        <div class="small text-muted mt-2">
+            <i class="bi bi-info-circle me-1"></i>@Localizer["FooterNote"]
+        </div>
+    }
+</div>

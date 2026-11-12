@@ -1,0 +1,107 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.Tooling
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    string action = isEdit ? "Edit" : "Create";
+    var toolingTypeOptions = (ViewBag.ToolingTypeOptions as System.Collections.IEnumerable) ?? Enumerable.Empty<object>();
+}
+
+<form method="post" asp-action="@action" asp-controller="Tooling" asp-route-toolingCode="@(isEdit ? Model.ToolingCode : null)"
+      data-ajax="true" class="p-1">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["ToolingCode"] <span class="text-danger">*</span></label>
+        @if (isEdit)
+        {
+            <input type="text" class="form-control bg-light" value="@Model.ToolingCode" readonly />
+            <input type="hidden" asp-for="ToolingCode" />
+            <div class="form-text text-muted">@Localizer["ToolingCodeReadonlyHint"]</div>
+        }
+        else
+        {
+            <input asp-for="ToolingCode" class="form-control u-text-transform-uppercase" placeholder="@Localizer["ToolingCodePlaceholder"]"
+                   />
+        }
+        <span asp-validation-for="ToolingCode" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["ToolingName"] <span class="text-danger">*</span></label>
+        <input asp-for="ToolingName" class="form-control" />
+        <span asp-validation-for="ToolingName" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["Spec"]</label>
+        <input asp-for="Spec" class="form-control" />
+        <span asp-validation-for="Spec" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["CavityCount"]</label>
+        <input asp-for="CavityCount" type="number" step="1" class="form-control" />
+        <span asp-validation-for="CavityCount" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["ToolingType"]</label>
+        <select asp-for="ToolingType" class="form-select">
+            <option value="">—</option>
+            @foreach (dynamic t in toolingTypeOptions)
+            {
+                <option value="@t.Code" selected="@(Model.ToolingType == (string)t.Code)">
+                    @t.Code — @t.DisplayName
+                </option>
+            }
+        </select>
+        <span asp-validation-for="ToolingType" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["ProductsPerCavity"]</label>
+        <input asp-for="ProductsPerCavity" class="form-control" placeholder="@Localizer["ProductsPerCavityPlaceholder"]" />
+        <span asp-validation-for="ProductsPerCavity" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["PmIntervalShots"]</label>
+        <input asp-for="PmIntervalShots" type="number" step="1" min="0" class="form-control" />
+        <div class="form-text text-muted">@Localizer["PmIntervalShotsHint"]</div>
+        <span asp-validation-for="PmIntervalShots" class="text-danger small"></span>
+    </div>
+
+    @if (isEdit)
+    {
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["AccumulatedShots"]</label>
+            <input type="text" class="form-control bg-light" value="@Model.AccumulatedShots.ToString("G29")" readonly />
+            <div class="form-text text-muted">@Localizer["AccumulatedShotsHint"]</div>
+        </div>
+    }
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["Remarks"]</label>
+        <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+        <span asp-validation-for="Remarks" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-4">
+        <div class="form-check">
+            <input type="checkbox" asp-for="IsActive" class="form-check-input" id="toolingIsActive" />
+            <label class="form-check-label fw-semibold" for="toolingIsActive">@Localizer["IsActive"]</label>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+            @Localizer["Cancel"]
+        </button>
+    </div>
+</form>

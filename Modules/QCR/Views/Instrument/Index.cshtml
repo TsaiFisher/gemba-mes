@@ -1,0 +1,188 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Modules.QCR.Models
+@inject IViewLocalizer Localizer
+@model PaginatedList<Instrument>
+
+@{
+    var instrumentOptions = ViewBag.InstrumentOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    string curCode = ViewBag.SearchCode as string ?? "";
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        @if (ViewBag.CanCreate)
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                        data-url="@Url.Action("Create")"
+                        data-label="@Localizer["AddEntry"]"
+                        data-action="openPanel">
+                    <i class="bi bi-plus-circle"></i> @Localizer["Add"]
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" action="@Url.Action("Index")" class="row g-3 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["InstrumentCode"]</label>
+                    <select name="searchCode" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllInstruments"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (dynamic ins in instrumentOptions)
+                        {
+                            <option value="@ins.InstrumentCode" selected="@(curCode == (string)ins.InstrumentCode)">@ins.InstrumentCode — @ins.InstrumentName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["InstrumentName"]</label>
+                    <input type="text" name="searchName" class="form-control"
+                           value="@ViewBag.SearchName"
+                           placeholder="@Localizer["SearchPlaceholder"]" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.CurrentSort == "code_asc" ? "code_desc" : "code_asc", searchCode = ViewBag.SearchCode, searchName = ViewBag.SearchName, pageSize = ViewBag.CurrentPageSize, searched = true })">
+                            @Localizer["InstrumentCode"]
+                            @if (ViewBag.CurrentSort == "code_asc") { <i class="bi bi-sort-up"></i> }
+                            else if (ViewBag.CurrentSort == "code_desc") { <i class="bi bi-sort-down"></i> }
+                        </a>
+                    </th>
+                    <th>
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.CurrentSort == "name_asc" ? "name_desc" : "name_asc", searchCode = ViewBag.SearchCode, searchName = ViewBag.SearchName, pageSize = ViewBag.CurrentPageSize, searched = true })">
+                            @Localizer["InstrumentName"]
+                            @if (ViewBag.CurrentSort == "name_asc") { <i class="bi bi-sort-up"></i> }
+                            else if (ViewBag.CurrentSort == "name_desc") { <i class="bi bi-sort-down"></i> }
+                        </a>
+                    </th>
+                    <th>@Localizer["CalibrationFrequencyDays"]</th>
+                    <th>@Localizer["IsActive"]</th>
+                    <th>@Localizer["SerialCount"]</th>
+                    <th>@Localizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null) @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="font-monospace">@item.InstrumentCode</td>
+                        <td>@item.InstrumentName</td>
+                        <td>@item.CalibrationFrequencyDays</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success">✓</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">✗</span>
+                            }
+                        </td>
+                        <td>@(item.Serials?.Count ?? 0)</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-info"
+                                    data-url="@Url.Action("Details", new { id = item.InstrumentCode })"
+                                    data-label="@Localizer["ViewTitle", item.InstrumentCode]"
+                                    data-action="openPanel"><i class="bi bi-eye"></i> @Localizer["View"]</button>
+                            @if (ViewBag.CanUpdate)
+                            {
+                                <button type="button" class="btn btn-sm btn-warning"
+                                        data-url="@Url.Action("Edit", new { id = item.InstrumentCode })"
+                                        data-label="@Localizer["EditTitle", item.InstrumentCode]"
+                                        data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                            }
+                            @if (ViewBag.CanDelete)
+                            {
+                                <button type="button" class="btn btn-sm btn-danger"
+                                        data-action="deleteItem" data-url="@Url.Action("DeleteConfirmed")" data-id="@item.InstrumentCode"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-info">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<div class="offcanvas offcanvas-end u-min-width-600px u-max-width-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function calibrateSerial(e, el) {
+        const serialId = el.dataset.serialId, serialNo = el.dataset.serialNo;
+        var msg = (window.i18n?.t('CalibrateConfirm') ?? 'Confirm calibration for serial {0}?').replace('{0}', serialNo);
+        if (!confirm(msg)) return;
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch('@Url.Action("Calibrate")', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'RequestVerificationToken': token },
+            body: `serialId=${encodeURIComponent(serialId)}`
+        })
+        .then(r => r.json())
+        .then(d => {
+            if (d.success) {
+                window.toastSuccess?.(d.message);
+                setTimeout(() => location.reload(), 800);
+            } else {
+                alert(d.message ?? (window.i18n?.t('OperationFailed') ?? 'Error'));
+            }
+        })
+        .catch(() => alert(window.i18n?.t('OperationFailed') ?? 'Error'));
+    }
+    </script>
+}

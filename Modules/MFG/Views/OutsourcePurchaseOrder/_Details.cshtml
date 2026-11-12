@@ -1,0 +1,82 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@model OutsourcePurchaseOrder
+
+@{
+    var supplierNames = ViewBag.SupplierNames as IReadOnlyDictionary<string, string> ?? new Dictionary<string, string>();
+    var sendMaterials = ViewBag.SendMaterials as IReadOnlyDictionary<string, List<object>> ?? new Dictionary<string, List<object>>();
+
+    (string css, string key) StatusBadge(OutsourcePoStatus s) => s switch
+    {
+        OutsourcePoStatus.Draft     => ("bg-secondary", "StatusDraft"),
+        OutsourcePoStatus.Confirmed => ("bg-primary", "StatusConfirmed"),
+        _                           => ("bg-danger", "StatusVoid")
+    };
+    var sb = StatusBadge(Model.Status);
+}
+
+<div class="ospo-details">
+    <section class="mb-3">
+        <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">1</span>@Localizer["SecHeader"]</h6>
+        <div class="row g-2">
+            <div class="col-md-6"><span class="text-muted small">@Localizer["OutsourcePoId"]</span><div class="fw-medium">@Model.OutsourcePurchaseOrderId</div></div>
+            <div class="col-md-6"><span class="text-muted small">@Localizer["Status"]</span><div><span class="badge @sb.css">@Localizer[sb.key]</span></div></div>
+            <div class="col-md-6"><span class="text-muted small">@Localizer["Supplier"]</span><div>@(supplierNames.TryGetValue(Model.SupplierCode, out var sn) ? $"{Model.SupplierCode} — {sn}" : Model.SupplierCode)</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["OrderDate"]</span><div>@Model.OrderDate.ToString("yyyy-MM-dd")</div></div>
+            <div class="col-md-3"><span class="text-muted small">@Localizer["ExpectedDate"]</span><div>@(Model.ExpectedDeliveryDate?.ToString("yyyy-MM-dd"))</div></div>
+            @if (!string.IsNullOrEmpty(Model.Remarks))
+            {
+                <div class="col-12"><span class="text-muted small">@Localizer["Remarks"]</span><div>@Model.Remarks</div></div>
+            }
+        </div>
+    </section>
+
+    <section class="mb-3">
+        <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">2</span>@Localizer["SecLines"]</h6>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["ColLineNo"]</th>
+                        <th>@Localizer["ColSourceWo"]</th>
+                        <th>@Localizer["ColProduct"]</th>
+                        <th class="text-end">@Localizer["ColQty"]</th>
+                        <th>@Localizer["ColSendMaterials"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var l in Model.Lines.OrderBy(x => x.LineNo))
+                    {
+                        var key = $"{l.SourceWorkOrderId}-{l.OperationSeq}";
+                        var mats = sendMaterials.TryGetValue(key, out var ms) ? ms : new List<object>();
+                        <tr>
+                            <td>@l.LineNo</td>
+                            <td>@l.SourceWorkOrderId<span class="text-muted small">-@l.OperationSeq</span></td>
+                            <td>@l.ProductCode</td>
+                            <td class="text-end">@l.Qty @l.UomCode</td>
+                            <td class="small">
+                                @if (mats.Count == 0)
+                                {
+                                    <span class="text-muted">—</span>
+                                }
+                                else
+                                {
+                                    @foreach (dynamic m in mats)
+                                    {
+                                        <div>@m.ProductCode × @m.RequiredQty @m.UomCode</div>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="text-muted small">@Localizer["SendMaterialsHint"]</div>
+    </section>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+    </div>
+</div>

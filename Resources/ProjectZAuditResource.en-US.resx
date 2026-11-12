@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PoOverReceipt" xml:space="preserve"><value>Cumulative valid receipt {0} exceeds ordered qty {1} (over-receipt {2})</value></data>
+  <data name="GrIrOverInvoice" xml:space="preserve"><value>Invoiced qty {0} exceeds recognizable qty {1} (received {2} − returned {3})</value></data>
+  <data name="GrIrAging" xml:space="preserve"><value>Receipt date {0} is more than {1} days old; accrual {2} cleared only {3} (open {4})</value></data>
+  <data name="OutsourceNegBalance" xml:space="preserve"><value>Negative outsourced balance at vendor: net issued {0} − theoretical consumption {1} (receipts × unit usage {2}) = {3} (over-production, or issue/return data error)</value></data>
+  <data name="JournalUnbalanced" xml:space="preserve"><value>Journal debit {0} ≠ credit {1} (difference {2})</value></data>
+  <data name="JournalDuplicate" xml:space="preserve"><value>Source document {0} {1} produced {2} automatic journals (expected 1; possible duplicate posting)</value></data>
+  <data name="InvRollforward" xml:space="preserve"><value>Net movement {0} ≠ book quantity {1} (difference {2}; location {3}, lot {4})</value></data>
+  <data name="InvRollforwardNoLot" xml:space="preserve"><value>Net movement {0} ≠ book quantity {1} (difference {2}; location {3}, no lot)</value></data>
+  <data name="SoOverShipment" xml:space="preserve"><value>Cumulative valid shipment {0} exceeds ordered qty {1} (over-shipment {2})</value></data>
+  <data name="GsNoArInvoice" xml:space="preserve"><value>Goods shipment {0} (ship date {1}) is confirmed but has no valid AR invoice</value></data>
+  <data name="GsNoArInvoicePreOpen" xml:space="preserve"><value>Goods shipment {0} (ship date {1}) is confirmed but has no valid AR invoice; the ship date precedes this plant's earliest accounting period start {2}, so it is pre-opening data and is a warning only, not a close blocker</value></data>
+  <data name="BackflushMismatch" xml:space="preserve"><value>Backflushed actual consumption {0} ≠ standard usage × completion ratio {1} (difference {2})</value></data>
+  <data name="WoMaterialNotIssued" xml:space="preserve"><value>Work order is received into stock, but {0} material {1} was never issued (required {2}) — the finished-goods cost excludes this material</value></data>
+  <data name="SalesReturnCostBasis" xml:space="preserve"><value>Sales-return unit cost {0} ≠ {2} on source shipment {1} ({3} units, difference {4}) — inventory and COGS drift together, and the moving average is already skewed</value></data>
+  <data name="FifoLayerMismatch" xml:space="preserve"><value>FIFO cost-layer total {1} at location {0} ≠ on-hand qty {2} (difference {3}) — issues will consume non-existent layers or price off stale ones; neither quantity audits nor debit/credit balance can see this, and when two locations offset each other even the plant total looks clean</value></data>
+  <data name="CustomerSuppliedWrongLocation" xml:space="preserve"><value>Customer-supplied movement {0} sits at location {1}, which is not a customer-supplied warehouse (warehouse type CustomerSupplied). Customer-owned stock is the customer's property; held in a normal warehouse it enters the moving-average denominator, understates our own unit cost, and propagates into the cost of goods sold of every later shipment. The posting guard prevents new occurrences, so these are legacy rows: transfer the stock into a customer-supplied warehouse.</value></data>
+  <data name="ArInvoiceUnreversed" xml:space="preserve"><value>Shipment {0} line {1} was returned ({2}), but the AR invoice still carries {3} unreversed (amount {4}) — invoice status {5}; settled invoices are not auto-reversed. A credit-note draft was created when the return posted; this finding clears once it is confirmed</value></data>
+  <data name="ApInvoiceUnreversed" xml:space="preserve"><value>Receipt {0} line {1} was returned ({2}), but the AP invoice still carries {3} unreversed (amount {4}) — invoice status {5}; settled invoices are not auto-reversed. A debit-note draft was created when the return posted; this finding clears once it is confirmed</value></data>
+  <data name="PoReceivedDrift" xml:space="preserve"><value>PO line cumulative received {0} ≠ valid goods-receipt total {1} (difference {2})</value></data>
+  <data name="PoReceivedOrphan" xml:space="preserve"><value>Goods-receipt line total {0} points at a PO line that does not exist</value></data>
+  <data name="SoShippedDrift" xml:space="preserve"><value>SO line cumulative shipped {0} ≠ valid goods-shipment total {1} (difference {2})</value></data>
+  <data name="SoShippedOrphan" xml:space="preserve"><value>Goods-shipment line total {0} points at an SO line that does not exist</value></data>
+  <data name="WipCostNotFinal" xml:space="preserve"><value>Work order {0} still has Preliminary completion cost for this period (period-end actual-rate revaluation has not run, or completions occurred after it — re-run the revaluation)</value></data>
+  <data name="WipSnapshotMissing" xml:space="preserve"><value>In-process work order {0} has no WIP snapshot for period {1} (period-end revaluation has not run, or the order was released after it — re-run the revaluation)</value></data>
+  <data name="WipSnapshotStale" xml:space="preserve"><value>WIP snapshot points at work order {0}, which is no longer in process (completed or voided after revaluation) — re-run the revaluation</value></data>
+  <data name="WipSnapshotNegative" xml:space="preserve"><value>WIP snapshot contains negative components (material {0}, labor {1}, overhead {2}, qty in process {3})</value></data>
+  <data name="WipVoidLeakage" xml:space="preserve"><value>Work order {0}, in process last period, was voided this period; its opening WIP {1} has no cost outlet (material should be returned before voiding). It has been adjusted out of the opening balance in the identity check</value></data>
+  <data name="WipIssuedNegative" xml:space="preserve"><value>Net material issued this period is negative ({0}) — returns exceed issues, which is a data anomaly; the identity check is skipped</value></data>
+  <data name="WipIdentityDrift" xml:space="preserve"><value>WIP value identity is off by {0}: ending {1} ≠ opening {2} + net issued {3} + department labor/overhead {4} − completed cost {5} (= {6}). Common causes: a work center with monthly expense but no labor hours (nothing to absorb into), issues/completions after the revaluation without a re-run, or a missing prior-period snapshot</value></data>
+  <data name="ErpSyncLagAp" xml:space="preserve"><value>AP invoice created at {0} has not been exported for over {1} hours (status {2}, {3} retries)</value></data>
+  <data name="ErpSyncLagApWithError" xml:space="preserve"><value>AP invoice created at {0} has not been exported for over {1} hours (status {2}, {3} retries, error: {4})</value></data>
+  <data name="ErpSyncLagAr" xml:space="preserve"><value>AR invoice created at {0} has not been exported for over {1} hours (status {2}, {3} retries)</value></data>
+  <data name="ErpSyncLagArWithError" xml:space="preserve"><value>AR invoice created at {0} has not been exported for over {1} hours (status {2}, {3} retries, error: {4})</value></data>
+  <data name="WoCostMaterialLeg" xml:space="preserve"><value>Material leg: cost record ActualMaterial {0} vs stock-movement subledger (backflush + issues/returns) net cost {1}, difference {2}</value></data>
+  <data name="WoCostConversionLeg" xml:space="preserve"><value>Conversion leg: cost record Labor+Overhead {0} vs absorption journals (completion + revaluation adjustment) net {1}, difference {2}</value></data>
+  <data name="OrphanStockMovement" xml:space="preserve"><value>Stock movement {0} (type {1}, {2} lines, net qty {3}) has no source document — the document was deleted without reversing its posting</value></data>
+  <data name="OrphanJournalEntry" xml:space="preserve"><value>Journal {0} references source document {1} {2}, which no longer exists — the document was deleted without reversing the GL entry</value></data>
+  <data name="OrphanInvoiceAp" xml:space="preserve"><value>AP invoice {0} references source document {1} {2}, which no longer exists — the source was deleted without voiding the invoice</value></data>
+  <data name="OrphanInvoiceAr" xml:space="preserve"><value>AR invoice {0} references source document {1} {2}, which no longer exists — the source was deleted without voiding the invoice</value></data>
+  <data name="InvGlSubledgerResidual" xml:space="preserve"><value>Inventory GL account {0} − subledger value {1} − WIP {2} − customer-owned {3} − lent out {4} = residual {5}. Some movement was posted without a journal, or with a different amount; quantity audits and debit/credit balance cannot see this. See this plant's "document GL vs movement value" findings for the sources</value></data>
+  <data name="InvGlDocDiff" xml:space="preserve"><value>Document {0} (movement types {1}): inventory GL net {2} ≠ stock movement value {3} (difference {4})</value></data>
+  <data name="InvGlWipNegative" xml:space="preserve"><value>Work order {0} leaves a negative WIP of {1} in the inventory GL account: more value came back to stock than was issued (e.g. a return exceeding the in-plant issue, or an outsource receipt posted without its processing fee)</value></data>
+  <data name="InvGlWipClosed" xml:space="preserve"><value>Work order {0} is closed, yet the inventory GL account still carries WIP of {1}: issued material was neither costed into the finished goods nor returned to stock</value></data>
+  <data name="InvGlWipVoided" xml:space="preserve"><value>Work order {0} is voided, yet the inventory GL account still carries WIP of {1}: issued material was never returned to stock</value></data>
+</root>

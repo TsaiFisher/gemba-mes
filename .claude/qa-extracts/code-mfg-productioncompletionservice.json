@@ -1,0 +1,70 @@
+{
+  "sourcePath": "Modules/MFG/Services/ProductionCompletionService.cs",
+  "sourceHash": "ac5785c37f0ea3dbf5011d4fbd1f9747fc5b5ea8ba05925ae19e6427077ee77d",
+  "entries": [
+    {
+      "slug": "code-mfg-productioncompletionservice-fe6aacee",
+      "lang": "zh",
+      "headingPath": "生產製造 › 後沖料的出庫倉儲",
+      "text": "出庫來源決定規則說明｜此處的出庫來源是系統自動決定的，不會由人員手動填寫。系統會根據該料件的正常存放地點來判斷，這個預設地點與產品類別的慣例一致；只有在確認該預設地點在本廠可用後才會採用它作為出庫來源。",
+      "approved": true,
+      "sourceSectionHash": "c43e88203beffdfd52ea3b0275eddc37bdce10cd98d67774f4b85adb88697f46"
+    },
+    {
+      "slug": "code-mfg-productioncompletionservice-ff1399a0",
+      "lang": "zh",
+      "headingPath": "生產製造 › 分箱在開交易、動任何帳之前先驗完：箱數、批號長度",
+      "text": "分箱前需檢查的資料限制｜在進行任何交易或操作之前，系統會先驗證所輸入的箱數、批號長度，並且確保輸入的批號不會與已存在的批號重複。",
+      "approved": true,
+      "sourceSectionHash": "518faabfdf76737aaebb2d627add672908e8b70d571a50bcebe8a3218c54eff1"
+    },
+    {
+      "slug": "code-mfg-productioncompletionservice-6df82d2e",
+      "lang": "zh",
+      "headingPath": "生產製造 › 指定箱號：箱數要對得上、每個箱子都得是本廠啟用中的空箱且種類相符",
+      "text": "指定箱號需符合條件與驗證｜系統會檢查所指定的箱數量是否正確，並且確認每個箱子都是本廠目前啟用且為空狀態的箱子，同時其種類也必須相符。此檢查會在交易前完成。此外，裝有本工單在製品的箱子也可以被使用。",
+      "approved": true,
+      "sourceSectionHash": "6af63efd89ea90fae418b11fd3b02dc9e7e547e5e3a49e5d8b6ec7c272f704f1"
+    },
+    {
+      "slug": "code-mfg-productioncompletionservice-2c7e378c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 後沖、完工入庫、預留釋放、成本結算、吸收分錄為單一原子單元",
+      "text": "單一原子單元處理的資料一致性要求｜系統在進行後沖、完工入庫、預留釋放、成本結算和吸收分錄這五個動作時，會將它們視為一個不可分割的整體操作。如果這個流程中的任何一步驟失敗，則所有已完成的變更都會被撤銷，確保資料的一致性。",
+      "approved": true,
+      "sourceSectionHash": "4143a92db3fa9ab61925d97f61d723b11a24ac5084972faaa7f9ce3d6ebb0f59"
+    },
+    {
+      "slug": "code-mfg-productioncompletionservice-8956c0a4",
+      "lang": "zh",
+      "headingPath": "生產製造 › 報工不沖、完工原本被時機篩掉，於是那種料從頭到尾沒被扣過",
+      "text": "後沖料的計算與處理方式｜所有後沖領用的材料，無論是在什麼時間點進行沖銷，都會被一次性計算和扣除，因此最終計算出的成本總量是正確的；差異僅在於材料庫存的時機分佈。",
+      "approved": true,
+      "sourceSectionHash": "c369d91ef4a60cf83a8e41e3bd2d027aa77f71dff6767e752c05bbfa9bafa4cc"
+    },
+    {
+      "slug": "code-mfg-productioncompletionservice-5c4a366d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 後沖料成本取「實際過帳的出庫成本」，而非工單建單當下的快照價",
+      "text": "成本計算依實際出庫成本，而非建單時價格｜系統會使用原料實際過帳的出庫成本來計算後沖料成本，而不是採用工單建立當下的快照價格。這代表如果原料的進價發生變動，系統會以實際入庫和出庫的成本進行核算，確保所有差異都能在各自的傳票中得到平衡。",
+      "approved": true,
+      "sourceSectionHash": "38927254ee046d8b13747da1bddb158da0e158a6d3ebd2794f2a86759be376cd"
+    },
+    {
+      "slug": "code-mfg-productioncompletionservice-ec21f0e3",
+      "lang": "zh",
+      "headingPath": "生產製造 › 箱子綁定與入庫同一交易：入庫回滾箱子就不會被綁",
+      "text": "箱子綁定與入庫的處理規則｜當在同一筆交易中進行入庫操作，如果退回了之前綁定的箱子，則該箱子不會被重新綁定。此外，若兩張單據同時嘗試搶佔同一個空箱時，後續完成交易的那一方會導致整個交易流程回滾。",
+      "approved": true,
+      "sourceSectionHash": "9071667270662e22d82f6a37180a0528c7029509519e9476a2e5cd49454f30ad"
+    },
+    {
+      "slug": "code-mfg-productioncompletionservice-5b7f6263",
+      "lang": "zh",
+      "headingPath": "生產製造 › 分箱入庫的每箱批號與數量",
+      "text": "每箱批號與數量限制說明｜系統會檢查一個品號是否已經使用過某個批號，如果該品號的任何庫存（無論是已出清還是餘額）曾經用過這個批號，則無法再將此批號用於分箱入庫。",
+      "approved": true,
+      "sourceSectionHash": "f6de9a5ed719655332547acef5bf52f7e93a191594312e2632616c44f26ff06f"
+    }
+  ]
+}

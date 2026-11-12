@@ -1,0 +1,865 @@
+@inject IViewLocalizer Localizer
+@using System.Text.Json
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool ready = ViewBag.Ready == true;
+    bool canRebuild = ViewBag.CanUpdate == true;
+
+    // JS 內的使用者字串一律從這裡取（Cx7：script 區塊不得有 CJK 字面）。
+    var msgs = new Dictionary<string, string>
+    {
+        ["you"] = Localizer["You"].Value,
+        ["assistant"] = Localizer["Assistant"].Value,
+        ["thinking"] = Localizer["Thinking"].Value,
+        ["cancelled"] = Localizer["Cancelled"].Value,
+        ["failed"] = Localizer["RequestFailed"].Value,
+        ["sources"] = Localizer["Sources"].Value,
+        ["unverifiable"] = Localizer["UnverifiableCitation"].Value,
+        ["elapsedFmt"] = Localizer["ElapsedFmt"].Value,
+        ["stageSearch"] = Localizer["StageSearch"].Value,
+        ["stageInferFmt"] = Localizer["StageInferFmt"].Value,
+        ["confirmRebuild"] = Localizer["ConfirmRebuild"].Value,
+        ["rebuilding"] = Localizer["Rebuilding"].Value,
+        ["queryParams"] = Localizer["QueryParams"].Value,
+        ["noRows"] = Localizer["NoRows"].Value,
+        ["rowsFmt"] = Localizer["RowsFmt"].Value,
+        ["truncatedFmt"] = Localizer["TruncatedFmt"].Value,
+        ["modeManualHint"] = Localizer["ModeManualHint"].Value,
+        ["confirmRun"] = Localizer["ConfirmRun"].Value,
+        ["confirmDiscard"] = Localizer["ConfirmDiscard"].Value,
+        ["confirmChooseTool"] = Localizer["ConfirmChooseTool"].Value,
+        ["confirmUnset"] = Localizer["ConfirmUnset"].Value,
+        ["confirmPending"] = Localizer["ConfirmPending"].Value,
+        ["saveQuery"] = Localizer["SaveQuery"].Value,
+        ["saveQueryPlaceholder"] = Localizer["SaveQueryPlaceholder"].Value,
+        ["paramPrefix"] = SmartFactory.MES.Modules.QA.Controllers.QaAssistantController.ParamPrefix,
+        ["modeDataHint"] = Localizer["ModeDataHint"].Value,
+        ["streamIncomplete"] = Localizer["StreamIncomplete"].Value,
+        // 串流時畫面上是**未經解析的原始輸出**，最後那行「來源：…」會先出現再被拿掉。
+        // 前綴由伺服端給，畫面不自己寫死——寫死的那份遲早與 QaPromptBuilder 分歧。
+        ["citationPrefix"] = SmartFactory.MES.Modules.QA.Services.QaPromptBuilder.CitationPrefix,
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-chat-dots"></i> @Localizer["PageTitle"]</h1>
+        @if (canRebuild)
+        {
+            @* 手動重建索引（§12.7）。押到本畫面一起做，是因為它需要一整條登錄鏈；
+               在它存在之前，重建的唯一觸發方式是重啟應用程式。 *@
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="qaRebuild"
+                    data-action="qaRebuild">
+                <i class="bi bi-arrow-clockwise me-1"></i>@Localizer["RebuildIndex"]
+            </button>
+        }
+    </div>
+
+    <div class="alert alert-info small">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["HelpText"]
+    </div>
+
+    @if (!ready)
+    {
+        @* §17.8：降級要出聲。三種故障（服務沒開／模型沒拉／組態填錯）在使用者眼中
+           都是「助理不回答」，但處理方式完全不同，所以把 Detail 原樣顯示出來。 *@
+        <div class="alert alert-warning small" id="qaHealth">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            <strong>@Localizer["NotReady"]</strong>
+            <span class="ms-1">@(ViewBag.HealthDetail as string)</span>
+        </div>
+    }
+
+    <div class="card shadow-sm mb-3">
+        <div class="card-body u-min-height-400px u-max-height-calc-100vh-140px overflow-auto" id="qaLog">
+            <div class="text-muted text-center py-5" id="qaEmpty">
+                <i class="bi bi-chat-square-text fs-4 d-block mb-2"></i>@Localizer["EmptyPrompt"]
+            </div>
+        </div>
+    </div>
+
+    @* 兩種提問模式（§9.5）。**由使用者明確選擇，不由程式猜。**
+       手冊問答讀的是手冊與規則語料，資料查詢讀的是營運資料——兩者的權限機制、
+       失敗方式與可信度都不同。讓程式從字面猜是哪一種，猜錯的方向是把營運資料
+       當成手冊資料處理，而使用者不會知道自己問到的是哪一邊。 *@
+    <div class="btn-group btn-group-sm mb-2" role="group" aria-label="@Localizer["Mode"]">
+        <input type="radio" class="btn-check" name="qaMode" id="qaModeManual" value="manual" checked
+               data-action-change="qaModeChanged">
+        <label class="btn btn-outline-primary" for="qaModeManual">
+            <i class="bi bi-book me-1"></i>@Localizer["ModeManual"]
+        </label>
+
+        <input type="radio" class="btn-check" name="qaMode" id="qaModeData" value="data"
+               data-action-change="qaModeChanged">
+        <label class="btn btn-outline-primary" for="qaModeData">
+            <i class="bi bi-table me-1"></i>@Localizer["ModeData"]
+        </label>
+    </div>
+    <div class="form-text mb-2" id="qaModeHint">@Localizer["ModeManualHint"]</div>
+
+    <form id="qaForm" data-action-submit="qaAsk">
+        <div class="input-group">
+            <textarea class="form-control" id="qaQuestion" rows="2" maxlength="500"
+                      placeholder="@Localizer["QuestionPlaceholder"]"></textarea>
+            <button type="submit" class="btn btn-primary px-4" id="qaSend">
+                <i class="bi bi-send me-1"></i>@Localizer["Send"]
+            </button>
+            <button type="button" class="btn btn-outline-danger px-4 u-display-none" id="qaCancel"
+                    data-action="qaCancel">
+                <i class="bi bi-x-circle me-1"></i>@Localizer["Cancel"]
+            </button>
+        </div>
+        <div class="form-text">@Localizer["LatencyNote"]</div>
+    </form>
+</div>
+
+<form class="u-display-none" id="__AjaxAntiForgery">@Html.AntiForgeryToken()</form>
+
+@section Scripts {
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    (function () {
+        var _msgs = @Html.Raw(JsonSerializer.Serialize(msgs));
+        var _inflight = null;      // 目前的 AbortController
+        var _timer = null;         // 等待秒數計時器
+
+        function log() { return document.getElementById('qaLog'); }
+
+        function token() {
+            return document.querySelector('#__AjaxAntiForgery input[name="__RequestVerificationToken"]').value;
+        }
+
+        function scrollDown() { var l = log(); l.scrollTop = l.scrollHeight; }
+
+        function bubble(who, cls) {
+            var empty = document.getElementById('qaEmpty');
+            if (empty) empty.remove();
+
+            var wrap = document.createElement('div');
+            wrap.className = 'mb-3';
+
+            var head = document.createElement('div');
+            head.className = 'small fw-semibold text-muted mb-1';
+            head.textContent = who;
+
+            var body = document.createElement('div');
+            body.className = cls;
+
+            wrap.appendChild(head);
+            wrap.appendChild(body);
+            log().appendChild(wrap);
+            scrollDown();
+            return body;
+        }
+
+        // ── 引文呈現（定案 #47／規格 §10.11.12）─────────────────────────────
+        // 三種形狀，伺服端已分好類（QaCitationPresenter），這裡只負責畫：
+        //   manual       → 真連結（那些檔案真的在 wwwroot 底下）
+        //   rule         → 就地展開的可摺疊區塊（rules/*.html 只是頁面代號，不是網址）
+        //   unverifiable → 純文字並標示，不展開也不連結
+        //                  （展開一個空白區塊會把「模型編了頁碼」偽裝成「這頁剛好沒內容」）
+        function renderCitations(container, citations) {
+            if (!citations || citations.length === 0) return;
+
+            var box = document.createElement('div');
+            box.className = 'mt-3 pt-2 border-top';
+
+            var label = document.createElement('div');
+            label.className = 'small text-muted mb-2';
+            label.textContent = _msgs.sources;
+            box.appendChild(label);
+
+            citations.forEach(function (c) {
+                var row = document.createElement('div');
+                row.className = 'mb-2';
+
+                if (c.kind === 'Rule') {
+                    var det = document.createElement('details');
+                    var sum = document.createElement('summary');
+                    sum.className = 'small u-cursor-pointer';
+                    // 標題用 HeadingPath、括號附頁面代號——代號要看得到，
+                    // 它就是使用者在答案裡讀到的那一個字串。
+                    sum.textContent = c.headingPath + '（' + c.pageCode + '）';
+                    var txt = document.createElement('div');
+                    txt.className = 'small text-muted mt-2 ps-3 border-start u-white-space-pre-wrap';
+                    txt.textContent = c.text;      // 一律 textContent（§12.3）
+                    det.appendChild(sum);
+                    det.appendChild(txt);
+                    row.appendChild(det);
+                } else if (c.kind === 'Manual') {
+                    var a = document.createElement('a');
+                    a.className = 'small';
+                    a.href = c.url;
+                    a.target = '_blank';
+                    a.rel = 'noopener';
+                    a.textContent = c.headingPath + '（' + c.pageCode + '）';
+                    row.appendChild(a);
+                } else {
+                    var s = document.createElement('span');
+                    s.className = 'small text-muted';
+                    s.textContent = c.pageCode + ' ' + _msgs.unverifiable;
+                    row.appendChild(s);
+                }
+
+                box.appendChild(row);
+            });
+
+            container.appendChild(box);
+            scrollDown();
+        }
+
+        // ── 資料查詢的結果呈現（Phase 2，規格 §9.1／§9.2-3）─────────────────
+        // 四種結局各有不同形狀，**刻意不收斂成一種**：
+        //   Answered      → 摘要 ＋ 查詢條件 ＋ 表格
+        //   SummarySkipped→ 沒有摘要，但表格照樣給（資料早就查到了，丟掉等於讓人白等）
+        //   NoTool        → 模型說沒有對應工具，這是正常路徑不是錯誤（§9.2）
+        //   ToolRejected  → 模型回了不在授權清單內的工具鍵，已擋下（§8.7）
+        // ── 回顯確認（§9.2-3／§9.3，狀態管理 §11.3）─────────────────────────
+        // **這一輪什麼都還沒查**：資料庫沒被碰過，摘要也沒跑。畫面要做的是把模型
+        // 解析出來的東西攤開讓人看、讓人改，然後才送出第二輪。
+        //
+        // 🚨 控制項一律由伺服端給的 schema 生成，不由畫面自己決定哪些欄位可以改——
+        //    伺服端刻意不讓模型碰 plantId／dateBasis／sortBy，畫面若自己列欄位，
+        //    這道界線就有兩份定義，而分歧的方向是畫面比模型還寬。
+        function renderConfirm(container, d) {
+            container.className = '';
+
+            var box = document.createElement('div');
+            box.className = 'border rounded p-3';
+
+            var hint = document.createElement('div');
+            hint.className = 'small mb-3';
+            hint.textContent = d.confirmHint || _msgs.confirmPending;
+            box.appendChild(hint);
+
+            var cands = d.candidates || [];
+            if (cands.length === 0) { container.textContent = d.answer || ''; scrollDown(); return; }
+
+            var params = document.createElement('div');
+
+            // 候選超過一支才給選擇器。只有一支時顯示它的說明就夠了——
+            // 一個只有一個選項的下拉是雜訊，而使用者真正要確認的是下面那些參數。
+            var chosen = cands[0];
+            if (cands.length > 1) {
+                var label = document.createElement('div');
+                label.className = 'small fw-semibold mb-1';
+                label.textContent = _msgs.confirmChooseTool;
+                box.appendChild(label);
+
+                var sel = document.createElement('select');
+                sel.className = 'form-select form-select-sm mb-3';
+                cands.forEach(function (c, i) {
+                    var o = document.createElement('option');
+                    o.value = String(i);
+                    o.textContent = c.description || c.toolKey;
+                    sel.appendChild(o);
+                });
+                sel.addEventListener('change', function () {
+                    chosen = cands[Number(sel.value)];
+                    box.dataset.toolKey = chosen.toolKey;
+                    buildParams(params, chosen);
+                });
+                box.appendChild(sel);
+            } else {
+                var only = document.createElement('div');
+                only.className = 'small fw-semibold mb-2';
+                only.textContent = chosen.description || chosen.toolKey;
+                box.appendChild(only);
+            }
+
+            box.dataset.turnId = d.turnId;
+            box.dataset.toolKey = chosen.toolKey;
+            buildParams(params, chosen);
+            box.appendChild(params);
+
+            var actions = document.createElement('div');
+            actions.className = 'd-flex gap-2 mt-3';
+
+            var run = document.createElement('button');
+            run.type = 'button';
+            run.className = 'btn btn-primary btn-sm';
+            run.setAttribute('data-action', 'qaConfirmRun');
+            run.textContent = _msgs.confirmRun;
+
+            var drop = document.createElement('button');
+            drop.type = 'button';
+            drop.className = 'btn btn-outline-secondary btn-sm';
+            drop.setAttribute('data-action', 'qaConfirmDiscard');
+            drop.textContent = _msgs.confirmDiscard;
+
+            actions.appendChild(run);
+            actions.appendChild(drop);
+            box.appendChild(actions);
+
+            container.appendChild(box);
+            scrollDown();
+        }
+
+        /// 依 schema 把一支工具的參數畫成可編修的控制項，初始值取模型填的那一份。
+        /// 列舉畫成下拉（含一個「不指定」的空選項），其餘依 JSON 型別畫輸入框。
+        function buildParams(wrap, cand) {
+            wrap.textContent = '';
+
+            var values = {};
+            try { values = JSON.parse(cand.paramsJson || '{}') || {}; } catch (e) { values = {}; }
+
+            Object.keys(cand.properties || {}).forEach(function (key) {
+                var prop = cand.properties[key];
+                var row = document.createElement('div');
+                row.className = 'row g-2 align-items-center mb-2';
+
+                var lab = document.createElement('label');
+                lab.className = 'col-sm-4 col-form-label col-form-label-sm small text-muted';
+                lab.textContent = key;
+                lab.htmlFor = 'qap_' + key;
+
+                var cell = document.createElement('div');
+                cell.className = 'col-sm-8';
+
+                var input;
+                if (prop.enumValues && prop.enumValues.length) {
+                    input = document.createElement('select');
+                    input.className = 'form-select form-select-sm';
+
+                    // 空選項是必要的：模型填了一個沒被問到的值時，使用者必須有辦法把它拿掉，
+                    // 而不是只能在一組同樣沒問過的值之間換一個（§9.2-3 要的是可修正）。
+                    var blank = document.createElement('option');
+                    blank.value = '';
+                    blank.textContent = _msgs.confirmUnset;
+                    input.appendChild(blank);
+
+                    prop.enumValues.forEach(function (v) {
+                        var o = document.createElement('option');
+                        o.value = v;
+                        o.textContent = v;
+                        input.appendChild(o);
+                    });
+                } else {
+                    input = document.createElement('input');
+                    input.className = 'form-control form-control-sm';
+                    input.type = prop.format === 'date' ? 'date'
+                        : (prop.type === 'integer' || prop.type === 'number') ? 'number'
+                        : 'text';
+                    if (prop.type === 'number') input.step = 'any';
+                }
+
+                input.id = 'qap_' + key;
+                input.setAttribute('data-qa-param', key);
+                var v = values[key];
+                input.value = (v === null || v === undefined) ? '' : String(v);
+
+                cell.appendChild(input);
+                row.appendChild(lab);
+                row.appendChild(cell);
+                wrap.appendChild(row);
+            });
+        }
+
+        function renderData(container, d) {
+            if (d.outcome === 'NeedsConfirm') { renderConfirm(container, d); return; }
+
+            container.className = (d.outcome === 'NoTool' || d.outcome === 'ToolRejected'
+                    || d.outcome === 'ConfirmExpired' || d.outcome === 'TooManyRounds')
+                ? 'text-secondary fst-italic u-white-space-pre-wrap'
+                : 'u-white-space-pre-wrap';
+            container.textContent = d.answer || '';   // 一律 textContent（§12.3／§9.4 I2）
+
+            // 降級要出聲（§17.8）：摘要沒寫成時，這是使用者唯一看得到的解釋。
+            if (d.note) {
+                var note = document.createElement('div');
+                note.className = 'alert alert-warning small mt-2 mb-0';
+                note.textContent = d.note;
+                container.appendChild(note);
+            }
+
+            if (!d.headers || d.headers.length === 0) { scrollDown(); return; }
+
+            // 🚨 查詢條件回顯（§9.2-3）。**這一段不是裝飾。** 實測模型會自行填入問題裡
+            // 沒提到的參數，而填出來的值看起來完全合理、數字也自洽——回顯是使用者
+            // 唯一能發現「它其實查的不是我問的那一段」的地方。
+            var cond = document.createElement('details');
+            cond.className = 'small mt-2';
+            var condSum = document.createElement('summary');
+            condSum.className = 'u-cursor-pointer text-muted';
+            condSum.textContent = _msgs.queryParams + '：' + (d.toolKey || '');
+            var condBody = document.createElement('div');
+            condBody.className = 'text-muted mt-1 ps-3 border-start u-white-space-pre-wrap';
+            condBody.textContent = d.paramsJson || '{}';
+            cond.appendChild(condSum);
+            cond.appendChild(condBody);
+            container.appendChild(cond);
+
+            var count = document.createElement('div');
+            count.className = 'small text-muted mt-2';
+            count.textContent = d.truncated
+                ? _msgs.truncatedFmt.replace('{0}', d.rows.length).replace('{1}', d.totalRows)
+                : _msgs.rowsFmt.replace('{0}', d.totalRows);
+            container.appendChild(count);
+
+            if (!d.rows || d.rows.length === 0) {
+                var empty = document.createElement('div');
+                empty.className = 'small text-muted';
+                empty.textContent = _msgs.noRows;
+                container.appendChild(empty);
+                renderSaveQuery(container, d);
+                scrollDown();
+                return;
+            }
+
+            renderSaveQuery(container, d);
+
+            var wrap = document.createElement('div');
+            wrap.className = 'table-responsive mt-2';
+            var table = document.createElement('table');
+            table.className = 'table table-sm table-striped table-bordered small mb-0';
+
+            var thead = document.createElement('thead');
+            var hr = document.createElement('tr');
+            d.headers.forEach(function (h) {
+                var th = document.createElement('th');
+                th.textContent = h;          // 欄名同樣經 textContent
+                hr.appendChild(th);
+            });
+            thead.appendChild(hr);
+            table.appendChild(thead);
+
+            var tbody = document.createElement('tbody');
+            d.rows.forEach(function (row) {
+                var tr = document.createElement('tr');
+                row.forEach(function (cell) {
+                    var td = document.createElement('td');
+                    // 🚨 一律 textContent。儲存格內容是**使用者可控的業務資料**
+                    // （客戶名稱、備註、品名），§9.4 I2 的攻擊面就在這裡。
+                    td.textContent = (cell === null || cell === undefined) ? '' : String(cell);
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+            wrap.appendChild(table);
+            container.appendChild(wrap);
+            scrollDown();
+        }
+
+        // ── 另存為常用查詢（Phase 3，規格 §十三）────────────────────────────
+        // 只在**真的查出結果**的那兩種結局出現。turnId 是憑據，工具鍵與參數都不從這裡送——
+        // 收下畫面給的參數等於讓「另存」變成一個可以憑空寫入任意查詢定義的入口，
+        // 而那張定義日後可能被掛上排程、定期寄出。
+        function renderSaveQuery(container, d) {
+            if (!d.turnId) return;
+            if (d.outcome !== 'Answered' && d.outcome !== 'SummarySkipped') return;
+
+            var box = document.createElement('div');
+            box.className = 'input-group input-group-sm mt-3';
+            box.dataset.saveTurnId = d.turnId;
+
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'form-control';
+            input.maxLength = 100;
+            input.placeholder = _msgs.saveQueryPlaceholder;
+            input.setAttribute('data-qa-save-name', '');
+
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-outline-secondary';
+            btn.setAttribute('data-action', 'qaSaveQuery');
+            btn.textContent = _msgs.saveQuery;
+
+            box.appendChild(input);
+            box.appendChild(btn);
+            container.appendChild(box);
+        }
+
+        window.qaSaveQuery = function (e, el) {
+            var box = el.closest('[data-save-turn-id]');
+            if (!box) return false;
+
+            var input = box.querySelector('[data-qa-save-name]');
+            var status = box.parentNode.querySelector('[data-qa-save-status]')
+                || document.createElement('div');
+            status.className = 'small mt-1';
+            status.setAttribute('data-qa-save-status', '');
+            box.parentNode.appendChild(status);
+
+            el.disabled = true;
+
+            fetch('/QaAssistant/SaveQuery', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                body: new URLSearchParams({
+                    turnId: box.dataset.saveTurnId,
+                    name: input.value,
+                    __RequestVerificationToken: token()
+                })
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (res) {
+                    el.disabled = false;
+                    // 成功訊息可能夾帶「哪些條件沒存進去」——那不是裝飾，是這張常用查詢
+                    // 與剛才那一題的差異。一律 textContent（§9.4 I2）。
+                    status.className = res.success ? 'small mt-1 text-success' : 'small mt-1 text-danger';
+                    status.textContent = res.message || _msgs.failed;
+                    scrollDown();
+                })
+                .catch(function () {
+                    el.disabled = false;
+                    status.className = 'small mt-1 text-danger';
+                    status.textContent = _msgs.failed;
+                });
+
+            return false;
+        };
+
+        function currentMode() {
+            return document.getElementById('qaModeData').checked ? 'data' : 'manual';
+        }
+
+        window.qaModeChanged = function () {
+            document.getElementById('qaModeHint').textContent =
+                currentMode() === 'data' ? _msgs.modeDataHint : _msgs.modeManualHint;
+            return false;
+        };
+
+        function stopWaiting() {
+            if (_timer) { clearInterval(_timer); _timer = null; }
+            _inflight = null;
+            document.getElementById('qaQuestion').disabled = false;
+            document.getElementById('qaSend').disabled = false;
+            document.getElementById('qaCancel').classList.add('u-display-none');
+        }
+
+        window.qaCancel = function () {
+            // 取消必須真的送出去（§12.5）：abort → 伺服端 RequestAborted →
+            // OllamaClient 斷線 → Ollama 停止生成。只藏畫面的話那顆 CPU 還要再跑五十秒。
+            if (_inflight) _inflight.abort();
+        };
+
+        /// 這個瀏覽器能不能逐段讀回應。舊瀏覽器（含部分企業內建瀏覽器）沒有
+        /// ReadableStream，fetch 會等整個回應收完才 resolve——那等於沒有串流又多一條路徑。
+        /// 偵測不到就走原本的 /Ask，行為與串流上線前完全一致。
+        function canStream() {
+            return typeof window.ReadableStream === 'function'
+                && typeof window.TextDecoder === 'function';
+        }
+
+        // 非串流：原本那條路，資料查詢模式與不支援串流的瀏覽器都走這裡。
+        function askOnce(waiting, body, mode) {
+            return fetch(mode === 'data' ? '/QaAssistant/AskData' : '/QaAssistant/Ask', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                body: body,
+                signal: _inflight.signal
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (res) {
+                    if (res.success) return res.data;
+                    waiting.className = 'text-danger small';
+                    waiting.textContent = res.message || _msgs.failed;
+                    return null;
+                });
+        }
+
+        /// 串流：逐行讀 NDJSON（§11.2 C4）。回傳的 promise 在收到 done 訊框時 resolve。
+        ///
+        /// ⚠️ 失敗可能發生在**畫面上已經有半段字之後**——這是串流與非串流唯一的行為差異。
+        /// 那種情形下把錯誤訊息接在既有文字後面會讓半截答案看起來像完整答案的一部分，
+        /// 所以錯誤一律整顆氣泡換掉（由 qaAsk 的 catch 統一處理）。
+        /// setStage：把等待中的標籤換掉（由 qaAsk 提供，因為計時器歸它管）。
+        /// 收不到 stage 訊框也不會壞——標籤就停在預設的「思考中」，
+        /// 這正是舊版畫面的行為，所以新舊兩端可以獨立部署。
+        function askStreaming(waiting, body, setStage) {
+            return fetch('/QaAssistant/AskStream', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                body: body,
+                signal: _inflight.signal
+            }).then(function (r) {
+                if (!r.ok || !r.body) {
+                    // 伺服端連串流都沒開始（權限、模組沒註冊）。這裡不自己編訊息，
+                    // 讓它落到統一的失敗處理，症狀才會與其他路徑一致。
+                    var e = new Error('stream-unavailable');
+                    throw e;
+                }
+
+                var reader = r.body.getReader();
+                var decoder = new TextDecoder();
+                var buf = '';        // 尚未湊成一整行的位元組（一行 JSON 可能跨兩個 chunk）
+                var raw = '';        // 累積的原始輸出（含尚未被拿掉的來源行）
+                var result = null;
+                var first = true;
+
+                function frame(line) {
+                    if (!line) return;
+                    var f = JSON.parse(line);
+
+                    if (typeof f.t === 'string') {
+                        if (first) {
+                            // 第一個 token 到了：停掉「思考中…N 秒」的計時，換成答案樣式。
+                            // 這一刻就是 C4 想買的東西——後面還要幾十秒，但畫面已經在動了。
+                            first = false;
+                            if (_timer) { clearInterval(_timer); _timer = null; }
+                            waiting.className = 'u-white-space-pre-wrap';
+                            waiting.textContent = '';
+                        }
+                        raw += f.t;
+                        waiting.textContent = visibleText(raw);   // 一律 textContent（§9.4 I2）
+                        scrollDown();
+                        return;
+                    }
+
+                    if (f.done) { result = f.done; return; }
+
+                    // 階段訊框。刻意不顯示預估剩餘時間：prefill 的進度 Ollama 不吐，
+                    // 唯一能算出秒數的方法是拿寫死的吞吐量去乘，換一台機器就會騙人。
+                    // 這裡只回答「在做什麼、要讀多少」，那兩件事是量得到的。
+                    if (typeof f.stage === 'string') {
+                        if (f.stage === 'search') setStage(_msgs.stageSearch);
+                        else if (f.stage === 'infer') {
+                            setStage(_msgs.stageInferFmt
+                                .replace('{0}', String(f.chunks))
+                                .replace('{1}', Number(f.chars).toLocaleString()));
+                        }
+                        // 認不得的階段就維持現狀——伺服端日後多送一格，
+                        // 舊畫面不該因此顯示空白或當掉。
+                        return;
+                    }
+
+                    if (f.error) {
+                        var e = new Error('qa-stream-error');
+                        e.qaMessage = f.error;
+                        throw e;
+                    }
+                }
+
+                function pump() {
+                    return reader.read().then(function (res) {
+                        if (res.done) {
+                            // 串流結束卻沒收到 done 訊框＝半截答案。伺服端已經會擋，
+                            // 這裡是第二道——讓它顯示成失敗，而不是一段看起來完整的字。
+                            if (result) return result;
+                            var e = new Error('qa-stream-incomplete');
+                            e.qaMessage = _msgs.streamIncomplete;
+                            throw e;
+                        }
+
+                        buf += decoder.decode(res.value, { stream: true });
+                        var lines = buf.split('\n');
+                        buf = lines.pop();          // 最後一段可能只有半行，留到下一輪
+                        for (var i = 0; i < lines.length; i++) frame(lines[i]);
+
+                        return result ? result : pump();
+                    });
+                }
+
+                return pump();
+            });
+        }
+
+        /// 串流過程中該顯示的文字：把行首的「來源：…」之後整段藏起來。
+        /// **與伺服端 QaPromptBuilder.Parse 同一條規則**（只認行首、取最後一個），
+        /// 前綴由伺服端給。判斷錯了也只是短暫的——done 訊框會用權威版本覆蓋整段。
+        function visibleText(raw) {
+            // 全形與半形冒號都要認——Parse 兩種都收，只認一種的話，模型寫半形時
+            // 畫面會在串流途中把來源行整行顯示出來（done 之後才消失），像個閃爍的 bug。
+            var prefixes = [_msgs.citationPrefix, _msgs.citationPrefix.replace('：', ':')];
+            var idx = -1;
+
+            for (var p = 0; p < prefixes.length; p++) {
+                var from = 0;
+                while (from <= raw.length) {
+                    var i = raw.indexOf(prefixes[p], from);
+                    if (i < 0) break;
+                    if ((i === 0 || raw.charAt(i - 1) === '\n') && i > idx) idx = i;
+                    from = i + 1;
+                }
+            }
+
+            if (idx < 0) return raw;
+            return raw.slice(0, idx).replace(/\s+$/, '');
+        }
+
+        window.qaAsk = function () {
+            var input = document.getElementById('qaQuestion');
+            var q = input.value.trim();
+            if (!q || _inflight) return false;
+
+            bubble(_msgs.you, 'u-white-space-pre-wrap').textContent = q;
+            input.value = '';
+
+            // 送出後**立即**鎖住輸入並顯示可取消的等待狀態（§12.5）：
+            // 定案模型實測 52.8 秒／題（CPU 推論），「按鈕轉個圈」在這個量級上不夠。
+            input.disabled = true;
+            document.getElementById('qaSend').disabled = true;
+            document.getElementById('qaCancel').classList.remove('u-display-none');
+
+            var waiting = bubble(_msgs.assistant, 'text-muted small');
+            var started = Date.now();
+
+            // 標籤是可變的：串流會依階段換掉它，秒數照舊每秒跳。
+            // 收不到階段訊框（非串流模式、或舊版伺服端）時它就是原本的「思考中」。
+            var stageLabel = _msgs.thinking;
+            var tick = function () {
+                var s = Math.round((Date.now() - started) / 1000);
+                waiting.textContent = stageLabel + ' ' + _msgs.elapsedFmt.replace('{0}', s);
+            };
+            var setStage = function (label) { stageLabel = label; tick(); };
+            tick();
+            _timer = setInterval(tick, 1000);
+
+            _inflight = new AbortController();
+            var body = new URLSearchParams({ question: q, __RequestVerificationToken: token() });
+            var mode = currentMode();
+
+            var run = (mode === 'manual' && canStream())
+                ? askStreaming(waiting, body, setStage)
+                : askOnce(waiting, body, mode);
+
+            run.then(function (d) {
+                stopWaiting();
+                if (!d) return;                     // 已在內部渲染完畢（錯誤訊框）
+
+                if (mode === 'data') {
+                    renderData(waiting, d);
+                } else {
+                    // 拒答要渲染成明確的狀態，不是空白氣泡（§12.4）。
+                    waiting.className = d.isNoAnswer
+                        ? 'text-secondary fst-italic u-white-space-pre-wrap'
+                        : 'u-white-space-pre-wrap';
+
+                    // 串流時畫面上累積的是原始輸出；這裡用伺服端解析過的本文覆蓋掉，
+                    // 「怎麼拿掉來源行」的規則因此只有伺服端那一份。
+                    waiting.textContent = d.body;   // 預設 textContent，不經 innerHTML（§12.3）
+
+                    if (!d.isNoAnswer) renderCitations(waiting, d.citations);
+                }
+
+                var meta = document.createElement('div');
+                meta.className = 'small text-muted mt-2';
+                meta.textContent = _msgs.elapsedFmt.replace('{0}', Math.round(d.elapsedMs / 1000));
+                waiting.appendChild(meta);
+                scrollDown();
+            })
+            .catch(function (err) {
+                stopWaiting();
+                waiting.className = 'text-muted small fst-italic';
+                waiting.textContent = (err && err.name === 'AbortError')
+                    ? _msgs.cancelled
+                    : ((err && err.qaMessage) || _msgs.failed);
+            });
+
+            return false;   // 阻止表單原生送出
+        };
+
+        /// 送出第二輪（§11.3）。**turnId 是唯一的憑據，工具鍵與參數都只是提議**——
+        /// 伺服端會重跑一次完整權限檢查、再依 schema 過濾一次參數，
+        /// 所以這裡送出去的東西擴大不了任何權限（見 IQaToolQueryService.ConfirmAsync）。
+        window.qaConfirmRun = function (e, el) {
+            var box = el.closest('[data-turn-id]');
+            if (!box || _inflight) return false;
+
+            var target = box.parentNode;      // 這一則氣泡的本體，等一下整個換成結果
+
+            var body = new URLSearchParams({
+                turnId: box.dataset.turnId,
+                toolKey: box.dataset.toolKey,
+                __RequestVerificationToken: token()
+            });
+
+            // 空字串照樣送出：伺服端把它解讀成「不指定這個參數」，
+            // 那正是使用者把模型憑空填的值清掉時要表達的意思。
+            Array.prototype.forEach.call(box.querySelectorAll('[data-qa-param]'), function (inp) {
+                body.append(_msgs.paramPrefix + inp.getAttribute('data-qa-param'), inp.value);
+            });
+
+            target.textContent = '';
+            target.className = 'text-muted small';
+
+            var started = Date.now();
+            var tick = function () {
+                var s = Math.round((Date.now() - started) / 1000);
+                target.textContent = _msgs.thinking + ' ' + _msgs.elapsedFmt.replace('{0}', s);
+            };
+            tick();
+            _timer = setInterval(tick, 1000);
+
+            document.getElementById('qaQuestion').disabled = true;
+            document.getElementById('qaSend').disabled = true;
+            document.getElementById('qaCancel').classList.remove('u-display-none');
+            _inflight = new AbortController();
+
+            fetch('/QaAssistant/ConfirmData', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                body: body,
+                signal: _inflight.signal
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (res) {
+                    stopWaiting();
+                    if (!res.success) {
+                        target.className = 'text-danger small';
+                        target.textContent = res.message || _msgs.failed;
+                        return;
+                    }
+
+                    renderData(target, res.data);
+
+                    var meta = document.createElement('div');
+                    meta.className = 'small text-muted mt-2';
+                    meta.textContent = _msgs.elapsedFmt.replace('{0}', Math.round(res.data.elapsedMs / 1000));
+                    target.appendChild(meta);
+                    scrollDown();
+                })
+                .catch(function (err) {
+                    stopWaiting();
+                    target.className = 'text-muted small fst-italic';
+                    target.textContent = (err && err.name === 'AbortError') ? _msgs.cancelled : _msgs.failed;
+                });
+
+            return false;
+        };
+
+        /// 放棄這一輪。**只動畫面，不通知伺服端**：那一列會留在待確認狀態，
+        /// 由保留期修剪收掉。刻意不做「取消」端點——它會是一個吃 turnId 的寫入路徑，
+        /// 而它買到的只是讓一列稽核資料早幾天消失。
+        window.qaConfirmDiscard = function (e, el) {
+            var box = el.closest('[data-turn-id]');
+            if (!box) return false;
+
+            var target = box.parentNode;
+            target.className = 'text-muted small fst-italic';
+            target.textContent = _msgs.cancelled;
+            return false;
+        };
+
+        window.qaRebuild = function (e, el) {
+            if (!confirm(_msgs.confirmRebuild)) return false;
+
+            el.disabled = true;
+            var original = el.textContent;
+            el.textContent = _msgs.rebuilding;
+
+            fetch('/QaAssistant/Rebuild', {
+                method: 'POST',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                body: new URLSearchParams({ __RequestVerificationToken: token() })
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (res) {
+                    el.disabled = false;
+                    el.textContent = original;
+                    var b = bubble(_msgs.assistant, res.success ? 'small text-success' : 'small text-danger');
+                    b.textContent = res.message || _msgs.failed;
+                })
+                .catch(function () {
+                    el.disabled = false;
+                    el.textContent = original;
+                    bubble(_msgs.assistant, 'small text-danger').textContent = _msgs.failed;
+                });
+
+            return false;
+        };
+    })();
+</script>
+}

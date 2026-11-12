@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/BAS/Controllers/WarehouseController.cs",
+  "sourceHash": "0ce824cd18dc3669790213b508fc00d68ff207e18c3eaa7775ea38c5f4362c04",
+  "entries": [
+    {
+      "slug": "code-bas-warehousecontroller-f7bb65a7",
+      "lang": "zh",
+      "headingPath": "基本資料 › 主動查核，避免倉庫刪除後留下孤兒資料",
+      "text": "資料關聯性與權威來源說明｜系統在判斷倉庫代碼的有效性時，會以儲位主檔為最主要的參考依據，因為其他單據類型（如庫存移轉、進出貨明細）多數是透過此處存放倉庫代碼。",
+      "approved": true,
+      "sourceSectionHash": "bde184cd782216bf97138709e29124c9551050efad9614847d6a95a5affbaa57"
+    },
+    {
+      "slug": "code-bas-warehousecontroller-b71d411e",
+      "lang": "zh",
+      "headingPath": "基本資料 › 倉庫是否仍被儲位主檔、庫存移轉單或進貨/出貨明細引用中",
+      "text": "倉庫是否仍被使用，影響資料的參考範圍｜此設定決定了系統判斷一個倉庫是否還在被儲位主檔、庫存移轉單（無論是廠內還是跨廠）或是進貨/出貨明細所引用。如果該倉庫正在被這些流程使用中，則會限制相關查詢的範圍。",
+      "approved": true,
+      "sourceSectionHash": "5f326c2fd8f5c3a480a918e5731656d5fbb019c6dbe5f077cd388b3bd0a8607b"
+    }
+  ]
+}

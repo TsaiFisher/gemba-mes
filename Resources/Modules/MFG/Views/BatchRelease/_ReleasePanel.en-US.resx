@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="SecHeader" xml:space="preserve"><value>Batch Info</value></data>
+  <data name="BatchId" xml:space="preserve"><value>Batch ID</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Quantity</value></data>
+  <data name="Priority" xml:space="preserve"><value>Priority</value></data>
+  <data name="PlannedEndDate" xml:space="preserve"><value>Due Date</value></data>
+  <data name="SecPreview" xml:space="preserve"><value>Release Preview (Planned → Recalculated)</value></data>
+  <data name="BlockedHint" xml:space="preserve"><value>Some work orders are short of material (in-transit still insufficient); the batch cannot be released. Replenish stock or adjust in-transit first.</value></data>
+  <data name="ColWo" xml:space="preserve"><value>Work Order</value></data>
+  <data name="ColProduct" xml:space="preserve"><value>Product</value></data>
+  <data name="ColPlanned" xml:space="preserve"><value>Planned</value></data>
+  <data name="ColRecalc" xml:space="preserve"><value>Recalculated</value></data>
+  <data name="ColResult" xml:space="preserve"><value>Result</value></data>
+  <data name="SemiTag" xml:space="preserve"><value>Semi</value></data>
+  <data name="OutcomeBlocked" xml:space="preserve"><value>Short</value></data>
+  <data name="OutcomeRecalc" xml:space="preserve"><value>Confirm</value></data>
+  <data name="OutcomeReady" xml:space="preserve"><value>Ready</value></data>
+  <data name="RiskTip" xml:space="preserve"><value>In-transit locked, not yet arrived but expected on time</value></data>
+  <data name="ShortLabel" xml:space="preserve"><value>Short</value></data>
+  <data name="NoPlanned" xml:space="preserve"><value>No releasable work orders in this batch</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="ReleaseBatch" xml:space="preserve"><value>Release Batch</value></data>
+  <data name="ReleaseConfirm" xml:space="preserve"><value>Release this entire production batch?</value></data>
+  <data name="RecalcPrompt" xml:space="preserve"><value>The recalculated quantity differs from the planned quantity for the following work orders. Confirm to apply:</value></data>
+  <data name="BlockedPrompt" xml:space="preserve"><value>The following work orders are short of material; the batch cannot be released:</value></data>
+  <data name="ReleaseFailed" xml:space="preserve"><value>Release failed, please retry.</value></data>
+  <data name="ViewMaterialStatus" xml:space="preserve"><value>View material status</value></data>
+</root>

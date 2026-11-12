@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ReworkMaterialDocId" xml:space="preserve"><value>Doc No</value></data>
+  <data name="TypeCode" xml:space="preserve"><value>Type</value></data>
+  <data name="TypeRI" xml:space="preserve"><value>Issue for Rework</value></data>
+  <data name="TypeRR" xml:space="preserve"><value>Return from Rework</value></data>
+  <data name="IssueDate" xml:space="preserve"><value>Issue Date</value></data>
+  <data name="WorkCenterCode" xml:space="preserve"><value>Work Center</value></data>
+  <data name="SelectWorkCenter" xml:space="preserve"><value>Select Work Center</value></data>
+  <data name="WorkOrderCode" xml:space="preserve"><value>Work Order</value></data>
+  <data name="WorkOrderCodePlaceholder" xml:space="preserve"><value>Optional; rework without a work order only</value></data>
+  <data name="Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>Approval</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>Lines</value></data>
+  <data name="AddLine" xml:space="preserve"><value>Add Line</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="SourceDoc" xml:space="preserve"><value>Source Doc</value></data>
+  <data name="Qty" xml:space="preserve"><value>Qty</value></data>
+  <data name="UomCode" xml:space="preserve"><value>UOM</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>Unit Price</value></data>
+  <data name="WhCode" xml:space="preserve"><value>WH</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>Location</value></data>
+  <data name="QtyPutAway" xml:space="preserve"><value>Put Away</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Submit" xml:space="preserve"><value>Submit</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>Withdraw</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="CancelConfirm" xml:space="preserve"><value>Cancel Confirm</value></data>
+  <data name="Void" xml:space="preserve"><value>Void</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>Submit for approval?</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>Withdraw approval request?</value></data>
+  <data name="ConfirmConfirm" xml:space="preserve"><value>Confirm this rework material doc?</value></data>
+  <data name="ConfirmCancelConfirm" xml:space="preserve"><value>Cancel the confirmation?</value></data>
+  <data name="VoidReason" xml:space="preserve"><value>Enter void reason (optional)</value></data>
+  <data name="VoidAndReopen" xml:space="preserve"><value>Void &amp; Reopen</value></data>
+  <data name="EntityCodeChangeWillClearLines" xml:space="preserve"><value>Changing the entity will clear existing lines. Continue?</value></data>
+  <data name="SelectProduct" xml:space="preserve"><value>Select Product</value></data>
+  <data name="LookupSource" xml:space="preserve"><value>Select source</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>Remove line</value></data>
+</root>

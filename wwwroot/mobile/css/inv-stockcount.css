@@ -1,0 +1,10 @@
+/* 庫存盤點
+   自 inv/stockcount.html 內聯 <style> 外部化：CSP style-src 已移除 'unsafe-inline'（Program.cs），
+   內聯 <style> 區塊會被瀏覽器整段擋掉。各頁 class 名稱互有衝突（如 .dispatch-card），故一頁一檔。 */
+
+.diff-pos { color: #198754; font-weight: 700; }
+.diff-neg { color: #dc3545; font-weight: 700; }
+.diff-zero{ color: #6c757d; }
+.count-input { font-size: 1.2rem !important; text-align: right; font-weight: 600; }
+.product-row { border-left: 3px solid #dee2e6; }
+.product-row.has-diff { border-left-color: #ffc107; }

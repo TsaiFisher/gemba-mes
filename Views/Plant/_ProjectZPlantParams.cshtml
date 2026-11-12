@@ -1,0 +1,94 @@
+@using SmartFactory.MES.Filters
+@using SmartFactory.MES.Modules.BAS.Models
+@*
+    ProjectZ 廠別參數設定區塊（ProjectZ 自有檔，非 Core）。
+    由 Core 擴充點 _PlantFormModuleExtensions.cshtml 單行委派載入。
+
+    ⚠️ 本區塊必須是**純 HTML**：Views/Plant/Index.cshtml（Core 檔）的面板載入是
+       `body.innerHTML = DOMPurify.sanitize(html)`，走的不是 crud-panel.js，
+       innerHTML 不會執行 <script>，DOMPurify 也會把 <script> 整段移除；
+       CSP 又是 `style-src 'self'`（無 unsafe-inline），故連 style="" 與 <style> 都不可用。
+       ⇒ 三態呈現一律靠 Bootstrap 既有 class 與伺服器端渲染，不要加任何 JS 或行內樣式。
+
+    對應多語資源：Resources/Views/Plant/_ProjectZPlantParams.{zh-TW,en-US}.resx
+    對應後端讀寫：Filters/PlantFormEnhancementFilter.cs
+    參數清單單一來源：Modules/BAS/Models/PlantParamCatalog.cs（新增參數只改那一支）
+*@
+@{
+    var overrides = ViewData[PlantFormEnhancementFilter.OverridesKey] as IReadOnlyDictionary<string, string?>;
+    var globals   = ViewData[PlantFormEnhancementFilter.GlobalsKey]   as IReadOnlyDictionary<string, string?>;
+
+    var title = Localizer["PlantParamSettings"].Value;
+
+    // 兩個頁籤的名字都由這裡供給宿主表單（Views/Plant/_PlantForm.cshtml，ProjectZ 就地漂移版）。
+    // 頁籤是為了「廠別參數」才長出來的，Core 的 _PlantForm 維持單頁、其資源檔也沒有這兩個鍵，
+    // 所以命名留在本部署專案自己的 resx。
+    //
+    // ⚠️ 回傳管道不能用 ViewData：`Html.PartialAsync` 是把呼叫端的 ViewData **複製**一份給
+    //    partial（所以下行的 PlantFormSupportsTabs 讀得到），partial 的寫入回不去宿主。
+    //    實測過——宿主永遠拿不到名字，於是靜靜退回單頁排版，頁籤整組不見。
+    //    改走整個請求共用的 HttpContext.Items；宿主是先把本區塊渲染成字串、再決定要不要長頁籤，
+    //    寫入一定早於讀取。這條相依由 PlantParamsPartial_RendersInsideHostFormTab 守著。
+    Context.Items["PlantFormBasicTabTitle"] = Localizer["BasicInfoTab"].Value;
+    Context.Items["PlantFormExtensionTabTitle"] = title;
+
+    // 宿主表單有沒有把這一段放進自己的頁籤？有就別再重複一個區塊標題；
+    // 沒有（例如這支被掛到別的宿主表單上）就自己補，否則面板尾巴會多一段無標題的欄位。
+    var hostHasTabs = ViewData["PlantFormSupportsTabs"] as bool? == true;
+}
+
+@* Filter 沒投影資料就整段不出現（例如 PlantFormEnhancementFilter 未註冊）——
+   寧可沒有這個區塊，也不要渲染一堆存不進去的欄位。 *@
+@if (globals != null)
+{
+    <div class="@(hostHasTabs ? "p-4" : "px-3 pb-3")">
+        @if (!hostHasTabs)
+        {
+            <div class="fw-bold border-top pt-3 mb-2">
+                <i class="bi bi-sliders me-1"></i>@title
+            </div>
+        }
+
+        @* 存在標記：後端據此區分「勾選全部取消」與「這張表單沒有參數區塊」 *@
+        <input type="hidden" name="@PlantFormEnhancementFilter.PresentField" value="1" />
+
+        @foreach (var (module, icon) in new[]
+        {
+            (PlantParamCatalog.ModuleInv, "bi-box-seam"),
+            (PlantParamCatalog.ModuleMfg, "bi-gear-wide-connected"),
+        })
+        {
+            var defs = PlantParamCatalog.ForModule(module).ToList();
+            var overriddenCount = defs.Count(d => overrides?.ContainsKey(d.Key) == true);
+
+            <details open class="mb-3">
+                <summary class="py-1">
+                    <i class="bi @icon me-1"></i>@Localizer[module + "Settings"]
+                    @if (overriddenCount > 0)
+                    {
+                        <span class="badge bg-warning text-dark ms-1">@Localizer["OverriddenCount", overriddenCount]</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-light text-muted ms-1">@Localizer["AllInherited"]</span>
+                    }
+                </summary>
+                <div class="ps-2 pt-2">
+                    @foreach (var def in defs)
+                    {
+                        var isOverridden = overrides?.TryGetValue(def.Key, out var ovr) == true;
+                        globals.TryGetValue(def.Key, out var globalValue);
+                        var overrideValue = isOverridden ? overrides![def.Key] : globalValue;
+
+                        @await Html.PartialAsync("_PlantParamField",
+                            new PlantParamFieldModel(def, isOverridden, overrideValue, globalValue))
+                    }
+                </div>
+            </details>
+        }
+
+        <div class="form-text">
+            <i class="bi bi-info-circle me-1"></i>@Localizer["PlantParamHint"]
+        </div>
+    </div>
+}

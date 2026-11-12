@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/ACT/Services/Jobs/MrpRunRetentionJobService.cs",
+  "sourceHash": "64b1ffd2183f5dd6d73a3775a66e733a6617cb87981b95c734a7d4a857306720",
+  "entries": [
+    {
+      "slug": "code-act-mrprunretentionjobservice-657ef54d",
+      "lang": "zh",
+      "headingPath": "帳務 › 而「重跑」在日常作業中很頻繁，",
+      "text": "展開單的保留與清理｜物料需求展開單預設保留一百八十天，超過就會被清除。但只清「沒有任何下游產出」的那些：只要還有請購單、生產批、委外需求或採購對帳差異項記著它，整張就保留下來。否則那些單據的來源追溯會指向一張不存在的展開單，點不開也查不到來源。",
+      "approved": true,
+      "sourceSectionHash": "7b8d3b912a4e22ee06514ffa44500600f859727ed6df95f6e9d96f4d767a3172"
+    },
+    {
+      "slug": "code-act-mrprunretentionjobservice-d917df67",
+      "lang": "zh",
+      "headingPath": "帳務 › 單次處理的展開單上限，避免累積多年後首次執行一次撈進過大的候選集",
+      "text": "單次資料處理批次大小限制｜系統在進行單次處理時，為了防止一次性載入的資料量過大，設定了每批次最多只能處理五百筆資料。",
+      "approved": true,
+      "sourceSectionHash": "99113999b55c877ff58002c178ec3e75e1e7f62bd6f23ec69e31299113d472d6"
+    },
+    {
+      "slug": "code-act-mrprunretentionjobservice-da9b3b9d",
+      "lang": "zh",
+      "headingPath": "帳務 › 反查候選展開單中「仍被下游引用」者",
+      "text": "被下游引用的展開單不會被自動清理｜物料需求展開單只要有任何一張下游單據引用到它，整張就會保留下來，不會被定期清理的排程刪掉。",
+      "approved": true,
+      "sourceSectionHash": "56c5cd749f5522f130752f047ec5a1e75a0a0549dffe02a8f6464f7414b3e41e"
+    }
+  ]
+}

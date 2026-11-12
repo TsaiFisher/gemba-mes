@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Warehouse — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>倉庫 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="warehouse.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link active"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-house me-2 text-primary"></i><span lang="zh">倉庫</span><span lang="en">Warehouse</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/Warehouse &nbsp;|&nbsp; 廠別倉庫與儲位管理</span><span lang="en">Route: /BAS/Warehouse &nbsp;|&nbsp; Plant warehouses and storage locations</span></div>
+    </div>
+
+    <p><span lang="zh">倉庫主檔定義本廠所有倉庫，並可在倉庫下設立多個儲位（Storage Location）。庫存管理的入出庫、調撥等操作都需指定倉庫與儲位。</span><span lang="en">The warehouse master defines every warehouse in the plant, and each warehouse can hold several storage locations. Inventory receipts, issues and transfers all require a warehouse and a location.</span></p>
+    <img class="screen-shot" src="img/warehouse.png" data-src-en="img/en/warehouse.png" alt="倉庫畫面截圖" data-alt-en="Warehouse screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">倉庫畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Warehouse screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="warehouse-fields"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">倉庫欄位說明</span><span lang="en">Warehouse fields</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">倉庫代碼</span><span lang="en">Warehouse Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">唯一識別碼，建立後不可修改（例：WH01）</span><span lang="en">Unique code; cannot be changed once created (e.g. WH01)</span></td></tr>
+        <tr><td><span lang="zh">倉庫名稱</span><span lang="en">WH Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">倉庫完整名稱（例：原料倉、成品倉）</span><span lang="en">Full warehouse name (e.g. Raw Material, Finished Goods)</span></td></tr>
+        <tr><td><span lang="zh">倉庫類型</span><span lang="en">Warehouse Type</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">原料（Raw）/ 在製品（WIP）/ 成品（Finished）/ 待驗（Quarantine）/ 委外（Outsource）/ 報廢（Scrap）/ 備料（Staging）/ 客供（Customer Supplied），各類型的可用量與計價處理方式詳見下表</span><span lang="en">Raw / WIP / Finished / Quarantine / Outsource / Scrap / Staging / Customer Supplied; the table below shows how each type is treated in available quantity and in costing</span></td></tr>
+        <tr><td><span lang="zh">是否 MRP 倉</span><span lang="en">MRP Warehouse</span></td><td></td><td><span lang="zh">勾選後，MRP 計算時會納入此倉庫的庫存餘量</span><span lang="en">Once checked, MRP includes the stock held in this warehouse</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後不影響歷史資料，但不可選為新異動目標倉</span><span lang="en">History is unaffected, but it cannot be chosen as the target warehouse of new transactions</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td></td><td><span lang="zh">倉庫補充說明</span><span lang="en">Warehouse notes</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="warehouse-type-and-available-quantity"><i class="bi bi-tags me-2 text-primary"></i><span lang="zh">倉庫類型與可用量</span><span lang="en">Warehouse type and available quantity</span></h2>
+    <p><span lang="zh">倉庫類型除了分類用途外，也決定該倉庫存是否計入「廠級可用量」（MRP 與料況判定的依據）：</span><span lang="en">Besides classification, the warehouse type also decides whether its stock counts toward plant-level available quantity (the basis for MRP and material readiness):</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">類型</span><span lang="en">Type</span></th><th class="u-width-20pct"><span lang="zh">計入可用量</span><span lang="en">Counts toward available quantity</span></th><th><span lang="zh">用途說明</span><span lang="en">Purpose</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">原料（Raw）</span><span lang="en">Raw</span></td><td><span lang="zh">是</span><span lang="en">Yes</span></td><td><span lang="zh">採購進貨、發料來源</span><span lang="en">Source for goods receipt and material issue</span></td></tr>
+        <tr><td><span lang="zh">在製品（WIP）</span><span lang="en">WIP</span></td><td><span lang="zh">是</span><span lang="en">Yes</span></td><td><span lang="zh">製程中半成品</span><span lang="en">Semi-finished goods in process</span></td></tr>
+        <tr><td><span lang="zh">成品（Finished）</span><span lang="en">Finished</span></td><td><span lang="zh">是</span><span lang="en">Yes</span></td><td><span lang="zh">完工入庫、出貨來源</span><span lang="en">Source for production put-away and shipping</span></td></tr>
+        <tr><td><span lang="zh">待驗（Quarantine）</span><span lang="en">Quarantine</span></td><td><b><span lang="zh">否</span><span lang="en">No</span></b></td><td><span lang="zh">IQC 檢驗放行前的暫置區，未放行不得動用</span><span lang="en">Holding area before IQC release; stock cannot be used until it is released</span></td></tr>
+        <tr><td><span lang="zh">委外（Outsource）</span><span lang="en">Outsource</span></td><td><span lang="zh">是</span><span lang="en">Yes</span></td><td><span lang="zh">委外出料的目的地倉</span><span lang="en">Destination warehouse for material sent to outsourcing</span></td></tr>
+        <tr><td><span lang="zh">報廢（Scrap）</span><span lang="en">Scrap</span></td><td><span lang="zh">是</span><span lang="en">Yes</span></td><td><span lang="zh">報廢單／製程損耗的歸集倉。系統不會自動把此倉排除在可用量之外，建議不勾選「是否 MRP 倉」以免報廢品被 MRP 當成可用庫存</span><span lang="en">Collection warehouse for scrap documents and process losses. The system does not exclude it from available quantity automatically, so leave "MRP Warehouse" unchecked to stop MRP treating scrap as usable stock</span></td></tr>
+        <tr><td><span lang="zh">備料（Staging）</span><span lang="en">Staging</span></td><td><b><span lang="zh">是</span><span lang="en">Yes</span></b></td><td><span lang="zh">備料單移入的待領用區，等候生產領料</span><span lang="en">Holding area filled by staging orders, waiting to be issued to production</span></td></tr>
+        <tr><td><span lang="zh">客供（Customer Supplied）</span><span lang="en">Customer Supplied</span></td><td><span lang="zh">是</span><span lang="en">Yes</span></td><td><span lang="zh">客戶提供之料件的唯一合法去處（客供進貨 CI／客供退回 CR）。料可以正常領用去做該客戶的訂單，所以計入可用量；但</span><span lang="en">The only valid destination for material supplied by a customer (customer-supplied receipt CI and return CR). The material can be issued normally for that customer's orders, so it counts toward availability, but </span><b><span lang="zh">單位成本恆為 0、不進移動平均</span><span lang="en">its unit cost is always 0 and it never enters the moving average</span></b><span lang="zh">——所有權屬客戶，不是我們的資產</span><span lang="en"> — it belongs to the customer and is not our asset</span></td></tr>
+      </tbody>
+    </table>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">備料倉為何仍計入可用量：</span><span lang="en">Why staging warehouses still count toward available quantity:</span></strong><span lang="zh">備料倉的料在備料單「確認」時就已被預留鎖住，
+      可用量早已扣過一次；若比照待驗倉再排除一次，等於同一批料扣兩次，全廠可用量會憑空短少、
+      MRP 產生不該有的請購。待驗倉沒有預留機制，所以必須靠倉庫類型排除。</span><span lang="en"> Material in a staging warehouse is already reserved and locked when the staging order is confirmed, so available quantity has been deducted once. Excluding it again the way quarantine stock is excluded would deduct the same material twice, understating plant-wide availability and making MRP raise purchase requests that are not needed. Quarantine warehouses have no reservation mechanism, so they must be excluded by warehouse type.</span>
+    </div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">客供料為何一定要收在客供倉：</span><span lang="en">Why customer-supplied material must go to a customer-supplied warehouse:</span></strong><span lang="zh">移動平均的成本池是「廠別 × 品號」，
+      分母取該品號在該廠的全部在手量。客供料若收進一般倉，它的數量就會進到均價分母、把自有料的單價壓低，
+      而且會擴散到之後每一張出貨的銷貨成本——帳面依然平衡，沒有任何錯誤訊息。分品號或分批號都擋不住，
+      因為分母本來就是全廠同品號加總，只有倉庫類型分得開。系統在過帳時會擋下收往非客供倉的客供異動，
+      而「資料稽核診斷」另有一項專門找出既有落在錯誤倉別的客供庫存，處置方式是把該批調撥到客供倉。</span><span lang="en"> The moving-average cost pool is keyed by plant and item, and the denominator is every on-hand unit of that item in the plant. Customer-supplied material received into an ordinary warehouse therefore enters that denominator, depressing the unit cost of your own stock and spreading into the cost of goods sold of every later shipment — the books still balance and nothing reports an error. Separating by item or by lot does not help, because the denominator sums the whole plant anyway; only the warehouse type separates them. Posting blocks customer-supplied movements aimed at any other warehouse type, and the Data Audit report has a dedicated check that finds customer-supplied stock already sitting in the wrong warehouse; the fix is to transfer that stock into a customer-supplied warehouse.</span>
+    </div>
+
+    <h2 id="location-management"><i class="bi bi-grid me-2 text-primary"></i><span lang="zh">儲位管理</span><span lang="en">Location management</span></h2>
+    <p><span lang="zh">編輯倉庫後，切換至「儲位」分頁可新增、修改、停用儲位。建議每個倉庫至少設定一個預設儲位（例：A-01）。</span><span lang="en">After opening a warehouse, switch to the "Location" tab to add, edit or deactivate locations. Give every warehouse at least one default location (e.g. A-01).</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">儲位代碼</span><span lang="en">Location Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">倉庫內唯一，建議依排架號命名（例：A-01-01）</span><span lang="en">Unique within the warehouse; naming by rack and level is recommended (e.g. A-01-01)</span></td></tr>
+        <tr><td><span lang="zh">儲位名稱</span><span lang="en">Location Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">儲位說明（例：A 排 01 層）</span><span lang="en">Location description (e.g. row A, level 01)</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後不可作為新異動的目標儲位</span><span lang="en">Once inactive, cannot be used as the target location of new transactions</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">新增儲位步驟</span><span lang="en">Adding a location</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在倉庫列表點擊要管理的倉庫，開啟編輯側欄。</span><span lang="en">Click the warehouse you want to manage in the list to open the edit panel.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">切換至「儲位」分頁，點「新增儲位」。</span><span lang="en">Switch to the "Location" tab and click "Add Location".</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">填入儲位代碼、儲位名稱後點「確定」。</span><span lang="en">Enter the location code and name, then click "Confirm".</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">新增完成後點「儲存」確認所有變更。</span><span lang="en">Click "Save" to confirm all changes when you are done.</span></div></div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">新增倉庫</span><span lang="en">Add Warehouse</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進入「基本資料 &gt; 倉庫」，點「新增」。</span><span lang="en">Go to "Basic Data &gt; Warehouse" and click "Add".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">填入代碼、名稱、選擇倉庫類型，視需要勾選「是否 MRP 倉」。</span><span lang="en">Enter the code and name, pick a warehouse type, and check "MRP Warehouse" if needed.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點「儲存」後，切換至「儲位」分頁新增儲位。</span><span lang="en">Click "Save", then switch to the "Location" tab to add locations.</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">MRP 執行時只會計算「是否 MRP 倉」已勾選的倉庫庫存，維修倉、退貨倉通常不需勾選。</span><span lang="en">MRP only counts stock in warehouses with "MRP Warehouse" checked. Repair and return warehouses normally should not be checked.</span>
+    </div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">倉庫代碼不可修改。若需停用倉庫，請確認倉庫內無在手庫存，否則庫存異動將受影響。</span><span lang="en"> The warehouse code cannot be changed. Before deactivating a warehouse, make sure it holds no on-hand stock, otherwise inventory transactions will be affected.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

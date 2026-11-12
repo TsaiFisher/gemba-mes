@@ -1,0 +1,27 @@
+{
+  "sourcePath": "Modules/RPS/Services/ReportSchedulePermissionChecker.cs",
+  "sourceHash": "13bc7df11430568791284c3ed96b62727d785d759997c0c02f1bdb1315cf401c",
+  "entries": [
+    {
+      "slug": "code-rps-reportschedulepermissionchecker-1701d060",
+      "lang": "zh",
+      "headingPath": "報表 › 一次權限判定的結果",
+      "text": "權限判定結果的呈現方式｜如果無法通過權限判定的檢查，系統會直接記錄一個原因說明，讓管理者可以清楚知道無法通過的原因是什麼。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportschedulepermissionchecker-aa3b77cf",
+      "lang": "zh",
+      "headingPath": "報表 › 排程路徑專用的權限檢查",
+      "text": "權限檢查依賴角色ID判斷執行條件｜系統在執行排程時，會根據明確提供的角色識別碼來進行權限檢查，而不是依賴當前登入的使用者環境狀態。這確保了即使在沒有實際使用者登入的背景服務中運行，也能正確地判斷是否需要執行相關操作。",
+      "approved": true
+    },
+    {
+      "slug": "code-rps-reportschedulepermissionchecker-3b4b4195",
+      "lang": "zh",
+      "headingPath": "報表 › 收件人以**他自己的所有角色**判定：",
+      "text": "判斷收件人權限的依據｜系統會根據接收單據的人員所擁有的所有角色來判定其權限，而不是僅使用該人員擁有者（owner）的角色。",
+      "approved": true
+    }
+  ]
+}

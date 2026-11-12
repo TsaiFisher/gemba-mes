@@ -1,0 +1,102 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.ChartOfAccount
+
+@{
+    bool isEdit   = ViewBag.IsEdit as bool? ?? false;
+    bool isSystem = isEdit && Model.IsSystem;
+}
+
+<form id="chartOfAccountForm" method="post"
+      asp-action="@(isEdit ? "Edit" : "Create")"
+      asp-route-id="@(isEdit ? Model.AccountCode : null)"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+
+    <div class="p-3">
+        <div class="row g-3">
+            <div class="col-12 col-md-4">
+                <label asp-for="AccountCode" class="form-label fw-semibold">@Localizer["AccountCode"] <span class="text-danger">*</span></label>
+                @if (isEdit)
+                {
+                    @* 代碼不可改：既有傳票上留的是當下寫進去的字串（無科目主檔可回查），
+                       改了會讓歷史傳票指向一個不存在的科目。 *@
+                    <div class="form-control-plaintext fw-bold text-primary">@Model.AccountCode</div>
+                    <input type="hidden" asp-for="AccountCode" />
+                }
+                else
+                {
+                    <input asp-for="AccountCode" class="form-control" maxlength="20" />
+                    <span asp-validation-for="AccountCode" class="text-danger small"></span>
+                }
+            </div>
+            <div class="col-12 col-md-8">
+                <label asp-for="AccountName" class="form-label fw-semibold">@Localizer["AccountName"] <span class="text-danger">*</span></label>
+                <input asp-for="AccountName" class="form-control" maxlength="100" />
+                <span asp-validation-for="AccountName" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="AccountNameEn" class="form-label fw-semibold">@Localizer["AccountNameEn"]</label>
+                <input asp-for="AccountNameEn" class="form-control" maxlength="100" />
+                <span asp-validation-for="AccountNameEn" class="text-danger small"></span>
+                <div class="form-text">@Localizer["AccountNameEnHint"]</div>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="AccountType" class="form-label fw-semibold">@Localizer["AccountType"] <span class="text-danger">*</span></label>
+                <span asp-validation-for="AccountType" class="text-danger small"></span>
+                @if (isSystem)
+                {
+                    @* 系統科目的性質不可改：自動分錄會用到它，改了之後那些傳票會落在
+                       錯誤的報表段落，而且不會有任何錯誤訊息。 *@
+                    var currentTypeKey = "AccountType_" + Model.AccountType;
+                    <div class="form-control-plaintext">@Localizer[currentTypeKey]</div>
+                    <input type="hidden" asp-for="AccountType" />
+                }
+                else
+                {
+                    <select asp-for="AccountType" class="form-select">
+                        @foreach (var t in Enum.GetValues<AccountType>())
+                        {
+                            @* 見 Index.cshtml 同處註解：鍵先算好，R1 認不得串接寫法。 *@
+                            var tKey = "AccountType_" + t;
+                            <option value="@((int)t)">@((int)t)xxx — @Localizer[tKey]</option>
+                        }
+                    </select>
+                }
+                <div class="form-text">@Localizer["AccountTypeHint"]</div>
+            </div>
+            <div class="col-12">
+                <label asp-for="Remarks" class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+                <input asp-for="Remarks" class="form-control" maxlength="500" />
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-check">
+                    <input asp-for="AllowManualEntry" class="form-check-input" type="checkbox" />
+                    <label asp-for="AllowManualEntry" class="form-check-label">@Localizer["AllowManualEntry"]</label>
+                    <span asp-validation-for="AllowManualEntry" class="text-danger small"></span>
+                </div>
+                <div class="form-text">@Localizer["AllowManualEntryHint"]</div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-check">
+                    <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                    <label asp-for="IsActive" class="form-check-label">@Localizer["IsActive"]</label>
+                    <span asp-validation-for="IsActive" class="text-danger small"></span>
+                </div>
+                <div class="form-text">@Localizer["IsActiveHint"]</div>
+            </div>
+            <div class="col-12">
+                <div class="alert @(isSystem ? "alert-warning" : "alert-info") py-2 mb-0 small">
+                    <i class="bi bi-info-circle me-1"></i>@Localizer[isSystem ? "SystemAccountNotice" : "ScopeNotice"]
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas-footer border-top p-3 d-flex gap-2">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>@Localizer["Save"]</button>
+        <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+    </div>
+</form>

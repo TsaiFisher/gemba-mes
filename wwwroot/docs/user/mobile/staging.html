@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Material Staging — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>備料作業 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link active"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">備料作業</span><span lang="en">Material Staging</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/inv/staging.html &nbsp;|&nbsp; 確認備料單（鎖定庫存），再把料揀移到備料倉</span><span lang="en">Path: /mobile/inv/staging.html &nbsp;|&nbsp; Confirm staging orders (reserve stock), then move the material into the staging area</span></div>
+    </div>
+
+    <p><span lang="zh">從倉儲作業首頁的<strong>「備料作業」</strong>進入。清單列出兩種備料單：<strong>待確認</strong>（已核准的草稿）與<strong>待移入</strong>（已確認）。備料單由桌機開立並送審。</span><span lang="en">Opened from <strong>"Material Staging"</strong> on the warehouse home page. The list holds two kinds of staging orders: <strong>to confirm</strong> (approved drafts) and <strong>to stage</strong> (confirmed). Staging orders are raised and submitted on the desktop.</span></p>
+    <p class="text-muted small"><i class="bi bi-123 me-1"></i><span lang="zh">倉儲作業首頁的「備料作業」卡片會顯示待確認與待移入的備料單筆數。</span><span lang="en">The "Staging" card on the warehouse home page shows how many staging orders are waiting to be confirmed or moved.</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">待確認的單：點<strong>「確認並鎖定庫存」</strong>，把工單的軟鎖定轉給這張備料單。可用量不足會當場提示。<strong>只能在連線時做。</strong></span><span lang="en">For an order to confirm: tap <strong>"Confirm &amp; reserve stock"</strong>, which moves the work order's soft reservation onto this staging order. Insufficient stock is reported on the spot. <strong>Online only.</strong></span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">待移入的單：每一行點選要揀料的來源儲位（列出有庫存的儲位，不含備料倉本身），點<strong>「揀料移入備料倉」</strong>。</span><span lang="en">For an order to stage: tap the source location on each line (locations holding stock are listed, excluding the staging area itself), then tap <strong>"Pick into staging area"</strong>.</span></div></div>
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">移入備料倉後鎖定仍保留，直到發料過帳才釋放，避免備好的料被別張工單用掉。移入送出時若剛好斷線，會先暫存在手機、恢復連線後自動送出。</span><span lang="en">The reservation stays after staging and is released only when the issue is posted, so staged material cannot be taken by another work order. If the connection drops just as you stage, the entry is saved on the phone and sent automatically when it returns.</span></div>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

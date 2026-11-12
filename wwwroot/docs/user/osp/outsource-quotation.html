@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Outsource Quotation — OSP User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>委外報價主檔 — OSP 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">委外管理目錄</span><span lang="en">Outsourcing Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="index.html#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">OSP 畫面</span><span lang="en">OSP Screens</span></div>
+    <a href="outsource-quotation.html" class="nav-link active"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+    <a href="outsource-price.html" class="nav-link"><span lang="zh">委外價格分析</span><span lang="en">Outsource Price Analysis</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關</span><span lang="en">Related</span></div>
+    <a href="../rpt/outsource-performance.html" class="nav-link"><span lang="zh">委外對帳報表（RPT）</span><span lang="en">Outsource reconciliation report (RPT)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-cash-coin me-2 text-primary"></i><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/OutsourceQuotation &nbsp;|&nbsp; 加工廠 × 工序報價維護</span><span lang="en">Route: /OutsourceQuotation &nbsp;|&nbsp; Subcontractor × operation price maintenance</span></div>
+    </div>
+
+    <p><span lang="zh">維護各加工廠對品號/工序的加工單價、幣別與有效期間，供委外採購單自動帶價。</span><span lang="en">Holds each subcontractor's processing price, currency and validity period per product and operation, which outsource POs use to fill in prices automatically.</span></p>
+    <img class="screen-shot" src="img/outsource-quotation.png" data-src-en="img/en/outsource-quotation.png" alt="委外報價主檔畫面截圖" data-alt-en="Outsource quotation screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">委外報價主檔畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Outsource quotation screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">維護報價</span><span lang="en">Maintaining quotations</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」，選擇加工廠、品號/工序，填單價、幣別與有效日。</span><span lang="en">Click "Add", pick the subcontractor and the product/operation, then enter the price, currency and validity dates.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">同條件多筆報價時，委外採購單取有效期間內最新一筆。</span><span lang="en">When several quotations match, the outsource PO takes the most recent one within its validity period.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">委外廠商 / 品號 / 工藝路線</span><span lang="en">Subcontractor / Product / Routing</span></td><td><span lang="zh">各自縮小查詢範圍</span><span lang="en">each narrows the query scope</span></td></tr>
+        <tr><td><span lang="zh">僅顯示有效</span><span lang="en">Active only</span></td><td><span lang="zh">只列出目前在有效期間內且啟用的報價</span><span lang="en">Lists only quotations that are active and within their validity period</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報價欄位</span><span lang="en">Quotation fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">廠商</span><span lang="en">Supplier</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">提供此報價的委外廠商</span><span lang="en">Subcontractor offering this quotation</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">委外加工的料件</span><span lang="en">Item sent out for processing</span></td></tr>
+        <tr><td><span lang="zh">工藝路線 / 工序序</span><span lang="en">Routing / Op Seq</span></td><td><span lang="zh">此報價適用的途程與工序；委外採購單依此帶出單價</span><span lang="en">Routing and operation this quotation applies to; outsource POs take the price from it</span></td></tr>
+        <tr><td><span lang="zh">委外單價</span><span lang="en">Unit Price</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">該工序每單位的委外加工費</span><span lang="en">Outsource processing fee per unit for this operation</span></td></tr>
+        <tr><td><span lang="zh">幣別</span><span lang="en">Currency</span></td><td><span lang="zh">報價的交易幣別；入帳時依匯率換算本位幣</span><span lang="en">Transaction currency of the quotation; it is converted to local currency at posting</span></td></tr>
+        <tr><td><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></td><td><span lang="zh">單價對應的計量單位</span><span lang="en">Unit of measure the price applies to</span></td></tr>
+        <tr><td><span lang="zh">交期天數</span><span lang="en">Lead Days</span></td><td><span lang="zh">廠商承諾的加工天數，供 MRP 與排程推算委外前置期</span><span lang="en">Processing days promised by the subcontractor, used by MRP and scheduling to derive the outsourcing lead time</span></td></tr>
+        <tr><td><span lang="zh">有效起日 / 有效迄日</span><span lang="en">Effective From / Effective To</span></td><td><span lang="zh">報價的適用期間；委外採購單以單據日期落在區間內者為準</span><span lang="en">Validity period of the quotation; an outsource PO uses the one whose period contains the document date</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">啟用／停用。停用的報價不會被新單據引用</span><span lang="en">Active or inactive. Inactive quotations are never pulled into new documents</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="outsource-purchase-order.html"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

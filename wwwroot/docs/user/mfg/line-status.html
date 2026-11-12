@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Line Status Board — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>產線即時看板 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link active"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-broadcast me-2 text-primary"></i><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/LineStatus &nbsp;|&nbsp; 一次總覽全部生產線目前在忙什麼</span><span lang="en">Route: /LineStatus &nbsp;|&nbsp; An at-a-glance view of what every production line is doing</span></div>
+    </div>
+
+    <p><span lang="zh">以卡片方式彙整廠內所有生產線（工作中心設定「屬於生產線」者）的即時狀態：目前是生產中、備料中還是待機，正在執行哪些派工、進度百分比，以及目前在線/備料人員名單與已在崗時長。純即時快照，不需查詢條件，畫面每 30 秒自動重新整理，也可手動點「重新整理」立即更新。</span><span lang="en">Gathers every production line in the plant (work centers flagged as a line) into cards showing its live status — producing, staging or idle — which dispatches are running and their progress percentage, plus who is currently online or staging and how long they have been on the job. It is a pure live snapshot with no query criteria; the page refreshes every 30 seconds and can also be refreshed on demand with "Refresh".</span></p>
+    <img class="screen-shot" src="img/line-status.png" data-src-en="img/en/line-status.png" alt="產線即時看板畫面截圖" data-alt-en="Line status board screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">產線即時看板畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Line status board screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="screen-contents"><i class="bi bi-grid-3x3-gap me-2 text-primary"></i><span lang="zh">畫面內容</span><span lang="en">Screen contents</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">項目</span><span lang="en">Item</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">狀態標籤</span><span lang="en">Status labels</span></td><td><span class="badge bg-success"><span lang="zh">生產中</span><span lang="en">In production</span></span> <span lang="zh">該線有派工正在報工執行；</span><span lang="en">a dispatch on the line is being reported; </span><span class="badge bg-warning text-dark"><span lang="zh">備料中</span><span lang="en">Staging in progress</span></span> <span lang="zh">有派工正在整備尚未開始生產；</span><span lang="en">a dispatch is being set up but production has not started yet; </span><span class="badge bg-secondary"><span lang="zh">待機</span><span lang="en">Idle</span></span> <span lang="zh">目前無進行中的派工</span><span lang="en">No active dispatch</span></td></tr>
+        <tr><td><span lang="zh">派工卡片</span><span lang="en">Dispatch card</span></td><td><span lang="zh">顯示工單號、品號、已完成量／應完成量與進度百分比（每張進行中派工各一張）</span><span lang="en">Shows the work order number, item, completed / target quantity and progress percentage (one card per dispatch in progress)</span></td></tr>
+        <tr><td><span lang="zh">目前在線人員</span><span lang="en">People currently online</span></td><td><span lang="zh">該派工目前開工中（報工 Session 未結束）的作業員名單，附已在崗時長</span><span lang="en">The operators currently working (session not yet ended), with how long they have been on the job</span></td></tr>
+        <tr><td><span lang="zh">目前備料人員</span><span lang="en">Currently preparing</span></td><td><span lang="zh">該派工目前整備中（Setup 未結束）的作業員名單，附已整備時長</span><span lang="en">The operators currently setting up (setup not yet ended), with how long they have been at it</span></td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">本畫面僅顯示</span><span lang="en">This screen only shows </span><strong><span lang="zh">目前所屬廠別</span><span lang="en">Your current plant</span></strong><span lang="zh">的生產線，且僅列出設定為「生產線」的工作中心；一般機台型工作中心不會出現在此看板。</span><span lang="en"> lines, and only work centers configured as a production line are listed; ordinary machine-type work centers do not appear on this board.</span></div>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="dispatch.html"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a><span lang="zh">（實際開工/報工/完工操作）、</span><span lang="en"> (actually starting, reporting and finishing), </span><a href="preparation-board.html"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a><span lang="zh">（開工前的物料/模具準備狀況）</span><span lang="en"> (material and tooling readiness before work starts)</span></p>
+  </main>
+</div>
+</body>
+</html>

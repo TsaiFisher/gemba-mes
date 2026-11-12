@@ -1,0 +1,51 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model MachineStatusOrder
+@{
+    var userNames = ViewBag.UserNames as Dictionary<string, string> ?? new();
+    var requestedByName = Model.RequestedBy != null && userNames.TryGetValue(Model.RequestedBy, out var n) ? n : Model.RequestedBy;
+}
+
+<div class="p-3">
+    <dl class="row mb-3">
+        <dt class="col-sm-4">@Localizer["OrderId"]</dt>
+        <dd class="col-sm-8 font-monospace">@Model.OrderId</dd>
+        <dt class="col-sm-4">@Localizer["EventType"]</dt>
+        <dd class="col-sm-8"><span class="badge bg-secondary">@MfgEnumDisplay.Text(L, Model.EventType)</span></dd>
+        <dt class="col-sm-4">@Localizer["EventAt"]</dt>
+        <dd class="col-sm-8">@DateTimeSvc.ToLocalTime(Model.EventAt).ToString("yyyy-MM-dd HH:mm:ss")</dd>
+        <dt class="col-sm-4">@Localizer["RequestedBy"]</dt>
+        <dd class="col-sm-8">@(requestedByName ?? "—")</dd>
+        <dt class="col-sm-4">@Localizer["Note"]</dt>
+        <dd class="col-sm-8">@(Model.Note ?? "—")</dd>
+    </dl>
+
+    <h6 class="fw-bold mb-2">@Localizer["Lines"]</h6>
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>@Localizer["Machine"]</th>
+                    <th>@Localizer["WorkCenter"]</th>
+                    <th>@Localizer["TargetStatus"]</th>
+                    <th>@Localizer["SourceDocId"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var line in Model.Lines)
+                {
+                    <tr>
+                        <td>@line.MachineCode</td>
+                        <td>@line.WorkCenterCode</td>
+                        <td><span class="badge bg-secondary">@MfgEnumDisplay.Text(L, line.TargetStatus)</span></td>
+                        <td class="small">@(line.SourceDocId ?? "—")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+</div>

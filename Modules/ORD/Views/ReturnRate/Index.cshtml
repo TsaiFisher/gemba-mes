@@ -1,0 +1,112 @@
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Modules.ORD.ViewModels.ReturnRateRowVm>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched    = ViewBag.Searched as bool? ?? false;
+    bool   canPrint       = ViewBag.CanPrint == true;
+    string fromDate       = ViewBag.FromDate      as string ?? "";
+    string toDate         = ViewBag.ToDate        as string ?? "";
+    string searchProduct    = ViewBag.SearchProduct as string ?? "";
+    var productOptions      = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-arrow-return-left me-2 text-warning"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && hasSearched && Model != null && Model.Any())
+        {
+            <a asp-action="Export" asp-route-fromDate="@fromDate" asp-route-toDate="@toDate" asp-route-searchProduct="@searchProduct"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    @* 常用查詢入口（§7.9-6）。放在查詢卡片之外——partial 內有按鈕與輸入框，
+       塞進下面那張卡的 <form> 內會變成巢狀表單。 *@
+    @await Html.PartialAsync("_SavedQueries", "ReturnRate")
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["FromDate"]</label>
+                    <input type="date" name="fromDate" class="form-control" value="@fromDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ToDate"]</label>
+                    <input type="date" name="toDate" class="form-control" value="@toDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Product"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllProducts"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-success text-center"><i class="bi bi-check-circle me-1"></i>@Localizer["NoData"]</div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">@Localizer["ResultTitle"] (@Model.Count @Localizer["Items"])</span>
+                <span class="badge bg-warning text-dark">@Localizer["TotalReturned"]：@Model.Sum(r => r.ReturnedQty).ToString("N2")</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["ProductCode"]</th>
+                                <th>@Localizer["CompanyCode"]</th>
+                                <th class="text-end">@Localizer["ShippedQty"]</th>
+                                <th class="text-end">@Localizer["ReturnedQty"]</th>
+                                <th class="text-center">@Localizer["ReturnRate"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var paged = ReportPaging.Page(Model, ViewData, Context); }
+                            @foreach (var row in paged)
+                            {
+                                var rateClass = row.ReturnRate >= 10 ? "text-danger fw-bold" : row.ReturnRate >= 5 ? "text-warning" : "text-success";
+                                <tr>
+                                    <td>@row.ProductCode</td>
+                                    <td>@row.CompanyCode</td>
+                                    <td class="text-end">@row.ShippedQty.ToString("N2")</td>
+                                    <td class="text-end">@row.ReturnedQty.ToString("N2")</td>
+                                    <td class="text-center @rateClass">@row.ReturnRate%</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @await Html.PartialAsync("_Pagination", paged)
+        </div>
+    }
+</div>

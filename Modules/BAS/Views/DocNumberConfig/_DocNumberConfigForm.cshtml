@@ -1,0 +1,168 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.DocNumberConfig
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    string action = isEdit ? "Edit" : "Create";
+}
+
+@{
+    var plantOptions = ViewBag.PlantOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var selectedPlantIds = ViewBag.SelectedPlantIds as HashSet<string> ?? new HashSet<string>();
+    var plantNames = ViewBag.PlantNames as Dictionary<string, string> ?? new Dictionary<string, string>();
+    // 預設規則（ScopeKey=""）維持全廠適用、不可改；其餘（新增或專屬規則）皆可勾選增減廠別
+    bool isDefaultRule = isEdit && string.IsNullOrEmpty(Model.ScopeKey);
+    bool plantEditable = !isDefaultRule;
+}
+
+<form method="post" asp-action="@action" asp-controller="DocNumberConfig"
+      asp-route-docType="@(isEdit ? Model.DocType : null)"
+      data-ajax="true" class="p-1">
+    @Html.AntiForgeryToken()
+    @if (isEdit)
+    {
+        <input type="hidden" asp-for="ScopeKey" />
+    }
+
+    <div class="row g-3">
+        <!-- 單據類型代號 -->
+        <div class="col-md-5">
+            <label class="form-label fw-semibold">@Localizer["DocType"] <span class="text-danger">*</span></label>
+            @if (isEdit)
+            {
+                <input type="text" class="form-control bg-light" value="@Model.DocType" readonly />
+                <input type="hidden" asp-for="DocType" />
+                <div class="form-text text-muted">@Localizer["DocTypeReadonlyHint"]</div>
+            }
+            else
+            {
+                <input asp-for="DocType" class="form-control font-monospace u-text-transform-none"
+                       placeholder="@Localizer["DocTypePlaceholder"]"
+                       />
+            }
+            <span asp-validation-for="DocType" class="text-danger small"></span>
+        </div>
+
+        <!-- 顯示名稱 -->
+        <div class="col-md-7">
+            <label class="form-label fw-semibold">@Localizer["DocTypeName"] <span class="text-danger">*</span></label>
+            <input asp-for="DocTypeName" class="form-control" placeholder="@Localizer["DocTypeNamePlaceholder"]" />
+            <span asp-validation-for="DocTypeName" class="text-danger small"></span>
+        </div>
+
+        <!-- 適用廠別（可增減；預設規則維持全廠適用不可改） -->
+        <div class="col-md-7">
+            <label class="form-label fw-semibold">@Localizer["ApplicablePlant"]</label>
+            @if (!plantEditable)
+            {
+                <input type="text" class="form-control bg-light" readonly
+                       value="@(Model.PlantIdList.Count == 0
+                            ? Localizer["DefaultAllPlants"].Value
+                            : string.Join("、", Model.PlantIdList.Select(id => plantNames.TryGetValue(id, out var pn) ? $"{id} — {pn}" : id)))" />
+                <div class="form-text text-muted">@Localizer["DefaultPlantLockedHint"]</div>
+            }
+            else
+            {
+                <div class="border rounded p-2 u-max-height-180px u-overflow-y-auto">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input plant-default-cb" id="plantDefault" checked="@(selectedPlantIds.Count == 0)" />
+                        <label class="form-check-label" for="plantDefault">@Localizer["DefaultAllPlants"]</label>
+                    </div>
+                    <hr class="my-2" />
+                    @foreach (var p in plantOptions)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox" name="plantIds" value="@p.Id" class="form-check-input plant-specific-cb"
+                                   id="plant_@p.Id" checked="@selectedPlantIds.Contains((string)p.Id)" />
+                            <label class="form-check-label" for="plant_@p.Id">@p.Id — @p.Name</label>
+                        </div>
+                    }
+                </div>
+                <div class="form-text text-muted">@Localizer["ApplicablePlantHint"]</div>
+            }
+            <span asp-validation-for="PlantId" class="text-danger small"></span>
+        </div>
+
+        <!-- 分隔線 -->
+        <div class="col-12"><hr class="my-0" /><span class="text-muted small fw-semibold">@Localizer["FormatSection"]</span></div>
+
+        <!-- 前置碼 -->
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">@Localizer["Prefix"] <span class="text-danger">*</span></label>
+            <input asp-for="Prefix" id="fldPrefix" class="form-control font-monospace u-text-transform-uppercase u-max-width-100px"
+                   placeholder="GR" />
+            <span asp-validation-for="Prefix" class="text-danger small"></span>
+        </div>
+
+        <!-- 分隔符號 -->
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">@Localizer["Separator"]</label>
+            <input asp-for="Separator" id="fldSeparator" class="form-control font-monospace u-max-width-70px"
+                   placeholder="-" />
+            <span asp-validation-for="Separator" class="text-danger small"></span>
+            <div class="form-text text-muted">@Localizer["SeparatorHint"]</div>
+        </div>
+
+        <!-- 日期格式 -->
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">@Localizer["DateFormat"]</label>
+            <select asp-for="DateFormat" id="fldDateFormat" class="form-select">
+                <option value="0">@Localizer["DateFormat_None"]</option>
+                <option value="1">@Localizer["DateFormat_YY"]</option>
+                <option value="2">@Localizer["DateFormat_YYMM"]</option>
+                <option value="3">@Localizer["DateFormat_YYYYMMDD"]</option>
+            </select>
+            <span asp-validation-for="DateFormat" class="text-danger small"></span>
+        </div>
+
+        <!-- 流水碼位數 -->
+        <div class="col-md-4">
+            <label class="form-label fw-semibold">@Localizer["SeqLength"]</label>
+            <div class="input-group u-max-width-130px">
+                <input asp-for="SeqLength" id="fldSeqLength" type="number" min="1" max="9"
+                       class="form-control text-center" />
+                <span class="input-group-text">@Localizer["Digits"]</span>
+            </div>
+            <span asp-validation-for="SeqLength" class="text-danger small"></span>
+        </div>
+
+        <!-- 重置週期 -->
+        <div class="col-md-4">
+            <label class="form-label fw-semibold">@Localizer["ResetCycle"]</label>
+            <select asp-for="ResetCycle" class="form-select">
+                <option value="0">@Localizer["Reset_Never"]</option>
+                <option value="1">@Localizer["Reset_Yearly"]</option>
+                <option value="2">@Localizer["Reset_Monthly"]</option>
+            </select>
+            <span asp-validation-for="ResetCycle" class="text-danger small"></span>
+            <div class="form-text text-muted">@Localizer["ResetCycleHint"]</div>
+        </div>
+
+        <!-- 即時預覽 -->
+        <div class="col-12">
+            <div class="alert alert-light border py-2 px-3 d-flex align-items-center gap-3 mb-0">
+                <span class="text-muted small">@Localizer["PreviewLabel"]</span>
+                <code class="fs-6 text-primary fw-bold" id="previewBox">—</code>
+            </div>
+        </div>
+
+        <!-- 是否啟用 -->
+        <div class="col-12">
+            <div class="form-check">
+                <input type="checkbox" asp-for="IsActive" class="form-check-input" id="cfgIsActive" />
+                <label class="form-check-label fw-semibold" for="cfgIsActive">@Localizer["IsActive"]</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2 mt-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+            @Localizer["Cancel"]
+        </button>
+    </div>
+</form>

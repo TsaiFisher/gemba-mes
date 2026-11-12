@@ -1,0 +1,214 @@
+{
+  "sourcePath": ".claude/specifications/pur-domain.md",
+  "sourceHash": "9339f79cd105af6774e700dd5308cb3c2975f45a3a6be1380313175ab991039d",
+  "entries": [
+    {
+      "slug": "pur-domain-1d37a75a",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md）",
+      "text": "系統範圍說明｜本系統的設計與規劃涵蓋了採購、委外採購以及供應商管理相關的功能。它會與另一個描述從生產需求觸發委外的流程的文件內容相互補充，而本文件則專注於採購和委外管理的獨立維護作業。",
+      "approved": false,
+      "sourceSectionHash": "b8bcf4a5cbeaa4eaadf9e64a1269310096aa641c944e34789c0aa90102ccc8b5"
+    },
+    {
+      "slug": "pur-domain-b225c74c",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 1. 模組結構",
+      "text": "採購與委外文件流程整合說明｜目前系統使用現有的「外發退料單」功能來處理所有相關的發料和退料事宜，不會新增獨立的文件類型。此外，「委外進貨單」是用來記錄收回加工完成的成品以及進行品管檢驗（IQC）的動作，這與只是退回原料的流程是不同的概念。",
+      "approved": true,
+      "sourceSectionHash": "9fcba9dde44bb031a0e4760c959a7a1c4c1784bc5ccfec8f97742de62b196059"
+    },
+    {
+      "slug": "pur-domain-140f8ba9",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 2. 廠商單價目錄（VendorPriceList）— NOW › 2.1 業務說明",
+      "text": "採購單價格的決定規則｜系統會自動帶入與目前有效議定單價最接近的價格到採購單據上，但使用者可以手動修改這個價格。",
+      "approved": true,
+      "sourceSectionHash": "ab61b0a141f8f1db5a0c4bdd76804339407c4d7e4e4ada56860958a328b8f86b"
+    },
+    {
+      "slug": "pur-domain-c84d9c81",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 2. 廠商單價目錄（VendorPriceList）— NOW › 2.4 UI 規格",
+      "text": "查詢與查看廠商單價目錄的規則｜使用者可以根據廠商、品號或有效的日期範圍來搜尋和檢視廠商單價目錄。在檢視列表時，系統會顯示包含廠商選擇、品號選擇、貨幣別、單價、最小訂購量以及有效起訖日等資訊。",
+      "approved": true,
+      "sourceSectionHash": "abb5b2267f43de0bcac37683ad95ed5cc5a1772aa189dd7741079330a8672382"
+    },
+    {
+      "slug": "pur-domain-4a454afc",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 3. 供應商資格狀態（Company.QualificationStatus）— NOW › 3.1 業務說明",
+      "text": "供應商資格狀態的判斷依據｜當系統需要進行採購或委外下單時，會根據供應商的資格狀態來提供資訊參考。如果該狀態不符合要求，系統只會顯示一個警告訊息，但不會阻止使用者繼續執行下單流程。",
+      "approved": true,
+      "sourceSectionHash": "c7ea31053d6e6843e439bc635a28efeb0ea51872e805d1e3ecd5d0bb158691da"
+    },
+    {
+      "slug": "pur-domain-a148215c",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 3. 供應商資格狀態（Company.QualificationStatus）— NOW › 3.2 欄位設計",
+      "text": "供應商的資格狀態與有效期限｜此系統會根據供應商目前的資格狀態來判斷其是否可以進行採購。當初建立或更新供應商資料時，系統預設的初始狀態為未評核。此外，每個供應商都會有一個資格的有效截止日期，如果沒有設定這個日期，則代表該資格是永久有效的；若已設定了此日期，則表示該資格在該日之後會失效。",
+      "approved": true,
+      "sourceSectionHash": "d1c8a4b1d2b54a648e46b39874bb4e0cd2556c24403e2361ed724f8a947ae497"
+    },
+    {
+      "slug": "pur-domain-15cbf118",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 3. 供應商資格狀態（Company.QualificationStatus）— NOW › 3.3 採購/委外單的整合",
+      "text": "廠商資格狀態的顯示與提醒｜當選擇的供應商資格狀態為暫停時，系統會以紅色警示標記顯示；若資格狀態為試用期，則會顯示黃色警示。此外，如果供應商的資格到期日已經早於今天，系統會提示需要重新評核資格。但無論這些警告訊息如何，系統都不會阻止使用者儲存資料。",
+      "approved": true,
+      "sourceSectionHash": "4cfee62a36d5e4a5a950e3e487217f05ca27a16de4fbee88758582c294751186"
+    },
+    {
+      "slug": "pur-domain-15524afe",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 4. Phase F：委外管理擴充（與 mfg-domain.md §19 Stage 4-6 對齊） › 4.1 委外進貨單（OutsourceReceipt）— ✅ 已實作（Phase A）",
+      "text": "採購進貨單的狀態與損耗計算規則｜此收貨單據採用雙重狀態管理，且其結構包含三層資料。關於超耗罰款的計算，系統會根據合約規定的允收損耗率來決定是否扣款；如果合約沒有約定相關損耗條款（欄位為空），則不會進行任何扣款；只有當明確約定了零容忍時，才會發生全額求償。",
+      "approved": true,
+      "sourceSectionHash": "4108d279242aeeb152abc7bca188d26f763d75761ca970a3bb062f61ca24730f"
+    },
+    {
+      "slug": "pur-domain-94cc903b",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 4. Phase F：委外管理擴充（與 mfg-domain.md §19 Stage 4-6 對齊） › 4.2 委外重工單（OutsourceRework）",
+      "text": "委外重工單的狀態與成本計算規則｜當系統根據不良品檢驗紀錄產生重工單時，會自動帶入相關的定責依據。如果責任歸屬是廠商全責或我方全責，則會產生向廠商扣款或應付加工費的金額；若為共同責任，則會依照設定的比例拆分這兩筆費用。",
+      "approved": true,
+      "sourceSectionHash": "608f3b4b31f05f18681f51206aa050e218bf7288883c5716916d483e9a01e803"
+    },
+    {
+      "slug": "pur-domain-d2865e34",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 4. Phase F：委外管理擴充（與 mfg-domain.md §19 Stage 4-6 對齊） › 4.3 委外發退料（OutsourceMaterialDoc）整合決策（2026-06-01 定案）",
+      "text": "委外發退料的資料整合規則｜當處理委外發退料時，系統會檢查已存在的採購單據，確保所使用的品項數量不能超過派工需求量減去其他未作廢的委外單已經發出的數量；如果某個品項沒有出現在派工的需求中，則無法進行操作。",
+      "approved": true,
+      "sourceSectionHash": "25cd8d4acf5af98f582baa917c99f36a8c6f1ed3fd1d9a14d68a7177b66b7a6a"
+    },
+    {
+      "slug": "pur-domain-f19e0d98",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 4. Phase F：委外管理擴充（與 mfg-domain.md §19 Stage 4-6 對齊） › 4.3 委外發退料（OutsourceMaterialDoc）整合決策（2026-06-01 定案） › 現有 INV 模組的單據",
+      "text": "委外退料的資料處理方式｜當委外廠商將未使用的材料退回時，系統會使用現有的外發退料單功能來記錄，此動作會增加庫存數量。",
+      "approved": true,
+      "sourceSectionHash": "4a673da16096cf73120ff5ffb85da4acd084f9ace1825fcb7717173147c7445e"
+    },
+    {
+      "slug": "pur-domain-a168a1da",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 4. Phase F：委外管理擴充（與 mfg-domain.md §19 Stage 4-6 對齊） › 4.3 委外發退料（OutsourceMaterialDoc）整合決策（2026-06-01 定案） › 委外收回成品（TypeCode OI）— 由 OutsourceReceipt 負責，**非** OutsourceMaterialDoc",
+      "text": "委外入庫與退料的區別｜「委外入庫」是用來記錄加工完成品回到本廠的情況，這個動作是透過專門的接收單據來處理，它與用來記錄原料發給委外廠或未用原料退回的單據類型是不同的。因此，不能將收回成品的紀錄誤認為是原料的退料紀錄。",
+      "approved": true,
+      "sourceSectionHash": "8c3a3d35ee1f0f6061be8e5d1de2d582ddeb83ec638d068046b78a999c979cf7"
+    },
+    {
+      "slug": "pur-domain-b5b4bd92",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 4. Phase F：委外管理擴充（與 mfg-domain.md §19 Stage 4-6 對齊） › 4.4 委外管理選單重組（Phase F 時執行）",
+      "text": "委外管理新增與調整的單據類型｜系統中現在會包含幾種新的或移動到此處的相關單據，包括委外採購單、委外發退料、委外進貨單、委外重工單，以及委外進度追蹤。此外，也會加入委外報價單，這些單據與委外採購單使用相同的流程。庫存作業人員在查看發退料記錄時，可以在庫存管理選單中看到查詢入口，但這不會影響主要操作的入口位置。",
+      "approved": true,
+      "sourceSectionHash": "f0864834ca4b9a50d6aa525b74679eb04e394cf43b0a0b3232649fcda02cc8f8"
+    },
+    {
+      "slug": "pur-domain-a50b99ca",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 4. Phase F：委外管理擴充（與 mfg-domain.md §19 Stage 4-6 對齊） › 4.5 Phase F 驗收標準",
+      "text": "委外品移動與庫存流程規則｜建立委外發料時，如果同時建立了委外採購單和派工，系統會驗證發出的數量是否正確。在處理退回的委外材料時，必須關聯到相關的委外採購單。此外，從接收檢驗、確認到最終入庫成品的完整流程是可操作的；如果檢驗不合格後退件，可以建立新的委外重工單進行重送。系統會自動累計已完成的出貨數量和收到的進貨數量。",
+      "approved": true,
+      "sourceSectionHash": "629cad69031dd6546d267e71b8ca3ea20fc3fa7c7fe9e85a9fc21baecfa3db19"
+    },
+    {
+      "slug": "pur-domain-303d0419",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 5. Phase G：管理報表",
+      "text": "報表顯示的資料來源與位置｜此類型的分析報告，其基礎資訊必須是已經填寫完整的進貨基本資料，並且需要有交貨日期才能生成。這些報表的介面會使用現有的儀表板頁面或純粹的資料表形式來呈現。",
+      "approved": true,
+      "sourceSectionHash": "6ede83c0c7877432a65874ca840ce1758b1349bec2e2df425aea47875f2aefcc"
+    },
+    {
+      "slug": "pur-domain-a4ca57af",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 5. Phase G：管理報表 › 5.1 採購稽催表（Expediting Report）",
+      "text": "採購單逾期狀況與篩選規則｜此報表用來查看那些預計交期已經過了，但實際進貨量還不夠的採購單明細。查詢時，系統會根據廠別、廠商、品號以及超過特定天數（等於或大於N天）的訂單進行篩選。這個報表只會顯示尚未結案的採購單行紀錄。",
+      "approved": true,
+      "sourceSectionHash": "38929ae8316005a999c4a242aab100ea0a68726695c3f115e49289032e0e36e2"
+    },
+    {
+      "slug": "pur-domain-370e0a79",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 5. Phase G：管理報表 › 5.2 委外稽催表",
+      "text": "委外進度追蹤的計算規則｜當採購訂單的數量需要拆分成多個部分進行驗收時，系統會以實際拆分的數量來計算已完成的量，而不是使用原始需求的總量。此外，在判斷是否逾期時，現在會根據超過多少天來篩選資料，並且已確認交貨的數量也會被納入考量範圍內。",
+      "approved": true,
+      "sourceSectionHash": "2ee4fe77889e64dfd05487518d9c2aa70a14bad6b7edae5d19093462db92d29c"
+    },
+    {
+      "slug": "pur-domain-627229ae",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 5. Phase G：管理報表 › 5.3 交期達成率統計",
+      "text": "交期達成率統計規則說明｜此報告會計算廠商的交期達成率，其計算方式是將準時交貨的筆數除以總進貨的筆數。此外，系統也會顯示平均逾期天數和最大逾期天數。使用者可以選擇看全部、採購進貨或委外收貨的資料。對於委外來源，會使用委外訂單表頭上的預計交貨日來進行計算。",
+      "approved": true,
+      "sourceSectionHash": "4005ded22f8e01cb3e41f244e5176d8c9e23dcc38b486ff47aaed98db0e9abee"
+    },
+    {
+      "slug": "pur-domain-9b190206",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 5. Phase G：管理報表 › 5.4 採購金額趨勢",
+      "text": "採購金額趨勢分析規則｜此報表會依據月份和廠商或品號來呈現採購的總金額及筆數。計算時所用的採購含稅總金額是根據實際進貨時的匯率換算成本幣後再加總，而不是直接使用下單時的採購幣金額。",
+      "approved": true,
+      "sourceSectionHash": "a01e81533c832b713f44f4d3cf272219d9d8dc14a95f559ec4c240a7a9d35afa"
+    },
+    {
+      "slug": "pur-domain-f11d1c42",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 5. Phase G：管理報表 › 5.5 廠商延誤統計",
+      "text": "廠商延誤紀錄用於供應商評核｜此報表會顯示哪些廠商的交貨有延遲的情況，並依據延遲的筆數多寡進行排序。此外，系統也會計算平均和最大的延期天數，這些資訊是用來協助您對供應商進行評分參考。",
+      "approved": true,
+      "sourceSectionHash": "58ccc466d5743837bd98142fc6497f937ac391ab50af92c4f41d53c58bf2e270"
+    },
+    {
+      "slug": "pur-domain-6d266aa6",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 5. Phase G：管理報表 › 5.6 Phase G 驗收標準",
+      "text": "報表篩選與多語言支援規則｜稽催表可以根據逾期天數進行過濾，並且可以匯出到試算表。此外，所有提供的報表都支援使用繁體中文和美式英文兩種語言版本。",
+      "approved": true,
+      "sourceSectionHash": "afe19e8c5d49cac9801fa84b6e8ebc1a668d9fe1b7123077ebc8ad281d467e7c"
+    },
+    {
+      "slug": "pur-domain-393672cf",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 6. Phase G：合格供應商評分卡（SRM）",
+      "text": "供應商評分計算的基礎規則｜供應商的整體表現評分是根據公司所有廠區彙總的資料來計算的。在計算不良量時，會加總期間內發生且未作廢的品質檢驗報告中的數量，並追溯到特定的供應商；進貨量則是將過帳進貨明細中的收貨數量加總而成。如果某個評分項目在特定期間沒有任何進貨或到料紀錄，該項目的分數則會被視為滿分 100 分。",
+      "approved": true,
+      "sourceSectionHash": "febafcfce1d88e6e1d1a7e7dbded41e0939bb3c29e98bf8c7889b37f7cd9ec88"
+    },
+    {
+      "slug": "pur-domain-4278260d",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 6. Phase G：合格供應商評分卡（SRM） › 6.2 評核分數來源（系統自動計算）",
+      "text": "評分計算依據的來源說明｜品質分數是根據進貨期間內不良數量佔總進貨量的比例來計算；交期分數則是根據準時進貨筆數佔所有進貨筆數的比率來計算。價格和服務的評分則需要人工填寫或比對市場基準。",
+      "approved": false,
+      "sourceSectionHash": "4803c94c75c9a2e7f96029ae213ef0b7abd1f7d0186ca10ae85a009ce40688ce"
+    },
+    {
+      "slug": "pur-domain-d0cb5619",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 6. Phase G：合格供應商評分卡（SRM） › 6.3 Phase G 驗收標準",
+      "text": "供應商評分與狀態更新規則｜年度或季度進行的評核，系統會自動計算分數並將結果寫入後端。當評核完成並確認合格時，該供應商的公司資格狀態也會同步更新為已核准。此外，系統會顯示過去所有評核總分的趨勢圖，並且可以將完整的評核清單匯出成電子表格或列印成符合格式的檔案。",
+      "approved": true,
+      "sourceSectionHash": "c94856c4a732d2a88e053bb5951fe622d181a6c3ea8c345eb876cd185403e635"
+    },
+    {
+      "slug": "pur-domain-dcebb504",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 7. Phase 時程摘要",
+      "text": "階段劃分與功能範圍說明｜目前採購和委外管理的功能會依據不同的階段來區分。其中，「現在」的狀態已經包含了供應商價格清單以及公司資格狀態的資訊。此外，已完成的部分包括委外進貨單的處理流程，並且在完工後也納入了委外發退料、委外重工單等相關功能。另外，系統目前也具備了採購稽催表和交期達成率等報表，並加入了供應商評分卡的功能，這些功能都已完成。",
+      "approved": false,
+      "sourceSectionHash": "8773dbfa44639ec6c3f14d5314d24f31cc4f4a5686b95df996a5d91383b08562"
+    },
+    {
+      "slug": "pur-domain-6cd6ac75",
+      "lang": "zh",
+      "headingPath": "採購與委外管理領域規格（pur-domain.md） › 8. 關聯文件",
+      "text": "關聯文件說明｜此流程與以下幾個領域的文件有相關性，請參考：委外完整流程的各個環節、關於收貨入庫時庫存變動的處理方式，以及所有新畫面和報表的具體設計規格。",
+      "approved": false,
+      "sourceSectionHash": "d59af7bf81312aafa23eb21972d8d6b62fc4de539a131462b23e1485e98f5b06"
+    }
+  ]
+}

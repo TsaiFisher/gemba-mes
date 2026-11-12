@@ -1,0 +1,124 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* Sidebar Styles */
+#sidebar-container {
+  min-height: calc(100vh - 56px);
+  background-color: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+  padding-top: 20px;
+  transition: all 0.3s ease;
+}
+
+#sidebar-container.collapsed {
+  margin-left: -250px;
+  /* 假設寬度 */
+  flex: 0 0 0;
+  max-width: 0;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+}
+
+#sidebar-container.collapsed+main {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+  padding: 10px 20px;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #e9ecef;
+  color: #007bff;
+}
+
+.sidebar .nav-link i {
+  width: 20px;
+}
+
+.sidebar .collapse {
+  background-color: #f1f3f5;
+}
+
+@media print {
+    header, 
+    #sidebar-container, 
+    footer, 
+    .pagination, 
+    .btn, 
+    .btn-close,
+    .card-header .row,
+    #filterCollapse,
+    .navbar-toggler,
+    .navbar-collapse,
+    .card.mb-4,
+    .table th:last-child, 
+    .table td:last-child {
+        display: none !important;
+    }
+
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+    }
+    
+    .table th, .table td {
+        border: 1px solid #dee2e6 !important;
+        padding: 0.5rem !important;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+    
+    tr {
+        page-break-inside: avoid;
+    }
+
+    code {
+        background-color: transparent !important;
+        padding: 0 !important;
+    }
+}

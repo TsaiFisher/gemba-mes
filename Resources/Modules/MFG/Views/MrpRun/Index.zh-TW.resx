@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>MRP 執行</value></data>
+  <data name="AddEntry" xml:space="preserve"><value>新增 MRP 執行單</value></data>
+  <data name="Add" xml:space="preserve"><value>新增</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>執行單號/備註</value></data>
+  <data name="MrpRunId" xml:space="preserve"><value>執行單號</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="LineCount" xml:space="preserve"><value>需求列數</value></data>
+  <data name="ExecutedAt" xml:space="preserve"><value>展開時間</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="StatusDraft" xml:space="preserve"><value>草稿</value></data>
+  <data name="StatusExecuted" xml:space="preserve"><value>已展開</value></data>
+  <data name="DirtyBadge" xml:space="preserve"><value>有異動</value></data>
+  <data name="DirtyHint" xml:space="preserve"><value>來源訂單或採購已異動，建議重跑此 MRP 執行單以同步。</value></data>
+  <data name="ReRun" xml:space="preserve"><value>重跑</value></data>
+  <data name="ReRunConfirm" xml:space="preserve"><value>確定重跑此 MRP 執行單？將清除前次未投產的展開並重新展開（已投產工單不受影響）。</value></data>
+  <data name="LoadFailed" xml:space="preserve"><value>載入失敗，請重試。</value></data>
+  <data name="ReRunBlockedTitle" xml:space="preserve"><value>此 MRP 執行單無法重跑，下游已有無法回收的作業：</value></data>
+  <data name="ReRunResidualTitle" xml:space="preserve"><value>可以重跑，但下列下游單據不會被自動收斂，重跑後仍需人工處理：</value></data>
+  <data name="ReRunEvalFailed" xml:space="preserve"><value>重跑可行性評估失敗，請重試。</value></data>
+  <data name="ViewTitle" xml:space="preserve"><value>MRP 執行單 {0}</value></data>
+  <data name="EditTitle" xml:space="preserve"><value>編輯 MRP 執行單 {0}</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入條件後按「查詢」</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>操作成功</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="View" xml:space="preserve"><value>檢視</value></data>
+</root>

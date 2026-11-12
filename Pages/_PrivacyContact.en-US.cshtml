@@ -1,0 +1,32 @@
+@model PrivacyModel
+@{
+    var org = Model.Organization ?? "your organization";
+}
+<h2 class="h5 mt-4">Your rights</h2>
+<p>Subject to applicable data protection law, you may ask <strong>@org</strong> to:</p>
+<ul>
+    <li>access or review your personal data;</li>
+    <li>provide a copy of your personal data;</li>
+    <li>supplement or correct your personal data;</li>
+    <li>stop collecting, processing, or using your personal data;</li>
+    <li>delete your personal data.</li>
+</ul>
+<p>
+    Most account data can be viewed and edited under Personal Settings. Where data such as audit logs must be kept
+    for legal or security reasons, a deletion request may not be fulfilled immediately; you will be told why.
+</p>
+
+<h2 class="h5 mt-4">Contact</h2>
+<p>
+    @if (Model.Contact != null)
+    {
+        <text>For questions about this policy or your personal data, please contact: <strong>@Model.Contact</strong></text>
+    }
+    else
+    {
+        <text>For questions about this policy or your personal data, please contact the system administrator at <strong>@org</strong>.</text>
+    }
+</p>
+
+<h2 class="h5 mt-4">Changes to this policy</h2>
+<p>If this policy is revised, this page will be updated and the "Last updated" date at the top will change.</p>

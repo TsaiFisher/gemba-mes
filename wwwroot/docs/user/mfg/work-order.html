@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Work Order Enquiry — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>工單查詢 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link active"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-card-checklist me-2 text-primary"></i><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/WorkOrder &nbsp;|&nbsp; 工單建立、維護與生命週期管理</span><span lang="en">Route: /WorkOrder &nbsp;|&nbsp; Work order creation, maintenance and lifecycle management</span></div>
+    </div>
+
+    <p><span lang="zh">工單是生產執行的核心單據，記載生產品號、數量、工序（自途程快照）與用料。工單類型分一般（Normal）、重工（Rework，需指定來源工單）與委外（Outsource）。工單經投產後產生派工單，報工完成且通過 FQC 後由完工入庫繳庫；全部繳庫後工單自動完工。</span><span lang="en">The work order is the central document of production: it records the item to be made, the quantity, the operations (snapshotted from the routing) and the material. There are three types — normal, rework (which needs a source work order) and outsource. Releasing a work order creates dispatches; once production has been reported and FQC passed, the output is received through Completion Receipt, and the work order finishes automatically when everything has been received.</span></p>
+    <img class="screen-shot" src="img/work-order.png" data-src-en="img/en/work-order.png" alt="工單查詢畫面截圖" data-alt-en="Work order enquiry screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">工單查詢畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Work order enquiry screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">可依狀態、品號、訂單號、預計開工區間篩選。</span><span lang="en">Can be filtered by status, item, order number and planned start date range.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">已規劃</span><span lang="en">Planned</span></span></td><td><span lang="zh">MRP 轉單或手動建立後的初始狀態，可編輯。</span><span lang="en">Initial status after MRP conversion or manual creation; still editable.</span></td></tr><tr><td><span class='badge bg-primary'><span lang="zh">已投產</span><span lang="en">Released</span></span></td><td><span lang="zh">經生產批投產釋出，產生派工單，凍結期內不受 MRP 重排影響。</span><span lang="en">Released through batch release, which creates the dispatches; while frozen it is not moved by an MRP reschedule.</span></td></tr><tr><td><span class='badge bg-info'><span lang="zh">生產中</span><span lang="en">In production</span></span></td><td><span lang="zh">已有報工紀錄。</span><span lang="en">production has already been reported.</span></td></tr><tr><td><span class='badge bg-success'><span lang="zh">已完工</span><span lang="en">Completed</span></span></td><td><span lang="zh">工單的派工全部完工或已取消（且至少一張完工）時自動完工；暫停中的派工不算完成，剩餘量要恢復生產或在派工作業以「剩餘量結案」結束。成本轉入工單實際成本。</span><span lang="en">The work order completes automatically when all its dispatches are closed or cancelled (with at least one closed). A dispatch on hold does not count as finished: its remaining quantity has to be resumed or ended with "Close remaining quantity" on Dispatch Operations. The cost is carried into the work order's actual cost.</span></td></tr><tr><td><span class='badge bg-danger'><span lang="zh">已作廢</span><span lang="en">Cancelled</span></span></td><td><span lang="zh">取消生產；已預留物料自動釋放，尚未結束的派工一併轉為「已取消」，不再出現在現場待辦、也不佔排程產能。</span><span lang="en">Production is cancelled and any reserved material is released automatically. Unfinished dispatches become "Cancelled" at the same time, so they leave the shop-floor list and no longer take up scheduling capacity.</span></td></tr></tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">整品委外工單：委外收回品每次合格入庫都會累計委外派工完工量，收滿後工單直接從「生產中」變「入庫完成」（不經「完工」、不做完工入庫）。</span><span lang="en">Fully outsourced work orders: each time returned goods pass inspection and enter stock the outsourced dispatch's completed quantity grows, and once full the order goes straight from "In progress" to "Received into stock" (no "Completed" step, no production completion).</span></p>
+
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">手動建立工單</span><span lang="en">Create a work order by hand</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」，選擇品號（自動帶入途程）、數量與預計完工日。</span><span lang="en">Click "Add", then choose the item (the routing is filled in automatically), the quantity and the planned completion date.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">重工工單：在列表上對「完工」或「已入庫」的工單按「建立重工」，輸入重工數量，並在「重做工序」只勾需要重做的工序（預設全勾，至少勾一道）。系統開出類型為重工、連到原工單的工單，沿用原工單的批號與途程，只帶勾選的工序與掛在它們底下的用料；用料依「重工數量 ÷ 原工單數量」等比換算，已發量從 0 起算。不良品已入庫（例如已繳庫後才判退）時勾「不良品已入庫」，系統另加一行不良品本身的用料，投產時隨重工發料發出，完工時良品以它的帳面值回存貨；已入庫結案的工單預設勾、已完工未繳庫的預設不勾——生產中判 NG 的不良品不在帳上，勾了會讓倉庫把庫存裡的良品當成不良品發出去。NCR 處置「重工」執行後開出的重工工單規則相同，但帶入全部工序（執行時沒有勾選的地方）；只需重做部分工序時，請改從工單列表「建立重工」建立。投產時 Push 用料自動開的是「重工發料（RI）」，不是一般的廠內發料。重工工單的發退料不入帳，完工入庫時才結算原值與重工損失（見<a href="work-order-variance.html#rework-cost">重工成本</a>）。</span><span lang="en">Rework orders: in the list, click <b>Create Rework</b> on a work order that is Completed or Closed enter the rework quantity, and under <b>Operations to redo</b> tick only the operations that must be redone (all are ticked by default; at least one is required). The system creates a work order of type Rework linked to the original, keeping its batch and routing and copying only the ticked operations and the materials under them; the materials are scaled by rework quantity ÷ original quantity and the issued quantities start at 0. When the defective items are in stock (for example rejected after being received), tick <b>The defective items are in stock</b>: a material line for the defective item itself is added, issued with the rework issue on release, and at completion the good units go back to inventory at its book value. It is ticked by default for a Closed (received) work order and unticked for a Completed one that has not been received — defective items rejected during production are not on the books, and ticking it would make the warehouse issue good units from stock as if they were the defective ones. A rework order created by executing an NCR rework disposition follows the same rules but takes all operations (there is nothing to tick when executing); if only some operations need redoing, create the rework from <b>Create Rework</b> in the work order list instead. On release, the slip created automatically for Push materials is a <b>rework issue (RI)</b>, not an ordinary in-plant issue. Material issued to and returned from a rework order creates no journal entry; the original value and the rework loss are settled at completion receipt (see <a href="work-order-variance.html#rework-cost">Rework cost</a>).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">儲存後經投產流程釋出。</span><span lang="en">Once saved, it is released through the release process.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">釋出後若在等待簽核，可在明細面板按「撤回」取消送審：工單回到「已規劃」、簽核狀態回到草稿，修改後可再釋出。簽核被<strong>駁回或退回修改</strong>時同樣自動回到「已規劃」，修正後重新釋出即可再次送審。哪些工單要送審：有工單簽核流程時，標準成本<strong>超過</strong>廠別參數的金額門檻者送審（沒設門檻則每張都送）；開了強制送審條件的委外、重工或延期工單一律送審。若符合上述條件但本廠<strong>沒有工單簽核流程</strong>，工單會直接核准並跳出提醒，請確認簽核設定。<strong>送審中或被駁回的工單不會被排程，也不能開工</strong>——核准後才進入生產。撤回或退回「已規劃」時，已排程但還沒開工的派工會退回「待排程」，重新投產後再排。</span><span lang="en">If the release is waiting for approval, click "Withdraw" in the detail panel to cancel the submission: the work order goes back to Planned and its approval status to draft, so you can edit it and release it again. When the approval is <strong>rejected or returned for revision</strong>, the work order also goes back to Planned automatically; correct it and release it again to resubmit. Which work orders are submitted: with a work order approval flow, those whose standard cost is <strong>above</strong> the plant's amount threshold (every order if no threshold is set); outsourced, rework or delayed orders are always submitted when the corresponding mandatory condition is on. If an order meets these conditions but the plant has <strong>no work order approval flow</strong>, it is approved directly and a reminder pops up — please check the approval settings. <strong>A work order that is awaiting approval or was rejected is not scheduled and cannot be started</strong> — production begins only after approval. When it goes back to Planned (withdrawn or rejected), dispatches that were scheduled but not started return to "Pending scheduling" and are scheduled again after the next release.</span></div></div>
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh">不再需要的工單在明細面板按「作廢」：未結束的派工一併取消、預留的料釋放。已有產出，或有已領未退的料時會擋下並說明——請先把料退回再作廢。尚未過帳的發料單：草稿到揀料中的會隨作廢自動取消；倉庫<strong>已確認揀料</strong>的發料單會擋下作廢（請倉庫先取消並把料放回原儲位，或過帳後開退料單退回）。已轉<strong>委外採購單</strong>的工單也會擋下：草稿委外採購單請先刪除；已確認者請先到委外採購單作廢（須尚未收貨、在外原料已退回）。工單作廢後，任何殘留的發料單或委外收貨都無法再過帳。已入庫完成或已作廢的工單沒有這個按鈕。</span><span lang="en">To drop a work order you no longer need, click "Void" in the detail panel: its open dispatches are cancelled and reserved materials released. It is blocked, with the reason shown, if anything has been produced or issued materials have not been returned — return the materials first. Unposted issue slips: those from draft up to picking are cancelled automatically with the void; an issue slip the warehouse has <strong>already confirmed as picked</strong> blocks the void (have the warehouse cancel it and put the material back, or post it and then return the materials with a return slip). A work order already converted to an <strong>outsource purchase order</strong> is blocked too: delete a draft outsource PO first; void a confirmed one on Outsource Purchase Orders first (only before any receipt and once materials at the vendor are returned). Once a work order is voided, any leftover issue slip or outsource receipt for it can no longer be posted. Closed or voided work orders have no Void button.</span></div></div>
+    <div class="note-box"><i class="bi bi-slash-circle me-1 text-warning"></i><span lang="zh"><strong>重算為 0 不能投產</strong>：投產當下的可用量已經滿足毛需求（例如成品庫存已足），重算後的生產量是 0，代表這張工單不需生產。系統會擋下並說明，請改按「作廢」。整批投產時，這張工單連同它底下的半成品子工單一起略過，其餘照常投產，結果訊息會列出略過的工單。</span><span lang="en"><strong>A work order recalculated to 0 cannot be released</strong>: the quantity available at release already covers the gross demand (for example there is enough finished stock), so the recalculated quantity is 0 and nothing needs to be produced. The release is blocked with an explanation; void the work order instead. In a batch release, that work order and the semi-finished child orders under it are skipped, the rest are released as usual, and the result message lists the skipped orders.</span></div>
+    <div class="note-box"><i class="bi bi-lock me-1"></i><span lang="zh"><strong>抵掉需求的庫存會保留給原訂單</strong>：投產重算用現有成品抵掉的量（含重算為 0 的整張），會自動保留給這張工單的來源訂單，別的出貨或工單不能動用；出貨時才扣掉。半成品子工單則保留給上階工單，上階工單發料時扣掉。手動建立、不是 MRP 展開的工單沒有來源訂單，不保留。</span><span lang="en"><strong>Stock that covers the demand is held for the original order</strong>: the finished goods counted against the demand at release (including the whole quantity when the result is 0) are reserved for the order behind this work order. Other shipments and work orders cannot use them, and the reservation is used up when that order ships. For a semi-finished child order the stock is held for the parent work order and used up when the parent is issued. Work orders entered by hand, not created by MRP, have no source order and reserve nothing.</span></div>
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">工單列印是發到現場用的：印工單抬頭、工序途程，以及<strong>各工序需領料</strong>——品號、品名、需求量、已發量、已退量、<strong>待發量</strong>（需求 − 已發 ＋ 已退）、單位與發料方式；後沖料完工時自動扣，待發量不適用。<strong>不印成本</strong>（標準／實際成本請在系統畫面查看）。</span><span lang="en">The work order printout is meant for the shop floor: it shows the header, the routing and the <strong>materials to issue for each operation</strong> — product code and name, required, issued and returned quantities, <strong>quantity still to issue</strong> (required − issued + returned), unit and issue method; backflushed materials are deducted automatically at completion, so the quantity to issue does not apply. <strong>Costs are not printed</strong> (see standard and actual costs on screen).</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">表頭</span><span lang="en">Header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">工單號</span><span lang="en">Work Order No</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">本工單要生產的成品／半成品</span><span lang="en">Finished or semi-finished item this work order produces</span></td></tr>
+        <tr><td><span lang="zh">數量</span><span lang="en">Count</span></td><td><span lang="zh">計畫產出量；由 MRP 展開時依累積良率回推投產量</span><span lang="en">Planned output; MRP works the release quantity back from the cumulative yield</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">工單的執行進度（計劃中／已投產／生產中／已完工／已結算）</span><span lang="en">Progress of the work order (planned / released / in production / completed / settled)</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">工序明細</span><span lang="en">Operations</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">序</span><span lang="en">Seq</span></td><td><span lang="zh">工序執行順序</span><span lang="en">Order in which the operations run</span></td></tr>
+        <tr><td><span lang="zh">工序 / 工作中心</span><span lang="en">Operation / Work center</span></td><td><span lang="zh">工序名稱與執行的工作中心</span><span lang="en">Operation name and the work center that performs it</span></td></tr>
+        <tr><td><span lang="zh">整備</span><span lang="en">Setup</span></td><td><span lang="zh">換模、換線等準備時間，每張派工單只計一次</span><span lang="en">Setup time such as changing tooling or lines, counted once per dispatch</span></td></tr>
+        <tr><td><span lang="zh">單位工時</span><span lang="en">Unit Time</span></td><td><span lang="zh">生產一個良品所需的標準工時</span><span lang="en">Standard time needed to produce one good piece</span></td></tr>
+        <tr><td><span lang="zh">委外</span><span lang="en">Outsource</span></td><td><span lang="zh">標示該工序是否委由外部廠商加工</span><span lang="en">Marks whether the operation is subcontracted to an outside supplier</span></td></tr>
+        <tr><td><span lang="zh">用料</span><span lang="en">Materials</span></td><td><span lang="zh">該工序展開自料表的用料清單</span><span lang="en">The material list exploded from the BOM for this operation</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">成本欄位</span><span lang="en">Cost fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">材料 / 人工 / 製造費用</span><span lang="en">Material / Labour / Manufacturing overhead</span></td><td><span lang="zh">三大成本要素，各自列出「標準」與「實際」</span><span lang="en">The three cost elements, each shown as standard and actual</span></td></tr>
+        <tr><td><span lang="zh">標準</span><span lang="en">Standard</span></td><td><span lang="zh">依標準用量與標準費率計算的應耗成本</span><span lang="en">Cost that should have been consumed, calculated from the standard usage and the standard rate</span></td></tr>
+        <tr><td><span lang="zh">實際</span><span lang="en">Actual</span></td><td><span lang="zh">實際投入的料工費累計；工單完工結算後產生差異，期末實際費率重估可能再調整</span><span lang="en">Cumulative material, labour and overhead actually put in; the variance appears once the work order is settled, and the period-end actual rate re-estimate may adjust it again</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="batch-release.html"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>、<a href="dispatch.html"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>、<a href="production-completion.html"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>、<a href="work-order-variance.html"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a></p>
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">工單畫面可檢視物料齊套狀況（MaterialRisk）；料不齊但在途料預計到貨日早於開工日者標示黃色待料風險。</span><span lang="en">The work order screen shows the kitting status (MaterialRisk); where material is short but the in-transit quantity is expected before the start date, it is marked yellow as a material risk.</span>
+    </div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">工單完工由系統依繳庫量自動判定，請勿以人工方式強制結案後再補繳庫。</span><span lang="en"> The system decides when a work order is finished from the quantity received into stock; do not force it closed by hand and then receive the rest afterwards.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

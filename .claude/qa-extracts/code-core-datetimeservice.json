@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Services/DateTimeService.cs",
+  "sourceHash": "8fa02e3d78c52b74259456bc5b677a51e9a2393d07cdb0d42c1e06a01b5a717b",
+  "entries": [
+    {
+      "slug": "code-core-datetimeservice-711155eb",
+      "lang": "zh",
+      "headingPath": "系統共用 › 取得指定時區的今日日期",
+      "text": "獲取特定時區的今日日期｜系統會根據您是否指定了特定的時間時區來決定今天的日期；若沒有指定，則使用目前登入使用者的預設時區。此日期的用途是決定建立單據時所使用的移動日期。",
+      "approved": true,
+      "sourceSectionHash": "9ebf7b8dd1b55eb505bf4e417fb36ee095f284471362013b5c5e73363e55295d"
+    },
+    {
+      "slug": "code-core-datetimeservice-5bff7377",
+      "lang": "zh",
+      "headingPath": "系統共用 › 直接偏移一個時差存進資料庫，而且沒有任何訊息",
+      "text": "儲存時間的規則說明｜如果輸入的時間本身就是以協調世界時（UTC）計算的，系統會直接使用這個時間值進行儲存，不會再做任何時區轉換。",
+      "approved": true,
+      "sourceSectionHash": "d0e93b417698efef694feede793b8a99d4d6786a2eddeec932f6e9607f3e1936"
+    },
+    {
+      "slug": "code-core-datetimeservice-b149c07e",
+      "lang": "zh",
+      "headingPath": "系統共用 › 那是伺服器的時區，不是使用者的",
+      "text": "時區判斷依據為系統設定｜輸入的日期時間會以本機時區作為參考，而不是使用者的本地時區。",
+      "approved": true,
+      "sourceSectionHash": "ed4ca5ba4e448cf74440dcaf6c82d7028e1087f3e6fb6682a914ac8ae6db3705"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.Tax
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    string action = isEdit ? "Edit" : "Create";
+    object? routeValues = isEdit ? new { code = Model.TaxCode } : null;
+}
+
+<form method="post" asp-action="@action" asp-controller="Tax" asp-route-code="@(isEdit ? Model.TaxCode : null)"
+      data-ajax="true" class="p-1">
+    @Html.AntiForgeryToken()
+<fieldset @(isReadOnly ? Html.Raw("disabled=\"disabled\"") : Html.Raw(""))>
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["TaxCode"] <span class="text-danger">*</span></label>
+        @if (isEdit)
+        {
+            <input type="text" class="form-control bg-light" value="@Model.TaxCode" readonly />
+            <input type="hidden" asp-for="TaxCode" />
+            <div class="form-text text-muted">@Localizer["TaxCodeReadonlyHint"]</div>
+        }
+        else
+        {
+            <input asp-for="TaxCode" class="form-control u-text-transform-uppercase" placeholder="@Localizer["TaxCodePlaceholder"]"
+                   />
+        }
+        <span asp-validation-for="TaxCode" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["TaxName"] <span class="text-danger">*</span></label>
+        <input asp-for="TaxName" class="form-control" />
+        <span asp-validation-for="TaxName" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["TaxRate"] <span class="text-danger">*</span></label>
+        <input asp-for="TaxRate" type="number" step="0.0001" min="0" max="1"
+               class="form-control" placeholder="0.05" />
+        <div class="form-text text-muted">@Localizer["TaxRateHint"]</div>
+        <span asp-validation-for="TaxRate" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["Remarks"]</label>
+        <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+        <span asp-validation-for="Remarks" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-4">
+        <div class="form-check">
+            <input type="checkbox" asp-for="IsActive" class="form-check-input" id="taxIsActive" />
+            <label class="form-check-label fw-semibold" for="taxIsActive">@Localizer["IsActive"]</label>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+            @Localizer["Cancel"]
+        </button>
+    </div>
+</fieldset>
+@if (isReadOnly)
+{
+    <div class="px-3 pb-3 pt-2 border-top text-end">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">
+            <i class="bi bi-x-lg me-1"></i>@SL["Close"]
+        </button>
+    </div>
+}
+</form>

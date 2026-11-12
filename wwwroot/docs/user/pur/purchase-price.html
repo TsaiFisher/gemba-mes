@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Purchase Price — PUR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>採購價格比較 — PUR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">PUR 目錄</span><span lang="en">PUR Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">PUR 畫面</span><span lang="en">PUR Screens</span></div>
+    <a href="purchase-request.html" class="nav-link"><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></a>
+    <a href="purchase-order.html" class="nav-link"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></a>
+    <a href="goods-receipt.html" class="nav-link"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></a>
+    <a href="goods-return.html" class="nav-link"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></a>
+    <a href="../osp/outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="../osp/outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="vendor-price-list.html" class="nav-link"><span lang="zh">廠商單價目錄</span><span lang="en">Vendor Price List</span></a>
+    <a href="vendor-evaluation.html" class="nav-link"><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></a>
+    <a href="purchase-overdue.html" class="nav-link"><span lang="zh">採購逾期跟催</span><span lang="en">Overdue Purchase Orders</span></a>
+    <a href="supplier-delivery-rate.html" class="nav-link"><span lang="zh">供應商交期達成率</span><span lang="en">Supplier Delivery Rate</span></a>
+    <a href="purchase-amount.html" class="nav-link"><span lang="zh">採購金額比較</span><span lang="en">Purchase Amount</span></a>
+    <a href="purchase-price.html" class="nav-link active"><span lang="zh">採購價格比較</span><span lang="en">Purchase Price</span></a>
+    <a href="../osp/outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-tag me-2 text-primary"></i><span lang="zh">採購價格比較</span><span lang="en">Purchase Price</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/PurchasePrice &nbsp;|&nbsp; 同品號跨供應商/跨期間價格比較</span><span lang="en">Route: /PurchasePrice &nbsp;|&nbsp; Price comparison for one product across suppliers and periods</span></div>
+    </div>
+
+    <p><span lang="zh">比較同一品號不同供應商與不同期間的採購單價走勢，輔助議價與供應商選擇。</span><span lang="en">Compares the price trend of one product across suppliers and periods, supporting negotiation and supplier selection.</span></p>
+    <img class="screen-shot" src="img/purchase-price.png" data-src-en="img/en/purchase-price.png" alt="採購價格分析畫面截圖" data-alt-en="Purchase price analysis screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">採購價格分析畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Purchase price analysis screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">進貨日（起 / 迄）</span><span lang="en">Receipt date (from / to)</span></td><td><span lang="zh">納入比較的進貨日期區間</span><span lang="en">Receipt date range included in the comparison</span></td></tr>
+        <tr><td><span lang="zh">品號 / 供應商</span><span lang="en">Product / Supplier</span></td><td><span lang="zh">各自縮小查詢範圍</span><span lang="en">each narrows the query scope</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號 / 供應商代號</span><span lang="en">Product / Supplier code</span></td><td><span lang="zh">比較對象</span><span lang="en">Comparison basis</span></td></tr>
+        <tr><td><span lang="zh">進貨日 / 進貨單號</span><span lang="en">Receipt Date / GR No.</span></td><td><span lang="zh">該筆進貨的日期與單號，可回溯明細</span><span lang="en">Date and number of the receipt, so the detail can be traced</span></td></tr>
+        <tr><td><span lang="zh">實際單價</span><span lang="en">Actual Price</span></td><td><span lang="zh">本次進貨實際成交的單價</span><span lang="en">Price actually agreed for this receipt</span></td></tr>
+        <tr><td><span lang="zh">幣別</span><span lang="en">Currency</span></td><td><span lang="zh">成交的交易幣別</span><span lang="en">Currency of the transaction</span></td></tr>
+        <tr><td><span lang="zh">標準單價</span><span lang="en">Standard price</span></td><td><span lang="zh">產品主檔設定的標準採購單價，作為比較基準</span><span lang="en">The standard purchase price on the product master, used as the comparison baseline</span></td></tr>
+        <tr><td><span lang="zh">差異 / 差異%</span><span lang="en">Diff / Diff%</span></td><td><span lang="zh">實際單價 － 標準單價，及其相對比率；正數代表買貴，是議價與成本控管的追蹤點</span><span lang="en">Actual price − standard price and the relative percentage; a positive figure means you paid more, which is the tracking point for negotiation and cost control</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="saved-queries"><i class="bi bi-bookmark-star me-2 text-primary"></i><span lang="zh">存成常用查詢</span><span lang="en">Saving the query</span></h2>
+    <p><span lang="zh">查詢列上方有「我的常用查詢」與「儲存此查詢」，可把這一組條件存起來下次一鍵重跑。存檔時必須選一個相對期間（例如「上個月」），不是固定日期。用法與注意事項見<a href="../rpt/saved-queries.html">常用查詢</a>。</span><span lang="en">Above the search bar are "My saved queries" and "Save this query", which store the current criteria for one-click reuse. You must choose a relative period when saving (for example "last month") rather than fixed dates. See <a href="../rpt/saved-queries.html">saved queries</a> for how they work and what to watch for.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="vendor-price-list.html"><span lang="zh">廠商單價目錄</span><span lang="en">Vendor Price List</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Quality Control (QCR) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>品質管理（QCR）— SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">QCR 畫面</span><span lang="en">QCR screens</span></div>
+    <a href="defect-code.html" class="nav-link"><span lang="zh">不良項目代碼</span><span lang="en">Defect Codes</span></a>
+    <a href="inspection-spec.html" class="nav-link"><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></a>
+    <a href="inspection-order.html" class="nav-link"><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></a>
+    <a href="ncr.html" class="nav-link"><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></a>
+    <a href="instrument.html" class="nav-link"><span lang="zh">檢驗儀器</span><span lang="en">Inspection Instruments</span></a>
+    <a href="spc-analysis.html" class="nav-link"><span lang="zh">SPC 製程能力分析</span><span lang="en">SPC Process Capability</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-shield-check me-2 text-primary"></i><span lang="zh">品質管理（QCR）</span><span lang="en">Quality Control (QCR)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">IQC/IPQC/FQC 檢驗、NCR 不合格品處置、儀器校正與 SPC 製程能力</span><span lang="en">IQC/IPQC/FQC inspection, NCR disposition, instrument calibration and SPC process capability</span></div>
+    </div>
+    <p><span lang="zh">QCR（Quality Control）模組管理三段檢驗與不合格品閉環：IQC 進料檢驗（進貨/委外收貨觸發，MIL-STD-1916 抽樣、VL 切換與跳批）、IPQC 製程檢驗（工序旗標觸發）與 FQC 完工檢驗（完工入庫硬閘口）。檢驗不合格開立 NCR，處置（報廢/重工/特採/退貨）直接連動對應單據。另含檢驗規範、不良項目代碼、儀器校正管理與 SPC 製程能力分析。</span><span lang="en">The QCR (Quality Control) module manages the three inspection stages and closes the loop on nonconforming material: IQC incoming inspection (triggered by a goods receipt or an outsource receipt, with MIL-STD-1916 sampling, VL switching and skip-lot), IPQC in-process inspection (triggered by an operation flag) and FQC final inspection (a hard gate on completion receipt). A failed inspection raises an NCR whose disposition (scrap / rework / use-as-is / return) drives the matching document directly. The module also covers inspection specs, defect codes, instrument calibration and SPC process capability analysis.</span></p>
+
+    <h2 id="the-three-inspection-gates"><i class="bi bi-signpost-2 me-2 text-primary"></i><span lang="zh">檢驗三段閘口</span><span lang="en">The three inspection gates</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">檢驗</span><span lang="en">Inspection</span></th><th><span lang="zh">觸發時機</span><span lang="en">When it is triggered</span></th><th><span lang="zh">閘口強度</span><span lang="en">Strength of the gate</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">IQC 進料</span><span lang="en">IQC incoming</span></td><td><span lang="zh">進貨單/委外收貨（品號需檢驗）</span><span lang="en">Goods receipt or outsource receipt (item requires inspection)</span></td><td><span lang="zh">合格才入良品倉</span><span lang="en">only accepted stock goes into the good-stock warehouse</span></td></tr>
+        <tr><td><span lang="zh">IPQC 製程</span><span lang="en">IPQC in-process</span></td><td><span lang="zh">工序「需要檢驗」旗標</span><span lang="en">The "inspection required" flag on the operation</span></td><td><span lang="zh">不合格不自動停工，人工判斷</span><span lang="en">A failure does not stop work automatically; someone decides</span></td></tr>
+        <tr><td><span lang="zh">FQC 完工</span><span lang="en">FQC final</span></td><td><span lang="zh">完工入庫前</span><span lang="en">before completion receipt</span></td><td><strong><span lang="zh">硬閘口</span><span lang="en">Hard gate</span></strong><span lang="zh">：未合格不可繳庫</span><span lang="en">: stock cannot be received until it passes</span></td></tr>
+      </tbody>
+    </table>
+    <h2 id="flow"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></h2>
+    <p class="small text-muted mb-2"><span lang="zh">依作業先後順序排列，點擊方塊可開啟該畫面的操作說明。</span><span lang="en">Arranged in the order the work is done; click a box to open the instructions for that screen. </span><strong><span lang="zh">虛線外框</span><span lang="en">A dashed outline</span></strong><span lang="zh">為其他模組的作業（以顏色區分模組）。</span><span lang="en"> marks a step in another module (colour-coded by module).</span></p>
+    <div class="flow">
+      <div class="flow-legend">
+        <span class="flow-legend-item m-qcr"><i class="flow-dot"></i><span lang="zh">QCR 品質（本模組）</span><span lang="en">QCR Quality (this module)</span></span>
+        <span class="flow-legend-item m-pur"><i class="flow-dot"></i><span lang="zh">PUR 採購</span><span lang="en">PUR Purchasing</span></span>
+        <span class="flow-legend-item m-mfg"><i class="flow-dot"></i><span lang="zh">MFG 製造</span><span lang="en">MFG Manufacturing</span></span>
+        <span class="flow-legend-item m-inv"><i class="flow-dot"></i><span lang="zh">INV 庫存</span><span lang="en">INV Inventory</span></span>
+        <span class="flow-legend-item m-bas"><i class="flow-dot"></i><span lang="zh">BAS 基本資料</span><span lang="en">BAS Master Data</span></span>
+        <span class="flow-legend-item m-osp"><i class="flow-dot"></i><span lang="zh">OSP 委外</span><span lang="en">OSP Outsource</span></span>
+        <span class="flow-legend-item"><i class="flow-dot flow-dot-ext"></i><span lang="zh">虛線＝其他模組作業</span><span lang="en">Dashed = a step in another module</span></span>
+      </div>
+
+      <div class="flow-row" id="flow-qcr-iqc-incoming">
+        <div class="flow-row-label"><span lang="zh">IQC 進料</span><span lang="en">IQC incoming</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-pur ext" href="../pur/goods-receipt.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></span></a>
+          <span class="flow-plus">／</span>
+          <a class="flow-node m-osp ext" href="../osp/outsource-receipt.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="inspection-order.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">檢驗單（IQC）</span><span lang="en">Inspection order (IQC)</span></span></a>
+          <span class="flow-cond"><span lang="zh">合格</span><span lang="en">Qualified</span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">入良品倉</span><span lang="en">into the good-stock warehouse</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-qcr-ipqc-in-process">
+        <div class="flow-row-label"><span lang="zh">IPQC 製程</span><span lang="en">IPQC in-process</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-mfg ext" href="../mfg/dispatch.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">派工報工（工序需檢驗）</span><span lang="en">Dispatch reporting (operation requires inspection)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="inspection-order.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">檢驗單（IPQC）</span><span lang="en">Inspection order (IPQC)</span></span></a>
+          <span class="flow-cond"><span lang="zh">不合格不停工</span><span lang="en">A failure does not stop work</span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="ncr.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">NCR 不合格品</span><span lang="en">NCR nonconformance</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-qcr-fqc-final">
+        <div class="flow-row-label"><span lang="zh">FQC 完工</span><span lang="en">FQC final</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-mfg ext" href="../mfg/dispatch.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">末工序完工</span><span lang="en">Last operation completed</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="inspection-order.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">檢驗單（FQC）</span><span lang="en">Inspection order (FQC)</span></span></a>
+          <span class="flow-cond"><span lang="zh">硬閘口：合格才可繳庫</span><span lang="en">Hard gate: stock can only be received once it passes</span></span>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg ext" href="../mfg/production-completion.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-qcr-ncr-disposition">
+        <div class="flow-row-label"><span lang="zh">NCR 處置</span><span lang="en">NCR disposition</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-qcr" href="ncr.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">NCR 不合格品</span><span lang="en">NCR nonconformance</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/scrap-doc.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></span></a>
+          <span class="flow-plus">／</span>
+          <a class="flow-node m-mfg ext" href="../mfg/work-order.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">重工工單</span><span lang="en">Rework WO</span></span></a>
+          <span class="flow-plus">／</span>
+          <span class="flow-node m-qcr evt"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">特採放行</span><span lang="en">Use-as-is release</span></span></span>
+          <span class="flow-plus">／</span>
+          <a class="flow-node m-pur ext" href="../pur/goods-return.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-qcr-prerequisites">
+        <div class="flow-row-label"><span lang="zh">事前設定</span><span lang="en">Prerequisites</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-bas ext" href="../bas/product.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">產品主檔（是否需檢驗）</span><span lang="en">Product master (whether inspection is required)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="defect-code.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">不良項目代碼</span><span lang="en">Defect Codes</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="inspection-spec.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">檢驗規範（抽樣水準）</span><span lang="en">Inspection spec (sampling level)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="instrument.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">儀器校正</span><span lang="en">Instrument calibration</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-qcr-quality-analysis">
+        <div class="flow-row-label"><span lang="zh">品質分析</span><span lang="en">Quality analysis</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-qcr" href="inspection-order.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">檢驗實績</span><span lang="en">Inspection results</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="spc-analysis.html"><span class="flow-mod">QCR</span><span class="flow-name"><span lang="zh">SPC 製程能力</span><span lang="en">SPC process capability</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-mfg ext" href="../mfg/defect-rate.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">不良率分析</span><span lang="en">Defect rate analysis</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-pur ext" href="../pur/vendor-evaluation.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-foot">
+        <i class="bi bi-info-circle me-1"></i><span lang="zh">IQC 放行即認列應付並過帳；免驗品號可直接放行入庫。NCR 選擇「退貨」處置時會產生採購退貨草稿單，並與進貨單雙向勾稽。</span><span lang="en">Releasing IQC recognises and posts the payable; items exempt from inspection can be released straight into stock. Choosing the "return" disposition on an NCR creates a draft purchase return that is cross-referenced with the receipt in both directions.</span>
+      </div>
+    </div>
+
+    <h2 id="screen-list"><i class="bi bi-grid me-2 text-primary"></i><span lang="zh">畫面清單</span><span lang="en">Screen list</span></h2>
+    <div class="row g-3">
+      <div class="col-md-6"><a href="defect-code.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-bug me-1 text-primary"></i><span lang="zh">不良項目代碼</span><span lang="en">Defect Codes</span></h6>
+        <div class="text-muted small"><span lang="zh">不良原因分類代碼維護</span><span lang="en">Maintaining defect reason codes</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="inspection-spec.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-clipboard2-pulse me-1 text-primary"></i><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></h6>
+        <div class="text-muted small"><span lang="zh">品號檢驗項目/規格上下限定義</span><span lang="en">Defining inspection items and specification limits per item</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="inspection-order.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-clipboard2-check me-1 text-primary"></i><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></h6>
+        <div class="text-muted small"><span lang="zh">IQC/IPQC/FQC 檢驗單管理與判定</span><span lang="en">Managing and judging IQC/IPQC/FQC inspection orders</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="ncr.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-shield-x me-1 text-primary"></i><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></h6>
+        <div class="text-muted small"><span lang="zh">不合格品處置閉環（報廢/重工/特採/退貨）</span><span lang="en">Closed-loop disposition of nonconforming material (scrap / rework / use-as-is / return)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="instrument.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-thermometer-half me-1 text-primary"></i><span lang="zh">檢驗儀器</span><span lang="en">Inspection Instruments</span></h6>
+        <div class="text-muted small"><span lang="zh">量測儀器與校正週期管理</span><span lang="en">Measuring instruments and calibration interval management</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="spc-analysis.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-graph-up-arrow me-1 text-primary"></i><span lang="zh">SPC 製程能力分析</span><span lang="en">SPC Process Capability</span></h6>
+        <div class="text-muted small"><span lang="zh">Cp/Cpk 製程能力與管制圖</span><span lang="en">Cp/Cpk process capability and control charts</span></div></div></div></a></div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

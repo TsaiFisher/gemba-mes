@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Inventory Balance</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="ProductCodePlaceholder" xml:space="preserve"><value>Enter product code keyword</value></data>
+  <data name="ProductName" xml:space="preserve"><value>Product Name</value></data>
+  <data name="WhCode" xml:space="preserve"><value>Warehouse</value></data>
+  <data name="AllWarehouses" xml:space="preserve"><value>All Warehouses</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>Location</value></data>
+  <data name="AllLocations" xml:space="preserve"><value>All Locations</value></data>
+  <data name="Print" xml:space="preserve"><value>Print</value></data>
+  <data name="LotNo" xml:space="preserve"><value>Lot No.</value></data>
+  <data name="IncludeZero" xml:space="preserve"><value>Include zero stock</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="Reset" xml:space="preserve"><value>Reset</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>Enter filters then click Search</value></data>
+  <data name="QtyOnHand" xml:space="preserve"><value>On Hand</value></data>
+  <data name="QtyReserved" xml:space="preserve"><value>Reserved</value></data>
+  <data name="QtyAvailable" xml:space="preserve"><value>Available</value></data>
+  <data name="StockUom" xml:space="preserve"><value>UOM</value></data>
+  <data name="UnitCost" xml:space="preserve"><value>Unit Cost</value></data>
+  <data name="NoData" xml:space="preserve"><value>No data</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>Export Excel</value></data>
+  <data name="ProductSummaryTitle" xml:space="preserve"><value>Product summary (whole plant)</value></data>
+  <data name="PlantOnHand" xml:space="preserve"><value>Plant on hand (excl. quarantine)</value></data>
+  <data name="PlantReserved" xml:space="preserve"><value>Plant reserved</value></data>
+  <data name="PlantAvailable" xml:space="preserve"><value>Plant available</value></data>
+  <data name="ProductSummaryNote" xml:space="preserve"><value>Reservations hold quantities for work orders, staging or MRP demand per plant and product, not per location, so they are shown only here; the detail below is the actual on-hand quantity in each location. Plant available = on hand − reserved, the same calculation as Stock Shortage and the material check at work order release.</value></data>
+</root>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence><xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" /></xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Machine" xml:space="preserve"><value>Machine</value></data>
+  <data name="SelectMachine" xml:space="preserve"><value>Select machine</value></data>
+  <data name="EventType" xml:space="preserve"><value>Event Type</value></data>
+  <data name="SelectEvent" xml:space="preserve"><value>Select event</value></data>
+  <data name="SourceDocId" xml:space="preserve"><value>Source Doc</value></data>
+  <data name="SourceDocIdPlaceholder" xml:space="preserve"><value>Enter repair/maintenance order (optional)</value></data>
+  <data name="Note" xml:space="preserve"><value>Remarks</value></data>
+  <data name="NotePlaceholder" xml:space="preserve"><value>Enter remarks (optional)</value></data>
+  <data name="Submit" xml:space="preserve"><value>Submit Event</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="EventCI" xml:space="preserve"><value>Restore to Available</value></data>
+  <data name="EventII" xml:space="preserve"><value>Set to Standby</value></data>
+  <data name="EventDI" xml:space="preserve"><value>Breakdown</value></data>
+  <data name="EventDO" xml:space="preserve"><value>Breakdown Resolved</value></data>
+  <data name="EventHI" xml:space="preserve"><value>Start Maintenance</value></data>
+  <data name="EventHO" xml:space="preserve"><value>Maintenance Done</value></data>
+  <data name="EventEO" xml:space="preserve"><value>Enter Modification</value></data>
+  <data name="EventFO" xml:space="preserve"><value>Loan Out</value></data>
+  <data name="EventFI" xml:space="preserve"><value>Return from Loan</value></data>
+  <data name="EventGO" xml:space="preserve"><value>Retire / Scrap</value></data>
+  <data name="EventCO" xml:space="preserve"><value>Send for External Repair</value></data>
+  <data name="CurrentStatusFmt" xml:space="preserve"><value> (current: {0})</value></data>
+</root>

@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CarriedInCost" xml:space="preserve"><value>Carried-in Cost</value></data>
+  <data name="ConfirmedQty" xml:space="preserve"><value>Confirmed Qty</value></data>
+  <data name="LeadDays" xml:space="preserve"><value>Lead Days</value></data>
+  <data name="SlipDate" xml:space="preserve"><value>Slip Date</value></data>
+  <data name="SlipId" xml:space="preserve"><value>Slip No</value></data>
+  <data name="SlipNo" xml:space="preserve"><value>Slip No</value></data>
+  <data name="SplitQty" xml:space="preserve"><value>Split Qty</value></data>
+  <data name="TransferredQty" xml:space="preserve"><value>Transferred Qty</value></data>
+  <data name="DemandQty" xml:space="preserve"><value>Demand Qty</value></data>
+  <data name="DemandType" xml:space="preserve"><value>Demand Type</value></data>
+  <data name="EffectiveFrom" xml:space="preserve"><value>Effective From</value></data>
+  <data name="IqcExempt" xml:space="preserve"><value>IQC Exempt (Direct Putaway)</value></data>
+  <data name="QtyGood" xml:space="preserve"><value>Good Qty</value></data>
+  <data name="QtyRejected" xml:space="preserve"><value>Rejected Qty</value></data>
+  <data name="StandardMaterialCost" xml:space="preserve"><value>Standard Material Cost</value></data>
+  <data name="StandardOverheadCost" xml:space="preserve"><value>Standard Overhead Cost</value></data>
+  <data name="ActualMaterialCost" xml:space="preserve"><value>Actual Material Cost</value></data>
+  <data name="ActualLaborCost" xml:space="preserve"><value>Actual Labor Cost</value></data>
+  <data name="ActualOverheadCost" xml:space="preserve"><value>Actual Overhead Cost</value></data>
+  <data name="ActualOutsourceCost" xml:space="preserve"><value>Actual Outsource Cost</value></data>
+  <data name="WipMaterial" xml:space="preserve"><value>WIP Material</value></data>
+  <data name="WipLabor" xml:space="preserve"><value>WIP Labor</value></data>
+  <data name="WipOverhead" xml:space="preserve"><value>WIP Overhead</value></data>
+  <data name="WipTotal" xml:space="preserve"><value>WIP Total</value></data>
+  <data name="QtyCompleted" xml:space="preserve"><value>Qty Completed</value></data>
+  <data name="QtyInProcess" xml:space="preserve"><value>Qty In Process</value></data>
+  <data name="SnapshotAt" xml:space="preserve"><value>Snapshot At</value></data>
+  <data name="WorkOrdersRecosted" xml:space="preserve"><value>Work Orders Recosted</value></data>
+  <data name="WipSnapshots" xml:space="preserve"><value>WIP Snapshots</value></data>
+  <data name="LaborAdjustment" xml:space="preserve"><value>Labor Adjustment</value></data>
+  <data name="OverheadAdjustment" xml:space="preserve"><value>Overhead Adjustment</value></data>
+  <data name="MachineHourlyRate" xml:space="preserve"><value>Machine Hourly Rate</value></data>
+  <data name="OpeningBalance" xml:space="preserve"><value>Opening Balance</value></data>
+  <data name="ClosingBalance" xml:space="preserve"><value>Closing Balance</value></data>
+  <data name="InQty" xml:space="preserve"><value>In Qty</value></data>
+  <data name="OutQty" xml:space="preserve"><value>Out Qty</value></data>
+  <data name="Balance" xml:space="preserve"><value>Balance</value></data>
+  <data name="TotalIn" xml:space="preserve"><value>Total In</value></data>
+  <data name="TotalOut" xml:space="preserve"><value>Total Out</value></data>
+  <data name="ReservedQty" xml:space="preserve"><value>Reserved Qty</value></data>
+  <data name="SourceType" xml:space="preserve"><value>Source Type</value></data>
+  <data name="SourceDocId" xml:space="preserve"><value>Source Document</value></data>
+  <data name="RequiredDate" xml:space="preserve"><value>Required Date</value></data>
+  <data name="SessionId" xml:space="preserve"><value>Session ID</value></data>
+  <data name="ReportId" xml:space="preserve"><value>Report ID</value></data>
+  <data name="SetupStartAt" xml:space="preserve"><value>Setup Start Time</value></data>
+  <data name="StartAt" xml:space="preserve"><value>Session Start Time</value></data>
+  <data name="ReportedAt" xml:space="preserve"><value>Reported At</value></data>
+  <data name="QtyOk" xml:space="preserve"><value>Qty OK</value></data>
+  <data name="QtyNg" xml:space="preserve"><value>Qty NG</value></data>
+  <data name="ActualQty" xml:space="preserve"><value>Actual Qty</value></data>
+  <data name="ContainerSeq" xml:space="preserve"><value>Container Seq</value></data>
+  <data name="EventType" xml:space="preserve"><value>Event Type</value></data>
+  <data name="EventAt" xml:space="preserve"><value>Event Time</value></data>
+  <data name="OrderId" xml:space="preserve"><value>Order ID</value></data>
+  <data name="TargetStatus" xml:space="preserve"><value>Target Status</value></data>
+  <data name="ClientTimestamp" xml:space="preserve"><value>Client Timestamp</value></data>
+  <data name="IssueMethod" xml:space="preserve"><value>Issue Method</value></data>
+  <data name="BackflushTiming" xml:space="preserve"><value>Backflush Timing</value></data>
+  <data name="IssueSlipId" xml:space="preserve"><value>Issue Slip ID</value></data>
+  <data name="RequisitionId" xml:space="preserve"><value>Requisition ID</value></data>
+  <data name="RequestedAt" xml:space="preserve"><value>Requested At</value></data>
+  <data name="RequestedQty" xml:space="preserve"><value>Requested Qty</value></data>
+  <data name="IsDirty" xml:space="preserve"><value>Has Changes</value></data>
+  <data name="CountMode" xml:space="preserve"><value>Count Mode</value></data>
+  <data name="SheetStatus" xml:space="preserve"><value>Sheet Status</value></data>
+  <data name="SheetId" xml:space="preserve"><value>Sheet No.</value></data>
+  <data name="BookQty" xml:space="preserve"><value>Book Qty</value></data>
+  <data name="IsOverdue" xml:space="preserve"><value>Is Overdue</value></data>
+  <data name="SpecCode" xml:space="preserve"><value>Spec Code</value></data>
+  <data name="SpecId" xml:space="preserve"><value>Spec ID</value></data>
+  <data name="SpecName" xml:space="preserve"><value>Spec Name</value></data>
+  <data name="ScopeKey" xml:space="preserve"><value>Scope Key</value></data>
+  <data name="HasSigmaWarning" xml:space="preserve"><value>Has Sigma Warning</value></data>
+  <data name="RequiresFpi" xml:space="preserve"><value>Requires FPI</value></data>
+  <data name="QtyScrap" xml:space="preserve"><value>Scrap Qty</value></data>
+  <data name="MaterialVarianceCost" xml:space="preserve"><value>Material Variance Cost</value></data>
+  <data name="PickedQty" xml:space="preserve"><value>Picked Qty</value></data>
+  <data name="StagingId" xml:space="preserve"><value>Staging No.</value></data>
+  <data name="DocDate" xml:space="preserve"><value>Doc Date</value></data>
+  <data name="Basis" xml:space="preserve"><value>Allocation Basis</value></data>
+  <data name="CostType" xml:space="preserve"><value>Cost Type</value></data>
+  <data name="TotalLandedCost" xml:space="preserve"><value>Total Landed Cost</value></data>
+  <data name="PurchaseAmount" xml:space="preserve"><value>Purchase Amount</value></data>
+  <data name="Weight" xml:space="preserve"><value>Weight</value></data>
+  <data name="OriginalUnitCost" xml:space="preserve"><value>Original Unit Cost</value></data>
+  <data name="AllocatedCost" xml:space="preserve"><value>Allocated Cost</value></data>
+  <data name="CapitalizedCost" xml:space="preserve"><value>Capitalized Cost</value></data>
+  <data name="ExpensedCost" xml:space="preserve"><value>Expensed Cost</value></data>
+  <data name="NewUnitCost" xml:space="preserve"><value>New Unit Cost</value></data>
+  <data name="GoodsReceiptLineNo" xml:space="preserve"><value>GR Line No.</value></data>
+  <data name="LandedCostAllocationId" xml:space="preserve"><value>Allocation No.</value></data>
+  <data name="MaterialRisk" xml:space="preserve">
+    <value>Material Risk</value>
+  </data>
+  <data name="VoidDate" xml:space="preserve"><value>Void Date</value></data>
+  <data name="GrossDemandQty" xml:space="preserve"><value>Gross Demand Qty</value></data>
+  <data name="IsSemi" xml:space="preserve"><value>Semi-Finished</value></data>
+  <data name="NewQuantity" xml:space="preserve"><value>New Quantity</value></data>
+  <data name="Outcome" xml:space="preserve"><value>Outcome</value></data>
+  <data name="Planned" xml:space="preserve"><value>Planned Qty</value></data>
+  <data name="PlannedQty" xml:space="preserve"><value>Planned Qty</value></data>
+  <data name="PlannedWorkOrderCount" xml:space="preserve"><value>Planned Work Order Count</value></data>
+  <data name="Recalculated" xml:space="preserve"><value>Recalculated Qty</value></data>
+  <data name="RecalculatedQty" xml:space="preserve"><value>Recalculated Qty</value></data>
+  <data name="Released" xml:space="preserve"><value>Released</value></data>
+  <data name="ScaleFactor" xml:space="preserve"><value>Scale Factor</value></data>
+  <data name="Submitted" xml:space="preserve"><value>Submitted</value></data>
+  <data name="RowCap" xml:space="preserve"><value>Row Limit</value></data>
+  <data name="Truncated" xml:space="preserve"><value>Truncated</value></data>
+  <data name="APInvoiceId" xml:space="preserve"><value>AP Invoice No.</value></data>
+  <data name="APPaymentId" xml:space="preserve"><value>Payment No.</value></data>
+  <data name="ARInvoiceId" xml:space="preserve"><value>AR Invoice No.</value></data>
+  <data name="ARReceiptId" xml:space="preserve"><value>Receipt No.</value></data>
+  <data name="AccountCode" xml:space="preserve"><value>Account Code</value></data>
+  <data name="AccountName" xml:space="preserve"><value>Account Name</value></data>
+  <data name="AccountType" xml:space="preserve"><value>Account Type</value></data>
+  <data name="AccountNo" xml:space="preserve"><value>Account No.</value></data>
+  <data name="AchievementRate" xml:space="preserve"><value>Achievement Rate</value></data>
+  <data name="ActTotalCost" xml:space="preserve"><value>Actual Total Cost</value></data>
+  <data name="Action" xml:space="preserve"><value>Action</value></data>
+  <data name="ActionKey" xml:space="preserve"><value>Action Key</value></data>
+  <data name="ActionTime" xml:space="preserve"><value>Action Time</value></data>
+  <data name="ActualAmount" xml:space="preserve"><value>Actual Amount</value></data>
+  <data name="ActualLabor" xml:space="preserve"><value>Actual Labor</value></data>
+  <data name="ActualMaterial" xml:space="preserve"><value>Actual Material</value></data>
+  <data name="ActualOverhead" xml:space="preserve"><value>Actual Overhead</value></data>
+  <data name="ActualOutsource" xml:space="preserve"><value>Actual Outsource</value></data>
+  <data name="ActualSampleQty" xml:space="preserve"><value>Actual Sample Qty</value></data>
+  <data name="ActualTotal" xml:space="preserve"><value>Actual Total</value></data>
+  <data name="ActualUnitPrice" xml:space="preserve"><value>Actual Unit Price</value></data>
+  <data name="AgingBucket" xml:space="preserve"><value>Aging Bucket</value></data>
+  <data name="AgingDays" xml:space="preserve"><value>Aging Days</value></data>
+  <data name="AgingDaysFrom" xml:space="preserve"><value>Aging Days From</value></data>
+  <data name="AgingDaysTo" xml:space="preserve"><value>Aging Days To</value></data>
+  <data name="AllocatedAmount" xml:space="preserve"><value>Allocated Amount</value></data>
+  <data name="AllocatedAmountLocal" xml:space="preserve"><value>Allocated Amount (Local)</value></data>
+  <data name="AllowedScrapRate" xml:space="preserve"><value>Allowed Scrap Rate</value></data>
+  <data name="Amount" xml:space="preserve"><value>Amount</value></data>
+  <data name="AmountLocal" xml:space="preserve"><value>Amount (Local)</value></data>
+  <data name="ApproverType" xml:space="preserve"><value>Approver Type</value></data>
+  <data name="ArBalance" xml:space="preserve"><value>AR Balance</value></data>
+  <data name="AssessedAt" xml:space="preserve"><value>Assessed At</value></data>
+  <data name="AvailableHours" xml:space="preserve"><value>Available Hours</value></data>
+  <data name="AvailableQty" xml:space="preserve"><value>Available Qty</value></data>
+  <data name="BankName" xml:space="preserve"><value>Bank Name</value></data>
+  <data name="BatchCount" xml:space="preserve"><value>Batch Count</value></data>
+  <data name="BatchMode" xml:space="preserve"><value>Batch Mode</value></data>
+  <data name="BatchQty" xml:space="preserve"><value>Batch Qty</value></data>
+  <data name="BomSeq" xml:space="preserve"><value>BOM Seq</value></data>
+  <data name="BookAmountLocal" xml:space="preserve"><value>Book Amount (Local)</value></data>
+  <data name="BookRate" xml:space="preserve"><value>Book Rate</value></data>
+  <data name="CalibrationFrequencyDays" xml:space="preserve"><value>Calibration Frequency (Days)</value></data>
+  <data name="CanCreate" xml:space="preserve"><value>Can Create</value></data>
+  <data name="CanDelete" xml:space="preserve"><value>Can Delete</value></data>
+  <data name="CanPrint" xml:space="preserve"><value>Can Print</value></data>
+  <data name="CanRead" xml:space="preserve"><value>Can Read</value></data>
+  <data name="CanUpdate" xml:space="preserve"><value>Can Update</value></data>
+  <data name="Capacity" xml:space="preserve"><value>Capacity</value></data>
+  <data name="CarryingCost" xml:space="preserve"><value>Carrying Cost</value></data>
+  <data name="ChecklistId" xml:space="preserve"><value>Checklist No.</value></data>
+  <data name="Cogs" xml:space="preserve"><value>COGS</value></data>
+  <data name="ConsecutivePasses" xml:space="preserve"><value>Consecutive Passes</value></data>
+  <data name="Cost" xml:space="preserve"><value>Cost</value></data>
+  <data name="CostDate" xml:space="preserve"><value>Cost Date</value></data>
+  <data name="CostStatus" xml:space="preserve"><value>Cost Status</value></data>
+  <data name="CostVariance" xml:space="preserve"><value>Cost Variance</value></data>
+  <data name="Count" xml:space="preserve"><value>Count</value></data>
+  <data name="CountQty" xml:space="preserve"><value>Count Qty</value></data>
+  <data name="Credit" xml:space="preserve"><value>Credit</value></data>
+  <data name="Current" xml:space="preserve"><value>Current</value></data>
+  <data name="CustomerCode" xml:space="preserve"><value>Customer Code</value></data>
+  <data name="DailyOvertimeHours" xml:space="preserve"><value>Daily Overtime Hours</value></data>
+  <data name="DailyRegularHours" xml:space="preserve"><value>Daily Regular Hours</value></data>
+  <data name="Days30" xml:space="preserve"><value>30 Days</value></data>
+  <data name="Days60" xml:space="preserve"><value>60 Days</value></data>
+  <data name="Days90" xml:space="preserve"><value>90 Days</value></data>
+  <data name="Days90Plus" xml:space="preserve"><value>90+ Days</value></data>
+  <data name="Debit" xml:space="preserve"><value>Debit</value></data>
+  <data name="DefectRate" xml:space="preserve"><value>Defect Rate</value></data>
+  <data name="Diff" xml:space="preserve"><value>Difference</value></data>
+  <data name="DispatchCount" xml:space="preserve"><value>Dispatch Count</value></data>
+  <data name="DispatchId" xml:space="preserve"><value>Dispatch No.</value></data>
+  <data name="DisplayName" xml:space="preserve"><value>Display Name</value></data>
+  <data name="Disposition" xml:space="preserve"><value>Disposition</value></data>
+  <data name="DocId" xml:space="preserve"><value>Document No.</value></data>
+  <data name="DocLineNo" xml:space="preserve"><value>Document Line No.</value></data>
+  <data name="DowntimeHours" xml:space="preserve"><value>Downtime Hours</value></data>
+  <data name="DueDate" xml:space="preserve"><value>Due Date</value></data>
+  <data name="EclAmount" xml:space="preserve"><value>ECL Amount</value></data>
+  <data name="EfficiencyRate" xml:space="preserve"><value>Efficiency Rate</value></data>
+  <data name="End" xml:space="preserve"><value>End</value></data>
+  <data name="EndDate" xml:space="preserve"><value>End Date</value></data>
+  <data name="EndMinute" xml:space="preserve"><value>End Minute</value></data>
+  <data name="EntryDate" xml:space="preserve"><value>Entry Date</value></data>
+  <data name="ErpRetryCount" xml:space="preserve"><value>ERP Retry Count</value></data>
+  <data name="ErpSyncStatus" xml:space="preserve"><value>ERP Sync Status</value></data>
+  <data name="EventCount" xml:space="preserve"><value>Event Count</value></data>
+  <data name="ExcessScrapPenalty" xml:space="preserve"><value>Excess Scrap Penalty</value></data>
+  <data name="ExchangeGainLoss" xml:space="preserve"><value>Exchange Gain/Loss</value></data>
+  <data name="ExchangeRate" xml:space="preserve"><value>Exchange Rate</value></data>
+  <data name="FailQty" xml:space="preserve"><value>Fail Qty</value></data>
+  <data name="FgFQC" xml:space="preserve"><value>FG FQC</value></data>
+  <data name="FgIPQC" xml:space="preserve"><value>FG IPQC</value></data>
+  <data name="FgIQC" xml:space="preserve"><value>FG IQC</value></data>
+  <data name="FgRQC" xml:space="preserve"><value>FG RQC</value></data>
+  <data name="FromUomCode" xml:space="preserve"><value>From UOM</value></data>
+  <data name="FulfillRate" xml:space="preserve"><value>Fulfill Rate</value></data>
+  <data name="GrossMarginRate" xml:space="preserve"><value>Gross Margin Rate</value></data>
+  <data name="GrossProfit" xml:space="preserve"><value>Gross Profit</value></data>
+  <data name="IdleDays" xml:space="preserve"><value>Idle Days</value></data>
+  <data name="ImpairmentLoss" xml:space="preserve"><value>Impairment Loss</value></data>
+  <data name="InspectedAt" xml:space="preserve"><value>Inspected At</value></data>
+  <data name="InstrumentCode" xml:space="preserve"><value>Instrument Code</value></data>
+  <data name="InstrumentName" xml:space="preserve"><value>Instrument Name</value></data>
+  <data name="InventoryValue" xml:space="preserve"><value>Inventory Value</value></data>
+  <data name="InvoiceDate" xml:space="preserve"><value>Invoice Date</value></data>
+  <data name="IsAllowed" xml:space="preserve"><value>Allowed</value></data>
+  <data name="IsApprovalRequired" xml:space="preserve"><value>Approval Required</value></data>
+  <data name="IsCompleted" xml:space="preserve"><value>Completed</value></data>
+  <data name="IsDefault" xml:space="preserve"><value>Default</value></data>
+  <data name="IsForecast" xml:space="preserve"><value>Forecast</value></data>
+  <data name="IsOutsource" xml:space="preserve"><value>Outsourced</value></data>
+  <data name="IsPredictedLate" xml:space="preserve"><value>Predicted Late</value></data>
+  <data name="IssuedQty" xml:space="preserve"><value>Issued Qty</value></data>
+  <data name="IsPull" xml:space="preserve"><value>Pull Material</value></data>
+  <data name="RequestableQty" xml:space="preserve"><value>Requestable Qty</value></data>
+  <data name="ReturnableQty" xml:space="preserve"><value>Returnable Qty</value></data>
+  <data name="NetIssuedQty" xml:space="preserve"><value>Net Issued Qty</value></data>
+  <data name="OpenQty" xml:space="preserve"><value>Open Qty</value></data>
+  <data name="ReadinessState" xml:space="preserve"><value>Readiness State</value></data>
+  <data name="JournalId" xml:space="preserve"><value>Journal No.</value></data>
+  <data name="LastSeq" xml:space="preserve"><value>Last Seq</value></data>
+  <data name="LastUpdatedAt" xml:space="preserve"><value>Last Updated At</value></data>
+  <data name="LateLines" xml:space="preserve"><value>Late Lines</value></data>
+  <data name="LineCount" xml:space="preserve"><value>Line Count</value></data>
+  <data name="LineSeq" xml:space="preserve"><value>Line Seq</value></data>
+  <data name="LossRate" xml:space="preserve"><value>Loss Rate</value></data>
+  <data name="LotCounter" xml:space="preserve"><value>Lot Counter</value></data>
+  <data name="LotSize" xml:space="preserve"><value>Lot Size</value></data>
+  <data name="MakeQty" xml:space="preserve"><value>Make Qty</value></data>
+  <data name="MaterialReadinessStatus" xml:space="preserve"><value>Material Readiness Status</value></data>
+  <data name="MenuKey" xml:space="preserve"><value>Menu Key</value></data>
+  <data name="Method" xml:space="preserve"><value>Method</value></data>
+  <data name="Mode" xml:space="preserve"><value>Mode</value></data>
+  <data name="ModuleActionId" xml:space="preserve"><value>Module Action ID</value></data>
+  <data name="ModuleId" xml:space="preserve"><value>Module ID</value></data>
+  <data name="ModuleKey" xml:space="preserve"><value>Module Key</value></data>
+  <data name="Month" xml:space="preserve"><value>Month</value></data>
+  <data name="MonthlyPurchase" xml:space="preserve"><value>Monthly Purchase</value></data>
+  <data name="MonthlyRevenue" xml:space="preserve"><value>Monthly Revenue</value></data>
+  <data name="MoveTime" xml:space="preserve"><value>Move Time</value></data>
+  <data name="MovementId" xml:space="preserve"><value>Movement No.</value></data>
+  <data name="MrpRunId" xml:space="preserve"><value>MRP Run No.</value></data>
+  <data name="MrpRunLineSeq" xml:space="preserve"><value>MRP Run Line Seq</value></data>
+  <data name="NcrStatus" xml:space="preserve"><value>NCR Status</value></data>
+  <data name="NetProfit" xml:space="preserve"><value>Net Profit</value></data>
+  <data name="InterPlantInTransit" xml:space="preserve"><value>Inventory in Transit</value></data>
+  <data name="NetRealizableValue" xml:space="preserve"><value>Net Realizable Value</value></data>
+  <data name="NormalVl" xml:space="preserve"><value>Normal VL</value></data>
+  <data name="NrvPrice" xml:space="preserve"><value>NRV Price</value></data>
+  <data name="OnTimeLines" xml:space="preserve"><value>On-Time Lines</value></data>
+  <data name="OnTimeRate" xml:space="preserve"><value>On-Time Rate</value></data>
+  <data name="OpenWorkOrders" xml:space="preserve"><value>Open Work Orders</value></data>
+  <data name="OperatingExpenses" xml:space="preserve"><value>Operating Expenses</value></data>
+  <data name="OperatingProfit" xml:space="preserve"><value>Operating Profit</value></data>
+  <data name="OperationSeq" xml:space="preserve"><value>Operation Seq</value></data>
+  <data name="OrderCount" xml:space="preserve"><value>Order Count</value></data>
+  <data name="OrderedQty" xml:space="preserve"><value>Ordered Qty</value></data>
+  <data name="OtherExpenses" xml:space="preserve"><value>Other Expenses</value></data>
+  <data name="OtherIncome" xml:space="preserve"><value>Other Income</value></data>
+  <data name="OutboundCost" xml:space="preserve"><value>Outbound Cost</value></data>
+  <data name="OutsourcePurchaseOrderId" xml:space="preserve"><value>Outsource PO No.</value></data>
+  <data name="OutsourceQty" xml:space="preserve"><value>Outsource Qty</value></data>
+  <data name="OutsourceReceiptId" xml:space="preserve"><value>Outsource Receipt No.</value></data>
+  <data name="OutstandingAmount" xml:space="preserve"><value>Outstanding Amount</value></data>
+  <data name="Overall" xml:space="preserve"><value>Overall</value></data>
+  <data name="OverdueAP" xml:space="preserve"><value>Overdue AP</value></data>
+  <data name="OverdueDays" xml:space="preserve"><value>Overdue Days</value></data>
+  <data name="PaidAmount" xml:space="preserve"><value>Paid Amount</value></data>
+  <data name="PassQty" xml:space="preserve"><value>Pass Qty</value></data>
+  <data name="PassesToNormal" xml:space="preserve"><value>Passes to Normal</value></data>
+  <data name="PassesToReduce" xml:space="preserve"><value>Passes to Reduced</value></data>
+  <data name="PassesToSkipLot" xml:space="preserve"><value>Passes to Skip-Lot</value></data>
+  <data name="PaymentDate" xml:space="preserve"><value>Payment Date</value></data>
+  <data name="PendingQty" xml:space="preserve"><value>Pending Qty</value></data>
+  <data name="PeriodEndRate" xml:space="preserve"><value>Period-End Rate</value></data>
+  <data name="PeriodId" xml:space="preserve"><value>Period</value></data>
+  <data name="PlanQty" xml:space="preserve"><value>Plan Qty</value></data>
+  <data name="PlannedEndDate" xml:space="preserve"><value>Planned End Date</value></data>
+  <data name="PlannedHours" xml:space="preserve"><value>Planned Hours</value></data>
+  <data name="PlannedStartDate" xml:space="preserve"><value>Planned Start Date</value></data>
+  <data name="PlantId" xml:space="preserve"><value>Plant</value></data>
+  <data name="Priority" xml:space="preserve"><value>Priority</value></data>
+  <data name="ProductionBatchId" xml:space="preserve"><value>Production Batch No.</value></data>
+  <data name="ProgressPct" xml:space="preserve"><value>Progress %</value></data>
+  <data name="Provision" xml:space="preserve"><value>Provision</value></data>
+  <data name="PurchaseQty" xml:space="preserve"><value>Purchase Qty</value></data>
+  <data name="QtyCount" xml:space="preserve"><value>Counted Qty</value></data>
+  <data name="QtyDone" xml:space="preserve"><value>Completed Qty</value></data>
+  <data name="QtyRemaining" xml:space="preserve"><value>Remaining Qty</value></data>
+  <data name="RestoredQty" xml:space="preserve"><value>Restored Qty</value></data>
+  <data name="LayerId" xml:space="preserve"><value>Cost Layer Id</value></data>
+  <data name="ConsumedDate" xml:space="preserve"><value>Consumed Date</value></data>
+  <data name="QtySourceCleared" xml:space="preserve"><value>Source Cleared Qty</value></data>
+  <data name="QualificationStatus" xml:space="preserve"><value>Qualification Status</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Quantity</value></data>
+  <data name="Level" xml:space="preserve"><value>Level</value></data>
+  <data name="IsMake" xml:space="preserve"><value>Make Item</value></data>
+  <data name="QueueTime" xml:space="preserve"><value>Queue Time</value></data>
+  <data name="Rank" xml:space="preserve"><value>Rank</value></data>
+  <data name="ReceiptCount" xml:space="preserve"><value>Receipt Count</value></data>
+  <data name="ReceivedAmount" xml:space="preserve"><value>Received Amount</value></data>
+  <data name="ReceivedQty" xml:space="preserve"><value>Received Qty</value></data>
+  <data name="ReceivedStockQty" xml:space="preserve"><value>Received Qty (Stock UOM)</value></data>
+  <data name="ReducedVl" xml:space="preserve"><value>Reduced VL</value></data>
+  <data name="ReportCount" xml:space="preserve"><value>Report Count</value></data>
+  <data name="RequiredQty" xml:space="preserve"><value>Required Qty</value></data>
+  <data name="RequiresFQC" xml:space="preserve"><value>Requires FQC</value></data>
+  <data name="RequiresInspection" xml:space="preserve"><value>Requires Inspection</value></data>
+  <data name="RequiresRQC" xml:space="preserve"><value>Requires RQC</value></data>
+  <data name="ReturnRate" xml:space="preserve"><value>Return Rate</value></data>
+  <data name="ReturnedQty" xml:space="preserve"><value>Returned Qty</value></data>
+  <data name="RevaluedAmountLocal" xml:space="preserve"><value>Revalued Amount (Local)</value></data>
+  <data name="RevaluedAt" xml:space="preserve"><value>Revalued At</value></data>
+  <data name="Revenue" xml:space="preserve"><value>Revenue</value></data>
+  <data name="RoleId" xml:space="preserve"><value>Role ID</value></data>
+  <data name="SampleQty" xml:space="preserve"><value>Sample Qty</value></data>
+  <data name="SampleSize" xml:space="preserve"><value>Sample Size</value></data>
+  <data name="Scheduled" xml:space="preserve"><value>Scheduled</value></data>
+  <data name="ScheduledHours" xml:space="preserve"><value>Scheduled Hours</value></data>
+  <data name="ScheduledMinutes" xml:space="preserve"><value>Scheduled Minutes</value></data>
+  <data name="ActualMinutes" xml:space="preserve"><value>Actual Minutes</value></data>
+  <data name="ScrapRate" xml:space="preserve"><value>Scrap Rate</value></data>
+  <data name="OffcutRate" xml:space="preserve"><value>Offcut Rate</value></data>
+  <data name="SeasonalIndex" xml:space="preserve"><value>Seasonal Index</value></data>
+  <data name="SellingCost" xml:space="preserve"><value>Selling Cost</value></data>
+  <data name="Seq" xml:space="preserve"><value>Seq</value></data>
+  <data name="SeqNo" xml:space="preserve"><value>Seq No.</value></data>
+  <data name="Sequence" xml:space="preserve"><value>Sequence</value></data>
+  <data name="SerialNo" xml:space="preserve"><value>Serial No.</value></data>
+  <data name="SetupTime" xml:space="preserve"><value>Setup Time</value></data>
+  <data name="ShipCount" xml:space="preserve"><value>Ship Count</value></data>
+  <data name="ShippedStockQty" xml:space="preserve"><value>Shipped Qty (Stock UOM)</value></data>
+  <data name="ShortageQty" xml:space="preserve"><value>Shortage Qty</value></data>
+  <data name="ShortfallQty" xml:space="preserve"><value>Shortfall Qty</value></data>
+  <data name="SkipLotEnabled" xml:space="preserve"><value>Skip-Lot Enabled</value></data>
+  <data name="SkipLotFrequency" xml:space="preserve"><value>Skip-Lot Frequency</value></data>
+  <data name="Skipped" xml:space="preserve"><value>Skipped</value></data>
+  <data name="SortOrder" xml:space="preserve"><value>Sort Order</value></data>
+  <data name="SourceDocType" xml:space="preserve"><value>Source Doc Type</value></data>
+  <data name="SourceMode" xml:space="preserve"><value>Source Mode</value></data>
+  <data name="StandardLabor" xml:space="preserve"><value>Standard Labor</value></data>
+  <data name="StandardMaterial" xml:space="preserve"><value>Standard Material</value></data>
+  <data name="StandardMinutes" xml:space="preserve"><value>Standard Minutes</value></data>
+  <data name="StandardOverhead" xml:space="preserve"><value>Standard Overhead</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="StartDate" xml:space="preserve"><value>Start Date</value></data>
+  <data name="StartMinute" xml:space="preserve"><value>Start Minute</value></data>
+  <data name="State" xml:space="preserve"><value>State</value></data>
+  <data name="StdLabor" xml:space="preserve"><value>Std Labor</value></data>
+  <data name="StdMaterial" xml:space="preserve"><value>Std Material</value></data>
+  <data name="StdOverhead" xml:space="preserve"><value>Std Overhead</value></data>
+  <data name="StdTotalCost" xml:space="preserve"><value>Std Total Cost</value></data>
+  <data name="StepName" xml:space="preserve"><value>Step Name</value></data>
+  <data name="StepNo" xml:space="preserve"><value>Step No.</value></data>
+  <data name="SysQty" xml:space="preserve"><value>System Qty</value></data>
+  <data name="TightenedVl" xml:space="preserve"><value>Tightened VL</value></data>
+  <data name="TimeUnit" xml:space="preserve"><value>Time Unit</value></data>
+  <data name="ToUomCode" xml:space="preserve"><value>To UOM</value></data>
+  <data name="Total" xml:space="preserve"><value>Total</value></data>
+  <data name="TotalAssets" xml:space="preserve"><value>Total Assets</value></data>
+  <data name="TotalConfirmedQty" xml:space="preserve"><value>Total Confirmed Qty</value></data>
+  <data name="TotalEquity" xml:space="preserve"><value>Total Equity</value></data>
+  <data name="TotalGrossProfit" xml:space="preserve"><value>Total Gross Profit</value></data>
+  <data name="TotalHours" xml:space="preserve"><value>Total Hours</value></data>
+  <data name="TotalLiabilities" xml:space="preserve"><value>Total Liabilities</value></data>
+  <data name="TotalLines" xml:space="preserve"><value>Total Lines</value></data>
+  <data name="PeriodDebit" xml:space="preserve"><value>Period Debit</value></data>
+  <data name="PeriodCredit" xml:space="preserve"><value>Period Credit</value></data>
+  <data name="IncludeZeroRows" xml:space="preserve"><value>Show Zero-Balance Accounts</value></data>
+  <data name="ReceiptLines" xml:space="preserve"><value>Receipt Lines</value></data>
+  <data name="AvgUnitPriceLocal" xml:space="preserve"><value>Weighted Avg Price (Local)</value></data>
+  <data name="MinUnitPriceLocal" xml:space="preserve"><value>Min Price (Local)</value></data>
+  <data name="MaxUnitPriceLocal" xml:space="preserve"><value>Max Price (Local)</value></data>
+  <data name="TotalMarginRate" xml:space="preserve"><value>Total Margin Rate</value></data>
+  <data name="OnTimeCount" xml:space="preserve"><value>On-Time Count</value></data>
+  <data name="EvaluableCount" xml:space="preserve"><value>Evaluable Count</value></data>
+  <data name="ProcessingFee" xml:space="preserve"><value>Processing Fee</value></data>
+  <data name="ScrapPenalty" xml:space="preserve"><value>Scrap Penalty</value></data>
+  <data name="ScrapPenaltyRate" xml:space="preserve"><value>Scrap Penalty Rate</value></data>
+  <data name="TotalReceiptCount" xml:space="preserve"><value>Total Receipts</value></data>
+  <data name="TotalOnTimeCount" xml:space="preserve"><value>Total On-Time Count</value></data>
+  <data name="TotalEvaluableCount" xml:space="preserve"><value>Total Evaluable Count</value></data>
+  <data name="TotalReceivedQty" xml:space="preserve"><value>Total Received Qty</value></data>
+  <data name="TotalProcessingFee" xml:space="preserve"><value>Total Processing Fee</value></data>
+  <data name="TotalScrapPenalty" xml:space="preserve"><value>Total Scrap Penalty</value></data>
+  <data name="TotalScrapPenaltyRate" xml:space="preserve"><value>Total Scrap Penalty Rate</value></data>
+  <data name="TotalOnTimeRate" xml:space="preserve"><value>Total On-Time Rate</value></data>
+  <data name="ItemCount" xml:space="preserve"><value>Item Count</value></data>
+  <data name="ValuePercent" xml:space="preserve"><value>Value %</value></data>
+  <data name="SampleCount" xml:space="preserve"><value>Sample Count</value></data>
+  <data name="Mean" xml:space="preserve"><value>Mean</value></data>
+  <data name="StdDev" xml:space="preserve"><value>Std Dev</value></data>
+  <data name="MinValue" xml:space="preserve"><value>Min</value></data>
+  <data name="MaxValue" xml:space="preserve"><value>Max</value></data>
+  <data name="OutOfSpecCount" xml:space="preserve"><value>Out-of-Spec Count</value></data>
+  <data name="Ucl" xml:space="preserve"><value>UCL</value></data>
+  <data name="Lcl" xml:space="preserve"><value>LCL</value></data>
+  <data name="PlannedMinutes" xml:space="preserve"><value>Planned (min)</value></data>
+  <data name="RunMinutes" xml:space="preserve"><value>Run (min)</value></data>
+  <data name="IdealMinutes" xml:space="preserve"><value>Ideal (min)</value></data>
+  <data name="GoodQty" xml:space="preserve"><value>Good Qty</value></data>
+  <data name="VariableRatio" xml:space="preserve"><value>Variable Ratio</value></data>
+  <data name="LowerBoundDays" xml:space="preserve"><value>Lower Bound Days</value></data>
+  <data name="TotalQty" xml:space="preserve"><value>Total Qty</value></data>
+  <data name="TotalRequestedQty" xml:space="preserve"><value>Total Requested Qty</value></data>
+  <data name="TotalRevenue" xml:space="preserve"><value>Total Revenue</value></data>
+  <data name="TotalValue" xml:space="preserve"><value>Total Value</value></data>
+  <data name="TotalVariance" xml:space="preserve"><value>Total Variance</value></data>
+  <data name="TurnoverRate" xml:space="preserve"><value>Turnover Rate</value></data>
+  <data name="Type" xml:space="preserve"><value>Type</value></data>
+  <data name="UnitTime" xml:space="preserve"><value>Unit Time</value></data>
+  <data name="UtilizationRate" xml:space="preserve"><value>Utilization Rate</value></data>
+  <data name="ValidFrom" xml:space="preserve"><value>Valid From</value></data>
+  <data name="ValuePct" xml:space="preserve"><value>Value %</value></data>
+  <data name="VarLabor" xml:space="preserve"><value>Labor Variance</value></data>
+  <data name="VarLaborEfficiency" xml:space="preserve"><value>Labor Efficiency Variance</value></data>
+  <data name="VarMaterial" xml:space="preserve"><value>Material Variance</value></data>
+  <data name="VarOverhead" xml:space="preserve"><value>Overhead Variance</value></data>
+  <data name="VarOverheadRate" xml:space="preserve"><value>Overhead Rate Variance</value></data>
+  <data name="VarianceQty" xml:space="preserve"><value>Variance Qty</value></data>
+  <data name="VerificationLevel" xml:space="preserve"><value>Verification Level</value></data>
+  <data name="WipValue" xml:space="preserve"><value>WIP Value</value></data>
+  <data name="WorkOrderCount" xml:space="preserve"><value>Work Order Count</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>Work Order No.</value></data>
+  <data name="WorkOrderOnTimeRate" xml:space="preserve"><value>Work Order On-Time Rate</value></data>
+  <data name="YieldRate" xml:space="preserve"><value>Yield Rate</value></data>
+  <data name="DifferenceAmount" xml:space="preserve">
+    <value>Difference</value>
+  </data>
+  <data name="IsPassed" xml:space="preserve">
+    <value>Passed</value>
+  </data>
+  <data name="RunId" xml:space="preserve"><value>Run ID</value></data>
+  <data name="RunAt" xml:space="preserve"><value>Run At</value></data>
+  <data name="FailureCount" xml:space="preserve"><value>Failure Count</value></data>
+  <data name="DurationMs" xml:space="preserve"><value>Duration (ms)</value></data>
+  <data name="FindingId" xml:space="preserve"><value>Finding ID</value></data>
+  <data name="AuditTypeCount" xml:space="preserve"><value>Audit Type Count</value></data>
+  <data name="ReworkQty" xml:space="preserve"><value>Rework Qty</value></data>
+  <data name="VendorLiablePct" xml:space="preserve"><value>Vendor Liable %</value></data>
+  <data name="VendorChargebackAmt" xml:space="preserve"><value>Vendor Chargeback</value></data>
+  <data name="ReworkProcessingFee" xml:space="preserve"><value>Rework Processing Fee</value></data>
+  <data name="LiabilityParty" xml:space="preserve"><value>Liability Party</value></data>
+  <data name="ReworkCost" xml:space="preserve"><value>Rework Cost</value></data>
+  <data name="AvgOverdueDays" xml:space="preserve"><value>Avg Overdue Days</value></data>
+  <data name="MaxOverdueDays" xml:space="preserve"><value>Max Overdue Days</value></data>
+  <data name="Delivery" xml:space="preserve"><value>Delivery</value></data>
+  <data name="DeliveryScore" xml:space="preserve"><value>Delivery Score</value></data>
+  <data name="EvaluationDate" xml:space="preserve"><value>Evaluation Date</value></data>
+  <data name="EvaluationYear" xml:space="preserve"><value>Evaluation Year</value></data>
+  <data name="Evaluator" xml:space="preserve"><value>Evaluator</value></data>
+  <data name="NgQty" xml:space="preserve"><value>NG Qty</value></data>
+  <data name="OtdOnTimeLines" xml:space="preserve"><value>On-Time Lines</value></data>
+  <data name="OtdTotalLines" xml:space="preserve"><value>Total Lines</value></data>
+  <data name="Price" xml:space="preserve"><value>Price</value></data>
+  <data name="PriceScore" xml:space="preserve"><value>Price Score</value></data>
+  <data name="Quality" xml:space="preserve"><value>Quality</value></data>
+  <data name="QualityScore" xml:space="preserve"><value>Quality Score</value></data>
+  <data name="ResultStatus" xml:space="preserve"><value>Result</value></data>
+  <data name="Service" xml:space="preserve"><value>Service</value></data>
+  <data name="ServiceScore" xml:space="preserve"><value>Service Score</value></data>
+  <data name="TotalScore" xml:space="preserve"><value>Total Score</value></data>
+  <data name="DelegatorId" xml:space="preserve"><value>Delegator</value></data>
+  <data name="DelegateId" xml:space="preserve"><value>Delegate</value></data>
+  <data name="SkipSameApprover" xml:space="preserve"><value>Auto-skip same approver</value></data>
+  <data name="AccumulatedShots" xml:space="preserve"><value>Accumulated Shots</value></data>
+  <data name="ToolingPmDue" xml:space="preserve"><value>Tooling PM Due</value></data>
+  <data name="RecommendedSampleSize" xml:space="preserve"><value>Recommended Sample Size</value></data>
+  <data name="Success" xml:space="preserve"><value>Success</value></data>
+  <data name="SetupTimeUnit" xml:space="preserve"><value>Setup Time Unit</value></data>
+  <data name="StagingStaged" xml:space="preserve"><value>Materials have been picked and moved to the staging warehouse.</value></data>
+  <data name="StagingOrderCreated" xml:space="preserve"><value>Staging order created. Confirm and pick it in the staging order screen.</value></data>
+  <data name="SessionCompleted" xml:space="preserve"><value>Session completed.</value></data>
+  <data name="DateBasis" xml:space="preserve"><value>Date Basis</value></data>
+  <data name="UseLocalCurrency" xml:space="preserve"><value>Show in Local Currency</value></data>
+  <data name="IdleDaysThreshold" xml:space="preserve"><value>Idle Days Threshold</value></data>
+  <data name="ToolKey" xml:space="preserve"><value>Report Tool</value></data>
+  <data name="OwnerUserId" xml:space="preserve"><value>Owner</value></data>
+  <data name="DefinitionId" xml:space="preserve"><value>Report definition</value></data>
+  <data name="TriggerType" xml:space="preserve"><value>Trigger type</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="RowCount" xml:space="preserve"><value>Row count</value></data>
+  <data name="UserId" xml:space="preserve"><value>User</value></data>
+  <data name="ScheduleKind" xml:space="preserve"><value>Frequency</value></data>
+  <data name="ScheduleHour" xml:space="preserve"><value>Hour</value></data>
+  <data name="ScheduleMinute" xml:space="preserve"><value>Minute</value></data>
+  <data name="ScheduleDayOfWeek" xml:space="preserve"><value>Day of Week</value></data>
+  <data name="ScheduleDayOfMonth" xml:space="preserve"><value>Day of Month</value></data>
+  <data name="OutputFormat" xml:space="preserve"><value>Output Format</value></data>
+  <data name="IsFinalReceipt" xml:space="preserve"><value>Final receipt</value></data>
+  <data name="CarriedInMaterialCost" xml:space="preserve"><value>Outstanding material cost carried in</value></data>
+  <data name="ARCreditNoteId" xml:space="preserve"><value>Credit Note No.</value></data>
+  <data name="APDebitNoteId" xml:space="preserve"><value>Debit Note No.</value></data>
+  <data name="CreditedAmount" xml:space="preserve"><value>Credited Amount</value></data>
+  <data name="DebitedAmount" xml:space="preserve"><value>Debited Amount</value></data>
+  <data name="InvoiceLineNo" xml:space="preserve"><value>Invoice Line No.</value></data>
+  <data name="NoteDate" xml:space="preserve"><value>Note Date</value></data>
+  <data name="HasCalendar" xml:space="preserve"><value>Has work calendar</value></data>
+  <data name="QualityHasData" xml:space="preserve"><value>Quality score has data</value></data>
+  <data name="DeliveryHasData" xml:space="preserve"><value>Delivery score has data</value></data>
+  <data name="IsSystem" xml:space="preserve"><value>System account</value></data>
+  <data name="AllowManualEntry" xml:space="preserve"><value>Selectable manually</value></data>
+  <data name="TradeTermCode" xml:space="preserve"><value>Trade Term</value></data>
+  <data name="DraftQty" xml:space="preserve"><value>Qty in Draft</value></data>
+  <data name="OpoLineNo" xml:space="preserve"><value>Outsourcing PO Line</value></data>
+  <data name="RemainingQty" xml:space="preserve"><value>Open Qty</value></data>
+  <data name="Busy" xml:space="preserve"><value>Schedule run in progress</value></data>
+  <data name="Held" xml:space="preserve"><value>Put on hold</value></data>
+  <data name="IsMachineLocked" xml:space="preserve"><value>Machine assigned</value></data>
+  <data name="LastRunAt" xml:space="preserve"><value>Last scheduled at</value></data>
+  <data name="LastScheduled" xml:space="preserve"><value>Last scheduled count</value></data>
+  <data name="LastSkipped" xml:space="preserve"><value>Last skipped count</value></data>
+  <data name="OnHoldCount" xml:space="preserve"><value>On-hold count</value></data>
+  <data name="PendingCount" xml:space="preserve"><value>Pending count</value></data>
+  <data name="Resumed" xml:space="preserve"><value>Resumed</value></data>
+  <data name="Unscheduled" xml:space="preserve"><value>Returned to pending</value></data>
+  <data name="BeforeDispatch" xml:space="preserve"><value>Reschedule before dispatch</value></data>
+  <data name="CalendarChanged" xml:space="preserve"><value>Calendar changed</value></data>
+  <data name="CalendarFingerprint" xml:space="preserve"><value>Calendar fingerprint</value></data>
+  <data name="DataAsOf" xml:space="preserve"><value>Data as of</value></data>
+  <data name="IsStale" xml:space="preserve"><value>Schedule out of date</value></data>
+  <data name="OnChange" xml:space="preserve"><value>Reschedule after changes</value></data>
+  <data name="Moved" xml:space="preserve"><value>Dispatches adjusted</value></data>
+  <data name="CalculatedAt" xml:space="preserve"><value>Calculated at</value></data>
+  <data name="MedianGapMinutes" xml:space="preserve"><value>Median actual gap (min)</value></data>
+  <data name="PeriodDays" xml:space="preserve"><value>Sampling days</value></data>
+  <data name="SuggestedQueueMinutes" xml:space="preserve"><value>Suggested queue time (min)</value></data>
+  <data name="MaterialCount" xml:space="preserve"><value>Materials</value></data>
+  <data name="WorkOrderType" xml:space="preserve"><value>Work Order Type</value></data>
+  <data name="ReworkLoss" xml:space="preserve"><value>Rework Loss</value></data>
+  <data name="IsWorkOrderMaterial" xml:space="preserve"><value>Work Order Material Movement</value></data>
+  <data name="ChangesTruncated" xml:space="preserve"><value>Changes truncated</value></data>
+  <data name="Fenced" xml:space="preserve"><value>Kept by freeze window</value></data>
+  <data name="FencedCount" xml:space="preserve"><value>Kept by freeze window</value></data>
+  <data name="FinishedAt" xml:space="preserve"><value>Finished at</value></data>
+  <data name="Kind" xml:space="preserve"><value>Kind</value></data>
+  <data name="MachineChangedCount" xml:space="preserve"><value>Machine changed count</value></data>
+  <data name="MovedCount" xml:space="preserve"><value>Time changed count</value></data>
+  <data name="NewlyScheduledCount" xml:space="preserve"><value>Newly scheduled count</value></data>
+  <data name="Rule" xml:space="preserve"><value>Rule</value></data>
+  <data name="RunLogId" xml:space="preserve"><value>Run log ID</value></data>
+  <data name="ScheduledCount" xml:space="preserve"><value>Scheduled count</value></data>
+  <data name="SkippedCount" xml:space="preserve"><value>Skipped count</value></data>
+  <data name="StartedAt" xml:space="preserve"><value>Started at</value></data>
+  <data name="TomorrowChangedCount" xml:space="preserve"><value>Affects tomorrow count</value></data>
+  <data name="Trigger" xml:space="preserve"><value>Trigger</value></data>
+  <data name="UnscheduledCount" xml:space="preserve"><value>Back to pending count</value></data>
+  <data name="QtyIncomingPo" xml:space="preserve"><value>PO In-Transit Qty</value></data>
+  <data name="QtyIncomingOpo" xml:space="preserve"><value>Outsource In-Transit Qty</value></data>
+  <data name="OnHand" xml:space="preserve"><value>On Hand</value></data>
+  <data name="Reserved" xml:space="preserve"><value>Reserved</value></data>
+  <data name="PlantOnHand" xml:space="preserve"><value>Plant On Hand</value></data>
+  <data name="PlantReserved" xml:space="preserve"><value>Plant Reserved</value></data>
+  <data name="PlantAvailable" xml:space="preserve"><value>Plant Available</value></data>
+  <data name="ContainerUnitId" xml:space="preserve"><value>Box No.</value></data>
+  <data name="OccurredAt" xml:space="preserve"><value>Time</value></data>
+  <data name="Recovered" xml:space="preserve"><value>Returned</value></data>
+</root>

@@ -1,0 +1,75 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+
+@{
+    var machines = ViewBag.Machines as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="p-3">
+    <form id="panelForm" method="post" action="@Url.Action("Save")">
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["Machine"] <span class="text-danger">*</span></label>
+            <select name="machineCode" class="form-select" required>
+                <option value="">— @Localizer["SelectMachine"] —</option>
+                @foreach (var m in machines)
+                {
+                    <option value="@m.MachineCode">@m.MachineCode — @m.MachineName@Localizer["CurrentStatusFmt", MfgEnumDisplay.Text(L, (MachineStatus)m.MachineStatus)]</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["EventType"] <span class="text-danger">*</span></label>
+            <select name="eventType" class="form-select" required>
+                <option value="">— @Localizer["SelectEvent"] —</option>
+                @{
+                    // 靜態 label 映射避免動態 Localizer key（R1 慣例）
+                    var evtLabels = new Dictionary<string, string>
+                    {
+                        ["CI"] = Localizer["EventCI"].Value,
+                        ["II"] = Localizer["EventII"].Value,
+                        ["DI"] = Localizer["EventDI"].Value,
+                        ["DO"] = Localizer["EventDO"].Value,
+                        ["HI"] = Localizer["EventHI"].Value,
+                        ["HO"] = Localizer["EventHO"].Value,
+                        ["EO"] = Localizer["EventEO"].Value,
+                        ["FO"] = Localizer["EventFO"].Value,
+                        ["FI"] = Localizer["EventFI"].Value,
+                        ["GO"] = Localizer["EventGO"].Value,
+                        ["CO"] = Localizer["EventCO"].Value,
+                    };
+                }
+                @foreach (MachineEventType evt in Enum.GetValues(typeof(MachineEventType)))
+                {
+                    var label = evtLabels.TryGetValue(evt.ToString(), out var l) ? l : evt.ToString();
+                    <option value="@evt">@evt — @label</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">@Localizer["SourceDocId"]</label>
+            <input type="text" name="sourceDocId" class="form-control" placeholder="@Localizer["SourceDocIdPlaceholder"]" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Note"]</label>
+            <input type="text" name="note" class="form-control" placeholder="@Localizer["NotePlaceholder"]" />
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+            <button type="submit" class="btn btn-primary" name="submit" value="save">
+                <i class="bi bi-save me-1"></i>@Localizer["Submit"]
+            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+        </div>
+    </form>
+</div>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    document.getElementById('panelForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitPanel(this, this.querySelector('[type=submit]'));
+    });
+</script>

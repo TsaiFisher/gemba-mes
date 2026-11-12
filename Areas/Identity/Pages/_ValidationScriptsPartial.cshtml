@@ -1,0 +1,9 @@
+@*
+    覆寫 Identity UI 套件內建的同名 partial——它放在 /Areas/Identity/Pages/，Razor 找 partial 時
+    比 /Pages/Shared/ 先查到，會遮蔽我們的版本。內建版在非 Development 環境改從 cdnjs 載入
+    並附 asp-fallback 內嵌腳本，三者全被 CSP 擋掉，正式環境登入頁的前端驗證因此靜默失效。
+
+    這裡只轉交，不另寫腳本清單：驗證腳本只有 /Pages/Shared 一個來源，部署專案在那份加的
+    語系訊息檔（如 messages_zh_TW.js）也會一起生效。守門：LoginIntegrationTests。
+*@
+<partial name="/Pages/Shared/_ValidationScriptsPartial.cshtml" />

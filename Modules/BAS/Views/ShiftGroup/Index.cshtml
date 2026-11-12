@@ -1,0 +1,527 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Services
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.BAS.Models.ShiftGroup>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    var canCreate = ViewBag.CanCreate as bool? ?? false;
+    var canUpdate = ViewBag.CanUpdate as bool? ?? false;
+    var canDelete = ViewBag.CanDelete as bool? ?? false;
+    bool hasSearched = ViewBag.Searched == true;
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.CurrentSort as string ?? "";
+        if (cur == col + "_asc") return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+
+    var dayNames = new[] { "", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-calendar-week"></i> @Localizer["PageTitle"]</h1>
+        @if (canCreate)
+        {
+            <button type="button" class="btn btn-primary"
+                    data-url="@Url.Action("Create", "ShiftGroup")"
+                    data-label="@Localizer["AddEntry"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus-lg"></i> @Localizer["AddEntry"]
+            </button>
+        }
+    </div>
+
+    <!-- 查詢列 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-center">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                <div class="col-12 col-md-auto flex-grow-1">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" name="searchTerm" class="form-control"
+                               placeholder="@Localizer["SearchPlaceholder"]" value="@ViewBag.SearchTerm" />
+                        @if (!string.IsNullOrEmpty(ViewBag.SearchTerm as string))
+                        {
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-pageSize="@ViewBag.CurrentPageSize"
+                               class="btn btn-outline-secondary bg-white text-muted">
+                                <i class="bi bi-x-circle"></i>
+                            </a>
+                        }
+                        <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                        @if (ViewBag.CanPrint as bool? ?? false)
+                        {
+                            <button type="button" class="btn btn-outline-info ms-2" data-action="printPage">
+                                <i class="bi bi-printer"></i> @Localizer["Print"]
+                            </button>
+                            <div class="btn-group ms-1">
+                                <a asp-action="Export" asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-format="xlsx" class="btn btn-outline-success">
+                                    <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                                </a>
+                                <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown"></button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-action="Export"
+                                           asp-route-searchTerm="@ViewBag.SearchTerm" asp-route-format="csv">
+                                        <i class="bi bi-filetype-csv me-2"></i>@Localizer["ExportCsv"]</a></li>
+                                    <li><a class="dropdown-item" asp-action="Export"
+                                           asp-route-searchTerm="@ViewBag.SearchTerm" asp-route-format="json">
+                                        <i class="bi bi-filetype-json me-2"></i>@Localizer["ExportJson"]</a></li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.CodeSort"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["GroupCode"] <i class="bi @sortIcon("code")"></i>
+                                </a>
+                            </th>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["GroupName"] <i class="bi @sortIcon("name")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["IsActive"]</th>
+                            <th class="text-end pe-4">@Localizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr><td colspan="4" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>@Localizer["NoData"]
+                            </td></tr>
+                        }
+                        else
+                        {
+                            foreach (var g in Model)
+                            {
+                                <tr>
+                                    <td class="fw-medium">@g.GroupCode</td>
+                                    <td>@g.GroupName</td>
+                                    <td>
+                                        @if (g.IsActive)
+                                        {
+                                            <span class="badge bg-success">@Localizer["Active"]</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">@Localizer["Inactive"]</span>
+                                        }
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group">
+                                            @if (canUpdate)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                        data-url="@Url.Action("Edit", "ShiftGroup", new { code = g.GroupCode })"
+                                                        data-label="@($"{Localizer["Edit"].Value}：{g.GroupName}")"
+                                                        data-code="@g.GroupCode"
+                                                        data-action="openDetailPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                            }
+                                            @if (canDelete)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        data-url="@Url.Action("Delete", "ShiftGroup", new { code = g.GroupCode })"
+                                                        data-label="@g.GroupName"
+                                                        data-action="deleteItem"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel (Master-Detail with Tabs) -->
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-90vw-1200px" id="crudPanel" tabindex="-1"
+     aria-labelledby="crudPanelLabel">
+    <div class="offcanvas-header border-bottom bg-primary text-white py-3">
+        <h5 class="offcanvas-title mb-0" id="crudPanelTitle"></h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+        <ul class="nav nav-tabs px-3 pt-2" id="panelTabs">
+            <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabMaster">@Localizer["TabMaster"]</button>
+            </li>
+            <li class="nav-item u-display-none" id="tabDetailNavItem">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabDetail" data-action="loadDays">@Localizer["DaySchedule"]</button>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active p-3" id="tabMaster">
+                <div id="crudPanelBody"></div>
+            </div>
+            <div class="tab-pane fade p-3" id="tabDetail">
+                <div id="daySection"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i><span id="successToastMsg"></span></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<form class="u-display-none" id="__AjaxAntiForgery">@Html.AntiForgeryToken()</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/module-validation.js" asp-append-version="true"></script>
+    @await Html.PartialAsync("_JsLocalization")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    var _currentGroupCode = null;
+    var _pendingListReload = false;   // 面板內已變更資料，關閉時需刷新列表
+    var _dayNamesZh = [''].concat(@(Json.Serialize(SL["WeekdayNamesMonFirst"].Value)).split(','));
+    var _shifts = @Html.Raw((string)(ViewBag.ShiftsJson ?? "[]"));   // 班別主檔（含起訖、淨工時）
+    var _shiftMap = {};
+    _shifts.forEach(function (s) { _shiftMap[s.code] = s; });
+
+    // 班次下拉（由 Shift 主檔產生）；selected 標記目前值
+    function shiftSelect(id, val) {
+        var opts = '<option value=""></option>';
+        _shifts.forEach(function (s) {
+            var sel = (s.code === val) ? ' selected' : '';
+            opts += '<option value="' + escHtml(s.code) + '"' + sel + '>' + escHtml(s.code) + ' — ' + escHtml(s.name || '') + '</option>';
+        });
+        var dow = id.split('_')[1];
+        return '<select class="form-select form-select-sm" id="' + id + '" data-action-change="onDayShiftChange" data-dow="' + dow + '">' + opts + '</select>';
+    }
+
+    // 依該列已選班別即時推算：正班工時=淨工時加總、開班=最早、收班=最晚（與伺服端一致）
+    function onDayShiftChange(e, el) {
+        var dow = el.dataset.dow;
+        var codes = ['s1_', 's2_', 's3_', 's4_']
+            .map(function (p) { return document.getElementById(p + dow).value; })
+            .filter(function (c) { return c; });
+        var uniq = codes.filter(function (c, i) { return codes.indexOf(c) === i; });
+        var mins = 0, start = null, end = null;
+        uniq.forEach(function (c) {
+            var s = _shiftMap[c];
+            if (!s) return;
+            mins += (s.mins || 0);
+            if (s.start && (start === null || s.start < start)) start = s.start;
+            if (s.end && (end === null || s.end > end)) end = s.end;
+        });
+        document.getElementById('wks_' + dow).value = (mins / 60).toFixed(2);
+        document.getElementById('ws_' + dow).value = start || '';
+        document.getElementById('we_' + dow).value = end || '';
+    }
+
+    function getToken() {
+        return document.querySelector('#__AjaxAntiForgery input[name="__RequestVerificationToken"]').value;
+    }
+
+    function showToast(msg) {
+        document.getElementById('successToastMsg').textContent = msg;
+        new bootstrap.Toast(document.getElementById('successToast')).show();
+    }
+
+    // 面板關閉時若資料曾異動則刷新列表（新增後直接排班的流程採此機制，不立即 reload）
+    document.getElementById('crudPanel').addEventListener('hidden.bs.offcanvas', function () {
+        if (_pendingListReload) location.reload();
+    });
+
+    function openPanel(e, el) {
+        const url = el.dataset.url, title = el.dataset.label;
+        _currentGroupCode = null;
+        _pendingListReload = false;
+        document.getElementById('tabDetailNavItem').classList.add('u-display-none');
+        document.getElementById('crudPanelTitle').textContent = title;
+        const body = document.getElementById('crudPanelBody');
+        body.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-3 text-muted small">' + @(Json.Serialize(SL["Loading"].Value)) + '</p></div>';
+        new bootstrap.Tab(document.querySelector('[data-bs-target="#tabMaster"]')).show();
+        new bootstrap.Offcanvas(document.getElementById('crudPanel')).show();
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+            .then(html => { body.innerHTML = DOMPurify.sanitize(html); bindPanelForms(); })
+            .catch(() => { body.innerHTML = '<div class="alert alert-danger m-3">' + @(Json.Serialize(SL["LoadFailed"].Value)) + '</div>'; });
+    }
+
+    function openDetailPanel(e, el) {
+        const url = el.dataset.url, title = el.dataset.label, groupCode = el.dataset.code;
+        _currentGroupCode = groupCode;
+        _pendingListReload = false;
+        document.getElementById('tabDetailNavItem').classList.remove('u-display-none');
+        document.getElementById('crudPanelTitle').textContent = title;
+        const body = document.getElementById('crudPanelBody');
+        body.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-3 text-muted small">' + @(Json.Serialize(SL["Loading"].Value)) + '</p></div>';
+        new bootstrap.Tab(document.querySelector('[data-bs-target="#tabMaster"]')).show();
+        new bootstrap.Offcanvas(document.getElementById('crudPanel')).show();
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+            .then(html => { body.innerHTML = DOMPurify.sanitize(html); bindPanelForms(); })
+            .catch(() => { body.innerHTML = '<div class="alert alert-danger m-3">' + @(Json.Serialize(SL["LoadFailed"].Value)) + '</div>'; });
+    }
+
+    function bindPanelForms() {
+        document.querySelectorAll('#crudPanelBody form[data-ajax="true"]').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitPanel(this);
+            });
+        });
+        document.querySelectorAll('#crudPanelBody [data-dismiss-panel]').forEach(btn => {
+            btn.addEventListener('click', () =>
+                bootstrap.Offcanvas.getInstance(document.getElementById('crudPanel'))?.hide());
+        });
+    }
+
+    function submitPanel(form) {
+        const submitter = form.querySelector('[type="submit"]');
+        const orig = submitter.innerHTML;
+        submitter.disabled = true;
+        submitter.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>';
+        const fd = new FormData(form);
+        if (submitter.name) fd.set(submitter.name, submitter.value);
+        fetch(form.action, {
+            method: 'POST',
+            body: fd,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(r => {
+            const ct = r.headers.get('Content-Type') || '';
+            return ct.includes('application/json')
+                ? r.json().then(d => ({ isJson: true, data: d }))
+                : r.text().then(h => ({ isJson: false, html: h }));
+        })
+        .then(result => {
+            if (result.isJson && result.data.success && result.data.groupCode && !_currentGroupCode) {
+                // 新增成功 → 不關閉面板，直接切入該班制的「每日排班」
+                _currentGroupCode = result.data.groupCode;
+                _pendingListReload = true;   // 關閉面板時再刷新列表
+                showToast(result.data.message);
+                document.getElementById('tabDetailNavItem').classList.remove('u-display-none');
+                const body = document.getElementById('crudPanelBody');
+                fetch('@Url.Action("Edit", "ShiftGroup")?code=' + encodeURIComponent(_currentGroupCode),
+                      { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                    .then(r => r.text())
+                    .then(html => { body.innerHTML = DOMPurify.sanitize(html); bindPanelForms(); });
+                new bootstrap.Tab(document.querySelector('[data-bs-target="#tabDetail"]')).show();
+                loadDays();
+                return;
+            }
+            if (result.isJson && result.data.success) {
+                bootstrap.Offcanvas.getInstance(document.getElementById('crudPanel')).hide();
+                showToast(result.data.message);
+                setTimeout(() => location.reload(), 1200);
+            } else if (result.isJson && !result.data.success) {
+                submitter.disabled = false; submitter.innerHTML = orig;
+                alert(result.data.message);
+            } else {
+                document.getElementById('crudPanelBody').innerHTML = DOMPurify.sanitize(result.html);
+                bindPanelForms();
+            }
+        })
+        .catch(() => { submitter.disabled = false; submitter.innerHTML = orig; alert(window.i18n.t('SaveFailed')); });
+    }
+
+    function deleteItem(e, el) {
+        const url = el.dataset.url, name = el.dataset.label;
+        if (!confirm(window.i18n.t('ConfirmDelete').replace('{0}', name))) return;
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+            body: '__RequestVerificationToken=' + encodeURIComponent(getToken())
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                showToast(result.message);
+                setTimeout(() => location.reload(), 1200);
+            } else {
+                alert(result.message || window.i18n.t('DeleteFailed'));
+            }
+        })
+        .catch(() => alert(window.i18n.t('DeleteFailed')));
+    }
+
+    // ---- Day Schedule Tab ----
+    function loadDays() {
+        if (!_currentGroupCode) return;
+        const sec = document.getElementById('daySection');
+        sec.innerHTML = '<div class="text-center py-4"><div class="spinner-border text-primary"></div></div>';
+        fetch('@Url.Action("GetDays", "ShiftGroup")?groupCode=' + encodeURIComponent(_currentGroupCode),
+              { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => r.json())
+            .then(list => renderDays(list))
+            .catch(() => { sec.innerHTML = '<div class="alert alert-danger">' + @(Json.Serialize(SL["LoadFailed"].Value)) + '</div>'; });
+    }
+
+    function renderDays(list) {
+        // Build a map for easy lookup
+        var dayMap = {};
+        list.forEach(d => { dayMap[d.dayOfWeek] = d; });
+
+        let html = `
+        <h6 class="fw-bold mb-3">@Localizer["DaySchedule"]</h6>
+        <p class="text-muted small mb-2">${@(Json.Serialize(SL["ShiftAllDayNote"].Value))}</p>
+        <div class="table-responsive">
+        <table class="table table-sm table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th class="u-width-60px">@Localizer["DayOfWeek"]</th>
+                    <th class="u-width-75px">${@(Json.Serialize(SL["ShiftWorkStart"].Value))}</th>
+                    <th class="u-width-75px">${@(Json.Serialize(SL["ShiftWorkEnd"].Value))}</th>
+                    <th class="u-width-75px">${@(Json.Serialize(SL["ShiftRegularHours"].Value))}</th>
+                    <th class="u-width-75px">${@(Json.Serialize(SL["ShiftOvertimeHours"].Value))}</th>
+                    <th>@Localizer["Shift1"]</th>
+                    <th>@Localizer["Shift2"]</th>
+                    <th>@Localizer["Shift3"]</th>
+                    <th>@Localizer["Shift4"]</th>
+                    <th class="text-center u-width-60px">@Localizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody id="dayTableBody">`;
+
+        for (var dow = 1; dow <= 7; dow++) {
+            var d = dayMap[dow] || { dayOfWeek: dow, shift1Code: '', shift2Code: '', shift3Code: '', shift4Code: '', workStart: '', workEnd: '', dailyRegularHours: 0, dailyOvertimeHours: 0 };
+            var wksBgClass = (dow >= 6) ? 'bg-light' : '';
+            html += `<tr id="dayRow_${dow}" class="${wksBgClass}">
+                <td class="fw-semibold text-center">${_dayNamesZh[dow]}</td>
+                <td><input type="time" class="form-control form-control-sm bg-light" id="ws_${dow}" value="${escHtml(d.workStart || '')}" readonly title="${@(Json.Serialize(SL["ShiftAutoFromShift"].Value))}" /></td>
+                <td><input type="time" class="form-control form-control-sm bg-light" id="we_${dow}" value="${escHtml(d.workEnd || '')}" readonly title="${@(Json.Serialize(SL["ShiftAutoFromShift"].Value))}" /></td>
+                <td><input type="number" class="form-control form-control-sm bg-light" id="wks_${dow}" value="${d.dailyRegularHours || 0}" readonly title="${@(Json.Serialize(SL["ShiftAutoSumNet"].Value))}" /></td>
+                <td><input type="number" class="form-control form-control-sm" id="wko_${dow}" value="${d.dailyOvertimeHours || 0}" step="0.5" min="0" /></td>
+                <td>${shiftSelect('s1_' + dow, d.shift1Code || '')}</td>
+                <td>${shiftSelect('s2_' + dow, d.shift2Code || '')}</td>
+                <td>${shiftSelect('s3_' + dow, d.shift3Code || '')}</td>
+                <td>${shiftSelect('s4_' + dow, d.shift4Code || '')}</td>
+                <td class="text-center">
+                    <button class="btn btn-sm btn-primary" data-action="saveDay" data-dow="${dow}" title="@Localizer["Save"]"><i class="bi bi-check-lg"></i> @Localizer["Save"]</button>
+                </td>
+            </tr>`;
+        }
+
+        html += `</tbody></table></div>
+        <div class="d-flex justify-content-end mt-3">
+            <button class="btn btn-primary" data-action="saveAllDays">
+                <i class="bi bi-check2-all me-1"></i>@Localizer["SaveAllDays"]
+            </button>
+        </div>`;
+        document.getElementById('daySection').innerHTML = html;
+    }
+
+    // 整週一次儲存：收集 7 天送 SaveDays，回填伺服端推算結果
+    function saveAllDays() {
+        if (!_currentGroupCode) return;
+        var days = [];
+        for (var dow = 1; dow <= 7; dow++) {
+            days.push({
+                dayOfWeek:          dow,
+                dailyOvertimeHours: parseFloat(document.getElementById('wko_' + dow).value) || 0,
+                shift1Code:         document.getElementById('s1_' + dow).value || null,
+                shift2Code:         document.getElementById('s2_' + dow).value || null,
+                shift3Code:         document.getElementById('s3_' + dow).value || null,
+                shift4Code:         document.getElementById('s4_' + dow).value || null
+            });
+        }
+        fetch('@Url.Action("SaveDays", "ShiftGroup")', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'RequestVerificationToken': getToken()
+            },
+            body: JSON.stringify({ groupCode: _currentGroupCode, days: days })
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                _pendingListReload = true;
+                (result.days || []).forEach(function (d) {
+                    document.getElementById('wks_' + d.dayOfWeek).value = d.dailyRegularHours;
+                    document.getElementById('ws_'  + d.dayOfWeek).value = d.workStart || '';
+                    document.getElementById('we_'  + d.dayOfWeek).value = d.workEnd || '';
+                });
+                showToast(result.message);
+            } else { alert(result.message); }
+        })
+        .catch(() => alert(window.i18n.t('SaveFailed')));
+    }
+
+    function saveDay(e, el) {
+        const dow = el.dataset.dow;
+        // 只送班別與加班；正班/開班/收班由伺服端依班別推算
+        const body = new URLSearchParams({
+            __RequestVerificationToken: getToken(),
+            groupCode:          _currentGroupCode,
+            dayOfWeek:          dow,
+            dailyOvertimeHours: document.getElementById('wko_' + dow).value,
+            shift1Code:         document.getElementById('s1_'  + dow).value,
+            shift2Code:         document.getElementById('s2_'  + dow).value,
+            shift3Code:         document.getElementById('s3_'  + dow).value,
+            shift4Code:         document.getElementById('s4_'  + dow).value
+        });
+        fetch('@Url.Action("SaveDay", "ShiftGroup")', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+            body
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                // 以伺服端推算結果回填顯示，確保畫面與儲存值一致
+                document.getElementById('wks_' + dow).value = result.dailyRegularHours;
+                document.getElementById('ws_'  + dow).value = result.workStart || '';
+                document.getElementById('we_'  + dow).value = result.workEnd || '';
+                showToast(result.message);
+            }
+            else { alert(result.message); }
+        })
+        .catch(() => alert(window.i18n.t('SaveFailed')));
+    }
+
+    function escHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+</script>
+}

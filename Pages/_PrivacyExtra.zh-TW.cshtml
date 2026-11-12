@@ -1,0 +1,61 @@
+@model PrivacyModel
+@inject IConfiguration Configuration
+@{
+    // 本檔是 ProjectZ 對 Core 隱私權政策的補充段落（Core 只寫它自己確實會做的事）。
+    // 下列天數皆為程式預設值；部署單位若在 appsettings 覆寫，請同步修改本頁。
+    var qaEnabled = Configuration.GetValue<bool>("Features:QaAssistant:Enabled");
+    var qaDays = Configuration.GetValue<int?>("Features:QaAssistant:TurnRetentionDays") ?? 90;
+    var telemetryDays = Configuration.GetValue<int?>("Telemetry:RetentionDays") is > 0 and var td ? td : 30;
+    var alertWebhook = !string.IsNullOrWhiteSpace(Configuration["Security:AlertWebhookUrl"]);
+    var org = Model.Organization ?? "貴公司";
+}
+<h2 class="h5 mt-4">手機版推播通知</h2>
+<p>
+    若您在手機版允許通知，系統會儲存瀏覽器提供的推播訂閱資訊，並透過您的瀏覽器或作業系統供應商
+    （例如 Google、Apple、Mozilla）的推播服務送達通知；通知內容依 Web Push 標準加密傳送。
+    您可隨時在裝置或瀏覽器設定中關閉通知。
+</p>
+
+<h2 class="h5 mt-4">手機版登出時的資料清除</h2>
+<p>在手機版登出時，系統會清除該裝置上與您帳號相關的離線暫存資料、草稿與已送出紀錄。</p>
+
+<h2 class="h5 mt-4">手機版運作狀況回報</h2>
+<p>
+    為了及早發現現場手機的問題，手機版會定期把運作狀況回報給本系統的伺服器：頁面錯誤訊息與錯誤細節、各功能的回應時間、
+    斷線時間、裝置上尚未送出的作業筆數、網路類型、手機版版號與瀏覽器識別字串（User-Agent），
+    並附上回報當下的登入帳號、廠別，以及一個存在瀏覽器裡、用來分辨裝置的隨機代號（不是硬體識別碼）。
+    這些資料只存在 <strong>@org</strong> 的伺服器上，供系統管理員排除故障，@telemetryDays 天後自動刪除。
+</p>
+
+@if (alertWebhook)
+{
+    <h2 class="h5 mt-4">資安警示通知</h2>
+    <p>
+        系統偵測到疑似攻擊（例如短時間內大量登入嘗試）時，會把警示類型、來源 IP 位址與時間送到部署單位設定的通知網址，
+        以便即時處理。該網址可能是部署單位使用的外部通訊或監控服務。
+    </p>
+}
+
+@if (qaEnabled)
+{
+    <h2 class="h5 mt-4">資料查詢助理</h2>
+    <p>
+        使用資料查詢助理時，系統會記錄您的使用者識別、提問文字、解析結果與回傳筆數，用於多輪追問的確認，
+        以及作為改善查詢功能的依據；這些紀錄保留 @qaDays 天後自動刪除。提問由部署單位設定的語言模型服務處理，
+        預設為與本系統同一台伺服器上的模型，不會傳送至外部的 AI 服務。
+    </p>
+}
+
+<h2 class="h5 mt-4">自動清除排程</h2>
+<p>系統每日自動清除超過保存期限的資料（以下為預設值，部署單位可調整）：</p>
+<ul>
+    <li>操作稽核記錄、簽核歷程：730 天</li>
+    <li>密碼歷史：每位使用者只保留最近 24 筆（僅雜湊值，用於防止重複使用舊密碼）</li>
+    <li>排程報表產出檔：90 天</li>
+    <li>物料需求計算（MRP）執行紀錄：180 天</li>
+    <li>手機版運作狀況回報：@telemetryDays 天</li>
+    @if (qaEnabled)
+    {
+        <li>資料查詢助理紀錄：@qaDays 天</li>
+    }
+</ul>

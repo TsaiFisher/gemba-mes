@@ -1,0 +1,27 @@
+{
+  "sourcePath": "Modules/MFG/Services/IMfgSimplifiedModeService.cs",
+  "sourceHash": "61316a8cd3dd2e8cd09a71ee9f7cee913fc830561e7a916f2620e384c3060289",
+  "entries": [
+    {
+      "slug": "code-mfg-imfgsimplifiedmodeservice-bf8bd994",
+      "lang": "zh",
+      "headingPath": "生產製造 › 製造簡化模式的**單一判定來源**",
+      "text": "單一判定來源決定製造模式狀態｜系統判斷製造簡化模式的狀態時，會統一透過此服務來取得資訊，以避免不同介面（如網頁和行動裝置）各自維護一份狀態清單而產生不一致的情況。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-imfgsimplifiedmodeservice-4a9d18d7",
+      "lang": "zh",
+      "headingPath": "生產製造 › 此派工狀態是否允許開工",
+      "text": "派工狀態決定是否可開工｜系統會根據目前的派工狀態來判斷是否允許開始作業；在完整模式下，只有「已排程/準備開工/進行中」的狀態才代表可以開工。若使用簡化模式，則額外開放了「待處理」的狀態，這表示免排程後建立的派工，即使沒有被推進到「已排程」，現場人員也可以直接從「待處理」的狀態開始作業。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-imfgsimplifiedmodeservice-48ab86f6",
+      "lang": "zh",
+      "headingPath": "生產製造 › 現場待辦清單應顯示的派工狀態",
+      "text": "顯示的派工狀態規則｜簡化模式下，如果沒有將「待處理」的派工狀態納入考量，即使已經開工放行了，該筆派工在待辦清單上也不會出現。",
+      "approved": false
+    }
+  ]
+}

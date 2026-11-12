@@ -1,0 +1,859 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model Routing
+@using System.Text.Json
+
+@{
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    bool isNew = string.IsNullOrEmpty(Model.RoutingId);
+    var workCenters = ViewBag.WorkCenters as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uoms = ViewBag.Uoms as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var products = ViewBag.Products as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var productStockUom = ViewBag.ProductStockUom as IDictionary<string, string> ?? new Dictionary<string, string>();
+    var containers = ViewBag.Containers as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var containerCapacity = ViewBag.ContainerCapacity as IDictionary<string, decimal> ?? new Dictionary<string, decimal>();
+    var toolings = ViewBag.Toolings as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+
+    var initOps = (Model.Operations ?? new List<RoutingOperation>()).Select(op => new {
+        op.OperationSeq, op.OperationName, op.WorkCenterId,
+        CD_BOR = (int)op.CD_BOR, op.QT_BOR, op.UomCode,
+        ContainerInCode = op.ContainerInCode, ContainerOutCode = op.ContainerOutCode,
+        op.IsOutsource, op.RequiresFpi, op.RequiresInspection, op.YieldRate, op.ToolingCode,
+        op.TM_SETUP, op.TM_UNIT, TimeUnit = (int)op.TimeUnit, SetupTimeUnit = (int)op.SetupTimeUnit, op.MoveTime, op.QueueTime, op.SopNumber,
+        Boms = op.Boms.Select(b => new {
+            b.BomSeq, b.ProductCode, b.Quantity, b.UomCode, b.ScrapRate, b.OffcutRate,
+            // 未設定＝發料（MrpEngine 的 fallback）；後沖時機畫面不開放（PerReport 未實作），只原樣帶回存檔
+            IssueMethod = (int)(b.IssueMethod ?? MaterialIssueMethod.Push), BackflushTiming = (int)b.BackflushTiming
+        }).ToList()
+    }).ToList();
+    var initOpsJson = JsonSerializer.Serialize(initOps);
+    // 等候時間建議值（每晚由實際報工統計，§23.2-2）：工序序號 → 建議（分鐘）／樣本數
+    var queueSuggestions = ViewBag.QueueSuggestions as IDictionary<int, RoutingQueueTimeSuggestion>
+                           ?? new Dictionary<int, RoutingQueueTimeSuggestion>();
+    var queueSuggestJson = JsonSerializer.Serialize(queueSuggestions.ToDictionary(
+        kv => kv.Key.ToString(),
+        kv => new { minutes = kv.Value.SuggestedQueueMinutes, samples = kv.Value.SampleCount, days = kv.Value.PeriodDays }));
+}
+
+<form id="routingForm" method="post"
+      action="@(isNew ? Url.Action("Create") : Url.Action("Edit", new { id = Model.RoutingId }))"
+      data-action-submit="submitRoutingForm">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="operationsJson" id="operationsJson" />
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+    @* 分頁切換鈕須放在 fieldset 外——放裡面的話唯讀時 disabled fieldset 會把
+       <button> 整個停用（HTML5 規範行為，不只是灰階），導致唯讀模式下無法切到
+       「工序與用料」分頁查看內容。fieldset 只鎖住裡面真正的表單欄位即可。 *@
+    <ul class="nav nav-tabs mb-3" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" type="button" data-bs-toggle="tab" data-bs-target="#rtTabMaster" role="tab">@Localizer["SecMaster"]</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" type="button" data-bs-toggle="tab" data-bs-target="#rtTabOps" role="tab">@Localizer["TabOps"] <span id="opsTabBadge" class="badge bg-secondary">0</span></button>
+        </li>
+    </ul>
+
+    <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+
+        <div class="tab-content">
+
+        <div class="tab-pane fade show active" id="rtTabMaster" role="tabpanel">
+        @* ── 第一層：途程主檔 ───────────────────────────── *@
+        <section class="mb-4">
+            <h6 class="fw-bold border-bottom pb-2 mb-3"><span class="badge bg-primary me-1">1</span>@Localizer["SecMaster"]</h6>
+            <div class="mb-3">
+                <label class="form-label">@Localizer["RoutingId"] <span class="text-danger">*</span></label>
+                @if (!isNew)
+                {
+                    <input type="text" class="form-control" asp-for="RoutingId" readonly required />
+                }
+                else
+                {
+                    <input type="text" class="form-control" asp-for="RoutingId" maxlength="30" required />
+                }
+                <span asp-validation-for="RoutingId" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">@Localizer["ProductCode"]</label>
+                <select class="form-select rt-product" asp-for="ProductCode">
+                    <option value="">@Localizer["PleaseSelect"]</option>
+                    @foreach (dynamic p in products)
+                    {
+                        <option value="@p.ProductCode">@p.ProductCode — @p.ProductName</option>
+                    }
+                </select>
+                <span asp-validation-for="ProductCode" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">@Localizer["RoutingName"]</label>
+                <input type="text" class="form-control" asp-for="RoutingName" maxlength="200" />
+                <span asp-validation-for="RoutingName" class="text-danger small"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">@Localizer["BatchSize"]</label>
+                        <input type="number" class="form-control" asp-for="BatchSize" step="any" min="0" />
+                        <span asp-validation-for="BatchSize" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">@Localizer["BufferDays"]</label>
+                        <input type="number" class="form-control" asp-for="BufferDays" min="0" />
+                        <span asp-validation-for="BufferDays" class="text-danger small"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">@Localizer["AvgLeadTime"]</label>
+                <input type="number" class="form-control" asp-for="AvgLeadTime" step="any" min="0" />
+                <span asp-validation-for="AvgLeadTime" class="text-danger small"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label">@Localizer["Version"]</label>
+                        <input type="text" class="form-control" asp-for="Version" maxlength="20" />
+                        <span asp-validation-for="Version" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label">@Localizer["EffectiveFrom"]</label>
+                        <input type="date" class="form-control" asp-for="EffectiveFrom" />
+                        <span asp-validation-for="EffectiveFrom" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label">@Localizer["EffectiveTo"]</label>
+                        <input type="date" class="form-control" asp-for="EffectiveTo" />
+                        <span asp-validation-for="EffectiveTo" class="text-danger small"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" asp-for="IsActive" />
+                    <label class="form-check-label">@Localizer["Active"]</label>
+                </div>
+            </div>
+        </section>
+        </div>
+
+        <div class="tab-pane fade" id="rtTabOps" role="tabpanel">
+        @* ── 第二層：工序明細 ───────────────────────────── *@
+        <section class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
+                <h6 class="mb-0 fw-bold"><span class="badge bg-primary me-1">2</span>@Localizer["SecOps"] <span id="opsBadge" class="badge bg-secondary">0</span></h6>
+                @if (!isReadOnly)
+                {
+                    <button type="button" class="btn btn-sm btn-outline-primary" data-action="showOpForm">
+                        <i class="bi bi-plus-circle"></i> @Localizer["AddOp"]
+                    </button>
+                }
+            </div>
+            <div class="text-muted small mb-2">@Localizer["OpsHint"]</div>
+
+            <div class="table-responsive mb-2">
+                <table class="table table-sm table-hover table-bordered" id="opsTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="u-width-50px">@Localizer["ColSeq"]</th>
+                            <th class="u-col-soft">@Localizer["ColName"]</th>
+                            <th>@Localizer["ColWorkCenter"]</th>
+                            <th class="u-width-70px">@Localizer["ColTransMode"]</th>
+                            <th class="u-col-num">@Localizer["ColTransQty"]</th>
+                            <th class="u-width-50px" title="@Localizer["ChkContIn"]">@Localizer["ColContIn"]</th>
+                            <th class="u-width-50px" title="@Localizer["ChkContOut"]">@Localizer["ColContOut"]</th>
+                            <th class="u-width-70px">@Localizer["ColSetup"]</th>
+                            <th class="u-width-70px">@Localizer["ColUnitTime"]</th>
+                            <th class="u-width-60px">@Localizer["ColYield"]</th>
+                            <th class="u-width-80px">@Localizer["ColSop"]</th>
+                            <th class="u-width-80px">@Localizer["ColActions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="opsTbody"></tbody>
+                </table>
+            </div>
+
+            @* Op inline form *@
+            <div id="opFormCard" class="card border-primary mb-3 d-none">
+                <div class="card-header d-flex justify-content-between align-items-center py-2">
+                    <small id="opFormTitle" class="fw-bold">@Localizer["OpFormAdd"]</small>
+                    <button type="button" class="btn-close btn-sm" data-action="hideOpForm"></button>
+                </div>
+                <div class="card-body py-2">
+                    <input type="hidden" id="opEditSeq" value="" />
+                    <div class="row g-2">
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["FldSeq"]</label>
+                            <input type="number" id="opSeq" class="form-control form-control-sm" min="1" step="10" />
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label form-label-sm">@Localizer["FldName"]</label>
+                            <input type="text" id="opName" class="form-control form-control-sm" maxlength="100" />
+                        </div>
+                        <div class="col-3">
+                            <label class="form-label form-label-sm">@Localizer["FldWorkCenter"]</label>
+                            <select id="opWc" class="form-select form-select-sm">
+                                <option value="">@Localizer["PleaseSelect"]</option>
+                                @foreach (dynamic wc in workCenters)
+                                {
+                                    <option value="@wc.WorkCenterCode">@wc.WorkCenterCode</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label class="form-label form-label-sm">@Localizer["FldUom"]</label>
+                            <select id="opUom" class="form-select form-select-sm">
+                                <option value="">@Localizer["PleaseSelect"]</option>
+                                @foreach (dynamic u in uoms)
+                                {
+                                    <option value="@u.UomCode">@u.UomCode</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-2 mt-1">
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["FldTransMode"]</label>
+                            <select id="opCdBor" class="form-select form-select-sm">
+                                <option value="1">@Localizer["TransContinuous"]</option>
+                                <option value="2">@Localizer["TransBatch"]</option>
+                                <option value="3" selected>@Localizer["TransWhole"]</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["FldTransQty"]</label>
+                            <input type="number" id="opQtBor" class="form-control form-control-sm" step="any" min="0" value="1" />
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["FldSetup"]</label>
+                            <input type="number" id="opSetup" class="form-control form-control-sm" step="any" min="0" value="0" />
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["FldSetupTimeUnit"]</label>
+                            <select id="opSetupTimeUnit" class="form-select form-select-sm">
+                                <option value="1">@Localizer["TimeSec"]</option>
+                                <option value="2" selected>@Localizer["TimeMin"]</option>
+                                <option value="3">@Localizer["TimeHour"]</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["FldUnitTime"]</label>
+                            <input type="number" id="opUnit" class="form-control form-control-sm" step="any" min="0" />
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["FldUnitTimeUnit"]</label>
+                            <select id="opTimeUnit" class="form-select form-select-sm">
+                                <option value="1">@Localizer["TimeSec"]</option>
+                                <option value="2" selected>@Localizer["TimeMin"]</option>
+                                <option value="3">@Localizer["TimeHour"]</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["FldSop"]</label>
+                            <input type="text" id="opSop" class="form-control form-control-sm" maxlength="50" />
+                        </div>
+                    </div>
+                    <div class="row g-2 mt-1">
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["FldYield"]</label>
+                            <input type="number" id="opYield" class="form-control form-control-sm" step="any" min="0" max="100" value="100" />
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["FldMoveTime"]</label>
+                            <input type="number" id="opMove" class="form-control form-control-sm" step="any" min="0" value="0" />
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["FldQueueTime"]</label>
+                            <input type="number" id="opQueue" class="form-control form-control-sm" step="any" min="0" value="0" />
+                            @* 依實際報工統計的建議值；按「套用」只填入欄位，存檔途程才生效 *@
+                            <div id="opQueueSuggest" class="form-text d-none">
+                                <span id="opQueueSuggestText"></span>
+                                @if (!isReadOnly)
+                                {
+                                    <button type="button" class="btn btn-link btn-sm p-0 ms-1 align-baseline" data-action="applyQueueSuggest">@Localizer["QueueSuggestApply"]</button>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label form-label-sm">@Localizer["FldTooling"]</label>
+                            <select id="opTooling" class="form-select form-select-sm">
+                                <option value="">@Localizer["ContNone"]</option>
+                                @foreach (dynamic t in toolings)
+                                {
+                                    <option value="@t.ToolingCode">@t.ToolingCode — @t.ToolingName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-2 mt-1 align-items-end">
+                        <div class="col-3">
+                            <label class="form-label form-label-sm">@Localizer["ChkContIn"]</label>
+                            <select id="opContIn" class="form-select form-select-sm">
+                                <option value="">@Localizer["ContNone"]</option>
+                                @foreach (dynamic c in containers)
+                                {
+                                    <option value="@c.ContainerCode">@c.ContainerCode — @c.ContainerName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label class="form-label form-label-sm">@Localizer["ChkContOut"]</label>
+                            <select id="opContOut" class="form-select form-select-sm">
+                                <option value="">@Localizer["ContNone"]</option>
+                                @foreach (dynamic c in containers)
+                                {
+                                    <option value="@c.ContainerCode">@c.ContainerCode — @c.ContainerName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-check form-check-inline">
+                                @* 途程工序委外已停用（mfg-domain.md §19.7）：勾選保留顯示舊資料，但不能再勾，MRP 也不再依它展開委外 *@
+                                <input type="checkbox" id="opOutsource" class="form-check-input" disabled title="@Localizer["OutsourceOpDisabledHint"]" />
+                                <label class="form-check-label form-label-sm text-muted" title="@Localizer["OutsourceOpDisabledHint"]">@Localizer["ChkOutsource"] <i class="bi bi-info-circle"></i></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" id="opFpi" class="form-check-input" />
+                                <label class="form-check-label form-label-sm">@Localizer["ChkFpi"]</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" id="opInspect" class="form-check-input" />
+                                <label class="form-check-label form-label-sm">@Localizer["ChkInspect"]</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 mt-2">
+                        <button type="button" class="btn btn-sm btn-secondary" data-action="hideOpForm">@Localizer["Cancel"]</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-action="saveOpForm">@Localizer["Confirm"]</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        @* ── 第三層：選定工序的用料（BOM）─────────────────── *@
+        <section id="bomSection" class="mb-3 d-none">
+            <div class="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
+                <h6 class="mb-0 fw-bold"><span class="badge bg-primary me-1">3</span><span id="bomTitle">@Localizer["SecBom"]</span></h6>
+                @if (!isReadOnly)
+                {
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-action="showBomForm">
+                        <i class="bi bi-plus-circle"></i> @Localizer["AddBom"]
+                    </button>
+                }
+            </div>
+
+            <div class="table-responsive mb-2">
+                <table class="table table-sm table-hover table-bordered" id="bomsTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="u-width-50px">@Localizer["BomColSeq"]</th>
+                            <th>@Localizer["BomColProduct"]</th>
+                            <th class="u-width-90px">@Localizer["BomColQty"]</th>
+                            <th class="u-width-70px">@Localizer["BomColUom"]</th>
+                            <th class="u-width-80px">@Localizer["BomColScrap"]</th>
+                            <th class="u-width-80px">@Localizer["BomColOffcut"]</th>
+                            <th class="u-width-80px">@Localizer["BomColIssueMethod"]</th>
+                            <th class="u-width-80px">@Localizer["BomColActions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bomsTbody"></tbody>
+                </table>
+            </div>
+
+            @* BOM inline form *@
+            <div id="bomFormCard" class="card border-secondary mb-3 d-none">
+                <div class="card-header d-flex justify-content-between align-items-center py-2">
+                    <small id="bomFormTitle" class="fw-bold">@Localizer["BomFormAdd"]</small>
+                    <button type="button" class="btn-close btn-sm" data-action="hideBomForm"></button>
+                </div>
+                <div class="card-body py-2">
+                    <input type="hidden" id="bomEditSeq" value="" />
+                    <div class="row g-2">
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["BomFldSeq"]</label>
+                            <input type="number" id="bomSeq" class="form-control form-control-sm" min="1" step="10" />
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label form-label-sm">@Localizer["BomFldProduct"]</label>
+                            <select id="bomProduct" class="form-select form-select-sm">
+                                <option value="">@Localizer["PleaseSelect"]</option>
+                                @foreach (dynamic p in products)
+                                {
+                                    <option value="@p.ProductCode">@p.ProductCode — @p.ProductName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["BomFldQty"]</label>
+                            <input type="number" id="bomQty" class="form-control form-control-sm" step="any" min="0" />
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["BomFldUom"]</label>
+                            <select id="bomUom" class="form-select form-select-sm">
+                                <option value="">@Localizer["PleaseSelect"]</option>
+                                @foreach (dynamic u in uoms)
+                                {
+                                    <option value="@u.UomCode">@u.UomCode</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm">@Localizer["BomFldScrap"]</label>
+                            <input type="number" id="bomScrap" class="form-control form-control-sm" step="any" min="0" value="0" />
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm" title="@Localizer["BomFldOffcutHint"]">@Localizer["BomFldOffcut"]</label>
+                            <input type="number" id="bomOffcut" class="form-control form-control-sm" step="any" min="0" value="0" />
+                        </div>
+                        <div class="col-2">
+                            <label class="form-label form-label-sm" title="@Localizer["BomFldIssueMethodHint"]">@Localizer["BomFldIssueMethod"]</label>
+                            <select id="bomIssueMethod" class="form-select form-select-sm">
+                                <option value="0">@Localizer["IssueMethodPush"]</option>
+                                <option value="1">@Localizer["IssueMethodPull"]</option>
+                                <option value="2">@Localizer["IssueMethodBackflush"]</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 mt-2">
+                        <button type="button" class="btn btn-sm btn-secondary" data-action="hideBomForm">@Localizer["Cancel"]</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-action="saveBomForm">@Localizer["Confirm"]</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+
+        </div>
+    </fieldset>
+
+    <div class="modal-footer">
+        @if (isReadOnly)
+        {
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-secondary" name="cancel" value="cancel" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+        }
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    var rOps = @Html.Raw(initOpsJson);
+    var queueSuggest = @Html.Raw(queueSuggestJson);
+    var selSeq = null;
+    var ro = @Html.Raw(isReadOnly.ToString().ToLower());
+    var productStockUom = @Html.Raw(JsonSerializer.Serialize(productStockUom));
+    // 工序時間單位（OperationTimeUnit）標籤；TM_SETUP/TM_UNIT 以原值儲存，單位另存（mfg-domain.md §3.1(3)）
+    var timeUnitLabels = { 1: "@Localizer["TimeSec"]", 2: "@Localizer["TimeMin"]", 3: "@Localizer["TimeHour"]" };
+    var containerCapacity = @Html.Raw(JsonSerializer.Serialize(containerCapacity));   // 容器代碼 → 容量（定量模式帶 QT_BOR）
+
+    var L = {
+        opFormAdd: "@Localizer["OpFormAdd"]", opFormEdit: "@Localizer["OpFormEdit"]",
+        queueSuggestFmt: "@Localizer["QueueSuggestFmt", "__V__", "__U__", "__N__", "__D__"]",
+        bomFormAdd: "@Localizer["BomFormAdd"]", bomFormEdit: "@Localizer["BomFormEdit"]",
+        noOps: "@Localizer["NoOps"]", noBoms: "@Localizer["NoBoms"]",
+        bomTitleFmt: "@Localizer["BomTitleFmt"]",
+        opSeqInvalid: "@Localizer["JsOpSeqInvalid"]", opWcRequired: "@Localizer["JsOpWcRequired"]",
+        opUomRequired: "@Localizer["JsOpUomRequired"]", opUnitInvalid: "@Localizer["JsOpUnitInvalid"]",
+        opSeqDupFmt: "@Localizer["JsOpSeqDupFmt"]", opDelConfirmFmt: "@Localizer["JsOpDelConfirmFmt"]",
+        bomSelectOpFirst: "@Localizer["JsBomSelectOpFirst"]", bomSeqInvalid: "@Localizer["JsBomSeqInvalid"]",
+        bomProductRequired: "@Localizer["JsBomProductRequired"]", bomQtyInvalid: "@Localizer["JsBomQtyInvalid"]",
+        bomUomRequired: "@Localizer["JsBomUomRequired"]", bomSeqDupFmt: "@Localizer["JsBomSeqDupFmt"]",
+        bomDelConfirm: "@Localizer["JsBomDelConfirm"]", bomOffcutInvalid: "@Localizer["JsBomOffcutInvalid"]"
+    };
+    var issueMethodLabels = { 0: '@Localizer["IssueMethodPush"]', 1: '@Localizer["IssueMethodPull"]', 2: '@Localizer["IssueMethodBackflush"]' };
+    var cdBorLabels = { 1: '@Localizer["TransContinuous"]', 2: '@Localizer["TransBatch"]', 3: '@Localizer["TransWhole"]' };
+
+    function ck(v) { return v ? '<i class="bi bi-check-lg text-success"></i>' : ''; }
+
+    function renderOps() {
+        var tbody = document.getElementById('opsTbody');
+        var rows = rOps.map(function (op) {
+            var active = op.OperationSeq === selSeq ? 'table-active' : '';
+            var actions = ro ? '' :
+                '<button type="button" class="btn btn-xs btn-outline-warning me-1" data-action="showOpForm" data-seq="' + op.OperationSeq + '"><i class="bi bi-pencil"></i></button>' +
+                '<button type="button" class="btn btn-xs btn-outline-danger" data-action="deleteOp" data-seq="' + op.OperationSeq + '"><i class="bi bi-trash"></i></button>';
+            return '<tr class="' + active + ' u-cursor-pointer" data-action="selectOp" data-seq="' + op.OperationSeq + '">' +
+                '<td>' + op.OperationSeq + '</td>' +
+                '<td>' + (op.OperationName || '') + '</td>' +
+                '<td>' + op.WorkCenterId + '</td>' +
+                '<td>' + (cdBorLabels[op.CD_BOR] || op.CD_BOR) + '</td>' +
+                '<td>' + op.QT_BOR + ' ' + (op.UomCode || '') + '</td>' +
+                '<td>' + (op.ContainerInCode || '') + '</td>' +
+                '<td>' + (op.ContainerOutCode || '') + '</td>' +
+                '<td>' + op.TM_SETUP + ' ' + (timeUnitLabels[op.SetupTimeUnit || op.TimeUnit] || '') + '</td>' +
+                '<td>' + op.TM_UNIT + ' ' + (timeUnitLabels[op.TimeUnit] || '') + '</td>' +
+                '<td>' + (op.YieldRate != null ? op.YieldRate + '%' : '') + '</td>' +
+                '<td>' + (op.SopNumber || '') + '</td>' +
+                '<td>' + actions + '</td>' +
+                '</tr>';
+        });
+        tbody.innerHTML = rows.join('') || '<tr><td colspan="12" class="text-center text-muted">' + L.noOps + '</td></tr>';
+        document.getElementById('opsBadge').textContent = rOps.length;
+        var opsTabBadge = document.getElementById('opsTabBadge');
+        if (opsTabBadge) opsTabBadge.textContent = rOps.length;
+        if (selSeq !== null) {
+            var op = rOps.find(function (o) { return o.OperationSeq === selSeq; });
+            if (op) renderBoms(op);
+        }
+    }
+
+    function renderBoms(op) {
+        document.getElementById('bomSection').classList.remove('d-none');
+        document.getElementById('bomTitle').textContent = L.bomTitleFmt.replace('{0}', op.OperationSeq);
+        var tbody = document.getElementById('bomsTbody');
+        var rows = (op.Boms || []).map(function (b) {
+            var actions = ro ? '' :
+                '<button type="button" class="btn btn-xs btn-outline-warning me-1" data-action="showBomForm" data-bom-seq="' + b.BomSeq + '"><i class="bi bi-pencil"></i></button>' +
+                '<button type="button" class="btn btn-xs btn-outline-danger" data-action="deleteBom" data-bom-seq="' + b.BomSeq + '"><i class="bi bi-trash"></i></button>';
+            return '<tr>' +
+                '<td>' + b.BomSeq + '</td>' +
+                '<td>' + b.ProductCode + '</td>' +
+                '<td>' + b.Quantity + '</td>' +
+                '<td>' + b.UomCode + '</td>' +
+                '<td>' + b.ScrapRate + '</td>' +
+                '<td>' + (b.OffcutRate || 0) + '</td>' +
+                '<td>' + (issueMethodLabels[b.IssueMethod || 0] || '') + '</td>' +
+                '<td>' + actions + '</td>' +
+                '</tr>';
+        });
+        tbody.innerHTML = rows.join('') || '<tr><td colspan="8" class="text-center text-muted">' + L.noBoms + '</td></tr>';
+    }
+
+    window.selectOp = function (e, el) {
+        selSeq = parseInt(el.dataset.seq);
+        renderOps();
+    };
+
+    window.showOpForm = function (e, el) {
+        // 靜態「新增」鈕無 data-seq → null（新增）；列上編輯鈕帶 data-seq → 編輯。
+        var seq = (el && el.dataset.seq != null && el.dataset.seq !== '') ? parseInt(el.dataset.seq) : null;
+        var card = document.getElementById('opFormCard');
+        card.classList.remove('d-none');
+        document.getElementById('opFormTitle').textContent = seq === null ? L.opFormAdd : L.opFormEdit;
+        document.getElementById('opEditSeq').value = seq === null ? '' : seq;
+
+        if (seq !== null) {
+            var op = rOps.find(function (o) { return o.OperationSeq === seq; });
+            if (op) {
+                document.getElementById('opSeq').value = op.OperationSeq;
+                document.getElementById('opName').value = op.OperationName || '';
+                document.getElementById('opWc').value = op.WorkCenterId;
+                document.getElementById('opUom').value = op.UomCode || '';
+                document.getElementById('opCdBor').value = op.CD_BOR;
+                document.getElementById('opQtBor').value = op.QT_BOR;
+                document.getElementById('opSetup').value = op.TM_SETUP;
+                document.getElementById('opUnit').value = op.TM_UNIT;
+                document.getElementById('opSetupTimeUnit').value = op.SetupTimeUnit || 2;   // 準備工時單位（可與單件不同）
+                document.getElementById('opTimeUnit').value = op.TimeUnit || 2;   // 以原存單位顯示
+                document.getElementById('opSop').value = op.SopNumber || '';
+                document.getElementById('opContIn').value = op.ContainerInCode || '';
+                document.getElementById('opContOut').value = op.ContainerOutCode || '';
+                document.getElementById('opTooling').value = op.ToolingCode || '';
+                document.getElementById('opMove').value = (op.MoveTime != null ? op.MoveTime : 0);
+                document.getElementById('opQueue').value = (op.QueueTime != null ? op.QueueTime : 0);
+                showQueueSuggest(op.OperationSeq);
+                document.getElementById('opYield').value = (op.YieldRate != null ? op.YieldRate : 100);
+                document.getElementById('opOutsource').checked = !!op.IsOutsource;
+                document.getElementById('opFpi').checked = !!op.RequiresFpi;
+                document.getElementById('opInspect').checked = !!op.RequiresInspection;
+            }
+        } else {
+            // defaults for new op
+            var nextSeq = rOps.length > 0 ? Math.max.apply(null, rOps.map(function (o) { return o.OperationSeq; })) + 10 : 10;
+            document.getElementById('opSeq').value = nextSeq;
+            document.getElementById('opName').value = '';
+            document.getElementById('opWc').value = '';
+            // 移轉批量單位預設帶途程品號的庫存單位（mfg-domain.md §3.1(2)），仍可改
+            var rtProductEl = document.querySelector('.rt-product');
+            var rtProduct = rtProductEl ? rtProductEl.value : '';
+            document.getElementById('opUom').value = (rtProduct && productStockUom[rtProduct]) ? productStockUom[rtProduct] : '';
+            document.getElementById('opCdBor').value = '3';
+            document.getElementById('opQtBor').value = '1';
+            document.getElementById('opSetup').value = '0';
+            document.getElementById('opUnit').value = '';
+            document.getElementById('opSetupTimeUnit').value = '2';   // 預設分
+            document.getElementById('opTimeUnit').value = '2';   // 預設分
+            showQueueSuggest(null);
+            document.getElementById('opSop').value = '';
+            document.getElementById('opContIn').value = '';
+            document.getElementById('opContOut').value = '';
+            document.getElementById('opTooling').value = '';
+            document.getElementById('opMove').value = '0';
+            document.getElementById('opQueue').value = '0';
+            document.getElementById('opYield').value = '100';
+            document.getElementById('opOutsource').checked = false;
+            document.getElementById('opFpi').checked = false;
+            document.getElementById('opInspect').checked = false;
+        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+
+    // ── 等候時間建議值（§23.2-2）：建議以分鐘存，依工序目前的時間單位換算顯示 ──
+    var unitFactor = { 1: 1 / 60, 2: 1, 3: 60 };   // 該單位 1 單位＝幾分鐘
+    var suggestSeq = null;
+    function suggestInUnit() {
+        var s = suggestSeq != null ? queueSuggest[String(suggestSeq)] : null;
+        if (!s) return null;
+        var unit = parseInt(document.getElementById('opTimeUnit').value) || 2;
+        return Math.round(s.minutes / unitFactor[unit] * 100) / 100;
+    }
+    function showQueueSuggest(seq) {
+        suggestSeq = seq;
+        var box = document.getElementById('opQueueSuggest');
+        var s = seq != null ? queueSuggest[String(seq)] : null;
+        if (!s) { box.classList.add('d-none'); return; }
+        var unit = parseInt(document.getElementById('opTimeUnit').value) || 2;
+        document.getElementById('opQueueSuggestText').textContent = L.queueSuggestFmt
+            .replace('__V__', suggestInUnit()).replace('__U__', timeUnitLabels[unit])
+            .replace('__N__', s.samples).replace('__D__', s.days);
+        box.classList.remove('d-none');
+    }
+    document.getElementById('opTimeUnit').addEventListener('change', function () { showQueueSuggest(suggestSeq); });
+    window.applyQueueSuggest = function () {
+        var v = suggestInUnit();
+        if (v != null) document.getElementById('opQueue').value = v;
+    };
+
+    window.hideOpForm = function () {
+        document.getElementById('opFormCard').classList.add('d-none');
+    };
+
+    window.saveOpForm = function () {
+        var editSeq = document.getElementById('opEditSeq').value;
+        var seq = parseInt(document.getElementById('opSeq').value);
+        var wc = document.getElementById('opWc').value;
+        var uom = document.getElementById('opUom').value;
+        var unit = parseFloat(document.getElementById('opUnit').value);
+
+        if (!seq || seq <= 0) { alert(L.opSeqInvalid); return; }
+        if (!wc) { alert(L.opWcRequired); return; }
+        if (!uom) { alert(L.opUomRequired); return; }
+        if (isNaN(unit) || unit < 0) { alert(L.opUnitInvalid); return; }
+
+        // Check duplicate seq (when adding new or changing seq)
+        if (!editSeq || parseInt(editSeq) !== seq) {
+            if (rOps.some(function (o) { return o.OperationSeq === seq; })) {
+                alert(L.opSeqDupFmt.replace('{0}', seq));
+                return;
+            }
+        }
+
+        var newOp = {
+            OperationSeq: seq,
+            OperationName: document.getElementById('opName').value.trim() || null,
+            WorkCenterId: wc,
+            UomCode: uom,
+            CD_BOR: parseInt(document.getElementById('opCdBor').value),
+            QT_BOR: parseFloat(document.getElementById('opQtBor').value) || 1,
+            TM_SETUP: parseFloat(document.getElementById('opSetup').value) || 0,
+            SetupTimeUnit: parseInt(document.getElementById('opSetupTimeUnit').value) || 2,
+            TM_UNIT: unit,
+            TimeUnit: parseInt(document.getElementById('opTimeUnit').value) || 2,
+            MoveTime: parseFloat(document.getElementById('opMove').value) || 0,
+            QueueTime: parseFloat(document.getElementById('opQueue').value) || 0,
+            SopNumber: document.getElementById('opSop').value.trim() || null,
+            ContainerInCode: document.getElementById('opContIn').value || null,
+            ContainerOutCode: document.getElementById('opContOut').value || null,
+            ToolingCode: document.getElementById('opTooling').value || null,
+            IsOutsource: document.getElementById('opOutsource').checked,
+            RequiresFpi: document.getElementById('opFpi').checked,
+            RequiresInspection: document.getElementById('opInspect').checked,
+            YieldRate: parseFloat(document.getElementById('opYield').value) || 100,
+            Boms: []
+        };
+
+        if (editSeq) {
+            var idx = rOps.findIndex(function (o) { return o.OperationSeq === parseInt(editSeq); });
+            if (idx >= 0) {
+                newOp.Boms = rOps[idx].Boms || [];
+                rOps[idx] = newOp;
+            }
+        } else {
+            rOps.push(newOp);
+            rOps.sort(function (a, b) { return a.OperationSeq - b.OperationSeq; });
+        }
+
+        hideOpForm();
+        renderOps();
+    };
+
+    window.deleteOp = function (e, el) {
+        var seq = parseInt(el.dataset.seq);
+        if (!confirm(L.opDelConfirmFmt.replace('{0}', seq))) return;
+        rOps = rOps.filter(function (o) { return o.OperationSeq !== seq; });
+        if (selSeq === seq) {
+            selSeq = null;
+            document.getElementById('bomSection').classList.add('d-none');
+        }
+        renderOps();
+    };
+
+    window.showBomForm = function (e, el) {
+        // 靜態「新增」鈕無 data-bom-seq → null（新增）；列上編輯鈕帶 data-bom-seq → 編輯。
+        var bomSeq = (el && el.dataset.bomSeq != null && el.dataset.bomSeq !== '') ? parseInt(el.dataset.bomSeq) : null;
+        if (selSeq === null) { alert(L.bomSelectOpFirst); return; }
+        var op = rOps.find(function (o) { return o.OperationSeq === selSeq; });
+        if (!op) return;
+
+        var card = document.getElementById('bomFormCard');
+        card.classList.remove('d-none');
+        document.getElementById('bomFormTitle').textContent = bomSeq === null ? L.bomFormAdd : L.bomFormEdit;
+        document.getElementById('bomEditSeq').value = bomSeq === null ? '' : bomSeq;
+
+        if (bomSeq !== null) {
+            var b = (op.Boms || []).find(function (x) { return x.BomSeq === bomSeq; });
+            if (b) {
+                document.getElementById('bomSeq').value = b.BomSeq;
+                $('#bomProduct').val(b.ProductCode).trigger('change.select2');   // 不觸發 DOM change，保留已存單位
+                document.getElementById('bomQty').value = b.Quantity;
+                document.getElementById('bomUom').value = b.UomCode;
+                window.restrictUomToProduct(document.getElementById('bomUom'), b.ProductCode, { keepCurrent: true, value: b.UomCode });
+                document.getElementById('bomScrap').value = b.ScrapRate;
+                document.getElementById('bomOffcut').value = b.OffcutRate || 0;
+                document.getElementById('bomIssueMethod').value = String(b.IssueMethod || 0);
+            }
+        } else {
+            var nextBom = (op.Boms && op.Boms.length > 0)
+                ? Math.max.apply(null, op.Boms.map(function (b) { return b.BomSeq; })) + 10
+                : 10;
+            document.getElementById('bomSeq').value = nextBom;
+            $('#bomProduct').val('').trigger('change.select2');
+            document.getElementById('bomQty').value = '';
+            document.getElementById('bomUom').value = '';
+            document.getElementById('bomScrap').value = '0';
+            document.getElementById('bomOffcut').value = '0';
+            document.getElementById('bomIssueMethod').value = '0';
+        }
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+
+    window.hideBomForm = function () {
+        document.getElementById('bomFormCard').classList.add('d-none');
+    };
+
+    window.saveBomForm = function () {
+        if (selSeq === null) return;
+        var op = rOps.find(function (o) { return o.OperationSeq === selSeq; });
+        if (!op) return;
+
+        var editSeq = document.getElementById('bomEditSeq').value;
+        var seq = parseInt(document.getElementById('bomSeq').value);
+        var product = document.getElementById('bomProduct').value.trim();
+        var qty = parseFloat(document.getElementById('bomQty').value);
+        var uom = document.getElementById('bomUom').value;
+        var offcut = parseFloat(document.getElementById('bomOffcut').value) || 0;
+
+        if (!seq || seq <= 0) { alert(L.bomSeqInvalid); return; }
+        if (!product) { alert(L.bomProductRequired); return; }
+        if (isNaN(qty) || qty <= 0) { alert(L.bomQtyInvalid); return; }
+        if (!uom) { alert(L.bomUomRequired); return; }
+        if (offcut < 0) { alert(L.bomOffcutInvalid); return; }
+
+        if (!editSeq || parseInt(editSeq) !== seq) {
+            if ((op.Boms || []).some(function (b) { return b.BomSeq === seq; })) {
+                alert(L.bomSeqDupFmt.replace('{0}', seq));
+                return;
+            }
+        }
+
+        var prevBom = editSeq ? (op.Boms || []).find(function (b) { return b.BomSeq === parseInt(editSeq); }) : null;
+        var newBom = {
+            BomSeq: seq,
+            ProductCode: product,
+            Quantity: qty,
+            UomCode: uom,
+            ScrapRate: parseFloat(document.getElementById('bomScrap').value) || 0,
+            OffcutRate: offcut,
+            IssueMethod: parseInt(document.getElementById('bomIssueMethod').value) || 0,
+            BackflushTiming: prevBom ? (prevBom.BackflushTiming || 0) : 0
+        };
+
+        if (!op.Boms) op.Boms = [];
+
+        if (editSeq) {
+            var idx = op.Boms.findIndex(function (b) { return b.BomSeq === parseInt(editSeq); });
+            if (idx >= 0) op.Boms[idx] = newBom;
+        } else {
+            op.Boms.push(newBom);
+            op.Boms.sort(function (a, b) { return a.BomSeq - b.BomSeq; });
+        }
+
+        hideBomForm();
+        renderBoms(op);
+    };
+
+    window.deleteBom = function (e, el) {
+        var bomSeq = parseInt(el.dataset.bomSeq);
+        if (selSeq === null) return;
+        var op = rOps.find(function (o) { return o.OperationSeq === selSeq; });
+        if (!op) return;
+        if (!confirm(L.bomDelConfirm)) return;
+        op.Boms = (op.Boms || []).filter(function (b) { return b.BomSeq !== bomSeq; });
+        renderBoms(op);
+    };
+
+    window.serializeOps = function () {
+        document.getElementById('operationsJson').value = JSON.stringify(rOps);
+    };
+
+    // 取代原本表單送出前先序列化工序再走 submitPanel 的兩段 inline 行為。
+    window.submitRoutingForm = function (e, el) {
+        window.serializeOps();
+        window.submitPanel(e, el);
+        return false;
+    };
+
+    function initProductSelects() {
+        if (!window.jQuery || !$.fn.select2) return;
+        var $form = $('#routingForm');
+        // dropdownParent 指向 offcanvas 內的表單，確保搜尋框於側欄可取得焦點
+        $('.rt-product, #bomProduct').each(function () {
+            $(this).select2({ theme: 'bootstrap-5', width: '100%', dropdownParent: $form });
+        });
+        // 用料品號（使用者實選時）自動帶該料庫存單位（mfg-domain.md §3.1(2)）
+        $('#bomProduct').on('change', function () {
+            var code = this.value;
+            if (code && productStockUom[code]) {
+                document.getElementById('bomUom').value = productStockUom[code];
+            }
+            // 單位下拉只留該料可用的單位（uom-step.js；2026-10-12）
+            if (code) window.restrictUomToProduct(document.getElementById('bomUom'), code);
+        });
+    }
+
+    // 定量(2)模式：完工容器容量帶為移轉批量 QT_BOR 預設值（仍可改）—— mfg-domain.md §3.1(5)/B
+    function applyContainerQtyDefault() {
+        if (document.getElementById('opCdBor').value !== '2') return;   // 僅定量模式
+        var c = document.getElementById('opContOut').value;
+        if (c && containerCapacity[c] != null) {
+            document.getElementById('opQtBor').value = containerCapacity[c];
+        }
+    }
+
+    // Init
+    initProductSelects();
+    document.getElementById('opCdBor').addEventListener('change', applyContainerQtyDefault);
+    document.getElementById('opContOut').addEventListener('change', applyContainerQtyDefault);
+    renderOps();
+    if (rOps.length > 0) {
+        selSeq = rOps[0].OperationSeq;
+        renderOps();
+    }
+})();
+</script>

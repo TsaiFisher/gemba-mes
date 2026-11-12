@@ -1,0 +1,48 @@
+{
+  "sourcePath": "Modules/_Shared/DocumentStateMachines.cs",
+  "sourceHash": "128ad0391c07285af8904ebbefca7a0a27c4168218c56ee03e91b604073e43e7",
+  "entries": [
+    {
+      "slug": "code-core-documentstatemachines-96e33f27",
+      "lang": "zh",
+      "headingPath": "系統共用 › 四大單據的狀態守衛",
+      "text": "狀態判斷規則的建立｜系統會根據四種主要單據（採購單、進貨單、工單、出貨單）來檢查其當前的狀態，並依序回報第一個不符合條件的原因。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-documentstatemachines-e77d4f73",
+      "lang": "zh",
+      "headingPath": "系統共用 › 採購單狀態機",
+      "text": "採購單狀態判斷依據｜採購單的流程狀態，是根據簽核狀態以及品項明細是否已結案或收貨數量來決定的。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-documentstatemachines-79829538",
+      "lang": "zh",
+      "headingPath": "系統共用 › 刪除：只要有任何一行進過貨就不得刪除——進貨單的明細指回採購明細",
+      "text": "無法刪除進貨紀錄｜只要有任何一筆明細已經過入庫的記錄，就不能將這張單據刪除；此外，如果該單據目前處於審核流程中，也無法被刪除。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-documentstatemachines-e4733f85",
+      "lang": "zh",
+      "headingPath": "系統共用 › 前兩項先判，因為那兩個訊息比「僅草稿可刪除」",
+      "text": "可刪除條件判斷規則｜系統會先檢查是否為「倉庫已動」或「已退貨」狀態，因為這兩個狀態能更明確地告知使用者資料卡在哪個流程點；此外，若單據處於審核中，則無法被刪除。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-documentstatemachines-ed01d582",
+      "lang": "zh",
+      "headingPath": "系統共用 › 已回報產出不可作廢",
+      "text": "產出狀態限制與庫存處理規則｜已結案或作廢的單據無法再次進行作廢；此外，已經回報的產出也無法再被作廢；若物料已經領用但尚未退回，系統也會阻止其作廢。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-documentstatemachines-28682c35",
+      "lang": "zh",
+      "headingPath": "系統共用 › 不是靠這裡的狀態判斷",
+      "text": "出貨單二次確認機制說明｜出貨單在已經確認過一次後，仍然可以再次進行確認操作，此行為是為了支援某些部署情境下，使用者先確認再進入簡化模式的情況。系統會透過檢查來防止重複的帳務過帳。",
+      "approved": true
+    }
+  ]
+}

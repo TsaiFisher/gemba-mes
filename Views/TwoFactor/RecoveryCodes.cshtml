@@ -1,0 +1,46 @@
+@model string[]
+@{
+    var isEn = System.Globalization.CultureInfo.CurrentUICulture.Name.StartsWith("en");
+    ViewData["Title"] = isEn ? "Recovery Codes" : "復原碼";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-success">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-key"></i> @(isEn ? "Your recovery codes" : "您的復原碼")</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        @(isEn
+                            ? "Save these recovery codes in a safe place. Each code can be used once to sign in if you lose access to your authenticator. They will not be shown again."
+                            : "請將這些復原碼保存在安全的地方。遺失驗證器時，每組復原碼可用於登入一次。此畫面關閉後將不再顯示。")
+                    </div>
+
+                    @if (Model.Length == 0)
+                    {
+                        <div class="alert alert-danger">@(isEn ? "No recovery codes were generated." : "未產生任何復原碼。")</div>
+                    }
+                    else
+                    {
+                        <div class="row g-2 mb-3">
+                            @foreach (var codeItem in Model)
+                            {
+                                <div class="col-6">
+                                    <code class="user-select-all d-block border rounded px-2 py-1">@codeItem</code>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-arrow-right-circle"></i> @(isEn ? "I have saved my codes — continue" : "我已保存 — 繼續")
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

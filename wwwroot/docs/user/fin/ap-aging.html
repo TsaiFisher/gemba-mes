@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="AP Aging Analysis — FIN User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>應付帳齡分析 — FIN 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">FIN 目錄</span><span lang="en">FIN contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">FIN 畫面</span><span lang="en">FIN screens</span></div>
+    <a href="chart-of-account.html" class="nav-link"><span lang="zh">會計科目</span><span lang="en">Chart of Accounts</span></a>
+    <a href="ap-invoice.html" class="nav-link"><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></a>
+    <a href="ar-invoice.html" class="nav-link"><span lang="zh">應收帳款</span><span lang="en">AR Invoice</span></a>
+    <a href="ar-credit-note.html" class="nav-link"><span lang="zh">銷貨折讓單</span><span lang="en">Sales Credit Note</span></a>
+    <a href="ap-debit-note.html" class="nav-link"><span lang="zh">進貨折讓單</span><span lang="en">Purchase Debit Note</span></a>
+    <a href="ap-payment.html" class="nav-link"><span lang="zh">付款作業</span><span lang="en">AP Payment</span></a>
+    <a href="ar-receipt.html" class="nav-link"><span lang="zh">收款作業</span><span lang="en">AR Receipt</span></a>
+    <a href="bank-account.html" class="nav-link"><span lang="zh">銀行帳戶</span><span lang="en">Bank Account</span></a>
+    <a href="ap-aging.html" class="nav-link active"><span lang="zh">應付帳齡分析</span><span lang="en">AP Aging</span></a>
+    <a href="ar-aging.html" class="nav-link"><span lang="zh">應收帳齡分析</span><span lang="en">AR Aging</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-calendar2-week me-2 text-primary"></i><span lang="zh">應付帳齡分析</span><span lang="en">AP Aging</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/APAging &nbsp;|&nbsp; 應付未結清餘額帳齡分桶</span><span lang="en">Route: /APAging &nbsp;|&nbsp; Aging buckets of open payables</span></div>
+    </div>
+
+    <p><span lang="zh">以指定基準日（asOf）將未結清應付發票餘額分桶（0-30/31-60/61-90/90+），合計與應付總額勾稽，供資金調度與付款排程。</span><span lang="en">Buckets the balances of open AP invoices as at a chosen date (asOf) into 0-30 / 31-60 / 61-90 / 90+, reconciled with total payables, for cash management and payment scheduling.</span></p>
+    <img class="screen-shot" src="img/ap-aging.png" data-src-en="img/en/ap-aging.png" alt="應付帳齡分析畫面截圖" data-alt-en="AP aging analysis screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">應付帳齡分析畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">AP aging analysis screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">選擇基準日後產生；可依供應商展開明細。</span><span lang="en">Choose an as-of date to produce it; the detail can be expanded by supplier.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">截至日</span><span lang="en">As of</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">帳齡的計算基準日；逾期天數＝截至日 － 發票到期日</span><span lang="en">The as-of date the aging is calculated from; days overdue = as-of date − invoice due date</span></td></tr>
+        <tr><td><span lang="zh">供應商</span><span lang="en">Supplier</span></td><td><span lang="zh">只看單一供應商；留空為全部供應商彙總</span><span lang="en">One supplier only; leave blank to summarise all suppliers</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">供應商</span><span lang="en">Supplier</span></td><td><span lang="zh">應付帳款的往來對象</span><span lang="en">The counterparty of the payable</span></td></tr>
+        <tr><td><span lang="zh">未到期</span><span lang="en">Current</span></td><td><span lang="zh">到期日尚未屆至的未結清應付金額</span><span lang="en">Open payables not yet due</span></td></tr>
+        <tr><td><span lang="zh">1-30天</span><span lang="en">1-30 Days</span></td><td><span lang="zh">逾期 1～30 天的未結清應付金額</span><span lang="en">Open payables 1–30 days overdue</span></td></tr>
+        <tr><td><span lang="zh">31-60天</span><span lang="en">31-60 Days</span></td><td><span lang="zh">逾期 31～60 天的未結清應付金額</span><span lang="en">Open payables 31–60 days overdue</span></td></tr>
+        <tr><td><span lang="zh">61-90天</span><span lang="en">61-90 Days</span></td><td><span lang="zh">逾期 61～90 天的未結清應付金額</span><span lang="en">Open payables 61–90 days overdue</span></td></tr>
+        <tr><td><span lang="zh">90天以上</span><span lang="en">Over 90 Days</span></td><td><span lang="zh">逾期超過 90 天的未結清應付金額，是催付與帳務風險的重點</span><span lang="en">Open payables more than 90 days overdue — the ones to chase and the main accounting risk</span></td></tr>
+        <tr><td><span lang="zh">合計</span><span lang="en">Total</span></td><td><span lang="zh">該供應商各帳齡區間的未結清金額總和</span><span lang="en">Total outstanding for the supplier across the aging bands</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">帳齡以「截至日 － 發票到期日」計算，未到期者列入「未到期」欄；各帳齡欄位為該區間內未結清金額＝總額 − 已收付 − 已折讓（已核銷、已折讓部分不計）。付清後才開折讓而我們多付的發票以負數列入，供應商合計因此減少。</span><span lang="en">Aging is calculated as the as-of date minus the invoice due date, and anything not yet due goes in the "not due" column; each aging column holds the outstanding amount in that band, which is total − settled − credited (amounts already allocated or credited are excluded). An invoice we overpaid because a debit note was issued after it was paid appears as a negative amount and reduces the supplier total.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="ap-invoice.html"><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

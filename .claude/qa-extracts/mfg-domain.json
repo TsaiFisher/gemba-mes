@@ -1,0 +1,1166 @@
+{
+  "sourcePath": ".claude/specifications/mfg-domain.md",
+  "sourceHash": "3d8059e150b640c64e5fdc87e2ae9b4150b4a0762d9caf42fac7a0224138ca30",
+  "entries": [
+    {
+      "slug": "mfg-domain-3fc9c69e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 1. 模組定位與範圍",
+      "text": "生產活動的流程範圍說明｜本系統負責將訂單轉換為可執行的生產活動，並能即時掌握進度。其涵蓋的業務流程從需求的產生，依序展開至生產批次、工單、工序和用料的層面。此外，系統也包含將已建立的派工單分配到具體的設備與時間段，以及管理派工單的建立、優先順序設定、合併或拆分等事宜。流程還涵蓋了實際的生產執行、進度回報及檢驗作業，並能根據目前的生產進度動態預估每個派工或設備的完成時間，最後包含完工後的入庫處理以及不良品退工或重工的流程。",
+      "approved": false,
+      "sourceSectionHash": "bf54e6d4e90e8e07b99eeb6476e8139b63c58f9e23ce8e28d09f728bb957f2bc"
+    },
+    {
+      "slug": "mfg-domain-3f75d505",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 2. 命名對照表（舊 → 新）",
+      "text": "系統術語的統一與使用規範｜在介面展示給使用者看的時候，即使後端資料結構使用了英文名稱，相關的關鍵單據和概念仍會沿用原有的中文說法，例如「生產批」、「工單」和「派工單」。",
+      "approved": false,
+      "sourceSectionHash": "e1ce9ae3bce1143240ac0074e7f29aaa1477941b0fca858e38b032eeadcb9c1f"
+    },
+    {
+      "slug": "mfg-domain-af89cf4a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 3. 核心 Entity 與關聯",
+      "text": "物料發放單位與庫存單位的差異規則說明｜在計算需要發出的物料數量時，系統會根據工序的用料設定來決定實際的發料單位，這個發料單位可能和該產品目前儲存的庫存單位是不同的。",
+      "approved": false,
+      "sourceSectionHash": "0db65985ddd78da49a650717bd99cbe6d32032d7400628039fc67feccbc2ba94"
+    },
+    {
+      "slug": "mfg-domain-d3e90517",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 3. 核心 Entity 與關聯 › 3.1 途程設計定案（2026-05-26）",
+      "text": "途程設計與品號關聯規則說明｜該途程的設定會決定一個產品可以透過哪些生產流程來製造，如果沒有指定任何品號，則代表此流程適用於所有產品；若為特定產品所用，則只能用於該產品，且系統會根據產品預設的流程代號自動選取。工序單位與物料單位定義規則說明在計算工時和使用材料時，使用的單位是針對「移動批次」的單位，而不是庫存管理的單位；當新增工序或用料時，系統會預設採用該產品或物料的標準庫存單位，但使用者仍可以手動修改。時間定義與單位的記錄規則說明生產流程中的準備時間和每件產品所需的標準工時是分開計算並獨立儲存的；這些時間值會根據其各自的時間單位進行紀錄，系統在後續排程計算時才會將它們轉換成共同的基準小時數來彙總。用料品號選擇與自動帶入單元規則說明當使用者在材料清單中選定某個物料時，系統會自動為該物料帶入其標準庫存單位；此關聯性確保了材料消耗和工序計算的單位一致性。工序轉移容器使用規則說明如果一個生產工序需要使用或產出特定的容器來進行移動，則必須在工序設定中指定相關的容器代號；若沒有指定任何容器，則代表該工序不需要以容器為單位的轉移作業。用料品號防循環檢查規則說明系統在儲存流程時會檢查材料清單，確保所使用的物料品號不能與此生產流程本身屬於同一產品系列，避免形成無限的、無法完成的製造環路。工序良率計算與使用規則說明每個生產工序都會設定一個投入到該工序後能產出合格品的比率；在進行材料消耗或產能負載的計算時，系統會根據各個工序的良率來回推算實際需要投入的起始數量。工序設備與搬運時間定義規則說明每個生產工序可以設定用於準備作業所需的專用工具，並且可以額外記錄在不同工序間移動或等待的時間；這些時間參數是比整個產品流程的總緩衝時間更精細的計算依據。首件檢查與製程巡檢的強制執行規則說明使用者可以在每個生產工序中設定兩個獨立的條件：一是是否必須在完成準備作業後進行一次「首件」檢查，二是開工後是否需要系統自動建立一個「製程中巡檢」的紀錄，這兩個判斷是獨立決定的。",
+      "approved": false,
+      "sourceSectionHash": "b68ae519db1397e2eeefbb39795ad84881872b51c11f774bd579297bb6b0bd07"
+    },
+    {
+      "slug": "mfg-domain-01897ade",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 4. 狀態機 › 4.1 MrpRun（MRP 執行單）",
+      "text": "MRP 執行計算依據與日期判斷規則｜一次批次處理所有待展開的訂單列，系統會根據需求日期往回倒推工序所需的時間，並以工作日曆來計算每個工序的計畫開工和完工日期。中間材料的庫存出貨日期會依照消耗該材料的那個特定工序的計畫開始日期來決定，因此這些中間材料的交期可能會比整個主訂單預計的交期更早或更晚。",
+      "approved": true,
+      "sourceSectionHash": "485313f3bb3ba01ff07720b5d200e94156e3b4160cfae19fe5a9e4b697f8e7c2"
+    },
+    {
+      "slug": "mfg-domain-9f4ca138",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 4. 狀態機 › 4.2 WorkOrder（工單）",
+      "text": "工單狀態的流轉規則說明｜工單從已規劃到釋出後，只要有任何一個作業流程開始執行，工單狀態就會變為生產中。只有在所有相關作業都完成之後，工單才會進入待入庫狀態；若要作廢，必須檢查是否有作業回報了產出或是否還有領用但未退回的物料，否則無法作廢。",
+      "approved": true,
+      "sourceSectionHash": "487ef1bbb84853a61fbbcc63650b5ef45391f28b70d3dec2bbb3255a7adfdaf3"
+    },
+    {
+      "slug": "mfg-domain-3b2943e4",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 4. 狀態機 › 4.3 Dispatch（派工單）",
+      "text": "排工單的流程與狀態變更規則｜生產作業的進度會依據不同的狀態進行管理。當派工單從未指定時間到已排定後，若需要準備工作，則會進入準備中狀態；完成準備後，如果該工序需要首件檢查，則會進入等待首件檢查的狀態，直到通過檢驗才能開始生產。在生產過程中，只要累積的合格數量達到派工總量，系統就會視為已完工並關閉此單據。此外，若某個工序不需要準備時間，則會直接從排定到生產中，跳過準備階段。",
+      "approved": true,
+      "sourceSectionHash": "d79c9fb86297de28042b6320c4a36c00d90414f567881500a38c6cf62a98b82f"
+    },
+    {
+      "slug": "mfg-domain-ab8ac1e5",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 4. 狀態機 › 4.4 ProductionSetup（開工準備記錄）",
+      "text": "狀態判斷與流程規則｜當開工準備記錄的狀態為「開放」，代表已經開始了準備工作，但尚未結束。若狀態變更為「已完成」，表示準備工作已經順利結束。只有在準備工作的結束時間（實際準備時間確定）被填寫後，狀態才會轉為「關閉」。",
+      "approved": false,
+      "sourceSectionHash": "f943cec3c31462746651194634ef928cdf12af61ad49c5137c58fd759713582d"
+    },
+    {
+      "slug": "mfg-domain-ea22d2e1",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 4. 狀態機 › 4.5 ProductionSession（上工紀錄）",
+      "text": "狀態判斷與流程規則｜當系統記錄顯示已經完成上工作業，但尚未有任何詳細的生產資料時，代表該紀錄處於「開放」狀態。若要結束此筆上工紀錄，則必須將其轉換為「已關閉」狀態；只有在有實際的生產資料填寫後，才能進入「已關閉」狀態。",
+      "approved": false,
+      "sourceSectionHash": "f43db24a76afd893b6400b4deb8aface05e127985ed1f4c85942f5e10fc48b71"
+    },
+    {
+      "slug": "mfg-domain-9ead9354",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 5. 核心業務流程 › 5.3 上工與報工（手機 API）",
+      "text": "操作流程與狀態變更規則｜當作業員開始備料或換模時，系統會將相關的派工單狀態更新為「正在設定中」。完成設定後，派工單的狀態會進一步更新為「可開始生產」，之後在確認機台和模具資訊建立生產紀錄時，派工單的狀態會變更為「進行中」。當作業員報工合格或不良數量後，系統會累加已完成的數量到派工單上；如果累積的總量達到或超過了預計的總量，則該派工單的狀態會變更為「結案」。最後，結束上工時，相關的生產紀錄也會被標記完成。",
+      "approved": true,
+      "sourceSectionHash": "9167019bd20040a95a59f1ff773a5bf838bd9e5903a279e88180f8b9b69b7acb"
+    },
+    {
+      "slug": "mfg-domain-008b6680",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 5. 核心業務流程 › 5.4 完工入庫",
+      "text": "入庫條件與數量計算規則｜當一個生產訂單的所有出貨紀錄都已結案時，系統會自動執行庫存移動的建立。此時，實際入庫的數量是所有已完成出貨紀錄中「合格數量」的總和，廢品在報工時已經排除，不會再次從中扣除。此外，如果該生產訂單需要經過成品品質檢驗（FQC），系統會檢查是否有通過檢驗的記錄，否則將無法入庫。",
+      "approved": false,
+      "sourceSectionHash": "2be6c7ec030e3712c098ca04a2a81bffddc446075976a14d0c1d790a7e95565f"
+    },
+    {
+      "slug": "mfg-domain-aa983c02",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 6. CD_MRP 與 CD_BOR 編碼 › CD_MRP（產銷模式）",
+      "text": "產銷模式代碼的意義說明｜此處定義了不同生產或物料來源的代碼代表不同的業務流程。當系統需要識別物料的獲取方式時，會根據以下代碼來判斷：如果代碼為「庫存出貨」，表示是使用現有庫存進行出貨；若為「採購」，則代表該物料需要透過外部購買取得；若是「委外」，則指此物料需委託給其他單位生產；而代碼為「自製」則表示該物料是在內部自行製造的。",
+      "approved": false,
+      "sourceSectionHash": "657f20f1b7e30c075a62682b2b2faf3c258aa03e1dae40d06a4e9f2c37cdf2ee"
+    },
+    {
+      "slug": "mfg-domain-f8aca4ec",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 6. CD_MRP 與 CD_BOR 編碼 › CD_BOR（生產批量模式，每道工序的派工模式）",
+      "text": "生產工序間的作業順序規則｜此規則定義了不同工序之間作業的啟動時機與依賴關係。如果設定為「連續」，表示前一個工序尚未完成時，後一個工序可以同步開始進行；若設定為「定量」，則必須等到前一個工序累積到指定數量後，後一個工序才會開始；而若是設定為「整批」，則要求前一個工序必須全部完工後，後一個工序才能開始。",
+      "approved": true,
+      "sourceSectionHash": "5834f60b741c1a5f8919f49eddb69341eab2d157fc273a86e261d924d6b4a501"
+    },
+    {
+      "slug": "mfg-domain-3c5a0658",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 7. 排程演算法（WW02 邏輯抽煉） › 7.1 資料準備",
+      "text": "排程資料準備與機台可用性判斷｜系統在進行排程時，會優先考慮那些已經有派工但尚未滿足特定條件的生產任務，以及所有尚未安排任何派工的任務。此外，排程只會考慮目前狀態為「可使用」的設備，若設備處於維修或停機等非可用狀態，則不會納入排程計算。在計算機台工作時段時，系統也會排除已預定的計劃性停機時間。",
+      "approved": true,
+      "sourceSectionHash": "0ccb921d3934367cd043cc08808afd1e25618473aac9425755d8d54c193840c7"
+    },
+    {
+      "slug": "mfg-domain-2372c81a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 7. 排程演算法（WW02 邏輯抽煉） › 7.2 派工順序決定",
+      "text": "排程決定依據的排序原則｜生產批次的處理順序會依照設定的優先級來決定，例如可以選擇以生產批次編號數字小的優先、最早交期優先、最短工時優先、先進先出或後進先出。如果有多個生產批次具有相同的最高優先級，則會再依據工單內部的工序順序進行排列，前一個工序的排程必須在後一個工序之前完成。",
+      "approved": true,
+      "sourceSectionHash": "710d8b9b7a8f2dd4ac4e638985a4f007088c043bae0b42e6e653d59bc09476d2"
+    },
+    {
+      "slug": "mfg-domain-f5e3cd7b",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 7. 排程演算法（WW02 邏輯抽煉） › 7.3 單張派工的時段配置",
+      "text": "排程時段配置規則說明｜當安排機台的派工時間時，如果與前一個工序有重疊的情況，系統會根據前後兩個工序的總工時來決定是將新的派工時間往後推還是往前推；此外，委外作業的開始時間會直接取前一個工序結束的時間或當天日期，不會經過產能可用時段的校正。",
+      "approved": true,
+      "sourceSectionHash": "d792b27ca94b091c3b7a86c29980b7075b048447fad3adffe6cc432c7efecb57"
+    },
+    {
+      "slug": "mfg-domain-573cac93",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 7. 排程演算法（WW02 邏輯抽煉） › 7.4 重要副產品",
+      "text": "排程後可取得的關鍵資訊｜系統在完成排程計算後，會自動產生幾份重要的報告資料。這些資料包括了那些實際派工時間超過了預計交貨日期的項目清單、無法找到可用時段而未被安排到任何工序的派工項目清單。此外，系統還會計算出每個派工所使用的物料齊備率，以及每台設備在排程期間每日的正班和加班總工作時數。",
+      "approved": true,
+      "sourceSectionHash": "2cb9293f60c513bf62ebb256fc8f92ccb2a5cfec9158af343434b286437b2c78"
+    },
+    {
+      "slug": "mfg-domain-748ef8e4",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 8. 手機 API 規劃",
+      "text": "手機工單安排的資料介面規劃｜此部分說明的是後續開發中，用於透過行動裝置進行每個工作中心或機台的後續工單安排以及投產作業所會使用的資料介面結構。",
+      "approved": false,
+      "sourceSectionHash": "61013ae0bee4969e3fbaeec8cafd5563599aceff4d25984987cab543871e465b"
+    },
+    {
+      "slug": "mfg-domain-30607741",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 8. 手機 API 規劃 › 8.3 即時投產",
+      "text": "即時記錄生產作業的開始｜當系統接收到設備、模具和操作人員的資訊後，會立即建立一個新的生產作業紀錄。此動作會將相關的委派單據狀態更新為「進行中」，代表該批次的生產活動已經正式啟動了。",
+      "approved": false,
+      "sourceSectionHash": "ad9fb03293cbe87cfbbc4012e06a414ec6fb1cb173455e93a6a95b80bae12e5d"
+    },
+    {
+      "slug": "mfg-domain-32a4c980",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 8. 手機 API 規劃 › 8.4 報工",
+      "text": "報工與完工的流程規則說明｜當進行「報工」時，系統會累計已完成的數量，並且保持生產紀錄為開放狀態，允許重複進行報工動作。只有在執行「完工」操作時，才會關閉目前的生產紀錄並結算相關的人工或製造費用。",
+      "approved": false,
+      "sourceSectionHash": "d073e85c450f548a297b2324f3d0a19ceb72762b65bda70b8db3e0df94ad01be"
+    },
+    {
+      "slug": "mfg-domain-4da4ac80",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 9. 切片實作建議（呼應 Fisher 提出的業務先後順序）",
+      "text": "流程推進時的建議時間規劃｜根據目前規劃，核心階段 A 到 F 的推進預計需要 12 到 14 週的時間；而包含緩衝和品質/成本擴充的後續階段 G 到 J，則保守估計為 15 到 22 週。實作排程請以前述的核心階段時間規劃為準。",
+      "approved": false,
+      "sourceSectionHash": "881a806f33a6fee8ece3208db16cf216fbf99e5d1751909708ec2f5c47bc8e1b"
+    },
+    {
+      "slug": "mfg-domain-e1c9f31e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 9. 切片實作建議（呼應 Fisher 提出的業務先後順序） › Phase A：BAS 擴充（前置主檔）",
+      "text": "工時計算依層級範圍決定｜查詢工時時，系統會依照「機台」的設定、再看「工作中心」的設定，最後參考「全廠」的設定，取一個最小的適用範圍來判斷可用的工時。這樣設計可以避免為每一台設備都重複建立完整的日曆紀錄，只需在需要特殊工時限制的地方才進行額外設定。",
+      "approved": true,
+      "sourceSectionHash": "e6f777ea768a0ab500d497f187b40da7eaf39eeaba3c1e3508a0f6588b6e5c30"
+    },
+    {
+      "slug": "mfg-domain-b0721e40",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 9. 切片實作建議（呼應 Fisher 提出的業務先後順序） › Phase A：BAS 擴充（前置主檔） › 產能模型與班別鏈（已實作 / 已定案，2026-05-21）",
+      "text": "生產線排程需依據實際操作時段計算成本｜當設備為生產線時，其相關的固定費用（overhead）將在所有人員都離開工作時，根據整個時間範圍一次性結算，而不是每次有人上下工時重複計費。甘特圖顯示的可用時段和停機區間，是基於已設定的班別、預定的停機時間等資訊計算出來的，這些資訊會影響排程可以執行的實際時間點。",
+      "approved": true,
+      "sourceSectionHash": "7b9f4c84d1aa328cb2c1ef001f6b59b82cec1ccfd7ea51b580ca2a47a1df146a"
+    },
+    {
+      "slug": "mfg-domain-0d2440fa",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 9. 切片實作建議（呼應 Fisher 提出的業務先後順序） › Phase B：MRP 與生產批",
+      "text": "成本資訊的建立與追蹤｜當系統進行物料需求規劃或產生生產批次時，會自動在相關的作業單和材料明細上記錄當時產品的標準成本。此外，當作業單被釋出時，系統會根據計算出的標準成本來填寫六個特定的成本欄位，以確保所有成本資訊都能被正確追蹤。",
+      "approved": true,
+      "sourceSectionHash": "cc2da22d52983c4b6aee8c7ef6ff9d6398a43d44ff90f82148acb3172bbc764c"
+    },
+    {
+      "slug": "mfg-domain-2a17c5f5",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 9. 切片實作建議（呼應 Fisher 提出的業務先後順序） › Phase C：排程引擎",
+      "text": "排程引擎的實作規劃與時程安排｜此功能目前處於開發階段，其核心邏輯將會以純函式的方式來配置單一派工時段。系統預計會透過一個完整的排程介面來處理所有相關的排程需求，並且計算出的排程結果會直接寫入到「計畫開始時間」和「計畫結束時間」這兩個欄位中。目前規劃上，此功能需要約 4 到 6 週的時間才能完成。",
+      "approved": false,
+      "sourceSectionHash": "a53559e3e4bca9b119dc8d027e0c343c9e62a4c0fe94ccdb6e75718509545d39"
+    },
+    {
+      "slug": "mfg-domain-4c13612a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 9. 切片實作建議（呼應 Fisher 提出的業務先後順序） › Phase D：上工與報工",
+      "text": "報工結案後成本會自動計算｜當生產作業紀錄結束時，系統會根據實際花費的工時，自動將相關的勞務成本和間接費用累加到該生產訂單的實際成本總額中。",
+      "approved": true,
+      "sourceSectionHash": "8d2ef86f275be09a17c9583b03048bb972ff928be896848aa87ab924a9586ecd"
+    },
+    {
+      "slug": "mfg-domain-ff2c079f",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 9. 切片實作建議（呼應 Fisher 提出的業務先後順序） › Phase E：手機 API + ETA 即時推算",
+      "text": "即時工時預估的計算方式｜系統會根據現有的資訊，使用一個專門的引擎來重新計算預計完成的時間。這個重算的結果是基於目前已知的資料進行推算，並不會提供操作上的細節說明。",
+      "approved": false,
+      "sourceSectionHash": "fd40a3f92fcae26b231b1c9cd5f92219708f3c31a718fc7ad9f5e96192aa3692"
+    },
+    {
+      "slug": "mfg-domain-94aab773",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 9. 切片實作建議（呼應 Fisher 提出的業務先後順序） › Phase F：完工入庫銜接",
+      "text": "完工入庫流程與不良品處理規則｜當生產訂單完成時，系統會自動觸發相關的入庫作業。若產出的產品有不良品，則其數量會直接計入損耗，此情況下不需要建立任何單據來記錄。此外，如果需要進行重工，必須手動建立新的生產訂單，並在其中標記為重工，同時需指明是從哪一個原先的生產訂單進行重工。",
+      "approved": true,
+      "sourceSectionHash": "5c5d2b5ad4fcf6988836c2b9010a6ee67d6e04f47e9fa7ed0641277e6928c43c"
+    },
+    {
+      "slug": "mfg-domain-cc6ab77d",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 10. 已確認規格與決策",
+      "text": "規則已確定，可供開發參考｜此處的內容說明的是先前討論過、但現在已經確定下來的標準規範，所有相關方可以以此為基礎進行系統建置。",
+      "approved": false,
+      "sourceSectionHash": "d10272f8cdd71a15ddf8ac6e48e2b45470ea14d46486c1d29aaddeac5daf9eb0"
+    },
+    {
+      "slug": "mfg-domain-cd7ed519",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 10. 已確認規格與決策 › 排程演算法",
+      "text": "排程與產能計算的規則說明｜後一個作業可以在前一個作業完成特定數量後才開始進行，例如容器裝滿後才能移轉。每次可以一次移動固定數量的產品，這個固定的數量是根據工序設定的。此外，在計算每日最大工作時長時，系統會使用一個預設的最大值作為參考依據，此數字並非代表正常全日生產的工作時間。",
+      "approved": true,
+      "sourceSectionHash": "d82b234f30ecd11d6303befdf409f043edc5c55ef30c609a655e70f63920d8af"
+    },
+    {
+      "slug": "mfg-domain-c838c2ff",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 10. 已確認規格與決策 › 即時 ETA",
+      "text": "派工時間重算範圍與限制｜當發生報工寫入時，系統會根據預設的局部觸發策略來重新計算預計完成時間，此時的計算範圍包含本派工、同工單後續派工、同一機台後續派工以及上層工單的派工。此外，局部重算只會平移未來 48 小時內且受影響派工數量不超過 50 個的派工，超出此範圍的遠期排程將由每日全量策略進行校準。",
+      "approved": true,
+      "sourceSectionHash": "61ebac0e7b14e297e5f45abcfac81cccc294c40520b8575402d7b2c9a1034eb0"
+    },
+    {
+      "slug": "mfg-domain-0df00b2e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 10. 已確認規格與決策 › 手機 API",
+      "text": "離線報工與多語言介面規則｜作業員提交的報工資料會先儲存在設備本地，當網路恢復後系統會自動依序將這些資料傳送出去；此外，手機介面的使用者可以切換支援中英文兩種語言，語系設定可以單獨選擇或沿用電腦端目前的語言設定。",
+      "approved": true,
+      "sourceSectionHash": "31f16b3ec80a96ad8224c18d7afe95491682bc7793735d117e34ced2fa12948b"
+    },
+    {
+      "slug": "mfg-domain-b6364a6b",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 11. 下一步建議",
+      "text": "系統開發的實施時程規劃｜所有相關的規格都已經確認完成，可以開始進行實際的建置工作了。目前針對此項功能，規劃了分階段的實施計畫，其中包含了技術上的準備、需要交付給使用者的成果物，以及驗收時必須達成的標準。",
+      "approved": false,
+      "sourceSectionHash": "6d9143d214208e18ce9756b5907a787ebc5d2bf44373e04837e17f1b1d0be70f"
+    },
+    {
+      "slug": "mfg-domain-efb0f035",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 11. 下一步建議 › Sprint 0：技術準備（Phase A 前置）",
+      "text": "系統基礎與測試環境的準備｜所有相關的資料結構都必須包含一個用於記錄變更時間和版本資訊的欄位，以確保在多個地方同時修改資料時能正確控制。此外，開發流程中會使用標準化的單元測試框架來驗證功能，並且這些測試可以在獨立的環境中執行。",
+      "approved": false,
+      "sourceSectionHash": "59c0f9ac8f19ac33d3b4a385779d0373c6a996abef38e0be65d9c8d03b6cae4a"
+    },
+    {
+      "slug": "mfg-domain-2a8fdd30",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 11. 下一步建議 › Phase A：BAS 擴充（1-2 週）",
+      "text": "物料發料單位與工作時間計算規則｜在規劃生產流程時，系統會記錄每個工序需要使用何種單位的物料。此外，當計算特定機台的工作時間時，系統會依循一個層級結構來判斷：首先檢查是否有針對該機台的特殊工時設定；若無，則以工作中心預設的工時為準；如果以上皆無，才會使用全廠範圍的預設值。如果所有層級都找不到相關設定，則計算結果會回傳零。",
+      "approved": true,
+      "sourceSectionHash": "41384ed9fa6c70f5838f1830312921ebf41fd4a690563875c7e016d7245565fc"
+    },
+    {
+      "slug": "mfg-domain-10f5b4d5",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 11. 下一步建議 › Phase D：上工報工（Web 桌機版）（2-3 週）",
+      "text": "流程操作與資料一致性要求｜開工、報工到完工的整個作業流程必須可以順利完成，並且系統會處理同時修改同一筆派工報工時發生的衝突情況。如果發生這種並行編輯的衝突，後續進行編輯的使用者會收到特定的錯誤提示，需要重新載入資料後才能繼續操作。此外，系統也會記錄實際備模或調機的時間，供之後分析達成率使用。",
+      "approved": true,
+      "sourceSectionHash": "05905d7353cedfa769643f739198bc23e559b33416b2eab0419b8e79a6a343f8"
+    },
+    {
+      "slug": "mfg-domain-eb30e87e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 11. 下一步建議 › Phase F：完工入庫（INV 模組並行）（1-2 週）",
+      "text": "完工品入庫的資料流向｜當生產訂單完成後，系統會自動或需要使用者手動建立相關的庫存移動紀錄。這代表產品從生產流程轉移到倉庫時，其庫存數量會正確增加。此外，整個完工派工入庫的流程必須能夠順利操作，並且要通過庫存模組的測試驗證。",
+      "approved": true,
+      "sourceSectionHash": "5079ed2f9ee0d7838d468d66403fc88221fad05605631ca75beeb6f0b0ed76b0"
+    },
+    {
+      "slug": "mfg-domain-9b67fbc9",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 分工與並行度",
+      "text": "開發時程規劃與各階段進度｜系統的開發將會分階段進行，第一到第二週會完成技術準備並開始第一個階段的工作；第三到第四週則會完成第一個階段並進入第二個階段。接著在第五到第七週，第二個和第三個階段的工作會同時進行。第八到第十週，第四個階段（桌機版報工）與第五個階段（手機 API）會同步開發。最後在第十一到十二週，第六個階段（完工入庫）與第五個階段的前端部分將會一起完成。",
+      "approved": false,
+      "sourceSectionHash": "a6bb0cfd3522570b346f2fb67a98b44db4f92a1ed1ba5b1fb09c043384525458"
+    },
+    {
+      "slug": "mfg-domain-9bc1d3f9",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 12. 自動測試規劃 › 12.1 單元測試（xUnit，純函式，不需 DB）",
+      "text": "測試案例說明（單元測試範圍）｜此部分僅描述了系統在不同情境下的預期行為，例如當物料結構層級超過一定深度時會發出警告；或是計算可用庫存時，若已進行保留數量，則會正確扣減該筆數。此外，它也涵蓋了根據不同排程規則（如最早到期先處理、最短工時優先等）對派工單的排序驗證，以及在特定時間點後報工後，後續派工的時間平移計算是否準確。",
+      "approved": false,
+      "sourceSectionHash": "b4e2f268793c3da143ba8f369f86d02198a155b3ab42d8570dc295916d40a6eb"
+    },
+    {
+      "slug": "mfg-domain-1e527b05",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 12. 自動測試規劃 › 12.2 整合測試（TestServer + 測試 DB）",
+      "text": "工單成本計算與狀態轉換規則｜當工單完成後，實際的勞務成本和機台費用會根據實際投入的時間來累加到工單上。此外，工單材料的單位成本是依照建立時產品標準成本來計算的，即使之後標準成本有變動，也不會影響已經建立的工單成本。",
+      "approved": false,
+      "sourceSectionHash": "aaa9997d102ed1550e91afed6e6e02fdc4ba5faea52f1bf5480d49a4d243d120"
+    },
+    {
+      "slug": "mfg-domain-24899763",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 12. 自動測試規劃 › 12.3 E2E 桌機 UI 測試（Playwright，套用 webapp-testing.md 規格）",
+      "text": "測試規則說明｜當途程包含工序和物料清單時，如果該途程已經有相關的生產工單，系統會阻止刪除此途程。在查看全廠日曆時，查詢結果會依照三層優先順序來顯示資訊。執行需求排程後，派出的工作單會出現在正確的設備和時間段；若更改了排序規則，顯示的結果也會隨之改變。",
+      "approved": false,
+      "sourceSectionHash": "357d2a032e3d14fd2908f343a2ffc0f1bc4aee16438b802729a3bfaa092bc6f3"
+    },
+    {
+      "slug": "mfg-domain-0e961579",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 12. 自動測試規劃 › 12.4 測試資料策略",
+      "text": "資料準備與隔離規則｜每個測試情境都會建立最少必要的工中心、設備、生產流程和產品資訊，並且每個整合測試會使用獨立的批次識別碼，以避免不同測試之間產生數據混淆。此外，在進行排程相關的測試時，系統會使用固定的時間點來計算，確保結果的可預測性。",
+      "approved": false,
+      "sourceSectionHash": "2289e03852fd372a931ed4eda29e54edab66992a3e56b548e23958ad91d51066"
+    },
+    {
+      "slug": "mfg-domain-d5d6841e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 13. 機台狀態管理（對應 GTR01）",
+      "text": "機台異動的資料來源說明｜本系統用於記錄機台的變更資訊，其原始資料來源是從一個名為「機台異動」的介面獲取的。",
+      "approved": false,
+      "sourceSectionHash": "e9dfc882d5e4d39d1564c62ef2f7075c4129a1074244da5d1f1d4366ec5c3b61"
+    },
+    {
+      "slug": "mfg-domain-bac0f4b2",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 13. 機台狀態管理（對應 GTR01） › 13.1 機台狀態定義",
+      "text": "機台狀態決定是否可排程｜當機台處於「正常」狀態時，系統允許將工序分派給該機台；若機台處於「待機」、「外修中」、「故障停機」、「改良/改裝」、「外借」、「保養中」或「廢棄」等其他狀態時，則不允許將工序分派給該機台。",
+      "approved": true,
+      "sourceSectionHash": "a78d9c4f23fe21aaa060f9be7bdf04485ddcddc71334fa0656aee77db88e211a"
+    },
+    {
+      "slug": "mfg-domain-3f5425c5",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 13. 機台狀態管理（對應 GTR01） › 13.3 狀態轉換規則（對應 CD_MTR）",
+      "text": "機台狀態的轉換規則說明｜當機台發生特定事件時，其狀態會依照既定的流程進行變動。例如，若機台處於可用的狀態，可以透過某些事件進入待機或故障停機的狀態；反之，從故障停機狀態也可以透過排除故障回到可用或待機狀態。此外，系統也定義了從任何非除役的狀態轉換到保養、改良、外借出廠等不同維護或使用狀態的規則，並規定了完成這些流程後可以恢復到的目標狀態。",
+      "approved": true,
+      "sourceSectionHash": "6af20ac06cbf3256d860fa589f2c037ef2e7331fa8ec2a0cd8fca062a4523bb7"
+    },
+    {
+      "slug": "mfg-domain-a5ab4266",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 13. 機台狀態管理（對應 GTR01） › 13.4 對排程的影響",
+      "text": "機台狀態變動會影響派工｜機台狀態改為「可使用」與「待機」以外的狀態時，該機台已排定的派工會退回待排、等下次重新排程；整備中、待開工、待首件檢查與生產中的派工會轉為暫停（原因：機台停機）。機台恢復為可使用或待機時，因停機而暫停的派工會自動恢復。",
+      "approved": true,
+      "sourceSectionHash": "a5fdb607ecb24297cfb1465bf020e2759408fcde75f48324d5987b22ca50d776"
+    },
+    {
+      "slug": "mfg-domain-f1b00f1d",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 13. 機台狀態管理（對應 GTR01） › 13.5 手機端支援",
+      "text": "機台狀態變更的觸發方式｜作業員在手機上發現設備故障時，可以透過掃描設備的識別碼來回報故障。當維修工作完成後，也可以使用手機進行操作以將設備狀態恢復正常。此外，保養工作的開始和結束也會透過手機進行記錄。",
+      "approved": true,
+      "sourceSectionHash": "7efe8c45117caffcb7f4d93b4519918804213bee28929d8cad54ff0c9c198b50"
+    },
+    {
+      "slug": "mfg-domain-67aa702d",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 13. 機台狀態管理（對應 GTR01） › 13.6 自動測試補充（對應 §12）",
+      "text": "機台狀態與排程安排規則｜當機台發生故障時，原先已排定的派工會退回到待處理狀態；若機台正在進行作業的派工，其狀態會轉為暫停。此外，系統只會將可用狀態的機台納入派工規劃考量，並且在預計停機期間內，系統會正確扣除可用的工作時數。",
+      "approved": true,
+      "sourceSectionHash": "388d260223b28e908a72670c1c4c75851fe289e96900552f73835214d84f908c"
+    },
+    {
+      "slug": "mfg-domain-3d876360",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 14. 已確認補充規格 › 14.1 Mold 與 Tooling：統一為 BAS.Tooling",
+      "text": "模具與工具的資料統一管理規則｜所有關於模具和夾治具的資訊都將集中在一個地方進行管理，使用者在記錄生產作業時，必須指定使用哪一個模具或夾治具。當完成生產報工後，系統會根據實際產出數量計算並更新該設備的累計使用次數，這個累計次數是判斷是否需要進行保養的重要依據。",
+      "approved": true,
+      "sourceSectionHash": "2526683c246e055b36aa5d1b3fc98b3483b1198189446fe4b30bd2f56b03fca8"
+    },
+    {
+      "slug": "mfg-domain-7a51e34a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 14. 已確認補充規格 › 14.2 退工/重工流程",
+      "text": "不良品處理與重工流程規範｜當生產線上發現不良品時，直接報廢，此情況不產生單據記錄。若需要對不良品進行重加工，必須手動建立一個新的作業工單，並將其標記為重工工單，同時需連結到原始的作業工單以方便追蹤品質歷程。",
+      "approved": true,
+      "sourceSectionHash": "e1e99387da59a00407057db3dd91de76550f77f71c8de04749393355f5f370c9"
+    },
+    {
+      "slug": "mfg-domain-695cb12b",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 15. 品質管理規劃（對應 QCR 模組）",
+      "text": "品質管理流程的現行規則說明｜製程不良回報和不合格品檢驗相關的處理，已經依照既定規範實作完成，其中包含對不同類型的判定與後續處理方式。當發生製程不良時，系統已具備完整的記錄與追蹤機制；對於進料品質檢驗（IPQC）或最終成品檢驗（FQC），也已建立相關的標準化流程來進行判斷和管理。此外，針對不合格品報告，其後續處理路徑已經明確定義，包括報廢、返工或退貨等不同狀態的處理方式。",
+      "approved": false,
+      "sourceSectionHash": "cdd08bc15475b25341027a54f782e0940abae3fbb2ca11c16dbfba75d22a54db"
+    },
+    {
+      "slug": "mfg-domain-7aa891f9",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 15. 品質管理規劃（對應 QCR 模組） › 15.1 原系統 QCR 模組盤點",
+      "text": "系統納入的品質檢驗資料範圍｜目前系統會使用不良項目主檔和檢驗規範主檔，來管理檢驗的相關資訊。此外，檢驗項目也會被納入到系統中，並且抽樣計畫是現行規則且已實作。",
+      "approved": true,
+      "sourceSectionHash": "0bf06b8bbe2f59f34fb1c525ba738a92eb3283edf2d573c0c73be1ff9117ba7a"
+    },
+    {
+      "slug": "mfg-domain-5b1dadbf",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 15. 品質管理規劃（對應 QCR 模組） › 15.2 第一階段：製程不良回報（已納入 ProductionReport）",
+      "text": "不良品回報與工單完成率計算規則｜作業員在報工時填寫的良品數量和不良品數量，會直接反映到該批生產工單的總結數據中。如果報告的不良品數量大於零，則必須同時填寫造成此不良品的具體原因代碼。此外，系統會根據所有已回報的良品數量來計算工單完成率，並將所有回報的不良品數量累加到該工單的廢料總量中。",
+      "approved": true,
+      "sourceSectionHash": "2a0518ffbf39502767cd6e3752afe48f307fc6413f62f0e90448cb5aa6606cb2"
+    },
+    {
+      "slug": "mfg-domain-34f041c5",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 15. 品質管理規劃（對應 QCR 模組） › 15.3 第二階段：製程品質檢驗（IPQC）",
+      "text": "檢驗時機：生產過程中的抽樣檢驗規則｜當某些製程或產品規格要求在生產過程中進行抽樣檢驗，而不是等到所有生產完成後才進行檢驗時，系統會依此規定執行檢驗流程。",
+      "approved": false,
+      "sourceSectionHash": "3311a5a0b2d3473398e6931dbbbfae0ee7ebd3a01f2af5a7bfd57922eebb2a19"
+    },
+    {
+      "slug": "mfg-domain-78e25b81",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 15. 品質管理規劃（對應 QCR 模組） › 15.3 第二階段：製程品質檢驗（IPQC） › 15.3.1 核心業務規則",
+      "text": "抽樣標準與批次狀態的判定規則｜檢驗的抽樣數量是根據產品的總出貨數量和指定的驗證等級來確定的。此外，系統會追蹤連續合格的批次數，並依據檢查範圍的不同，自動判斷當前應採用的檢驗狀態，該狀態可能會在正常、加嚴、減量或跳過批次之間切換。如果任何一次檢驗結果判定為不合格，則相關的出貨單會自動變更為待處理狀態，並且會在行動裝置上顯示警示以防止不良品擴散。",
+      "approved": true,
+      "sourceSectionHash": "92c7fb2745a90e5e0a16c5bdac0afb5cfc317b5a29ef2219f3b9f02c3ce2a3bb"
+    },
+    {
+      "slug": "mfg-domain-8412aad3",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 15. 品質管理規劃（對應 QCR 模組） › 15.4 第三階段：不合格品單（NCR）",
+      "text": "不合格品單的建立與處置規則｜當發生重大不良情況時，必須正式建立不合格品單來追蹤原因分析和改善行動。此單據會記錄產品資訊、數量、發現的不良代碼，並指定該批次產品的最終處理方式，例如報廢、返工或直接使用。此外，若需要進行返工，則需連結到相關的重工作業單號，並且必須填寫根本原因說明和矯正措施，最後才能完成結案。",
+      "approved": false,
+      "sourceSectionHash": "06018203adec0f451a017ae9edfe6562e049449df769910f57f24b5892677951"
+    },
+    {
+      "slug": "mfg-domain-e4cf30fa",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 15. 品質管理規劃（對應 QCR 模組） › 15.5 品質管理切片建議",
+      "text": "品質管理流程的階段性要求｜此系統的品質檢驗相關功能，其開發和實作是分階段完成的。在達到某個階段的特定功能（例如生產報告數量或不合格品處置）之前，必須先完成前一個階段所定義的所有基礎條件與功能。這確保了流程的依序建立，才能順利進行後續更複雜的品質管理作業。",
+      "approved": false,
+      "sourceSectionHash": "eadf06f277d99b0ce4ca4f7155d23f0d1d6f2229f7bacddc2d1eed2a3e58d5cf"
+    },
+    {
+      "slug": "mfg-domain-a1459ec6",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 16. 生產成本規劃",
+      "text": "生產成本資料的時效性要求｜標準成本或費率一旦變動，如果沒有在交易發生的當下記錄下來，之後就無法準確地還原出當時計算成本所依據的基礎數據。",
+      "approved": false,
+      "sourceSectionHash": "8c9fc3f54764c073d1132d27ecdd73664053c4d9b32e6786bf9aec8fdf2ef74d"
+    },
+    {
+      "slug": "mfg-domain-c945b7b2",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 16. 生產成本規劃 › 16.2 欄位設計 › WorkCenter（Phase A 加入）",
+      "text": "工作中心費率設定規則｜機台的費用和人工的費用，都是在「工作中心」這個層級來設定的。這樣做是為了避免需要為每一台設備都去維護一次費用率。如果未來有特定設備需要不同的費用率，則可以再擴充後續的功能來處理。",
+      "approved": false,
+      "sourceSectionHash": "cbdde71482c426ebddf5a0b654b3fa7b05a07c0a25a090badfcd8b9c10e5c0dc"
+    },
+    {
+      "slug": "mfg-domain-47099e4a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 16. 生產成本規劃 › 16.2 欄位設計 › Product（Phase A 確認）",
+      "text": "產品標準成本的設定規則｜該產品的標準成本是根據系統預設的數值來計算和記錄的。如果相關的基礎資料模組還沒有建立這個成本欄位，則在目前階段會用一個特定的方式來補齊這個標準成本資訊。",
+      "approved": false,
+      "sourceSectionHash": "307a27d7a33dfdb0c86eefc86d1b3e2892c2ef1e0fa4435acb6ed9db067b80bd"
+    },
+    {
+      "slug": "mfg-domain-84c33250",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 16. 生產成本規劃 › 16.2 欄位設計 › WorkOrderMaterial（Phase B 加入）",
+      "text": "工單材料單位成本的計算規則｜此欄位記錄的是在建立生產工單當下的材料單位成本，其數值會以工單建立時產品的標準成本或最近一次進貨的單價為準。一旦工單建立完成，即使後續產品的標準成本發生變動，此處記錄的單位成本數值也不會隨之改變。",
+      "approved": true,
+      "sourceSectionHash": "afd4284813973520f273c86f03f63952fe0c825106eb0f05e6479594563c3cad"
+    },
+    {
+      "slug": "mfg-domain-2697c71a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 16. 生產成本規劃 › 16.2 欄位設計 › WorkOrder（Phase B 加入）",
+      "text": "標準成本計算與實際成本累計規則｜在工單被正式發出後，其預設的材料和人工及設備成本會一次性計算並寫入，之後不會再變動。而實際發生的材料、人工和設備成本則會在特定時機依據不同的流程進行累積記錄。",
+      "approved": true,
+      "sourceSectionHash": "970d06ca9b14c381f0ee51ee64fe65d7c174880494fb866e7c6207afc588aefb"
+    },
+    {
+      "slug": "mfg-domain-9ce098f3",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 16. 生產成本規劃 › 16.3 成本累計邏輯 › ProductionSession 關閉時（Phase D）",
+      "text": "計算生產成本的基礎工時與費用｜關閉生產作業時，系統會根據從開始到結束的時間差來計算實際工作小時數。如果過程中有記錄暫停時間，則需要將這些暫停時間轉換為小時後再減去，以得出最終的實際工時。接著，這個實際工時會分別用來計算累計的人力成本和設備費用，人力的成本是根據作業中心每小時的人力費率計算，而設備的費用則是根據作業中心每小時的機械費率計算。",
+      "approved": true,
+      "sourceSectionHash": "cc78880b93d11c5fe4729d0c5e480e93c466f264c491584c5bf0f238a7e70406"
+    },
+    {
+      "slug": "mfg-domain-6c533b1f",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 16. 生產成本規劃 › 16.3 成本累計邏輯 › ProductionSetup 關閉時（Phase D，可選）",
+      "text": "成本計算依據工時與機台費率｜生產設定的工時是從開始時間到結束時間之間的總小時數。這個工時會用來乘以該工作中心每小時的機械費用率，然後加到實際產能超額成本中。",
+      "approved": false,
+      "sourceSectionHash": "5036ebd8ce887365509ad20de9386145cb6bec596661b4c6c2a0d822acacb755"
+    },
+    {
+      "slug": "mfg-domain-2e7bd828",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 16. 生產成本規劃 › 16.3 成本累計邏輯 › 完工入庫時（Phase F）",
+      "text": "成本計算依據實際發料成本｜完工入庫時所計算的材料成本，是根據系統記錄的實際發料成本總計。這個成本數據是由庫存管理模組根據所有相關的出庫紀錄來計算和回傳的。",
+      "approved": true,
+      "sourceSectionHash": "bd4261dc543984ce3224aa73d91b5180a651e50052cb3a6141e4469f2765b402"
+    },
+    {
+      "slug": "mfg-domain-fb37b572",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 16. 生產成本規劃 › 16.4 成本查詢與差異分析（不需額外 Entity，查詢即可）",
+      "text": "計算生產的標準與實際成本差異｜在產品完成時，會根據已記錄的材料、人工和費用，分別計算出「實際」與「標準」的總成本。接著，系統會比較這些數值，找出材料、人工和費用的各個差異點，以了解實際發生與預期之間的差距。單位成本產品在完成後，其單位的實際成本是將所有已計算出的實際總成本除以該工單的完工數量所得到的。",
+      "approved": true,
+      "sourceSectionHash": "e90e62093dadd4e558f66fb0b7812a5ff4a85362ed02022627de6d3e3fb91ed6"
+    },
+    {
+      "slug": "mfg-domain-9b07da36",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 16. 生產成本規劃 › 16.5 與財務模組的銜接預留",
+      "text": "生產成本資訊的來源與用途｜本系統的製造模組不會直接產生會計分錄，而是會將計算好的相關成本數據提供給其他模組使用。這些數據包括在製品的評價、製成品入庫時的總成本、生產過程中產生的損耗成本，以及不同類型的重工和加工費用等資訊。",
+      "approved": true,
+      "sourceSectionHash": "b0bf1fdf4a9d1366bad4d3aedd4d1c9352a22b9b876269d72f5d589faeb71b18"
+    },
+    {
+      "slug": "mfg-domain-8af89f7a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 16. 生產成本規劃 › 16.6 成本模組切片建議",
+      "text": "生產成本計算的階段性規則說明｜在不同的生產流程階段，系統會依據該階段的特性來累積或計算相關的成本資訊。例如，在初步規劃時會納入機台和人工的每小時費用，並確認產品的標準成本；當工單釋出時，會快照物料單位成本，並增加六個成本欄位以供後續計算。此外，系統會在報工結束時累計實際的人工和間接費用，而在入庫時，也會將實際的物料成本寫回相關模組，並記錄委外加工的成本金額。",
+      "approved": false,
+      "sourceSectionHash": "9d94ba61b7f357c07126cb2c59754994e35f9de30905eb0d89098a01c9cf9cd5"
+    },
+    {
+      "slug": "mfg-domain-551d669e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 17. MFG ↔ INV 庫存異動類型對應表",
+      "text": "庫存變動來源與類型說明｜所有由生產模組產生的庫存變動，都會透過一個統一的機制與庫存模組進行互動，此處列出了生產各個流程會觸發哪些類型的庫存變動。",
+      "approved": false,
+      "sourceSectionHash": "21b2f528f1f67f091858076ea1c8cda138b5a6ce730d8610e8c40d5484f6a9cd"
+    },
+    {
+      "slug": "mfg-domain-78b484f9",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 17. MFG ↔ INV 庫存異動類型對應表 › 17.2 MFG 各流程的異動映射 › 投產前：用料出庫（三模式）",
+      "text": "用料出庫的三種不同方式｜當材料從倉庫領出時，根據不同的流程模式，決定了系統記錄材料出庫的時間點和消費的時機。如果採用「發料」的方式，材料在倉庫確認揀料並過帳後會觸發出庫；若採「領料」方式，則需等到倉庫核准後才能過帳，且可以分批進行。最後，「後沖」模式則是系統自動在生產單完成時（或每次報工時）處理出庫，並且所有這三種模式的材料預留都會在生產單被正式啟用後統一建立。",
+      "approved": true,
+      "sourceSectionHash": "6d0955ddc9472417f1aa0206d5ae2686549b6479d72afbe31925e8b986ce4928"
+    },
+    {
+      "slug": "mfg-domain-269e74d8",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 17. MFG ↔ INV 庫存異動類型對應表 › 17.2 MFG 各流程的異動映射 › 報廢處理：廢品直接損耗",
+      "text": "報廢處理的庫存異動規則｜當生產報告中發現有不良數量時，如果判定該不良是因「報廢」（非重工），系統會直接產生一筆庫存損耗紀錄。這筆紀錄會以負數的方式記錄被報廢的數量，並將其從生產現場這個來源地扣除，同時會在備註欄位中包含不良的原因代碼。",
+      "approved": true,
+      "sourceSectionHash": "60a4f6755d4e19a79dbd9f24c760b0c36df552df58e6a717b2e2f0b03a35c912"
+    },
+    {
+      "slug": "mfg-domain-24ce5381",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 17. MFG ↔ INV 庫存異動類型對應表 › 17.2 MFG 各流程的異動映射 › 重工：用料 + 成品異動",
+      "text": "重工用料與成品異動的觸發規則｜當建立重工工單時，系統會自動將相關材料從庫存中出庫。此時的出庫記錄會以「重工 WorkOrder 編號」作為文件編號標示。此外，在重工工單完成時，系統會執行成品入庫動作，並會在備註欄位明確指出該批成品的來源是哪個原始的工單編號。",
+      "approved": true,
+      "sourceSectionHash": "bafaf75fc6695e7ec168e6f61bcebe0f4d9377b3c1be329e0e2c5be6ab61e380"
+    },
+    {
+      "slug": "mfg-domain-3709448a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 17. MFG ↔ INV 庫存異動類型對應表 › 17.2 MFG 各流程的異動映射 › 完工入庫：成品回庫",
+      "text": "成品的入庫與成本計算規則｜當生產訂單的完工數量達到總計畫數量時，系統會自動建立一個庫存移動紀錄。此紀錄會標示為成品完成或重工完成類型，並以該生產訂單的編號作為文件來源。入庫的數量是實際完工的數量，且成本計算會使用包含材料、人工和製費在內的實際單位總成本來記錄，以便後續的庫存評價作業。",
+      "approved": true,
+      "sourceSectionHash": "be46a115decd5d8ee81a5f40fc2d615282c30ee189eb4fca982f28d56d82e516"
+    },
+    {
+      "slug": "mfg-domain-a51cc178",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 17. MFG ↔ INV 庫存異動類型對應表 › 17.2 MFG 各流程的異動映射 › 委外進貨：供應商交貨入庫",
+      "text": "庫存異動的觸發點與後續處理流程｜當系統記錄了供應商交貨入庫時，會自動產生庫存增加的紀錄。如果系統設定為簡易模式，物品會直接進入目標倉位；若設定為完整模式，則會先進入暫存區，待確認儲位後才會轉移到正式倉位。同時，此進貨動作也會同步建立生產報告，將合格進貨量和不良量記錄下來，這些數量會累計到委外工單的完成數量中，直到達到總預定數量為止。如果產生了不良品，系統也可能觸發後續的重工流程。",
+      "approved": true,
+      "sourceSectionHash": "b7871f323f58babd27bb0ec90dc940c75edca683036927ab59d284ee098b21a5"
+    },
+    {
+      "slug": "mfg-domain-9ad776d2",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 17. MFG ↔ INV 庫存異動類型對應表 › 17.3 發退料單統一框架（MaterialSlip）（2026-06-09 定案）",
+      "text": "單據類型整合與使用範圍｜發料和領料的單據現在都合併成一個統一的單據格式，系統會根據單據的類別來區分是發生在廠內、委外還是重工等七種不同的情境，並且共用相同的倉庫揀料作業流程和庫存變動機制。",
+      "approved": true,
+      "sourceSectionHash": "279b8c4f29ab210058aee83c0a8a8badce108666db23ec7a773f9ec09d2f1a86"
+    },
+    {
+      "slug": "mfg-domain-7b19aa5a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 17. MFG ↔ INV 庫存異動類型對應表 › 17.3 發退料單統一框架（MaterialSlip）（2026-06-09 定案） › 三模式概念邊界（廠內仍適用 Push/Pull/Backflush）",
+      "text": "備料流程依工單狀態決定｜當工單已核准後，系統會自動建立待處理的材料移動單據來彙整需要使用的物料；如果使用「拉取」方式，則需由申請人先提交申請單據，再經過倉庫人員核准才能進行揀料和結案。若採用「直接消耗」的方式，則在工單完成或每次報工時，系統會根據實際完成量計算出需要使用的物料數量，並直接記錄庫存移動，此模式不需建立材料移動單據。",
+      "approved": true,
+      "sourceSectionHash": "fdd661c2705e62ef090dd0d0fc6c8a29c510778cf95b5547cf2c79773d64a94d"
+    },
+    {
+      "slug": "mfg-domain-65740b63",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 17. MFG ↔ INV 庫存異動類型對應表 › 17.3 發退料單統一框架（MaterialSlip）（2026-06-09 定案） › Category ↔ InventoryMovement 映射",
+      "text": "庫存異動類型與觸發條件的對應規則｜當材料出庫時，系統會根據不同的操作情境來決定記錄的庫存異動類型。例如，如果是在生產訂單釋放後自動推送材料，或是由生產單位申請，都會被歸類為材料領用；若發生廠內多餘材料退回，則會記錄為材料退回。此外，系統也會區分是內部重工還是委外重工的材料出庫，並對應不同的異動類型進行記錄。",
+      "approved": true,
+      "sourceSectionHash": "9ee987dce28f01891562133feb162eeefe7a57beea4e8e228e31d4bc4f2133f7"
+    },
+    {
+      "slug": "mfg-domain-82d8ad9d",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 17. MFG ↔ INV 庫存異動類型對應表 › 17.3 發退料單統一框架（MaterialSlip）（2026-06-09 定案） › Category 業務規則速查",
+      "text": "發退料單的類型與核准要求｜根據不同的物料移動類型，系統會決定是否需要經過核准。例如，當是內部出貨時，在生產工單釋放後會自動產生，且不需要核准；但如果是生產單位手動建立的內部需求，則必須經過核准。其他如內部退回、外委出貨或外委退回等類型，若為手動建立，則不需要核准。",
+      "approved": true,
+      "sourceSectionHash": "88619d5ac8ccd359e01465f725073eabb2a23f75829e0238509b0d0da817419c"
+    },
+    {
+      "slug": "mfg-domain-ecaa6fa4",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 17. MFG ↔ INV 庫存異動類型對應表 › 17.3 發退料單統一框架（MaterialSlip）（2026-06-09 定案） › Phase 實作建議",
+      "text": "庫存異動類型依流程階段決定｜根據目前系統的實作建議，不同生產或物料移動的流程階段會使用不同的方式來處理工件和材料的發出或退回。例如在「上工報工」的階段，系統預設不建立正式的材料單據；若為「補強」需求，則採用倉庫主控的方式進行內部移出；當涉及委外或重工流程時，會使用專門對應的物料單據類型來處理發送和退回。此外，如果需要透過申請與核准的工作流來控制材料的領用，則會在較後期的階段才採用此機制。",
+      "approved": false,
+      "sourceSectionHash": "0f8668a57ac56b56c28eef347de395782d09df22dcbc64be7aceae6e4d7de74b"
+    },
+    {
+      "slug": "mfg-domain-0d432450",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 18. 各單據簽核需求對照表 › 18.1 簽核主體對照",
+      "text": "單據簽核主體與觸發條件｜生產工單在「釋出」時會觸發需要簽核的流程，此時需由生產主管或廠長進行簽核，且簽核的金額依據標準成本總額計算。其他如途程、工作中心、設備等主檔資料，以及派工、開工準備、上工和報工等單據，目前都不需要經過簽核流程。",
+      "approved": true,
+      "sourceSectionHash": "5778c377d94c6af4192c7298632e89c83dcbf38358525678b65050eddafe8bea"
+    },
+    {
+      "slug": "mfg-domain-3973a0e2",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 18. 各單據簽核需求對照表 › 18.2 WorkOrder 簽核設定 › 何時需簽核（系統參數控制）",
+      "text": "工單是否需要經過審批流程｜當工單的標準成本超過了預設的五十萬台幣門檻時，系統會要求進行稽核。此外，如果工單的工期延誤超過了訂單規定的交貨期限，也需要經過簽核。對於委外或重工的工單，系統允許設定是否需要相關主管審批；但一般自製且成本較低、工期較短的工單則會自動通過審批流程。",
+      "approved": true,
+      "sourceSectionHash": "4aedcc9d2b4b990f192159556e0d7158e4c23b10edd7b83289ff0ff968cd8186"
+    },
+    {
+      "slug": "mfg-domain-b0cecf29",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 18. 各單據簽核需求對照表 › 18.3 MachineStatusOrder 簽核設定（可選）",
+      "text": "簽核需求依據設備狀態變更的類型｜當設備從待命狀態變為可用時，不需要進行任何簽核。若設備進入計劃停機狀態，需要設備主管進行核可。設備發生故障停機後，只需記錄事實即可，無需事前審批。如果對設備進行了較大的修改，建議由主管批准。",
+      "approved": true,
+      "sourceSectionHash": "f25c95dbb5ac2a7eb1b7b4263c5d2e7c4b44268a5ddb849588342a7bdcd3e5e6"
+    },
+    {
+      "slug": "mfg-domain-902866a5",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程",
+      "text": "委外工單的跨模組協作範圍｜當產生需要委外的工單時，這個流程會讓製造（MFG）、採購（PUR）和庫存（INV）這三個不同的系統模組互相配合工作。",
+      "approved": false,
+      "sourceSectionHash": "e20ab0c68078abc97f07abe63c7bceb919318299188204db40cffa504bdc0d25"
+    },
+    {
+      "slug": "mfg-domain-c7b4f98d",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.1 委外的角色定位",
+      "text": "角色分工與權責劃分｜各個部門在委外流程中的職責是不同的。生產管理負責規劃物料需求、建議委外作業、建立和追蹤派工，以及接收進度回報和觸發重工。採購部門則負責處理廠商的報價、建立採購單、簽核收到的貨品，並進行應付帳務處理。庫存部門主要負責將物料送出給外部單位、處理退回的物料入庫，以及接收委外進來的成品和上架作業。",
+      "approved": true,
+      "sourceSectionHash": "0463b20a6b5709f0bb636ef9794a3aa3e7c20f26b541a5071e4ce7945e6862ad"
+    },
+    {
+      "slug": "mfg-domain-208d6d19",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.2 委外相關 Entity 設計 › WorkOrder 委外欄位（已實作）",
+      "text": "工單是否為委外與相關資訊｜如果這張工單是透過外部供應商完成的，系統會標記出來。同時，需要記錄負責的外部供應商代碼、該筆委外訂購單的編號，以及預計從外部供應商收到的交貨日期。",
+      "approved": true,
+      "sourceSectionHash": "edec28a59b26e9484f5d2c977d55863282c6894ca6285b7ac12f1a55d6145ed8"
+    },
+    {
+      "slug": "mfg-domain-d212b4f8",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.2 委外相關 Entity 設計 › Dispatch 委外調適",
+      "text": "機台資訊與委外時間規劃規則｜此紀錄顯示，如果這筆資料是關於委外的，則會標記為「是」；並且系統會記錄一個預計的開始日期和一個預計的完成日期。若沒有具體的機台資訊，則不需填寫機台編號。",
+      "approved": true,
+      "sourceSectionHash": "8c62a6c27bcf199404e88d63bfdeb63bc0cba4d3f7aee1c020c276da0c4937fa"
+    },
+    {
+      "slug": "mfg-domain-e349a28b",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.3 委外流程：從 MRP 展開到完工入庫 › Stage 1：MRP 展開時建立委外建議與工單",
+      "text": "委外建議與工單的建立規則｜當啟動整品委外時，系統會自動建立一個標記為委外的生產工單。若觸發的是特定工序的委外，則會建立一個標記為委外的派工紀錄。接著，系統會根據物料需求清單來建立需要送出的材料明細，並依據是整品還是工序委外，分別建立對應的外部需求記錄。此外，預計交貨日期會根據訂單要求的交期減去報價上的提前天數；若沒有報價資訊，則使用產品本身的委外前置時間或系統預設的時間來計算。最終產生的生產工單狀態為已規劃，且外部需求紀錄尚未完全轉移。",
+      "approved": true,
+      "sourceSectionHash": "9c6933ccf165380fdf86fb093fc52e8f29f1ddd5a838fca917ad0549873fbad6"
+    },
+    {
+      "slug": "mfg-domain-b3852d8f",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.3 委外流程：從 MRP 展開到完工入庫 › Stage 2：批次拋轉 — 設廠商/價格/拆單 → 建委外採購單",
+      "text": "委外拆單與報價帶入規則｜當需要將委外需求轉換成採購單時，系統會根據您選擇的廠商和產品資訊，從已有的有效報價中自動帶入預計的單價；使用者可以手動修改這個帶入的價格。",
+      "approved": true,
+      "sourceSectionHash": "56f0e741f3968e03b54ba9d6e27762dda1555c2292b75cb65f02b233163723e1"
+    },
+    {
+      "slug": "mfg-domain-8fc2798c",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.3 委外流程：從 MRP 展開到完工入庫 › Stage 3：排程推算委外時段",
+      "text": "排程推算委外時段的規則｜當系統進行排程計算，且該工序是委外的場合，系統不會檢查設備是否可用。接著，開始時間會取前一個工序結束的時間和今天的日期中較晚的一個時間點作為起點。之後，根據物料的特性來決定前置作業的依賴方式，最後將預計完成的時間計算為起始時間加上委外採購單上的所需天數或標準工時所規定的天數，並更新到該工序的預計開始和結束時間。",
+      "approved": true,
+      "sourceSectionHash": "2fd619afb0e980952990d20a8d07b46fbad5b2eeb83f22cb0991aee0b019206b"
+    },
+    {
+      "slug": "mfg-domain-f9c5804e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.3 委外流程：從 MRP 展開到完工入庫 › Stage 3.5：委外發料（送外料出庫）",
+      "text": "送外材料的流程與記錄｜當採購訂單確認後，系統會自動產生一份出貨憑證草稿。倉庫人員需要使用掃描設備來完成揀料作業，這個動作會讓出貨憑證的狀態從草稿變為已揀料、確認，最後才能結案並扣減庫存。如果廠商有退回多餘或未使用的材料，則需手動建立另一份憑證來記錄，這會使庫存增加。",
+      "approved": true,
+      "sourceSectionHash": "4df1704e04ebef9fa737eaed73930de79035243d39b42fbfab014d39120b902b"
+    },
+    {
+      "slug": "mfg-domain-9e0a95f8",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.3 委外流程：從 MRP 展開到完工入庫 › Stage 4：進度回報",
+      "text": "進度回報與訂單狀態更新規則｜當進行委外派工的進度回報時，系統會記錄本次合格收入量和不良量。如果累積的合格收入量達到或超過了總預計完成數量，則該委外派工的狀態會變為已結案，進而使相關的生產訂單也更新為已完成狀態。",
+      "approved": true,
+      "sourceSectionHash": "e1968c8a2ea5e4ee994409f458f60b756b5de0649f845e02829b903ab391e890"
+    },
+    {
+      "slug": "mfg-domain-9790a890",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.3 委外流程：從 MRP 展開到完工入庫 › Stage 5：委外進貨（廠商交貨入庫）",
+      "text": "委外進貨的庫存處理規則｜當廠商交貨時，系統會根據設定決定入庫的方式；如果系統參數是開啟狀態，則直接將物料入庫到指定的倉位；若參數是關閉狀態，則會先將物料進入暫存區，等待使用手機進行上架確認。此外，在完成進貨的後續處理中，系統會自動建立生產報告，其中記錄了合格品和不良品的數量。",
+      "approved": true,
+      "sourceSectionHash": "66728ad21ffe935ebc1b49d8011e2b72ba0847becc25065b37bdfe410909d28e"
+    },
+    {
+      "slug": "mfg-domain-e6d32aca",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.3 委外流程：從 MRP 展開到完工入庫 › Stage 5b：委外重工（進貨不良品送廠商重工）",
+      "text": "委外重工流程與成本追蹤規則｜當進貨時發現有不良品且決定送廠商進行重工，系統會建立一個專門的重工作業單。此重工作業單的數量是以實際發現的不良數量為基礎，並且會記錄原先的委外工單資訊。在後續流程中，材料的處理是使用這些不良品本身，並與正常的委外流程一致。成本計算上，系統會將這兩筆費用——即不良品本身的帳面成本和本次重工產生的加工費——分別獨立計算出來，並將它們歸類為「重工損失」納入成本分析報表。",
+      "approved": true,
+      "sourceSectionHash": "c94919919ae45dacc03fa50049d8b69c514230e14412952e6587848544a35b86"
+    },
+    {
+      "slug": "mfg-domain-aa5d06fc",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.3 委外流程：從 MRP 展開到完工入庫 › Stage 6：委外工單完工與入庫、付款帳務",
+      "text": "完工與入庫的條件判斷｜要確認委外工單可以完成並進入入庫流程，必須滿足兩個條件：實際完成數量達到總需求量，並且相關的委外採購訂單已經結案。付款文件流向追蹤從最後的付款紀錄回溯時，系統會完整記錄到「委外採購單」到「委外建議」，再到「MRP 工單」，最終連結至原始的「銷售訂單」。此外，應付發票必須記錄相關的委外採購單編號，這樣在報表上就可以用這個編號來篩選出所有的委外費用。",
+      "approved": false,
+      "sourceSectionHash": "630cebee6f0ebef0088cba7e3d869ee50e220af5bebe9860e6fde5c7aacf220b"
+    },
+    {
+      "slug": "mfg-domain-db4660ab",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.3 委外流程：從 MRP 展開到完工入庫 › Stage 7：委外工單完工入庫（MFG 側 + IQC 閘口 + 成本結算）",
+      "text": "委外工單完工入庫的完成條件｜要確認委外工單可以結案，必須滿足三個條件：合格收入量等於或大於總數量、對應的廠商採購訂單已經關閉，並且需要經過品質檢驗結果的確認。",
+      "approved": true,
+      "sourceSectionHash": "88b11d05f52d6dbccad44d7f8e720561083cfcb195bce5b35da8a808493413fb"
+    },
+    {
+      "slug": "mfg-domain-6da5e070",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.4 委外工單的特殊狀態 › 提前交貨",
+      "text": "委外廠商提早交貨的影響｜當委外廠商實際交貨日期比預計的交貨日期要早的時候，系統會根據這個提前的交貨時間重新計算後續所有工序所需的時間。這會導致整個生產排程自動地往前調整，並且如果此批物料涉及了之後需要進行的工序，可能會改變原先設定的派工優先順序。",
+      "approved": true,
+      "sourceSectionHash": "96e33d07b3ac8a4ea638dbdef6e117895e65d82196230b5f279a7edb9bdb6906"
+    },
+    {
+      "slug": "mfg-domain-a8398043",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.4 委外工單的特殊狀態 › 逾期交貨",
+      "text": "交貨逾期會觸發的流程與提醒｜如果預計的交貨日期已經超過了原定的交期，系統會標記出此工單為「超期」，並且需要聯繫廠商來確認最新的交貨時間。由於這可能會影響到後續所有依賴此物料的生產排程，因此可能導致下游的交期也需要重新計算，進而觸發相關的預警通知。",
+      "approved": true,
+      "sourceSectionHash": "f73e343bc7b5f6a8c0f055491344e86430c0645e5c90b061b227e7ac14772fc5"
+    },
+    {
+      "slug": "mfg-domain-2c156731",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.4 委外工單的特殊狀態 › 廠商變更",
+      "text": "廠商變更時的流程規則｜若需要更改委外供應商，必須建立一份新的採購訂單，並將舊的採購訂單作廢。接著，系統會更新工作單所指的委外供應商代碼和採購訂單編號。此外，原有的派工紀錄需要被取消掉，並且必須重新建立或更新派工的時間範圍，最後還需要進行一次新的排程作業。",
+      "approved": true,
+      "sourceSectionHash": "8c1f15fc0ff19431685247f330084eeb81932226ccb06075cc9c5e0673f1cd44"
+    },
+    {
+      "slug": "mfg-domain-b6fb51b7",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 19. 委外完整流程 › 19.5 委外成本處理 › 成本構成",
+      "text": "委外成本的組成與計算方式｜委外工單的總成本是由委外廠商支付的費用，加上本公司內部產生的相關成本（例如發貨和驗收）所構成。計算標準成本時，會將材料成本、委外採購單的金額以及進貨或驗收等費用加總。實際成本回寫時，則會納入來自委外採購單的實際進貨成本、報廢產量的成本，以及在完工入庫時由相關模組記錄的材料成本。",
+      "approved": true,
+      "sourceSectionHash": "b2897a9d4a7ce87f9f252e356812727b9140e0cce492ba2fd7c8019f99700819"
+    },
+    {
+      "slug": "mfg-domain-d190913b",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 20. 自動測試補充（委外與簽核相關） › 20.1 委外單元測試補充",
+      "text": "委外單據的處理與追蹤｜當一個工單被判定為委外作業時，系統會確認該工單沒有指定特定的設備編號，並且相關的採購訂單編號在初期是空白的。此外，如果進行了委外派工排程，系統會根據不同的場景來計算委外派工的時間，此計算過程不依賴任何機台日曆的查詢。當生產報告寫入時，完成數量會持續累加，一旦達到總預計數量後，該單據將自動關閉。最後，如果發生了進貨退回的異動，系統會建立一個反向的庫存移動紀錄，以確保庫存數量能正確扣減。",
+      "approved": true,
+      "sourceSectionHash": "181a29655da1f76978b1a8a20a0120c7c91a6ccef40b4a676198cb59b857af60"
+    },
+    {
+      "slug": "mfg-domain-212c7625",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 20. 自動測試補充（委外與簽核相關） › 20.2 委外整合測試",
+      "text": "工單流程與採購訂單的關聯性｜當工單是透過外部廠商執行時，系統會自動建立一個相關的採購訂單。此外，成品入庫時，如果發生不良品，使用者可以根據不良數量來建立退貨或不合格報告，以確保庫存記錄能正確調整。",
+      "approved": false,
+      "sourceSectionHash": "6f66d70878f0117a9fc03fb7b4f32a748b4d23de88bca94dd1490ce2078fb2d8"
+    },
+    {
+      "slug": "mfg-domain-ec3ff276",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 21. 訂單↔MRP↔生產聯動管控規則（2026-05-29 定案）",
+      "text": "跨模組流程管控規則說明｜本系統會管理銷售訂單和採購訂單結案後，對需求排程的預留數量進行釋放。此外，當匯入的訂單內容發生修改時，系統會發出警示提醒使用者注意。在計算可用的供給面時，也會納入已排定的收貨數量。另外，若生產工單在執行過程中發現缺少物料，系統會發出缺料警示。",
+      "approved": true,
+      "sourceSectionHash": "3154482b15ad4e8c8e1ac2571037db16222636a06cd1e610fca694502a31bb7a"
+    },
+    {
+      "slug": "mfg-domain-9bb9a3dd",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 21. 訂單↔MRP↔生產聯動管控規則（2026-05-29 定案） › 21.2 MRP 已匯入之訂單被修改 → 跨模組警示（P2，Phase C 前完成）",
+      "text": "訂單修改需先處理工單狀態｜當訂單已經匯入生產需求計畫（MRP）並產生了正在進行的工單時，若要修改原始訂單的數量或交期，系統會要求您必須先暫停相關的工單才能進行修改。如果雖然已匯入但尚未有任何投產工單，則允許儲存，但系統會提醒使用者建議重新執行一次生產需求計畫來同步變更資訊。",
+      "approved": true,
+      "sourceSectionHash": "55e73d85c6b231e7de449ab4e66e3dbd7697a26ec8391f0a79189c1c58b3db7c"
+    },
+    {
+      "slug": "mfg-domain-9d4696af",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 21. 訂單↔MRP↔生產聯動管控規則（2026-05-29 定案） › 21.4 WO Release 缺料警示（P3，Phase B→C 銜接，非阻擋）",
+      "text": "工單釋出時的缺料警示規則｜當系統進行工單釋出時，如果任何需要的物料在預計投產的時間點上，其可用數量不足以滿足需求，系統會發出警告訊息給使用者，但不會阻止工單的釋出流程繼續執行。",
+      "approved": true,
+      "sourceSectionHash": "d1814d1f23b2a9d5049e7d9c6430dedb1f47bcc65dce7b37f86b3e681d12092e"
+    },
+    {
+      "slug": "mfg-domain-38928b11",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 21. 訂單↔MRP↔生產聯動管控規則（2026-05-29 定案） › 21.5 物料備齊確認閘口（定案規格，2026-06-10；Phase C/D 已完成可落地）",
+      "text": "物料備齊需在開工前正式確認｜當生產工單已經被釋出並且核准後，但在實際開始生產作業之前，系統會要求必須確認到足夠的實體物料是可用的。這樣做是為了確保物料預留狀態不會出現偏差，並且能處理下一個層級半成品尚未完成的情況，以避免因物料不足而影響生產進度。",
+      "approved": true,
+      "sourceSectionHash": "becd3c9b5f18dd0e020b5e85f729086c2827ae03cbed4b34d325941ea6126c78"
+    },
+    {
+      "slug": "mfg-domain-8ed7498f",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 21. 訂單↔MRP↔生產聯動管控規則（2026-05-29 定案） › 21.5 物料備齊確認閘口（定案規格，2026-06-10；Phase C/D 已完成可落地） › 新欄位",
+      "text": "物料備齊狀態判斷規則｜系統會根據物料的可用性來判定訂單是否可以進入生產流程。當初建立時，此狀態預設為未執行確認。若所有需要的物料都已確認可以使用，則表示物料是全部可用的；如果發現有任何物料無法使用或數量不足，則會判斷為物料缺料的狀況。",
+      "approved": true,
+      "sourceSectionHash": "10ead08ee000fff4231a733c07ca99a537d405d328b0a40b3a0a78d64af15236"
+    },
+    {
+      "slug": "mfg-domain-68e268ce",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 21. 訂單↔MRP↔生產聯動管控規則（2026-05-29 定案） › 21.5 物料備齊確認閘口（定案規格，2026-06-10；Phase C/D 已完成可落地） › 新服務：`IWorkOrderMaterialReadinessService.CheckAsync(workOrderId, ct)`",
+      "text": "物料備齊判斷的依據與邏輯｜工單所需物料的可用量，是計算廠區整體可用的數量加上該工單自身已經預留的數量。若使用「備料單」來確認物料時，系統會先將原本為工單鎖定的數量加回計算中，然後再從工單預留中扣除等額數量，這樣確保了同一批物料不會被重複鎖定，並且在完成備料後，該物料的持有權轉移給備料單，但仍計入本工單自身的預留量，因此備齊物料不會導致系統誤判為缺少物料。此外，若此物料是自製的半成品，則必須確認其子工單已經完成；如果物料是以「沖銷」方式領用，則在開工前並不會強制要求物料必須到位。",
+      "approved": true,
+      "sourceSectionHash": "78a860123e5d67f8258294faae279bc32b06ced129a56d32363770238381f246"
+    },
+    {
+      "slug": "mfg-domain-4b28eb14",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 21. 訂單↔MRP↔生產聯動管控規則（2026-05-29 定案） › 21.5 物料備齊確認閘口（定案規格，2026-06-10；Phase C/D 已完成可落地） › UI",
+      "text": "物料備齊狀況的即時顯示與確認｜當生產訂單已經發出且已核准後，系統會顯示一個按鈕來進行物料備齊的確認。此處會清楚標示每個所需物料目前的狀態，讓使用者可以立即了解是物料準備就緒、是否需要等待子工單完成，或是目前缺少哪些物料。",
+      "approved": true,
+      "sourceSectionHash": "edb38d30c9b58c97b52388e53afd7486f34d1f0d727abc13ca67740a6f5b09e0"
+    },
+    {
+      "slug": "mfg-domain-c03d2c6c",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 21. 訂單↔MRP↔生產聯動管控規則（2026-05-29 定案） › 21.5 物料備齊確認閘口（定案規格，2026-06-10；Phase C/D 已完成可落地） › 與 Dispatch 開工連動（系統參數 `MFG_MATERIAL_GATE`）",
+      "text": "開工前物料備齊的檢查規則｜當系統設定為預設值時，若發現物料不足的情況，系統會發出警告訊息，但使用者仍可以在確認後繼續進行開工作業。如果需要完全阻止開工，則必須將此檢查設定為阻擋，屆時在主管填寫了特殊原因說明後才能繼續。",
+      "approved": true,
+      "sourceSectionHash": "1d7e8a7aae4b81a6687621957a3e21a802c3447bebeae5e953c3ebda4929048e"
+    },
+    {
+      "slug": "mfg-domain-7d2f36b1",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 21. 訂單↔MRP↔生產聯動管控規則（2026-05-29 定案） › 21.6 MRP dirty flag（定案規格，2026-06-10；**已部分落地**）",
+      "text": "訂單變動會提醒需要重新計算物料需求｜當銷售訂單的數量或交期、內部工單的數量或交期、或是採購訂單結案或取消時，系統會自動標記相關的物料需求計畫執行結果為有異動，以提醒使用者建議重新進行物料需求計畫的計算。",
+      "approved": true,
+      "sourceSectionHash": "285816d78085cd877597a9554d26f194ed54d12fb1af84eacf9821c14963d553"
+    },
+    {
+      "slug": "mfg-domain-5976f247",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 22. 委外廠商報價主檔（OutsourceQuotation） › 22.2 報價自動帶入規則",
+      "text": "報價自動帶入的規則說明｜系統會依照特定的順序來尋找最適合的報價價格，並將其自動填入單據中。它會先嘗試用包含供應商、產品、工序和作業順序所有資訊的最精確報價；如果找不到，才會依序檢查是否能找到特定途程的整體報價，再是整品的委外報價，最後才使用最通用的廠商加工費。系統會自動帶入符合條件中優先級最高的價格，但使用者仍可以手動修改這個價格。若以上所有條件都無法匹配到任何報價，則該價格欄位將保持空白，等待使用者親自填寫。",
+      "approved": true,
+      "sourceSectionHash": "997e348bdf0804b3d68efba14135a215350d2c0dbbef35d221d41e5b4b00e2be"
+    },
+    {
+      "slug": "mfg-domain-f34e02f8",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 22. 委外廠商報價主檔（OutsourceQuotation） › 22.3 與 MRP 的整合",
+      "text": "委外工單預計交期計算規則｜當建立委外工單時，系統會根據從報價中取得的交貨天數來計算預計交貨日期。這個預計交貨日期是從需要的日期減去這些交貨天數所算出來的。如果有多家廠商提供了有效的報價，系統會採用所有報價中交貨天數最短的那一個作為計算基準。",
+      "approved": true,
+      "sourceSectionHash": "eee49157a8e9873aec7e92c07dcb975ecff302133862cc5e08f60c065cc599eb"
+    },
+    {
+      "slug": "mfg-domain-6eb0bf1e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 22. 委外廠商報價主檔（OutsourceQuotation） › 22.4 CRUD 畫面規格",
+      "text": "查詢條件與資料顯示規則｜使用者可以根據特定的供應商、產品編號或有效日期來篩選查看報價資訊，系統會同時顯示目前有效的以及已經失效的報價記錄。",
+      "approved": true,
+      "sourceSectionHash": "d23a91e456b62a6d3262a6fe9e814e88ffd74309d3ab91b523864328f0e3a9d7"
+    },
+    {
+      "slug": "mfg-domain-53b2d979",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 22. 委外廠商報價主檔（OutsourceQuotation） › 22.5 Phase 實作時機",
+      "text": "報價主檔的實作階段與功能範圍｜目前，委外廠商報價的主體資料結構已經建立，並且可以進行新增、檢視、修改和刪除等基本操作。此外，系統也整合了自動帶入相關資訊的功能。",
+      "approved": false,
+      "sourceSectionHash": "8d597c53f61648876b6f4a4e08e5f373cc976cb2a2a91f4c0c412cd62ab38007"
+    },
+    {
+      "slug": "mfg-domain-2df7031e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 23. 排程料況閘口、生產準備與檢驗閘口（2026-06-12 定案）",
+      "text": "排程相關的系統流程連結說明｜本章節描述的是已經確定下來的規格，它會與「開工物料閘口」、「預計收到的物料」以及「負載視圖」這幾個已定義的環節進行銜接。",
+      "approved": false,
+      "sourceSectionHash": "ff0a0f155308d3d0f5c23f0777385fb52632243edfc2aee7eba8ab5c05bc960d"
+    },
+    {
+      "slug": "mfg-domain-6313a64e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 23. 排程料況閘口、生產準備與檢驗閘口（2026-06-12 定案） › 23.1 排程料況閘口（定案：廠級預留，不做儲位/批號級）",
+      "text": "排程料況確認的規則與條件｜材料的預留和進入生產流程時，系統會根據不同的階段進行檢查。在規劃階段，如果材料短缺但有預計到貨日期，且該到貨日期早於或等於計畫開工日，則可以安排生產，但會標記出料風險；否則，將無法排程並需要提醒催促採購。",
+      "approved": true,
+      "sourceSectionHash": "aa1ef3180ff73c40d9fa10e2e133956409217d774b32a13475c8c4b135fe0c46"
+    },
+    {
+      "slug": "mfg-domain-3dfb8f61",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 23. 排程料況閘口、生產準備與檢驗閘口（2026-06-12 定案） › 23.2 等候線理論落地（定案：簡化，不做排隊模型）",
+      "text": "機台佇列與等候時間建議值｜系統會列出每台設備已排定但尚未開工的派工，並依前方已佔用的分鐘數估算等候時間。另外，系統每晚依近 90 天的實際報工間隔，統計各工序等候時間的建議值（中位數），顯示在途程編輯畫面工序的「等候時間」欄位下方；按「套用」只會填入欄位，存檔後才生效，系統不會自動修改途程。樣本少於 5 筆不提供建議；移動時間無法單獨量測，不提供建議。",
+      "approved": true,
+      "sourceSectionHash": "0d4175226ac855e2bd033753cbe6812de278d044fe2abb2b52e65f7207465679"
+    },
+    {
+      "slug": "mfg-domain-df92788a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 23. 排程料況閘口、生產準備與檢驗閘口（2026-06-12 定案） › 23.3 生產準備看板＋模具（定案：準備清單＋衝突警示，不進排程引擎硬約束）",
+      "text": "生產準備與模具的資訊展示規則｜系統會根據排程順序，在指定的日期（預設是隔天）顯示各設備需要進行的備料需求、模具或治具的資訊，以及預估的設定時間。當同一組模具被安排到不同設備且時間重疊時，看板上會發出警示提醒使用者注意衝突，但此警示不會阻止排程的進行。",
+      "approved": true,
+      "sourceSectionHash": "650274cf138ad947d5dd79a07fb35359afe9952de1c0666c72cf540c00b935b0"
+    },
+    {
+      "slug": "mfg-domain-b246b40a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 23. 排程料況閘口、生產準備與檢驗閘口（2026-06-12 定案） › 23.4 檢驗閘口（定案：FPI/IPQC 不自動暫停派工）",
+      "text": "檢驗閘口判斷規則說明｜當產品在現場進行的初步檢驗或中間品檢驗不合格時，系統僅會記錄這次不合格的狀況並發出通知給相關人員，不會自動改變生產排程的狀態；是否需要暫停生產流程，仍需由現場人員根據實際情況自行判斷決定。",
+      "approved": true,
+      "sourceSectionHash": "38ba4837a0ee93c4b95b651a62174f7c8fcbe346e0ea659434e5142e12e2cfc7"
+    },
+    {
+      "slug": "mfg-domain-0eb1ba9e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 23. 排程料況閘口、生產準備與檢驗閘口（2026-06-12 定案） › 23.5 批量政策（定案 2026-06-12：系統參數切換 A／B，預設 A）",
+      "text": "批量計算依系統設定的規則｜當使用「最小倍數」的生產排程模式時，每個單一需求項目會先向上取整到符合該品號規定的最小倍數，此計算不會跨越不同的訂單或需求項目進行合併。",
+      "approved": true,
+      "sourceSectionHash": "5bc62555aff5140d2af62e7916f62fa9006e4de0123769675c3ba51242b69f2b"
+    },
+    {
+      "slug": "mfg-domain-28fc6050",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 23. 排程料況閘口、生產準備與檢驗閘口（2026-06-12 定案） › 23.6 替代料（定案：本階段不做）",
+      "text": "關於使用替代物料的規定｜當生產材料無法取得時，系統會依照排程規劃和實際開工的流程來處理缺料問題。目前階段不提供使用替代物料的功能。",
+      "approved": true,
+      "sourceSectionHash": "868c4a44cf1583aab9d940d20829ae70ec9e8808923ff371b9627546c6fb2999"
+    },
+    {
+      "slug": "mfg-domain-5bca883a",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 24. 投產（Release）為定案閘門：釋出時定量、硬料閘、在途鎖定與排程入口（2026-06-20 定案，已實作）",
+      "text": "投產時的材料與排程控制規則｜在進行產品釋出時，系統會根據先前設定的工序倒推和材料狀況閘口的要求來執行相關的流程控制。這代表當您要將產品投入生產階段時，系統會自動檢查並管理所需的物料數量、硬體材料的可用性，以及正在運輸途中的物料狀態，這些條件必須符合規定才能順利進入後續的排程作業。",
+      "approved": true,
+      "sourceSectionHash": "b5b26fb763ee65c3fc6fdf51442210039ce9f8db6112f469f66d8ef8f90fcf2d"
+    },
+    {
+      "slug": "mfg-domain-3e2edd31",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 24. 投產（Release）為定案閘門：釋出時定量、硬料閘、在途鎖定與排程入口（2026-06-20 定案，已實作） › 24.1 核心理念：MRP 暫定 → 投產定案",
+      "text": "投產動作是確定最終的生產數量與料件使用量｜當系統執行「投產」這個定案動作時，代表將原本根據庫存預估的建議生產數量，變成了確定的、必須執行的生產計畫。此動作會同時確認所需的物料狀況，並鎖定需要從倉庫領出的物料數量；只有完成此定案後，生產排程和甘特圖才會開始計算與顯示相關資訊。此外，一次投產的範圍是針對整個生產批次，所有工單必須一起確定，不能只選取批次內的部分工單進行確認。",
+      "approved": true,
+      "sourceSectionHash": "f22e8523f6243dce36cb43ad78b990f73802e18dee2838eb9c5f2aa3dcf9e9f3"
+    },
+    {
+      "slug": "mfg-domain-a5df8b6e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 24. 投產（Release）為定案閘門：釋出時定量、硬料閘、在途鎖定與排程入口（2026-06-20 定案，已實作） › 24.3 硬料閘：料齊才可投產（整批擋住，不分批）",
+      "text": "硬料檢查：整批物料需齊備才能開始生產｜所有用於本批次生產的採購或委外用料，必須全部準備齊全，否則無法進行投產作業。這個檢查會針對該批次內所有工單所需要的採購和委外材料進行檢核；但對於在批次內部自製的半成品，此硬料閘口不會進行阻擋檢查。",
+      "approved": true,
+      "sourceSectionHash": "d5f4f89bbb6be28ddbfc5f4553e3be4016d719e1cfe915392034ca5b84f06591"
+    },
+    {
+      "slug": "mfg-domain-fca5ab8b",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 24. 投產（Release）為定案閘門：釋出時定量、硬料閘、在途鎖定與排程入口（2026-06-20 定案，已實作） › 24.4 在途可算，但需鎖定（新增：供給端預留／PO pegging）",
+      "text": "在途材料可用計算規則說明｜只有當已核准且尚未結案的採購訂單或委外進料，其預計到貨日期早於工序計畫開工日，並且該批在途數量沒有被其他需求佔用時，才能將這部分在途材料納入可用的供給量計算中。系統僅使用這些估計的到貨日期來判斷投產是否可行，採購部門仍需根據產業和企業實際情況人工決定是否需要下單或何時下單。",
+      "approved": true,
+      "sourceSectionHash": "cbd563cbbf1cf229f692deecfcde293df7e6a24b564cb712340db9cc4aca615f"
+    },
+    {
+      "slug": "mfg-domain-9ef03e23",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 24. 投產（Release）為定案閘門：釋出時定量、硬料閘、在途鎖定與排程入口（2026-06-20 定案，已實作） › 24.5 投產後即進排程（排程入口＝Released）",
+      "text": "投產之後才會上甘特｜工單要投產、狀態進到已定案或進行中，才會被排程系統挑進來排，未投產的不會出現在甘特上。排程時不會再檢查一次料況，那道關卡在投產時就已經把過了。",
+      "approved": true,
+      "sourceSectionHash": "9cc0eb235427771bf07b78084754b7602fe82425784576906e6ce4e5197c72fd"
+    },
+    {
+      "slug": "mfg-domain-7e3dabc9",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 24. 投產（Release）為定案閘門：釋出時定量、硬料閘、在途鎖定與排程入口（2026-06-20 定案，已實作） › 24.6 派工全自動（優先序＋最早空閒機台）",
+      "text": "派工規則與機台選擇標準｜排程會依照生產批的優先順序進行排序，在同一個工作中心內，系統會選擇目前最能最早開始使用的設備來分配任務。日常的派工作業不需要人工介入。只有在發生延遲的情況下，才會需要人員手動處理換機台、拆分或轉委外等例外情況。",
+      "approved": true,
+      "sourceSectionHash": "f8eb868734566dec094c318c85b90ed524ea5fdc0422152caa39f93a5486e22d"
+    },
+    {
+      "slug": "mfg-domain-dcacff3d",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 24. 投產（Release）為定案閘門：釋出時定量、硬料閘、在途鎖定與排程入口（2026-06-20 定案，已實作） › 24.7 料閘職責重整（取代 §23.1 步驟 2）",
+      "text": "投產時的可用物料計算方式｜投產時判斷可用的物料數量，是把這張單自己已經預留的在手庫存，加上已經鎖定給它的在途數量。",
+      "approved": true,
+      "sourceSectionHash": "15082becae5b44ecf5fb3f55089834e55c6c0ce0f4eb89fb0fae0f64eb6c1d07"
+    },
+    {
+      "slug": "mfg-domain-778fc064",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 24. 投產（Release）為定案閘門：釋出時定量、硬料閘、在途鎖定與排程入口（2026-06-20 定案，已實作） › 24.8 資料模型異動清單（已實作 2026-06-20）",
+      "text": "生產批次投產的流程與規則說明｜當進行整批或單張工單的投產定案時，系統會根據目前的庫存預留量和自由庫存來重新計算所需數量；如果發現任何材料短缺，系統會檢查是否有足夠的在途物料可以鎖定使用，若無法滿足所有材料需求，則整個投產流程將不會進行。",
+      "approved": true,
+      "sourceSectionHash": "e785757a7923ee94322bb748777dd2674f042f11a4a3b85777a51ce1ddf9bd63"
+    },
+    {
+      "slug": "mfg-domain-8f3df2b2",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 24. 投產（Release）為定案閘門：釋出時定量、硬料閘、在途鎖定與排程入口（2026-06-20 定案，已實作） › 24.9 已釐清（2026-06-20 定案）",
+      "text": "投產時的材料使用規則說明｜所有物料的投產必須是針對整批進行，不能只對部分數量進行投產。此外，如果工單的用量有變動需要重新計算，則必須先由人員確認後才能套用到生產流程中。",
+      "approved": true,
+      "sourceSectionHash": "a58364d2e5502c5cd210d73200fd2e26fd11e0d0e9ca2dae6cd162b00b562cc8"
+    },
+    {
+      "slug": "mfg-domain-a92f6a16",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成）",
+      "text": "製造簡化模式的實作範圍與流程｜此生產模式已經完成三個階段的實作，使用者可以利用這個模式進行操作。第一階段允許在設定參數後，無需投產即可直接過帳。第二階段讓工單可以在未排程的情況下直接開始執行工作。第三階段則會在訂單核准之後，根據系統判斷自動建立並展開相關的物料需求計畫（MRP）單據。",
+      "approved": false,
+      "sourceSectionHash": "f8daf9c531cf01e3dfcf3ccd6508d98bb6add758baaa0fcc54c036019a2173bd"
+    },
+    {
+      "slug": "mfg-domain-cd90df03",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.1 目標流程與適用對象",
+      "text": "簡化模式適用條件與限制說明｜此生產流程的簡化模式適用於訂單量小、使用單一產線或機台同質，且當天接單即當天完成生產的小型工廠。若場景需要跨訂單進行批量合併、必須在投產前進行硬料閘把關，或是需要利用甘特圖進行產能排程時，則不適用此簡化模式。",
+      "approved": true,
+      "sourceSectionHash": "1cfd739b87caef40c74016e545249ff06df88b61c81e14901267788c9d351b6b"
+    },
+    {
+      "slug": "mfg-domain-04699545",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.2 系統參數",
+      "text": "製造模式設定與流程判斷｜此系統預設採用完整的生產流程，除非在系統參數中明確將「簡化模式」設定為啟用狀態，否則系統會依照完整流程進行操作。即使未設定相關的系統參數，系統的行為仍會維持不變，不會因為新增了新的參數而改變既有的作業邏輯。",
+      "approved": true,
+      "sourceSectionHash": "c681d3c3261ffdd094e88d7991f260ed4443db147c3b730a471a8d4fa2fce799"
+    },
+    {
+      "slug": "mfg-domain-17ca4b7e",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.4 免排程：派工 Pending 可直接開工",
+      "text": "簡化模式下工序順序的檢查規則｜在簡化生產模式下，系統會檢查當前這個工序累積產出量是否超過了前面一個工序已經完成的總數量；如果超出了，則無法進行開工作業。",
+      "approved": true,
+      "sourceSectionHash": "f189484ee533ec25a80dc35014c2e74b0c4e84931f1c0f421009e62e1d7a23b3"
+    },
+    {
+      "slug": "mfg-domain-039c96cd",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.5 訂單自動展 MRP",
+      "text": "自動展開排程的判斷標準｜系統判定是否需要自動展開生產排程時，是根據「已核准訂單還有多少未被計算的需求量」，而不是依據「剛才發生了什麼事件」來決定。如果一張訂單在不同時間點被重複處理，系統不會產生錯誤或數量翻倍的情況，它會安全地只展現新增的、尚未納入需求的剩餘部分。",
+      "approved": true,
+      "sourceSectionHash": "5cefc3a75ede888bb986886ce87cababea11dd285fe98610cb2980defcfc7fba"
+    },
+    {
+      "slug": "mfg-domain-6c7bf687",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.6 發料方式：維持 Push（預設）或改 Backflush",
+      "text": "發料方式維持現狀以確保流程穩定性｜系統在生產時會自動產生領料單，讓現場人員確認過帳後再扣除庫存，這樣做是為了確保材料的投入記錄與實際作業流程完全一致，資料正確性是最穩妥的選擇。",
+      "approved": true,
+      "sourceSectionHash": "f80ef1f3d9806c36c0cfa425dab8b7147941b1a564cc7a56ebbe596d47909f11"
+    },
+    {
+      "slug": "mfg-domain-8f9ae9fa",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.7 明確不改的部分",
+      "text": "保留生產時段與成本計算規則｜即使使用簡化模式進行生產，系統仍會記錄實際的開始和結束時間來計算工時，並維持原有的人工費用、設備利用率等相關費用的計算方式，確保所有成本數據的準確性不變。",
+      "approved": true,
+      "sourceSectionHash": "4073dd0bfefd409e1958fd03373e27de68ce8c1f835f7530d2b8f2fbcb8b428a"
+    },
+    {
+      "slug": "mfg-domain-08cf507b",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.8 已定案決策（2026-07-27）",
+      "text": "開工完工時間與品質檢核保留｜現場人員仍需實際記錄開工和完工的時間點，系統會根據這些真實的起訖時間來計算工時。此外，即使使用簡化模式，產品在進行品管檢查（FPI）時，相關的品質關卡依然必須被尊重，不會因為進入簡化模式而自動跳過檢核流程。",
+      "approved": true,
+      "sourceSectionHash": "7ea3150694d70eb0fb5cd4e13797581a6be18809fcd44fc0c1b84e78f5e69220"
+    },
+    {
+      "slug": "mfg-domain-e79b0193",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.9 實作分段建議",
+      "text": "製造簡化模式的生產流程規則｜在執行此模式時，系統預設不會自動進行投產作業；若需要觸發工單的自動投產，必須透過特定的參數設定才能達成。此外，先前已規劃的後向沖銷（Backflush）功能目前是可選的，預設情況下不會執行該流程。",
+      "approved": true,
+      "sourceSectionHash": "dc7e619da3665ed347d6faa129ce9051a3d0b147cace3f285b297f3cb5db60c4"
+    },
+    {
+      "slug": "mfg-domain-57408aa2",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.10 測試規劃",
+      "text": "製造簡化模式的規則說明｜當系統進入此模式時，工單的成本計算、委外採購訂單的產生以及庫存移動等流程會與一般情況不同，使用者需要了解這些差異點，因為部分步驟將不會執行或資料記錄方式會改變。",
+      "approved": false,
+      "sourceSectionHash": "2fe2d9d68343db9df5eb062da20c6b1ba053fbdd1da9cf108accd0288278d86e"
+    },
+    {
+      "slug": "mfg-domain-bbcf4aad",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.11 已知取捨與風險",
+      "text": "生產模式切換的注意事項｜當系統從簡化模式切換回完整模式時，先前在簡化模式下已完成「釋出」的製造工單，不會退回到原先的計劃狀態，因為這些工單並未經過硬體材料閘門和在途物料追蹤。因此，建議使用者在沒有任何正在進行生產的工單時進行模式切換，或者必須接受既有工單會以簡化模式的語意流程走完。",
+      "approved": true,
+      "sourceSectionHash": "cfee2dfe828519f46c5c034639d0b655adcc2757b9bfef1e3815ca4167b0cc57"
+    },
+    {
+      "slug": "mfg-domain-1fcc9b78",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.12 Core 邊界與擴充點（新增系統參數的正確做法）",
+      "text": "系統參數變更的正確方式｜所有對系統參數的修改都必須透過特定的服務來執行，不能直接操作資料庫中的相關記錄。這樣做是為了確保系統能正確地管理和更新這些參數值。",
+      "approved": false,
+      "sourceSectionHash": "8171d89af2d2ff10f7618e47059482f6dfe59ada19d4b57fc64d248d5682d354"
+    },
+    {
+      "slug": "mfg-domain-fe3d4f64",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 25. 製造簡化模式（mfg_simplified_mode）：免投產、免排程直接生產（2026-07-28 實作完成） › 25.13 相容性與資料正確性保證",
+      "text": "製造流程規則與資料正確性保證｜在生產過程中，系統會確保某些關鍵環節的行為不會改變既有的作業流程。例如，只要是工序順序的檢查，都會依照完整的排程流程來判斷，如果過去有「跳過工序進行報工」的情況，現在將會被拒絕。此外，當資料進入到網頁介面時，系統的檢查標準會變得更嚴格。在材料和成品的庫存記錄、標準成本計算、實際人工與製費的追蹤上，系統不會改變現有的處理方式。不過，工單的簽核紀錄將不再產生釋出相關的記錄。",
+      "approved": true,
+      "sourceSectionHash": "40cb4447c4e24c95ab5051d6db6974ece7871df5f704c9db4facb13c1b82d442"
+    },
+    {
+      "slug": "mfg-domain-a0685de3",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 26. FPI 首件檢查閘口修復（2026-07-27 定案，已實作）",
+      "text": "首件檢查閘口修復的規則說明｜系統目前會顯示兩組資訊，第一組是修改前系統的原始行為記錄，目的是讓使用者可以追蹤到過去的情況；第二組則是已經實際執行的最新功能內容。",
+      "approved": false,
+      "sourceSectionHash": "b364c990dfb84dc74eddce0d089c8de7ec2047ddc6245f9be34456b7ed2580df"
+    },
+    {
+      "slug": "mfg-domain-32f05741",
+      "lang": "zh",
+      "headingPath": "MFG 模組領域模型草稿（mfg-domain.md） › 26. FPI 首件檢查閘口修復（2026-07-27 定案，已實作） › 26.5 與 §25 的關係",
+      "text": "首件檢查仍需遵守流程規則｜即使使用簡化的工序模式，系統依然會要求執行首件檢查（FPI）閘口。這代表在進入生產前，無論工序是否經過備料狀態轉換，首件的品質檢核環節是無法被跳過的。",
+      "approved": true,
+      "sourceSectionHash": "0dde81a78b68aef8242cc9af76cc6bc51d29d7a6f0640533c9f381b75e690860"
+    }
+  ]
+}

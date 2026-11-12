@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="WorklistHint" xml:space="preserve"><value>Select outsource dispatches pending conversion, assign a supplier and expected date, and create one outsource PO (can be merged).</value></data>
+  <data name="FldSupplier" xml:space="preserve"><value>Supplier</value></data>
+  <data name="FldExpectedDate" xml:space="preserve"><value>Expected Date</value></data>
+  <data name="PleaseSelect" xml:space="preserve"><value>Please select</value></data>
+  <data name="NoPending" xml:space="preserve"><value>No dispatches pending outsource conversion.</value></data>
+  <data name="ColWo" xml:space="preserve"><value>WO-Op</value></data>
+  <data name="ColKind" xml:space="preserve"><value>Type</value></data>
+  <data name="ColProduct" xml:space="preserve"><value>Returned Product</value></data>
+  <data name="ColDemandQty" xml:space="preserve"><value>Demand Qty</value></data>
+  <data name="ColTransferredQty" xml:space="preserve"><value>Transferred</value></data>
+  <data name="ColSplitQty" xml:space="preserve"><value>This Transfer</value></data>
+  <data name="ColDue" xml:space="preserve"><value>Due Date</value></data>
+  <data name="OutsourceNoSelection" xml:space="preserve"><value>Please select at least one pending item.</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="BtnCreate" xml:space="preserve"><value>Create Outsource PO</value></data>
+</root>

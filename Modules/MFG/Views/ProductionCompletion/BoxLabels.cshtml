@@ -1,0 +1,38 @@
+@*
+    箱標籤（container-tracking.md §8 L1+）：分箱完工入庫一箱一個批號，每箱一張；QR 內容＝批號。
+    樣式在 box-label.css（CSP style-src 'self'，不可用 inline style，R38）。
+*@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Modules.MFG.Controllers.ProductionCompletionController.BoxLabel>
+@{
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Localizer["Title"].Value;
+    var fmt = ViewBag.Formats as SmartFactory.MES.Modules._Shared.Printing.PrintFormats;
+    var containerName = ViewBag.ContainerName as string;
+}
+<link rel="stylesheet" href="~/css/box-label.css" asp-append-version="true" />
+
+<div class="box-label-grid">
+    @for (var i = 0; i < Model.Count; i++)
+    {
+        var b = Model[i];
+        <div class="box-label">
+            <div class="box-label-qr">@Html.Raw(b.QrSvg)</div>
+            <div class="box-label-body">
+                <div class="box-label-lot">@b.LotNo</div>
+                <div class="box-label-product">@ViewBag.ProductCode — @ViewBag.ProductName</div>
+                <div class="box-label-qty">@(fmt?.Qty(b.Qty, b.UomCode) ?? b.Qty.ToString()) @b.UomCode</div>
+                <div class="box-label-meta">
+                    @Localizer["WorkOrderId"]：@ViewBag.WorkOrderId<br />
+                    @Localizer["ReceivedOn"]：@b.ReceivedOn.ToString("yyyy-MM-dd")
+                    @if (!string.IsNullOrEmpty(containerName))
+                    {
+                        <br />@Localizer["Container"]<text>：</text>@containerName
+                    }
+                    <br />@Localizer["BoxSeq", i + 1, Model.Count]
+                </div>
+            </div>
+        </div>
+    }
+</div>

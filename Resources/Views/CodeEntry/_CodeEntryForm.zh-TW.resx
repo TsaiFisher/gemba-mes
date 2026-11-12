@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Category" xml:space="preserve"><value>代碼類別</value></data>
+  <data name="CategoryPlaceholder" xml:space="preserve"><value>例：defect_reason、unit、process_type</value></data>
+  <data name="CategoryHint" xml:space="preserve"><value>程式端用的分類鍵值，建立後不可更改</value></data>
+  <data name="CategoryReadonlyHint" xml:space="preserve"><value>代碼類別建立後不可更改</value></data>
+  <data name="Code" xml:space="preserve"><value>代碼</value></data>
+  <data name="CodePlaceholder" xml:space="preserve"><value>例：D001、KG、PROC_A</value></data>
+  <data name="CodeReadonlyHint" xml:space="preserve"><value>代碼值建立後不可更改</value></data>
+  <data name="NameZh" xml:space="preserve"><value>中文名稱</value></data>
+  <data name="NameZhPlaceholder" xml:space="preserve"><value>例：外觀不良、公斤</value></data>
+  <data name="NameEn" xml:space="preserve"><value>英文名稱</value></data>
+  <data name="NameEnPlaceholder" xml:space="preserve"><value>例：Appearance Defect、Kilogram</value></data>
+  <data name="SortOrder" xml:space="preserve"><value>排序</value></data>
+  <data name="SortOrderHint" xml:space="preserve"><value>數字越小越前面，預設 0</value></data>
+  <data name="IsActive" xml:space="preserve"><value>啟用此代碼</value></data>
+  <data name="Remark" xml:space="preserve"><value>備註</value></data>
+  <data name="RemarkPlaceholder" xml:space="preserve"><value>選填，說明此代碼的適用情境</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+</root>

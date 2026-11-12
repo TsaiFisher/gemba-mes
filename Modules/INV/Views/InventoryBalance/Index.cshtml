@@ -1,0 +1,263 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.INV.ViewModels
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<InventoryBalanceRowVm>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched == true;
+    var productSummary = ViewBag.ProductSummary as List<InventoryBalanceProductSummaryVm> ?? new();
+    var whOptions = ViewBag.WarehouseOptions as System.Collections.IEnumerable ?? new List<object>();
+    var productOptions = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var locationOptions = ViewBag.LocationOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var curProduct = ViewBag.ProductCode as string ?? "";
+    var curLocation = ViewBag.LocationCode as string ?? "";
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.CurrentSort as string ?? "";
+        if (cur == col + "_asc") return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    int costDp = ViewBag.BaseCurrencyDp as int? ?? 6;
+    string costFmt = costDp <= 0 ? "N0" : $"N{costDp}";
+    string QtyFmt(string? uom)
+    {
+        var dp = (uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)) ? v : 4;
+        return dp <= 0 ? "N0" : $"N{dp}";
+    }
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-boxes"></i> @Localizer["PageTitle"]</h1>
+    </div>
+
+    <!-- 查詢列 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["ProductCode"]</label>
+                    <select name="productCode" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["ProductCodePlaceholder"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(curProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["WhCode"]</label>
+                    <select name="whCode" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllWarehouses"]</option>
+                        @foreach (dynamic w in whOptions)
+                        {
+                            var sel = (string?)ViewBag.WhCode == (string)w.WhCode ? "selected" : null;
+                            <option value="@w.WhCode" selected="@sel">@w.WhCode — @w.WhName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["LocationCode"]</label>
+                    <select name="locationCode" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllLocations"]</option>
+                        @foreach (var l in locationOptions)
+                        {
+                            <option value="@l.LocationCode" selected="@(curLocation == (string)l.LocationCode)">@l.WhCode / @l.LocationCode — @l.LocationName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["LotNo"]</label>
+                    <input type="text" name="lotNo" class="form-control form-control-sm"
+                           value="@ViewBag.LotNo" />
+                </div>
+                <div class="col-md-2">
+                    <div class="form-check mt-4">
+                        <input type="checkbox" name="includeZero" value="true" id="chkZero"
+                               class="form-check-input" checked="@((bool)(ViewBag.IncludeZero ?? false))" />
+                        <label class="form-check-label small" for="chkZero">@Localizer["IncludeZero"]</label>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search me-1"></i>@Localizer["Search"]
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Reset"]</a>
+
+                    @if (ViewBag.CanPrint as bool? ?? false)
+                    {
+                        @* 直接以查詢列「當前」條件送出列印（新分頁），不需先按查詢 *@
+                        <button type="submit" formaction="@Url.Action("Print")" formtarget="_blank" formnovalidate
+                                class="btn btn-outline-dark btn-sm ms-auto">
+                            <i class="bi bi-printer"></i> @Localizer["Print"]
+                        </button>
+                        <div class="btn-group">
+                            <a asp-action="Export"
+                               asp-route-productCode="@ViewBag.ProductCode"
+                               asp-route-whCode="@ViewBag.WhCode"
+                               asp-route-locationCode="@ViewBag.LocationCode"
+                               asp-route-lotNo="@ViewBag.LotNo"
+                               asp-route-includeZero="@ViewBag.IncludeZero"
+                               asp-route-format="xlsx" class="btn btn-outline-success btn-sm">
+                                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                            </a>
+                            <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Export"
+                                       asp-route-productCode="@ViewBag.ProductCode"
+                                       asp-route-whCode="@ViewBag.WhCode"
+                                       asp-route-locationCode="@ViewBag.LocationCode"
+                                       asp-route-lotNo="@ViewBag.LotNo"
+                                       asp-route-includeZero="@ViewBag.IncludeZero"
+                                       asp-route-format="csv">CSV</a></li>
+                                <li><a class="dropdown-item" asp-action="Export"
+                                       asp-route-productCode="@ViewBag.ProductCode"
+                                       asp-route-whCode="@ViewBag.WhCode"
+                                       asp-route-locationCode="@ViewBag.LocationCode"
+                                       asp-route-lotNo="@ViewBag.LotNo"
+                                       asp-route-includeZero="@ViewBag.IncludeZero"
+                                       asp-route-format="json">JSON</a></li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else
+    {
+        @if (productSummary.Any())
+        {
+            @* 預留是「廠 × 品號」層級、不記儲位，所以只能在品號這一層看；口徑同缺貨分析與投產料閘 *@
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-light py-2 small fw-semibold">@Localizer["ProductSummaryTitle"]</div>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle mb-0" id="productSummaryTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["ProductCode"]</th>
+                                <th>@Localizer["ProductName"]</th>
+                                <th class="text-end">@Localizer["PlantOnHand"]</th>
+                                <th class="text-end">@Localizer["PlantReserved"]</th>
+                                <th class="text-end">@Localizer["PlantAvailable"]</th>
+                                <th>@Localizer["StockUom"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in productSummary)
+                            {
+                                <tr>
+                                    <td class="fw-medium">@p.ProductCode</td>
+                                    <td>@p.ProductName</td>
+                                    <td class="text-end">@p.PlantOnHand.ToString(QtyFmt(p.StockUom))</td>
+                                    <td class="text-end">@p.PlantReserved.ToString(QtyFmt(p.StockUom))</td>
+                                    <td class="text-end fw-semibold">@p.PlantAvailable.ToString(QtyFmt(p.StockUom))</td>
+                                    <td>@p.StockUom</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer bg-white text-muted small py-2">@Localizer["ProductSummaryNote"]</div>
+            </div>
+        }
+
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.ProductSort"
+                                   asp-route-productCode="@ViewBag.ProductCode"
+                                   asp-route-whCode="@ViewBag.WhCode"
+                                   asp-route-locationCode="@ViewBag.LocationCode"
+                                   asp-route-lotNo="@ViewBag.LotNo"
+                                   asp-route-includeZero="@ViewBag.IncludeZero"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["ProductCode"] <i class="bi @sortIcon("product")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["ProductName"]</th>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.LocationSort"
+                                   asp-route-productCode="@ViewBag.ProductCode"
+                                   asp-route-whCode="@ViewBag.WhCode"
+                                   asp-route-locationCode="@ViewBag.LocationCode"
+                                   asp-route-lotNo="@ViewBag.LotNo"
+                                   asp-route-includeZero="@ViewBag.IncludeZero"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["WhCode"] / @Localizer["LocationCode"] <i class="bi @sortIcon("location")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["LotNo"]</th>
+                            <th class="text-end">
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.QtySort"
+                                   asp-route-productCode="@ViewBag.ProductCode"
+                                   asp-route-whCode="@ViewBag.WhCode"
+                                   asp-route-locationCode="@ViewBag.LocationCode"
+                                   asp-route-lotNo="@ViewBag.LotNo"
+                                   asp-route-includeZero="@ViewBag.IncludeZero"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["QtyOnHand"] <i class="bi @sortIcon("qty")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["StockUom"]</th>
+                            <th class="text-end pe-4">@Localizer["UnitCost"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr><td colspan="7" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>@Localizer["NoData"]
+                            </td></tr>
+                        }
+                        else
+                        {
+                            foreach (var r in Model)
+                            {
+                                <tr>
+                                    <td class="fw-medium">@r.ProductCode</td>
+                                    <td>@r.ProductName</td>
+                                    <td>@r.WhCode <span class="text-muted">/</span> @r.LocationCode
+                                        @if (!string.IsNullOrEmpty(r.LocationName))
+                                        {
+                                            <span class="text-muted small"> (@r.LocationName)</span>
+                                        }
+                                    </td>
+                                    <td>@(string.IsNullOrEmpty(r.LotNo) ? "-" : r.LotNo)</td>
+                                    <td class="text-end">@r.QtyOnHand.ToString(QtyFmt(r.StockUom))</td>
+                                    <td>@r.StockUom</td>
+                                    <td class="text-end pe-4">@r.UnitCost.ToString(costFmt)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>

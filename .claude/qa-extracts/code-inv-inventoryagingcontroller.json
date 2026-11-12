@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Modules/INV/Controllers/InventoryAgingController.cs",
+  "sourceHash": "5a8028032175b3892b84883deee39e4c04d203ebd08cac88d43e661e62ab295a",
+  "entries": [
+    {
+      "slug": "code-inv-inventoryagingcontroller-e1225428",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 存貨庫齡分析報表：依呆滯天數分桶彙總在手庫存金額，",
+      "text": "庫存分析依天數分桶彙總在手庫存｜此報表會根據品號、儲位和批號的最後移動日期，計算出與今日的相差天數，並依據這些天數區間來彙總目前在手的庫存金額，目的是用來評估積壓的資金成本。",
+      "approved": true
+    },
+    {
+      "slug": "code-inv-inventoryagingcontroller-738f9955",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 庫存掃描安全上限：庫齡須全載廠別在手庫存後於記憶體計算",
+      "text": "庫存掃描的數量限制與處理方式｜當系統進行庫存掃描安全上限的計算時，會先將所有廠別在手庫存載入記憶體後再進行計算。如果計算結果超過了設定的最大值，系統會拒絕本次操作，並要求使用者使用品號來縮小搜尋範圍。",
+      "approved": false
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="Name" xml:space="preserve"><value>排程名稱</value></data>
+  <data name="ToolKey" xml:space="preserve"><value>報表</value></data>
+  <data name="SelectReport" xml:space="preserve"><value>請選擇報表</value></data>
+  <data name="ToolKeyHint" xml:space="preserve"><value>目前有 {0} 張報表已接入排程，且僅列出您有權限執行的。其餘報表尚未接入排程，請改由各自的報表畫面查詢或匯出。</value></data>
+  <data name="ScheduleKind" xml:space="preserve"><value>執行週期</value></data>
+  <data name="ScheduleDaily" xml:space="preserve"><value>每日</value></data>
+  <data name="ScheduleWeekly" xml:space="preserve"><value>每週</value></data>
+  <data name="ScheduleMonthly" xml:space="preserve"><value>每月</value></data>
+  <data name="ScheduleDayOfWeek" xml:space="preserve"><value>星期</value></data>
+  <data name="Sunday" xml:space="preserve"><value>星期日</value></data>
+  <data name="Monday" xml:space="preserve"><value>星期一</value></data>
+  <data name="Tuesday" xml:space="preserve"><value>星期二</value></data>
+  <data name="Wednesday" xml:space="preserve"><value>星期三</value></data>
+  <data name="Thursday" xml:space="preserve"><value>星期四</value></data>
+  <data name="Friday" xml:space="preserve"><value>星期五</value></data>
+  <data name="Saturday" xml:space="preserve"><value>星期六</value></data>
+  <data name="ScheduleDayOfMonth" xml:space="preserve"><value>每月第幾日</value></data>
+  <data name="ScheduleDayOfMonthHint" xml:space="preserve"><value>設 29～31 時，遇到天數不足的月份自動順延至該月最後一日。</value></data>
+  <data name="ScheduleHour" xml:space="preserve"><value>時（0–23）</value></data>
+  <data name="ScheduleMinute" xml:space="preserve"><value>分（0–59）</value></data>
+  <data name="OutputFormat" xml:space="preserve"><value>輸出格式</value></data>
+  <data name="OutputFormatHint" xml:space="preserve"><value>Excel 保留欄位格式；CSV 適合再匯入其他系統。</value></data>
+  <data name="Recipients" xml:space="preserve"><value>收件人</value></data>
+  <data name="SelectRecipients" xml:space="preserve"><value>請選擇收件人</value></data>
+  <data name="RecipientsHint" xml:space="preserve"><value>報表放進收件人的「報表收件匣」，不寄送郵件。收件人於下載時會重新檢查權限，權限已異動者將收不到。</value></data>
+  <data name="IsActive" xml:space="preserve"><value>啟用此排程</value></data>
+  <data name="IsActiveHint" xml:space="preserve"><value>停用後不再自動執行；若擁有者權限失效，系統會自動停用並記錄原因。</value></data>
+  <data name="Owner" xml:space="preserve"><value>擁有者</value></data>
+  <data name="NextRunAt" xml:space="preserve"><value>下次執行</value></data>
+  <data name="NotScheduled" xml:space="preserve"><value>未排定</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Period" xml:space="preserve"><value>查詢期間</value></data>
+  <data name="PeriodHint" xml:space="preserve"><value>排程存的是滾動期間（例如「上月」），每次執行都重新解算成當下的日期；不是固定的那一段日期。</value></data>
+  <data name="TargetPlant" xml:space="preserve"><value>對象廠別</value></data>
+  <data name="TargetPlantHint" xml:space="preserve"><value>報表只查這個廠別的資料，期間與執行時刻也依這個廠別的時區計算。要建立其他廠別的排程，請先切換到該廠別。</value></data>
+</root>

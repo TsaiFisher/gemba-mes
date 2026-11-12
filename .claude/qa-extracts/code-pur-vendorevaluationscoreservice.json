@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/PUR/Services/VendorEvaluationScoreService.cs",
+  "sourceHash": "4cf80ebb2ef0be3f093607bd5035bf9f9e0f0410680b619bd873bdeb25add3fd",
+  "entries": [
+    {
+      "slug": "code-pur-vendorevaluationscoreservice-80d225a7",
+      "lang": "zh",
+      "headingPath": "採購 › 自動分數的計算依據",
+      "text": "自動分數計算的依據與顯示方式｜當品質或交期相關的資料為空值時，系統會預設以滿分一百分來進行展示，且在儲存資料時也會視為一百分。",
+      "approved": true,
+      "sourceSectionHash": "90554fb80782c23307d7542ecf79a97bf63aad2cfaeea277737acde60e559aa2"
+    },
+    {
+      "slug": "code-pur-vendorevaluationscoreservice-0a76b17b",
+      "lang": "zh",
+      "headingPath": "採購 › 供應商評分卡自動分數：",
+      "text": "供應商評分計算的標準規則｜品質分數是根據不良量與過帳進貨量的比率來計算，公式為 (1 減去不良量除以過帳進貨量) 乘以 100。其中，不良量包含來源類型為收貨且非作廢的檢驗報告數量，以及未開立檢驗報告但已判退的數量。交期達成率分數則是以準時交貨率乘以 100 來計算，此數據會綜合採購訂單和委外來源的資料。",
+      "approved": true,
+      "sourceSectionHash": "7e7a706dc8f8d7617a1f6683f77db915ec52c7fee3cb7927cd57deaa52c003a1"
+    },
+    {
+      "slug": "code-pur-vendorevaluationscoreservice-17dc0308",
+      "lang": "zh",
+      "headingPath": "採購 › 不良量：兩個來源相加，依進貨單號歸屬到期間內的進貨",
+      "text": "不良量計算規則說明｜不良量的計算是將兩個來源的數量加總，並根據進貨單號歸屬到當前期間內的進貨紀錄。",
+      "approved": true,
+      "sourceSectionHash": "c21894b365a161350a4ab8bdaf3928ae718e2524c95033ad3666658efc725587"
+    },
+    {
+      "slug": "code-pur-vendorevaluationscoreservice-5815ce5e",
+      "lang": "zh",
+      "headingPath": "採購 › 但評核當期時，它決定哪些未交單已經算逾期",
+      "text": "交期計算的範圍與時間點限制｜交期的計算依據是採購訂單和委外訂單的口徑規定；當沒有指定廠別時，則會以全公司為準。在評核已經結束的時間期間內，系統只會影響「至今仍未交清」這類遲延的天數計算；但若是在評核當期（指該期間尚未結束），系統會決定哪些未交單已經被視為逾期。",
+      "approved": true,
+      "sourceSectionHash": "640479b583bfc8b2b34ff8e347b50fe921f2ef6457028e8a0573e2fe1a863ee9"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@model SmartFactory.MES.Modules.PUR.Models.GoodsReturn
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@inject SmartFactory.MES.Modules._Shared.Printing.PrintNameService PrintNameSvc
+@{
+    // 本幣合計列也要幣別名稱：本幣不一定出現在明細上，另外補進來
+    var names = await PrintNameSvc.ForAsync(Model, new { CurrencyCode = ViewBag.BaseCurrency as string });
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    var userNames = ViewBag.UserNames as Dictionary<string, string> ?? new Dictionary<string, string>();
+    string UserDisplay(string? id) => id != null && userNames.TryGetValue(id, out var n) ? n : (id ?? "");
+    ViewData["Title"] = Localizer["DocTitle"].Value;
+    var currencyDecimals = ViewBag.CurrencyDecimals as IReadOnlyDictionary<string, int>;
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    var baseCurrency = ViewBag.BaseCurrency as string;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div class="print-title-block">
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["DocTitle"]</div>
+        <div class="print-doc-number">@Localizer["DocNo"]：@Model.GoodsReturnId ／ @Localizer["DocDate"]：@Model.ReturnDate.ToString("yyyy-MM-dd")</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-section-title">@L["Print_BasicInfo"]</div>
+    <div class="print-field-grid">
+        <div class="print-field-label">@Localizer["Supplier"]</div>
+        <div class="print-field-value">@names.CompanyWith(Model.SupplierCode)</div>
+        <div class="print-field-label">@Localizer["TxnType"]</div>
+        <div class="print-field-value">@names.TxTypeWith(Model.TypeCode)</div>
+        <div class="print-field-label">@Localizer["Status"]</div>
+        <div class="print-field-value">@SmartFactory.MES.Modules._Shared.DocEnumDisplay.Text(L, Model.Status)</div>
+        <div class="print-field-label">@Localizer["CreatedAt"]</div>
+        <div class="print-field-value">@DateTimeSvc.ToLocalTime(Model.CreatedAt).ToString("yyyy-MM-dd HH:mm")</div>
+        <div class="print-field-label">@Localizer["CreatedBy"]</div>
+        <div class="print-field-value">@UserDisplay(Model.CreatedBy)</div>
+        <div class="print-field-label">@Localizer["ApprovalStatus"]</div>
+        <div class="print-field-value">@DocStatusLabels.Label(Model.ApprovalStatus)</div>
+        @if (!string.IsNullOrEmpty(Model.Remarks))
+        {
+            <div class="print-field-label">@Localizer["Remarks"]</div>
+            <div class="print-field-value">@Model.Remarks</div>
+        }
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-section-title">@L["Print_Details"]</div>
+    <table class="print-table">
+        <thead>
+            <tr>
+                <th>@Localizer["ColNo"]</th>
+                <th>@Localizer["ProductCode"]</th>
+                <th>@L["Print_ProductName"]</th>
+                <th>@Localizer["ReturnQty"]</th>
+                <th>@Localizer["Uom"]</th>
+                <th>@Localizer["Currency"]</th>
+                <th>@Localizer["UnitPrice"]</th>
+                <th>@Localizer["AmountExclTax"]</th>
+                <th>@Localizer["TaxCode"]</th>
+                <th>@Localizer["TaxAmount"]</th>
+                <th>@Localizer["AmountInclTax"]</th>
+                <th>@Localizer["Warehouse"]</th>
+                <th>@Localizer["LotNo"]</th>
+                <th>@Localizer["Remarks"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var l in Model.Lines)
+            {
+                <tr>
+                    <td>@l.LineNo</td>
+                    <td>@l.ProductCode</td>
+                    <td>@names.Product(l.ProductCode)</td>
+                    <td>@l.ReturnQty.ToString(QtyFmt(l.UomCode))</td>
+                    <td>@names.UomWith(l.UomCode)</td>
+                    <td>@names.CurrencyWith(l.CurrencyCode)</td>
+                    <td>@l.UnitPrice.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, l.CurrencyCode))</td>
+                    <td>@l.LineAmount.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, l.CurrencyCode))</td>
+                    <td>@names.TaxWith(l.TaxCode)</td>
+                    <td>@l.TaxAmount.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, l.CurrencyCode))</td>
+                    <td>@l.TotalAmount.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, l.CurrencyCode))</td>
+                    <td>@names.WarehouseWith(l.WhCode)</td>
+                    <td>@l.LotNo</td>
+                    <td>@l.Remarks</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.Lines.Any(l => l.TotalAmount != 0))
+{
+    <div class="print-section text-end">
+        @* 合計必須是**明細欄的加總**：明細印的是交易幣（含稅 TotalAmount），
+           而表頭 Model.TotalAmount 是本幣（各明細 AmountLocal 加總）。本國幣單據上剛好相等，
+           外幣單據上就變成「明細是 USD、合計是 NTD」而且沒有任何幣別標示（5-9）。
+           明細可為不同幣別，故逐幣別各印一列；本幣總額另立一行並標明。 *@
+        @foreach (var g in Model.Lines.GroupBy(x => x.CurrencyCode ?? "").OrderBy(x => x.Key))
+        {
+            <div><strong>@L["Print_Total"] @names.CurrencyWith(g.Key)：@g.Sum(x => x.TotalAmount).ToString(CurrencyStepHelper.GetFormat(currencyDecimals, g.Key))</strong></div>
+        }
+        <div class="text-muted">@L["Print_LocalTotal"] @names.CurrencyWith(baseCurrency)：@Model.TotalAmount.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, baseCurrency))</div>
+    </div>
+}
+
+@await Html.PartialAsync("_PrintBase")

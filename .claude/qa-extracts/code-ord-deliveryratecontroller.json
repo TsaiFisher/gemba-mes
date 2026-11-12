@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/ORD/Controllers/DeliveryRateController.cs",
+  "sourceHash": "683231062bf11392e356785eddda02610cf1406aaa02fdb480b0e430020ef5c2",
+  "entries": [
+    {
+      "slug": "code-ord-deliveryratecontroller-5e15fc36",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 動詞一律 ：報表沒有「新增」語意",
+      "text": "報表權限判斷依據變更｜系統的報表功能，其是否可以被查看的範圍，將不再使用「可建立」的權限來限制顯示內容。現在會根據每個角色各自的權限設定來決定使用者能看到哪些報表。",
+      "approved": false,
+      "sourceSectionHash": "c4a0639a75dbe8fa6b43c35ec2f0ddfa5f55fb7d1291f9150b18fdf7c0d6f060"
+    },
+    {
+      "slug": "code-ord-deliveryratecontroller-9aafcc7c",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 期間在本報表只是篩選，所以留白給預設近 30 天而不是擋下來",
+      "text": "報表期間預設為近三十天｜此報表的「期間」僅用於篩選資料，因此系統預設會顯示最近的三十天資料範圍，而不是強制要求使用者輸入起訖日期。",
+      "approved": true,
+      "sourceSectionHash": "3357c9046cacb1bc3daf239cc9fe4f33127df2e398f3cdf5083fde4570620b71"
+    },
+    {
+      "slug": "code-ord-deliveryratecontroller-225557eb",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 查詢邏輯已抽至",
+      "text": "查詢邏輯已移至專門工具類別｜系統在處理日期留白時，會回傳當天日期，以維持原有的伺服器時間區的意義。",
+      "approved": true,
+      "sourceSectionHash": "af7d9440590521273f3f0457838dac67f3d3051533a970b2005b9aab71f58055"
+    }
+  ]
+}

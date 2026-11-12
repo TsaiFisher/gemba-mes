@@ -1,0 +1,3 @@
+@inject SmartFactory.MES.Services.IUserContext PlantContextUser
+<meta name="mes-plant-context" content="@(PlantContextUser.PlantId ?? "")" />
+<script src="~/js/plant-context.js" asp-append-version="true"></script>

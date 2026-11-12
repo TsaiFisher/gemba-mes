@@ -1,0 +1,34 @@
+{
+  "sourcePath": "Modules/MFG/Services/OeeService.cs",
+  "sourceHash": "8bb5fe023d52ed653c9750094ca6521fd870a58ba5d4919de410cd5735a232ac",
+  "entries": [
+    {
+      "slug": "code-mfg-oeeservice-9b4c42c6",
+      "lang": "zh",
+      "headingPath": "生產製造 › 服務：依機台彙總期間內的三要素",
+      "text": "機台三要素彙總的計算依據｜此服務會根據指定的機台，彙總特定期間內的三個核心要素。其中，「稼動時間」是從已結算的生產作業紀錄中取得的起訖累計分鐘數；「計畫時間」則是基於機台層級的工作日曆資訊所計算出的小時數轉換成的分鐘數；而「產出/良率」則會根據與特定工作流程相關的生產報告，分別統計合格品和不良品的數量。此外，「理想工時」是依據作業單上的單位時間，並換算成分鐘後作為參考標準。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-oeeservice-e50ccd06",
+      "lang": "zh",
+      "headingPath": "生產製造 › → ：每個上工紀錄僅歸屬單一工單，故品號唯一",
+      "text": "工單記錄的產品編號限制｜每筆上工紀錄只能屬於一個特定的工單，因此該紀錄所關聯的產品編號是唯一的。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-oeeservice-5298d9bc",
+      "lang": "zh",
+      "headingPath": "生產製造 › 涉及的所有組合",
+      "text": "設備與產品組合的定義｜系統會記錄所有涉及的設備和產品組合，其中沒有任何實際生產紀錄，僅有計畫工時的設備，其產品編號會顯示為空。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-oeeservice-d0f0021c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 為機台層級，同機台各品號列共用同一值",
+      "text": "機台工時計算規則說明｜每種產品在同一台設備上所佔用的時間比例，是根據該產品實際運行所需分鐘數除以該設備所有品項共用的一個預定總可用工時來計算的。",
+      "approved": true
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>出貨單</value></data>
+  <data name="AddEntry" xml:space="preserve"><value>新增出貨單</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>出貨單號、銷售訂單號</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入條件後按「查詢」</value></data>
+  <data name="All" xml:space="preserve"><value>全部</value></data>
+  <data name="DateFrom" xml:space="preserve"><value>日期起</value></data>
+  <data name="DateTo" xml:space="preserve"><value>日期迄</value></data>
+  <data name="GoodsShipmentId" xml:space="preserve"><value>出貨單號</value></data>
+  <data name="ShipDate" xml:space="preserve"><value>出貨日期</value></data>
+  <data name="Customer" xml:space="preserve"><value>客戶</value></data>
+  <data name="SalesOrderId" xml:space="preserve"><value>銷售訂單</value></data>
+  <data name="LineCount" xml:space="preserve"><value>明細筆數</value></data>
+  <data name="TotalAmount" xml:space="preserve"><value>出貨金額</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>簽核狀態</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="EditTitle" xml:space="preserve"><value>編輯出貨單 {0}</value></data>
+  <data name="ConfirmDelete" xml:space="preserve"><value>確定要刪除出貨單 {0} 嗎？</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>出貨單儲存成功。</value></data>
+  <data name="NoResults" xml:space="preserve"><value>查無資料。</value></data>
+  <data name="LoadError" xml:space="preserve"><value>載入失敗，請重試。</value></data>
+  <data name="NotFound" xml:space="preserve"><value>此單據已不存在（可能已被刪除）。</value></data>
+  <data name="Print" xml:space="preserve"><value>列印</value></data>
+</root>

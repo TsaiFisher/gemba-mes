@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/ProductionBatchController.cs",
+  "sourceHash": "017e02d7a67e52f75d55795e42b6cb5f0c49e73c75990753ee4e76367b47bb50",
+  "entries": [
+    {
+      "slug": "code-mfg-productionbatchcontroller-7e271798",
+      "lang": "zh",
+      "headingPath": "生產製造 › 提供查詢、明細與優先序調整",
+      "text": "生產批次資料的關聯性說明｜一個生產批次會對應到一筆物料需求計畫的紀錄，而這筆需求紀錄下可以包含多張工單。系統提供查詢、查看明細（包括子工單的進度）以及調整優先順序的功能。",
+      "approved": true,
+      "sourceSectionHash": "71ab20ac05bd90151ed0e8f45fed49e37bbe412bbeedbaa1e72130515903e970"
+    },
+    {
+      "slug": "code-mfg-productionbatchcontroller-992ca116",
+      "lang": "zh",
+      "headingPath": "生產製造 › 範圍守門：對齊 UI 契約",
+      "text": "範圍守門的優先級限制說明｜系統會檢查一個數值是否在 1 到 9999 的範圍內；如果不在這個範圍內，則不允許直接插入到所有生產批之前。",
+      "approved": true,
+      "sourceSectionHash": "485fdd3df76dad84c1daa88fecdc9546751c6ed481578a287e10504d3464ed1a"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+@using SmartFactory.MES.Modules._Shared
+@*
+    ProjectZ 部署專案的 docDetailsUrls 模組 URL 映射。
+    此 Partial 由主 View 的 <script> 區塊內呼叫，不可包含 <script> 標籤。
+
+    ⚠️ 這裡**不再手寫任何一行對應**——來源是 ApprovalDocumentLinks.Templates（C# 一份）。
+    原因：手機的待簽核清單需要同一份對應，抄成第二份 JS 一定會分岔，
+    而分岔的症狀是「某個單別在其中一邊點下去沒反應」，本來就沒有錯誤訊息
+    （PendingIndex.cshtml 是 `if (!urlFn) return;`）。
+    新增單別請改 Modules/_Shared/ApprovalDocumentLinks.cs，桌機與手機會一起生效。
+
+    單號**刻意不做編碼**，與伺服端的 ApprovalDocumentLinks.Resolve 保持逐字元一致：
+    兩邊給出不同的網址，就失去了「只有一份對應」的意義。
+*@
+Object.assign(docDetailsUrls, {
+@foreach (var kv in ApprovalDocumentLinks.Templates)
+{
+    @Html.Raw($"    '{kv.Key}': id => `{kv.Value.Replace("{id}", "${id}")}`,\n")
+}
+});

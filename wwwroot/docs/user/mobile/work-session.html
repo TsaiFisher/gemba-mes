@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Production session — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>開工作業 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link active"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-play-circle me-2 text-primary"></i><span lang="zh">開工作業</span><span lang="en">Production session</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/mfg/sessions.html &nbsp;|&nbsp; 備料準備與開工／下工</span><span lang="en">Path: /mobile/mfg/sessions.html &nbsp;|&nbsp; Setup, and starting and ending work</span></div>
+    </div>
+
+    <p><span lang="zh">從派工清單點卡片進入。同一頁包含兩個步驟：步驟一備料準備、步驟二開工／下工。上方的派工資訊卡顯示工單、工序、機台與進度（已完成／派工量與百分比）。</span><span lang="en">Opened by tapping a card in the dispatch list. The page holds two steps: step 1 setup, step 2 start and end work. The dispatch card at the top shows the work order, operation, machine and progress (quantity done out of the dispatched quantity, with a percentage).</span></p>
+
+    <img class="screen-shot" src="img/work-session.png" data-src-en="img/en/work-session.png" alt="開工作業畫面截圖" data-alt-en="Production session screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">開工作業畫面（備料已完成、生產中的派工）</span><span lang="en">Production session screen (a dispatch whose setup is done and which is in progress)</span></div>
+
+    <h2 id="setup"><i class="bi bi-box-seam me-2 text-primary"></i><span lang="zh">步驟一：備料準備</span><span lang="en">Step 1: setup</span></h2>
+
+    <p><span lang="zh">這一區顯示本派工已開立的備料單，以及尚未備妥的用料清單。</span><span lang="en">This area shows the staging orders already raised for this dispatch and the list of material that is not ready yet.</span></p>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">若顯示<strong>「尚有 N 項用料未備妥」</strong>，可點<strong>「建立備料單」</strong>開出草稿單，備料倉取自工作中心的預設設定。沒有待備料件時這顆按鈕不會出現。</span><span lang="en">If it says <strong>"N material(s) still not ready"</strong>, tap <strong>"Create Staging Order"</strong> to raise a draft; the staging warehouse comes from the work center default. The button does not appear when nothing is outstanding.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點<strong>「開始備料」</strong>開始計算備料（換模、換線）工時，派工轉為「備料中」。</span><span lang="en">Tap <strong>"Start Setup"</strong> to begin clocking setup time (tooling or line changeover); the dispatch moves to "Setup".</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">備妥後點<strong>「備料完成」</strong>，派工轉為「備料完成」，步驟一整區會變灰表示已結束。</span><span lang="en">When it is ready, tap <strong>"Setup Done"</strong>; the dispatch moves to "Ready" and step 1 greys out to show it is finished.</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">模具不需在此回報——後端一律沿用排程時指定的模具，打次統計與模具衝突偵測不受影響。工序未設準備工時者可略過步驟一直接開工。</span><span lang="en">Tooling does not have to be reported here — the system always uses the tooling assigned during scheduling, and shot counting and tooling conflict detection are unaffected. Operations with no setup time defined can skip step 1 and start straight away.</span></div>
+
+    <p class="text-muted small"><span lang="zh">確認鎖料與實際揀料移倉不在手機執行，請於桌機的「備料單」畫面完成。</span><span lang="en">Confirming the stock lock and actually picking and moving the material are not done on the phone; use the Material Staging screen on the desktop.</span></p>
+
+    <h2 id="session"><i class="bi bi-play-fill me-2 text-primary"></i><span lang="zh">步驟二：開工／下工</span><span lang="en">Step 2: starting and ending work</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh"><strong>「機台代碼」</strong>為選填，掃描或輸入可覆寫派工預設的機台；留空即用派工原本指定的機台。</span><span lang="en">The <strong>"Machine code"</strong> field is optional: scan or type it to override the dispatch's default machine, or leave it blank to use the machine already assigned.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點<strong>「開工」</strong>，畫面出現計時器開始累計本次上工時間。若出現「工單送審中或已被退回」，表示工單尚未核准，須待主管核准後才能開工；若出現「工單不是已投產或生產中」，表示工單已撤回或被駁回，須重新投產。</span><span lang="en">Tap <strong>"Start"</strong> and a timer appears, counting this session's elapsed time. If you see "The work order is pending approval or was rejected", the work order has not been approved yet; it can be started only after approval. If you see "The work order is not released or in production", it was withdrawn or rejected and has to be released again.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">生產期間點<strong>「報工」</strong>前往報工頁回報數量，可回報多次。</span><span lang="en">During production, tap <strong>"Report"</strong> to go to the reporting screen and enter quantities, as often as needed.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">本次作業結束時點<strong>「完工（結束本次上工）」</strong>，系統關閉本次上工並結算工時；按鈕會出現確認提示。</span><span lang="en">At the end of the session tap <strong>"Finish (end this session)"</strong>; the system closes the session and settles the hours, after a confirmation prompt.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh">點「完工」並不會回報數量。若本次還有產出沒回報，請先到報工頁按「完工並報工」，那一顆會在回報最後一批數量的同時結束上工。</span><span lang="en">"Finish" does not report any quantity. If this session still has output that has not been reported, go to the reporting screen first and use "Finish and report", which reports the last batch and ends the session in one action.</span></div>
+
+    <h2 id="buttons"><i class="bi bi-arrow-repeat me-2 text-primary"></i><span lang="zh">按鈕會隨狀態改變</span><span lang="en">The buttons change with the status</span></h2>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-28pct"><span lang="zh">看到的按鈕</span><span lang="en">The button you see</span></th><th><span lang="zh">代表的情況</span><span lang="en">What it means</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">開工</span><span lang="en">Start</span></td><td><span lang="zh">尚未開工，或前一次上工已結束。</span><span lang="en">Work has not started, or the previous session has ended.</span></td></tr>
+    <tr><td><span lang="zh">繼續（報工）</span><span lang="en">Continue (report)</span></td><td><span lang="zh">這張派工已在生產中，但本次上工不是在這支手機開的（例如換班交接）。此時只能去報工，不能重複開工。</span><span lang="en">The dispatch is already in progress but the session was not opened on this phone (a shift handover, for example). You can only report; you cannot start it again.</span></td></tr>
+    <tr><td><span lang="zh">再次開工</span><span lang="en">Start Again</span></td><td><span lang="zh">剛按過完工。尚未生產完的話可以再開一輪。</span><span lang="en">"Finish" has just been tapped. If production is not complete you can start another round.</span></td></tr>
+    </tbody>
+    </table>
+
+    <p class="text-muted small"><span lang="zh">累計良品數達到派工量時，派工會自動結案，不需另外操作。</span><span lang="en">The dispatch closes automatically once the cumulative good quantity reaches the dispatched quantity; nothing else is needed.</span></p>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

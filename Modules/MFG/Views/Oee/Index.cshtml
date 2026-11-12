@@ -1,0 +1,140 @@
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Services
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.MFG.Models.OeeReport
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched = ViewBag.Searched as bool? ?? false;
+    bool   canPrint    = ViewBag.CanPrint == true;
+    string machineCode = ViewBag.MachineCode as string ?? "";
+    var    dateFrom    = ViewBag.DateFrom as DateOnly? ?? DateOnly.FromDateTime(DateTime.Today).AddDays(-30);
+    var    dateTo      = ViewBag.DateTo   as DateOnly? ?? DateOnly.FromDateTime(DateTime.Today);
+    var    machineOptions = ViewBag.MachineOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+
+    var rows    = Model?.Rows ?? new();
+    bool hasData = rows.Count > 0;
+
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+
+    string OeeClass(decimal ratio) => ratio >= 0.85m ? "text-success fw-bold"
+        : ratio >= 0.60m ? "text-warning fw-bold" : "text-danger fw-bold";
+    string Pct(decimal ratio) => (ratio * 100m).ToString("N1") + "%";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-speedometer me-2 text-primary"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && hasSearched && hasData)
+        {
+            <a asp-action="Export" asp-route-machineCode="@machineCode"
+               asp-route-dateFrom="@dateFrom.ToString("yyyy-MM-dd")" asp-route-dateTo="@dateTo.ToString("yyyy-MM-dd")"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-4">
+                    <label class="form-label small fw-semibold">@Localizer["Machine"]</label>
+                    <select name="machineCode" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllMachines"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var m in machineOptions)
+                        {
+                            <option value="@m.MachineCode" selected="@(machineCode == (string)m.MachineCode)">@m.MachineCode — @m.MachineName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["DateFrom"]</label>
+                    <input type="date" name="dateFrom" value="@dateFrom.ToString("yyyy-MM-dd")" class="form-control form-control-sm" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["DateTo"]</label>
+                    <input type="date" name="dateTo" value="@dateTo.ToString("yyyy-MM-dd")" class="form-control form-control-sm" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+            <div class="form-text mt-2"><i class="bi bi-info-circle me-1"></i>@Localizer["Formula"]</div>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (!hasData)
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["Machine"]</th>
+                        <th>@Localizer["Product"]</th>
+                        <th class="text-end">@Localizer["PlannedMinutes"]</th>
+                        <th class="text-end">@Localizer["RunMinutes"]</th>
+                        <th class="text-end">@Localizer["IdealMinutes"]</th>
+                        <th class="text-end">@Localizer["TotalQty"]</th>
+                        <th class="text-end">@Localizer["GoodQty"]</th>
+                        <th class="text-end">@Localizer["Availability"]</th>
+                        <th class="text-end">@Localizer["Performance"]</th>
+                        <th class="text-end">@Localizer["Quality"]</th>
+                        <th class="text-end">OEE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                @foreach (var r in paged)
+                {
+                    <tr>
+                        <td><span class="fw-semibold">@r.MachineCode</span>
+                            @if (!string.IsNullOrEmpty(r.MachineName)) { <div class="small text-muted">@r.MachineName</div> }
+                        </td>
+                        <td>
+                            @if (string.IsNullOrEmpty(r.ProductCode))
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                            else
+                            {
+                                <span class="fw-semibold">@r.ProductCode</span>
+                                @if (!string.IsNullOrEmpty(r.ProductName)) { <div class="small text-muted">@r.ProductName</div> }
+                            }
+                        </td>
+                        <td class="text-end">@r.PlannedMinutes.ToString("N0")</td>
+                        <td class="text-end">@r.RunMinutes.ToString("N0")</td>
+                        <td class="text-end">@r.IdealMinutes.ToString("N0")</td>
+                        <td class="text-end">@r.TotalQty.ToString(QtyFmt(r.UomCode))</td>
+                        <td class="text-end">@r.GoodQty.ToString(QtyFmt(r.UomCode))</td>
+                        <td class="text-end">@Pct(r.Availability)</td>
+                        <td class="text-end">@Pct(r.Performance)</td>
+                        <td class="text-end">@Pct(r.Quality)</td>
+                        <td class="text-end @OeeClass(r.Oee)">@Pct(r.Oee)</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @await Html.PartialAsync("_Pagination", paged)
+    <div class="form-text mt-2">@Localizer["Legend"]</div>
+    }
+</div>

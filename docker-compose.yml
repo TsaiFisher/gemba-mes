@@ -1,0 +1,69 @@
+# 安全修正 M2：DB_PASSWORD 為必填（移除弱預設 fallback），且 PostgreSQL 埠僅綁 loopback，
+# 不對主機所有介面發布。設定方式：於同目錄建立 .env（已 gitignore）填入 DB_PASSWORD=<強密碼>。
+# 反向代理與 TLS 請見 deploy/nginx.conf.example（安全修正 H1）。
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: SmartFactoryMES
+      POSTGRES_USER: dev
+      # 未設定 DB_PASSWORD 時 compose 直接報錯，避免以已知弱密碼啟動。
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?請於 .env 設定 DB_PASSWORD（強密碼）}
+    ports:
+      # 僅本機可連（供備份/維運）；容器間走 compose 內部網路，不需對外發布。
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev -d SmartFactoryMES"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      # 祕密管理模式 B（預設，授權制部署）：加密連線字串由 .env 的 DB_ENCRYPTED 注入。
+      # 在容器內以 EncryptConnectionString 產生（--no-host-binding；步驟見 deploy/encrypted-connection-string.md §2）。
+      # 客戶正式授權不允許明文 DefaultConnection；只有授權明示 allowPlainConnection 時才可改用模式 A：
+      #   ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=SmartFactoryMES;Username=dev;Password=${DB_PASSWORD}"
+      ConnectionStrings__DefaultConnection: ""
+      ConnectionStrings__DefaultEncrypted: ${DB_ENCRYPTED:?請於 .env 設定 DB_ENCRYPTED（容器內 EncryptConnectionString 的輸出）}
+      # 容器授權一律每 90 天確認（瀏覽器代為確認，系統不連外）。客戶允許系統直接連外時可改自動確認：
+      # License__Transport: direct
+      # 反向代理位於前方時，讓 Kestrel 信任代理標頭（見 Program.cs UseForwardedHeaders）。
+      Security__KnownProxies__0: ${TRUSTED_PROXY_IP:?Set TRUSTED_PROXY_IP to the proxy address seen by Kestrel}
+      # 安全修正 M1：DataProtection 金鑰持久化至掛載 volume（見下方 dpkeys）。
+      # 未設此變數時金鑰落容器內臨時路徑，容器重建即失效導致全員登出。
+      DATAPROTECTION_KEYS_DIR: /app/keys
+      # 安全修正 M7：Host 標頭白名單（覆寫 appsettings 的 "*"）。生產必填，於 .env 設
+      # ALLOWED_HOSTS=mes.example.com;www.mes.example.com（分號分隔，勿含協定/埠）。
+      # 未設定即啟動失敗，避免以萬用字元 "*" 上線（快取投毒/連結產生攻擊面）。
+      AllowedHosts: ${ALLOWED_HOSTS:?請於 .env 設定 ALLOWED_HOSTS（生產網域白名單，分號分隔）}
+    ports:
+      # App 亦僅綁 loopback，對外一律經反向代理（TLS 終結）。
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - applogs:/app/logs
+      # M1：金鑰目錄跨容器重建存活；多副本水平擴充時改為共享儲存即可共用金鑰。
+      - dpkeys:/app/keys
+      # 機器錨定檔與授權確認結果（lease.json）：容器重建不變。刪掉這個 volume＝換一個身分，要重新申請授權——請納入備份
+      - anchor:/var/lib/smartfactory
+      # 授權檔與 Security DLL 唯讀掛載（不進映像）。啟動 app 前兩者都必須存在，否則 Docker 會建成空目錄
+      - ./license.json:/app/license.json:ro
+      - ./Security:/app/Security:ro
+
+volumes:
+  pgdata:
+  applogs:
+  dpkeys:
+  anchor:

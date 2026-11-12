@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Production Schedule — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>生產排程 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link active"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-bar-chart-steps me-2 text-primary"></i><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/mfg/schedule.html &nbsp;|&nbsp; 現場的排程看板與條件查詢</span><span lang="en">Path: /mobile/mfg/schedule.html &nbsp;|&nbsp; The shop floor schedule board and its query</span></div>
+    </div>
+
+    <p><span lang="zh">依工作中心與機台分組列出已排程的派工，供現場確認接下來要做什麼。本頁唯讀，不會改變任何派工。</span><span lang="en">Lists scheduled dispatches grouped by work center and machine, so the floor can see what is coming next. The page is read-only and changes no dispatch.</span></p>
+
+    <img class="screen-shot" src="img/schedule.png" data-src-en="img/en/schedule.png" alt="生產排程畫面截圖" data-alt-en="Production schedule screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">生產排程畫面（依工作中心 → 機台分組）</span><span lang="en">Production schedule screen (grouped by work center, then machine)</span></div>
+
+    <h2 id="range"><i class="bi bi-sliders me-2 text-primary"></i><span lang="zh">顯示範圍與圖例</span><span lang="en">Range and legend</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh"><strong>「顯示至」</strong>選擇要看到哪一天為止，清單只列出計畫在該日之前的派工。</span><span lang="en">Pick the last day to include with <strong>"Show Until"</strong>; only dispatches planned before that day are listed.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">勾選<strong>「僅延遲」</strong>後只保留預測會延遲的派工，用於盯進度。</span><span lang="en">Tick <strong>"Late Only"</strong> to keep only the dispatches predicted to run late, which is the view for chasing progress.</span></div></div>
+
+    <p><span lang="zh">卡片左側色條與右上角徽章代表狀態：</span><span lang="en">The coloured bar on the left of each card and the badge at the top right show the status:</span></p>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-20pct"><span lang="zh">圖例</span><span lang="en">Legend</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">生產中</span><span lang="en">In Progress</span></td><td><span lang="zh">已開工，正在生產。</span><span lang="en">Work has started and is under way.</span></td></tr>
+    <tr><td><span lang="zh">預測延遲</span><span lang="en">Predicted Late</span></td><td><span lang="zh">依目前進度推算會超過計畫完成時間，卡片另加「延遲」徽章。</span><span lang="en">Projected to miss the planned finish time at the current rate; the card also carries a "Late" badge.</span></td></tr>
+    <tr><td><span lang="zh">待料風險</span><span lang="en">Material Risk</span></td><td><span lang="zh">用料尚未備妥，開工前可能缺料，卡片另加「待料」徽章。</span><span lang="en">Material is not ready and may be short before work starts; the card also carries a "Waiting" badge.</span></td></tr>
+    <tr><td><span lang="zh">已排</span><span lang="en">Scheduled</span></td><td><span lang="zh">已排定但尚未開工。</span><span lang="en">Scheduled but not started.</span></td></tr>
+    </tbody>
+    </table>
+
+    <p><span lang="zh">卡片內顯示派工號、計畫起訖時間、時長（分鐘）與完成進度（已完成／派工量與百分比）。頁尾的「上次更新」是資料取得時間，點右上角的 <i class="bi bi-arrow-clockwise"></i> 可重新整理。</span><span lang="en">Each card shows the dispatch number, the planned start and finish, the duration in minutes and the progress (done out of the dispatched quantity, with a percentage). "Last updated" at the foot is when the data was fetched; the <i class="bi bi-arrow-clockwise"></i> button at the top right refreshes it.</span></p>
+
+    <h2 id="query"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">排程查詢</span><span lang="en">Schedule query</span></h2>
+
+    <p><span lang="zh">點上方的<strong>「排程查詢」</strong>進入條件查詢頁，用於找特定工單或機台的派工，而不是看整體排程。</span><span lang="en">Tap <strong>"Schedule Query"</strong> at the top to open the query screen, which is for finding the dispatches of a particular work order or machine rather than viewing the whole schedule.</span></p>
+
+    <img class="screen-shot" src="img/schedule-query.png" data-src-en="img/en/schedule-query.png" alt="排程查詢畫面截圖" data-alt-en="Schedule query screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">排程查詢畫面（不填任何條件直接查詢即列出全部）</span><span lang="en">Schedule query screen (searching with no criteria lists everything)</span></div>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-28pct"><span lang="zh">查詢條件</span><span lang="en">Criterion</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">工作中心</span><span lang="en">Work Center</span></td><td><span lang="zh">下拉選擇，預設「全部」。</span><span lang="en">A dropdown; the default is "All".</span></td></tr>
+    <tr><td><span lang="zh">機台</span><span lang="en">Machine</span></td><td><span lang="zh">輸入機台代號。</span><span lang="en">Type the machine code.</span></td></tr>
+    <tr><td><span lang="zh">工單號</span><span lang="en">Work Order</span></td><td><span lang="zh">輸入工單號。</span><span lang="en">Type the work order number.</span></td></tr>
+    <tr><td><span lang="zh">生產批號</span><span lang="en">Batch</span></td><td><span lang="zh">輸入生產批號。</span><span lang="en">Type the production batch number.</span></td></tr>
+    <tr><td><span lang="zh">計畫開始（起）／（迄）</span><span lang="en">Planned Start (From) / (To)</span></td><td><span lang="zh">以計畫開始時間限定區間。</span><span lang="en">Limits the range by planned start time.</span></td></tr>
+    </tbody>
+    </table>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">設定條件後點<strong>「查詢」</strong>；不填任何條件直接查詢即列出全部。</span><span lang="en">Set the criteria and tap <strong>"Search"</strong>; searching with nothing filled in lists everything.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">結果上方顯示「共 N 筆」；筆數達 200 時會加註「（已達上限 200 筆）」，表示還有資料沒列出，請縮小條件。</span><span lang="en">The result count appears above the list; at 200 it adds "(limit of 200 reached)", which means there is more data not shown — narrow the criteria.</span></div></div>
+
+    <h2 id="prep"><i class="bi bi-clipboard-data me-2 text-primary"></i><span lang="zh">生產準備看板</span><span lang="en">Preparation board</span></h2>
+
+    <p><span lang="zh">另一顆按鈕<strong>「生產準備看板」</strong>用於開工前確認備料與模具狀況，說明見該頁。</span><span lang="en">The other button, <strong>"Preparation Board"</strong>, is for checking material and tooling readiness before work starts; see that page for details.</span></p>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+{
+  "sourcePath": "Modules/RPS/Services/SavedQueryService.cs",
+  "sourceHash": "808b54e3eb8ef8fb873f986f0faa79b71eeebd1ecd78b3cdfe96a4625a1adae8",
+  "entries": [
+    {
+      "slug": "code-rps-savedqueryservice-fe04dac9",
+      "lang": "zh",
+      "headingPath": "報表 › 常用查詢存下來的參數",
+      "text": "參數儲存僅保留條件，不會儲存資料內容｜系統只會儲存您設定的查詢條件，而不會儲存實際查詢出來的資料結果。這樣做是為了確保每次開啟此查詢時，系統都能重新執行權限檢查和資料查詢，避免使用者在調職後仍能看到不屬於自己範圍的舊資料。",
+      "approved": true,
+      "sourceSectionHash": "48cb1e9cc05103e50b1f40fc5ca66057868059acc7700bf86f2a8670b0f3a86b"
+    },
+    {
+      "slug": "code-rps-savedqueryservice-b2309969",
+      "lang": "zh",
+      "headingPath": "報表 › 固定選項，**不啟用任何多型／型別名稱處理**：",
+      "text": "固定選項不處理型別差異｜系統在固定選項的設定中，不會根據使用者的資料來判斷和載入不同類型的資訊，以避免潛在的安全風險。",
+      "approved": true,
+      "sourceSectionHash": "6b04c141123dad92e272be81737de50e5db6e00b09eeba0fa55c8d5e134aedb2"
+    },
+    {
+      "slug": "code-rps-savedqueryservice-91d7bef2",
+      "lang": "zh",
+      "headingPath": "報表 › 期間存**列舉名稱**而非數字",
+      "text": "報表期間依列舉名稱儲存規則｜系統會以列舉的名稱來儲存期間資訊，而不是使用代表順序的數字。這樣做是為了確保即使未來新增或修改了某個期間選項，已儲存的舊查詢資料不會因為順序改變而指向錯誤的期間。",
+      "approved": true,
+      "sourceSectionHash": "4cb7a745ec511202336972a8b52883e45d9d4adcc30d89a5e386e478dfd5a1c8"
+    },
+    {
+      "slug": "code-rps-savedqueryservice-12e61766",
+      "lang": "zh",
+      "headingPath": "報表 › 擁有者條件寫在查詢裡，不是撈出來再篩",
+      "text": "資料篩選限制於查詢時執行｜系統的資料篩選條件是直接在查詢的時候就設定好，這樣可以確保不會因為後續的處理步驟而導致使用者可以看到不屬於自己的資料。",
+      "approved": true,
+      "sourceSectionHash": "b0520fcbcdacbb84b4f10487d7a8d518ceaff7f5f52f4665fff8562bd694c15f"
+    },
+    {
+      "slug": "code-rps-savedqueryservice-79a298a9",
+      "lang": "zh",
+      "headingPath": "報表 › 存不下自己執行不了的查詢——否則清單上會出現一整排永遠點不開的項",
+      "text": "報表資料篩選限制｜系統只會顯示使用者有權限執行的查詢，避免在清單中出現無法點擊的項目。",
+      "approved": true,
+      "sourceSectionHash": "fa6c2ef217400af5296ab4655459dc6c8f3846189cdb9934d24d04c1cb7b3e00"
+    },
+    {
+      "slug": "code-rps-savedqueryservice-b2889da5",
+      "lang": "zh",
+      "headingPath": "報表 › §7.9-1：有日期區間的畫面一律存相對期間",
+      "text": "儲存資料時使用相對時間範圍｜系統在處理帶有日期區間的資料時，預設會以相對的時間範圍進行儲存，因為如果使用絕對日期來查詢，下個月的資料可能會過期。",
+      "approved": true,
+      "sourceSectionHash": "2b762d2e0951925c49aa6c6f6bcef10fa13256e7c0de932849416a1512bbb00e"
+    },
+    {
+      "slug": "code-rps-savedqueryservice-79a89abe",
+      "lang": "zh",
+      "headingPath": "報表 › 兩條路徑混用",
+      "text": "權限判斷依據為當下使用者｜系統的權限判定會以目前登入操作的使用者來決定，不會使用單據建立者所設定的角色權限。",
+      "approved": true,
+      "sourceSectionHash": "410b30ec038c8ed6c591ed568d98b72fbaa5caed5e0bf3843178e5598120d11b"
+    },
+    {
+      "slug": "code-rps-savedqueryservice-37cd93a4",
+      "lang": "zh",
+      "headingPath": "報表 › 這裡把它轉成「這張常用查詢現在跑不了」，",
+      "text": "無法執行會計期間的查詢｜當系統沒有建立會計期間時，不會拋出錯誤訊息。",
+      "approved": true,
+      "sourceSectionHash": "4ef3f2fa657d73c1769c5d702fc2bd76361494f9d28b4a0234cba4fc0662e6a5"
+    },
+    {
+      "slug": "code-rps-savedqueryservice-9d28e352",
+      "lang": "zh",
+      "headingPath": "報表 › 把解算出來的區間串成該畫面看得懂的期間參數",
+      "text": "會計期間依主檔查出所屬期別｜常用查詢使用會計期間時，系統會拿日期到會計期間主檔查出它所屬的期別，而不是直接把日期換算成年月，因為各廠的會計期間可以自訂起訖日，也可能尚未建立。若該日期不落在任何會計期間內，這次執行會回報失敗，而不是產出一份空白報表。",
+      "approved": true,
+      "sourceSectionHash": "d028ed261164555448f8188ae7e25423daa63bc8f381208475a873815b1237ae"
+    },
+    {
+      "slug": "code-rps-savedqueryservice-d862d5fa",
+      "lang": "zh",
+      "headingPath": "報表 › 取解算區間**迄日**的年份",
+      "text": "報表區間年份判斷規則｜當選擇的是年度類型的資料時，系統取出的計算區間到期日所屬的年份是精確的；若選擇非年度類型，則該選項會被畫面限制無法選用。",
+      "approved": true,
+      "sourceSectionHash": "4822c6abb4ccb1281ce98b1e402657714e047f1dfa912d7bcf806273b8f61110"
+    },
+    {
+      "slug": "code-rps-savedqueryservice-bb8a9740",
+      "lang": "zh",
+      "headingPath": "報表 › 不繞過廠別過濾：期間依廠別分開，報表要的是本廠的會計行事曆",
+      "text": "報表資料範圍限制｜系統在生成報表時，其計算期間是依據當前所屬的廠別來分開處理，因此顯示的會計行事曆僅限於本廠區的資料。",
+      "approved": true,
+      "sourceSectionHash": "a37077ad14e990954c949851e0df1da9a2a4c9764a4de93cc9d440c30926c351"
+    },
+    {
+      "slug": "code-rps-savedqueryservice-08110bac",
+      "lang": "zh",
+      "headingPath": "報表 › 失敗**不得靜默跳過**——工具的參數演進會讓",
+      "text": "報表參數解析失敗的處理機制｜如果工具的參數結構發生變動，導致系統無法正確解讀舊資料時，系統不會悄悄地忽略錯誤，而是會明確告知使用者。",
+      "approved": true,
+      "sourceSectionHash": "f3d8fdb82ced634c64a3065cd8249b01dd386fa79a91178805eee944a6b45f35"
+    }
+  ]
+}

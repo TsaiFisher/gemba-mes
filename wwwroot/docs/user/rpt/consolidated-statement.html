@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Consolidated Statements — RPT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>合併財報 — RPT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">RPT 目錄</span><span lang="en">RPT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">RPT 畫面</span><span lang="en">RPT screens</span></div>
+    <a href="dashboard.html" class="nav-link"><span lang="zh">管理儀表板</span><span lang="en">Management dashboard</span></a>
+    <a href="profit-loss.html" class="nav-link"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a>
+    <a href="gross-margin.html" class="nav-link"><span lang="zh">毛利分析</span><span lang="en">Gross Margin Analysis</span></a>
+    <a href="margin-analysis.html" class="nav-link"><span lang="zh">多維度銷售毛利分析</span><span lang="en">Multi-dimensional sales margin analysis</span></a>
+    <a href="contribution-margin.html" class="nav-link"><span lang="zh">產品邊際貢獻分析</span><span lang="en">Product Contribution Margin</span></a>
+    <a href="balance-sheet.html" class="nav-link"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></a>
+    <a href="consolidated-statement.html" class="nav-link active"><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></a>
+    <a href="outsource-performance.html" class="nav-link"><span lang="zh">委外加工對帳與損耗分析</span><span lang="en">Outsource Reconciliation &amp; Scrap Analysis</span></a>
+    <a href="data-audit.html" class="nav-link"><span lang="zh">資料稽核診斷</span><span lang="en">Data Audit Diagnostics</span></a>
+    <a href="field-telemetry.html" class="nav-link"><span lang="zh">現場遙測</span><span lang="en">Field Telemetry</span></a>
+    <a href="saved-queries.html" class="nav-link"><span lang="zh">常用查詢</span><span lang="en">Saved Queries</span></a>
+    <a href="report-schedule.html" class="nav-link"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>
+    <a href="report-inbox.html" class="nav-link"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a>
+    <a href="report-run-history.html" class="nav-link"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-building-fill-gear me-2 text-primary"></i><span lang="zh">合併財報</span><span lang="en">Consolidated Statements</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/ConsolidatedStatement &nbsp;|&nbsp; 跨廠彙總的合併資產負債表與合併損益表</span><span lang="en">Route: /ConsolidatedStatement &nbsp;|&nbsp; Balance sheet and P&amp;L summed across plants</span></div>
+    </div>
+
+    <p><span lang="zh">系統的會計期間、月結、資產負債表、損益表都依廠別分開，各廠的月結進度本來就可以不同。多個廠屬於同一法人時，對外要出的卻是一套帳——本畫面把選定廠別的科目餘額加總成一份合併資產負債表與合併損益表，並同時列出各廠當下的期間狀態，讓你看得出自己看的是什麼狀態的數字。</span><span lang="en">Accounting periods, month-end close, the balance sheet and the P&amp;L are all kept per plant, and plants are allowed to be at different stages of closing. When several plants belong to one legal entity, however, the outside world expects a single set of books. This screen sums the account balances of the selected plants into one consolidated balance sheet and one consolidated P&amp;L, and shows each plant's period status alongside so you can tell what state the figures are in.</span></p>
+    <img class="screen-shot" src="img/consolidated-statement.png" data-src-en="img/en/consolidated-statement.png" alt="合併財報畫面截圖" data-alt-en="Consolidated statements screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">合併財報畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Consolidated statements screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">選擇「截至期間」，勾選要納入的廠別（預設全選），然後點「查詢」。</span><span lang="en">Choose the as-of period, tick the plants to include (all are ticked by default) and click "Search".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">「損益起始期間」留白時，損益表自有史以來累計；要看單月或單季，把它設成該區間的第一個期別。</span><span lang="en">Leave "P&amp;L from period" blank to accumulate from inception; to look at a single month or quarter, set it to the first period of that range.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">右上角「匯出 Excel」把兩張報表攤成同一份檔案，第一欄標明每一列屬於哪一張表。</span><span lang="en">"Export Excel" at the top right flattens both statements into a single file whose first column says which statement each row belongs to.</span></div></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">截至期間</span><span lang="en">As of period</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">資產負債表的基準期間（YYYYMM），損益表也累計至此期別。此處列的是全公司建過的所有期別，不受目前作業廠別限制</span><span lang="en">Base period of the balance sheet (YYYYMM); the P&amp;L is accumulated through it as well. The list shows every period created anywhere in the company, not only those of the plant you are working in</span></td></tr>
+        <tr><td><span lang="zh">損益起始期間</span><span lang="en">P&amp;L from period</span></td><td><span lang="zh">留白＝自有史以來累計。只影響損益表，不影響資產負債表（資產負債表本來就是截至某期的累計餘額）</span><span lang="en">Blank means accumulate from inception. It affects only the P&amp;L; the balance sheet is a cumulative balance as of a period by nature</span></td></tr>
+        <tr><td><span lang="zh">納入廠別</span><span lang="en">Plants included</span></td><td><span lang="zh">預設全選。取消勾選可只合併部分廠別，例如先看兩個已關帳的廠</span><span lang="en">All plants are selected by default. Uncheck to consolidate a subset, for example only the two plants that are already closed</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">各廠期間狀態</span><span lang="en">Period status by plant</span></td><td><span lang="zh">每一個納入的廠別在該期別的狀態：開帳中／月結中／已關帳／已重開帳。顯示「未建立期間」表示那一廠根本沒建這個期間——與「已開帳」不是同一回事，那種狀態下連過帳閘門都不生效</span><span lang="en">The state of each included plant for that period: open, closing, closed or reopened. "Period not created" means the plant has no row for that period at all — which is not the same as being open, because in that state the posting gate does not apply either</span></td></tr>
+        <tr><td><span lang="zh">在途存貨</span><span lang="en">Inventory in transit</span></td><td><span lang="zh">跨廠調撥的兩腿（撥出廠與撥入廠）加總後，廠際往來科目還剩下的餘額＝已撥出但對方尚未入庫的存貨。跨廠調撥按成本搬、不加價，所以沒有未實現內部損益需要消除，合併時也不需要另開沖銷分錄</span><span lang="en">What is left on the inter-plant clearing account once both legs of each transfer (sending plant and receiving plant) are summed: goods shipped but not yet received. Transfers move at cost with no markup, so there is no unrealized intercompany profit to eliminate and no elimination entry is needed</span></td></tr>
+        <tr><td><span lang="zh">資產合計 / 負債合計 / 股東權益</span><span lang="en">Total assets / Total liabilities / Total equity</span></td><td><span lang="zh">納入廠別的三大段合計。本表不做期末結轉，故等式是「資產 ＝ 負債 ＋ 權益 ＋ 本期損益」</span><span lang="en">The three section totals across the included plants. No year-end close is applied here, so the identity is "assets = liabilities + equity + net profit"</span></td></tr>
+        <tr><td><span lang="zh">本期損益</span><span lang="en">Net profit</span></td><td><span lang="zh">一律自有史以來累計，與單廠資產負債表同口徑；設了損益起始期間時，右側損益表顯示的是該區間的損益，兩者不可混用</span><span lang="en">Always accumulated from inception, matching the single-plant balance sheet. When a from-period is set, the P&amp;L on the right shows that range only — the two figures are not interchangeable</span></td></tr>
+        <tr><td><span lang="zh">科目代碼 / 科目名稱 / 餘額</span><span lang="en">Account code / Account name / Balance</span></td><td><span lang="zh">各分段底下的明細科目與其合併後餘額（本位幣）</span><span lang="en">The detail accounts under each section and their consolidated balances (local currency)</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="things-to-watch"><i class="bi bi-exclamation-triangle me-2 text-primary"></i><span lang="zh">注意事項</span><span lang="en">Things to watch</span></h2>
+    <ul>
+      <li><span lang="zh">本畫面的可見範圍比單廠財報大（它看得到所有廠的金額），因此權限是分開授的：有資產負債表的權限不代表看得到合併財報。</span><span lang="en">This screen sees more than the single-plant statements do, since it shows amounts from every plant. Its permission is therefore granted separately: access to the balance sheet does not imply access to the consolidated statements.</span></li>
+      <li><span lang="zh">各廠關帳進度不一致時，畫面上方會出現提醒——尚未關帳的廠別之後還可能補入傳票，合併數字會跟著變動。要出定版的合併報表，先確認所有納入廠別都已關帳。</span><span lang="en">A warning appears when the included plants are at different close states: the open ones may still post further entries, so the consolidated figures can still move. Before issuing a final consolidated report, confirm every included plant is closed.</span></li>
+      <li><span lang="zh">在途存貨不為零是正常的（貨還在路上），但金額異常大或長期不歸零，通常表示有調撥單只做了撥出、對方一直沒收貨。</span><span lang="en">A non-zero in-transit figure is normal — goods really are on the way — but an unusually large one, or one that never clears, usually means a transfer was shipped and never received.</span></li>
+    </ul>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="balance-sheet.html"><span lang="zh">資產負債表</span><span lang="en">Balance Sheet</span></a>、<a href="profit-loss.html"><span lang="zh">損益表</span><span lang="en">Profit &amp; Loss</span></a>、<a href="../act/accounting-period.html"><span lang="zh">會計期間</span><span lang="en">Accounting Periods</span></a>、<a href="../inv/cross-plant-transfer.html"><span lang="zh">跨廠調撥</span><span lang="en">Cross-plant Transfer</span></a></p>
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Date" xml:space="preserve"><value>日期</value></data>
+  <data name="ShiftGroup" xml:space="preserve"><value>班制代號</value></data>
+  <data name="SelectOptional" xml:space="preserve"><value>—— 請選擇（選填）</value></data>
+  <data name="WorkCenterOpt" xml:space="preserve"><value>工作中心（選填）</value></data>
+  <data name="AllPlantLayer" xml:space="preserve"><value>—— 全廠層</value></data>
+  <data name="MachineCodeOpt" xml:space="preserve"><value>機台代碼（選填）</value></data>
+  <data name="MachinePh" xml:space="preserve"><value>空值=工作中心層</value></data>
+  <data name="WorkStart" xml:space="preserve"><value>開班時間</value></data>
+  <data name="WorkStartHint" xml:space="preserve"><value>空值＝全天 24h 連續</value></data>
+  <data name="WorkEnd" xml:space="preserve"><value>收班時間</value></data>
+  <data name="WorkEndHint" xml:space="preserve"><value>早於開班時間表示跨午夜</value></data>
+  <data name="RegHours" xml:space="preserve"><value>正班工時（小時）</value></data>
+  <data name="OtHours" xml:space="preserve"><value>加班工時（小時）</value></data>
+  <data name="Note" xml:space="preserve"><value>備註</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+</root>

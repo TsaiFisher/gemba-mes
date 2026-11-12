@@ -1,0 +1,54 @@
+{
+  "sourcePath": "Modules/INV/Reporting/SlowMovingInventoryTool.cs",
+  "sourceHash": "728a706f7133de9420efd5c1ee9f2fd355d96996f32e63c999ccc04d3cccb53f",
+  "entries": [
+    {
+      "slug": "code-inv-slowmovinginventorytool-0c7a6f57",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 庫存掃描安全上限：呆滯天數須全載廠別在手庫存後於記憶體計算，",
+      "text": "庫存掃描安全上限的計算規則｜系統會根據所有廠別在手庫存後，在記憶體中計算呆滯天數來判斷是否超過安全上限。若超出此上限，系統將拒絕操作，並要求使用者使用品號縮小查詢範圍，以避免因一次性查詢過多資料造成系統資源耗盡。",
+      "approved": true,
+      "sourceSectionHash": "4b68471984b7306fc6421c510d1f262aa4c02b7e9541270fc06f2dda3eabf423"
+    },
+    {
+      "slug": "code-inv-slowmovinginventorytool-58ca6910",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 這不影響畫面與排程：有權限的人照樣開得了報表",
+      "text": "報表是否包含金額資訊的規則說明｜系統預設不會在自然語言目錄中顯示含有金額的資料，但有權限的使用者仍可以正常開出相關報表。",
+      "approved": false,
+      "sourceSectionHash": "6b3d3e0c4a48dd1bc050cc24179f592850fd485da52f1ead307bbc68dbe052e3"
+    },
+    {
+      "slug": "code-inv-slowmovinginventorytool-0ee223be",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 零筆的報表，與「這段期間確實沒有呆滯庫存」完全無從分辨——而兩者",
+      "text": "報表執行結果判斷規則｜當掃描的數量超過限制時，系統會拋出例外訊息，此訊息會在報告運行紀錄中顯示給使用者，說明原因與應對方法。",
+      "approved": true,
+      "sourceSectionHash": "7563962ec512bdd3f1c16499b36ce8398eaec191b4f9d65a5e933a0caa888457"
+    },
+    {
+      "slug": "code-inv-slowmovinginventorytool-5c9d400f",
+      "lang": "zh",
+      "headingPath": "庫存管理 › ️ 查無異動紀錄者以哨兵值 9999 計",
+      "text": "異動紀錄者預設值與顯示方式｜當沒有異動記錄時，系統會使用一個特殊的數值來代表，這個數值在匯出資料時會顯示為「N/A」。",
+      "approved": true,
+      "sourceSectionHash": "0fb46662e6bb5e7c71dedcaa67734cb58f3b7b4550162321bb4441d16b4566f2"
+    },
+    {
+      "slug": "code-inv-slowmovinginventorytool-f09f87ab",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 逐欄照抄該報表畫面現行的匯出輸出**，不增不刪不改順序：",
+      "text": "報表資料匯出欄位固定不變｜系統匯出的欄位順序和內容會完全依照目前報表畫面的顯示順序，不會進行任何增減或調整。",
+      "approved": false,
+      "sourceSectionHash": "a3803507fede4043d09bf789e3358af5607f7a393b4d736b78ebdec5c4b5215b"
+    },
+    {
+      "slug": "code-inv-slowmovinginventorytool-a082a742",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 兩個「沒有值」的表示法照抄畫面現行輸出：無異動紀錄印破折號、",
+      "text": "顯示沒有資料時的呈現方式｜系統在無法取得特定日期資訊時，會以「無」字樣取代原本可能出現的空值或特殊代碼。",
+      "approved": true,
+      "sourceSectionHash": "c6a9b9b3c87eb98bcf882198be3f0109129997a60be3642253aaac7148e0f8d6"
+    }
+  ]
+}

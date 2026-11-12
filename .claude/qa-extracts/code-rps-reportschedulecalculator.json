@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/RPS/Services/ReportScheduleCalculator.cs",
+  "sourceHash": "ec08fdcc2c19d706ec43f90b024867c1f91c57fc7f17eb1ea009aba46e59eaad",
+  "entries": [
+    {
+      "slug": "code-rps-reportschedulecalculator-699634fd",
+      "lang": "zh",
+      "headingPath": "報表 › 兩個必須寫進實作的邊界條件：",
+      "text": "報表排程的日期計算規則｜當計算月份的最後一天時，如果該月沒有特定日期的號數（例如二月沒有三十一日），系統會取用該月的最後一天來生成報表，而不是跳過整個月份。此外，所有時間點都必須以協調世界時（UTC）進行記錄和計算，只有在需要顯示給使用者時才會轉換成當地時區。",
+      "approved": false,
+      "sourceSectionHash": "818ade23a264bf674f8511885035142d6c29f7b9c1fc93839df855865d11a519"
+    },
+    {
+      "slug": "code-rps-reportschedulecalculator-fa6ba2b9",
+      "lang": "zh",
+      "headingPath": "報表 › 算出「嚴格晚於 」的下一次執行時刻",
+      "text": "報表下次執行時間的計算規則｜若要計算下一次執行的時刻，必須使用「嚴格大於」的條件判斷，否則在剛完成一次執行後，如果使用「大於等於」，系統會重複計算出相同的下一次執行時刻，導致同一份報表會在極短的時間內被多次執行。",
+      "approved": true,
+      "sourceSectionHash": "7ed247e2061abd552bced3cc55dd6c896cb1bd8dfd9ea854d8ec52a95ec19267"
+    },
+    {
+      "slug": "code-rps-reportschedulecalculator-8a607f25",
+      "lang": "zh",
+      "headingPath": "報表 › 不存在的時刻往後推一小時，重複的時刻取較早的那一次",
+      "text": "時區轉換規則說明｜當系統處理不同時區的日期時間時，如果遇到時鐘往前跳（不存在的時刻）的情況，會將該時刻往後推一小時；若遇到重複的時刻，則採用較早的那一次記錄。",
+      "approved": true,
+      "sourceSectionHash": "cecb8019accd04eee4fd2b0d66d82b0133cb72afc0eccdef0c031f37453a2b41"
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "sourcePath": "Api/Mobile/MobileMfgController.cs",
+  "sourceHash": "abe5e71c563a7d6e23915768255ca693de10485743014d2967edcd09d7e3ee57",
+  "entries": [
+    {
+      "slug": "code-mobile-mobilemfgcontroller-74b197a0",
+      "lang": "zh",
+      "headingPath": "手機 › 上工／備料的作業員一律是登入者本人",
+      "text": "作業員只能使用自己的身份登入系統｜上工或備料的紀錄，必須以目前登入操作人員的身份進行，無法使用其他人的代號來記錄。",
+      "approved": true,
+      "sourceSectionHash": "b924a60fc9c33f52161777a0be94581b0ba38d98405bd1737b499280d02f0506"
+    },
+    {
+      "slug": "code-mobile-mobilemfgcontroller-860a0939",
+      "lang": "zh",
+      "headingPath": "手機 › 上工時現場改填的機台，必須是本廠",
+      "text": "機台和模具的限制說明｜上工時現場改填的機台，必須是本廠且屬於該派工工序所屬工作中心的機台；使用的模具也只能是排程指定的那一副。",
+      "approved": true,
+      "sourceSectionHash": "c74272f465363a3fa80801964f2fe7f88a3728c6cfa5a7068436eeafc620f613"
+    },
+    {
+      "slug": "code-mobile-mobilemfgcontroller-e8b1c79e",
+      "lang": "zh",
+      "headingPath": "手機 › 模組層閘門：角色在此手機模組**任一**作業被授權即放行",
+      "text": "模組權限判斷規則說明｜只要使用者被授權使用此手機模組的任何一個作業功能，系統就會讓該模組在首頁顯示出來。",
+      "approved": true,
+      "sourceSectionHash": "0ffc55d5f16c3e2f17e18313f5a60c5aa72e3679911706a9e49a37b0f46b3aba"
+    },
+    {
+      "slug": "code-mobile-mobilemfgcontroller-e3cc6cd6",
+      "lang": "zh",
+      "headingPath": "手機 › 現場在待辦清單上也看不到這張派工",
+      "text": "簡化模式下待辦清單看得到的派工｜簡化模式免排程，派工會停在「待處理」狀態，而現場待辦清單一樣列得出來——只要開工放行了就看得到。待辦清單認的狀態與開工放行是同一份判定來源，不會出現「放行了卻找不到」。",
+      "approved": true,
+      "sourceSectionHash": "7a18efb4dbc67f2206df0c0d7fd92d8d961bd2dd1ccc3d2ff03310efe8847a0a"
+    },
+    {
+      "slug": "code-mobile-mobilemfgcontroller-c1508dc5",
+      "lang": "zh",
+      "headingPath": "手機 › 開始備料",
+      "text": "模具編號使用排程指定的規則｜備料時使用的模具編號會以排程規劃時所設定的為準，請求中傳入的模具編號欄位已不再影響實際操作。",
+      "approved": true,
+      "sourceSectionHash": "7a5196d89c7c9551d5571ee5fb88d0f5b04e169eaf688e34d507460053f5e93e"
+    },
+    {
+      "slug": "code-mobile-mobilemfgcontroller-1aaee335",
+      "lang": "zh",
+      "headingPath": "手機 › 人工逐人計，製造費用依時間窗只算一次不隨人數疊加",
+      "text": "成本計算規則說明｜製造費用會根據時間區間計算一次，不會因為計入的人數而重複累加。",
+      "approved": true,
+      "sourceSectionHash": "164640a12d900226e208021fa06f4e0468c35d5839b4ce351c7cf9b636025303"
+    },
+    {
+      "slug": "code-mobile-mobilemfgcontroller-7c48c35f",
+      "lang": "zh",
+      "headingPath": "手機 › 先依單位捨入再做所有數量判定：整數單位下 0.4 是 0",
+      "text": "數量判斷依單位的捨入規則｜在計算所有數量時，如果單位是整數，那麼小於 0.4 的數值會被視為 0，並且系統會阻止任何「至少一個大於 0」的條件。",
+      "approved": true,
+      "sourceSectionHash": "2e35923ba3c2fba8dc4370ef57677b092113ba61f80b1569717f38b30908e9d0"
+    },
+    {
+      "slug": "code-mobile-mobilemfgcontroller-1d4dda36",
+      "lang": "zh",
+      "headingPath": "手機 › 背景，桌機/手機共用",
+      "text": "觸發預估時間重算與通知｜只有在資料儲存成功時，系統才會重新計算預估到達時間，並會透過推播訊息進行通知。",
+      "approved": true,
+      "sourceSectionHash": "bb7caa44cec6d895ce6c78b663b72df3fd4ad6fe20540ec8e521905f442da8cf"
+    },
+    {
+      "slug": "code-mobile-mobilemfgcontroller-0c84f6e0",
+      "lang": "zh",
+      "headingPath": "手機 › 報工數量依產品庫存單位的小數位數四捨五入，",
+      "text": "報工數量依庫存單位小數點四捨五入｜系統會根據產品的庫存單位的小數位數來決定報工數量是否需要四捨五入。如果輸入框沒有設定步進值，則會以原始輸入的值進行帳務處理。",
+      "approved": true,
+      "sourceSectionHash": "30236f49c30de6f45c8d918f0037a352a6213402f97f051478ba73fa25e7ac1b"
+    },
+    {
+      "slug": "code-mobile-mobilemfgcontroller-f2d6739b",
+      "lang": "zh",
+      "headingPath": "手機 › 建立報工紀錄＋累計數量／報廢量／模具打次",
+      "text": "報工紀錄的提交方式與流程說明｜報工和完工的業務規則是共用的，這樣可以避免在不同地方重複編寫相同的規則。當掃描到箱號時，系統會自動進行裝箱處理；如果無法裝箱，即使報工資料成功接收，也會回傳原因讓使用者在畫面上看到提示。",
+      "approved": true,
+      "sourceSectionHash": "8a76592a76619c97d9737d8f3071935624efcb4bc355dc484ef525c485d4523e"
+    },
+    {
+      "slug": "code-mobile-mobilemfgcontroller-487cd3ef",
+      "lang": "zh",
+      "headingPath": "手機 › 依類別取代碼維護選項",
+      "text": "類別取代碼的維護選項｜此功能是用來維護報工等下拉選單所使用的類別代碼。",
+      "approved": true,
+      "sourceSectionHash": "bd5b924dab939780b2f6ba4dc23bd251eb52597bf91db69e423a5acaf8497d25"
+    },
+    {
+      "slug": "code-mobile-mobilemfgcontroller-9c8a3a04",
+      "lang": "zh",
+      "headingPath": "手機 › 儲存並回傳結果",
+      "text": "儲存與回傳結果的衝突處理機制｜當系統嘗試儲存資料時，如果發現該筆資料（例如工單或作業訂單）已經被其他人修改過，系統會回傳一個特定的錯誤代碼，讓離線設備知道需要重新載入後再試一次。",
+      "approved": true,
+      "sourceSectionHash": "7904ea457aae8df355d2b103909d491dc5eecf5cda3a2d0a9ae0125bf5dd6974"
+    }
+  ]
+}

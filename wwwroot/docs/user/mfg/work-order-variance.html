@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Work Order Cost Variance — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>工單成本差異 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link active"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-graph-up-arrow me-2 text-primary"></i><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/WorkOrderVariance &nbsp;|&nbsp; 工單標準 vs 實際成本差異分析（料差/效率差/費率差）</span><span lang="en">Route: /WorkOrderVariance &nbsp;|&nbsp; Standard vs actual cost variance analysis for work orders (material, efficiency and rate variance)</span></div>
+    </div>
+
+    <p><span lang="zh">彙總工單實際成本（材料/人工/製費）與標準成本的差異，拆解為用料差異、效率差異與費率差異。月末經實際費率重估後，差異會以調整分錄回刷（Preliminary → Final）。</span><span lang="en">Compares the actual cost of a work order (material, labour, overhead) with standard and breaks the difference into usage, efficiency and rate variance. After the actual rates are re-estimated at month end, the variance is restated through an adjusting journal entry (preliminary → final).</span></p>
+    <img class="screen-shot" src="img/work-order-variance.png" data-src-en="img/en/work-order-variance.png" alt="工單成本差異畫面截圖" data-alt-en="Work order cost variance screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">工單成本差異畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Work order cost variance screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="where-actual-cost-comes-from"><i class="bi bi-cash-stack me-2 text-primary"></i><span lang="zh">實際成本從哪裡來</span><span lang="en">Where actual cost comes from</span></h2>
+    <p><span lang="zh">本畫面是查詢工單實際成本的主要入口。實際成本不是隨時都有——它在工單生命週期的兩個時點才會產生與定案：</span><span lang="en">This screen is the main place to look up a work order's actual cost. Actual cost is not available at all times: it is created and then finalised at two specific points in the work order's life cycle.</span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">時點</span><span lang="en">Point in time</span></th><th class="u-width-12pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">發生什麼事</span><span lang="en">What happens</span></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span lang="zh">工單結案</span><span lang="en">Work order closed</span></td>
+          <td><span class="badge bg-secondary"><span lang="zh">初步</span><span lang="en">Preliminary</span></span></td>
+          <td><span lang="zh">完工入庫並將工單結案時，系統自動結算一筆實際成本，把已發料、已報工的材料／人工／製費寫入，並與標準成本相減得出差異。此時人工與製費用的還是<strong>預估費率</strong>。</span><span lang="en">When production is put away and the work order is closed, the system settles one actual-cost record: issued material, reported labour and overhead are written in and compared with standard to derive the variance. At this stage labour and overhead still use <strong>estimated rates</strong>.</span></td>
+        </tr>
+        <tr>
+          <td><span lang="zh">月結費率重估</span><span lang="en">Month-end rate re-estimate</span></td>
+          <td><span class="badge bg-success"><span lang="zh">最終</span><span lang="en">Final</span></span></td>
+          <td><span lang="zh">月結作業執行「實際費率重估」後，以該期間的部門實際費用重算人工與製費，差額以調整分錄回刷，狀態轉為「最終」。</span><span lang="en">Once the month-end run performs the actual rate re-estimate, labour and overhead are recalculated from that period's departmental actual costs, the difference is restated through an adjusting journal entry, and the status becomes "Final".</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <span lang="zh"><strong>兩件事會讓你「查不到實際成本」，但都不是系統故障：</strong><br />
+      ① <strong>工單尚未結案</strong>——生產中的工單在本畫面完全沒有資料列。在製中的成本請改看<a href="wip-report.html">在製品報表</a>。<br />
+      ② <strong>該期間尚未做月結重估</strong>——看得到資料，但狀態是「初步」，代表人工與製費之後還會變動。要把數字當定案用（對外報價、績效考核、帳務分析），請先確認狀態是「最終」。</span>
+      <span lang="en"><strong>Two situations make actual cost look "missing", and neither is a fault:</strong><br />
+      (1) <strong>The work order is not closed yet</strong> — work orders still in production have no row at all on this screen. For cost still in progress, use the <a href="wip-report.html">WIP report</a> instead.<br />
+      (2) <strong>The month end has not re-estimated that period yet</strong> — the rows are there but the status reads "Preliminary", meaning labour and overhead will still change. Before treating the figures as settled (quoting, performance review, accounting analysis), check that the status is "Final".</span>
+    </div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">可依工單、品號、期間篩選；點單筆展開成本要素明細。</span><span lang="en">Can be filtered by work order, item and period; click a row to expand the cost element detail.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">工單號 / 品號</span><span lang="en">WO No. / Product</span></td><td><span lang="zh">關鍵字模糊比對</span><span lang="en">Keyword (partial match)</span></td></tr>
+        <tr><td><span lang="zh">結算日起 / 迄</span><span lang="en">Settlement date from / to</span></td><td><span lang="zh">依工單成本結算日區間篩選</span><span lang="en">Filters by the work order cost settlement date range</span></td></tr>
+        <tr><td><span lang="zh">工單類型</span><span lang="en">WO Type</span></td><td><span lang="zh">一般／重工／委外，留空＝全部；匯出也套用此條件</span><span lang="en">Normal / Rework / Outsource; leave blank for all. Exports apply the same filter</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">工單號 / 品號</span><span lang="en">WO No. / Product</span></td><td><span lang="zh">已結算的工單與其生產料件</span><span lang="en">Settled work orders and the items they produce</span></td></tr>
+        <tr><td><span lang="zh">工單類型</span><span lang="en">WO Type</span></td><td><span lang="zh">標在工單號下方：重工（黃色）／委外；一般工單不標</span><span lang="en">Shown under the work order number: Rework (yellow) / Outsource; normal work orders carry no tag</span></td></tr>
+        <tr><td><span lang="zh">計畫量</span><span lang="en">Planned qty</span></td><td><span lang="zh">工單的計畫產出數量</span><span lang="en">Planned output quantity of the work order</span></td></tr>
+        <tr><td><span lang="zh">結算日</span><span lang="en">Cost Date</span></td><td><span lang="zh">工單實際成本結算的日期</span><span lang="en">Date the work order's actual cost was settled</span></td></tr>
+        <tr><td><span lang="zh">材料 / 人工 / 製費</span><span lang="en">Material / Labour / Overhead</span></td><td><span lang="zh">三大成本要素各自的「標準成本、實際成本、差異」三欄；差異＝實際 － 標準，正數為超耗</span><span lang="en">Standard cost, actual cost and variance for each of the three cost elements; variance = actual − standard, a positive figure meaning over-consumption</span></td></tr>
+        <tr><td><span lang="zh">合計差異</span><span lang="en">Total Variance</span></td><td><span lang="zh">三要素差異的加總，即該工單的整體成本超耗或節省</span><span lang="en">Sum of the three element variances, i.e. the overall cost overrun or saving on the work order</span></td></tr>
+        <tr><td><span lang="zh">重工損失</span><span lang="en">Rework Loss</span></td><td><span lang="zh">只有重工工單有值：實際總成本超出「發進來的不良品原值」、沒有回到存貨而轉入 5250 重工損失的金額（見下方「重工成本」）。之後的月結費率重估差額照一般工單進製造成本差異，不改這一欄</span><span lang="en">Rework work orders only: the part of the actual total cost above the original value of the defective items issued in, which did not go back to inventory but was charged to 5250 Rework Loss (see "Rework cost" below). Later month-end rate re-estimate differences go to manufacturing cost variance as for any work order and do not change this column</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">結算狀態。<strong>初步</strong>＝工單結案時以預估費率結算，人工／製費之後會變；<strong>最終</strong>＝該期間已完成實際費率重估，數字已定案。判讀金額前務必先看這一欄</span><span lang="en">Settlement status. <strong>Preliminary</strong> = settled at work order close using estimated rates, so labour and overhead will still change; <strong>Final</strong> = the period's actual rate re-estimate is done and the figures are settled. Always read this column before interpreting the amounts</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="rework-cost"><i class="bi bi-arrow-repeat me-2 text-primary"></i><span lang="zh">重工成本</span><span lang="en">Rework cost</span></h2>
+    <p><span lang="zh">重工工單的成本屬於品質異常成本，與正常生產分開統計。完工入庫時：</span><span lang="en">The cost of a rework work order is a quality failure cost and is reported separately from normal production. At completion receipt:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">良品以<strong>發進重工工單的不良品原值</strong>（發料當下的帳面成本）回存貨，不超過實際總成本。生產中判 NG、從沒入過庫的不良品不在帳上，原值為 0——它的料錢早已攤進原工單良品的單位成本。</span><span lang="en">Good units go back to inventory at the <strong>original value of the defective items issued into the rework order</strong> (their book cost when issued), capped at the actual total cost. Defective items rejected during production that were never received into stock are not on the books, so their original value is 0: their material cost was already spread over the original order's good units.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">其餘（重工補料、人工、製費、委外）借「5250 重工損失」，不進存貨。</span><span lang="en">Everything else (extra material, labour, overhead, outsourcing) is debited to "5250 Rework Loss" and does not go into inventory.</span></div></div>
+    <p><span lang="zh">查詢結果有重工工單時，表格下方會列出重工工單張數、實際成本合計與其中的重工損失。</span><span lang="en">When the results include rework work orders, a line below the table shows how many there are, their total actual cost and how much of it is rework loss.</span></p>
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="production-completion.html"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>、<a href="wip-report.html"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>、<a href="../act/month-end.html"><span lang="zh">月結作業</span><span lang="en">Month-End Close</span></a>、<a href="../act/department-actual-cost.html"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></a></p>
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">差異異常常見原因：BOM 標準用量失真、報工工時漏報、工作中心費率未更新。</span><span lang="en">Common causes of an unusual variance: an inaccurate standard BOM usage, unreported production hours, or a work center rate that has not been updated.</span>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

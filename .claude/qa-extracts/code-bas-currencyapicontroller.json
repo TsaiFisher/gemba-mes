@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/BAS/Controllers/CurrencyApiController.cs",
+  "sourceHash": "fcf7c6f0a5e6e05e7e100f61def4fe0e107965dee2617de7d9b2b98db0d4a4e0",
+  "entries": [
+    {
+      "slug": "code-bas-currencyapicontroller-9e7c6c83",
+      "lang": "zh",
+      "headingPath": "基本資料 › 匯率查詢規則： &lt",
+      "text": "匯率取用規則說明｜系統會根據單據的日期，從所有可用的匯率資料中，取得不超過該日期的最新一筆匯率來使用。",
+      "approved": true,
+      "sourceSectionHash": "51649574fa62b1f926dc58f3e9caa6aa963441f5e8e06cf6509599fc6dd13694"
+    },
+    {
+      "slug": "code-bas-currencyapicontroller-6e9d0adf",
+      "lang": "zh",
+      "headingPath": "基本資料 › 且前端只是欄位留白、不報錯",
+      "text": "匯率查詢的限制與預設行為｜當只有維護幣別資料的權限角色開立單據時，系統不會顯示匯率資訊，且介面上的相關欄位會留白但不會報錯。",
+      "approved": true,
+      "sourceSectionHash": "e9498111b30e03dc0e5c1962bf8326e09f48a284f11be4e3d71f49aeff8460d8"
+    },
+    {
+      "slug": "code-bas-currencyapicontroller-3a717ba1",
+      "lang": "zh",
+      "headingPath": "基本資料 › 找不到時回 200 + =，由前端決定處理方式",
+      "text": "匯率查詢的規則與處理方式｜系統會取得指定幣別在文件日期當日或之前最近一筆的匯率快照，此時可選擇採購預設、銷售預設或成本評價的匯率。若找不到對應的匯率資料，則回傳空值，由前端決定如何提示使用者或是否保留該數值。",
+      "approved": true,
+      "sourceSectionHash": "bae0025902bd5852af858a52158e56ed13567cd711e93b5e971c95b4b0cc7dee"
+    },
+    {
+      "slug": "code-bas-currencyapicontroller-42f1a043",
+      "lang": "zh",
+      "headingPath": "基本資料 › 選填的列舉參數寫成可空：非可空實值型別會被補上",
+      "text": "欄位是否填寫的規則說明｜如果系統參數設定為可選，但實際傳入的值類型要求必須有數值，則會使用 400 作為該參數的值，而不是預設值。",
+      "approved": false,
+      "sourceSectionHash": "34d16377053ad8fa8c4a7131a5ad88396ae4ff00cb6a1c4daae037c53d429af6"
+    }
+  ]
+}

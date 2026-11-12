@@ -1,0 +1,222 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/DispatchController.cs",
+  "sourceHash": "1c878845d022e8f98013f13e0ac6ac73b32ab9e1610a2768450a50849999ab9b",
+  "entries": [
+    {
+      "slug": "code-mfg-dispatchcontroller-f10867df",
+      "lang": "zh",
+      "headingPath": "生產製造 › 派工前自動重排：現場看到的順序與機台是最新的",
+      "text": "規則說明｜系統會根據當前的廠別資訊，確保所顯示的工單順序和設備狀態是最新資料。",
+      "approved": false,
+      "sourceSectionHash": "9823b921ebdc7116b7a1406f76581eedcd704ccf4f1d0f22c471a028fe04edcc"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-50bbfb84",
+      "lang": "zh",
+      "headingPath": "生產製造 › 已取消不再是現場待辦",
+      "text": "流程狀態判斷與顯示規則｜系統會將工單作廢或暫停後未產出即結案的紀錄，從現場待辦清單中移除；若要查看這些已取消的紀錄，必須明確選擇「已取消」的篩選條件。",
+      "approved": true,
+      "sourceSectionHash": "f20eb3aab76a0a0bec4a220beba9099117d3d151cc35d775ca5ffe738d62fed6"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-a37d9e30",
+      "lang": "zh",
+      "headingPath": "生產製造 › 備料＝把本派工要用的料開備料單移入備料倉不再回報模具",
+      "text": "備料作業的工具代碼使用規則｜此備料單所使用的工具代碼會沿用排程時指定的代碼，且此操作不會影響到打次與衝突偵測。",
+      "approved": false,
+      "sourceSectionHash": "bc869233f1a82a4c88c6cf3f58ba2aafd795bedfc1edfd0057ce62318202ab03"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-46f79123",
+      "lang": "zh",
+      "headingPath": "生產製造 › 由本派工一鍵建立草稿備料單",
+      "text": "一鍵建立草稿備料單的流程說明｜此功能可以根據已產生的派工，一次性地建立一份草稿備料單，這份備料單會自動帶入尚未發放的用料以及預設的設備用料倉資訊。後續需要使用者在備料單畫面完成鎖料和揀料移入備料倉的動作。",
+      "approved": true,
+      "sourceSectionHash": "b05a87170995b216adb121b30dfe6402fb967e77e0a0df762916c36e802fe67c"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-4b840469",
+      "lang": "zh",
+      "headingPath": "生產製造 › 生產線允許多人同時備料",
+      "text": "備料時的工具代碼使用規則｜備料時使用的模具資訊將會沿用原先在生產排程中指定的工具代碼，不再需要現場人員回報。",
+      "approved": true,
+      "sourceSectionHash": "65eb122e472e8bd8f16cc8cca45adadfaaf51a9b1c3e8964f4e5d375aec1136f"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-92d8778c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 生產線備料期間，其他人也可以加入",
+      "text": "限制備料狀態的變更範圍｜只有當生產排程已設定為「預定」或「準備開始」時，其他人才能加入此備料流程；一般機台在正常情況下只能從這些狀態開始進行一次備料。",
+      "approved": true,
+      "sourceSectionHash": "7bc07dd653ff5f84ad47e4ac889616e7e1212aeec1625ca2140feaf44270ebc8"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-941f205d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 備料完成：關閉這張派工單「所有」 的",
+      "text": "關閉派工單的備料成本計算規則｜當關閉這張派工單時，系統會根據從最早開始備料到目前的時間區間，一次性累計實際產能費用。此計算方式適用於所有機台或生產線，無論是單人操作還是多人操作，其計算邏輯都是一致的。",
+      "approved": true,
+      "sourceSectionHash": "71bb0d1c45750920394a467f4bccf8be2e4f396164b733f1df0475f64a27dc75"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-e86a7b24",
+      "lang": "zh",
+      "headingPath": "生產製造 › 此狀態僅供待辦清單與 UI 顯示",
+      "text": "工序首件檢查的流程說明｜當品管要求進行工序的首件檢查，且該檢查尚未通過時，系統會將狀態設為待辦清單和使用者介面顯示的「等待品管量測」狀態。實際阻止後續操作的判定是基於開始工作階段的事實判斷。",
+      "approved": true,
+      "sourceSectionHash": "1aacf523979d3dae76c0fb4648909250a939566bb8872b132f1eb21231ac7d60"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-acdbbb07",
+      "lang": "zh",
+      "headingPath": "生產製造 › 生產線可多人同時上工：面板要判斷「我自己」有沒有在線上，",
+      "text": "生產線多人上工的狀態判定｜工作中心設定為生產線時可多人同時上工。面板判斷「是否正在生產作業中」，看的是目前登入者自己有沒有在線上，而不是看這張派工單有沒有任何人在線上。",
+      "approved": true,
+      "sourceSectionHash": "211dae93ee07bf6e5b0d762ed1ab7332ff62f6b8e02623d0f3cc59f0df4944bb"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-32647c3c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 僅在首次開工時檢查，續工不重複阻擋",
+      "text": "首件檢查只在第一次開工時執行｜系統會根據是否需要進行「首次品管檢驗」來判斷是否需要進行檢查，此檢查僅在單據的第一次開工時才會觸發，後續的持續作業過程不會重複進行此項阻擋。",
+      "approved": true,
+      "sourceSectionHash": "46877936d902cefc118461aaa8c2320b87b7a097b409985f47b697e483ba5539"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-ea3b7fbc",
+      "lang": "zh",
+      "headingPath": "生產製造 › 僅在首次開工時檢查，避免續工被重複阻擋",
+      "text": "物料備齊的開工限制規則｜系統會根據設定來決定是否需要檢查物料是否備齊才能開始生產作業；如果設定為不檢查則不會有任何限制，若設定為阻擋則缺少物料時無法開工，而預設情況下雖然缺少物料仍可開工但系統會發出警示。此檢查僅在首次開工時執行，以避免重複檢查導致後續作業受阻。",
+      "approved": true,
+      "sourceSectionHash": "db4385e947b73fba6e9eb861b6e5470ecd796a0ffa455d769ee2f159b87f5a3b"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-4cec4d36",
+      "lang": "zh",
+      "headingPath": "生產製造 › 改選的機台會回寫到派工，進而影響排程佔用，",
+      "text": "開工改選機台的限制｜開工時改選的機台會回寫到派工並影響排程佔用，因此只能選本廠且未廢棄的機台；與換機台相同，可以跨工作中心選擇。",
+      "approved": true,
+      "sourceSectionHash": "b53d93820d440520d0618f03bb28813e46acb4de6d2729f5a9b117e905ae20c4"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-7d83c718",
+      "lang": "zh",
+      "headingPath": "生產製造 › 機台狀態閘口：故障、保養中等不可排程狀態的機台",
+      "text": "機台狀態決定是否可安排生產｜如果機台處於故障、保養中或不可排程的狀態，系統會阻止開工作業或發出警示，因為這些狀態的機台不能被排程使用。此外，當機台中途報修後，系統也會檢查以確保不會有人再次將其列為可上線狀態。",
+      "approved": true,
+      "sourceSectionHash": "460e8f863466886b1cc3350ba87ebc3b8a899a39a53badd1eeaa3d224ca3a98b"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-a8036d75",
+      "lang": "zh",
+      "headingPath": "生產製造 › 生產線本來就是多人共同作業的連續產線，允許同時多筆",
+      "text": "生產線允許多人同時作業｜生產線是多人共同作業的連續流程，因此同一條生產線允許多位作業員同時上工。",
+      "approved": true,
+      "sourceSectionHash": "1464751542db61558eceac84455599e7d73bb0a5ccaba228d624bcbdba474b6a"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-7f6bb200",
+      "lang": "zh",
+      "headingPath": "生產製造 › 完工：結束「本次上工」——可一併回報最後一批數量",
+      "text": "本次上工與結束流程區分不同功能｜現場每轉移一批產品需要進行一次報工動作，但只有在執行「完工」操作時才會關閉當次作業的紀錄並結算相關成本。派工是否完成仍會根據累計數量是否達到目標自動判斷。",
+      "approved": true,
+      "sourceSectionHash": "f982415ba445cb21e31cb7a15d6fcb5dee00a63350222707ea8aff3ad58466e0"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-0c9d18c7",
+      "lang": "zh",
+      "headingPath": "生產製造 › §25.4 工序順序守門：免排程後可能第 3 工序先報工，",
+      "text": "工序順序需依序進行才能報工｜系統會檢查工序的執行順序，以確保後續工序的報工數量不會超過前一個工序的實際產出量。",
+      "approved": true,
+      "sourceSectionHash": "977b849fa6a6c9212bd6eaf75a223c079631b01fa356e542b65f561b58f67488"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-c1e97e19",
+      "lang": "zh",
+      "headingPath": "生產製造 › 掃了箱號：裝箱，容器種類跟著箱子走",
+      "text": "掃描箱號後容器種類會自動帶入｜只要成功掃描了箱子編號，系統就會自動將該箱子所屬的容器種類記錄下來。如果無法裝箱，則不會產生任何報表紀錄。",
+      "approved": true,
+      "sourceSectionHash": "c3429fcab6f2edfb052f1d8e66ddc2ab7e85454dc28f4df137ec72f0edf0947f"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-279f1139",
+      "lang": "zh",
+      "headingPath": "生產製造 › 桌機是下拉選單，不在容器維護裡的代碼只可能是竄改或畫面開著時被停",
+      "text": "設備代碼判斷規則｜如果沒有提供設備代碼，系統會將其視為空值。",
+      "approved": true,
+      "sourceSectionHash": "c7713b2ef7f3acef7e73f7a1ac7c2c4556220665ea2317c4fabf3145cf18635c"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-9aae57fb",
+      "lang": "zh",
+      "headingPath": "生產製造 › 報工數量依產品庫存單位的小數位數四捨五入",
+      "text": "報工數量依庫存單位四捨五入｜系統會根據產品的庫存單位的小數位數來決定報工數量是否需要進行四捨五入，此計算方式與報工介面顯示的單位是統一的。",
+      "approved": true,
+      "sourceSectionHash": "67a08427d1538011b49204c4b3385aeaccc6686823266670bb5202b4575b2554"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-668e63e6",
+      "lang": "zh",
+      "headingPath": "生產製造 › 暫停不算完成",
+      "text": "暫停的派工不算完成｜判斷工單的派工是否都已結束時，暫停的派工不算完成——剩餘量必須恢復生產，或由生管以「剩餘量結案」處理；已取消的派工則算已結束。桌機、手機與剩餘量結案都用同一套判定。",
+      "approved": true,
+      "sourceSectionHash": "e23da83b34833f909e4f33503135afffe7371a009a88f9192eed0b36d3e11778"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-15a6bb27",
+      "lang": "zh",
+      "headingPath": "生產製造 › 換過的機台會鎖定：重排只排在這台",
+      "text": "機台更換後將固定使用該機台｜一旦某個機台已經被更換過，系統會強制只在該機台上進行重排程，不再允許回退到原本工作中心最早可用的其他機台。",
+      "approved": true,
+      "sourceSectionHash": "962c01f8523fa954ea1e3a6117bd3bb5cbab231cd3dcb166f79e3a884933e1e7"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-56f54b1d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 機台須確實存在且非廢棄",
+      "text": "機台必須是有效的設備｜系統會檢查所指定的設備是否確實存在且尚未被永久廢棄的狀態。",
+      "approved": true,
+      "sourceSectionHash": "fc0decd867c992137b3f4942f2844d5b28e3fd0e8d6c5c7fb5406d60108f20a6"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-0193bc45",
+      "lang": "zh",
+      "headingPath": "生產製造 › 換機續做可選：本廠、可生產的機台，原機台除外",
+      "text": "換機續做可選的機台｜暫停後「換機續做」可選的機台必須是本廠、可生產（正常或待機）的機台，原機台除外；可以跨工作中心選擇，清單中同工作中心的機台排在前面。",
+      "approved": true,
+      "sourceSectionHash": "eb6202f964ea61e4bc10265ed88d63d87889e603d6bf612fc2a6425e11cbe1cd"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-76622be8",
+      "lang": "zh",
+      "headingPath": "生產製造 › 恢復暫停的派工回到暫停前狀態",
+      "text": "派工狀態的恢復規則說明｜當派工因品質原因暫停，需要品管人員確認檢驗單後才能放行。若派工是因機台停用而暫停，系統會在機台恢復可用時自動解除此暫停；如果機台仍處於停用狀態，則不能手動將其恢復，必須使用換機續做的方式處理。",
+      "approved": true,
+      "sourceSectionHash": "5c1ce14ec0c170de8ca4856fda8b2550561b23aefcc1791d111012d1dd218afe"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-3b514442",
+      "lang": "zh",
+      "headingPath": "生產製造 › 換機續做：暫停的派工改到另一台機台繼續生產",
+      "text": "換機續做的處理方式｜暫停的派工可以改到另一台機台繼續生產。原派工已有產出時，會以已完成的數量結案，剩餘量另開一張續做派工。續做派工鎖定在新機台、狀態為待排，因此要重新換模與首件檢查，之後重排也只會排在新機台上。",
+      "approved": true,
+      "sourceSectionHash": "4492b072f28d102f43c7cf83bad36a85bc23d7946ddcdb26ddd57a015366ee47"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-9adb58c2",
+      "lang": "zh",
+      "headingPath": "生產製造 › 拆分時指定了機台＝人指定，重排不得改掉",
+      "text": "機台指定後無法更改｜當在拆分時指定了特定的設備代碼，系統會將該設備視為已鎖定，因此之後的重排操作將無法修改此設定。若沒有指定設備代碼，則維持原有的鎖定狀態。",
+      "approved": true,
+      "sourceSectionHash": "57e3715ee63cae15eb1549ea0826341ef5a5a49a56de4f608f1e29ba4ce5f568"
+    },
+    {
+      "slug": "code-mfg-dispatchcontroller-138342c1",
+      "lang": "zh",
+      "headingPath": "生產製造 › 取本派工既有子派工的最大序號，往後續編，確保重複拆分不衝突",
+      "text": "子派工序號自動遞增以防衝突｜系統會根據原派工的識別碼，從已存在的最大子派工序號之後開始連續編號，這樣可以確保即使重複進行拆分操作，新產生的子派工序號也不會與先前已使用的序號發生重複。",
+      "approved": true,
+      "sourceSectionHash": "eb5cb9c9168ad350c2271b490d4d38134ac9e5b57e92c46dc6257eb88b8694cb"
+    }
+  ]
+}

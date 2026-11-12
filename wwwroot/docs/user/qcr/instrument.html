@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Inspection Instruments — QCR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>檢驗儀器 — QCR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">QCR 目錄</span><span lang="en">QCR contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">QCR 畫面</span><span lang="en">QCR screens</span></div>
+    <a href="defect-code.html" class="nav-link"><span lang="zh">不良項目代碼</span><span lang="en">Defect Codes</span></a>
+    <a href="inspection-spec.html" class="nav-link"><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></a>
+    <a href="inspection-order.html" class="nav-link"><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></a>
+    <a href="ncr.html" class="nav-link"><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></a>
+    <a href="instrument.html" class="nav-link active"><span lang="zh">檢驗儀器</span><span lang="en">Inspection Instruments</span></a>
+    <a href="spc-analysis.html" class="nav-link"><span lang="zh">SPC 製程能力分析</span><span lang="en">SPC Process Capability</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-thermometer-half me-2 text-primary"></i><span lang="zh">檢驗儀器</span><span lang="en">Inspection Instruments</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/Instrument &nbsp;|&nbsp; 量測儀器與校正週期管理</span><span lang="en">Route: /Instrument &nbsp;|&nbsp; Measuring instruments and calibration interval management</span></div>
+    </div>
+
+    <p><span lang="zh">維護檢驗儀器基本資料、校正週期與到期提醒；逾期未校正的儀器於檢驗時提示警告。</span><span lang="en">Maintains the basic data, calibration interval and due reminders for inspection instruments; an instrument overdue for calibration raises a warning when it is used.</span></p>
+    <img class="screen-shot" src="img/instrument.png" data-src-en="img/en/instrument.png" alt="檢驗儀器畫面截圖" data-alt-en="Inspection instrument screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">檢驗儀器畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Inspection instrument screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">校正管理</span><span lang="en">Calibration management</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」建立儀器：編號、名稱、校正週期。</span><span lang="en">Click "Add" to create an instrument: number, name and calibration interval.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">每次校正完成後回寫校正日期，系統自動計算下次到期日。</span><span lang="en">Enter the calibration date each time one is done and the system works out the next due date.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">儀器代碼 / 儀器名稱</span><span lang="en">Instrument code / Instrument name</span></td><td><span lang="zh">各自關鍵字模糊比對</span><span lang="en">each a partial keyword match</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">欄位</span><span lang="en">Field</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">儀器代碼</span><span lang="en">Instrument Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">唯一識別，建立後不可修改</span><span lang="en">Unique identifier; cannot be changed after creation</span></td></tr>
+        <tr><td><span lang="zh">儀器名稱</span><span lang="en">Instrument Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">量測儀器的名稱（如三次元、卡尺）</span><span lang="en">Name of the instrument (CMM, calipers …)</span></td></tr>
+        <tr><td><span lang="zh">校正週期(天)</span><span lang="en">Calibration Cycle (Days)</span></td><td><span lang="zh">兩次校正的間隔天數；系統據此推算下次校正到期日並提醒</span><span lang="en">Days between calibrations; the system works out the next due date from it and sends a reminder</span></td></tr>
+        <tr><td><span lang="zh">校正方式</span><span lang="en">Calibration Method</span></td><td><span lang="zh">內校或外校，以及校正依循的方法說明</span><span lang="en">In-house or external calibration, and a note on the method followed</span></td></tr>
+        <tr><td><span lang="zh">啟用</span><span lang="en">Active</span></td><td><span lang="zh">停用後不可在檢驗規範與檢驗作業中選用</span><span lang="en">Once inactive, it cannot be chosen in inspection specs or during inspection</span></td></tr>
+        <tr><td><span lang="zh">序號數</span><span lang="en">Serial Count</span></td><td><span lang="zh">此儀器型號下已登錄的實體序號數量；校正紀錄以個別序號管理</span><span lang="en">Number of physical serial numbers registered under this instrument model; calibration records are kept per serial number</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">補充說明</span><span lang="en">Notes</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="inspection-spec.html"><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

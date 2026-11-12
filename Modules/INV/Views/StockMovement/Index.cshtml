@@ -1,0 +1,234 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.INV.ViewModels
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<StockMovementRowVm>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched == true;
+    var typeOptions    = ViewBag.TypeOptions    as System.Collections.IEnumerable ?? new List<object>();
+    var productOptions = ViewBag.ProductOptions as IEnumerable<dynamic>            ?? Enumerable.Empty<dynamic>();
+    var locationOptions = ViewBag.LocationOptions as IEnumerable<dynamic>          ?? Enumerable.Empty<dynamic>();
+    var curProduct = ViewBag.ProductCode as string ?? "";
+    var curLocation = ViewBag.LocationCode as string ?? "";
+    var curType = ViewBag.TypeCode as string ?? "";
+    var dateFromStr = ViewBag.DateFrom is DateOnly df ? df.ToString("yyyy-MM-dd") : "";
+    var dateToStr   = ViewBag.DateTo   is DateOnly dt ? dt.ToString("yyyy-MM-dd") : "";
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.CurrentSort as string ?? "";
+        if (cur == col + "_asc")  return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    int costDp = ViewBag.BaseCurrencyDp as int? ?? 6;
+    int totalDp = Math.Max(costDp - 4, 2);  // 總成本通常少於單位成本
+    string costFmt  = costDp  <= 0 ? "N0" : $"N{costDp}";
+    string totalFmt = totalDp <= 0 ? "N0" : $"N{totalDp}";
+    string QtyFmt(string? uom)
+    {
+        var dp = (uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)) ? v : 4;
+        return dp <= 0 ? "N0" : $"N{dp}";
+    }
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-arrow-left-right"></i> @Localizer["PageTitle"]</h1>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["DateFrom"]</label>
+                    <input type="date" name="dateFrom" class="form-control form-control-sm" value="@dateFromStr" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["DateTo"]</label>
+                    <input type="date" name="dateTo" class="form-control form-control-sm" value="@dateToStr" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["TypeCode"]</label>
+                    <select name="typeCode" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllTypes"]</option>
+                        @foreach (dynamic t in typeOptions)
+                        {
+                            var sel = curType == (string)t.TypeCode ? "selected" : null;
+                            var dir = (int)t.Direction >= 0 ? "+" : "-";
+                            <option value="@t.TypeCode" selected="@sel">@t.TypeCode @dir — @t.TypeName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ProductCode"]</label>
+                    <select name="productCode" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllProducts"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(curProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["DocNo"]</label>
+                    <input type="text" name="docNo" class="form-control form-control-sm" value="@ViewBag.DocNo" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["LocationCode"]</label>
+                    <select name="locationCode" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllLocations"]</option>
+                        @foreach (var l in locationOptions)
+                        {
+                            <option value="@l.LocationCode" selected="@(curLocation == (string)l.LocationCode)">@l.WhCode / @l.LocationCode — @l.LocationName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["LotNo"]</label>
+                    <input type="text" name="lotNo" class="form-control form-control-sm" value="@ViewBag.LotNo" />
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search me-1"></i>@Localizer["Search"]
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Reset"]</a>
+
+                    @if (ViewBag.CanPrint as bool? ?? false)
+                    {
+                        @* 直接以查詢列「當前」條件送出列印（新分頁），不需先按查詢 *@
+                        <button type="submit" formaction="@Url.Action("Print")" formtarget="_blank" formnovalidate
+                                class="btn btn-outline-dark btn-sm ms-auto">
+                            <i class="bi bi-printer"></i> @Localizer["Print"]
+                        </button>
+                        <div class="btn-group">
+                            <a asp-action="Export"
+                               asp-route-dateFrom="@dateFromStr"
+                               asp-route-dateTo="@dateToStr"
+                               asp-route-typeCode="@curType"
+                               asp-route-productCode="@ViewBag.ProductCode"
+                               asp-route-docNo="@ViewBag.DocNo"
+                               asp-route-locationCode="@ViewBag.LocationCode"
+                               asp-route-lotNo="@ViewBag.LotNo"
+                               asp-route-format="xlsx" class="btn btn-outline-success btn-sm">
+                                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                            </a>
+                            <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Export"
+                                       asp-route-dateFrom="@dateFromStr" asp-route-dateTo="@dateToStr"
+                                       asp-route-typeCode="@curType" asp-route-productCode="@ViewBag.ProductCode"
+                                       asp-route-docNo="@ViewBag.DocNo" asp-route-locationCode="@ViewBag.LocationCode"
+                                       asp-route-lotNo="@ViewBag.LotNo" asp-route-format="csv">CSV</a></li>
+                                <li><a class="dropdown-item" asp-action="Export"
+                                       asp-route-dateFrom="@dateFromStr" asp-route-dateTo="@dateToStr"
+                                       asp-route-typeCode="@curType" asp-route-productCode="@ViewBag.ProductCode"
+                                       asp-route-docNo="@ViewBag.DocNo" asp-route-locationCode="@ViewBag.LocationCode"
+                                       asp-route-lotNo="@ViewBag.LotNo" asp-route-format="json">JSON</a></li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover table-sm align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="u-width-110px">
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.DateSort"
+                                   asp-route-dateFrom="@dateFromStr" asp-route-dateTo="@dateToStr"
+                                   asp-route-typeCode="@curType" asp-route-productCode="@ViewBag.ProductCode"
+                                   asp-route-docNo="@ViewBag.DocNo" asp-route-locationCode="@ViewBag.LocationCode"
+                                   asp-route-lotNo="@ViewBag.LotNo" asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["MovementDate"] <i class="bi @sortIcon("date")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["TypeCode"]</th>
+                            <th class="text-center u-width-50px">@Localizer["Direction"]</th>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.DocSort"
+                                   asp-route-dateFrom="@dateFromStr" asp-route-dateTo="@dateToStr"
+                                   asp-route-typeCode="@curType" asp-route-productCode="@ViewBag.ProductCode"
+                                   asp-route-docNo="@ViewBag.DocNo" asp-route-locationCode="@ViewBag.LocationCode"
+                                   asp-route-lotNo="@ViewBag.LotNo" asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["DocNo"] <i class="bi @sortIcon("doc")"></i>
+                                </a>
+                            </th>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.ProductSort"
+                                   asp-route-dateFrom="@dateFromStr" asp-route-dateTo="@dateToStr"
+                                   asp-route-typeCode="@curType" asp-route-productCode="@ViewBag.ProductCode"
+                                   asp-route-docNo="@ViewBag.DocNo" asp-route-locationCode="@ViewBag.LocationCode"
+                                   asp-route-lotNo="@ViewBag.LotNo" asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["ProductCode"] <i class="bi @sortIcon("product")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["Location"]</th>
+                            <th>@Localizer["LotNo"]</th>
+                            <th class="text-end">@Localizer["Qty"]</th>
+                            <th class="text-end">@Localizer["StockQty"]</th>
+                            <th class="text-end">@Localizer["UnitCost"]</th>
+                            <th class="text-end pe-4">@Localizer["TotalCost"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr><td colspan="11" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>@Localizer["NoData"]
+                            </td></tr>
+                        }
+                        else
+                        {
+                            foreach (var r in Model)
+                            {
+                                <tr>
+                                    <td class="small">@r.MovementDate.ToString("yyyy-MM-dd")</td>
+                                    <td><span class="badge bg-light text-dark border">@r.TypeCode</span> <span class="small">@r.TypeName</span></td>
+                                    <td class="text-center">
+                                        @if (r.Direction >= 0) { <span class="badge bg-success">+</span> }
+                                        else                   { <span class="badge bg-danger">−</span> }
+                                    </td>
+                                    <td class="small">@r.DocNo <span class="text-muted">#@r.DocLineNo</span></td>
+                                    <td><span class="fw-medium">@r.ProductCode</span> <span class="text-muted small">@r.ProductName</span></td>
+                                    <td class="small">@r.WhCode <span class="text-muted">/</span> @r.LocationCode</td>
+                                    <td class="small">@(string.IsNullOrEmpty(r.LotNo) ? "-" : r.LotNo)</td>
+                                    <td class="text-end">@r.Qty.ToString(QtyFmt(r.UomCode)) <span class="text-muted small">@r.UomCode</span></td>
+                                    <td class="text-end">@r.StockQty.ToString(QtyFmt(r.StockUomCode)) <span class="text-muted small">@r.StockUomCode</span></td>
+                                    <td class="text-end">@(r.UnitCost?.ToString(costFmt) ?? "-")</td>
+                                    <td class="text-end pe-4">@(r.TotalCost?.ToString(totalFmt) ?? "-")</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>

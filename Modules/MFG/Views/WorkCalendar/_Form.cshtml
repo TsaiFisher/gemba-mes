@@ -1,0 +1,107 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model WorkCalendar
+
+@{
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    var shiftGroups = ViewBag.ShiftGroups as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var workCenters = ViewBag.WorkCenters as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<form method="post" action="@(Model.Id == 0 ? Url.Action("Create") : Url.Action("Edit", new { id = Model.Id }))"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+    <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Date"] <span class="text-danger">*</span></label>
+            <input type="date" class="form-control" asp-for="Date" required />
+            <span asp-validation-for="Date" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["ShiftGroup"]</label>
+            <select class="form-select" asp-for="ShiftGroupCode">
+                <option value="">@Localizer["SelectOptional"]</option>
+                @foreach (dynamic sg in shiftGroups)
+                {
+                    <option value="@sg.GroupCode">@sg.GroupCode — @sg.GroupName</option>
+                }
+            </select>
+            <span asp-validation-for="ShiftGroupCode" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["WorkCenterOpt"]</label>
+            <select class="form-select" asp-for="WorkCenterId">
+                <option value="">@Localizer["AllPlantLayer"]</option>
+                @foreach (dynamic wc in workCenters)
+                {
+                    <option value="@wc.WorkCenterCode">@wc.WorkCenterCode — @wc.WorkCenterName</option>
+                }
+            </select>
+            <span asp-validation-for="WorkCenterId" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["MachineCodeOpt"]</label>
+            <input type="text" class="form-control" asp-for="MachineCode" placeholder="@Localizer["MachinePh"]" maxlength="20" />
+            <span asp-validation-for="MachineCode" class="text-danger small"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["WorkStart"]</label>
+                    <input type="time" class="form-control" asp-for="WorkStart" />
+                    <span asp-validation-for="WorkStart" class="text-danger small"></span>
+                    <div class="form-text">@Localizer["WorkStartHint"]</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["WorkEnd"]</label>
+                    <input type="time" class="form-control" asp-for="WorkEnd" />
+                    <span asp-validation-for="WorkEnd" class="text-danger small"></span>
+                    <div class="form-text">@Localizer["WorkEndHint"]</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["RegHours"]</label>
+                    <input type="number" class="form-control" asp-for="TM_WKS" step="0.01" min="0" max="24" />
+                    <span asp-validation-for="TM_WKS" class="text-danger small"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["OtHours"]</label>
+                    <input type="number" class="form-control" asp-for="TM_WKO" step="0.01" min="0" />
+                    <span asp-validation-for="TM_WKO" class="text-danger small"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Note"]</label>
+            <input type="text" class="form-control" asp-for="Note" maxlength="200" />
+            <span asp-validation-for="Note" class="text-danger small"></span>
+        </div>
+    </fieldset>
+
+    <div class="modal-footer">
+        @if (isReadOnly)
+        {
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-secondary" name="cancel" value="cancel" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+        }
+    </div>
+</form>

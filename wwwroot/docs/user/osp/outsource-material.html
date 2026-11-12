@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Outsource Material — OSP User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>委外發退料單 — OSP 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">委外管理目錄</span><span lang="en">Outsourcing Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="index.html#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">OSP 畫面</span><span lang="en">OSP Screens</span></div>
+    <a href="outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="outsource-material.html" class="nav-link active"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+    <a href="outsource-price.html" class="nav-link"><span lang="zh">委外價格分析</span><span lang="en">Outsource Price Analysis</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關</span><span lang="en">Related</span></div>
+    <a href="../rpt/outsource-performance.html" class="nav-link"><span lang="zh">委外對帳報表（RPT）</span><span lang="en">Outsource reconciliation report (RPT)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-truck me-2 text-primary"></i><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/OutsourceMaterial &nbsp;|&nbsp; 委外加工發料（OO）與退料（OR）</span><span lang="en">Route: /OutsourceMaterial &nbsp;|&nbsp; Outsource material issue (OO) and return (OR)</span></div>
+    </div>
+
+    <p><span lang="zh">依委外採購單發出原料（OO：原料 → 在途委外），加工廠退回未用料以 OR 沖回。發料出庫的單位成本即發料時點 AVCO 快照，作為委外成品結轉成本與超耗計價基礎。</span><span lang="en">Issues raw material against an outsource PO (OO: raw material → in-transit outsourcing); material the subcontractor sends back is reversed with an OR. The unit cost of the issue is the AVCO snapshot at that moment, which becomes the carry-over cost of the finished part and the basis for pricing excess consumption.</span></p>
+    <img class="screen-shot" src="img/outsource-material.png" data-src-en="img/en/outsource-material.png" alt="委外發退料單畫面截圖" data-alt-en="Outsource material screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">委外發退料單畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Outsource material screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">草稿 Draft</span><span lang="en">Draft</span></span></td><td><span lang="zh">已建立未生效，可自由編輯、刪除；需簽核者於此狀態送審。</span><span lang="en">Created but not yet effective; can be freely edited or deleted, and submitted for approval from this status.</span></td></tr><tr><td><span class='badge bg-info'><span lang="zh">待審核</span><span lang="en">Pending approval</span></span></td><td><span lang="zh">已送審等待簽核，不可編輯；可撤回改回草稿。</span><span lang="en">Submitted and waiting for approval; it cannot be edited, but it can be withdrawn back to draft.</span></td></tr><tr><td><span class='badge bg-primary'><span lang="zh">已確認 Confirmed</span><span lang="en">Confirmed</span></span></td><td><span lang="zh">簽核核准（或免簽核直接確認）後生效，等待後續作業/過帳。</span><span lang="en">Effective once approved (or confirmed directly when no approval is required), waiting for the next step or for posting.</span></td></tr><tr><td><span class='badge bg-success'><span lang="zh">已過帳 Posted</span><span lang="en">Posted</span></span></td><td><span lang="zh">庫存/帳務已入帳，單據不可再修改。</span><span lang="en">Stock and accounting have been posted; the document can no longer be changed.</span></td></tr><tr><td><span class='badge bg-danger'><span lang="zh">已作廢 Void</span><span lang="en">Void</span></span></td><td><span lang="zh">反向沖銷已過帳內容；作廢原因需留存，不可復原。</span><span lang="en">Reverses what was posted; the void reason is kept and the action cannot be undone.</span></td></tr></tbody>
+    </table>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">建立發/退料單</span><span lang="en">Creating an issue or return document</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」開啟側欄，填寫發/退料單表頭與明細行後儲存（草稿）。表頭可選填「委外採購單」與「委外派工」建立 MFG 連結：發料（OO）指定派工時，系統驗證各品號累計發料量不得超過派工發料需求量（扣除其他未作廢發料單已發量）；委外採購單供應商須與本單供應商一致。</span><span lang="en">Click "Add" to open the panel, fill in the issue/return header and lines, then save (as a draft). The header can reference an outsource PO and an outsource dispatch to link back to MFG: when an issue (OO) names a dispatch, the system checks that the cumulative issued quantity per product does not exceed the dispatch requirement (less what other non-voided issues have already sent), and the outsource PO supplier must match the supplier on this document.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「送審」進入簽核流程；核准後單據自動轉「已確認」。若免簽核，直接點「確認」。</span><span lang="en">Click "Submit" to start the approval flow; the document turns to "Confirmed" once approved. Where no approval is required, click "Confirm" directly.</span></div></div>
+    <h3><span lang="zh">後續作業</span><span lang="en">Follow-up actions</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">已確認/已過帳單據可點「列印」產生含 QR Code 的正式表單（新分頁開啟）。</span><span lang="en">Confirmed and posted documents can be printed with "Print", producing the official form with a QR code in a new tab.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">已過帳單據如需沖銷，點「作廢」並填寫原因；系統產生反向庫存/帳務異動。</span><span lang="en">To reverse a posted document, click "Void" and enter a reason; the system creates the reversing stock and accounting entries.</span></div></div>
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">委外退料（廠商把料退回）的入庫成本，由系統以這張工單此料「還在廠商那裡」的加權平均自動帶入（已發出的價值扣掉已退回的價值），不是現在的庫存單價；先進先出的料也因此可以正常退回。</span><span lang="en">A return from the subcontractor is valued automatically at the weighted average of what is still out at the subcontractor for this work order and item (value issued less value already returned), not at today's stock cost — which is also what lets FIFO items be returned at all.</span></div>
+
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">表頭</span><span lang="en">Header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">委外發退料單號</span><span lang="en">Slip No</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">類型</span><span lang="en">Type</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">OO 委外發料（送料到廠商）／OR 委外退料（廠商退回用料）</span><span lang="en">OO outsource issue (material sent to the subcontractor) / OR outsource return (material sent back)</span></td></tr>
+        <tr><td><span lang="zh">發料日期</span><span lang="en">Issue date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">料件送出或退回的日期</span><span lang="en">Date the material was sent out or returned</span></td></tr>
+        <tr><td><span lang="zh">委外廠商</span><span lang="en">Subcontractor</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">收料的委外加工廠商</span><span lang="en">Subcontractor the goods are received from</span></td></tr>
+        <tr><td><span lang="zh">工單</span><span lang="en">Work order</span></td><td><span lang="zh">本次送料服務的工單</span><span lang="en">Work order this material shipment serves</span></td></tr>
+        <tr><td><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></td><td><span lang="zh">對應的委外採購單，用於串接加工費與超耗結算</span><span lang="en">The outsource PO it belongs to, linking the processing fee and the excess-consumption settlement</span></td></tr>
+        <tr><td><span lang="zh">派工單</span><span lang="en">Dispatch</span></td><td><span lang="zh">對應的派工單工序</span><span lang="en">The dispatch operation it belongs to</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">整張單據的補充說明</span><span lang="en">Notes for the whole document</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">明細</span><span lang="en">Lines</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">送出或退回的料件</span><span lang="en">Item sent out or returned</span></td></tr>
+        <tr><td><span lang="zh">來源單號</span><span lang="en">Source doc No</span></td><td><span lang="zh">產生此需求的來源單據；由來源單匯入時自動填寫，用於追溯與回寫</span><span lang="en">Source document that raised this demand; filled in automatically when imported from the source, and used for tracing and write-back</span></td></tr>
+        <tr><td><span lang="zh">數量 / 單位</span><span lang="en">Qty / UOM</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">送出或退回的數量。選了品號後，單位只列該品號的庫存單位與查得到換算的單位（預設庫存單位）；存檔時系統依品號主檔換算成庫存數量入帳，查不到換算的單位會擋下並說明。</span><span lang="en">Quantity sent out or returned. Once a product is chosen, the unit list shows only its stock unit and the units that convert to it (stock unit preselected); on save the system converts to the stock quantity from the product master, and a unit with no conversion is rejected with an explanation.</span></td></tr>
+        <tr><td><span lang="zh">單價</span><span lang="en">Unit Price</span></td><td><span lang="zh">發料時凍結的 AVCO 單位成本；委外超耗扣款即以此單價計價</span><span lang="en">AVCO unit cost frozen at the moment of issue; the outsource scrap penalty is priced with it</span></td></tr>
+        <tr><td><span lang="zh">已作業量</span><span lang="en">Put Away</span></td><td><span lang="zh">倉庫作業實際執行（上架或下架）的累計數量；全部執行完畢後單據自動過帳</span><span lang="en">Cumulative quantity actually processed by warehouse operations (put-away or picking); the document posts automatically once everything is done</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">該明細行的個別說明</span><span lang="en">Notes for this individual line</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="outsource-purchase-order.html"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>、<a href="outsource-receipt.html"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>、<a href="outsource-rework.html"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

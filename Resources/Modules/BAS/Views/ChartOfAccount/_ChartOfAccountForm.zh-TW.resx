@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AccountCode" xml:space="preserve">
+    <value>科目代碼</value>
+  </data>
+  <data name="AccountName" xml:space="preserve">
+    <value>科目名稱</value>
+  </data>
+  <data name="AccountType" xml:space="preserve">
+    <value>科目用途</value>
+  </data>
+  <data name="Remarks" xml:space="preserve">
+    <value>備註</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>啟用</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>儲存</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="Expense" xml:space="preserve">
+    <value>費用（手動應付發票的借方）</value>
+  </data>
+  <data name="Revenue" xml:space="preserve">
+    <value>收入（手動應收發票的貸方）</value>
+  </data>
+  <data name="AccountTypeHint" xml:space="preserve">
+    <value>決定借貸方向與落在哪一張報表的哪一段。數值對齊科目代碼首碼（1xxx 資產、4xxx 收入…）。</value>
+  </data>
+  <data name="IsActiveHint" xml:space="preserve">
+    <value>停用後不能再被新的發票指定，既有發票與傳票不受影響。</value>
+  </data>
+  <data name="ScopeNotice" xml:space="preserve">
+    <value>會計科目為全公司共用，不分廠別。代碼建立後不可修改——既有傳票留的是當下寫入的代碼字串。</value>
+  </data>
+  <data name="AccountNameEn" xml:space="preserve"><value>科目名稱（英文）</value></data>
+  <data name="AccountNameEnHint" xml:space="preserve"><value>留白時英文介面顯示中文名稱。</value></data>
+  <data name="AccountType_Asset" xml:space="preserve"><value>資產</value></data>
+  <data name="AccountType_Liability" xml:space="preserve"><value>負債</value></data>
+  <data name="AccountType_Equity" xml:space="preserve"><value>權益</value></data>
+  <data name="AccountType_Revenue" xml:space="preserve"><value>營業收入</value></data>
+  <data name="AccountType_Cogs" xml:space="preserve"><value>銷貨成本</value></data>
+  <data name="AccountType_OperatingExpense" xml:space="preserve"><value>營業費用</value></data>
+  <data name="AccountType_OtherIncome" xml:space="preserve"><value>營業外收入</value></data>
+  <data name="AccountType_OtherExpense" xml:space="preserve"><value>營業外費用</value></data>
+  <data name="AllowManualEntry" xml:space="preserve"><value>可手動選用</value></data>
+  <data name="AllowManualEntryHint" xml:space="preserve"><value>勾選後才會出現在手動發票與手動傳票的科目下拉。存貨、暫估應付這類由自動分錄維護餘額的科目請勿勾選——手動打一筆進去就會與子帳對不起來。</value></data>
+  <data name="SystemAccountNotice" xml:space="preserve"><value>這是系統科目：自動分錄會用到它，代碼與性質不可修改，也不可刪除。可修改的只有名稱、備註與是否可手動選用。</value></data>
+  <data name="IsSystem" xml:space="preserve"><value>系統科目</value></data>
+</root>

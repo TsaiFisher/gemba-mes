@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>SmartFactory.MES.MachineId</RootNamespace>
+    <AssemblyName>SmartFactory.MES.MachineId</AssemblyName>
+    <!-- 單一執行檔發布時不帶衛星組件，縮小交付體積 -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <!-- 指紋演算法單一來源：與主專案、Security DLL、LicenseAuthority 共用同一份原始檔。
+       此工具交付給客戶，因此**不得**參照任何含私鑰或簽發功能的專案。 -->
+  <ItemGroup>
+    <Compile Include="..\Services\MachineAnchor.cs" Link="MachineAnchor.cs" />
+    <!-- 「該找誰申請授權」的文案同樣單一來源：這支工具印出的那一句，
+         是新使用者接觸本系統時看到的第一個指引。 -->
+    <Compile Include="..\Services\LicenseSupport.cs" Link="LicenseSupport.cs" />
+    <!-- 主機識別碼與申請碼（§18.15.4）：全新安裝還沒有授權、系統起不來，進不了「授權狀態」頁，
+         申請碼只能從這支工具取得。兩檔都只輸出雜湊，不含錨定碼與主機板 UUID 原值。 -->
+    <Compile Include="..\Services\HostIdentity.cs" Link="HostIdentity.cs" />
+    <Compile Include="..\Services\LicenseBindingModes.cs" Link="LicenseBindingModes.cs" />
+    <Compile Include="..\Services\LicenseRequestCode.cs" Link="LicenseRequestCode.cs" />
+  </ItemGroup>
+
+  <!-- MachineAnchor.cs 的 Windows DPAPI 封裝（見 SECURITY-OPERATIONS.md §17）。
+       此套件不在 .NET 共用框架內，且 MachineAnchor.cs 以 <Compile Include Link> 共用於
+       主專案／MachineId／Security／LicenseAuthority 四個專案 —— 任一處漏加即建置失敗。 -->
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="10.0.14" />
+  </ItemGroup>
+
+</Project>

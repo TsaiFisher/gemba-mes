@@ -1,0 +1,59 @@
+@using SmartFactory.MES.Services
+@inject IPermissionService PermissionService
+@model SmartFactory.MES.Models.OrganizationUnit
+
+@{
+    var canEdit = await PermissionService.CanUpdate("OrgStructure");
+    var canDelete = await PermissionService.CanDelete("OrgStructure");
+}
+
+<li class="list-group-item border-0 p-0">
+    <div class="d-flex align-items-center border-bottom py-2 ps-2 hover-bg">
+        <div class="flex-grow-1">
+            <i class="bi bi-diagram-2 me-2 text-primary"></i>
+            <span class="fw-bold">@Model.Name</span>
+            @{
+                var effectivePlantIds = ViewBag.EffectivePlantIds as Dictionary<string, string>;
+                var effectivePlantId = effectivePlantIds != null && effectivePlantIds.ContainsKey(Model.Id) ? effectivePlantIds[Model.Id] : null;
+            }
+            @if (!string.IsNullOrEmpty(effectivePlantId))
+            {
+                if (string.IsNullOrEmpty(Model.PlantId))
+                {
+                    <span class="badge bg-secondary ms-2" title="@Localizer["InheritedFromParent"]">@effectivePlantId</span>
+                }
+                else
+                {
+                    <span class="badge bg-info text-dark ms-2">@effectivePlantId</span>
+                }
+            }
+            <small class="text-muted ms-2">(@(Model.Children?.Count ?? 0))</small>
+        </div>
+        <div class="btn-group">
+            @if (canEdit)
+            {
+                <button type="button" class="btn btn-sm btn-outline-secondary border-0"
+                        data-action="openPanel" data-url="@Url.Action("Edit", "Organization", new { id = Model.Id })" data-label="@Model.Name">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            }
+            @if (canDelete)
+            {
+                <button type="button" class="btn btn-sm btn-outline-danger border-0"
+                        data-action="deleteItem" data-url="@Url.Action("Delete", "Organization", new { id = Model.Id })" data-label="@Model.Name">
+                    <i class="bi bi-trash"></i>
+                </button>
+            }
+        </div>
+    </div>
+
+    @if (Model.Children != null && Model.Children.Any())
+    {
+        <ul class="list-group list-group-flush ms-4 border-start ps-2">
+            @foreach (var child in Model.Children)
+            {
+                <partial name="_OrganizationTreeNode" model="child" />
+            }
+        </ul>
+    }
+</li>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PageTitle" xml:space="preserve"><value>待我簽核</value></data>
+  <data name="AllRequests" xml:space="preserve"><value>查看所有簽核紀錄</value></data>
+  <data name="DocumentType" xml:space="preserve"><value>單據類型</value></data>
+  <data name="DocumentId" xml:space="preserve"><value>單據編號</value></data>
+  <data name="CurrentStep" xml:space="preserve"><value>目前步驟</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="NoPending" xml:space="preserve"><value>目前沒有待簽核的項目</value></data>
+  <data name="Pending" xml:space="preserve"><value>待簽核</value></data>
+  <data name="Review" xml:space="preserve"><value>審核</value></data>
+  <data name="History" xml:space="preserve"><value>歷程</value></data>
+  <data name="Supervisor" xml:space="preserve"><value>直屬主管</value></data>
+  <data name="RoleApprover" xml:space="preserve"><value>角色簽核</value></data>
+  <data name="UserApprover" xml:space="preserve"><value>指定簽核</value></data>
+  <data name="Requester" xml:space="preserve"><value>申請人</value></data>
+  <data name="SubmittedAt" xml:space="preserve"><value>送審時間</value></data>
+  <data name="StepLabel" xml:space="preserve"><value>第 {0} 步</value></data>
+  <data name="DelegateSettings" xml:space="preserve"><value>代理人設定</value></data>
+</root>

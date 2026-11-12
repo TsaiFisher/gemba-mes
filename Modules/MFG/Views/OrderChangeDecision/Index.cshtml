@@ -1,0 +1,151 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Controllers
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.MFG.Controllers.OrderChangeDecisionRow>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    int  curPageSize = ViewBag.CurrentPageSize as int? ?? 20;
+    bool onlyDirty   = ViewBag.OnlyDirty as bool? ?? false;
+
+    var productOptions   = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    string searchProduct = ViewBag.SearchProduct as string ?? "";
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.SortOrder as string ?? "";
+        if (cur == col + "_asc")  return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+
+    string statusBadge(WorkOrderStatus s) => s switch
+    {
+        WorkOrderStatus.InProgress => "bg-warning text-dark",
+        WorkOrderStatus.Completed  => "bg-info text-dark",
+        _                          => "bg-secondary"
+    };
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-exclamation-diamond me-2"></i>@Localizer["PageTitle"]</h1>
+    </div>
+
+    <div class="alert alert-light border small text-muted">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["PageHint"]
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@Localizer["SearchProduct"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["SearchProduct"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check mt-4">
+                        <input class="form-check-input" type="checkbox" name="onlyDirty" value="true" id="onlyDirty" @(onlyDirty ? "checked" : "") />
+                        <label class="form-check-label small" for="onlyDirty">@Localizer["OnlyDirty"]</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-success text-center"><i class="bi bi-check-circle me-1"></i>@Localizer["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-searchProduct="@ViewBag.SearchProduct" asp-route-onlyDirty="@onlyDirty"
+                               asp-route-pageSize="@curPageSize" asp-route-sortOrder="@ViewBag.OrderSort"
+                               class="text-decoration-none text-dark">
+                                @Localizer["SourceOrderId"] <i class="bi @sortIcon("order")"></i>
+                            </a>
+                        </th>
+                        <th>@Localizer["SourceType"]</th>
+                        <th>@Localizer["ProductCode"]</th>
+                        <th>@Localizer["WorkOrderId"]</th>
+                        <th>@Localizer["WorkOrderStatus"]</th>
+                        <th class="text-end">@Localizer["PlannedQty"]</th>
+                        <th>@Localizer["MrpStatus"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        <td><code>@r.SourceOrderId</code></td>
+                        <td><span class="badge bg-light text-dark border">@r.SourceType</span></td>
+                        <td>@r.ProductCode</td>
+                        <td><code>@r.WorkOrderId</code></td>
+                        <td><span class="badge @statusBadge(r.WorkOrderStatus)">@MfgEnumDisplay.Text(L, r.WorkOrderStatus)</span></td>
+                        <td class="text-end">@r.PlannedQty.ToString(QtyFmt(r.UomCode))</td>
+                        <td>
+                            @if (r.IsDirty)
+                            {
+                                <span class="badge bg-danger"><i class="bi bi-arrow-repeat me-1"></i>@Localizer["NeedsSync"]</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">@Localizer["InSync"]</span>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_Pagination", Model)
+    }
+
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

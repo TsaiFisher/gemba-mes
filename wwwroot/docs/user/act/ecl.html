@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="IFRS 9 ECL Provision — ACT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IFRS 9 ECL 準備 — ACT 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ACT 目錄</span><span lang="en">ACT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ACT 畫面</span><span lang="en">ACT screens</span></div>
+    <a href="accounting-period.html" class="nav-link"><span lang="zh">會計期間</span><span lang="en">Accounting period</span></a>
+    <a href="journal-entry.html" class="nav-link"><span lang="zh">管理日記帳</span><span lang="en">Management Journal</span></a>
+    <a href="trial-balance.html" class="nav-link"><span lang="zh">試算表</span><span lang="en">Trial Balance</span></a>
+    <a href="month-end.html" class="nav-link"><span lang="zh">月結作業</span><span lang="en">Month-end close</span></a>
+    <a href="department-actual-cost.html" class="nav-link"><span lang="zh">部門實際費用</span><span lang="en">Department Actual Cost</span></a>
+    <a href="nrv-assessment.html" class="nav-link"><span lang="zh">IAS 2 NRV 評估</span><span lang="en">IAS 2 NRV Assessment</span></a>
+    <a href="ecl.html" class="nav-link active"><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></a>
+    <a href="bad-debt-provision.html" class="nav-link"><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-percent me-2 text-primary"></i><span lang="zh">IFRS 9 ECL 準備</span><span lang="en">IFRS 9 ECL Allowance</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/Ecl &nbsp;|&nbsp; 預期信用損失（簡化法）評估</span><span lang="en">Route: /Ecl &nbsp;|&nbsp; Expected credit loss assessment (simplified approach)</span></div>
+    </div>
+
+    <p><span lang="zh">依 IFRS 9 簡化法以帳齡矩陣估算應收帳款預期信用損失率，計算備抵損失。提列分錄在<a href="month-end.html">月結作業</a>步驟 9 開立（借 6250 預期信用減損損失／貸 1179 備抵損失-應收帳款，調整到等於本期評估額）；月結步驟 6 也可以直接「執行 ECL」。</span><span lang="en">Uses the IFRS 9 simplified approach and an aging matrix to estimate the expected credit loss rate on receivables, and calculates the allowance. The provisioning entry is posted at step 9 of <a href="month-end.html">Month-End Closing</a> (Dr 6250 Expected credit impairment loss / Cr 1179 Loss allowance – AR, adjusted to equal this period's assessment); ECL can also be run directly with "Run ECL" on month-end step 6.</span></p>
+    <img class="screen-shot" src="img/ecl.png" data-src-en="img/en/ecl.png" alt="ECL 預期信用損失畫面截圖" data-alt-en="ECL expected credit loss screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">ECL 預期信用損失畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">ECL expected credit loss screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">以應收帳齡為基礎套用各桶損失率，可調整矩陣參數。</span><span lang="en">Applies a loss rate to each bucket of the AR aging; the matrix parameters can be adjusted.</span></div></div>
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">期間（YYYYMM）</span><span lang="en">Period (YYYYMM)</span></td><td><span lang="zh">要計算或查詢的會計期間</span><span lang="en">The accounting period to calculate or query</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">計算結果</span><span lang="en">Result</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">期間</span><span lang="en">Period</span></td><td><span lang="zh">本次 ECL 計算歸屬的會計期間</span><span lang="en">Accounting period this ECL calculation belongs to</span></td></tr>
+        <tr><td><span lang="zh">帳齡區間</span><span lang="en">Aging Bucket</span></td><td><span lang="zh">應收帳款依逾期天數分桶的區間名稱</span><span lang="en">Name of the band receivables are bucketed into by days overdue</span></td></tr>
+        <tr><td><span lang="zh">應收帳款餘額</span><span lang="en">AR Balance</span></td><td><span lang="zh">落在該帳齡區間內的應收帳款合計（本幣，總額 − 已收 − 已折讓）。客戶多付（負餘額）的發票不計入，也不會抵減其他發票</span><span lang="en">Total receivables falling in the band (local currency, total − received − credited). Invoices the customer has overpaid (negative balance) are excluded and do not offset other invoices</span></td></tr>
+        <tr><td><span lang="zh">損失率</span><span lang="en">Loss Rate</span></td><td><span lang="zh">該區間適用的預期信用損失率（%）</span><span lang="en">Expected credit loss rate applied to the band (%)</span></td></tr>
+        <tr><td><span lang="zh">ECL 準備金</span><span lang="en">ECL Allowance</span></td><td><span lang="zh">應收帳款餘額 × 損失率，該區間應提列的備抵金額</span><span lang="en">Receivable balance × loss rate, i.e. the allowance to provide for that band</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">帳齡區間設定</span><span lang="en">Aging band settings</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">帳齡區間</span><span lang="en">Aging Bucket</span></td><td><span lang="zh">區間名稱，如「未逾期」「1–30 天」</span><span lang="en">Name of the band, e.g. "not due" or "1–30 days"</span></td></tr>
+        <tr><td><span lang="zh">起（天）/ 迄（天）</span><span lang="en">From (days) / To (days)</span></td><td><span lang="zh">該區間涵蓋的逾期天數範圍；區間之間不可重疊或留空隙</span><span lang="en">Range of overdue days the band covers; the bands must not overlap or leave gaps</span></td></tr>
+        <tr><td><span lang="zh">損失率</span><span lang="en">Loss Rate</span></td><td><span lang="zh">該區間的預期信用損失率（%），依歷史損失經驗與前瞻資訊設定</span><span lang="en">Expected credit loss rate for the band (%), set from historical loss experience and forward-looking information</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="../fin/ar-aging.html"><span lang="zh">應收帳齡分析</span><span lang="en">AR Aging</span></a>、<a href="bad-debt-provision.html"><span lang="zh">壞帳準備 ECL</span><span lang="en">Bad Debt Provision (ECL)</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

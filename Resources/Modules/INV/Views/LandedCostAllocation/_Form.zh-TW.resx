@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="LandedCostAllocationId" xml:space="preserve"><value>分攤單號</value></data>
+  <data name="DocDate" xml:space="preserve"><value>單據日期</value></data>
+  <data name="Basis" xml:space="preserve"><value>分攤基準</value></data>
+  <data name="Basis_Amount" xml:space="preserve"><value>採購金額</value></data>
+  <data name="Basis_Quantity" xml:space="preserve"><value>採購數量</value></data>
+  <data name="Basis_Weight" xml:space="preserve"><value>重量</value></data>
+  <data name="CostType" xml:space="preserve"><value>費用類別</value></data>
+  <data name="SelectCostType" xml:space="preserve"><value>請選擇費用類別</value></data>
+  <data name="CurrencyCode" xml:space="preserve"><value>幣別</value></data>
+  <data name="TotalLandedCost" xml:space="preserve"><value>待分攤費用總額</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>分攤明細</value></data>
+  <data name="PickGrLines" xml:space="preserve"><value>選入進貨明細</value></data>
+  <data name="GoodsReceiptId" xml:space="preserve"><value>進貨單號</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>儲位</value></data>
+  <data name="ReceiptQty" xml:space="preserve"><value>收貨量</value></data>
+  <data name="PurchaseAmount" xml:space="preserve"><value>採購金額</value></data>
+  <data name="Weight" xml:space="preserve"><value>重量</value></data>
+  <data name="OriginalUnitCost" xml:space="preserve"><value>分攤前單價</value></data>
+  <data name="AllocatedCost" xml:space="preserve"><value>分攤費用</value></data>
+  <data name="CapitalizedCost" xml:space="preserve"><value>資本化金額</value></data>
+  <data name="ExpensedCost" xml:space="preserve"><value>費用化金額</value></data>
+  <data name="NewUnitCost" xml:space="preserve"><value>分攤後新單價</value></data>
+  <data name="AllocationHint" xml:space="preserve"><value>確認時依分攤基準計算各行費用；在庫餘量部分資本化（滾入存貨均價），已出庫對應部分轉費用。</value></data>
+  <data name="Status" xml:space="preserve"><value>單據</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>簽核</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Submit" xml:space="preserve"><value>送審</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>撤回</value></data>
+  <data name="Confirm" xml:space="preserve"><value>確認分攤</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>確定要送審此分攤單嗎？</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>確定要撤回此分攤單嗎？</value></data>
+  <data name="ConfirmConfirm" xml:space="preserve"><value>確認後將更新存貨成本，是否繼續？</value></data>
+  <data name="GrSearchPlaceholder" xml:space="preserve"><value>進貨單號或品號</value></data>
+  <data name="GrSearchPrompt" xml:space="preserve"><value>請輸入條件後按「查詢」</value></data>
+  <data name="AddSelected" xml:space="preserve"><value>加入選取</value></data>
+  <data name="NoResults" xml:space="preserve"><value>查無資料</value></data>
+  <data name="ActionFailed" xml:space="preserve"><value>操作失敗，請重試。</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>移除此列</value></data>
+  <data name="Void" xml:space="preserve"><value>作廢</value></data>
+  <data name="VoidPrompt" xml:space="preserve"><value>作廢後將開立反向傳票並把分攤進存貨的成本扣回（分攤後已有出庫則不能作廢）。請輸入作廢原因：</value></data>
+</root>

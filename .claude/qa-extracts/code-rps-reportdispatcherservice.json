@@ -1,0 +1,94 @@
+{
+  "sourcePath": "Modules/RPS/Services/ReportDispatcherService.cs",
+  "sourceHash": "c2b77d609c805057be0a55f10d87555a2fc1c51e8cc153fcdb1236c34671fca4",
+  "entries": [
+    {
+      "slug": "code-rps-reportdispatcherservice-e918d8ff",
+      "lang": "zh",
+      "headingPath": "報表 › 報表排程派工器",
+      "text": "報表排程的觸發規則說明｜系統只會在有到期排程時才進行檢查，不會每分鐘都執行一次。",
+      "approved": true,
+      "sourceSectionHash": "5f35c2fd81c440726d66608819d34a3dcfdd7c6f88c2b65cc72b4d3b9d29dac9"
+    },
+    {
+      "slug": "code-rps-reportdispatcherservice-7fb817e0",
+      "lang": "zh",
+      "headingPath": "報表 › 啟動時留一行",
+      "text": "報表啟動時的背景服務狀態｜系統在啟動時會記錄一個訊息，說明排程檢查是每隔特定分鐘數進行一次。",
+      "approved": true,
+      "sourceSectionHash": "4de801ce67a1b559c34d695a9f02f53d75ad42e8e734eba8e45f8cc63b340ecc"
+    },
+    {
+      "slug": "code-rps-reportdispatcherservice-ba945f5d",
+      "lang": "zh",
+      "headingPath": "報表 › 單次掃描失敗不得讓整個背景服務結束——那會讓排程從此靜默停擺，",
+      "text": "單次掃描失敗不會影響後續排程執行｜如果某一次的掃描操作失敗了，這不會導致整個背景服務停止運作，也不會讓系統的排程功能無法正常運行。",
+      "approved": true,
+      "sourceSectionHash": "91d926a729e347f4b3eb21426bc072c53fee8d6e1a2785c226617e17fe42f270"
+    },
+    {
+      "slug": "code-rps-reportdispatcherservice-9d4d505f",
+      "lang": "zh",
+      "headingPath": "報表 › 一份排程**只解一次**時區",
+      "text": "排程執行時區的判斷規則｜系統在決定下次何時執行或查詢特定時間範圍時，會使用同一套計算邏輯來確定時區資訊，以確保無論是手動觸發還是定時排程，所呈現的時間點都是一致的。",
+      "approved": true,
+      "sourceSectionHash": "dc10b55ad71fef53012d212a1225597c590c77e853275fbb50d6973f045c3db0"
+    },
+    {
+      "slug": "code-rps-reportdispatcherservice-edbf4789",
+      "lang": "zh",
+      "headingPath": "報表 › 少了這一步，失敗的排程會在下一輪、",
+      "text": "排程重試的行為與時區處理規則｜無論這次排程是成功還是失敗，系統都會將下一次預計執行時間往前推移；如果無法確定時區資訊，則會使用一個備用的時區值來計算，以確保後續流程不會因為時區問題而停滯。此外，手動執行的標記在每次處理後都會被清除。",
+      "approved": false,
+      "sourceSectionHash": "61093cd310bccc5a9b5b6f19918192dea296a189bf86c5f2faa8345daa57168f"
+    },
+    {
+      "slug": "code-rps-reportdispatcherservice-849cda1b",
+      "lang": "zh",
+      "headingPath": "報表 › §7.8 S2：停用 ＋ 留下原因",
+      "text": "無法直接關閉或取消啟用狀態｜系統在停用或取消啟用時，必須有明確的紀錄，不能是無聲地完成操作，否則管理人員將無法追蹤到相關的操作行為。",
+      "approved": true,
+      "sourceSectionHash": "e6d5ffb3ec3654f290850d480a5b7bc5355b67f3cffdd5d6a96bf86a07c7d604"
+    },
+    {
+      "slug": "code-rps-reportdispatcherservice-ffbb4878",
+      "lang": "zh",
+      "headingPath": "報表 › 沒有這三行， 會以空上下文求值，工具**靜默查到 0 筆**",
+      "text": "授權範圍由擁有者角色決定｜系統在沒有指定特定篩選條件時，會預設以空的資料集進行查詢，因此產出的報表將是一個格式正確的空文件，不會顯示任何錯誤訊息。",
+      "approved": true,
+      "sourceSectionHash": "13851a1a6ea32d6b8daa9bc222bf06aa9ee392ec994fabef133d25b81b6423c1"
+    },
+    {
+      "slug": "code-rps-reportdispatcherservice-83d95c83",
+      "lang": "zh",
+      "headingPath": "報表 › 收件人失格不停整份排程——那會讓一個人的異動害所有人收不到",
+      "text": "排程資料會因個人資訊異動而受影響｜如果某位使用者的資訊有變動，但該使用者沒有被列入語系分組，則系統不會為此人產生相關的報表內容。",
+      "approved": true,
+      "sourceSectionHash": "3c65f80c78ac5ee94c01f9a1f548837c233995534138aa7a6a7d45bcaa142535"
+    },
+    {
+      "slug": "code-rps-reportdispatcherservice-f64a55e7",
+      "lang": "zh",
+      "headingPath": "報表 › 不顯式設定的話，",
+      "text": "文化設定與匯出文件語言差異｜系統在沒有明確指定時，將使用行程預設的文化設定值來決定輸出的內容。因此，即使英文收件人會收到帶有中文標題的 Excel 文件，但由於數字部分是正確的，所以不會被回報為錯誤。",
+      "approved": true,
+      "sourceSectionHash": "5041b6980c1e5208b76211a916c2771cbd55ffd5caac99259ea80614d1793719"
+    },
+    {
+      "slug": "code-rps-reportdispatcherservice-bcf8dfc0",
+      "lang": "zh",
+      "headingPath": "報表 › 算出下一次執行時刻",
+      "text": "無法計算下一次執行時間點｜系統會直接以當前時間為基準往後推算，不會回溯計算所有錯過的執行時段。",
+      "approved": true,
+      "sourceSectionHash": "cce89ce2fd444ded138a0bebd01b2b2dce456a85ece9123aa9bbb123aa80870d"
+    },
+    {
+      "slug": "code-rps-reportdispatcherservice-c00822bc",
+      "lang": "zh",
+      "headingPath": "報表 › 與存檔那條路徑用同一份邏輯",
+      "text": "時區判斷依據與排程時間同步｜系統在決定報表和存檔的排程時間時，會依照一個固定的順序來判斷時區：首先以廠別設定的時區為準，若無則使用建立者的個人時區，最後再備用預設值。這樣做是為了確保無論是在哪裡執行或查看排程，其查詢的時間範圍都能與系統下次實際執行的時間點保持一致。",
+      "approved": true,
+      "sourceSectionHash": "acbc16b640c81c0d23398b3d6b4f44a8b352b72d7e01ce3fb1742b5f21cd5527"
+    }
+  ]
+}

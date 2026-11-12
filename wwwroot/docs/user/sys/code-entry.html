@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Code Maintenance — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>代碼維護 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System Administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link active"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-card-list me-2 text-primary"></i><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：管理系統 → 代碼維護 &nbsp;|&nbsp; 權限：依權限設定</span><span lang="en">Menu: System Administration → Code Maintenance &nbsp;|&nbsp; Permission: per permission settings</span></div>
+    </div>
+
+    <p><span lang="zh">代碼維護管理系統中的</span><span lang="en">Code maintenance manages the system's </span><b><span lang="zh">下拉選項</span><span lang="en">drop-down options</span></b><span lang="zh">——那些出現在各主檔畫面、由公司自行定義的分類值，例如收款方式、客戶等級、庫存模式、產銷模式、模治具種類、特殊日類型、儲位類型。每一筆代碼由</span><span lang="en"> — the classification values that appear on master-data screens and are defined by each company: payment type, customer grade, stock mode, planning mode, tooling type, special-day type and storage-location type. Each entry is identified by its </span><b><span lang="zh">類別 + 代碼</span><span lang="en">category plus code</span></b><span lang="zh">識別。</span><span lang="en">.</span></p>
+
+    <img class="screen-shot" src="img/code-entry.png" data-src-en="img/en/code-entry.png" alt="代碼維護畫面截圖" data-alt-en="Code maintenance screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">代碼維護畫面截圖（示意，實際類別/代碼依系統資料而異）</span><span lang="en">Code maintenance screenshot (illustrative; the categories and codes shown depend on your data)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">類別</span><span lang="en">Category</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">決定這個代碼出現在哪個下拉選單（見下方對照表）。</span><span lang="en">Decides which drop-down the code appears in (see the table below). </span><b><span lang="zh">建立後不可修改</span><span lang="en">It cannot be changed once created</span></b><span lang="zh">，編輯時為唯讀。</span><span lang="en">, and is read-only when editing.</span></td></tr>
+        <tr><td><span lang="zh">代碼</span><span lang="en">Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">同一類別下唯一，實際存進資料的就是這個值。</span><span lang="en">Unique within the category; this is the value actually stored on the data. </span><b><span lang="zh">建立後不可修改</span><span lang="en">It cannot be changed once created</span></b><span lang="zh">。</span><span lang="en">.</span></td></tr>
+        <tr><td><span lang="zh">中文名稱</span><span lang="en">Name (ZH)</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">中文介面的下拉選單顯示文字。</span><span lang="en">The text shown in the drop-down in the Chinese interface.</span></td></tr>
+        <tr><td><span lang="zh">英文名稱</span><span lang="en">Name (EN)</span></td><td></td><td><span lang="zh">英文介面的顯示文字。</span><span lang="en">The text shown in the English interface.</span></td></tr>
+        <tr><td><span lang="zh">排序</span><span lang="en">Sort order</span></td><td></td><td><span lang="zh">下拉選單中的排列順序，數字小的在前。</span><span lang="en">The order within the drop-down; smaller numbers first.</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Remark</span></td><td></td><td><span lang="zh">內部說明，不顯示於下拉選單。</span><span lang="en">An internal note; it is not shown in the drop-down.</span></td></tr>
+        <tr><td><span lang="zh">啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">取消勾選後，這個代碼不再出現於新資料的下拉選單，但既有資料仍保留該值。</span><span lang="en">Unticked, the code no longer appears in the drop-down for new records, while existing records keep the value.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="what-each-category-feeds-master-data"><i class="bi bi-tags me-2 text-primary"></i><span lang="zh">類別對照（基本資料主檔）</span><span lang="en">What each category feeds (master data)</span></h2>
+    <p><span lang="zh">下表是基本資料主檔會用到的類別。</span><span lang="en">The table below covers the categories used by the master-data screens. </span><b><span lang="zh">系統中的類別不只這些</span><span lang="en">There are more categories than these</span></b><span lang="zh">——其他模組另有自己的類別（例如不良原因 <code>ng_reason</code>、停機類型 <code>downtime_type</code>、訂單型態 <code>PZ.SalesOrderType</code>）。以畫面上「代碼類別」下拉列出的內容為準。</span><span lang="en">: other modules bring their own, such as <code>ng_reason</code> for defect reasons, <code>downtime_type</code> for downtime types and <code>PZ.SalesOrderType</code> for order types. What the "Category" drop-down on screen lists is the authority.</span></p>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">類別</span><span lang="en">Category</span></th><th><span lang="zh">用在哪個畫面的哪個欄位</span><span lang="en">Which field on which screen it feeds</span></th></tr></thead>
+      <tbody>
+        <tr><td><code>payment_type</code></td><td><span lang="zh">公司/廠商主檔 — 收款方式</span><span lang="en">Company / Vendor Master — payment type</span></td></tr>
+        <tr><td><code>abc_grade</code></td><td><span lang="zh">公司/廠商主檔 — 客戶等級</span><span lang="en">Company / Vendor Master — customer grade</span></td></tr>
+        <tr><td><code>stock_mode</code></td><td><span lang="zh">產品主檔 — 庫存模式</span><span lang="en">Product Master — stock mode</span></td></tr>
+        <tr><td><code>mrp_mode</code></td><td><span lang="zh">產品主檔 — 產銷模式</span><span lang="en">Product Master — planning mode</span></td></tr>
+        <tr><td><code>tooling_type</code></td><td><span lang="zh">模具主檔 — 種類</span><span lang="en">Tooling Master — type</span></td></tr>
+        <tr><td><code>special_day_type</code></td><td><span lang="zh">特殊日 — 類型</span><span lang="en">Special Day — day type</span></td></tr>
+        <tr><td><code>location_type</code></td><td><span lang="zh">倉庫（儲位）— 儲位類型</span><span lang="en">Warehouse (storage location) — location type</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <span lang="zh">畫面上方的類別下拉，列出的是</span><span lang="en">The category drop-down at the top of the screen lists the categories that </span><b><span lang="zh">系統中目前實際存在的類別</span><span lang="en">actually exist in your data</span></b><span lang="zh">。因此新增第一筆某類別的代碼時，該類別要自己打進「類別」欄位；建完之後它就會出現在下拉中。</span><span lang="en">. So when you add the first code of a category, type the category into the "Category" box yourself; it appears in the drop-down from then on.</span>
+    </div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">新增一個下拉選項</span><span lang="en">Adding a drop-down option</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「管理系統 &gt; 代碼維護」，選擇類別（或輸入關鍵字）後按「查詢」。</span><span lang="en">Choose "System Administration &gt; Code Maintenance" in the left-hand menu, pick a category (or type a keyword) and click "Search".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「新增」。若查詢時已選定類別，表單的類別欄位會自動帶入。</span><span lang="en">Click "Add"; if a category was selected in the search, the form is pre-filled with it.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">填入代碼、中文名稱、英文名稱與排序，按「儲存」。</span><span lang="en">Fill in the code, the Chinese and English names and the sort order, then click "Save".</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">回到相關主檔畫面，新選項即出現在下拉中（若走簽核，須待核准後才出現）。</span><span lang="en">Back on the master-data screen the new option appears in the drop-down — or, if approval applies, once it has been approved.</span></div></div>
+
+    <h2 id="approval-flow"><i class="bi bi-check2-circle me-2 text-primary"></i><span lang="zh">簽核流程</span><span lang="en">Approval flow</span></h2>
+    <p><span lang="zh">若管理員已在</span><span lang="en">If an administrator has switched on approval for the </span><a href="../apr/document-approval-config.html"><span lang="zh">作業類型簽核設定</span><span lang="en">Document Approval Settings</span></a><span lang="zh">中為「代碼維護」開啟簽核，本畫面的新增與修改都會走簽核：</span><span lang="en"> of "Code Maintenance", both adding and changing go through approval here:</span></p>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">動作</span><span lang="en">What you do</span></th><th><span lang="zh">結果</span><span lang="en">What happens</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">新增</span><span lang="en">Add</span></td><td><span lang="zh">存檔後狀態為</span><span lang="en">After saving the status is </span><b><span lang="zh">待審核</span><span lang="en">pending approval</span></b><span lang="zh">，且</span><span lang="en"> and the code is </span><b><span lang="zh">自動設為停用</span><span lang="en">set to inactive</span></b><span lang="zh">，核准後才生效並出現在下拉選單。</span><span lang="en">; it only takes effect and appears in the drop-down after approval.</span></td></tr>
+        <tr><td><span lang="zh">修改</span><span lang="en">Change</span></td><td><span lang="zh">需</span><span lang="en">It has to be </span><b><span lang="zh">重新送審</span><span lang="en">submitted again</span></b><span lang="zh">，送審期間同樣停用。因此改一個已在使用中的代碼，會讓它暫時從下拉選單中消失。</span><span lang="en">, and stays inactive while it is pending. Changing a code already in use therefore makes it disappear from the drop-down for a while.</span></td></tr>
+        <tr><td><span lang="zh">審核中的代碼</span><span lang="en">A code under approval</span></td><td><span lang="zh"><b>不可編輯、不可刪除</b>，須待簽核完成或撤回。</span><span lang="en"><b>Cannot be edited or deleted</b> until the approval finishes or is withdrawn.</span></td></tr>
+        <tr><td><span lang="zh">未設定簽核</span><span lang="en">No approval configured</span></td><td><span lang="zh">存檔即生效，「啟用」由您自行控制。</span><span lang="en">It takes effect on save, and you control "Active" yourself.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">簽核設定是分廠的：</span><span lang="en">Approval settings are per plant:</span></strong><span lang="zh">代碼維護是否需要簽核，取決於</span><span lang="en"> whether code maintenance needs approval depends on the setting for the </span><b><span lang="zh">您目前所在廠別</span><span lang="en">plant you are currently in</span></b><span lang="zh">的設定。同一份代碼在 A 廠操作要簽核、在 B 廠不用，是設定使然而非異常。</span><span lang="en">. The same code may need approval when handled in plant A but not in plant B; that follows from the settings and is not a fault.</span>
+    </div>
+
+    <h2 id="deleting-a-code"><i class="bi bi-trash me-2 text-primary"></i><span lang="zh">刪除代碼</span><span lang="en">Deleting a code</span></h2>
+    <p><span lang="zh">系統會檢查這個代碼是否</span><span lang="en">The system checks whether the code is </span><b><span lang="zh">已被實際資料使用</span><span lang="en">used by actual data</span></b><span lang="zh">，例如「被公司（收款方式）使用中」「被產品（庫存模式）使用中」「被儲位（類型）使用中」，只要有任何一筆在用就擋下刪除並指出是誰在用。正在審核中的代碼同樣不可刪。</span><span lang="en"> — for example "in use by a company (payment type)", "in use by a product (stock mode)" or "in use by a storage location (type)". If any record uses it, the deletion is blocked and the message says who is using it. A code under approval cannot be deleted either.</span></p>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">引用檢查只涵蓋上表那幾個類別：</span><span lang="en">The in-use check covers only the categories in the table above:</span></strong><span lang="zh">其他模組的類別（不良原因、停機類型、訂單型態等）目前</span><span lang="en"> categories belonging to other modules — defect reasons, downtime types, order types and so on — are </span><b><span lang="zh">不在檢查範圍內</span><span lang="en">not checked</span></b><span lang="zh">，刪得掉，而既有資料上那個代碼會就此查不回名稱。刪這類代碼前請自行確認沒有資料在用，或者改用停用。</span><span lang="en">, so they can be deleted — and the code left on existing records can then no longer be resolved to a name. Check for yourself that nothing uses such a code before deleting it, or make it inactive instead.</span>
+    </div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">已經被用過的代碼，正確做法是</span><span lang="en">The right way to retire a code that has been used is to </span><b><span lang="zh">取消「啟用」而不是刪除</span><span lang="en">untick "Active" rather than delete it</span></b><span lang="zh">：既有資料的顯示不受影響，新單據也選不到它。</span><span lang="en">: existing records still display correctly, and it can no longer be chosen on new ones.</span>
+    </div>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">查詢結果可匯出 Excel（.xlsx）、CSV 或 JSON，內容為類別、代碼、中英文名稱、排序與啟用狀態。</span><span lang="en">The results can be exported as Excel (.xlsx), CSV or JSON, containing the category, code, Chinese and English names, sort order and active status.</span></p>
+  </main>
+</div>
+</body>
+</html>

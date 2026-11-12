@@ -1,0 +1,130 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.FIN.Models.BankAccount>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    var currencyDecimals = await Precision.CurrencyDecimalsAsync();
+    ViewData["Title"] = L["BankAccount"];
+    bool canCreate   = ViewBag.CanCreate == true;
+    bool canUpdate   = ViewBag.CanUpdate == true;
+    bool canDelete   = ViewBag.CanDelete == true;
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    int  curPageSize = ViewBag.CurrentPageSize as int? ?? 20;
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-bank me-2"></i>@L["BankAccount"]</h1>
+        @if (canCreate) {
+            <button class="btn btn-primary"
+                    data-url="/BankAccount/Create" data-label="@L["Create"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus-lg"></i> @L["Create"]
+            </button>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-12 col-md-4">
+                    <label class="form-label small">@L["AccountOrBankName"]</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" name="search" class="form-control"
+                               placeholder="@L["AccountOrBankName"]" value="@ViewBag.SearchTerm" />
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@L["Search"]</button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@L["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@L["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["AccountId"]</th>
+                        <th>@L["BankName"]</th>
+                        <th>@L["AccountNo"]</th>
+                        <th>@L["CurrencyCode"]</th>
+                        <th class="text-end">@L["OutstandingBalance"]</th>
+                        <th>@L["IsActive"]</th>
+                        <th>@L["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var b in Model)
+                {
+                    <tr>
+                        <td><code>@b.AccountId</code></td>
+                        <td>@b.BankName</td>
+                        <td>@b.AccountNo</td>
+                        <td>@b.CurrencyCode</td>
+                        <td class="text-end">@b.Balance.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, @b.CurrencyCode))</td>
+                        <td><span class="badge @(b.IsActive ? "bg-success" : "bg-secondary")">@(b.IsActive ? SL["StatusActive"] : SL["StatusInactive"])</span></td>
+                        <td>
+                            @if (canUpdate)
+                            {
+                                <button class="btn btn-sm btn-outline-primary me-1"
+                                        data-url="/BankAccount/Edit/@b.AccountId" data-label="@b.AccountId"
+                                        data-action="openPanel"><i class="bi bi-pencil"></i> @L["Edit"]</button>
+                            }
+                            @if (canDelete)
+                            {
+                                <button class="btn btn-sm btn-outline-danger"
+                                        data-action="deleteItem" data-url="/BankAccount/Delete" data-id="@b.AccountId"><i class="bi bi-trash"></i> @L["Delete"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_Pagination", Model)
+    }
+
+</div>
+
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-500px-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="sidePanelBody"></div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@L["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

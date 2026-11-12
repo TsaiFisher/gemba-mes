@@ -1,0 +1,188 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@inject IViewLocalizer Localizer
+@model PaginatedList<OutsourceQuotation>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool activeOnly     = (bool)(ViewBag.ActiveOnly ?? true);
+    string curSupplier  = ViewBag.SupplierCode as string ?? "";
+    string curProduct   = ViewBag.ProductCode  as string ?? "";
+    var supplierOptions = ViewBag.SupplierOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var productOptions  = ViewBag.ProductOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var routingOptions  = ViewBag.RoutingOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    string curRouting   = ViewBag.RoutingId as string ?? "";
+    var currencyDecimals = ViewBag.CurrencyDecimals as IReadOnlyDictionary<string, int>;
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        @if (ViewBag.CanCreate)
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                        data-url="@Url.Action("Form")"
+                        data-label="@Localizer["CreateTitle"]"
+                        data-action="openPanel">
+                    <i class="bi bi-plus-lg"></i> @Localizer["CreateTitle"]
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" action="@Url.Action("Index")" class="row g-3 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["LabelSupplier"]</label>
+                    <select name="supplierCode" class="form-select select2-enable w-100"
+                            data-placeholder="@Localizer["All"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (dynamic s in supplierOptions)
+                        {
+                            <option value="@s.CompanyCode" selected="@(curSupplier == (string)s.CompanyCode)">@s.CompanyCode — @s.CompanyName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["LabelProduct"]</label>
+                    <select name="productCode" class="form-select select2-enable w-100"
+                            data-placeholder="@Localizer["SearchProduct"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (dynamic p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(curProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">@Localizer["LabelRouting"]</label>
+                    <select name="routingId" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["All"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (dynamic r in routingOptions)
+                        {
+                            <option value="@r.RoutingId" selected="@(curRouting == (string)r.RoutingId)">@r.RoutingId — @r.RoutingName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto d-flex align-items-end gap-3">
+                    <div class="form-check">
+                        <input type="checkbox" name="activeOnly" value="true" class="form-check-input" id="chkActive"
+                               @(activeOnly ? "checked" : "") />
+                        <label for="chkActive" class="form-check-label">@Localizer["ActiveOnly"]</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>@Localizer["ColSupplier"]</th>
+                    <th>@Localizer["ColProduct"]</th>
+                    <th>@Localizer["ColRouting"]</th>
+                    <th class="text-end">@Localizer["ColOperationSeq"]</th>
+                    <th class="text-end">@Localizer["ColUnitPrice"]</th>
+                    <th>@Localizer["ColCurrency"]</th>
+                    <th>@Localizer["ColUom"]</th>
+                    <th class="text-end">@Localizer["ColLeadDays"]</th>
+                    <th>@Localizer["ColEffectiveFrom"]</th>
+                    <th>@Localizer["ColEffectiveTo"]</th>
+                    <th>@Localizer["ColActive"]</th>
+                    <th>@Localizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null) @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SupplierCode</td>
+                        <td>@(item.ProductCode ?? "—")</td>
+                        <td>@(item.RoutingId ?? "—")</td>
+                        <td class="text-end">@(item.OperationSeq?.ToString() ?? "—")</td>
+                        <td class="text-end">@item.UnitPrice.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, item.CurrencyCode))</td>
+                        <td>@item.CurrencyCode</td>
+                        <td>@item.UomCode</td>
+                        <td class="text-end">@item.LeadDays</td>
+                        <td>@item.EffectiveFrom.ToString("yyyy-MM-dd")</td>
+                        <td>@(item.EffectiveTo?.ToString("yyyy-MM-dd") ?? "—")</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success">@Localizer["Active"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@Localizer["Inactive"]</span>
+                            }
+                        </td>
+                        <td>
+                            @if (ViewBag.CanUpdate)
+                            {
+                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                        data-url="@Url.Action("Form", new { id = item.QuotationId })"
+                                        data-label="@Localizer["EditTitle", item.QuotationId]"
+                                        data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                            }
+                            @if (ViewBag.CanDelete)
+                            {
+                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                        data-action="deleteItem" data-url="@Url.Action("DeleteConfirmed")" data-id="@item.QuotationId"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-info">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<div class="offcanvas offcanvas-end u-min-width-720px u-max-width-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

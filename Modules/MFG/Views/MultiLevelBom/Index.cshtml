@@ -1,0 +1,172 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.MFG.ViewModels
+@inject IViewLocalizer Localizer
+@model MultiLevelExplosionResult
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched == true;
+    var productOptions = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var curProduct = ViewBag.SearchProduct as string ?? "";
+
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string QtyFmt(string? uom)
+    {
+        var dp = (uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)) ? v : 4;
+        return dp <= 0 ? "N0" : $"N{dp}";
+    }
+    string Indent(int level) => level <= 1 ? "" : string.Concat(Enumerable.Repeat("　", level - 1)) + "└ ";
+    string IssueMethodLabel(MaterialIssueMethod? m) => m switch
+    {
+        MaterialIssueMethod.Push      => Localizer["IssueMethodPush"].Value,
+        MaterialIssueMethod.Pull      => Localizer["IssueMethodPull"].Value,
+        MaterialIssueMethod.Backflush => Localizer["IssueMethodBackflush"].Value,
+        _                             => "—",
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-diagram-3"></i> @Localizer["PageTitle"]</h1>
+    </div>
+
+    <!-- 查詢列 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+
+                <div class="col-md-4">
+                    <label class="form-label small fw-semibold">@Localizer["ProductCode"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["ProductCodePlaceholder"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(curProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search me-1"></i>@Localizer["Search"]
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Reset"]</a>
+
+                    @if (ViewBag.CanPrint as bool? ?? false)
+                    {
+                        @* 直接以查詢列「當前」品號送出列印（新分頁），不需先按查詢 *@
+                        <button type="submit" formaction="@Url.Action("Print")" formtarget="_blank" formnovalidate
+                                class="btn btn-outline-dark btn-sm ms-auto">
+                            <i class="bi bi-printer"></i> @Localizer["Print"]
+                        </button>
+                        <div class="btn-group">
+                            <a asp-action="Export"
+                               asp-route-searchProduct="@curProduct"
+                               asp-route-format="xlsx" class="btn btn-outline-success btn-sm">
+                                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                            </a>
+                            <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Export"
+                                       asp-route-searchProduct="@curProduct"
+                                       asp-route-format="csv">CSV</a></li>
+                                <li><a class="dropdown-item" asp-action="Export"
+                                       asp-route-searchProduct="@curProduct"
+                                       asp-route-format="json">JSON</a></li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched || Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else
+    {
+        @if (Model.Warnings.Count > 0)
+        {
+            <div class="alert alert-warning py-2">
+                <i class="bi bi-exclamation-triangle me-1"></i>
+                <ul class="mb-0 small">
+                    @foreach (var w in Model.Warnings)
+                    {
+                        <li>@w</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <div class="card shadow-sm mb-3">
+            <div class="card-body py-2 d-flex gap-4 align-items-center">
+                <span class="fw-bold"><i class="bi bi-box-seam me-1"></i>@Model.RootProductCode — @Model.RootProductName</span>
+                <span class="text-muted small">@Localizer["RootQtyBasis"]</span>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="u-width-60px">@Localizer["Level"]</th>
+                            <th>@Localizer["ProductCode"]</th>
+                            <th>@Localizer["ProductName"]</th>
+                            <th>@Localizer["UomCode"]</th>
+                            <th class="text-end">@Localizer["Quantity"]</th>
+                            <th class="text-end">@Localizer["ScrapRate"]</th>
+                            <th class="text-end">@Localizer["OffcutRate"]</th>
+                            <th class="text-end">@Localizer["RequiredQty"]</th>
+                            <th>@Localizer["SourceType"]</th>
+                            <th class="pe-4">@Localizer["IssueMethod"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.BomRows.Any())
+                        {
+                            <tr><td colspan="10" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>@Localizer["NoBomData"]
+                            </td></tr>
+                        }
+                        else
+                        {
+                            foreach (var r in Model.BomRows)
+                            {
+                                <tr>
+                                    <td class="text-muted">@r.Level</td>
+                                    <td class="fw-medium"><span class="text-muted">@Indent(r.Level)</span>@r.ProductCode</td>
+                                    <td>@r.ProductName</td>
+                                    <td>@r.UomCode</td>
+                                    <td class="text-end">@r.Quantity.ToString(QtyFmt(r.UomCode))</td>
+                                    <td class="text-end">@(r.ScrapRate == 0 ? "—" : r.ScrapRate.ToString("N2"))</td>
+                                    <td class="text-end">@(r.OffcutRate == 0 ? "—" : r.OffcutRate.ToString("N2"))</td>
+                                    <td class="text-end fw-semibold">@r.RequiredQty.ToString(QtyFmt(r.UomCode))</td>
+                                    <td>
+                                        @if (r.SourceType == "Make")
+                                        {
+                                            <span class="badge bg-primary-subtle text-primary border">@Localizer["SourceMake"]</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary-subtle text-secondary border">@Localizer["SourceBuy"]</span>
+                                        }
+                                    </td>
+                                    <td class="pe-4">@IssueMethodLabel(r.IssueMethod)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

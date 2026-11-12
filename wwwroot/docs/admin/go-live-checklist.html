@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>上線設定清單 — SmartFactory MES 系統管理手冊</title>
+<link rel="stylesheet" href="../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="go-live-checklist.page.css">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-check2-square me-2"></i>上線設定清單 — SmartFactory MES</span>
+  <div class="d-flex gap-2">
+    <a href="index.html" class="btn btn-sm btn-outline-light">管理手冊</a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light">文件中心</a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i>返回系統</a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading">章節</div>
+    <a href="#intro" class="nav-link active">說明</a>
+    <a href="#step1-infra" class="nav-link">1. 基礎架構</a>
+    <a href="#step2-codeentry" class="nav-link">2. 代碼維護設定</a>
+    <a href="#step3-master" class="nav-link">3. 主檔資料</a>
+    <a href="#step4-users" class="nav-link">4. 使用者與權限</a>
+    <a href="#step5-approval" class="nav-link">5. 簽核流程</a>
+    <a href="#step6-params" class="nav-link">6. 系統參數</a>
+    <a href="#step7-docnum" class="nav-link">7. 單號設定</a>
+    <a href="#step8-uat" class="nav-link">8. UAT 驗收</a>
+    <div class="sidebar-heading">代碼維護速查</div>
+    <a href="#ce-bas" class="nav-link">基本資料（BAS）</a>
+    <a href="#ce-inv" class="nav-link">庫存管理（INV）</a>
+    <a href="#ce-ord" class="nav-link">銷售管理（ORD）</a>
+    <a href="#ce-mfg" class="nav-link">製造執行（MFG）</a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-check2-square text-warning me-2"></i>上線設定清單</h1>
+      <div class="text-muted small mt-1">系統管理手冊附件 &nbsp;|&nbsp; 請在上線前逐項完成並核對</div>
+    </div>
+
+    <div id="intro" class="priority-high">
+      <strong><i class="bi bi-exclamation-diamond me-1"></i>本文件目的</strong><br>
+      列出 SmartFactory MES 上線前必須完成的所有設定項目，特別是「代碼維護」類別，
+      這些類別的代碼值是各畫面下拉選單的資料來源，<strong>未設定將導致使用者無法選擇對應欄位</strong>。
+    </div>
+
+    <!-- Step 1 基礎架構 -->
+    <h2 id="step1-infra"><i class="bi bi-server me-2 text-warning"></i>1. 基礎架構確認</h2>
+    <div class="priority-high mb-3">
+      <strong>授權相關項目有先後順序</strong>：授權綁定這台主機的「環境指紋」（由機器錨定碼算出）與主機板識別碼。
+      必須<strong>先在正式主機產生錨定碼</strong>（Linux 另需完成服務檔設定），再以 <code>SmartFactory.MES.MachineId</code> 取得申請碼申請授權（全新安裝還沒有授權時系統無法啟動，開不了「授權狀態」頁）；
+      順序顛倒會拿到一張在這台主機上無效的授權。詳見<a href="license.html">授權與防複製</a>。
+    </div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 機器錨定碼已產生：執行 <code>SmartFactory.MES.MachineId --init</code>（Linux 須以 root 執行），並確認輸出顯示的錨定檔位置為系統位置——Windows <code>%ProgramData%\SmartFactory\instance-id</code>／Linux <code>/etc/smartfactory/instance-id</code>。若顯示的是個人目錄，代表系統位置無法寫入，以服務帳號執行的應用程式會讀不到</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> Linux 實體機：systemd 服務檔已加入 <code>ExecStartPre=+</code> 寫入 <code>/run/smartfactory/host-id</code> 的那一行（<a href="license.html#linux">說明</a>），「授權狀態」頁的主機識別碼不是「讀不到」，且部署類型顯示「實體機」（顯示「虛擬機」代表系統認定這是虛擬機，會改用定期確認的授權方式）</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 已在正式主機執行 <code>SmartFactory.MES.MachineId</code>（不加參數）取得申請碼，開啟印出的登記網址送出申請，並收到授權檔（處理方式見<a href="license.html#received">收到授權信之後</a>）</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 錨定檔已備份，且<strong>未</strong>從其他主機複製而來（錨定檔遺失或更換＝指紋改變＝需換發授權）</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> <code>license.json</code> 已放置於應用程式目錄</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> Security DLL 已放置於 <code>Security/SmartFactory.MES.Security.dll</code></label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 資料庫連線使用 <code>ConnectionStrings:DefaultEncrypted</code>：由 IT <strong>在正式主機上</strong>以授權檔的授權編號加密（<code>EncryptConnectionString --this-host</code>；VM／容器授權用 <code>--no-host-binding</code>）——金鑰含這台主機的主機板識別碼，SmartFactory 無法代為加密；明文 <code>DefaultConnection</code> 需授權明示允許，正式授權一般不開放</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 虛擬機或容器部署：匯入授權後已在「授權狀態」頁按「確認授權」完成第一次確認，並排定每 90 天由誰確認</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 實體機／WSL：已與客戶確認是否啟用「線上授權確認」（<a href="license.html#online">說明</a>）；啟用的話同樣排定每 90 天由誰確認</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 授權撤銷清單：可連外網的廠區依合約設定 <code>License:Crl</code>；離線廠區維持 <code>Enabled: false</code></label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 初次啟動資料庫 Migration 已執行，資料表已建立</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 上傳目錄（<code>wwwroot/uploads/</code>）具寫入權限</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 健康檢查 <code>/health</code> 回傳 Healthy</label></div>
+
+    <!-- Step 2 代碼維護 -->
+    <h2 id="step2-codeentry"><i class="bi bi-tags me-2 text-warning"></i>2. 代碼維護設定</h2>
+    <p>路由：<span class="nav-path">基本資料 &gt; 代碼維護（/BAS/CodeEntry）</span></p>
+    <p>以下各 <strong>Category</strong> 必須在上線前建立至少一筆代碼，否則對應畫面的下拉選單為空，
+       使用者無法填寫必填欄位。</p>
+
+    <div class="priority-medium">
+      <strong>操作方式</strong>：進入「代碼維護」→ 選擇 Category → 點「新增」→ 填入代碼（Code）、中文名稱、英文名稱、排序 → 儲存。
+    </div>
+
+    <!-- BAS 代碼 -->
+    <h3 id="ce-bas"><span class="badge bg-primary me-2">BAS</span> 基本資料模組代碼</h3>
+    <table class="table table-sm screen-table border">
+      <thead>
+        <tr>
+          <th class="u-width-180px">Category 代碼</th>
+          <th class="u-width-130px">使用畫面</th>
+          <th class="u-width-140px">欄位名稱</th>
+          <th>說明 / 建議值</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>payment_type</code> <span class="tag-required">必填</span></td>
+          <td>廠商維護<br><span class="nav-path">/BAS/Company</span></td>
+          <td>付款方式</td>
+          <td>
+            採購付款條件。<br>
+            建議值：
+            <ul class="mb-0 ps-3 mt-1">
+              <li>Code: <code>CASH</code>，名稱：現金付款</li>
+              <li>Code: <code>M30</code>，名稱：月結30天</li>
+              <li>Code: <code>M60</code>，名稱：月結60天</li>
+              <li>Code: <code>M90</code>，名稱：月結90天</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>stock_mode</code> <span class="tag-required">必填</span></td>
+          <td>產品維護<br><span class="nav-path">/BAS/Product</span></td>
+          <td>庫存模式</td>
+          <td>
+            產品的成本計算方式。<br>
+            建議值：
+            <ul class="mb-0 ps-3 mt-1">
+              <li>Code: <code>FIFO</code>，名稱：先進先出法</li>
+              <li>Code: <code>MA</code>，名稱：移動平均法</li>
+            </ul>
+            <small class="text-muted">注意：產品建立後此欄位不建議變更，以免成本層計算異常。</small>
+          </td>
+        </tr>
+        <tr>
+          <td><code>tooling_type</code> <span class="tag-optional">選填</span></td>
+          <td>工具維護<br><span class="nav-path">/BAS/Tooling</span></td>
+          <td>工具類別</td>
+          <td>
+            生產工具的分類。<br>
+            建議值：
+            <ul class="mb-0 ps-3 mt-1">
+              <li>Code: <code>JIG</code>，名稱：治具</li>
+              <li>Code: <code>MOLD</code>，名稱：模具</li>
+              <li>Code: <code>TOOL</code>，名稱：刀具</li>
+              <li>Code: <code>FIXTURE</code>，名稱：夾具</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- INV 代碼 -->
+    <h3 id="ce-inv"><span class="badge bg-success me-2">INV</span> 庫存管理模組代碼</h3>
+    <table class="table table-sm screen-table border">
+      <thead>
+        <tr>
+          <th class="u-width-200px">Category 代碼</th>
+          <th class="u-width-140px">使用畫面</th>
+          <th class="u-width-130px">欄位名稱</th>
+          <th>說明 / 建議值</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>PZ.ScrapReason</code> <span class="tag-required">必填</span></td>
+          <td>報廢單<br><span class="nav-path">/INV/ScrapDoc</span></td>
+          <td>報廢原因</td>
+          <td>
+            物料報廢的原因說明，必須至少一筆才能建立報廢單。<br>
+            建議值：
+            <ul class="mb-0 ps-3 mt-1">
+              <li>Code: <code>QC_FAIL</code>，名稱：品質不良</li>
+              <li>Code: <code>EXPIRED</code>，名稱：逾期廢棄</li>
+              <li>Code: <code>DAMAGE</code>，名稱：損壞</li>
+              <li>Code: <code>PROCESS</code>，名稱：製程損耗</li>
+              <li>Code: <code>OTHER</code>，名稱：其他</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>PZ.AdjustReason</code> <span class="tag-required">必填</span></td>
+          <td>庫存調整單<br><span class="nav-path">/INV/StockAdjustment</span></td>
+          <td>調整原因</td>
+          <td>
+            庫存數量調整的原因，必須至少一筆才能建立調整單。<br>
+            建議值：
+            <ul class="mb-0 ps-3 mt-1">
+              <li>Code: <code>COUNT_DIFF</code>，名稱：盤點差異</li>
+              <li>Code: <code>LOSS</code>，名稱：自然耗損</li>
+              <li>Code: <code>CORRECT</code>，名稱：帳務修正</li>
+              <li>Code: <code>SAMPLE</code>，名稱：樣品試用</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ORD 代碼 -->
+    <h3 id="ce-ord"><span class="badge bg-info me-2">ORD</span> 銷售管理模組代碼</h3>
+    <table class="table table-sm screen-table border">
+      <thead>
+        <tr>
+          <th class="u-width-200px">Category 代碼</th>
+          <th class="u-width-140px">使用畫面</th>
+          <th class="u-width-130px">欄位名稱</th>
+          <th>說明 / 建議值</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>PZ.SalesOrderType</code> <span class="tag-required">必填</span></td>
+          <td>銷售訂單<br><span class="nav-path">/ORD/SalesOrder</span></td>
+          <td>訂單類型</td>
+          <td>
+            區分不同性質的銷售訂單。<br>
+            建議值：
+            <ul class="mb-0 ps-3 mt-1">
+              <li>Code: <code>NORMAL</code>，名稱：一般訂單</li>
+              <li>Code: <code>URGENT</code>，名稱：急單</li>
+              <li>Code: <code>SAMPLE</code>，名稱：樣品訂單</li>
+              <li>Code: <code>BLANKET</code>，名稱：長期合約訂單</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- MFG 代碼 -->
+    <h3 id="ce-mfg"><span class="badge bg-warning text-dark me-2">MFG</span> 製造執行模組代碼</h3>
+    <table class="table table-sm screen-table border">
+      <thead>
+        <tr>
+          <th class="u-width-200px">Category 代碼</th>
+          <th class="u-width-160px">使用畫面</th>
+          <th class="u-width-130px">欄位名稱</th>
+          <th>說明 / 建議值</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>downtime_type</code> <span class="tag-optional">選填</span></td>
+          <td>計劃性停機<br><span class="nav-path">/MFG/PlannedDowntime</span></td>
+          <td>停機類型</td>
+          <td>
+            計劃性停機的原因分類（未設定則無法建立停機記錄）。<br>
+            建議值：
+            <ul class="mb-0 ps-3 mt-1">
+              <li>Code: <code>PM</code>，名稱：預防保養</li>
+              <li>Code: <code>CHANGEOVER</code>，名稱：換模換線</li>
+              <li>Code: <code>CLEANING</code>，名稱：清潔作業</li>
+              <li>Code: <code>HOLIDAY</code>，名稱：節日停產</li>
+              <li>Code: <code>TRIAL</code>，名稱：試產</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Step 3 主檔 -->
+    <h2 id="step3-master"><i class="bi bi-database me-2 text-warning"></i>3. 主檔資料建置</h2>
+    <p>請依下表順序建立主檔（有相依關係，順序不可顛倒）：</p>
+    <table class="table table-sm screen-table border">
+      <thead><tr><th>#</th><th>主檔名稱</th><th>路由</th><th>必要說明</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>計量單位</td><td>/BAS/Uom</td><td>所有品項必須有 UOM</td><td><span class="tag-required">必填</span></td></tr>
+        <tr><td>2</td><td>幣別</td><td>/BAS/Currency</td><td>需設定本位幣（IsBase=true）</td><td><span class="tag-required">必填</span></td></tr>
+        <tr><td>3</td><td>稅別</td><td>/BAS/Tax</td><td>採購 / 銷售發票稅率</td><td><span class="tag-required">必填</span></td></tr>
+        <tr><td>4</td><td>產品類別</td><td>/BAS/ProductCategory</td><td>含成本方法設定</td><td><span class="tag-required">必填</span></td></tr>
+        <tr><td>5</td><td>產品主檔</td><td>/BAS/Product</td><td>含 BOM、庫存模式</td><td><span class="tag-required">必填</span></td></tr>
+        <tr><td>6</td><td>廠商 / 客戶</td><td>/BAS/Company</td><td>供應商與客戶可同表</td><td><span class="tag-required">必填</span></td></tr>
+        <tr><td>7</td><td>倉庫</td><td>/BAS/Warehouse</td><td>含倉庫類型設定</td><td><span class="tag-required">必填</span></td></tr>
+        <tr><td>8</td><td>儲位</td><td>/BAS/StorageLocation</td><td>依倉庫建立儲位</td><td><span class="tag-optional">選填</span></td></tr>
+        <tr><td>9</td><td>工作中心</td><td>/BAS/WorkCenter</td><td>MFG 模組所需</td><td><span class="tag-optional">選填</span></td></tr>
+        <tr><td>10</td><td>班別 / 班制</td><td>/BAS/Shift</td><td>MFG 排程所需</td><td><span class="tag-optional">選填</span></td></tr>
+      </tbody>
+    </table>
+
+    <!-- Step 4 使用者 -->
+    <h2 id="step4-users"><i class="bi bi-people me-2 text-warning"></i>4. 使用者與角色設定</h2>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 至少建立一個系統管理員帳號</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 依部門建立角色（採購、倉管、業務、生管、主管⋯）</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 每個角色設定正確的功能權限</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 建立所有使用者帳號並指派角色</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 多廠環境：每個使用者設定可存取的廠別</label></div>
+
+    <!-- Step 5 簽核 -->
+    <h2 id="step5-approval"><i class="bi bi-check2-circle me-2 text-warning"></i>5. 簽核流程設定</h2>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 建立各部門簽核範本（請購單、採購單、庫存調整單⋯）</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 在「文件簽核設定」中，將範本套用至對應單據類型（依廠別）</label></div>
+    <div class="checklist-item mb-2"><label><input type="checkbox"> 測試送審 → 核准 / 退回 流程正確執行</label></div>
+
+    <!-- Step 6 系統參數 -->
+    <h2 id="step6-params"><i class="bi bi-sliders me-2 text-warning"></i>6. 系統參數確認</h2>
+    <table class="table table-sm screen-table border">
+      <thead><tr><th>參數代碼</th><th>建議設定</th><th></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>inv_simplified_mode</code></td>
+          <td><code>true</code>（一般建議）：入庫核准即過帳，不需上下架作業<br><code>false</code>（完整倉儲）：需完成上架才反映庫存</td>
+          <td><span class="tag-required">必確認</span></td>
+        </tr>
+        <tr>
+          <td>公司 Logo</td>
+          <td>上傳公司 Logo 圖片至系統</td>
+          <td><span class="tag-optional">選填</span></td>
+        </tr>
+        <tr>
+          <td>公司簡稱（中 / 英）</td>
+          <td>設定顯示於頂部導覽列的名稱</td>
+          <td><span class="tag-optional">選填</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Step 7 單號 -->
+    <h2 id="step7-docnum"><i class="bi bi-123 me-2 text-warning"></i>7. 單號規則設定</h2>
+    <p>路由：<span class="nav-path">基本資料 &gt; 單號設定（/BAS/DocNumberConfig）</span></p>
+    <p>確認各模組單號前置碼符合貴司命名規範：</p>
+    <table class="table table-sm screen-table border">
+      <thead><tr><th>單據類型</th><th>系統預設前置碼</th><th>確認</th></tr></thead>
+      <tbody>
+        <tr><td>請購單</td><td>PR</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>採購單</td><td>PO</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>進貨單</td><td>GR</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>退貨單</td><td>RT</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>銷售訂單</td><td>SO</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>出貨單</td><td>GS</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>報廢單</td><td>IS</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>庫存調整單</td><td>IA</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>備料單</td><td>IM</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>工單</td><td>WO</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>委外採購單</td><td>OP</td><td><input type="checkbox" class="form-check-input"></td></tr>
+      </tbody>
+    </table>
+
+    <!-- Step 8 UAT -->
+    <h2 id="step8-uat"><i class="bi bi-bug me-2 text-warning"></i>8. UAT 使用者驗收測試</h2>
+    <p>上線前請由各部門代表依下列情境測試：</p>
+    <table class="table table-sm screen-table border">
+      <thead><tr><th>測試情境</th><th>模組</th><th>結果</th></tr></thead>
+      <tbody>
+        <tr><td>完整採購流程：請購 → 採購 → 進貨 → 庫存入帳</td><td>PUR + INV</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>完整銷售流程：訂單 → 出貨 → 庫存出帳</td><td>ORD + INV</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>MRP 執行後工單自動產生</td><td>MFG</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>工單領料 → 完工入庫</td><td>MFG + INV</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>盤點作業：建立 → 實盤 → 結帳</td><td>INV</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>線上簽核：送審 → 核准 → 退回測試</td><td>全模組</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>權限測試：確認各角色只能看到對應功能</td><td>系統管理</td><td><input type="checkbox" class="form-check-input"></td></tr>
+        <tr><td>待我簽核清單可正確點擊查閱單據</td><td>簽核管理</td><td><input type="checkbox" class="form-check-input"></td></tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-success mt-3 p-2 small">
+      <i class="bi bi-check-circle me-1"></i>所有項目確認完成後，系統即可正式上線。建議保留此清單作為上線紀錄。
+    </div>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end">SmartFactory MES 上線設定清單 v1.0 &nbsp;|&nbsp; 系統管理手冊附件</div>
+  </main>
+</div>
+</body>
+</html>

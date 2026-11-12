@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Stock Count — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>庫存盤點 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link active"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clipboard2-check me-2 text-primary"></i><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/inv/stockcount.html &nbsp;|&nbsp; 掃碼輸入盤點數量</span><span lang="en">Path: /mobile/inv/stockcount.html &nbsp;|&nbsp; Entering counted quantities by scanning</span></div>
+    </div>
+
+    <p><span lang="zh">提供三種盤點方式，上方三顆按鈕切換。盤點清冊由桌機開立，手機負責現場輸入實盤數量；盤盈虧的調整則回到桌機處理。</span><span lang="en">Three ways of counting, switched with the three buttons at the top. Count sheets are raised on the desktop and the phone is for entering the counted quantities on the floor; gain and loss adjustments go back to the desktop.</span></p>
+
+    <img class="screen-shot" src="img/stockcount.png" data-src-en="img/en/stockcount.png" alt="庫存盤點畫面截圖" data-alt-en="Stock count screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">庫存盤點畫面（依清冊盤點，已選擇一張進行中的清冊）</span><span lang="en">Stock count screen (counting by sheet, with an open sheet selected)</span></div>
+
+    <h2 id="modes"><i class="bi bi-ui-radios me-2 text-primary"></i><span lang="zh">三種模式</span><span lang="en">The three modes</span></h2>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-20pct"><span lang="zh">模式</span><span lang="en">Mode</span></th><th><span lang="zh">使用時機</span><span lang="en">When to use it</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">依清冊盤點</span><span lang="en">By Sheet</span></td><td><span lang="zh">最常用。選一張進行中的盤點清冊，逐項輸入實盤數量。清冊由桌機事先開立。</span><span lang="en">The usual one. Choose an open count sheet and enter the counted quantity item by item. The sheet is raised on the desktop beforehand.</span></td></tr>
+    <tr><td><span lang="zh">自由盤點</span><span lang="en">Free Count</span></td><td><span lang="zh">沒有清冊時使用。掃一個儲位，畫面列出該儲位的所有庫存供逐項輸入。</span><span lang="en">For when there is no sheet. Scan a location and the screen lists everything held there for you to count.</span></td></tr>
+    <tr><td><span lang="zh">複盤</span><span lang="en">Recount</span></td><td><span lang="zh">初盤有差異時的第二次確認。系統會擋下與初盤同一人，必須由不同的人複盤。</span><span lang="en">The second check when the first count showed a difference. The system blocks the person who did the first count, so it has to be someone else.</span></td></tr>
+    </tbody>
+    </table>
+
+    <h2 id="sheet"><i class="bi bi-list-ol me-2 text-primary"></i><span lang="zh">依清冊盤點</span><span lang="en">Counting by sheet</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在<strong>「選擇盤點清冊」</strong>下拉挑一張清冊。若顯示<strong>「目前無進行中的盤點清冊」</strong>，代表桌機尚未開立或清冊已結案。</span><span lang="en">Pick a sheet from the <strong>"Select Count Sheet"</strong> dropdown. <strong>"No open count sheets"</strong> means none has been raised on the desktop, or they are all closed.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh"><strong>「待盤項目」</strong>逐項顯示品號與<strong>「帳面量」</strong>，在旁邊輸入實際點到的數量。</span><span lang="en">Each item under <strong>"Pending Items"</strong> shows the product and its <strong>"Book Qty"</strong>; enter what you actually counted beside it.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">全部輸入後點<strong>「送出盤點結果」</strong>。</span><span lang="en">When they are all entered, tap <strong>"Submit Count"</strong>.</span></div></div>
+
+    <h2 id="free"><i class="bi bi-upc-scan me-2 text-primary"></i><span lang="zh">自由盤點</span><span lang="en">Free counting</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在<strong>「選擇盤點儲位」</strong>掃描或輸入儲位代碼。掃<a href="../bas/container-unit.html">箱號</a>則只盤這一箱：畫面換成箱子所在儲位，只列箱子的品號與批號。</span><span lang="en">Scan or type the code under <strong>"Select Location"</strong>. Scanning a <a href="../bas/container-unit.html">box number</a> counts just that box: the screen switches to the box's location and lists only the box's item and lot.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">畫面列出該儲位的每個品項，顯示<strong>「系統：」</strong>帳面數量，在<strong>「實盤數量」</strong>輸入實際數量，下方即時顯示<strong>「差異：」</strong>。</span><span lang="en">The screen lists every item at that location with its <strong>"Sys: "</strong>quantity; enter what you counted in <strong>"Count Qty"</strong> and the <strong>"Diff: "</strong>figure updates below.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點<strong>「加入待送出清單」</strong>把這個儲位的結果暫存，接著可再掃下一個儲位。</span><span lang="en">Tap <strong>"Add to Pending List"</strong> to hold this location's result and move on to the next one.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">全部盤完後點<strong>「送出全部」</strong>一次送出。</span><span lang="en">When everything is counted, tap <strong>"Submit All"</strong> to send it all at once.</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">儲位若無庫存紀錄，畫面會說明「仍可新增品項盤點」——盤到帳上沒有的東西時，直接輸入品號與數量即可，這正是盤盈的來源。</span><span lang="en">If a location has no stock on the books, the screen says you can still add items — when you find something that is not on the books, just enter the product and the quantity. That is exactly where a count gain comes from.</span></div>
+
+    <h2 id="result"><i class="bi bi-check2-square me-2 text-primary"></i><span lang="zh">送出後</span><span lang="en">After submitting</span></h2>
+
+    <p><span lang="zh">送出後畫面上方出現結果卡：全部吻合時顯示<strong>「所有品項數量吻合」</strong>（綠色），有差異或有品項失敗時轉為黃色並逐項列出原因。依清冊盤點時，整張清冊都盤完後它會從下拉清單消失；若那是最後一張，下拉變空屬正常結果，不會再跳「目前無進行中的盤點清冊」提示。</span><span lang="en">A result card appears at the top: green with <strong>"All quantities match"</strong> when everything agrees, or amber listing each item and its reason when there are differences or failures. When counting by sheet, a fully counted sheet drops out of the dropdown; if it was the last one the dropdown is simply empty, and no "No open count sheets" notice is shown.</span></p>
+
+    <p class="text-muted small"><span lang="zh">盤盈虧的調整單由桌機的「庫存調整單」處理，手機不執行調整過帳。</span><span lang="en">Gain and loss adjustments are handled by the Stock Adjustment screen on the desktop; the phone does not post adjustments.</span></p>
+
+    <h2 id="offline"><i class="bi bi-wifi-off me-2 text-primary"></i><span lang="zh">斷線時</span><span lang="en">When the connection drops</span></h2>
+    <p><span lang="zh"><strong>盤點清冊與待複盤清單需要連線才載得出來。</strong>連不上時畫面顯示「需要連線」，不會用舊的清冊頂替。</span><span lang="en"><strong>Count sheets and the recount list need a connection to load.</strong> When the server cannot be reached the screen says "Connection required"; an old sheet is never shown in its place.</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">按送出時若剛好斷線，盤點結果會<strong>先暫存在手機</strong>，畫面提示「連不上伺服器，盤點結果已暫存在手機，恢復連線後自動送出」，已送出的那一批會從畫面拿掉，避免重按變成第二筆。</span><span lang="en">If the connection drops just as you submit, the results are <strong>saved on the phone</strong> and the screen says "Server unreachable — count results saved on the phone and sent when the connection returns"; the batch disappears from the screen so that tapping again does not create a second entry.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">帳面量取的是<strong>送達伺服器當下</strong>的庫存，斷線期間若有進出，差異會包含那段期間的異動；若有明細失敗（例如期間別人已複盤），待送出清單會留黃字，那幾行要重盤。</span><span lang="en">The book quantity is the stock <strong>at the moment the results reach the server</strong>, so any movements during the disconnection show up in the difference; if some lines fail (for example someone else recounted meanwhile) the waiting list keeps a yellow note and those lines must be counted again.</span></div></div>
+    <p class="text-muted small"><span lang="zh">還沒按送出的數量只在畫面上，<strong>離開或重新整理頁面就會消失</strong>（自由盤點清單尚有未送出品項時，離開前會跳確認提示）。訊號不穩的倉區建議<strong>分批少量送出</strong>。詳見<a href="index.html#offline">斷線保護</a>。</span><span lang="en">Quantities not yet submitted exist only on screen and <strong>are lost if you leave or reload the page</strong> (a free-count list with unsent items asks before you leave). In areas with a weak signal, <strong>submit in small batches</strong>. See <a href="index.html#offline">Disconnection protection</a>.</span></p>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "sourcePath": "Modules/BAS/Services/MasterReferenceGuard.cs",
+  "sourceHash": "0f799e9ba8b2a637c1df95e4fd00cb5c801edf964ea5e6569a9c79e4c6865168",
+  "entries": [
+    {
+      "slug": "code-bas-masterreferenceguard-7d2d0b27",
+      "lang": "zh",
+      "headingPath": "基本資料 › 主檔外來參照的伺服端檢核",
+      "text": "主檔外來參照的資料驗證規則｜系統在處理主檔外來參照時，其選項的篩選已經包含了廠別和是否啟用狀態，因此使用者無法透過介面選擇到非本廠代碼或已停用的代碼。此外，當系統查詢廠別主檔時，會進行全域資料查詢，這導致如果所查資料屬於其他廠別，系統會將其資料隱藏，使得錯誤訊息只顯示「代碼不存在」，而無法區分是該代碼根本不存在還是僅屬於其他廠別的資料。",
+      "approved": true
+    },
+    {
+      "slug": "code-bas-masterreferenceguard-72140993",
+      "lang": "zh",
+      "headingPath": "基本資料 › 儲位自己沒有 ，廠別是跟著所屬倉庫走的，故廠別判定取倉庫那一列",
+      "text": "儲位與廠別的關聯性說明｜儲位的唯一識別方式是由「倉庫」和「儲位編號」組合而成，而該儲位所屬的廠別資訊是直接依據其所在的倉庫來判定的。",
+      "approved": true
+    },
+    {
+      "slug": "code-bas-masterreferenceguard-0553a807",
+      "lang": "zh",
+      "headingPath": "基本資料 › 會把那種列誤判成不存在",
+      "text": "取單筆記錄的判定規則｜系統在取得一筆紀錄時，如果該紀錄的廠別編號為空值、是否啟用狀態為未啟用，這類資料會被誤判成不存在。",
+      "approved": true
+    },
+    {
+      "slug": "code-bas-masterreferenceguard-88160067",
+      "lang": "zh",
+      "headingPath": "基本資料 › 廠別為空的列視為共用，",
+      "text": "共用資料的判斷規則｜廠別欄位為空白的記錄，系統視為適用於所有廠區使用。這是因為部分既有的主檔是在多個廠區啟用之前建立的，因此其廠區代碼尚未回填。",
+      "approved": true
+    }
+  ]
+}

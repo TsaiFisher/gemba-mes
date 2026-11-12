@@ -1,0 +1,164 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.RPT.Models.OutsourcePerformanceReport?
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    bool canPrint    = ViewBag.CanPrint == true;
+    string fromDate = ViewBag.FromDate as string ?? "";
+    string toDate   = ViewBag.ToDate   as string ?? "";
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-diagram-3 me-2"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && Model != null && Model.Rows.Any())
+        {
+            <a asp-action="Export" asp-route-fromDate="@fromDate" asp-route-toDate="@toDate"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    @* 常用查詢入口（§7.9-6）。放在查詢卡片之外——partial 內有按鈕與輸入框，
+       塞進下面那張卡的 <form> 內會變成巢狀表單。 *@
+    @await Html.PartialAsync("_SavedQueries", "OutsourcePerformance")
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["FromDate"]</label>
+                    <input type="date" name="fromDate" class="form-control" value="@fromDate" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["ToDate"]</label>
+                    <input type="date" name="toDate" class="form-control" value="@toDate" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Rows.Any())
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+    <!-- 合計卡 -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 bg-primary text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["TotalReceiptCount"]</div>
+                    <div class="fs-5 fw-bold">@Model.TotalReceiptCount</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-info text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["OnTimeRate"]</div>
+                    <div class="fs-5 fw-bold">@Model.TotalOnTimeRate.ToString("N1")%</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-secondary text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["ProcessingFee"]</div>
+                    <div class="fs-5 fw-bold">@Model.TotalProcessingFee.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-danger text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["ScrapPenalty"]</div>
+                    <div class="fs-5 fw-bold">@Model.TotalScrapPenalty.ToString(moneyFmt)
+                        <small class="fs-6">(@Model.TotalScrapPenaltyRate.ToString("N1")%)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["SupplierCode"]</th>
+                        <th>@Localizer["SupplierName"]</th>
+                        <th class="text-center">@Localizer["ReceiptCount"]</th>
+                        <th class="text-end">@Localizer["OnTimeRate"]</th>
+                        <th class="text-end">@Localizer["ReceivedQty"]</th>
+                        <th class="text-end">@Localizer["ProcessingFee"]</th>
+                        <th class="text-end">@Localizer["ScrapPenalty"]</th>
+                        <th class="text-end">@Localizer["ScrapPenaltyRate"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @{ var paged = ReportPaging.Page(Model.Rows, ViewData, Context); }
+                @foreach (var row in paged)
+                {
+                    <tr>
+                        <td><strong>@row.SupplierCode</strong></td>
+                        <td>@row.SupplierName</td>
+                        <td class="text-center">@row.ReceiptCount</td>
+                        <td class="text-end">
+                            @if (row.EvaluableCount == 0)
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                            else
+                            {
+                                <span class="@(row.OnTimeRate >= 90 ? "text-success" : row.OnTimeRate >= 70 ? "text-warning" : "text-danger")">
+                                    @row.OnTimeRate.ToString("N1")%
+                                </span>
+                            }
+                        </td>
+                        <td class="text-end">@row.ReceivedQty.ToString("N2")</td>
+                        <td class="text-end">@row.ProcessingFee.ToString(moneyFmt)</td>
+                        <td class="text-end @(row.ScrapPenalty > 0 ? "text-danger fw-semibold" : "")">
+                            @row.ScrapPenalty.ToString(moneyFmt)
+                        </td>
+                        <td class="text-end">@row.ScrapPenaltyRate.ToString("N1")%</td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot class="table-secondary">
+                    <tr>
+                        <td class="fw-bold" colspan="2">@Localizer["Total"]</td>
+                        <td class="text-center fw-bold">@Model.TotalReceiptCount</td>
+                        <td class="text-end fw-bold">@Model.TotalOnTimeRate.ToString("N1")%</td>
+                        <td class="text-end fw-bold">@Model.TotalReceivedQty.ToString(moneyFmt)</td>
+                        <td class="text-end fw-bold">@Model.TotalProcessingFee.ToString(moneyFmt)</td>
+                        <td class="text-end fw-bold text-danger">@Model.TotalScrapPenalty.ToString(moneyFmt)</td>
+                        <td class="text-end fw-bold">@Model.TotalScrapPenaltyRate.ToString("N1")%</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    @await Html.PartialAsync("_Pagination", paged)
+    }
+</div>

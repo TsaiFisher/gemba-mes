@@ -1,0 +1,77 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.RPT.Models.ProfitLossReport
+@{
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    var isEn = System.Globalization.CultureInfo.CurrentUICulture.Name == "en-US";
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div>
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["PageTitle"]</div>
+        <div class="print-doc-number">
+            @Localizer["FromPeriod"]：@Model.FromPeriod ／ @Localizer["ToPeriod"]：@Model.ToPeriod
+        </div>
+    </div>
+</div>
+
+<!-- 摘要區 -->
+<div class="print-section">
+    <div class="print-section-title">@Localizer["Summary"]</div>
+    <div class="print-field-grid">
+        <div class="print-field-label">@Localizer["Revenue"]</div>
+        <div class="print-field-value fw-bold">@Model.Revenue.ToString(moneyFmt)</div>
+        <div class="print-field-label">@Localizer["Cogs"]</div>
+        <div class="print-field-value">@Model.Cogs.ToString(moneyFmt)</div>
+        <div class="print-field-label">@Localizer["GrossProfit"]</div>
+        <div class="print-field-value fw-bold">@Model.GrossProfit.ToString(moneyFmt) (@Model.GrossMarginRate.ToString("N1")%)</div>
+        <div class="print-field-label">@Localizer["OperatingExpenses"]</div>
+        <div class="print-field-value">@Model.OperatingExpenses.ToString(moneyFmt)</div>
+        <div class="print-field-label">@Localizer["OperatingProfit"]</div>
+        <div class="print-field-value fw-bold">@Model.OperatingProfit.ToString(moneyFmt)</div>
+        <div class="print-field-label">@Localizer["OtherIncome"]</div>
+        <div class="print-field-value">@Model.OtherIncome.ToString(moneyFmt)</div>
+        <div class="print-field-label">@Localizer["OtherExpenses"]</div>
+        <div class="print-field-value">@Model.OtherExpenses.ToString(moneyFmt)</div>
+        <div class="print-field-label fw-bold">@Localizer["NetProfit"]</div>
+        <div class="print-field-value fw-bold @(Model.NetProfit >= 0 ? "text-success" : "text-danger")">
+            @Model.NetProfit.ToString(moneyFmt)
+        </div>
+    </div>
+</div>
+
+<!-- 明細 -->
+@if (Model.Lines.Any())
+{
+    <div class="print-section">
+        <div class="print-section-title">@Localizer["DetailTitle"]</div>
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th>@Localizer["AccountCode"]</th>
+                    <th>@Localizer["AccountName"]</th>
+                    <th>@Localizer["Category"]</th>
+                    <th class="text-end">@Localizer["Amount"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var line in Model.Lines)
+                {
+                    <tr>
+                        <td>@line.AccountCode</td>
+                        <td>@line.AccountName</td>
+                        <td>@Localizer[line.Category]</td>
+                        <td class="text-end">@line.Amount.ToString(moneyFmt)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@await Html.PartialAsync("_PrintBase")

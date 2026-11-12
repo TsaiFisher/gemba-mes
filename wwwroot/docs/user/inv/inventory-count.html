@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Count Sheet — INV User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>盤點清冊 — INV 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">INV 目錄</span><span lang="en">INV Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">INV 畫面</span><span lang="en">INV Screens</span></div>
+    <a href="inventory-balance.html" class="nav-link"><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></a>
+    <a href="stock-movement.html" class="nav-link"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a>
+    <a href="stock-ledger.html" class="nav-link"><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></a>
+    <a href="warehouse-ops.html" class="nav-link"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a>
+    <a href="material-staging.html" class="nav-link"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a>
+    <a href="scrap-doc.html" class="nav-link"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></a>
+    <a href="loan-doc.html" class="nav-link"><span lang="zh">借入借出單</span><span lang="en">Loan Document</span></a>
+    <a href="sample-doc.html" class="nav-link"><span lang="zh">樣品/客供單</span><span lang="en">Sample/Consignment Docs</span></a>
+    <a href="inventory-count.html" class="nav-link active"><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></a>
+    <a href="stock-adjustment.html" class="nav-link"><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></a>
+    <a href="../osp/outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="rework-material.html" class="nav-link"><span lang="zh">重工發退料單</span><span lang="en">Rework Material</span></a>
+    <a href="stock-transfer.html" class="nav-link"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a>
+    <a href="cross-plant-transfer.html" class="nav-link"><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></a>
+    <a href="inventory-valuation.html" class="nav-link"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a>
+    <a href="landed-cost-allocation.html" class="nav-link"><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></a>
+    <a href="stock-shortage.html" class="nav-link"><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></a>
+    <a href="slow-moving-inventory.html" class="nav-link"><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></a>
+    <a href="inventory-aging.html" class="nav-link"><span lang="zh">存貨庫齡分析</span><span lang="en">Inventory Aging Analysis</span></a>
+    <a href="inventory-value.html" class="nav-link"><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></a>
+    <a href="inventory-turnover.html" class="nav-link"><span lang="zh">庫存周轉率</span><span lang="en">Inventory Turnover</span></a>
+    <a href="stock-variance.html" class="nav-link"><span lang="zh">盤差分析</span><span lang="en">Stock Variance</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clipboard2-check me-2 text-primary"></i><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/InventoryCount &nbsp;|&nbsp; 盤點計畫、盤點輸入與盤盈虧調整</span><span lang="en">Route: /InventoryCount &nbsp;|&nbsp; Count planning, count entry and gain/loss adjustment</span></div>
+    </div>
+
+    <p><span lang="zh">建立盤點清冊凍結帳面量，盤點人員輸入實盤量（支援行動裝置），差異經覆核後產生庫存調整（盤盈虧）過帳。</span><span lang="en">Creating a count sheet freezes the book quantity; counters enter the actual quantity (mobile devices supported), and once the differences are reviewed a stock adjustment (count gain/loss) is posted.</span></p>
+    <img class="screen-shot" src="img/inventory-count.png" data-src-en="img/en/inventory-count.png" alt="庫存盤點畫面截圖" data-alt-en="Inventory count screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">庫存盤點畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Inventory count screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">盤點</span><span lang="en">Stock count</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」選擇盤點範圍（倉庫/儲位/品號類別）產生清冊，凍結帳面量。</span><span lang="en">Click "Add", choose the count scope (warehouse / location / product category) to generate the sheet, and the book quantity is frozen.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">盤點人員逐筆輸入實盤量；可多人分區同時進行。</span><span lang="en">Counters enter the actual quantity line by line; several people can count different areas at the same time.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">覆核差異清單，確認後產生調整單過帳盤盈虧。</span><span lang="en">Review the variance list; confirming creates the adjustment that posts the count gain or loss.</span></div></div>
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。盤點表列印逐行列出倉庫、儲位、批號、品號與品名，並留初盤、複盤兩欄；刻意不印帳面數量，避免盤點人照抄帳面數。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The count sheet printout lists warehouse, location, lot, product code and name line by line, with columns for the first count and the recount; the book quantity is deliberately left off so counters cannot copy it.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">依清冊狀態篩選（草稿／已凍結／盤點中／已完成）</span><span lang="en">Filters by count sheet status (Draft / Frozen / Counting / Completed)</span></td></tr>
+        <tr><td><span lang="zh">盤點模式</span><span lang="en">Count Mode</span></td><td><span lang="zh">全盤（整倉一次盤完）或循環盤點（按類別/區域分批）</span><span lang="en">Full count (the whole warehouse at once) or cycle count (in batches by category or area)</span></td></tr>
+        <tr><td><span lang="zh">建立日期（起 / 迄）</span><span lang="en">Created between (from / to)</span></td><td><span lang="zh">依清冊建立日期區間篩選</span><span lang="en">Filters by the creation date range of the count sheet</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">清單欄位</span><span lang="en">List columns</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">清冊單號</span><span lang="en">Sheet No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">盤點模式</span><span lang="en">Count Mode</span></td><td><span lang="zh">全盤或循環盤點，決定清冊的抽取範圍</span><span lang="en">Full or cycle counting, which decides the scope of the sheet</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">清冊的執行進度；凍結後該範圍的庫存異動受限，確保帳面基準不變</span><span lang="en">Progress of the count sheet; once frozen, stock movements within the scope are restricted so that the book baseline stays unchanged</span></td></tr>
+        <tr><td><span lang="zh">盤點範圍</span><span lang="en">Count Range</span></td><td><span lang="zh">本次清冊涵蓋的倉庫／儲位／類別條件</span><span lang="en">Warehouse / location / category scope of this count sheet</span></td></tr>
+        <tr><td><span lang="zh">凍結時間</span><span lang="en">Snapshot Time</span></td><td><span lang="zh">凍結帳面數量的時間點，盤差以此時的帳面量為基準計算</span><span lang="en">The moment the book quantity is frozen; count differences are measured against the book quantity at that point</span></td></tr>
+        <tr><td><span lang="zh">建立者 / 建立日期</span><span lang="en">Created by / Created date</span></td><td><span lang="zh">清冊的建立人與建立時間</span><span lang="en">Who created the count sheet and when</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="stock-adjustment.html"><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">盤點期間建議暫停該範圍的出入庫作業，避免帳面基準失真。</span><span lang="en"> Receipts and issues within the counted scope should be suspended while the count is running, so that the book baseline is not distorted.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

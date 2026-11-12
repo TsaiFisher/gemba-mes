@@ -1,0 +1,95 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Services
+@inject IViewLocalizer Localizer
+@{
+    var role = ViewBag.Role as ApplicationRole;
+    var modules = ViewBag.Modules as IEnumerable<MobileModule> ?? Enumerable.Empty<MobileModule>();
+    var existing = ViewBag.ExistingPermissions as Dictionary<string, bool> ?? new Dictionary<string, bool>();
+    var roleDisplayName = role?.GetDisplayName() ?? string.Empty;
+    ViewData["Title"] = $"{Localizer["Title"].Value} — {roleDisplayName}";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex align-items-center mb-4 gap-2">
+        <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+        <h1 class="mb-0">
+            <i class="bi bi-phone"></i> @Localizer["PageTitle"]
+            <span class="badge bg-primary ms-2">@roleDisplayName</span>
+        </h1>
+    </div>
+
+    <form asp-action="Edit" method="post" id="permForm">
+        <input type="hidden" name="roleId" value="@role?.Id" />
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        @if (!modules.Any())
+        {
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle me-2"></i>
+                @Localizer["NoModules"]
+            </div>
+        }
+
+        @foreach (var module in modules)
+        {
+            <div class="card shadow-sm mb-3">
+                <div class="card-header bg-light d-flex align-items-center gap-2">
+                    <i class="bi @module.IconClass text-primary"></i>
+                    <strong>@module.DisplayName</strong>
+                    <small class="text-muted">(@module.ModuleKey)</small>
+                    <div class="ms-auto">
+                        <button type="button" class="btn btn-link btn-sm text-decoration-none p-0"
+                                data-action="toggleModule" data-module-id="@module.Id" data-checked="true">@Localizer["SelectAll"]</button>
+                        <span class="text-muted mx-1">|</span>
+                        <button type="button" class="btn btn-link btn-sm text-decoration-none p-0"
+                                data-action="toggleModule" data-module-id="@module.Id" data-checked="false">@Localizer["SelectNone"]</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row g-2" data-module="@module.Id">
+                        @foreach (var action in module.Actions.OrderBy(a => a.SortOrder))
+                        {
+                            var isAllowed = existing.ContainsKey(action.Id) && existing[action.Id];
+                            <div class="col-6 col-md-4 col-lg-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                           name="allowedActionIds"
+                                           value="@action.Id"
+                                           id="action-@action.Id"
+                                           @(isAllowed ? "checked" : "")>
+                                    <label class="form-check-label" for="action-@action.Id">
+                                        @action.DisplayName
+                                        <small class="text-muted d-block">@action.ActionKey</small>
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (modules.Any())
+        {
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg me-1"></i> @Localizer["Save"]
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Cancel"]</a>
+            </div>
+        }
+    </form>
+</div>
+
+@section Scripts {
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+        function toggleModule(e, el) {
+            const moduleId = el.dataset.moduleId, checked = el.dataset.checked === 'true';
+            document.querySelectorAll(`[data-module="${moduleId}"] input[type="checkbox"]`)
+                .forEach(cb => cb.checked = checked);
+        }
+    </script>
+}

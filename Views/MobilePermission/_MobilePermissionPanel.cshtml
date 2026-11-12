@@ -1,0 +1,66 @@
+@using SmartFactory.MES.Models
+
+@{
+    var role = ViewBag.Role as ApplicationRole;
+    var modules = ViewBag.Modules as IEnumerable<MobileModule> ?? Enumerable.Empty<MobileModule>();
+    var existing = ViewBag.ExistingPermissions as Dictionary<string, bool> ?? new Dictionary<string, bool>();
+}
+
+<form method="post" asp-action="Edit" asp-controller="MobilePermission" data-ajax="true">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="roleId" value="@role?.Id" />
+
+    @if (!modules.Any())
+    {
+        <div class="alert alert-info m-3">
+            <i class="bi bi-info-circle me-2"></i>@Localizer["NoMobileModules"]
+        </div>
+    }
+
+    @foreach (var module in modules)
+    {
+        <div class="card shadow-sm mx-3 mb-3">
+            <div class="card-header bg-light d-flex align-items-center gap-2 py-2">
+                <i class="bi @module.IconClass text-primary"></i>
+                <strong class="small">@module.DisplayName</strong>
+                <small class="text-muted">(@module.ModuleKey)</small>
+                <div class="ms-auto d-flex gap-2">
+                    <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none"
+                            data-toggle-module="@module.Id" data-toggle-value="true">@Localizer["SelectAll"]</button>
+                    <span class="text-muted">|</span>
+                    <button type="button" class="btn btn-link btn-sm p-0 text-decoration-none"
+                            data-toggle-module="@module.Id" data-toggle-value="false">@Localizer["SelectNone"]</button>
+                </div>
+            </div>
+            <div class="card-body py-2" data-module="@module.Id">
+                <div class="row g-2">
+                    @foreach (var action in module.Actions.OrderBy(a => a.SortOrder))
+                    {
+                        var isAllowed = existing.ContainsKey(action.Id) && existing[action.Id];
+                        <div class="col-6 col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                       name="allowedActionIds" value="@action.Id"
+                                       id="pa-@action.Id" @(isAllowed ? "checked" : "") />
+                                <label class="form-check-label small" for="pa-@action.Id">
+                                    @action.DisplayName
+                                    <span class="text-muted d-block u-font-size-p75rem">@action.ActionKey</span>
+                                </label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (modules.Any())
+    {
+        <div class="d-flex gap-2 px-3 pb-3">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-lg me-1"></i>@Localizer["SaveSettings"]
+            </button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">@Localizer["Cancel"]</button>
+        </div>
+    }
+</form>

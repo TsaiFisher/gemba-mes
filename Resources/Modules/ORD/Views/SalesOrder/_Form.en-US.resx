@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="SalesOrderId" xml:space="preserve"><value>Sales Order No.</value></data>
+  <data name="OrderDate" xml:space="preserve"><value>Order Date</value></data>
+  <data name="OrderType" xml:space="preserve"><value>Order Type</value></data>
+  <data name="Customer" xml:space="preserve"><value>Customer</value></data>
+  <data name="SelectCustomer" xml:space="preserve"><value>Select Customer</value></data>
+  <data name="CustomerOrderNo" xml:space="preserve"><value>Customer Order No.</value></data>
+  <data name="CurrencyCode" xml:space="preserve"><value>Currency</value></data>
+  <data name="Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>Sales Lines</value></data>
+  <data name="AddLine" xml:space="preserve"><value>Add Line</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="DeliveryDate" xml:space="preserve"><value>Delivery Date</value></data>
+  <data name="OrderQty" xml:space="preserve"><value>Order Qty</value></data>
+  <data name="UomCode" xml:space="preserve"><value>UOM</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>Unit Price</value></data>
+  <data name="TaxCode" xml:space="preserve"><value>Tax</value></data>
+  <data name="LineAmount" xml:space="preserve"><value>Amount</value></data>
+  <data name="TaxAmount" xml:space="preserve"><value>Tax Amt</value></data>
+  <data name="TotalAmount" xml:space="preserve"><value>Total</value></data>
+  <data name="AmountLocal" xml:space="preserve"><value>Local Amount</value></data>
+  <data name="ShippedQty" xml:space="preserve"><value>Shipped Qty</value></data>
+  <data name="IsClosed" xml:space="preserve"><value>Closed</value></data>
+  <data name="CloseAll" xml:space="preserve"><value>Close All</value></data>
+  <data name="CloseLine" xml:space="preserve"><value>Close Line</value></data>
+  <data name="Reopen" xml:space="preserve"><value>Reopen</value></data>
+  <data name="ClosePendingApprovalHint" xml:space="preserve"><value>Not yet approved; cannot be closed.</value></data>
+  <data name="ConfirmCloseDoc" xml:space="preserve"><value>Close all open lines? Closed lines cannot be referenced by new shipments.</value></data>
+  <data name="Submit" xml:space="preserve"><value>Submit</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>Withdraw</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>Submit this sales order for approval?</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>Withdraw this sales order from approval?</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="ConfirmCustomerChange" xml:space="preserve"><value>Changing the customer will clear all existing lines. Continue?</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>Remove line</value></data>
+  <data name="TradeTerm" xml:space="preserve"><value>Trade Term (Incoterms)</value></data>
+</root>

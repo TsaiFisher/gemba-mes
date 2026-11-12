@@ -1,0 +1,51 @@
+# R13 baseline — 經審查的正當豁免清單（非待回補項，新增豁免必須附理由）。
+# 不在此清單的新違規會讓建置失敗。
+#
+# 認證/自我服務（僅操作目前登入者自身狀態，無需選單權限）：
+Api/Mobile/MobileAuthController.cs: Login
+Api/Mobile/MobileAuthController.cs: LoginTwoFactor
+Api/Mobile/MobileAuthController.cs: Logout
+Controllers/AccountController.cs: ForceChangePassword
+Controllers/AccountController.cs: SwitchRole
+# M3：使用者自助啟用自身 2FA（[Authorize] 已授權，僅改自己 TwoFactorEnabled，無需選單權限）
+Controllers/TwoFactorController.cs: Enable
+# 同上，僅重產自己的復原碼。原為 GET（誘導點擊即作廢本人復原碼），
+# 2026-08-03 由 Core PR #16 改為 POST + AntiForgery，因而落入 R13 母體。
+Controllers/TwoFactorController.cs: RegenerateRecoveryCodes
+Controllers/UserSettingsController.cs: SwitchPlant
+Controllers/UserSettingsController.cs: SwitchRole
+# 個人時區自助設定（Core PR #34）。與上兩筆同類：`WHERE Id = _userManager.GetUserId(User)`，
+# 只寫呼叫者自己的 ApplicationUser.TimeZoneId，不觸及任何業務資料，因此無對應選單權限可檢查。
+# 程式碼上另掛 [PermissionGateExempt("只寫呼叫者自己的帳號設定（WHERE Id = 目前登入者）")]——
+# 那個屬性目前只有 R24/R26（/api 端點）認得，R13 的豁免仍走本清單。
+Controllers/UserSettingsController.cs: SetTimeZone
+# 個人語系偏好自助設定（Core PR #54）：同 SetTimeZone，只寫呼叫者自己的 ApplicationUser.Language
+# 與 culture cookie。GET 版只寫 cookie（R26），寫回帳號必須走 POST——桌機帶 anti-forgery、手機走 JSON API。
+Controllers/UserSettingsController.cs: SetLanguagePost
+Api/Mobile/MobileAuthController.cs: SetLanguage
+#
+# Push 訂閱自我服務（皆以 _userContext.UserId 限定自身訂閱；Subscribe 另有
+# 訂閱劫持防護：改綁他人 Endpoint 需金鑰相符）：
+Api/Mobile/MobilePushController.cs: SendTest
+Api/Mobile/MobilePushController.cs: Subscribe
+Api/Mobile/MobilePushController.cs: Unsubscribe
+#
+# 簽核引擎（授權於 ApprovalService 內驗證：Process/Withdraw 驗證簽核人/申請人
+# 身分；ReassignApprover 另有方法級 [Authorize(Roles = "Admin,Manager")]）：
+Controllers/ApprovalController.cs: Process
+Controllers/ApprovalController.cs: ReassignApprover
+Controllers/ApprovalController.cs: Withdraw
+# 手機簽核（2026-09-09）。與上面 ApprovalController.Process 是**同一個機制**：
+# 授權完全由 ApprovalService.ProcessApproval 內部的簽核人驗證決定（非當前步驟指定的
+# 簽核人／角色一律 return false）。在手機這一側額外加 MenuKey 閘門會做出
+# 「桌機簽得了、手機簽不了」的漂移。
+# 另外它在呼叫 ProcessApproval 之前還多兩道自己的守門：這張單必須在該使用者的
+# 「待我簽核」清單裡（否則 404），且該單別必須有 IApprovalSummaryProvider（否則 400）。
+Api/Mobile/MobileApprovalController.cs: Decide
+#
+# 唯讀計算（POST 僅回傳工單備齊狀態，無資料異動）：
+Modules/MFG/Controllers/WorkOrderController.cs: CheckReadiness
+# 現場遙測上報（2026-10-21）：手機回報自己的前端錯誤／API 耗時／斷線／未送出佇列，必須允許未登入
+# （登入頁本身出錯、工作階段過期時的錯誤也要收得到），所以沒有選單權限可檢查。
+# 防線在 ClientTelemetryService：未登入只收錯誤兩種、每批筆數上限、每 IP 限流、欄位截斷；不讀寫任何業務資料。
+Api/Telemetry/ClientTelemetryController.cs: Events

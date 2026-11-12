@@ -1,0 +1,217 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@model PaginatedList<MrpRun>
+
+<link rel="stylesheet" href="~/css/panel-table.css" />
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        @if (ViewBag.CanCreate)
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                        data-url="@Url.Action("Create")"
+                        data-label="@Localizer["AddEntry"]"
+                        data-action="openPanel">
+                    <i class="bi bi-plus-circle"></i> @Localizer["Add"]
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" action="@Url.Action("Index")" class="row g-3 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                <div class="col-md-6">
+                    <label class="form-label">@Localizer["SearchLabel"]</label>
+                    <input type="text" name="searchText" class="form-control" value="@ViewBag.SearchText" placeholder="@Localizer["SearchPlaceholder"]" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.CurrentSort == "mrp_run_id" ? "mrp_run_id_desc" : "mrp_run_id" })">
+                            @Localizer["MrpRunId"] @if (ViewBag.CurrentSort == "mrp_run_id") { <i class="bi bi-sort-up"></i> } else if (ViewBag.CurrentSort == "mrp_run_id_desc") { <i class="bi bi-sort-down"></i> }
+                        </a>
+                    </th>
+                    <th>@Localizer["Status"]</th>
+                    <th>@Localizer["LineCount"]</th>
+                    <th>
+                        <a href="@Url.Action("Index", new { sortOrder = ViewBag.CurrentSort == "executed_at" ? "executed_at_desc" : "executed_at" })">
+                            @Localizer["ExecutedAt"] @if (ViewBag.CurrentSort == "executed_at") { <i class="bi bi-sort-up"></i> } else if (ViewBag.CurrentSort == "executed_at_desc") { <i class="bi bi-sort-down"></i> }
+                        </a>
+                    </th>
+                    <th>@Localizer["Remarks"]</th>
+                    <th>@Localizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null) @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MrpRunId</td>
+                        <td>
+                            @if (item.Status == MrpRunStatus.Draft)
+                            {
+                                <span class="badge bg-secondary">@Localizer["StatusDraft"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">@Localizer["StatusExecuted"]</span>
+                                @if (item.IsDirty)
+                                {
+                                    <span class="badge bg-warning text-dark ms-1" title="@Localizer["DirtyHint"]">
+                                        <i class="bi bi-exclamation-triangle"></i> @Localizer["DirtyBadge"]
+                                    </span>
+                                }
+                            }
+                        </td>
+                        <td>@(item.Lines?.Count ?? 0)</td>
+                        <td>@(item.ExecutedAt.HasValue ? DateTimeSvc.ToLocalTime(item.ExecutedAt.Value).ToString("yyyy-MM-dd HH:mm") : "")</td>
+                        <td class="text-muted small">@item.Remarks</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-info"
+                                    data-url="@Url.Action("Details", new { id = item.MrpRunId })"
+                                    data-label="@Localizer["ViewTitle", item.MrpRunId]"
+                                    data-action="openPanel"><i class="bi bi-eye"></i> @Localizer["View"]</button>
+                            @if (item.Status == MrpRunStatus.Draft && ViewBag.CanUpdate)
+                            {
+                                <button type="button" class="btn btn-sm btn-warning"
+                                        data-url="@Url.Action("Edit", new { id = item.MrpRunId })"
+                                        data-label="@Localizer["EditTitle", item.MrpRunId]"
+                                        data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                            }
+                            @if (item.Status == MrpRunStatus.Draft && ViewBag.CanDelete)
+                            {
+                                <button type="button" class="btn btn-sm btn-danger"
+                                        data-action="deleteItem" data-url="@Url.Action("DeleteConfirmed")" data-id="@item.MrpRunId"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                            }
+                            @if (item.Status == MrpRunStatus.Executed && ViewBag.CanUpdate)
+                            {
+                                <button type="button" class="btn btn-sm btn-warning"
+                                        title="@Localizer["ReRun"]"
+                                        data-action="reRunMrp" data-id="@item.MrpRunId" data-label="@Localizer["ViewTitle", item.MrpRunId]"><i class="bi bi-arrow-repeat"></i> @Localizer["ReRun"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-info">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<div class="offcanvas offcanvas-end u-panel-wide" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+    <script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+        // 重跑（§10-5）：先呼叫前置可行性評估預告後果——L3 直接擋下並列出原因，
+        // L2 先讓使用者看到哪些下游單據不會被自動收斂再決定是否續行，L1 直接確認。
+        // 通過後才 POST 重跑，並在側欄顯示展開結果。
+        var reRunConfirmMsg = "@Localizer["ReRunConfirm"]";
+        var reRunFailedMsg = "@Localizer["LoadFailed"]";
+        var reRunBlockedTitle = "@Localizer["ReRunBlockedTitle"]";
+        var reRunResidualTitle = "@Localizer["ReRunResidualTitle"]";
+        var reRunEvalFailedMsg = "@Localizer["ReRunEvalFailed"]";
+
+        function formatImpediments(items) {
+            return items.map(function (i) { return '• ' + i.description; }).join('\n');
+        }
+
+        window.reRunMrp = function (e, el) {
+            var id = el.dataset.id, label = el.dataset.label;
+            fetch('@Url.Action("Evaluate")'.replace(/\/$/, '') + '/' + encodeURIComponent(id), {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (ev) {
+                    if (!ev.success) { alert(ev.message || reRunEvalFailedMsg); return; }
+                    if (!ev.canReRun) {
+                        alert(reRunBlockedTitle + '\n\n' + formatImpediments(ev.blocking));
+                        return;
+                    }
+                    var msg = reRunConfirmMsg;
+                    if (ev.residuals && ev.residuals.length > 0) {
+                        msg = reRunResidualTitle + '\n\n' + formatImpediments(ev.residuals)
+                            + '\n\n' + reRunConfirmMsg;
+                    }
+                    if (!confirm(msg)) return;
+                    postReRun(id, label);
+                })
+                .catch(function () { alert(reRunEvalFailedMsg); });
+        };
+
+        function postReRun(id, label) {
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+            fetch('@Url.Action("ReRun")'.replace(/\/$/, '') + '/' + encodeURIComponent(id), {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': token, 'X-Requested-With': 'XMLHttpRequest' }
+            })
+                .then(function (r) { return r.text(); })
+                .then(function (html) {
+                    var body = document.getElementById('sidePanelBody');
+                    if (html.replace(/^\s+/, '').slice(0, 7).toLowerCase() === '<script') {
+                        window.execScripts && (body.innerHTML = html, window.execScripts(body));
+                        return;   // 被擋下/錯誤：僅執行警示，不開面板
+                    }
+                    document.getElementById('sidePanelLabel').textContent = label;
+                    body.innerHTML = html;
+                    window.execScripts && window.execScripts(body);
+                    new bootstrap.Offcanvas(document.getElementById('sidePanel')).show();
+                })
+                .catch(function () { alert(reRunFailedMsg); });
+        }
+    </script>
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>工作中心維護</value></data>
+  <data name="AddEntry" xml:space="preserve"><value>新增工作中心</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>代號 / 名稱查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>查詢工作中心代號或名稱</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入查詢條件後按「查詢」</value></data>
+  <data name="WorkCenterCode" xml:space="preserve"><value>工作中心代號</value></data>
+  <data name="WorkCenterName" xml:space="preserve"><value>工作中心名稱</value></data>
+  <data name="DepartmentId" xml:space="preserve"><value>部門代號</value></data>
+  <data name="ShiftGroupCode" xml:space="preserve"><value>班制代號</value></data>
+  <data name="IsProductionLine" xml:space="preserve"><value>生產線</value></data>
+  <data name="AdditionalRate" xml:space="preserve"><value>附加費率</value></data>
+  <data name="StandardLaborCost" xml:space="preserve"><value>標準工時單價</value></data>
+  <data name="MachineHourlyRate" xml:space="preserve"><value>機台費率</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="IsActive" xml:space="preserve"><value>啟用</value></data>
+  <data name="Active" xml:space="preserve"><value>啟用</value></data>
+  <data name="Inactive" xml:space="preserve"><value>停用</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="BasicInfo" xml:space="preserve"><value>基本資料</value></data>
+  <data name="MachinesSection" xml:space="preserve"><value>機台清單</value></data>
+  <data name="AddMachine" xml:space="preserve"><value>新增機台</value></data>
+  <data name="LinesSection" xml:space="preserve"><value>生產線別</value></data>
+  <data name="AddLine" xml:space="preserve"><value>新增線別</value></data>
+  <data name="LineCode" xml:space="preserve"><value>線別代號</value></data>
+  <data name="LineName" xml:space="preserve"><value>線別名稱</value></data>
+  <data name="MachineCode" xml:space="preserve"><value>機台編號</value></data>
+  <data name="MachineName" xml:space="preserve"><value>機台名稱</value></data>
+  <data name="MachineStatus" xml:space="preserve"><value>設備狀態</value></data>
+  <data name="MachineStatusAvailable" xml:space="preserve"><value>正常</value></data>
+  <data name="MachineStatusStandby" xml:space="preserve"><value>待機</value></data>
+  <data name="MachineStatusExternalRepair" xml:space="preserve"><value>外修中</value></data>
+  <data name="MachineStatusBreakDown" xml:space="preserve"><value>故障停機</value></data>
+  <data name="MachineStatusModification" xml:space="preserve"><value>改良/改裝</value></data>
+  <data name="MachineStatusLoaned" xml:space="preserve"><value>外借</value></data>
+  <data name="MachineStatusRetired" xml:space="preserve"><value>廢棄</value></data>
+  <data name="MachineStatusMaintenance" xml:space="preserve"><value>保養中</value></data>
+  <data name="WorkCenterCodeReadonlyHint" xml:space="preserve"><value>工作中心代號建立後無法修改</value></data>
+  <data name="WorkCenterCodePlaceholder" xml:space="preserve"><value>例：MC01、WC-A</value></data>
+  <data name="Print" xml:space="preserve"><value>列印</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>匯出 Excel</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>匯出 CSV</value></data>
+  <data name="ExportJson" xml:space="preserve"><value>匯出 JSON</value></data>
+  <data name="WorkCenterCodePlaceholder" xml:space="preserve"><value>例：WC001</value></data>
+  <data name="WorkCenterCodeReadonlyHint" xml:space="preserve"><value>工作中心代號建立後無法修改</value></data>
+  <data name="StagingWhCode" xml:space="preserve"><value>預設備料倉</value></data>
+  <data name="StagingLocationCode" xml:space="preserve"><value>預設備料儲位</value></data>
+  <data name="StagingWhHint" xml:space="preserve"><value>本工作中心的派工開備料單時，備料目標倉的預設值（★ 為備料倉類型）；開單時仍可修改。</value></data>
+  <data name="MachineStatusReadonlyHint" xml:space="preserve"><value>既有機台的狀態請由「機台狀態異動」變更——那裡會一併處理機台上的派工（已排退回待排、已開工轉暫停、恢復時自動恢復）並留下異動紀錄。新增的機台可在此設定初始狀態。</value></data>
+</root>

@@ -1,0 +1,70 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model DepartmentActualCost
+
+@{
+    bool isReadOnly       = ViewBag.IsReadOnly == true;
+    var periodOptions     = ViewBag.PeriodOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    var workCenterOptions = ViewBag.WorkCenterOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    int baseDp            = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt       = "{0:F" + baseDp + "}";
+}
+
+<form method="post" action="@(Model.Id == 0 ? Url.Action("Create") : Url.Action("Edit", new { id = Model.Id }))"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+    <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Period"] <span class="text-danger">*</span></label>
+            <select class="form-select" asp-for="PeriodId">
+                <option value="">@Localizer["SelectPlaceholder"]</option>
+                @foreach (var p in periodOptions)
+                {
+                    <option value="@p">@p</option>
+                }
+            </select>
+            <span asp-validation-for="PeriodId" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["WorkCenter"] <span class="text-danger">*</span></label>
+            <select class="form-select" asp-for="WorkCenterCode">
+                <option value="">@Localizer["SelectPlaceholder"]</option>
+                @foreach (var wc in workCenterOptions)
+                {
+                    <option value="@wc.WorkCenterCode">@wc.WorkCenterCode — @wc.WorkCenterName</option>
+                }
+            </select>
+            <span asp-validation-for="WorkCenterCode" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["ActualLaborCost"] <span class="text-danger">*</span></label>
+            <input asp-for="ActualLaborCost" asp-format="@moneyFmt" type="number" step="any" min="0" class="form-control" />
+            <span asp-validation-for="ActualLaborCost" class="text-danger small"></span>
+            <div class="form-text">@Localizer["ActualLaborCostHint"]</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["ActualOverheadCost"] <span class="text-danger">*</span></label>
+            <input asp-for="ActualOverheadCost" asp-format="@moneyFmt" type="number" step="any" min="0" class="form-control" />
+            <span asp-validation-for="ActualOverheadCost" class="text-danger small"></span>
+            <div class="form-text">@Localizer["ActualOverheadCostHint"]</div>
+        </div>
+    </fieldset>
+
+    <div class="modal-footer">
+        @if (isReadOnly)
+        {
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+        }
+    </div>
+</form>

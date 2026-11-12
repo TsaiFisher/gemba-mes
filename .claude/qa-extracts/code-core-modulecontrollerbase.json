@@ -1,0 +1,78 @@
+{
+  "sourcePath": "Modules/_Shared/ModuleControllerBase.cs",
+  "sourceHash": "f890b76134070545361e1929459b45b5ad86a6ffb5d49eef06227b92bf05f171",
+  "entries": [
+    {
+      "slug": "code-core-modulecontrollerbase-68e5ac5e",
+      "lang": "zh",
+      "headingPath": "系統共用 › 使用者／廠別時區的時間換算",
+      "text": "時間顯示的標準規則說明｜所有系統中用時間戳記記錄的時間，都必須透過此處進行換算，不能直接使用伺服器的當前時間。",
+      "approved": true,
+      "sourceSectionHash": "8306c48272b1f3255935189f6bf9c8d321cc7f152ab27af57f560260a827d600"
+    },
+    {
+      "slug": "code-core-modulecontrollerbase-851c8725",
+      "lang": "zh",
+      "headingPath": "系統共用 › ️ 本方法不做任何守門，只準備",
+      "text": "權限檢查需在各操作處自行實作｜系統不會自動為所有畫面做權限控制，每個需要限制存取權限的動作都必須在對應的操作流程中手動加入權限判斷。",
+      "approved": true,
+      "sourceSectionHash": "d0964f30670db80b4524dd077f9437a32437ffd34f83dd86496587687900febb"
+    },
+    {
+      "slug": "code-core-modulecontrollerbase-bf0ffd85",
+      "lang": "zh",
+      "headingPath": "系統共用 › 單據明細的讀取閘門：模組可讀 或 本人是這一張單的簽核關係人",
+      "text": "單據明細可讀條件說明｜若使用者不是該模組的使用者，系統會檢查該使用者是否為這張單據的簽核關係人；如果是，則允許查看。",
+      "approved": true,
+      "sourceSectionHash": "5ae1b982f01288695c4f65a93e7c3f3b7fcb5c21d85b6f07367c363c609e0c41"
+    },
+    {
+      "slug": "code-core-modulecontrollerbase-4b517759",
+      "lang": "zh",
+      "headingPath": "系統共用 › 取代各控制器各寫一套 if 分支",
+      "text": "統一處理資料驗證失敗的顯示方式｜當系統在進行非即時（AJAX）操作，且輸入的資料不符合規定時，會以部分頁面更新的方式回傳結果；否則，會回傳完整的畫面。",
+      "approved": false,
+      "sourceSectionHash": "263f77acb997707e6f45ec6662d0f1a13178e05e375ae2003d85f39747fd5ac6"
+    },
+    {
+      "slug": "code-core-modulecontrollerbase-6d6ddcab",
+      "lang": "zh",
+      "headingPath": "系統共用 › 故「狀態推進＋回呼過帳＋存檔」以顯式交易包住，",
+      "text": "統一簽核流程與資料一致性控制｜系統在處理簽核狀態的變更時，會將「狀態推進」、「回呼過帳」和「儲存資料」這三個動作視為一個整體交易來執行。如果這三個步驟中的任何一步失敗，整個操作都會自動回滾，以確保單據不會處於不一致的狀態，並且會記錄錯誤並提示使用者後讓其重試。",
+      "approved": true,
+      "sourceSectionHash": "d995f53846038ef0e39bf3f1392e0a93dda3fbbf01eb9457f9d8bb8349250e54"
+    },
+    {
+      "slug": "code-core-modulecontrollerbase-9aef17db",
+      "lang": "zh",
+      "headingPath": "系統共用 › 核准且帶自動過帳回呼：以交易包住整段，失敗整體回滾",
+      "text": "核准且帶自動過帳回呼：以交易包住整段，失敗整體回｜流程處理的資料會全部一起處理，若其中任何一個環節出錯，所有已經完成的部分都會退回到原本的狀態，需要重新嘗試。",
+      "approved": true,
+      "sourceSectionHash": "cd71a380244069b08d147949e9ba293ec60ad6c0823acaa8197530a079523456"
+    },
+    {
+      "slug": "code-core-modulecontrollerbase-9870b3f6",
+      "lang": "zh",
+      "headingPath": "系統共用 › 權限 → 載入 → 僅 / 可送 → 查簽核設定→",
+      "text": "送簽流程的統一處理機制｜當單據需要送件核准時，系統會透過一個統一的流程來建立和儲存核准申請紀錄。如果該單據沒有設定任何核准流程，則會直接完成核准。",
+      "approved": true,
+      "sourceSectionHash": "f7f276d1a6824ddb3e406a07a3b4a68c517145d4edc891ab591f8a0851db3b80"
+    },
+    {
+      "slug": "code-core-modulecontrollerbase-d68c9a2a",
+      "lang": "zh",
+      "headingPath": "系統共用 › 交易包住「建立申請單＋回寫單據」：第二段存檔失敗時整體回滾，",
+      "text": "資料存取流程的完整性要求｜當建立申請單和回寫單據這兩個動作中，任何一個環節儲存失敗時，所有已完成的變動都會被撤銷，以確保系統不會留下未完成或不一致的紀錄。",
+      "approved": true,
+      "sourceSectionHash": "af131a238ce4d9cf893ca4fbb7f4927733504fd3a1d41220e6ad01659d982a5a"
+    },
+    {
+      "slug": "code-core-modulecontrollerbase-67b5bdf6",
+      "lang": "zh",
+      "headingPath": "系統共用 › ，不可再覆寫回待審核",
+      "text": "簽核流程終局核准規則說明｜當模板開啟了「同一簽核人自動跳簽」且所有審核步驟都被跳過時，送件審核的動作會直接視為最終核准，此狀態無法再變回待審核。此外，帶有自動過帳功能的單據類型，其過帳狀態將由既有的同步讀取機制來補齊。",
+      "approved": true,
+      "sourceSectionHash": "8b828e928593de9fe65c2b1718fee40130bdc06553e4a203dc388f9aa8ba10e9"
+    }
+  ]
+}

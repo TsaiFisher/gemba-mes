@@ -1,0 +1,237 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Services
+@inject IViewLocalizer Localizer
+@inject IPermissionService PermissionService
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Models.ApplicationRole>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.SharedResource> SL
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched == true;
+    var canPrint = await PermissionService.CanPrint("MobilePermission");
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-phone"></i> @Localizer["PageTitle"]</h1>
+    </div>
+
+    <!-- 搜尋與分頁設定 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-3 align-items-center">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-7">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" name="searchTerm" class="form-control border-end-0"
+                               placeholder="@Localizer["SearchPlaceholder"]" value="@ViewBag.SearchTerm" />
+                        @if (!string.IsNullOrEmpty(ViewBag.SearchTerm as string))
+                        {
+                            <a asp-action="Index" asp-route-searched="true" asp-route-pageSize="@ViewBag.CurrentPageSize"
+                               class="btn btn-outline-secondary border-start-0 border-end-0 bg-white text-muted">
+                                <i class="bi bi-x-circle"></i>
+                            </a>
+                        }
+                        <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                        @if (canPrint)
+                        {
+                            <button type="button" class="btn btn-outline-info ms-2" data-action="printPage">
+                                <i class="bi bi-printer"></i> @Localizer["Print"]
+                            </button>
+                            <div class="btn-group ms-1">
+                                <a asp-action="Export"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-sortOrder="@ViewBag.CurrentSort"
+                                   asp-route-format="xlsx"
+                                   class="btn btn-outline-success">
+                                    <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                                </a>
+                                <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown"></button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-action="Export"
+                                           asp-route-searchTerm="@ViewBag.SearchTerm"
+                                           asp-route-sortOrder="@ViewBag.CurrentSort"
+                                           asp-route-format="csv">
+                                        <i class="bi bi-filetype-csv me-2"></i>@Localizer["ExportCsv"]</a></li>
+                                    <li><a class="dropdown-item" asp-action="Export"
+                                           asp-route-searchTerm="@ViewBag.SearchTerm"
+                                           asp-route-sortOrder="@ViewBag.CurrentSort"
+                                           asp-route-format="json">
+                                        <i class="bi bi-filetype-json me-2"></i>@Localizer["ExportJson"]</a></li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="card shadow-sm">
+            <div class="card-body text-center py-5 text-muted">
+                <i class="bi bi-search fs-1 d-block mb-3 opacity-25"></i>
+                <p class="mb-0">@Localizer["SearchPrompt"]</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">
+                                <a class="text-dark text-decoration-none" asp-action="Index"
+                                   asp-route-sortOrder="@ViewBag.NameSort"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true">
+                                    @Localizer["RoleName"]
+                                    @if (string.IsNullOrEmpty(ViewBag.CurrentSort as string) || ViewBag.CurrentSort == "name_asc") { <i class="bi bi-sort-up"></i> }
+                                    else if (ViewBag.CurrentSort == "name_desc") { <i class="bi bi-sort-down"></i> }
+                                </a>
+                            </th>
+                            <th>
+                                <a class="text-dark text-decoration-none" asp-action="Index"
+                                   asp-route-sortOrder="@ViewBag.OrgSort"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true">
+                                    @Localizer["Organization"]
+                                    @if (ViewBag.CurrentSort == "org_asc") { <i class="bi bi-sort-up"></i> }
+                                    else if (ViewBag.CurrentSort == "org_desc") { <i class="bi bi-sort-down"></i> }
+                                </a>
+                            </th>
+                            <th class="text-end pe-4">@Localizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center py-5 text-muted">@Localizer["NoData"]</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var role in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-bold">
+                                        @role.GetDisplayName()
+                                        <small class="text-muted fw-normal ms-1">(@role.Name)</small>
+                                    </td>
+                                    <td>@(role.OrganizationUnit?.Name ?? "-")</td>
+                                    <td class="text-end pe-4">
+                                        <button type="button" class="btn btn-sm btn-primary"
+                                                data-url="@Url.Action("Edit", "MobilePermission", new { id = role.Id })"
+                                                data-label="@($"{Localizer["SetPermissions"].Value}：{role.GetDisplayName()}")"
+                                                data-action="openMobilePanel">
+                                            <i class="bi bi-phone"></i> @Localizer["SetPermissions"]
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel (Bootstrap Offcanvas) -->
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-600px-95vw" id="mobilePermPanel" tabindex="-1"
+     aria-labelledby="mobilePermPanelLabel">
+    <div class="offcanvas-header border-bottom bg-primary text-white py-3">
+        <h5 class="offcanvas-title mb-0" id="mobilePermPanelLabel">
+            <i class="bi bi-phone me-2"></i><span id="mobilePermPanelTitle"></span>
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="mobilePermPanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="mobileSuccessToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body">
+                <i class="bi bi-check-circle-fill me-2"></i><span id="mobileSuccessToastMsg">@Localizer["SaveSettingsSuccess"]</span>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function openMobilePanel(e, el) {
+        const url = el.dataset.url, title = el.dataset.label;
+        document.getElementById('mobilePermPanelTitle').textContent = title;
+        const body = document.getElementById('mobilePermPanelBody');
+        body.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-3 text-muted small">' + @(Json.Serialize(SL["Loading"].Value)) + '</p></div>';
+        new bootstrap.Offcanvas(document.getElementById('mobilePermPanel')).show();
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+            .then(html => { body.innerHTML = DOMPurify.sanitize(html); bindMobilePanel(); })
+            .catch(() => { body.innerHTML = '<div class="alert alert-danger m-3">' + @(Json.Serialize(SL["LoadFailedRetry"].Value)) + '</div>'; });
+    }
+
+    function bindMobilePanel() {
+        // 表單送出
+        const form = document.querySelector('#mobilePermPanelBody form[data-ajax="true"]');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitMobilePanel(this);
+            });
+        }
+        // 取消按鈕
+        document.querySelectorAll('#mobilePermPanelBody [data-dismiss-panel]').forEach(btn => {
+            btn.addEventListener('click', () =>
+                bootstrap.Offcanvas.getInstance(document.getElementById('mobilePermPanel'))?.hide());
+        });
+        // 全選 / 全不選
+        document.querySelectorAll('#mobilePermPanelBody [data-toggle-module]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const moduleId = this.dataset.toggleModule;
+                const checked = this.dataset.toggleValue === 'true';
+                document.querySelectorAll(`[data-module="${moduleId}"] input[type="checkbox"]`)
+                    .forEach(cb => cb.checked = checked);
+            });
+        });
+    }
+
+    function submitMobilePanel(form) {
+        const btn = form.querySelector('[type="submit"]');
+        const orig = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>';
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                bootstrap.Offcanvas.getInstance(document.getElementById('mobilePermPanel')).hide();
+                new bootstrap.Toast(document.getElementById('mobileSuccessToast')).show();
+            } else {
+                btn.disabled = false; btn.innerHTML = orig;
+                alert(result.message || @(Json.Serialize(SL["SaveFailedRetry"].Value)));
+            }
+        })
+        .catch(() => { btn.disabled = false; btn.innerHTML = orig; alert(@(Json.Serialize(SL["SaveFailedRetry"].Value))); });
+    }
+</script>
+}

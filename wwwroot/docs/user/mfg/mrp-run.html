@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="MRP Run — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MRP 執行 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link active"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-cpu-fill me-2 text-primary"></i><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/MrpRun &nbsp;|&nbsp; 物料需求計畫展開：訂單 → 工單/採購建議</span><span lang="en">Route: /MrpRun &nbsp;|&nbsp; Material requirements planning: orders → work order and purchase suggestions</span></div>
+    </div>
+
+    <p><span lang="zh">MRP 依訂單需求、現有庫存、在途量與產品 MRP 模式（自製/外購/委外）展開，產生工單、請購建議或委外採購單建議，並依工作日曆與途程前置期倒推各階開工日。批量政策由系統參數控制（逐批 LotForLot 或最小批量/倍量 MinMultiple）。料況不足時工單會標示「待料風險」（在途 PO/委外預計到貨日 ≤ 計畫開工日仍可排程，甘特圖以黃色標記）。</span><span lang="en">MRP explodes demand from sales orders against on-hand stock, in-transit quantities and each product's MRP mode (make / buy / outsource) to produce work orders, purchase requisition suggestions or outsource purchase order suggestions, back-scheduling the start date of every level from the work calendar and the routing lead time. The lot-sizing policy is controlled by a system parameter (lot-for-lot, or minimum / multiple lot size). When material is short the work order is flagged "material risk" (it can still be scheduled if the expected arrival of the in-transit PO or outsource order is on or before the planned start date, and is marked yellow on the Gantt chart).</span></p>
+    <img class="screen-shot" src="img/mrp-run.png" data-src-en="img/en/mrp-run.png" alt="MRP 執行畫面截圖" data-alt-en="MRP run screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">MRP 執行畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">MRP run screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列的「執行單號/備註」輸入關鍵字後點「查詢」；「執行單號」與「展開時間」欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Type a keyword into "Run No. / Remarks" in the search bar and click "Search"; the "Run No." and "Expanded At" column headers can be clicked to sort, and page navigation sits below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">「狀態」欄顯示「草稿」或「已展開」。草稿可編輯或刪除；已展開的執行單不能再修改，「操作」欄只剩檢視（眼睛圖示）與「重跑」。</span><span lang="en">The "Status" column shows "Draft" or "Executed". A draft can be edited or deleted; an executed run can no longer be modified — the "Actions" column only offers view (the eye icon) and "Re-run".</span></div></div>
+
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">建立執行單</span><span lang="en">Create a run</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」開啟側欄。執行單號於存檔後由系統自動編號，備註可留空。</span><span lang="en">Click "Add" to open the side panel. The run number is assigned automatically on save, and remarks may be left blank.</span></div></div>
+    <img class="screen-shot" src="img/mrp-run-panel.png" data-src-en="img/en/mrp-run-panel.png" alt="新增 MRP 執行單側欄" data-alt-en="New MRP run side panel" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">新增 MRP 執行單：需求列還是空的，底部只有「取消」與「儲存草稿」——「執行 MRP」要存檔後重新開啟才會出現</span><span lang="en">A new MRP run: the demand lines are still empty and the footer only offers "Cancel" and "Save Draft" — "Execute MRP" appears only after the draft is saved and reopened</span></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「匯入訂單」開啟明細視窗，勾選未結案的訂單明細並輸入本次排程量（預設為剩餘量＝訂單量−已展開量），再點「加入選取」帶進需求列。</span><span lang="en">Click "Import Orders" to open the picker, tick the open order lines and enter the quantity to plan this time (which defaults to the remaining quantity = order quantity − quantity already exploded), then click "Add Selected" to bring them into the demand lines.</span></div></div>
+    <img class="screen-shot" src="img/mrp-run-import.png" data-src-en="img/en/mrp-run-import.png" alt="匯入訂單明細視窗" data-alt-en="Import order lines dialog" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">匯入訂單明細：銷售訂單與內部訂單都會列出，「本次排程量」可逐列調整</span><span lang="en">Importing order lines: both sales orders and internal orders are listed, and the quantity to plan can be adjusted line by line</span></div>
+    <div class="step-row" data-shot="img/mrp-run-panel.png"><span class="step-badge">3</span><div><span lang="zh">點「儲存草稿」。草稿仍可反覆修改需求列，也可以先存檔、之後再回來補。</span><span lang="en">Click "Save Draft". The demand lines of a draft can still be changed as often as needed, so it is fine to save first and come back later.</span></div></div>
+    <h3><span lang="zh">執行展開</span><span lang="en">Run the explosion</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">於列表點該草稿「操作」欄的鉛筆圖示重新開啟側欄，確認需求列無誤後點「執行 MRP」。系統會再確認一次：展開後此執行單將無法再修改。</span><span lang="en">Click the pencil icon in the "Actions" column of that draft to reopen the panel, check the demand lines and then click "Execute MRP". The system asks for confirmation once more: the run can no longer be edited after it is exploded.</span></div></div>
+    <img class="screen-shot" src="img/mrp-run-execute.png" data-src-en="img/en/mrp-run-execute.png" alt="草稿的執行 MRP 按鈕" data-alt-en="The Execute MRP button on a draft" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">重新開啟的草稿：需求列已帶出來源訂單，底部多出綠色的「執行 MRP」</span><span lang="en">A reopened draft: the demand line carries its source order, and the green "Execute MRP" button is now in the footer</span></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">系統依料況展開，建立生產批、工單與派工；需外購的部分會自動建立一張請購單。</span><span lang="en">The system explodes against the material situation and creates production batches, work orders and dispatches; whatever has to be bought in is raised as a purchase requisition automatically.</span></div></div>
+    <h2 id="reading-the-results"><i class="bi bi-clipboard-data me-2 text-primary"></i><span lang="zh">結果解讀</span><span lang="en">Reading the results</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">展開完成的訊息會列出生產批、工單、派工的筆數與「預計延遲的生產批」；自動建立的請購單可於「請購轉採購」批次轉為採購單。</span><span lang="en">The completion message lists how many production batches, work orders and dispatches were created plus the "production batches predicted to be late"; the requisition that was raised automatically can be turned into purchase orders in bulk under "PR to PO".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">於列表點「操作」欄的眼睛圖示可看展開結果明細：每列的產銷模式、庫存滿足量、採購量、委外量、自製量與對應生產批；「預檢錯誤」欄會標出展開時發現的問題。</span><span lang="en">The eye icon in the "Actions" column shows the expansion result in detail: the make/buy mode, the quantity covered from stock, the purchased, outsourced and in-house quantities and the matching production batch for every line; the "Pre-check errors" column flags problems found during the explosion.</span></div></div>
+    <img class="screen-shot" src="img/mrp-run-result.png" data-src-en="img/en/mrp-run-result.png" alt="MRP 展開結果明細" data-alt-en="MRP expansion result detail" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">展開結果明細：同一品號兩列分別由庫存滿足與新開生產批滿足</span><span lang="en">Expansion result detail: two lines of the same product, one covered from stock and one by a newly created production batch</span></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">每筆需求列顯示來源訂單（pegging 1:1），可追溯至銷售訂單。</span><span lang="en">Every demand line shows its source order (1:1 pegging) and can be traced back to the sales order.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">「MRP 達成率」報表可事後檢核建議與實際落實的差異。</span><span lang="en">The "MRP Attainment" report lets you review afterwards how far the suggestions were actually acted on.</span></div></div>
+    <h2 id="how-the-quantity-covered-from-stock-is"><i class="bi bi-calculator me-2 text-primary"></i><span lang="zh">庫存滿足量怎麼算</span><span lang="en">How the quantity covered from stock is worked out</span></h2>
+    <p><span lang="zh">展開結果的「庫存滿足量」不等於庫存餘額表上的數字。系統實際可以拿來扣抵需求的量是：</span><span lang="en">The "covered from stock" figure in the expansion result is not the number on the inventory balance report. What the system may actually use to cover demand is:</span></p>
+    <p><span lang="zh"><code>可取用量 = max( 可用庫存 + 已核准 PO 在途 + 進貨待上架 − 出貨待下架 − 安全庫存 , 0 )</code></span><span lang="en"><code>usable = max( available stock + in-transit approved POs + goods awaiting put-away − shipments awaiting picking − safety stock , 0 )</code></span></p>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">項目</span><span lang="en">Term</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">安全庫存</span><span lang="en">Safety stock</span></td><td><span lang="zh">產品主檔的安全庫存<strong>會先被扣掉，MRP 不會動用它</strong>。所以帳上明明有量卻仍開出請購／工單是正常的——差額通常就是這一段</span><span lang="en">The product master&#39;s safety stock is <strong>deducted first; MRP never draws on it</strong>. Seeing a requisition or work order raised while stock appears to be on hand is therefore normal — the gap is usually exactly this</span></td></tr>
+        <tr><td><span lang="zh">已核准 PO 在途</span><span lang="en">In-transit approved POs</span></td><td><span lang="zh">只認<strong>已核准</strong>、未結案、且<strong>交期在需求日之前（含當日）</strong>的採購單未交量。草稿或待審的 PO、交期晚於需求日的 PO 都不算</span><span lang="en">Counts only the undelivered quantity of purchase orders that are <strong>approved</strong>, still open, and <strong>due on or before the required date</strong>. Draft or pending POs, and POs due later than the required date, do not count</span></td></tr>
+        <tr><td><span lang="zh">進貨待上架 / 出貨待下架</span><span lang="en">Awaiting put-away / awaiting picking</span></td><td><span lang="zh"><strong>只在完整模式生效</strong>：貨已進廠但還沒上架時庫存尚未增加，故加回；已確認出貨但還沒下架時庫存尚未減少，故扣除。簡化模式核准即過帳，庫存已即時反映，不做這兩項調整</span><span lang="en"><strong>Full mode only.</strong> Goods received but not yet put away have not increased stock, so they are added back; shipments confirmed but not yet picked have not decreased it, so they are deducted. In simplified mode approval posts immediately, stock is already up to date, and neither adjustment is made</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">同一次展開中同一品號被多階需求共用時，在途與待上架的量<strong>只會被認領一次</strong>，不會重複扣抵。取用順序固定為在手庫存 → PO 在途 → 進貨待上架，且在手那一段本身也不得低於安全庫存。</span><span lang="en">Where several levels of one explosion need the same item, in-transit and awaiting-put-away quantities are <strong>claimed only once</strong> and never counted twice. They are drawn in a fixed order — on-hand, then in-transit POs, then goods awaiting put-away — and the on-hand portion alone may not fall below safety stock either.</span></p>
+
+    <h2 id="decimals-of-the-material-demand"><i class="bi bi-123 me-2 text-primary"></i><span lang="zh">用料需求量的小數位（2026-07 起）</span><span lang="en">Decimals of the material demand quantity (from 2026-07)</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">展開子階用料時，需求量＝上階數量 × 單位用量 ×（1 ＋ 下角率% ＋ 損耗率%），此式可能算出小數（例：105 × 1.05 ＝ 110.25）。</span><span lang="en">When a lower level is exploded, demand = parent quantity × usage per unit × (1 + offcut rate% + scrap rate%), which can produce a decimal (e.g. 105 × 1.05 = 110.25).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">系統會依該料</span><span lang="en">The system uses the material's </span><b><span lang="zh">計量單位的小數位無條件進位</span><span lang="en">rounded up to the decimals of the unit of measure</span></b><span lang="zh">：PCS 為 0 位 → 110.25 進位為</span><span lang="en">: PCS has 0 decimals, so 110.25 rounds up to</span> <b>111</b><span lang="zh">；若單位允許 4 位小數則保留 110.25。計量單位主檔查無該單位時維持原值不進位。</span><span lang="en">; if the unit allows 4 decimals, 110.25 is kept as it is. If the unit is not found in the unit-of-measure master the value is kept unchanged, without rounding up.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">只影響之後新展開的工單，</span><span lang="en">only affects work orders exploded after that, </span><b><span lang="zh">既有工單的需求量不會被追溯修改</span><span lang="en">the demand quantity of existing work orders is not changed retroactively</span></b><span lang="zh">；舊工單要改用新口徑需重跑 MRP。可於</span><span lang="en">; an older work order has to have MRP re-run to move onto the new basis. You can check under</span> <a href="work-order-material-status.html"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a> <span lang="zh">檢視實際需求量與缺料差額。</span><span lang="en">Review the actual demand and the shortfall.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-lightning-charge me-1 text-warning"></i>
+      <strong><span lang="zh">已開啟「製造簡化模式」的工廠：</span><span lang="en">Plants with "Simplified Manufacturing Mode" switched on:</span></strong><span lang="zh">不需要來這裡人工建單——訂單核准時系統會自動建立
+      MRP 執行單、立即展開，並接著把工單自動投產。存檔後的提示訊息會告訴您產生的執行單號。
+      系統只補「還沒展開的量」，同一張訂單重複存檔不會重複展開。
+      自動展開失敗時提示訊息會說明原因，該張執行單會留在</span><span lang="en"> do not need to create a run here by hand — approving a sales order automatically creates an
+      MRP run, explodes it immediately and then releases the work orders. The message shown after saving tells you the run number that was created.
+      The system only covers the quantity that has not been exploded yet, so saving the same order again does not explode it twice.
+      If the automatic run fails the message explains why and the run stays in </span><b><span lang="zh">草稿</span><span lang="en">Draft</span></b><span lang="zh">狀態，可在本畫面查看並人工執行。
+      此設定由系統管理員於</span><span lang="en"> status, which can be viewed here and carried out by hand.
+      The setting is maintained by the system administrator under</span> <a href="../sys/system-param.html"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a> <span lang="zh">開關。</span><span lang="en">switch.</span>
+    </div>
+
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">查詢</span><span lang="en">Search</span></td><td><span lang="zh">執行單號或備註的模糊比對</span><span lang="en">Partial match on the run number or the notes</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">執行單欄位</span><span lang="en">Run fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">執行單號</span><span lang="en">Run No.</span></td><td><span lang="zh">系統採番，每次展開一張，可回溯本次展開的完整結果</span><span lang="en">Numbered by the system, one per run, so the full result of that run can be traced</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">展開作業的進度（草稿／已展開／已關閉）</span><span lang="en">Progress of the run (draft / exploded / closed)</span></td></tr>
+        <tr><td><span lang="zh">需求列數</span><span lang="en">Lines</span></td><td><span lang="zh">本次納入展開的需求筆數</span><span lang="en">Number of demand lines included in this run</span></td></tr>
+        <tr><td><span lang="zh">展開時間</span><span lang="en">Executed At</span></td><td><span lang="zh">實際執行展開運算的時間戳</span><span lang="en">Timestamp when the explosion actually ran</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">本次展開的補充說明</span><span lang="en">Notes for this run</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">展開結果明細</span><span lang="en">Explosion result detail</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號 / 需求量 / 交期</span><span lang="en">Item / Demand qty / Due date</span></td><td><span lang="zh">本階需求的料件、數量與需求日</span><span lang="en">Item, quantity and demand date required at this level</span></td></tr>
+        <tr><td><span lang="zh">產銷模式</span><span lang="en">MRP Mode</span></td><td><span lang="zh">該品號的取得方式：自製（Make）／外購（Buy）／委外（Outsource），取自產品主檔</span><span lang="en">How the item is obtained: make, buy or outsource, taken from the product master</span></td></tr>
+        <tr><td><span lang="zh">庫存滿足</span><span lang="en">Stock</span></td><td><span lang="zh">可由現有庫存與在途量直接滿足的數量，不再產生新需求</span><span lang="en">Quantity that can be met straight from existing stock and in-transit quantities, so no new demand is created</span></td></tr>
+        <tr><td><span lang="zh">採購量 / 委外量 / 自製量</span><span lang="en">Purchase qty / Outsource qty / Make qty</span></td><td><span lang="zh">扣除庫存滿足後，分別要轉為請購單、委外採購單、工單的數量</span><span lang="en">After netting off stock, the quantities to be turned into purchase requisitions, outsource purchase orders and work orders</span></td></tr>
+        <tr><td><span lang="zh">生產批</span><span lang="en">Production batch</span></td><td><span lang="zh">自製量歸屬的生產批號，投產時以生產批為單位整批放行</span><span lang="en">Batch the make quantity belongs to; work is released a whole batch at a time</span></td></tr>
+        <tr><td><span lang="zh">預檢錯誤</span><span lang="en">Pre-check Error</span></td><td><span lang="zh">展開前的資料檢核問題（缺途程、缺料表、缺前置天數等）；有錯誤者不產生後續單據，須先補齊主檔</span><span lang="en">Data problems found before the explosion (missing routing, missing BOM, missing lead days …); nothing downstream is created while there are errors, so the master data has to be completed first</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">需求來源</span><span lang="en">Demand source</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">來源訂單</span><span lang="en">Sales Order</span></td><td><span lang="zh">產生此需求的銷貨訂單／預測</span><span lang="en">Sales order or forecast that produced this demand</span></td></tr>
+        <tr><td><span lang="zh">優先序</span><span lang="en">Priority</span></td><td><span lang="zh">需求的排程優先順序，數字越小越優先</span><span lang="en">Scheduling priority of the demand; the lower the number, the higher the priority</span></td></tr>
+        <tr><td><span lang="zh">訂單量 / 已展開 / 剩餘</span><span lang="en">Order qty / Exploded / Remaining</span></td><td><span lang="zh">該來源的總量、已被先前展開消化的量、本次仍待展開的剩餘量。以「剩餘量」判定故重跑具冪等性</span><span lang="en">The total quantity of the source, how much earlier runs have already consumed and how much is still to be exploded. Because the decision is made on the remaining quantity, re-running is idempotent</span></td></tr>
+        <tr><td><span lang="zh">本次排程量</span><span lang="en">This Run Qty</span></td><td><span lang="zh">本次展開實際納入計算的數量</span><span lang="en">Quantity actually taken into the calculation by this run</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="work-order.html"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>、<a href="order-change-decision.html"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>、<a href="mrp-achievement.html"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>、<a href="work-order-material-status.html"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>、<a href="../sys/system-param.html"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">訂單數量變更時：未投產的工單由系統自動釋放殘留預留並以新量重跑；已投產者進入「訂單變更決策」清單由人工判斷。</span><span lang="en"> When the order quantity changes: work orders not yet released have their residual reservations released automatically and are re-run at the new quantity; released ones go into the "Order Change Decisions" list for someone to decide.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

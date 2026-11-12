@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>系統管理手冊 — SmartFactory MES</title>
+<link rel="stylesheet" href="../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="index.page.css">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-gear-wide-connected me-2"></i>SmartFactory MES — 系統管理手冊</span>
+  <div class="d-flex gap-2">
+    <a href="../index.html" class="btn btn-sm btn-outline-light">文件中心</a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i>返回系統</a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading">導覽</div>
+    <a href="#overview" class="nav-link active">管理員概覽</a>
+    <div class="sidebar-heading">上線前設定</div>
+    <a href="#go-live" class="nav-link">上線前作業流程</a>
+    <a href="go-live-checklist.html" class="nav-link"><i class="bi bi-check2-square me-1"></i>上線設定清單</a>
+    <a href="license.html" class="nav-link"><i class="bi bi-patch-check me-1"></i>授權與防複製</a>
+    <div class="sidebar-heading">基本主檔設定</div>
+    <a href="#company" class="nav-link">公司與廠別</a>
+    <a href="#users" class="nav-link">使用者與角色</a>
+    <a href="#permissions" class="nav-link">權限設定</a>
+    <a href="#approval" class="nav-link">簽核流程設定</a>
+    <a href="#sys-params" class="nav-link">系統參數</a>
+    <a href="#doc-number" class="nav-link">單號規則設定</a>
+    <div class="sidebar-heading">日常管理</div>
+    <a href="#backup" class="nav-link">備份與還原</a>
+    <a href="#monitor" class="nav-link">系統監控</a>
+    <a href="#period-close" class="nav-link">期間結帳作業</a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-gear-wide-connected text-warning me-2"></i>系統管理手冊</h1>
+      <div class="text-muted small mt-1">適用對象：系統管理者 &nbsp;|&nbsp; 版本 1.0 &nbsp;|&nbsp; 最後更新：2026-07</div>
+    </div>
+
+    <!-- 概覽 -->
+    <h2 id="overview"><i class="bi bi-info-circle me-2 text-warning"></i>1. 管理員職責概覽</h2>
+    <p>系統管理者負責以下事項：</p>
+    <ul>
+      <li>上線前主檔資料建置（公司資訊、廠別、代碼維護、使用者等）</li>
+      <li>使用者帳號與角色權限管理</li>
+      <li>簽核流程設定</li>
+      <li>系統參數維護</li>
+      <li>期間結帳作業協助</li>
+      <li>日常系統監控與備份確認</li>
+    </ul>
+
+    <!-- 上線前作業 -->
+    <h2 id="go-live"><i class="bi bi-flag me-2 text-warning"></i>2. 上線前作業流程</h2>
+    <div class="alert-checklist p-3 mb-3">
+      <strong><i class="bi bi-exclamation-triangle me-1"></i>重要</strong>：上線前必須完成所有基本主檔設定，否則使用者無法正常操作單據。
+    </div>
+    <div class="step-row"><span class="step-badge">1</span><div>建立<strong>公司主檔</strong>（基本資料 &gt; 公司）</div></div>
+    <div class="step-row"><span class="step-badge">2</span><div>建立<strong>廠別主檔</strong>（基本資料 &gt; 廠別），每個生產廠設定一筆。</div></div>
+    <div class="step-row"><span class="step-badge">3</span><div>設定<strong>代碼維護</strong>（基本資料 &gt; 代碼維護），依<a href="go-live-checklist.html">上線設定清單</a>逐項建立。</div></div>
+    <div class="step-row"><span class="step-badge">4</span><div>建立<strong>計量單位、幣別、稅別</strong>等全域主檔。</div></div>
+    <div class="step-row"><span class="step-badge">5</span><div>建立<strong>倉庫與儲位</strong>（基本資料 &gt; 倉庫 / 儲位）。</div></div>
+    <div class="step-row"><span class="step-badge">6</span><div>建立<strong>供應商 / 客戶</strong>（基本資料 &gt; 廠商維護）。</div></div>
+    <div class="step-row"><span class="step-badge">7</span><div>建立<strong>產品主檔</strong>（基本資料 &gt; 產品）。</div></div>
+    <div class="step-row"><span class="step-badge">8</span><div>設定<strong>使用者帳號與角色</strong>（系統管理 &gt; 使用者）。</div></div>
+    <div class="step-row"><span class="step-badge">9</span><div>設定<strong>簽核流程</strong>（系統管理 &gt; 簽核範本）。</div></div>
+    <div class="step-row"><span class="step-badge">10</span><div>確認<strong>系統參數</strong>（系統管理 &gt; 系統參數），尤其庫存模式設定。</div></div>
+    <div class="step-row"><span class="step-badge">11</span><div>設定<strong>單號規則</strong>（基本資料 &gt; 單號設定），確認各模組前置碼正確。</div></div>
+    <div class="step-row"><span class="step-badge">12</span><div>進行<strong>使用者驗收測試（UAT）</strong>，確認各模組作業流程正常。</div></div>
+    <p class="mt-2">詳細設定清單請參閱：<a href="go-live-checklist.html" class="btn btn-sm btn-warning ms-2"><i class="bi bi-check2-square me-1"></i>上線設定清單</a></p>
+
+    <!-- 公司廠別 -->
+    <h2 id="company"><i class="bi bi-building me-2 text-warning"></i>3. 公司與廠別設定</h2>
+    <h3>3-1 公司主檔（BAS/Company）</h3>
+    <p>建立公司基本資訊，包括：公司全名、統一編號、地址、Logo（上傳後顯示在頂部導覽列）、發票類型預設值。</p>
+    <h3>3-2 廠別（BAS/Plant）</h3>
+    <p>每個生產廠別獨立設定，廠別代碼一經建立不可修改。使用者登入後需選擇廠別，所有單據均以廠別隔離。</p>
+
+    <!-- 使用者 -->
+    <h2 id="users"><i class="bi bi-people me-2 text-warning"></i>4. 使用者與角色管理</h2>
+    <h3>4-1 建立角色（系統管理 &gt; 角色）</h3>
+    <p>先建立角色（如「採購人員」、「倉管」、「主管」），再對角色指定各功能的存取權限。</p>
+    <h3>4-2 建立使用者（系統管理 &gt; 使用者）</h3>
+    <ol>
+      <li>填入姓名、Email（作為登入帳號）、初始密碼。</li>
+      <li>指派一個或多個角色。</li>
+      <li>選擇可存取的廠別（多廠環境）。</li>
+      <li>儲存後系統寄送帳號啟用 Email。</li>
+    </ol>
+    <h3>4-3 兩階段驗證（2FA）</h3>
+    <p>使用者可於「個人設定 &gt; 兩階段驗證」自行啟用 TOTP（以 Authenticator App 掃描 QR Code），啟用後系統會產生一組復原碼供遺失驗證器時使用。<strong>擔任管理員（Admin）角色者為強制項目</strong>：首次登入若尚未啟用 2FA，會被導向設定頁完成綁定後才能繼續操作；一般作業人員則為自願啟用。</p>
+    <p>登入流程若帳號已啟用 2FA，輸入帳密驗證成功後不會立即登入，而是進入「輸入驗證碼」步驟（桌機另開頁面、手機版則在同一登入畫面切換步驟），驗證碼正確才完成登入。</p>
+    <div class="alert alert-info p-2 small"><i class="bi bi-info-circle me-1"></i>使用者遺失驗證器（如換手機）無法輸入驗證碼時，管理員可至「系統安全管理 &gt; 兩階段驗證重置」為該帳號重置 2FA，使用者需重新綁定。</div>
+    <h3>4-4 手機模組權限（管理系統 &gt; 手機模組權限）</h3>
+    <p>桌機版「管理系統 &gt; 角色」的權限設定<strong>不包含</strong>手機版：手機模組（如生產現場、庫存作業）需另外在「管理系統 &gt; 手機模組權限」逐角色勾選可用的模組/動作，儲存後對應角色的使用者手機版首頁才會出現該功能格。未開放任何手機模組的角色，其成員登入手機版會看到「尚未設定手機模組權限」提示。</p>
+
+    <!-- 權限 -->
+    <h2 id="permissions"><i class="bi bi-shield-lock me-2 text-warning"></i>5. 權限設定</h2>
+    <p>每個功能菜單支援 5 種操作權限：</p>
+    <table class="table table-sm screen-table border">
+      <thead><tr><th>權限</th><th>說明</th></tr></thead>
+      <tbody>
+        <tr><td>讀取（Read）</td><td>可查詢、瀏覽列表</td></tr>
+        <tr><td>建立（Create）</td><td>可新增單據</td></tr>
+        <tr><td>修改（Update）</td><td>可修改草稿單據</td></tr>
+        <tr><td>刪除（Delete）</td><td>可刪除草稿單據</td></tr>
+        <tr><td>列印（Print）</td><td>可列印 / 匯出報表</td></tr>
+      </tbody>
+    </table>
+    <p>至「系統管理 &gt; 角色」，選擇角色後在「權限」分頁逐模組設定。</p>
+
+    <!-- 簽核 -->
+    <h2 id="approval"><i class="bi bi-check2-circle me-2 text-warning"></i>6. 簽核流程設定</h2>
+    <h3>6-1 簽核範本（系統管理 &gt; 簽核範本）</h3>
+    <p>定義簽核關卡（例：「採購單簽核」→ 第一關：採購主管；第二關：財務副總）。</p>
+    <h3>6-2 文件簽核設定（系統管理 &gt; 文件簽核設定）</h3>
+    <p>將簽核範本指定給具體的單據類型（依廠別設定）。未指定範本的單據類型在儲存時直接為「已核准」。</p>
+    <div class="alert alert-info p-2 small"><i class="bi bi-info-circle me-1"></i>提示：若不需要簽核流程，不指定範本即可，系統自動核准。</div>
+
+    <!-- 系統參數 -->
+    <h2 id="sys-params"><i class="bi bi-sliders me-2 text-warning"></i>7. 系統參數</h2>
+    <p>路由：系統管理 &gt; 系統參數。各廠別可獨立設定以下參數：</p>
+    <table class="table table-sm screen-table border">
+      <thead><tr><th>參數代碼</th><th>說明</th><th>預設值</th></tr></thead>
+      <tbody>
+        <tr><td><code>inv_simplified_mode</code></td><td>庫存簡化模式：<code>true</code> = 入庫核准即過帳；<code>false</code> = 全模式（需上下架）</td><td>true</td></tr>
+        <tr><td>Logo URL</td><td>公司 Logo 圖片路徑</td><td>（空）</td></tr>
+        <tr><td>公司簡稱（中 / 英）</td><td>顯示於頂部導覽列</td><td>SmartFactory</td></tr>
+      </tbody>
+    </table>
+
+    <!-- 單號規則 -->
+    <h2 id="doc-number"><i class="bi bi-123 me-2 text-warning"></i>8. 單號規則設定（BAS &gt; 單號設定）</h2>
+    <p>每種單據類型可設定：前置碼、日期格式（YYMM / YYYYMM）、流水號長度、重置週期（每年 / 每月）。</p>
+    <div class="alert alert-warning p-2 small"><i class="bi bi-exclamation-triangle me-1"></i>系統內建類型（<code>IsSystemType = true</code>）為唯讀，不可修改。企業自訂類型可自由設定。</div>
+
+    <!-- 備份 -->
+    <h2 id="backup"><i class="bi bi-cloud-arrow-up me-2 text-warning"></i>9. 備份與還原</h2>
+    <p>備份由 IT 基礎架構團隊負責，建議排程：</p>
+    <ul>
+      <li>每日完整備份一次，保留 30 天。</li>
+      <li>每小時增量備份，保留 7 天。</li>
+      <li>上線前與每次重大版本升級前，手動執行完整備份。</li>
+    </ul>
+    <p><strong>備份範圍要含檔案，不能只有資料庫。</strong>排程報表的產出檔與上傳檔存在檔案系統上，
+       只還原資料庫的話報表下載會全部 404。系統提供的 <code>scripts/backup-db.sh</code> 會把兩者一起備走，
+       細節見〈系統維護手冊〉的「備份與還原」。</p>
+
+    <!-- 監控 -->
+    <h2 id="monitor"><i class="bi bi-activity me-2 text-warning"></i>10. 系統監控</h2>
+    <ul>
+      <li>健康檢查端點：<code>/health</code>（回傳 Healthy / Degraded / Unhealthy）</li>
+      <li>資料庫連線狀態包含在健康檢查中。</li>
+      <li>建議搭配 Uptime Robot 或 Grafana 定期輪詢 <code>/health</code>。</li>
+    </ul>
+
+    <!-- 期間結帳 -->
+    <h2 id="period-close"><i class="bi bi-calendar-check me-2 text-warning"></i>11. 期間結帳作業</h2>
+    <div class="step-row"><span class="step-badge">1</span><div>確認本月所有單據已完成過帳（庫存異動查詢 &gt; 確認無「暫存」狀態）。</div></div>
+    <div class="step-row"><span class="step-badge">2</span><div>財務模組執行「月結作業」（FIN &gt; 月結），系統自動產生庫存快照與成本結算。</div></div>
+    <div class="step-row"><span class="step-badge">3</span><div>確認損益表與資產負債表數字無異常後，關閉該會計期間（FIN &gt; 會計期間）。</div></div>
+    <div class="step-row"><span class="step-badge">4</span><div>期間關閉後，前期單據不可修改（系統阻擋）。</div></div>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end">SmartFactory MES 系統管理手冊 v1.0 &nbsp;|&nbsp; 如需技術協助請聯繫系統維護顧問</div>
+  </main>
+</div>
+</body>
+</html>

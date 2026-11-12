@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="LicenseStatus" xml:space="preserve"><value>License status</value></data>
+  <data name="State_Normal" xml:space="preserve"><value>License valid</value></data>
+  <data name="State_Warning" xml:space="preserve"><value>License needs attention</value></data>
+  <data name="State_ReadOnly" xml:space="preserve"><value>Read-only</value></data>
+  <data name="State_Disabled" xml:space="preserve"><value>Disabled</value></data>
+  <data name="State_Unlocked" xml:space="preserve"><value>License enforcement lifted</value></data>
+  <data name="ExpiresAt" xml:space="preserve"><value>Expires</value></data>
+  <data name="Perpetual" xml:space="preserve"><value>Permanent</value></data>
+  <data name="ReadOnlySince" xml:space="preserve"><value>Read-only since</value></data>
+  <data name="DisabledAt" xml:space="preserve"><value>Disabled on</value></data>
+  <data name="LicenseId" xml:space="preserve"><value>License ID</value></data>
+  <data name="ClientName" xml:space="preserve"><value>Licensee</value></data>
+  <data name="BindingMode" xml:space="preserve"><value>Binding</value></data>
+  <data name="Binding_lease" xml:space="preserve"><value>Periodic check-in (every 90 days)</value></data>
+  <data name="Binding_tpm" xml:space="preserve"><value>TPM bound</value></data>
+  <data name="Binding_offline" xml:space="preserve"><value>Bound to this machine (no connection needed)</value></data>
+  <data name="Binding_ci" xml:space="preserve"><value>CI</value></data>
+  <data name="Seats" xml:space="preserve"><value>Seats</value></data>
+  <data name="ObtainLicense" xml:space="preserve"><value>Request or renew a license</value></data>
+  <data name="AnchorMissing" xml:space="preserve"><value>The machine anchor file cannot be read, so the fingerprint cannot be computed. Create it with SmartFactory.MES.MachineId --init.</value></data>
+  <data name="Fingerprint" xml:space="preserve"><value>Environment fingerprint:</value></data>
+  <data name="FingerprintHint" xml:space="preserve"><value>Only the fingerprint and the host ID are sent (both are hashes) — never the anchor, the raw motherboard serial or any business data.</value></data>
+  <data name="Register" xml:space="preserve"><value>Request a license (opens registration page)</value></data>
+  <data name="RenewOffline" xml:space="preserve"><value>Request re-issue (new computer or motherboard)</value></data>
+  <data name="ImportLicense" xml:space="preserve"><value>Import license file</value></data>
+  <data name="ImportHint" xml:space="preserve"><value>Upload the license.json you received. It is verified first and only then replaces the current license (the old file is backed up). No restart needed.</value></data>
+  <data name="Import" xml:space="preserve"><value>Import</value></data>
+  <data name="DeployKind" xml:space="preserve"><value>Deployment</value></data>
+  <data name="Deploy_physical" xml:space="preserve"><value>Physical machine</value></data>
+  <data name="Deploy_vm" xml:space="preserve"><value>Virtual machine</value></data>
+  <data name="Deploy_wsl" xml:space="preserve"><value>WSL</value></data>
+  <data name="Deploy_container" xml:space="preserve"><value>Container</value></data>
+  <data name="Deploy_unknown" xml:space="preserve"><value>Unknown</value></data>
+  <data name="HostId" xml:space="preserve"><value>Host ID</value></data>
+  <data name="HostIdUnavailable" xml:space="preserve"><value>Not readable</value></data>
+  <data name="SuggestedBinding" xml:space="preserve"><value>License type for this deployment</value></data>
+  <data name="Suggested_offline" xml:space="preserve"><value>Bound to this computer, no connection needed, permanent</value></data>
+  <data name="Suggested_lease" xml:space="preserve"><value>Confirmed by an administrator on this page every 90 days (the system itself does not connect out)</value></data>
+  <data name="HostCheck" xml:space="preserve"><value>Host match</value></data>
+  <data name="HostCheck_Match" xml:space="preserve"><value>Matches</value></data>
+  <data name="HostCheck_Mismatch" xml:space="preserve"><value>Does not match: this license does not belong to this computer</value></data>
+  <data name="HostCheck_Unavailable" xml:space="preserve"><value>Cannot be confirmed (host ID not readable)</value></data>
+  <data name="RequestCode" xml:space="preserve"><value>Request code (give this to your license provider)</value></data>
+  <data name="Copy" xml:space="preserve"><value>Copy</value></data>
+  <data name="Copied" xml:space="preserve"><value>Copied</value></data>
+  <data name="CheckinTitle" xml:space="preserve"><value>License check-in (every 90 days)</value></data>
+  <data name="CheckinHint" xml:space="preserve"><value>A license that needs online confirmation (a virtual machine, or with "Online license check" turned on) has to be confirmed every 90 days to keep working; reminders start 14 days before it is due. The button opens the license server's check-in page, and this page updates itself when that finishes. The system itself never connects out.</value></data>
+  <data name="CheckinDirectHint" xml:space="preserve"><value>This system is set to renew automatically (License:Lease:Transport = direct), so manual check-in is normally not needed; you can still confirm here if necessary.</value></data>
+  <data name="CheckinButton" xml:space="preserve"><value>Confirm license</value></data>
+  <data name="CheckinWaiting" xml:space="preserve"><value>The check-in page is open; please complete it in that tab…</value></data>
+  <data name="CheckinFailed" xml:space="preserve"><value>The result could not be sent back to the system; use "Import check-in response" below instead.</value></data>
+  <data name="CheckinCopyLink" xml:space="preserve"><value>Copy check-in link (for a device with internet access)</value></data>
+  <data name="CheckinWhatIsSent" xml:space="preserve"><value>What is sent during check-in?</value></data>
+  <data name="CheckinWhatIsSentHint" xml:space="preserve"><value>Below is everything that is sent: the license file, the machine fingerprint (a hash), the activation token, the version, the operating system and the time. No anchor, motherboard serial, connection string or business data.</value></data>
+  <data name="CheckinImportHint" xml:space="preserve"><value>If this computer has no internet access: open the check-in link on a phone or another device that does, download the response, then import it here.</value></data>
+  <data name="CheckinImport" xml:space="preserve"><value>Import check-in response</value></data>
+  <data name="OnlineCheckTitle" xml:space="preserve"><value>Online license check</value></data>
+  <data name="OnlineCheckHint" xml:space="preserve"><value>When enabled, this computer's license has to be confirmed every 90 days (with "Confirm license" above, sent through your browser; the system itself never connects out). A copy of the whole machine running elsewhere cannot pass the check. Being offline does not stop anything; the system turns read-only only after the confirmation expires.</value></data>
+  <data name="OnlineCheckEffective" xml:space="preserve"><value>Current</value></data>
+  <data name="OnlineCheckForced" xml:space="preserve"><value>On (required in a virtual environment)</value></data>
+  <data name="OnlineCheckOn" xml:space="preserve"><value>On</value></data>
+  <data name="OnlineCheckOff" xml:space="preserve"><value>Off (offline verification only)</value></data>
+  <data name="OnlineCheckValidUntil" xml:space="preserve"><value>Confirmed until</value></data>
+  <data name="OnlineCheckForcedHint" xml:space="preserve"><value>This computer was detected as a virtual machine or container. A virtual machine's host ID can be copied, so the online check is required and cannot be turned off.</value></data>
+  <data name="OnlineCheckEnable" xml:space="preserve"><value>Turn on online license check</value></data>
+  <data name="OnlineCheckDisable" xml:space="preserve"><value>Turn off online license check</value></data>
+  <data name="OnlineCheckConfirmFirst" xml:space="preserve"><value>Before turning it on, confirm the license once with "Confirm license" above.</value></data>
+  <data name="Summary_HostBound" xml:space="preserve"><value>Bound to this machine</value></data>
+  <data name="Summary_Perpetual" xml:space="preserve"><value>No expiry date</value></data>
+  <data name="Summary_ValidUntil" xml:space="preserve"><value>Valid until {0}</value></data>
+  <data name="Summary_CheckinUntil" xml:space="preserve"><value>Online check valid until {0}</value></data>
+  <data name="Summary_Separator" xml:space="preserve"><value>; </value></data>
+</root>

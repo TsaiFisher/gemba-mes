@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ContainerUnitId" xml:space="preserve"><value>箱號</value></data>
+  <data name="ContainerCode" xml:space="preserve"><value>容器種類</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="StatusEmpty" xml:space="preserve"><value>空箱</value></data>
+  <data name="StatusInUse" xml:space="preserve"><value>使用中</value></data>
+  <data name="StatusInactive" xml:space="preserve"><value>停用</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="LotNo" xml:space="preserve"><value>批號</value></data>
+  <data name="Qty" xml:space="preserve"><value>數量</value></data>
+  <data name="PrintLabel" xml:space="preserve"><value>列印標籤</value></data>
+  <data name="PageTitle" xml:space="preserve"><value>箱子（容器個體）</value></data>
+  <data name="Add" xml:space="preserve"><value>建立箱子</value></data>
+  <data name="AddTitle" xml:space="preserve"><value>批次建立箱子</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>箱號／批號／品號</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>可直接掃描箱上的 QR 碼</value></data>
+  <data name="All" xml:space="preserve"><value>全部</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="PrintPageLabels" xml:space="preserve"><value>列印本頁標籤</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入條件後查詢</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="Details" xml:space="preserve"><value>內容</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>儲存成功</value></data>
+  <data name="StatusInWip" xml:space="preserve"><value>在製</value></data>
+  <data name="WorkOrderOp" xml:space="preserve"><value>工單／工序</value></data>
+  <data name="StatusOffsite" xml:space="preserve"><value>廠外</value></data>
+  <data name="OutDocNo" xml:space="preserve"><value>出廠單號</value></data>
+  <data name="Recover" xml:space="preserve"><value>回收</value></data>
+  <data name="RecoverTitle" xml:space="preserve"><value>容器回收</value></data>
+  <data name="Pack" xml:space="preserve"><value>裝箱</value></data>
+  <data name="PackTitle" xml:space="preserve"><value>既有庫存裝箱</value></data>
+  <data name="PackNoStock" xml:space="preserve"><value>這個品號沒有可用庫存</value></data>
+  <data name="PackSourceNotBox" xml:space="preserve"><value>{0} 不是裝著貨的箱子</value></data>
+</root>

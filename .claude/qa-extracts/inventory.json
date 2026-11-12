@@ -1,0 +1,62 @@
+{
+  "sourcePath": ".claude/specifications/inventory.md",
+  "sourceHash": "66291ece4a1ca8defd4282fefa16bc60357e354ed3290c8c552b5a96ad468bb8",
+  "entries": [
+    {
+      "slug": "inventory-f368cf47",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範 › 二-B、成本計價規劃 (Costing Planning) › 0. 核心設計：依產品類別選擇 (Per Category Choice)",
+      "text": "產品計價方式的決定與限制｜每種產品的成本計算方法會根據其所屬的產品類別來決定。一旦某個品項已經有庫存或發生了任何變動紀錄，就不能更改其既定的成本計算方式。雖然系統會持續記錄一個「當前參考成本」供快速查詢使用，但最準確的成本資訊仍需以庫存移動和成本層級的紀錄為準。",
+      "approved": true,
+      "sourceSectionHash": "2be0ba5287a3449f9cd94a47010d8676b56b01309ce3ade7658f3e2c01aa0757"
+    },
+    {
+      "slug": "inventory-acd67720",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範 › 二-B、成本計價規劃 (Costing Planning) › 1. 移動加權平均 (Moving Average, MA) — 建議預設",
+      "text": "成本計算依據廠別產品組合｜成本的平均單價是根據「廠別」和「產品代碼」這兩個條件來計算的，不會區分到儲位區域來計算。只有當有增加成本的入庫變動時，才會重新計算這個平均單價。",
+      "approved": true,
+      "sourceSectionHash": "408e4da8983a03ff9db6681ba5cea81d8beeae28eaccdacf609bdae4f87e4c00"
+    },
+    {
+      "slug": "inventory-d91855ba",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範 › 二-B、成本計價規劃 (Costing Planning) › 2. 先進先出 (FIFO) — 選配",
+      "text": "先進先出成本計算規則說明｜系統會根據物料的進貨日期由早到晚依序扣除成本。當需要領用物料時，系統會從最早進庫的那批開始扣減數量和成本，直到滿足本次需求為止。如果一次領用的數量跨越了多個不同進貨批次，雖然記錄上只是一筆移動紀錄，但計算的總成本會是所有被扣除批次的實際成本加總。",
+      "approved": true,
+      "sourceSectionHash": "8686895b93fcdf3035c01cd260f1940ac845de94d0a173256378163147075274"
+    },
+    {
+      "slug": "inventory-35af96d5",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範 › 二-B、成本計價規劃 (Costing Planning) › 3. 公共規則",
+      "text": "成本計價的基礎規則說明｜一旦記錄了物料移動的成本資訊，該筆紀錄所包含的單價和總成本將會固定不變，即使之後需要重新計算平均單價，也只會影響後續發生新的庫存異動的計算。所有成本的計算都必須以系統預設的單位為基準進行。期末的庫存評價報表是透過將每個物料當前的數量乘以其記錄的單價總和計算出來的。",
+      "approved": true,
+      "sourceSectionHash": "2c61a10f4df9677fcedc954b4a43a709c979e24182cdef2777ec23fc780eca91"
+    },
+    {
+      "slug": "inventory-fb84607b",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範 › 三、三層單據結構與兩階段作業 › 3-0 兩階段作業模式",
+      "text": "兩階段作業流程與權責劃分｜業務單位負責建立或修改品項的基礎資訊，例如產品型號、數量和單價。在完成這些資料後，系統會自動將狀態確認或發出需要簽核的流程。接著，倉庫單位才能針對已經被確認的品項，輸入具體的儲位位置與實際數量，此操作一經儲存，就會產生庫存移動紀錄並更新庫存總量。一個品項在倉庫端可以接受多次處理，系統會追蹤每次分配到不同儲位的數量。",
+      "approved": true,
+      "sourceSectionHash": "e7afad2a86cef4d62a6de21ff0f5f7239a29ae648e3e5df17633731f1bd2d2ec"
+    },
+    {
+      "slug": "inventory-b771e642",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範 › 三、三層單據結構與兩階段作業 › 簡化模式（系統參數 `INV.SimplifiedMode`）",
+      "text": "單據流程的作業方式差異｜在簡化模式下，簽核程序會全部跳過並直接自動核准；建檔時，系統會自動使用產品類別預設的位置來建立詳細位置資訊，並且狀態也會一步從草稿直接到已發佈。與此不同的是，在完整模式下，簽核仍需依據設定的規則進行，倉庫作業需要業務人員手動執行入或出架動作，且單據的狀態會經過「確認」這個中間步驟後才能達到「已發佈」。",
+      "approved": true,
+      "sourceSectionHash": "fb95034a90e36f10a05ab0f3ffc6e35f1d5f845ec8d8e0263630be039b7d56f4"
+    },
+    {
+      "slug": "inventory-690e4ae5",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES — 庫存運作規範 › 三、三層單據結構與兩階段作業 › 三層結構",
+      "text": "單據結構與作業流程規則｜此系統的資料紀錄是分層級建構的，最高層級的單據主檔在第一階段進行業務建立。接著，第二層次的料品明細也需在第一階段完成業務建立。最低一層級的儲位明細則是在倉庫建立時（或使用簡化模式自動建立）產生的。只有當所有料品明細所記錄的數量總和等於單據主檔要求的庫存單位數量，才會觸發資料轉為已結案狀態。",
+      "approved": true,
+      "sourceSectionHash": "83a5620c5d2532bc27c7eb5189b34fcec94b60706a2b85aba0a6e6515e465d38"
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Role Management — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>角色管理 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System Administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link active"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-person-badge me-2 text-primary"></i><span lang="zh">角色管理</span><span lang="en">Role Management</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：管理系統 → 角色管理 &nbsp;|&nbsp; 權限：目前身份為 Admin</span><span lang="en">Menu: System Administration → Role Management &nbsp;|&nbsp; Permission: current role is Admin</span></div>
+    </div>
+
+    <p><span lang="zh">角色是本系統</span><span lang="en">A role is </span><b><span lang="zh">權限的唯一載體</span><span lang="en">the one and only carrier of permissions</span></b><span lang="zh">：使用者能看到哪些選單、能不能新增或刪除，全部由他被指派的角色決定。角色本身在這個畫面建立與維護，至於每個角色實際能做什麼，則在</span><span lang="en"> in this system: which menus a user sees, and whether they may create or delete, is decided entirely by the roles assigned to them. Roles themselves are created and maintained on this screen, while what each role may actually do is set on the </span><a href="permission.html"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a><span lang="zh">畫面設定。</span><span lang="en"> screen.</span></p>
+
+    <img class="screen-shot" src="img/role.png" data-src-en="img/en/role.png" alt="角色管理畫面截圖" data-alt-en="Role management screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">角色管理畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Role management screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">角色名稱</span><span lang="en">Role name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">全系統唯一。簽核模板的「指定角色」步驟、以及權限設定的清單都以此名稱顯示。</span><span lang="en">Unique across the system. It is the name shown on approval template steps that target a role, and in the permission settings list.</span></td></tr>
+        <tr><td><span lang="zh">英文名稱</span><span lang="en">Name (EN)</span></td><td></td><td><span lang="zh">介面切換為英文時顯示的名稱。留空時英文介面仍顯示中文名稱。</span><span lang="en">The name shown when the interface is in English. Left empty, the Chinese name is shown in the English interface too.</span></td></tr>
+        <tr><td><span lang="zh">組織單位</span><span lang="en">Organization unit</span></td><td></td><td><span lang="zh">這個角色隸屬的部門。它不只是分類資訊——</span><span lang="en">The department this role belongs to. It is not merely descriptive: </span><b><span lang="zh">主管簽核靠它往上找人</span><span lang="en">supervisor approval uses it to find the person above</span></b><span lang="zh">（見下方說明）。</span><span lang="en"> (see below).</span></td></tr>
+        <tr><td><span lang="zh">可用廠別</span><span lang="en">Plants allowed</span></td><td></td><td><span lang="zh">勾選這個角色能進入哪些廠。</span><span lang="en">Tick the plants this role may enter. </span><b><span lang="zh">完全不勾＝不限制廠別</span><span lang="en">Ticking none means no restriction</span></b><span lang="zh">，可切換到系統中任何一廠。</span><span lang="en">, and the user may switch to any plant in the system.</span></td></tr>
+        <tr><td><span lang="zh">預設廠別</span><span lang="en">Default plant</span></td><td></td><td><span lang="zh">使用者切換到這個角色時自動進入的廠。有勾可用廠別但沒指定預設時，取清單中的第一個。</span><span lang="en">The plant a user lands in when they switch to this role. When plants are ticked but no default is chosen, the first one in the list is used.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="organization-unit-and-supervisor"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">組織單位與主管簽核</span><span lang="en">Organization unit and supervisor approval</span></h2>
+    <p><span lang="zh">簽核模板的步驟可以指定簽核人為「主管」。系統解析主管的方式是：</span><span lang="en">A step in an approval template can name the approver as "supervisor". This is how the system works out who that is:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">取申請人</span><span lang="en">Take the </span><b><span lang="zh">送審當下作用中的角色</span><span lang="en">role that was in effect for the requester when they submitted</span></b><span lang="zh">。</span><span lang="en">.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">找出該角色掛的組織單位，再往上取它的</span><span lang="en">Find the organization unit that role is attached to, then go up to its </span><b><span lang="zh">上層組織單位</span><span lang="en">parent organization unit</span></b><span lang="zh">。</span><span lang="en">.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">在上層組織單位所掛的角色中，取其中一位使用者作為簽核人。</span><span lang="en">Among the roles attached to that parent unit, take one of their users as the approver.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">角色沒掛組織單位，主管簽核會安靜地卡住：</span><span lang="en">A role with no organization unit makes supervisor approval stall silently:</span></strong><span lang="zh">上面三步任何一步落空——角色沒有組織單位、組織單位沒有上層、上層組織單位底下沒有任何使用者——都會解析不出簽核人。這時單據</span><span lang="en"> if any of the three steps above comes up empty — the role has no organization unit, the unit has no parent, or no user sits under the parent unit — no approver can be resolved. The document is then </span><b><span lang="zh">仍然是送出的，卻不會出現在任何人的「待我簽核」</span><span lang="en">still submitted, yet appears in nobody's "My Pending Approvals"</span></b><span lang="zh">，也不會有錯誤訊息。要找出這種單，請到「所有簽核記錄」勾選</span><span lang="en">, and there is no error message. To find such documents, go to "All Approval Requests" and tick </span><b><span lang="zh">僅看未指派</span><span lang="en">Unassigned only</span></b><span lang="zh">篩選，再用「重新指派」把簽核人補上。</span><span lang="en">, then fill in the approver with "Reassign".</span>
+    </div>
+
+    <h2 id="plant-assignment"><i class="bi bi-building me-2 text-primary"></i><span lang="zh">廠別指派</span><span lang="en">Plant assignment</span></h2>
+    <p><span lang="zh">使用者登入後在「個人設定」切換角色時，系統會一併處理廠別：</span><span lang="en">When a user switches role under "Personal settings" after signing in, the system handles the plant at the same time:</span></p>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">角色的廠別設定</span><span lang="en">The role's plant setting</span></th><th><span lang="zh">切換到這個角色時</span><span lang="en">When switching to this role</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">有勾選可用廠別</span><span lang="en">Plants are ticked</span></td><td><span lang="zh">自動切到預設廠（沒設預設就取第一個），且</span><span lang="en">The user is moved to the default plant (or the first one if no default is set), and </span><b><span lang="zh">只能在勾選的廠之間切換</span><span lang="en">may only switch among the ticked plants</span></b><span lang="zh">。</span><span lang="en">.</span></td></tr>
+        <tr><td><span lang="zh">完全沒勾</span><span lang="en">No plant is ticked</span></td><td><span lang="zh">保留使用者目前所在的廠，且可切換到任何一廠。</span><span lang="en">The user stays in the plant they are in and may switch to any plant.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">新增角色</span><span lang="en">Adding a role</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「管理系統 &gt; 角色管理」，按「查詢」載入現有角色。</span><span lang="en">Choose "System Administration &gt; Role Management" in the left-hand menu and click "Search" to load the existing roles.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「新增」，填入角色名稱與英文名稱，選擇所屬組織單位。</span><span lang="en">Click "Add", fill in the role name and its English name, and choose the organization unit it belongs to.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">勾選可用廠別，並指定其中一個為預設廠別。</span><span lang="en">Tick the plants allowed and mark one of them as the default.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">按「儲存」。此時角色</span><span lang="en">Click "Save". At this point the role </span><b><span lang="zh">還沒有任何功能權限</span><span lang="en">has no permissions at all</span></b><span lang="zh">，必須接著到「功能權限設定」勾選畫面與動作。</span><span lang="en">; you must go on to "Permission Settings" and tick the screens and actions.</span></div></div>
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh">最後到「使用者管理」把這個角色指派給實際使用的人。</span><span lang="en">Finally, assign the role to the people who will use it under "User Management".</span></div></div>
+
+    <h2 id="deleting-a-role"><i class="bi bi-trash me-2 text-primary"></i><span lang="zh">刪除角色</span><span lang="en">Deleting a role</span></h2>
+    <p><span lang="zh">下列任一情況會擋下刪除，並在訊息中列出原因：</span><span lang="en">Any of the following blocks the deletion, and the message lists the reason:</span></p>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">擋下的原因</span><span lang="en">Reason it is blocked</span></th><th><span lang="zh">處理方式</span><span lang="en">What to do</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">還有使用者（會顯示人數）</span><span lang="en">Users still have it (the count is shown)</span></td><td><span lang="zh">先到「使用者管理」把這些人的該角色取消勾選。</span><span lang="en">Untick this role for those people under "User Management" first.</span></td></tr>
+        <tr><td><span lang="zh">被簽核模板步驟指定</span><span lang="en">An approval template step targets it</span></td><td><span lang="zh">到「簽核模板設定」把該步驟改指定其他角色或刪除該步驟。</span><span lang="en">Change that step to another role, or delete it, under "Approval Template Settings".</span></td></tr>
+        <tr><td><span lang="zh">有進行中的簽核流程由此角色送出</span><span lang="en">An approval flow submitted under this role is still running</span></td><td><span lang="zh">等流程簽完或撤回後再刪。</span><span lang="en">Wait for it to finish or be withdrawn.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">刪除會連帶清掉權限設定：</span><span lang="en">Deleting also clears the permission settings:</span></strong><span lang="zh">通過檢查後，系統會一併刪除這個角色的</span><span lang="en"> once the checks pass, the system also deletes this role's </span><b><span lang="zh">功能權限矩陣</span><span lang="en">permission matrix</span></b><span lang="zh">，並把「目前作用中角色正好是它」的使用者清空。刪掉後再建同名角色，權限要重新勾一次。</span><span lang="en">, and clears it for users who currently have it in effect. If you recreate a role with the same name afterwards, its permissions have to be ticked again.</span>
+    </div>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">查詢結果可匯出 Excel（.xlsx）、CSV 或 JSON，內容為角色名稱、英文名稱與所屬組織單位。</span><span lang="en">The results can be exported as Excel (.xlsx), CSV or JSON, containing the role name, its English name and its organization unit.</span></p>
+  </main>
+</div>
+</body>
+</html>

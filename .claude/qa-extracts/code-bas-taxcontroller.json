@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/BAS/Controllers/TaxController.cs",
+  "sourceHash": "02b26e3b85ce9a528eaf9d923cae9e8126a5d18c9139aa103843df5d70942597",
+  "entries": [
+    {
+      "slug": "code-bas-taxcontroller-2916926d",
+      "lang": "zh",
+      "headingPath": "基本資料 › 主動查核，避免稅別刪除後留下孤兒資料",
+      "text": "稅別關聯性檢查規則｜系統會檢查一個稅別是否還被其他單據使用，以防止在刪除該稅別時產生無法追蹤的孤立資料。",
+      "approved": true,
+      "sourceSectionHash": "8741892e49c363c6f8bc605c44fa2ae6d684822177beb13ce7fd5ae24d36f55d"
+    },
+    {
+      "slug": "code-bas-taxcontroller-78646805",
+      "lang": "zh",
+      "headingPath": "基本資料 › 稅別是否仍被往來廠商預設稅別",
+      "text": "稅別是否預設給廠商使用｜系統會判斷，在銷售訂單或採購、銷售、委外、應收應付的單據明細中，是否仍會引用往來廠商所設定的稅別。",
+      "approved": true,
+      "sourceSectionHash": "faf1adffcdc1d415812684b0716c0e3115cc7a22a650245a13dd1f985018bd78"
+    }
+  ]
+}

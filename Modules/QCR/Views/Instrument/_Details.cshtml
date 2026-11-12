@@ -1,0 +1,150 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.QCR.Models
+@inject IViewLocalizer Localizer
+@model Instrument
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+<div class="p-3">
+    <h6 class="fw-bold mb-3">@Localizer["InstrumentInfo"]</h6>
+    <dl class="row mb-4">
+        <dt class="col-sm-4">@Localizer["InstrumentCode"]</dt>
+        <dd class="col-sm-8 font-monospace">@Model.InstrumentCode</dd>
+
+        <dt class="col-sm-4">@Localizer["InstrumentName"]</dt>
+        <dd class="col-sm-8">@Model.InstrumentName</dd>
+
+        <dt class="col-sm-4">@Localizer["CalibrationFrequencyDays"]</dt>
+        <dd class="col-sm-8">@Model.CalibrationFrequencyDays</dd>
+
+        <dt class="col-sm-4">@Localizer["CalibrationMethod"]</dt>
+        <dd class="col-sm-8">@(Model.CalibrationMethod ?? "—")</dd>
+
+        <dt class="col-sm-4">@Localizer["IsActive"]</dt>
+        <dd class="col-sm-8">
+            @if (Model.IsActive)
+            {
+                <span class="badge bg-success">✓</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">✗</span>
+            }
+        </dd>
+
+        @if (!string.IsNullOrEmpty(Model.Remarks))
+        {
+            <dt class="col-sm-4">@Localizer["Remarks"]</dt>
+            <dd class="col-sm-8">@Model.Remarks</dd>
+        }
+    </dl>
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h6 class="fw-bold mb-0"><i class="bi bi-list-ul me-1"></i>@Localizer["Serials"]</h6>
+        @if (ViewBag.CanCreate == true)
+        {
+            <button type="button" class="btn btn-sm btn-primary"
+                    data-url="@Url.Action("CreateSerial", new { instrumentCode = Model.InstrumentCode })"
+                    data-label="@SL["SerialAdd"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus me-1"></i>@SL["SerialAdd"]
+            </button>
+        }
+    </div>
+    @if (!Model.Serials.Any())
+    {
+        <p class="text-muted small">@Localizer["NoSerials"]</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["SerialNo"]</th>
+                        <th>@Localizer["Status"]</th>
+                        <th>@Localizer["Brand"]</th>
+                        <th>@Localizer["NextCalibrationDate"]</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var s in Model.Serials.OrderBy(x => x.SerialNo))
+                    {
+                        var badgeCss = s.Status switch
+                        {
+                            "Active"           => "bg-success",
+                            "Retired"          => "bg-secondary",
+                            "Loaned"           => "bg-warning text-dark",
+                            "UnderCalibration" => "bg-info text-dark",
+                            _                  => "bg-secondary"
+                        };
+                        var today = DateOnly.FromDateTime(DateTime.Today);
+                        var isOverdue  = s.NextCalibrationDate.HasValue && s.NextCalibrationDate.Value < today;
+                        var isDueSoon  = s.NextCalibrationDate.HasValue && !isOverdue
+                                         && s.NextCalibrationDate.Value <= today.AddDays(30);
+                        var calBadge   = isOverdue ? "bg-danger" : isDueSoon ? "bg-warning text-dark" : "";
+                        var calDisplay = s.NextCalibrationDate?.ToString("yyyy-MM-dd") ?? "—";
+                        <tr class="@(isOverdue ? "table-danger" : "")">
+                            <td class="font-monospace">@s.SerialNo</td>
+                            <td><span class="badge @badgeCss">@s.Status</span></td>
+                            <td>@(s.Brand ?? "—")</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(calBadge))
+                                {
+                                    <span class="badge @calBadge">@calDisplay</span>
+                                    if (isOverdue) { <i class="bi bi-exclamation-triangle-fill text-danger ms-1"></i> }
+                                }
+                                else { @calDisplay }
+                            </td>
+                            <td class="text-nowrap">
+                                @if (ViewBag.CanUpdate == true && s.Status == "Active")
+                                {
+                                    <button type="button" class="btn btn-xs btn-success me-1 u-font-size-p75rem u-padding-1px-6px"
+                                           
+                                            data-action="calibrateSerial" data-serial-id="@s.SerialId" data-serial-no="@s.SerialNo"
+                                            title="@Localizer["Calibrate"]">
+                                        <i class="bi bi-check2-circle"></i> @Localizer["Calibrate"]
+                                    </button>
+                                }
+                                @if (ViewBag.CanUpdate == true)
+                                {
+                                    <button type="button" class="btn btn-xs btn-warning u-font-size-p75rem u-padding-1px-6px"
+                                           
+                                            data-url="@Url.Action("EditSerial", new { id = s.SerialId })"
+                                            data-label="@string.Format(SL["SerialEditFmt"].Value, s.SerialNo)"
+                                            data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                }
+                                @if (ViewBag.CanDelete == true)
+                                {
+                                    <button type="button" class="btn btn-xs btn-danger u-font-size-p75rem u-padding-1px-6px"
+                                           
+                                            data-action="deleteItem" data-url="@Url.Action("DeleteSerial")" data-id="@s.SerialId" data-confirm="@string.Format(SL["SerialDeleteConfirmFmt"].Value, s.SerialNo)"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="d-flex justify-content-end mt-3">
+        <button type="button" class="btn btn-secondary" data-action="closeSidePanel">
+            @Localizer["Close"]
+        </button>
+    </div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

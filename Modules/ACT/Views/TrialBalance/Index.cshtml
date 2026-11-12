@@ -1,0 +1,145 @@
+@model SmartFactory.MES.Modules.ACT.ViewModels.TrialBalanceVm
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    ViewData["Title"] = L["PageTitle"].Value;
+    bool searched = ViewBag.Searched == true;
+    bool canPrint = ViewBag.CanPrint == true;
+    var vm        = Model ?? new();
+    var rows      = vm.Rows;
+    string curFrom = ViewBag.FromPeriod as string ?? "";
+    string curTo   = ViewBag.ToPeriod   as string ?? "";
+    bool includeZero = ViewBag.IncludeZeroRows == true;
+    var periodOptions = ViewBag.PeriodOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    string currentPeriod = ViewBag.CurrentPeriod as string ?? "";
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+}
+
+<div class="container-fluid py-3">
+    <h4 class="mb-3">@L["PageTitle"]</h4>
+
+    <div class="alert alert-secondary py-2 small">
+        <i class="bi bi-info-circle me-1"></i>@L["MethodHint"]
+    </div>
+
+    @await Html.PartialAsync("_SavedQueries", "TrialBalance")
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label">@L["FromPeriod"]</label>
+                <select name="fromPeriod" class="form-select">
+                    <option value="">@L["FromBeginning"]</option>
+                    @foreach (var p in periodOptions)
+                    {
+                        <option value="@p" selected="@(curFrom == p)">@p@(string.CompareOrdinal(p, currentPeriod) > 0 ? " " + L["FuturePeriodSuffix"].Value : "")</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">@L["ToPeriod"]</label>
+                <select name="toPeriod" class="form-select">
+                    <option value=""></option>
+                    @foreach (var p in periodOptions)
+                    {
+                        <option value="@p" selected="@(curTo == p)">@p@(string.CompareOrdinal(p, currentPeriod) > 0 ? " " + L["FuturePeriodSuffix"].Value : "")</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" name="includeZeroRows" value="true"
+                           id="includeZeroRows" checked="@includeZero" />
+                    <label class="form-check-label" for="includeZeroRows">@L["IncludeZeroRows"]</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" name="searched" value="true" class="btn btn-primary w-100 px-4">
+                    <i class="bi bi-search"></i> @L["Search"]
+                </button>
+            </div>
+        </div>
+    </form>
+
+    @if (!searched)
+    {
+        <div class="alert alert-info">@L["SearchFirst"]</div>
+    }
+    else if (!rows.Any())
+    {
+        <div class="alert alert-warning">@L["NoData"]</div>
+    }
+    else
+    {
+        @* 借貸是否相等是這張表存在的理由，所以擺在最上面而不是表尾——
+           使用者來這裡就是為了看這一行，不該先捲過幾百個科目才看到。 *@
+        <div class="alert @(vm.IsBalanced ? "alert-success" : "alert-danger") d-flex justify-content-between align-items-center py-2">
+            <div>
+                <i class="bi @(vm.IsBalanced ? "bi-check-circle-fill" : "bi-exclamation-triangle-fill") me-2"></i>
+                <strong>@(vm.IsBalanced ? L["Balanced"] : L["NotBalanced"])</strong>
+                @if (!vm.IsBalanced)
+                {
+                    <span class="ms-2">@L["Difference"] @vm.Difference.ToString(moneyFmt)</span>
+                }
+            </div>
+            <div class="small">
+                @L["TotalDebit"]: <strong>@vm.TotalDebit.ToString(moneyFmt)</strong>
+                <span class="mx-2">/</span>
+                @L["TotalCredit"]: <strong>@vm.TotalCredit.ToString(moneyFmt)</strong>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <strong>@L["ResultTitle"]</strong>
+                <span class="text-muted ms-1">@rows.Count @L["Accounts"]</span>
+                <span class="text-muted ms-2">@vm.FromPeriod ~ @vm.ToPeriod</span>
+            </div>
+            @if (canPrint)
+            {
+                <a asp-action="Export" asp-route-fromPeriod="@curFrom" asp-route-toPeriod="@curTo"
+                   asp-route-includeZeroRows="@includeZero" class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @L["ExportExcel"]
+                </a>
+            }
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-sm table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@L["AccountCode"]</th>
+                            <th>@L["AccountName"]</th>
+                            <th class="text-end">@L["OpeningBalance"]</th>
+                            <th class="text-end">@L["PeriodDebit"]</th>
+                            <th class="text-end">@L["PeriodCredit"]</th>
+                            <th class="text-end">@L["ClosingBalance"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in rows)
+                        {
+                            <tr>
+                                <td>@r.AccountCode</td>
+                                <td>@r.AccountName</td>
+                                <td class="text-end @(r.OpeningBalance < 0 ? "text-danger" : "")">@r.OpeningBalance.ToString(moneyFmt)</td>
+                                <td class="text-end">@(r.PeriodDebit == 0 ? "" : r.PeriodDebit.ToString(moneyFmt))</td>
+                                <td class="text-end">@(r.PeriodCredit == 0 ? "" : r.PeriodCredit.ToString(moneyFmt))</td>
+                                <td class="text-end fw-semibold @(r.ClosingBalance < 0 ? "text-danger" : "")">@r.ClosingBalance.ToString(moneyFmt)</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-light fw-bold">
+                        <tr>
+                            <td colspan="3" class="text-end">@L["Total"]</td>
+                            <td class="text-end">@vm.TotalDebit.ToString(moneyFmt)</td>
+                            <td class="text-end">@vm.TotalCredit.ToString(moneyFmt)</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    }
+</div>

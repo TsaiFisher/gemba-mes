@@ -1,0 +1,177 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.MFG.Services
+@inject IViewLocalizer Localizer
+@model Dispatch
+
+@{
+    var openSetup         = ViewBag.OpenSetup as ProductionSetup;
+    bool hasOpen           = openSetup != null;
+    bool isProductionLine  = ViewBag.IsProductionLine == true;
+    bool requiresSetup     = ViewBag.RequiresSetup == true;
+    var activeOperators    = ViewBag.ActiveOperatorNames as List<string> ?? new();
+    var stagingOrders      = ViewBag.StagingOrders as IReadOnlyList<StagingOrderBrief> ?? new List<StagingOrderBrief>();
+    var pendingMaterials   = ViewBag.StagingMaterials as IReadOnlyList<StagingSourceLine> ?? new List<StagingSourceLine>();
+}
+
+<div class="p-3">
+    <dl class="row mb-3">
+        <dt class="col-sm-4">@Localizer["DispatchId"]</dt>
+        <dd class="col-sm-8 font-monospace">@Model.DispatchId</dd>
+        <dt class="col-sm-4">@Localizer["WorkOrderId"]</dt>
+        <dd class="col-sm-8">@Model.WorkOrderId</dd>
+        @if (!string.IsNullOrEmpty(Model.ToolingCode))
+        {
+            @* 模具改為唯讀顯示：排程時已指定，現場不再回報 *@
+            <dt class="col-sm-4">@Localizer["ToolingCode"]</dt>
+            <dd class="col-sm-8">@Model.ToolingCode</dd>
+        }
+    </dl>
+
+    @* ── 備料單 ────────────────────────────────────────────────────────────── *@
+    <h6 class="border-bottom pb-2 mb-2">
+        <i class="bi bi-box-seam me-1"></i>@Localizer["MaterialStagingSection"]
+    </h6>
+
+    @if (stagingOrders.Any())
+    {
+        <table class="table table-sm align-middle mb-2">
+            <thead class="table-light">
+                <tr>
+                    <th>@Localizer["StagingId"]</th>
+                    <th>@Localizer["Status"]</th>
+                    <th>@Localizer["StagingWhCode"]</th>
+                    <th class="text-end">@Localizer["Lines"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var so in stagingOrders)
+                {
+                    var badge = so.Status switch
+                    {
+                        "Draft"     => "secondary",
+                        "Confirmed" => "info",
+                        "Picking"   => "warning",
+                        "Completed" => "success",
+                        _           => "secondary"
+                    };
+                    <tr>
+                        <td class="font-monospace">@so.StagingId</td>
+                        <td><span class="badge bg-@badge">@Localizer[so.Status]</span></td>
+                        <td>@so.StagingWhCode @so.StagingLocationCode</td>
+                        <td class="text-end">@so.LineCount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @if (pendingMaterials.Any())
+    {
+        <div class="alert alert-warning py-2 small">
+            <i class="bi bi-exclamation-triangle me-1"></i>@Localizer["PendingMaterialsMsg"]
+        </div>
+        <table class="table table-sm align-middle mb-2">
+            <thead class="table-light">
+                <tr>
+                    <th>@Localizer["ProductCode"]</th>
+                    <th class="text-end">@Localizer["RequiredQty"]</th>
+                    <th>@Localizer["UomCode"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in pendingMaterials)
+                {
+                    <tr>
+                        <td>@m.ProductCode <span class="text-muted small">@m.ProductName</span></td>
+                        <td class="text-end">@m.RequiredQty</td>
+                        <td>@m.UomCode</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <form id="stagingForm" method="post" action="@Url.Action("CreateStagingOrder", new { id = Model.DispatchId })"
+              class="mb-3">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-file-earmark-plus me-1"></i>@Localizer["CreateStagingOrder"]
+            </button>
+            <div class="form-text text-muted">@Localizer["CreateStagingOrderHint"]</div>
+        </form>
+    }
+    else if (!stagingOrders.Any())
+    {
+        <div class="alert alert-light border py-2 small">
+            <i class="bi bi-check2 me-1"></i>@Localizer["NoPendingMaterialsMsg"]
+        </div>
+    }
+
+    @* ── 準備（Setup）───────────────────────────────────────────────────────── *@
+    <h6 class="border-bottom pb-2 mb-2 mt-3">
+        <i class="bi bi-tools me-1"></i>@Localizer["SetupSection"]
+    </h6>
+
+    @if (isProductionLine && activeOperators.Any())
+    {
+        <div class="alert alert-info small mb-3">
+            <i class="bi bi-people me-1"></i>@Localizer["ActiveOperators"]:
+            @string.Join("、", activeOperators)
+        </div>
+    }
+
+    @if (hasOpen)
+    {
+        <div class="alert alert-warning">
+            <i class="bi bi-tools me-1"></i>
+            @Localizer["SetupInProgressMsg"]
+        </div>
+        <p class="small text-muted">@Localizer["SetupStartedAt"]: @DateTimeSvc.ToLocalTime(openSetup!.SetupStartAt).ToString("yyyy-MM-dd HH:mm:ss")</p>
+
+        <form id="panelForm" method="post" action="@Url.Action("DoneSetup", new { id = Model.DispatchId })">
+            @Html.AntiForgeryToken()
+            <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-success" name="submit" value="done">
+                    <i class="bi bi-check-circle me-1"></i>@Localizer["DoneSetup"]
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            </div>
+        </form>
+    }
+    else if (!requiresSetup)
+    {
+        @* 工序未設準備工時＝免 Setup：直接開工，不必為了流程按一次備料完成 *@
+        <div class="alert alert-light border">
+            <i class="bi bi-info-circle me-1"></i>@Localizer["NoSetupRequiredMsg"]
+        </div>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+    }
+    else
+    {
+        <div class="alert alert-light border">
+            <i class="bi bi-info-circle me-1"></i>@Localizer["NoOpenSetupMsg"]
+        </div>
+
+        <form id="panelForm" method="post" action="@Url.Action("StartSetup", new { id = Model.DispatchId })">
+            @Html.AntiForgeryToken()
+            <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-warning" name="submit" value="start">
+                    <i class="bi bi-tools me-1"></i>@Localizer["StartSetup"]
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            </div>
+        </form>
+    }
+</div>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    // 備料單建立與 Setup 起訖是兩個獨立表單，各自提交（submitPanel 負責成功後的關閉與刷新）
+    ['panelForm', 'stagingForm'].forEach(function (id) {
+        var form = document.getElementById(id);
+        if (!form) return;
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            submitPanel(this, this.querySelector('[type=submit]'));
+        });
+    });
+</script>

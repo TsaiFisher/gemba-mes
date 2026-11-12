@@ -1,0 +1,347 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.ACT.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model SmartFactory.MES.Modules.ACT.Models.MonthEndChecklist?
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool canUpdate   = ViewBag.CanUpdate == true;
+    string periodId  = ViewBag.PeriodId as string ?? "";
+    string checklistId = Model?.ChecklistId ?? "";
+    var periodOptions = ViewBag.PeriodOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    var userNames     = ViewBag.UserNames as Dictionary<string, string> ?? new();
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-check2-square me-2"></i>@Localizer["PageTitle"]</h1>
+    </div>
+
+    @Html.AntiForgeryToken()
+
+    <!-- 期間選擇列 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" asp-action="Index" class="row g-2 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["PeriodId"]</label>
+                    <select name="periodId" class="form-select">
+                        <option value="">@L["SelectPeriod"]</option>
+                        @foreach (var p in periodOptions)
+                        { <option value="@p" selected="@(periodId == p)">@p</option> }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-search me-1"></i>@Localizer["Search"]
+                    </button>
+                </div>
+                @if (canUpdate && !string.IsNullOrWhiteSpace(periodId) && Model == null)
+                {
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-outline-primary" data-action="initChecklist" data-period-id="@periodId">
+                            <i class="bi bi-plus-circle me-1"></i>@Localizer["Init"]
+                        </button>
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
+
+    @if (string.IsNullOrWhiteSpace(periodId))
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-calendar3 fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null)
+    {
+        <div class="alert alert-warning text-center py-4">
+            <i class="bi bi-exclamation-circle fs-4 d-block mb-2"></i>@Localizer["NoData"]
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">
+                    <i class="bi bi-list-check me-2"></i>@Localizer["PeriodId"]：<strong>@Model.PeriodId</strong>
+                </span>
+                @if (Model.IsCompleted)
+                {
+                    <span class="badge bg-success fs-6"><i class="bi bi-check-circle me-1"></i>@L["PeriodStatusClosed"]</span>
+                }
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-sm align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="u-width-50px">@Localizer["Step"]</th>
+                            <th>@Localizer["StepName"]</th>
+                            <th class="u-width-120px">@Localizer["Status"]</th>
+                            <th>@Localizer["CompletedAt"]</th>
+                            <th>@Localizer["CompletedBy"]</th>
+                            <th>@Localizer["Notes"]</th>
+                            @if (canUpdate) { <th class="u-width-200px">@Localizer["Actions"]</th> }
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model.Items.OrderBy(i => i.StepNo))
+                    {
+                        var statusBadge = item.Status switch {
+                            ChecklistItemStatus.Completed  => "bg-success",
+                            ChecklistItemStatus.InProgress => "bg-warning text-dark",
+                            ChecklistItemStatus.Skipped    => "bg-secondary",
+                            _                              => "bg-light text-dark border"
+                        };
+                        var statusText = ActEnumDisplay.Text(L, item.Status);
+                        // 步驟 4 的重估原本沒有任何 UI 入口——控制器有 RunActualRateReestimation，
+                        // 但沒有一支 View 呼叫它，操作員能按的只有「完成」，而「完成」是鎖定不是重估。
+                        bool isBatchStep = item.StepNo == 4 || item.StepNo == 6 || item.StepNo == 7;
+                        bool isDone      = item.Status == ChecklistItemStatus.Completed || item.Status == ChecklistItemStatus.Skipped;
+                        <tr class="@(isDone ? "table-light" : "")">
+                            <td class="text-center text-muted">@item.StepNo</td>
+                            @* 步驟名稱在初始化時以中文寫進資料庫；畫面改依步驟編號取 resx，英文介面才不會整欄中文。取不到才用資料庫的名稱。 *@
+                            @{ var stepLabel = Localizer[$"Step{item.StepNo}Name"]; }
+                            <td class="small fw-semibold">@(stepLabel.IsResourceNotFound ? item.StepName : stepLabel.Value)</td>
+                            <td><span class="badge @statusBadge">@statusText</span></td>
+                            <td class="small text-muted">@(item.CompletedAt?.ToString("yyyy-MM-dd HH:mm") ?? "—")</td>
+                            <td class="small text-muted">@(item.CompletedBy != null && userNames.TryGetValue(item.CompletedBy, out var byName) ? byName : (item.CompletedBy ?? "—"))</td>
+                            @* 系統產生的備註是代碼（見 MonthEndNote），依當下語系還原；使用者自己打的照原文。 *@
+                            <td class="small text-muted">@(item.Notes == null ? "—" : SmartFactory.MES.Modules.ACT.Services.MonthEndNote.Render(item.Notes, k => { var t = Localizer[k]; return t.IsResourceNotFound ? null : t.Value; }))</td>
+                            @if (canUpdate)
+                            {
+                                <td>
+                                    @if (!isDone)
+                                    {
+                                        if (isBatchStep && item.StepNo == 4)
+                                        {
+                                            <button class="btn btn-sm btn-outline-info me-1"
+                                                    data-action="runActualRateReest" data-checklist-id="@checklistId" data-step-no="@item.StepNo" data-period-id="@Model.PeriodId">
+                                                <i class="bi bi-speedometer2"></i> @Localizer["RunBatch"]
+                                            </button>
+                                        }
+                                        else if (isBatchStep && item.StepNo == 6)
+                                        {
+                                            <button class="btn btn-sm btn-outline-info me-1"
+                                                    data-action="runFxRevaluation" data-checklist-id="@checklistId" data-step-no="@item.StepNo" data-period-id="@Model.PeriodId">
+                                                <i class="bi bi-currency-exchange"></i> @Localizer["RunBatch"]
+                                            </button>
+                                            @* ECL 原本只能在「預期信用損失」畫面跑；步驟 9 入帳讀本期 ECL 結果，沒跑就略過。 *@
+                                            <button class="btn btn-sm btn-outline-info me-1"
+                                                    data-action="runEclBatch" data-checklist-id="@checklistId" data-step-no="@item.StepNo" data-period-id="@Model.PeriodId">
+                                                <i class="bi bi-shield-exclamation"></i> @Localizer["RunEclBatch"]
+                                            </button>
+                                        }
+                                        else if (isBatchStep && item.StepNo == 7)
+                                        {
+                                            <button class="btn btn-sm btn-outline-info me-1"
+                                                    data-action="runNrvBatch" data-checklist-id="@checklistId" data-step-no="@item.StepNo" data-period-id="@Model.PeriodId">
+                                                <i class="bi bi-calculator"></i> @Localizer["RunBatch"]
+                                            </button>
+                                        }
+                                        @* completeStep 送出期間會鎖住這顆按鈕：步驟 9／10 會入帳，
+                                           連點兩下的兩個請求會各算出同一筆差額、各開一張分錄。 *@
+                                        <button class="btn btn-sm btn-outline-success me-1"
+                                                data-action="completeStep" data-checklist-id="@checklistId" data-step-no="@item.StepNo">
+                                            <i class="bi bi-check-lg"></i> @Localizer["Complete"]
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary"
+                                                data-action="skipStep" data-checklist-id="@checklistId" data-step-no="@item.StepNo">
+                                            <i class="bi bi-skip-forward"></i> @Localizer["Skip"]
+                                        </button>
+                                    }
+                                    @* 步驟 8 封鎖之後才發現稽核不過的話，沒有這個出口就只能改資料庫：
+                                       關帳要稽核過，稽核異常多半得靠過帳去修，而過帳正被 Closing 擋著。 *@
+                                    @* 條件看的是**期間狀態**而不是步驟 8：期間可能是從「會計期間」畫面
+                                       直接進 Closing 的，那時步驟 8 永遠不會變成已完成（W4-F8）。 *@
+                                    @if (item.StepNo == 8
+                                         && (ViewBag.PeriodStatus as PeriodStatus?) == PeriodStatus.Closing
+                                         && !Model.IsCompleted)
+                                    {
+                                        <button class="btn btn-sm btn-outline-warning"
+                                                data-action="cancelClosing" data-checklist-id="@checklistId">
+                                            <i class="bi bi-arrow-counterclockwise"></i> @Localizer["CancelClosing"]
+                                        </button>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+@*
+    部門實際費用輸入 Modal——費率重估的分子。
+    每行「工作中心:實際人工:實際製費」；沒有這份資料就算不出實際費率，重估等於沒做。
+    （說明寫在 <script> 之外：Cx7 不允許 script 區塊出現中文，連註解也一樣。）
+*@
+<!-- Department actual cost input modal -->
+<div class="modal fade" id="deptCostModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-speedometer2 me-2"></i>@Localizer["DeptCostTitle"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted small">@Localizer["DeptCostHint"]</p>
+                <textarea id="deptCostInput" class="form-control font-monospace" rows="5"
+                          placeholder="WC01:120000:60000&#10;WC02:80000:35000">@(ViewBag.DeptCostPrefill as string)</textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Cancel"]</button>
+                <button type="button" class="btn btn-primary" id="btnConfirmDeptCost">@Localizer["ConfirmRun"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FX 匯率輸入 Modal -->
+<div class="modal fade" id="fxRatesModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-currency-exchange me-2"></i>@Localizer["FxRatesTitle"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted small">@Localizer["FxRatesHint"]</p>
+                <textarea id="fxRatesInput" class="form-control font-monospace" rows="5"
+                          placeholder="USD:33.5&#10;EUR:36.2&#10;JPY:0.22"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Localizer["Cancel"]</button>
+                <button type="button" class="btn btn-primary" id="btnConfirmFx">@Localizer["ConfirmRun"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMsg"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+    <div id="errorToast" class="toast align-items-center text-bg-danger border-0">
+        <div class="d-flex">
+            <div class="toast-body" id="errorMsg"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    const token = () => document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+    const hdrs  = () => ({ 'RequestVerificationToken': token(), 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json' });
+
+    function showSuccess(msg) {
+        document.getElementById('toastMsg').textContent = msg;
+        bootstrap.Toast.getOrCreateInstance(document.getElementById('successToast')).show();
+    }
+    function showError(msg) {
+        document.getElementById('errorMsg').textContent = msg;
+        bootstrap.Toast.getOrCreateInstance(document.getElementById('errorToast')).show();
+    }
+
+    function postJson(url, body) {
+        return fetch(url, { method: 'POST', headers: hdrs(), body: JSON.stringify(body) })
+            .then(r => r.json().catch(() => ({ success: false, message: 'JSON parse error' })));
+    }
+    function postForm(url) {
+        return fetch(url, { method: 'POST', headers: { 'RequestVerificationToken': token(), 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => r.json().catch(() => ({ success: false, message: 'JSON parse error' })));
+    }
+
+    function initChecklist(e, el) {
+        const periodId = el.dataset.periodId;
+        postForm(`/MonthEnd/Init?periodId=${encodeURIComponent(periodId)}`)
+            .then(d => { if (d.success) { showSuccess(d.message); setTimeout(() => location.reload(), 800); } else showError(d.message); });
+    }
+
+    function completeStep(e, el) {
+        if (el.disabled) return;
+        el.disabled = true;
+        const checklistId = el.dataset.checklistId, stepNo = el.dataset.stepNo;
+        postForm(`/MonthEnd/CompleteStep?checklistId=${encodeURIComponent(checklistId)}&stepNo=${stepNo}`)
+            .then(d => { if (d.success) { showSuccess(d.message); setTimeout(() => location.reload(), 800); } else { el.disabled = false; showError(d.message); } })
+            .catch(() => { el.disabled = false; });
+    }
+
+    function skipStep(e, el) {
+        const checklistId = el.dataset.checklistId, stepNo = el.dataset.stepNo;
+        postForm(`/MonthEnd/SkipStep?checklistId=${encodeURIComponent(checklistId)}&stepNo=${stepNo}&reason=${encodeURIComponent(window.i18n.t('MonthEndSkipReason'))}`)
+            .then(d => { if (d.success) { showSuccess(d.message); setTimeout(() => location.reload(), 800); } else showError(d.message); });
+    }
+
+    function cancelClosing(e, el) {
+        const checklistId = el.dataset.checklistId;
+        postForm(`/MonthEnd/CancelClosing?checklistId=${encodeURIComponent(checklistId)}`)
+            .then(d => { if (d.success) { showSuccess(d.message); setTimeout(() => location.reload(), 800); } else showError(d.message); });
+    }
+
+    function runNrvBatch(e, el) {
+        const periodId = el.dataset.periodId;
+        postForm(`/MonthEnd/RunNrv?periodId=${encodeURIComponent(periodId)}`)
+            .then(d => { if (d.success) { showSuccess(d.message); } else showError(d.message); });
+    }
+
+    function runEclBatch(e, el) {
+        const periodId = el.dataset.periodId;
+        postForm(`/MonthEnd/RunEcl?periodId=${encodeURIComponent(periodId)}`)
+            .then(d => { if (d.success) { showSuccess(d.message); } else showError(d.message); });
+    }
+
+    let _reestPeriodId;
+    function runActualRateReest(e, el) {
+        _reestPeriodId = el.dataset.periodId;
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('deptCostModal')).show();
+    }
+
+    document.getElementById('btnConfirmDeptCost')?.addEventListener('click', () => {
+        // one line per work center: code:labor:overhead
+        const rows = document.getElementById('deptCostInput').value.trim().split('\n')
+            .map(l => l.split(':'))
+            .filter(p => p.length === 3 && p[0].trim())
+            .map(p => ({
+                workCenterCode: p[0].trim(),
+                actualLaborCost: parseFloat(p[1]) || 0,
+                actualOverheadCost: parseFloat(p[2]) || 0
+            }));
+        if (!rows.length) { showError(window.i18n.t('DeptCostRequired')); return; }
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('deptCostModal')).hide();
+        postJson(`/MonthEnd/RunActualRateReestimation?periodId=${encodeURIComponent(_reestPeriodId)}`, rows)
+            .then(d => { if (d.success) { showSuccess(d.message); } else showError(d.message); });
+    });
+
+    let _fxChecklistId, _fxStepNo, _fxPeriodId;
+    function runFxRevaluation(e, el) {
+        const checklistId = el.dataset.checklistId, stepNo = el.dataset.stepNo, periodId = el.dataset.periodId;
+        _fxChecklistId = checklistId; _fxStepNo = stepNo; _fxPeriodId = periodId;
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('fxRatesModal')).show();
+    }
+
+    document.getElementById('btnConfirmFx')?.addEventListener('click', () => {
+        const lines = document.getElementById('fxRatesInput').value.trim().split('\n');
+        const rates = {};
+        lines.forEach(l => {
+            const [code, rate] = l.split(':');
+            if (code && rate) rates[code.trim().toUpperCase()] = parseFloat(rate.trim());
+        });
+        if (!Object.keys(rates).length) { showError(window.i18n.t('FxRatesRequired')); return; }
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('fxRatesModal')).hide();
+        postJson(`/MonthEnd/RunFxRevaluation?periodId=${encodeURIComponent(_fxPeriodId)}`, rates)
+            .then(d => { if (d.success) { showSuccess(d.message); } else showError(d.message); });
+    });
+</script>
+}

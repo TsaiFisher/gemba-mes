@@ -1,0 +1,68 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.OrganizationUnit
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    var action = isEdit
+        ? Url.Action("Edit", "Organization", new { id = Model.Id })
+        : Url.Action("Create", "Organization");
+}
+
+<form id="panelForm" action="@action" method="post" data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    @if (isEdit)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+    <div class="p-4">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label fw-bold">@Localizer["UnitName"] <span class="text-danger">*</span></label>
+            <input asp-for="Name" class="form-control" placeholder="@Localizer["UnitNamePlaceholder"]" />
+            <span asp-validation-for="Name" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PlantId" class="form-label fw-bold">@Localizer["Plant"]</label>
+            <select asp-for="PlantId" class="form-select">
+                <option value="">-- @Localizer["InheritFromParent"] --</option>
+                @foreach (var plant in ViewBag.Plants as List<SmartFactory.MES.Models.Plant>)
+                {
+                    <option value="@plant.Id" selected="@(Model.PlantId == plant.Id)">@plant.Id - @(System.Globalization.CultureInfo.CurrentUICulture.Name == "en-US" && !string.IsNullOrWhiteSpace(plant.NameEn) ? plant.NameEn : plant.Name)</option>
+                }
+            </select>
+            <span asp-validation-for="PlantId" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SortOrder" class="form-label fw-bold">@Localizer["SortOrder"]</label>
+            <input asp-for="SortOrder" class="form-control" type="number" />
+            <span asp-validation-for="SortOrder" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ParentId" class="form-label fw-bold">@Localizer["ParentUnit"]</label>
+            <select asp-for="ParentId" class="form-select" asp-items="ViewBag.ParentId">
+                <option value="">-- @Localizer["NoParent"] --</option>
+            </select>
+            <span asp-validation-for="ParentId" class="text-danger small"></span>
+        </div>
+
+        @if (isEdit)
+        {
+            <div class="mb-3">
+                <label asp-for="Path" class="form-label fw-bold text-muted">@Localizer["CurrentPath"]</label>
+                <input asp-for="Path" class="form-control bg-light" readonly />
+            </div>
+        }
+    </div>
+
+    <div class="p-3 border-top bg-light d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+        <button type="submit" class="btn btn-success px-4">
+            <i class="bi bi-save"></i> @Localizer["Save"]
+        </button>
+    </div>
+</form>

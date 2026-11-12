@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>派工作業</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>派工單號/工單號/品號</value></data>
+  <data name="StatusFilter" xml:space="preserve"><value>狀態</value></data>
+  <data name="StatusAll" xml:space="preserve"><value>全部</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="DispatchId" xml:space="preserve"><value>派工單號</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>工單號</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="OperationSeq" xml:space="preserve"><value>工序</value></data>
+  <data name="OperationName" xml:space="preserve"><value>工序名稱</value></data>
+  <data name="WorkCenterId" xml:space="preserve"><value>工作中心</value></data>
+  <data name="MachineCode" xml:space="preserve"><value>機台</value></data>
+  <data name="Quantity" xml:space="preserve"><value>派工量</value></data>
+  <data name="QtyDone" xml:space="preserve"><value>完工量</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="ScheduledStart" xml:space="preserve"><value>排程開始</value></data>
+  <data name="PlannedEndDate" xml:space="preserve"><value>計劃交期</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="ViewTitle" xml:space="preserve"><value>派工 {0}</value></data>
+  <data name="SetupTitle" xml:space="preserve"><value>備料作業 — {0}</value></data>
+  <data name="SessionTitle" xml:space="preserve"><value>上工/下工 — {0}</value></data>
+  <data name="ReportTitle" xml:space="preserve"><value>報工 — {0}</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入條件後按「查詢」</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>操作成功</value></data>
+  <data name="StatusPending" xml:space="preserve"><value>未排程</value></data>
+  <data name="StatusScheduled" xml:space="preserve"><value>已排定</value></data>
+  <data name="StatusSetupInProgress" xml:space="preserve"><value>備料中</value></data>
+  <data name="StatusReadyToStart" xml:space="preserve"><value>備料完成</value></data>
+  <data name="StatusInProgress" xml:space="preserve"><value>生產中</value></data>
+  <data name="StatusClosed" xml:space="preserve"><value>已完工</value></data>
+  <data name="StatusOnHold" xml:space="preserve"><value>暫停</value></data>
+  <data name="StatusPendingFPI" xml:space="preserve"><value>待首件檢驗</value></data>
+  <data name="Outsource" xml:space="preserve"><value>委外</value></data>
+  <data name="ToolingPmDue" xml:space="preserve"><value>模具需保養</value></data>
+  <data name="View" xml:space="preserve"><value>檢視</value></data>
+  <data name="Setup" xml:space="preserve"><value>備料</value></data>
+  <data name="SetupDone" xml:space="preserve"><value>備料完成</value></data>
+  <data name="Session" xml:space="preserve"><value>上工／下工</value></data>
+  <data name="Report" xml:space="preserve"><value>報工／完工</value></data>
+  <data name="StatusCancelled" xml:space="preserve"><value>已取消</value></data>
+  <data name="HoldReasonMachineDown" xml:space="preserve"><value>機台停用</value></data>
+  <data name="HoldReasonFpiFailed" xml:space="preserve"><value>首件不合格</value></data>
+  <data name="HoldReasonIpqcFailed" xml:space="preserve"><value>巡檢不合格</value></data>
+  <data name="HandleHold" xml:space="preserve"><value>暫停處理</value></data>
+  <data name="HoldTitle" xml:space="preserve"><value>暫停處理 — {0}</value></data>
+</root>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Approval Template Settings — Approval Management Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>簽核模板設定 — 簽核管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">簽核管理目錄</span><span lang="en">Approval Management contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">簽核管理畫面</span><span lang="en">Approval Management Screens</span></div>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核／所有簽核記錄</span><span lang="en">My Pending / All Approval Requests</span></a>
+    <a href="approval-template.html" class="nav-link active"><span lang="zh">簽核模板設定</span><span lang="en">Approval Template Settings</span></a>
+    <a href="document-approval-config.html" class="nav-link"><span lang="zh">作業類型簽核設定</span><span lang="en">Document Approval Settings</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../sys/index.html" class="nav-link"><span lang="zh">系統管理（SYS）</span><span lang="en">System Administration (SYS)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">簽核模板設定</span><span lang="en">Approval Template Settings</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：簽核管理 → 簽核範本設定 &nbsp;|&nbsp; 權限：依權限設定</span><span lang="en">Menu: Approval Management → Approval Template Settings &nbsp;|&nbsp; Permission: per permission settings</span></div>
+    </div>
+
+    <p><span lang="zh">簽核模板定義</span><span lang="en">An approval template defines </span><b><span lang="zh">一條簽核路線</span><span lang="en">one approval route</span></b><span lang="zh">：由哪些人、依什麼順序簽。模板本身不會自己作用，必須到</span><span lang="en">: who signs, and in what order. A template does nothing on its own; it has to be attached to a document type under </span><a href="document-approval-config.html"><span lang="zh">作業類型簽核設定</span><span lang="en">Document Approval Settings</span></a><span lang="zh">綁定到某個作業類型，該類型的單據才會走這條路線。</span><span lang="en"> before documents of that type follow the route.</span></p>
+
+    <img class="screen-shot" src="img/approval-template.png" data-src-en="img/en/approval-template.png" alt="簽核模板設定畫面截圖" data-alt-en="Approval template settings screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">簽核模板設定畫面截圖（示意，實際模板依系統資料而異）</span><span lang="en">Approval template settings screenshot (illustrative; the templates shown depend on your data)</span></div>
+
+    <h2 id="template-fields"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">模板欄位</span><span lang="en">Template fields</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">模板名稱</span><span lang="en">Template name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">辨識用的名稱，例如「採購單三級簽核」。作業類型簽核設定的下拉就是以此挑選。</span><span lang="en">The name you recognise it by, such as "Purchase order, three levels". It is what you pick from the drop-down in the document approval settings.</span></td></tr>
+        <tr><td><span lang="zh">適用單據類型</span><span lang="en">Document type it is for</span></td><td></td><td><span lang="zh">說明這條路線是為哪種單據設計的，供管理者辨識用。</span><span lang="en">Records which kind of document the route was designed for, to help administrators tell templates apart.</span></td></tr>
+        <tr><td><span lang="zh">同一簽核人自動跳簽</span><span lang="en">Skip repeated approver</span></td><td></td><td><span lang="zh">開啟後，若某個步驟解析出來的簽核人</span><span lang="en">With this on, when the approver resolved for a step </span><b><span lang="zh">正是前面已經簽過的人</span><span lang="en">is somebody who has already signed</span></b><span lang="zh">，該步驟自動視為通過，不必再簽一次。跳過的步驟仍會記入簽核歷程。</span><span lang="en">, that step is passed automatically instead of asking them to sign twice. Skipped steps are still recorded in the history.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="approval-steps"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">簽核步驟</span><span lang="en">Approval steps</span></h2>
+    <p><span lang="zh">建立模板後，點模板進入明細即可管理步驟。步驟依序執行，順序由系統維護：新增的步驟自動排到最後，可用上下移動調整，刪除後其餘步驟自動重新編號。</span><span lang="en">Once a template exists, open it to manage its steps. Steps run in order and the system keeps the numbering: a new step is added at the end, the arrows move a step up or down, and deleting one renumbers the rest automatically.</span></p>
+
+    <img class="screen-shot" src="img/approval-template-steps.png" data-src-en="img/en/approval-template-steps.png" alt="簽核步驟側面板截圖" data-alt-en="Approval step panel screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">點模板後開啟的步驟面板：已建立的步驟依序列出，右側為上移／下移／修改／刪除，下方是新增步驟</span><span lang="en">The step panel that opens from a template: the existing steps in order, with move up, move down, edit and delete on the right, and the form for a new step below</span></div>
+
+    <h3><span lang="zh">三種簽核人類型</span><span lang="en">The three kinds of approver</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">類型</span><span lang="en">Type</span></th><th><span lang="zh">系統如何找到簽核人</span><span lang="en">How the system finds the approver</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">直屬主管</span><span lang="en">Direct Supervisor</span></td><td><span lang="zh">依申請人</span><span lang="en">From the requester's </span><b><span lang="zh">送審當下作用中的角色</span><span lang="en">role at the moment of submission</span></b><span lang="zh">，找該角色的組織單位，再取其上層組織單位底下的使用者。不需要指定人，會隨組織異動自動跟著變。</span><span lang="en">, the system finds that role's organization unit and takes a user under its parent unit. Nobody is named, so the route follows changes in the organization.</span></td></tr>
+        <tr><td><span lang="zh">指定角色</span><span lang="en">Role Approver</span></td><td><span lang="zh">指定一個角色，該角色的使用者</span><span lang="en">You name a role; whoever holds it </span><b><span lang="zh">切換到這個角色時</span><span lang="en">sees the request while they are in that role</span></b><span lang="zh">就會在待簽清單看到這張單。適合「由採購主管簽」這種依職務而非依人的規則。</span><span lang="en">. This suits rules stated by job rather than by person, such as "signed by the purchasing manager".</span></td></tr>
+        <tr><td><span lang="zh">指定使用者</span><span lang="en">Specific User</span></td><td><span lang="zh">直接指定某位使用者。最明確，但該員離職或轉調時必須手動改模板。</span><span lang="en">You name one person. It is the most explicit, but the template has to be changed by hand when that person leaves or moves on.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">用「直屬主管」型之前，先確認組織架構是完整的：</span><span lang="en">Before using the "Direct Supervisor" type, make sure the organization is complete:</span></strong><span lang="zh">申請人的角色沒掛組織單位、該單位沒有上層、或上層單位底下沒有任何使用者，都會導致</span><span lang="en"> if the requester's role has no organization unit, if that unit has no parent, or if no user sits under the parent, the step </span><b><span lang="zh">解析不到簽核人</span><span lang="en">resolves to nobody</span></b><span lang="zh">。單據照樣送出，但不會進任何人的待簽清單，也沒有錯誤訊息。詳見</span><span lang="en">. The document is still submitted, yet lands in nobody's pending list and no error is shown. See </span><a href="approval.html"><span lang="zh">待我簽核／所有簽核記錄</span><span lang="en">My Pending / All Approval Requests</span></a><span lang="zh">的「未指派簽核人」一節。</span><span lang="en"> under "Unassigned approver".</span>
+    </div>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">建立一條簽核路線</span><span lang="en">Creating an approval route</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「簽核管理 &gt; 簽核範本設定」，按「查詢」載入現有模板。</span><span lang="en">Choose "Approval Management &gt; Approval Template Settings" in the left-hand menu and click "Search" to load the existing templates.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「新增」，填入模板名稱與適用單據類型，視需要開啟自動跳簽，儲存。</span><span lang="en">Click "Add", enter the name and the document type it is for, turn on skip-repeated-approver if you want it, and save.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點該模板進入明細，逐一新增步驟：選擇簽核人類型，指定角色或人員（主管型不需指定）。</span><span lang="en">Open the template and add the steps one by one: choose the kind of approver and name the role or the person (the supervisor type needs neither).</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">用上下移動調整順序，第一個步驟就是送審後第一位簽核的人。</span><span lang="en">Use the arrows to set the order; the first step is whoever signs first after submission.</span></div></div>
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh">最後到「作業類型簽核設定」把這個模板綁到實際的單據類型，路線才會開始作用。</span><span lang="en">Finally attach the template to a real document type under "Document Approval Settings"; only then does the route start working.</span></div></div>
+
+    <h2 id="steps-are-locked-while-approvals-are-in"><i class="bi bi-lock me-2 text-primary"></i><span lang="zh">有進行中的簽核時，步驟會被鎖住</span><span lang="en">Steps are locked while approvals are in flight</span></h2>
+    <p><span lang="zh">當這個模板底下</span><span lang="en">While this template has </span><b><span lang="zh">還有未簽完的單</span><span lang="en">requests that are still unsigned</span></b><span lang="zh">時，新增、修改、刪除、上下移動步驟</span><span lang="en">, adding, changing, deleting and moving steps are </span><b><span lang="zh">一律被擋下</span><span lang="en">all blocked</span></b><span lang="zh">，訊息會提示「請待簽核完成或撤回後再修改」。這是刻意的保護：改動路線會讓正在跑的單失去下一站，變成永遠簽不完的孤單。</span><span lang="en">, with a message asking you to wait until the approvals finish or are withdrawn. This is deliberate: changing the route would leave running requests without a next stop, stranded and impossible to complete.</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">到「所有簽核記錄」以狀態篩出進行中的單，確認是哪幾張擋著。</span><span lang="en">Filter "All Approval Requests" by status to see which requests are holding things up.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">請簽核人簽完，或請申請人撤回。</span><span lang="en">Have the approvers sign them, or have the requesters withdraw them.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">全部清空後再回來調整步驟。</span><span lang="en">Come back and adjust the steps once none are left.</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">若某個步驟已被歷史簽核紀錄引用，即使目前沒有進行中的單，該步驟也刪不掉——刪掉會讓過去的簽核歷程失去依據。這種情況請改用新模板，而不是拆掉舊的。</span><span lang="en">A step already referenced by past approval records cannot be deleted even when nothing is in flight, because deleting it would leave the historical trail without its basis. In that situation create a new template rather than dismantling the old one.</span>
+    </div>
+
+    <h2 id="deleting-a-template"><i class="bi bi-trash me-2 text-primary"></i><span lang="zh">刪除模板</span><span lang="en">Deleting a template</span></h2>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">擋下的原因</span><span lang="en">Reason it is blocked</span></th><th><span lang="zh">處理方式</span><span lang="en">What to do</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">被作業類型簽核設定使用中</span><span lang="en">A document approval setting uses it</span></td><td><span lang="zh">先到該設定改綁其他模板，或把「需要簽核」關閉。</span><span lang="en">Point that setting at another template first, or turn "Requires approval" off.</span></td></tr>
+        <tr><td><span lang="zh">有進行中的簽核流程</span><span lang="en">Approvals are still running</span></td><td><span lang="zh">等單據簽完或撤回。</span><span lang="en">Wait until they are signed or withdrawn.</span></td></tr>
+      </tbody>
+    </table>
+    <p><span lang="zh">通過檢查後，模板連同其所有步驟一併刪除。</span><span lang="en">Once the checks pass, the template is deleted together with all of its steps.</span></p>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">查詢結果可匯出 Excel（.xlsx）、CSV 或 JSON，內容為模板名稱、適用單據類型與步驟數。</span><span lang="en">The results can be exported as Excel (.xlsx), CSV or JSON, containing the template name, the document type it is for and the number of steps.</span></p>
+  </main>
+</div>
+</body>
+</html>

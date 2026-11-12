@@ -1,0 +1,54 @@
+{
+  "sourcePath": "Modules/MFG/Services/ActualRateReestimationService.cs",
+  "sourceHash": "605fb6093ed0523affd704dd91c3e788b578fa7e89af0dc3c7177a71d6346bf5",
+  "entries": [
+    {
+      "slug": "code-mfg-actualratereestimationservice-1c51eaeb",
+      "lang": "zh",
+      "headingPath": "生產製造 › 工單實際費率期末重估實作",
+      "text": "工單費率重估的計算規則說明｜人工和製費的實際費率是根據各工作中心當月實際費用除以對應的工時總量來計算。在處理完工或在製品工單時，會使用這些實際費率重新計算相關成本，並將結果彙總成調整分錄。跨期結轉的人工和製費，會採用前期已凍結的快照數據加上本期的工時乘以本期計算出的實際費率來計算，以確保完工工單的最終成本能涵蓋整個生命週期。",
+      "approved": true,
+      "sourceSectionHash": "cef969cdebf2b67e8aeb528781e511bd7cb921df7273849aa9a852b5190f5b1a"
+    },
+    {
+      "slug": "code-mfg-actualratereestimationservice-e791707b",
+      "lang": "zh",
+      "headingPath": "生產製造 › 有工時卻沒輸入部門費用的工作中心：費率會算成 0",
+      "text": "費率計算與部門費用處理規則｜如果某個工作中心有工時記錄，但沒有輸入對應的部門費用，則該工作中心的成本費率會被計算為零。若要明確表示成本為零，必須直接輸入 0 的值才能通過系統驗證。",
+      "approved": true,
+      "sourceSectionHash": "2bbf54e9e3c7c0a7c4fa8aaab05ed9146af49c024b61153b2968b05837e1fc00"
+    },
+    {
+      "slug": "code-mfg-actualratereestimationservice-b5719a5e",
+      "lang": "zh",
+      "headingPath": "生產製造 › 前期已關帳、快照不可變，作為跨期工單的期初層",
+      "text": "期初資料凍結與計算規則｜系統會將前一個已經結算的期間的在製品成本資訊固定下來，作為跨期工單的起始基礎；如果沒有前期快照資料，則該項目的期初金額為零。",
+      "approved": true,
+      "sourceSectionHash": "4b82ce5807544466f5a65c76ee825e77f2baf8308425edf129e8b134a2b51ad5"
+    },
+    {
+      "slug": "code-mfg-actualratereestimationservice-bcee60a5",
+      "lang": "zh",
+      "headingPath": "生產製造 › ── 4. 回刷完工工單─────────────────",
+      "text": "工單成本計算的流程說明｜系統在處理完工工單時，其成本計算是依據「本期記錄」範圍進行的。如果對同一筆紀錄重複執行此操作，不會產生額外的調整或分錄，確保了資料的唯一性與正確性。",
+      "approved": true,
+      "sourceSectionHash": "87d6987fb74926eba71f4db9ae3b3a3447f242fe1cf1fd0c262c03fb2ee75cfc"
+    },
+    {
+      "slug": "code-mfg-actualratereestimationservice-43624913",
+      "lang": "zh",
+      "headingPath": "生產製造 › 金額為零則略過──────",
+      "text": "差異調整分錄的處理規則｜當進行差異調整分錄時，如果該筆分錄的金額為零，系統會跳過相關的計算與記錄流程。",
+      "approved": true,
+      "sourceSectionHash": "182dd7a44849d5243695f8a1bb24c37e2e21ee1a8af1a0d71bc2fd3e872d5aa9"
+    },
+    {
+      "slug": "code-mfg-actualratereestimationservice-01cd5e8d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 兩邊各留一份的下場見人工驗收紀錄 W2-F7",
+      "text": "資料記錄位置說明｜在產品報表的介面中，關於「兩邊各留一份的下場見人工驗收紀錄」，系統會使用與材料成本計算時相同的單據進行記錄。",
+      "approved": true,
+      "sourceSectionHash": "1f7eb39c96b5d28f2859cf4d2ef6501b28f586994ac6271a3e85996334d5e739"
+    }
+  ]
+}

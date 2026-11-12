@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Outsource Price Analysis — OSP User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>委外價格分析 — OSP 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">委外管理目錄</span><span lang="en">Outsourcing Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="index.html#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">OSP 畫面</span><span lang="en">OSP Screens</span></div>
+    <a href="outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+    <a href="outsource-price.html" class="nav-link active"><span lang="zh">委外價格分析</span><span lang="en">Outsource Price Analysis</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關</span><span lang="en">Related</span></div>
+    <a href="../rpt/outsource-performance.html" class="nav-link"><span lang="zh">委外對帳報表（RPT）</span><span lang="en">Outsource reconciliation report (RPT)</span></a>
+    <a href="../pur/purchase-price.html" class="nav-link"><span lang="zh">採購價格分析（PUR）</span><span lang="en">Purchase price analysis (PUR)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-graph-up-arrow me-2 text-primary"></i><span lang="zh">委外價格分析</span><span lang="en">Outsource Price Analysis</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/OutsourcePrice &nbsp;|&nbsp; 委外加工費的月趨勢與比價</span><span lang="en">Route: /OutsourcePrice &nbsp;|&nbsp; Monthly trend and quotation comparison for outsourcing costs</span></div>
+    </div>
+
+    <p><span lang="zh">回答兩個關於委外加工費的問題：<strong>加工費在漲嗎</strong>（月趨勢）、<strong>這一筆是照哪一張報價收的、差多少</strong>（比價明細）。資料來源是已過帳的委外收貨明細，對照的是該筆收貨<strong>當日</strong>應適用的委外報價。</span><span lang="en">Answers two questions about outsourcing costs: <strong>are processing fees rising</strong> (monthly trend), and <strong>which quotation was each receipt priced against, and by how much did it differ</strong> (comparison detail). The source is posted outsource receipt lines, compared against the quotation in effect <strong>on that receipt date</strong>.</span></p>
+
+    <img class="screen-shot" src="img/outsource-price.png" data-src-en="img/en/outsource-price.png" alt="委外價格分析畫面截圖" data-alt-en="Outsource price analysis screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">委外價格分析畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Outsource price analysis screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <div class="note-box">
+      <div class="fw-semibold mb-1"><i class="bi bi-info-circle me-1"></i><span lang="zh">它和採購價格分析是一對</span><span lang="en">It pairs with purchase price analysis</span></div>
+      <p class="mb-0"><span lang="zh">採購那一側是「進貨單價 vs 供應商報價（<code>VendorPriceList</code>）」，委外這一側是「加工費單價 vs 委外報價（<code>OutsourceQuotation</code>）」。兩張表刻意不合併：資料來源不同、查價規則也不同（委外走廠商＋品號＋途程＋工序的四層查價，採購是單層有效期），合成一張只會得到一支兩邊都不好用的報表。</span><span lang="en">On the purchasing side it is "receipt unit price vs supplier price list (<code>VendorPriceList</code>)"; here it is "processing fee vs outsource quotation (<code>OutsourceQuotation</code>)". The two are deliberately kept apart: the sources differ and so do the lookup rules (outsourcing uses a four-level lookup on supplier + product + routing + operation, purchasing a single validity period), so merging them would produce one report that serves neither well.</span></p>
+    </div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">開啟「委外管理 &gt; 委外價格分析」。</span><span lang="en">Open "Outsourcing &gt; Outsource Price Analysis".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">設定收貨日區間，必要時再選委外廠商或品號縮小範圍，按「查詢」。<strong>期間留白時預設近 30 天</strong>，不是「不限起日」——這張報表要逐筆掃收貨明細並逐筆查價，不給預設值等於掃全部歷史。</span><span lang="en">Set the receipt date range, optionally narrow by subcontractor or product, then click "Search". <strong>When the range is left blank it defaults to the last 30 days</strong>, not "no start date" — this report scans every receipt line and looks up a quotation for each, so no default would mean scanning the entire history.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">上方折線是月趨勢，左下是月表，右下是逐筆比價明細。兩份都可以各自匯出 Excel。</span><span lang="en">The line chart at the top is the monthly trend, the table at the lower left is the same data in figures, and the lower right is the line-by-line comparison. Both can be exported to Excel separately.</span></div></div>
+
+    <h2 id="method"><i class="bi bi-calculator me-2 text-primary"></i><span lang="zh">計算口徑</span><span lang="en">How it is calculated</span></h2>
+
+    <div class="note-box">
+      <div class="fw-semibold mb-1"><i class="bi bi-currency-exchange me-1"></i><span lang="zh">月趨勢一律換算本幣，而且以收貨量加權</span><span lang="en">The monthly trend is converted to local currency and weighted by quantity</span></div>
+      <p><span lang="zh">趨勢圖與月表的平均單價都是<strong>本幣</strong>（單價 × 該筆的進貨匯率），所以報價幣別不同的委外廠可以放在同一張圖上看。直接平均交易幣別的單價，等於把 USD 30 和 TWD 30 加起來除以二——那個數字沒有任何意義，而它看起來完全正常。</span><span lang="en">Average prices in the chart and the monthly table are in <strong>local currency</strong> (unit price × the exchange rate on that receipt), so subcontractors quoting in different currencies can be read on one chart. Averaging transaction-currency prices directly would add USD 30 to TWD 30 and halve it — a meaningless number that looks perfectly normal.</span></p>
+      <p class="mb-0"><span lang="zh">平均是<strong>以收貨量加權</strong>的：不加權的話，一筆 1 個的試作單會和一筆 10000 個的量產單等重，趨勢會被零星小單帶著跑。</span><span lang="en">The average is <strong>weighted by receipt quantity</strong>: without weighting, a one-piece trial run would count as much as a 10,000-piece production run, and the trend would follow the small odd orders.</span></p>
+    </div>
+
+    <div class="tip-box">
+      <div class="fw-semibold mb-1"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh">「無法比價」不等於「差異 0」</span><span lang="en">"Not comparable" is not "zero difference"</span></div>
+      <p><span lang="zh">差異欄顯示「—」而不是 0，有兩種完全不同的成因，畫面上方的黃色徽章會告訴你有幾筆：</span><span lang="en">The difference column shows "—" rather than 0, for two quite different reasons. The yellow badge above the table tells you how many lines are affected:</span></p>
+      <ul class="mb-0">
+        <li><span lang="zh"><strong>查無報價</strong>——這個委外廠沒有報過這個品號（也沒有廠商層級的通用報價）。這是<strong>報價維護的缺口</strong>，該去補報價主檔。</span><span lang="en"><strong>No quotation found</strong> — this subcontractor has never quoted this product, and there is no supplier-level catch-all quotation either. This is a <strong>gap in quotation maintenance</strong>; the quotation master needs updating.</span></li>
+        <li><span lang="zh"><strong>幣別不同</strong>——報價是 USD、收貨是 TWD 之類。這是換算問題，不是價差。</span><span lang="en"><strong>Currency mismatch</strong> — for example the quotation is in USD and the receipt in TWD. That is a conversion issue, not a price variance.</span></li>
+      </ul>
+    </div>
+
+    <div class="note-box">
+      <div class="fw-semibold mb-1"><i class="bi bi-diagram-3 me-1"></i><span lang="zh">比的是「當日」的報價，不是現在的報價</span><span lang="en">It compares against the quotation of the day, not today's</span></div>
+      <p class="mb-0"><span lang="zh">每一筆收貨都用<strong>該筆收貨日</strong>當天有效的報價去比。期間內調過價的品號，照舊價收的那幾筆才不會被整批算成差異。查價順序與建立委外採購單時完全相同（廠商＋品號＋途程＋工序四層，由最精確往下退），所以報表看到的「應該是多少」與當初系統帶入的是同一個答案。</span><span lang="en">Every receipt is compared against the quotation in effect <strong>on its own receipt date</strong>. For a product whose price changed mid-period, the receipts taken at the old price are therefore not all counted as variances. The lookup order is identical to the one used when the outsource PO was created (supplier + product + routing + operation, falling back from the most specific), so the "what it should have been" in this report is the same answer the system used at the time.</span></p>
+    </div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">收貨日（起 / 迄）</span><span lang="en">Receipt date (from / to)</span></td><td><span lang="zh">依委外收貨單的收貨日期篩選。<strong>留白預設近 30 天</strong></span><span lang="en">Filters by the receipt date of the outsource receipt. <strong>Blank defaults to the last 30 days</strong></span></td></tr>
+        <tr><td><span lang="zh">委外廠商</span><span lang="en">Subcontractor</span></td><td><span lang="zh">只看單一委外廠的價格走勢</span><span lang="en">Restricts the trend to a single subcontractor</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Product</span></td><td><span lang="zh">只看單一料件。看某個零件的加工費走勢時，這一欄通常要選</span><span lang="en">Restricts to a single item. Usually needed when looking at the fee trend of one particular part</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3><span lang="zh">月趨勢欄位</span><span lang="en">Monthly trend fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">年月</span><span lang="en">Month</span></td><td><span lang="zh">依收貨日歸月</span><span lang="en">Grouped by receipt date</span></td></tr>
+        <tr><td><span lang="zh">收貨明細數</span><span lang="en">Receipt Lines</span></td><td><span lang="zh">該月的委外收貨明細筆數（行，不是單）</span><span lang="en">Number of outsource receipt lines that month (lines, not documents)</span></td></tr>
+        <tr><td><span lang="zh">加權平均單價</span><span lang="en">Weighted Avg Price</span></td><td><span lang="zh">本幣，以收貨量加權。這是趨勢線畫的值</span><span lang="en">Local currency, weighted by receipt quantity. This is the value plotted on the trend line</span></td></tr>
+        <tr><td><span lang="zh">最低 / 最高單價</span><span lang="en">Min / Max Price</span></td><td><span lang="zh">本幣，用來看該月的離散程度。平均沒動但高低差拉大，通常代表有一批特殊價</span><span lang="en">Local currency, showing the spread within the month. A flat average with a widening spread usually means a batch was priced differently</span></td></tr>
+      </tbody>
+    </table>
+
+    <img class="screen-shot" src="img/outsource-price-detail.png" data-src-en="img/en/outsource-price-detail.png" alt="委外價格分析的比價明細截圖" data-alt-en="Outsource price comparison detail screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">比價明細：實際單價與報價單價逐筆對照，差異 0 代表照報價收</span><span lang="en">Comparison detail: actual price against quoted price line by line; a difference of 0 means it was received at the quoted price</span></div>
+
+    <h3><span lang="zh">比價明細欄位</span><span lang="en">Comparison detail fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號 / 委外廠商</span><span lang="en">Product / Subcontractor</span></td><td><span lang="zh">該筆收貨的料件與承接廠商；滑過廠商代號可看廠商名稱</span><span lang="en">The item and the subcontractor on that receipt; hover the code to see the name</span></td></tr>
+        <tr><td><span lang="zh">收貨日 / 收貨單號</span><span lang="en">Receipt Date / Receipt No.</span></td><td><span lang="zh">可回頭到委外收貨單查原始明細</span><span lang="en">Lets you trace back to the outsource receipt for the original detail</span></td></tr>
+        <tr><td><span lang="zh">實際單價</span><span lang="en">Actual Price</span></td><td><span lang="zh">收貨明細上的加工費單價（交易幣別）。這就是一路快照到加工費暫估與應付的那個值</span><span lang="en">The processing fee on the receipt line, in transaction currency. This is the value that is snapshotted onward into the accrual and accounts payable</span></td></tr>
+        <tr><td><span lang="zh">報價單價</span><span lang="en">Quoted Price</span></td><td><span lang="zh">該筆收貨當日應適用的報價；滑過可看報價單號。查無時顯示「查無報價」</span><span lang="en">The quotation that applied on that receipt date; hover to see the quotation number. Shows "No quotation" when none applies</span></td></tr>
+        <tr><td><span lang="zh">差異 / 差異%</span><span lang="en">Diff / Diff%</span></td><td><span lang="zh">實際 − 報價，正值（紅）＝收得比報價貴。無法比價時顯示「—」，理由見上方說明框</span><span lang="en">Actual − quoted; a positive value (red) means it was received at more than the quoted price. Shows "—" when not comparable, for the reasons in the box above</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="saved-queries"><i class="bi bi-bookmark-star me-2 text-primary"></i><span lang="zh">存成常用查詢</span><span lang="en">Saving the query</span></h2>
+    <p><span lang="zh">查詢列上方有「我的常用查詢」與「儲存此查詢」，可把這一組條件存起來下次一鍵重跑。用法與注意事項見<a href="../rpt/saved-queries.html"><span lang="zh">常用查詢</span><span lang="en">saved queries</span></a>。</span><span lang="en">Above the search bar are "My saved queries" and "Save this query", which store the current criteria for one-click reuse. See <a href="../rpt/saved-queries.html">saved queries</a> for how they work and what to watch for.</span></p>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="outsource-quotation.html"><span lang="zh">委外報價主檔</span><span lang="en">Outsource quotation</span></a>、<a href="outsource-receipt.html"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>、<a href="../pur/purchase-price.html"><span lang="zh">採購價格分析</span><span lang="en">Purchase price analysis</span></a></p>
+
+  </main>
+</div>
+</body>
+</html>

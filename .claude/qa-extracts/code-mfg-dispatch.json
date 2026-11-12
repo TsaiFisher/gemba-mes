@@ -1,0 +1,70 @@
+{
+  "sourcePath": "Modules/MFG/Models/Dispatch.cs",
+  "sourceHash": "579a463311a79a5834a0c76f8bdba1ab910a15eaf0dfa5c3d6c7dd30dd45b7d6",
+  "entries": [
+    {
+      "slug": "code-mfg-dispatch-0c5e21e9",
+      "lang": "zh",
+      "headingPath": "生產製造 › 機台轉為不可排程狀態",
+      "text": "機台停用狀態的判斷規則｜當機台進入不可排程狀態，例如因故障或進行保養等原因，系統會記錄此狀態。待該機台恢復正常運作後，系統會自動解除其不可排程的限制。",
+      "approved": true,
+      "sourceSectionHash": "9e4324f0ade6ac1eddf775a21bec2f9960c44abe8eb794241beaa3294fe0a725"
+    },
+    {
+      "slug": "code-mfg-dispatch-d4d41fcc",
+      "lang": "zh",
+      "headingPath": "生產製造 › 此為「最晚應開工日」的規劃值",
+      "text": "規劃開工日期是參考值｜此欄位顯示的是一個規劃上的最晚應開工日期，它與實際排程計算出的精確開始時間不同。本系統用來計算所需物料的庫出日，會以這個「最晚應開工日」作為依據。",
+      "approved": true,
+      "sourceSectionHash": "dc8b2ab9e4795109b3dcf22ed9c781846c558321832097be1d270bfe27221a7a"
+    },
+    {
+      "slug": "code-mfg-dispatch-d458c679",
+      "lang": "zh",
+      "headingPath": "生產製造 › 逐工序倒推的計畫完工日",
+      "text": "計畫完工日期計算規則｜此欄位顯示的是預計完成生產的日期，其計算依據是後一個工序的預定開工日期；如果這是最末一個工序，則以工單的需求日為準。",
+      "approved": true,
+      "sourceSectionHash": "68b5bf66d7211d6e1501929ee9a7e07f19a24b368ec5b778f218888b87c46c69"
+    },
+    {
+      "slug": "code-mfg-dispatch-c3dc0029",
+      "lang": "zh",
+      "headingPath": "生產製造 › 待料風險：排程時物料不足、但在途供給預計到貨日",
+      "text": "待料風險判斷規則｜如果物料在排程時不足，但預計的到貨日期早於工單計畫開工日，系統會將此情況標示為有待料風險。",
+      "approved": true,
+      "sourceSectionHash": "69f53cdda626eb32a77344d46a0814556337f6ccf3b3212c990993f385a4d023"
+    },
+    {
+      "slug": "code-mfg-dispatch-e4fadc41",
+      "lang": "zh",
+      "headingPath": "生產製造 › 機台已由人指定",
+      "text": "機台指定規則說明｜排程重排時，系統只會將工序安排到目前被指定的這台機台上，不再根據工作中心最早可用的機台進行選擇；若指定的機台無法使用，則會退回一般機台的挑選範圍並清除此指定狀態。",
+      "approved": true,
+      "sourceSectionHash": "6138c8be27aeef33ac8973c932929ba736dc3a735f7f42a518efb352b4a70ff5"
+    },
+    {
+      "slug": "code-mfg-dispatch-93d46b88",
+      "lang": "zh",
+      "headingPath": "生產製造 › 被排於重疊時段的不同機台",
+      "text": "工具代號的產工與衝突提醒｜此系統會根據模具或治具的代號，顯示需要更換模具的需求，並且會在同一時間段內，若有不同的機台被排程使用相同的模具或治具代號時，會發出衝突警示。",
+      "approved": true,
+      "sourceSectionHash": "b933a48c90638d2010d24d4a75810218d8d13708c04183b204cd121de86f73ca"
+    },
+    {
+      "slug": "code-mfg-dispatch-f8c75602",
+      "lang": "zh",
+      "headingPath": "生產製造 › 不該隨人數重複疊加——改成「最後一人下工」時才依此欄位到目前時刻",
+      "text": "機台/產線費用計算的結束時間點｜當有多人使用生產線時，設備或產線相關的額外費用只會根據所有人員最後一人下班的時間來一次性結算運作時間，並記錄此時間點，以避免在後續計算中重複計費同一段時間。",
+      "approved": true,
+      "sourceSectionHash": "d253ad97f3a2a356d878c8c59796a1271e940f4d0a3cd71a4c011baff6087272"
+    },
+    {
+      "slug": "code-mfg-dispatch-d5003b02",
+      "lang": "zh",
+      "headingPath": "生產製造 › 並發控制",
+      "text": "系統資料的並發控制機制說明｜此系統使用一個特殊的數值來確保多個使用者同時修改同一筆資料時，能正確地進行版本控制和同步，以避免資料被意外覆蓋。",
+      "approved": true,
+      "sourceSectionHash": "abdc7583c3a4522e75b8a6f65af047718d65d887402daa96bb99edd24946b93e"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Services/SamplingPlanService.cs",
+  "sourceHash": "2ea82f52f4e33e0b341d369b69f94e81136a3368697d3d2d910e9067edb2c8f1",
+  "entries": [
+    {
+      "slug": "code-core-samplingplanservice-fdfe161e",
+      "lang": "zh",
+      "headingPath": "系統共用 › 1916 VL 切換規則實作",
+      "text": "切換規則的狀態與計數範圍說明｜系統會根據連續合格次數來決定目前的檢驗狀態。當達到一定合格次數時，狀態會從正常、減緩到跳批等不同階段轉換；若發生任何不合格的情況，狀態都會被調整為更嚴格的檢驗狀態。此外，計算計數的範圍也會依據不同的規格設定而有所區分。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-samplingplanservice-22a6c739",
+      "lang": "zh",
+      "headingPath": "系統共用 › 僅重試「本服務自身累加器」的並發",
+      "text": "僅重試「本服務自身累加器」的並發｜無法重試服務自身的計數器並發；如果任何一個失敗的項目不是屬於這個計數器，則會將問題交給上層系統用特定的錯誤代碼來處理。",
+      "approved": true
+    }
+  ]
+}

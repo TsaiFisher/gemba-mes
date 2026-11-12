@@ -1,0 +1,86 @@
+{
+  "sourcePath": "Modules/FIN/Services/ARInvoiceService.cs",
+  "sourceHash": "3d179af1ef342b0357c1a838d9cee4247abb782e98dfd9ecf7518e50dd1c7240",
+  "entries": [
+    {
+      "slug": "code-fin-arinvoiceservice-263f1cfb",
+      "lang": "zh",
+      "headingPath": "財務會計 › 只有開票退回買匯，於是同一筆銷售有兩個本幣金額：出貨單畫面上的",
+      "text": "開票匯率沿用出貨單鎖定值｜應收發票的匯率一律沿用出貨單存檔當下鎖住的賣出匯率，不在開票時重查。銷售鏈每一段都用賣出匯率，口徑才一致；重查還會取到存檔到確認之間被補登或修改過的匯率，與出貨單上的數字對不起來。",
+      "approved": true,
+      "sourceSectionHash": "d9a75cd9aa53845206baf997f6c82f3879842c7be628cc3f978a3876c184ab16"
+    },
+    {
+      "slug": "code-fin-arinvoiceservice-d5a758d4",
+      "lang": "zh",
+      "headingPath": "財務會計 › 開票量要扣掉「開票前就已經**過帳**的退貨量」",
+      "text": "開票量要扣掉已過帳的退貨｜開立應收發票時，數量要扣掉開票前就已經過帳的退貨量。退貨過帳當下若發票還沒開，回沖會查無發票而什麼都不做，此後沒有第二次機會；這裡不扣，那段退回量就會永遠掛在應收帳款上。只數已過帳的退貨，尚未過帳的會在它自己過帳時回沖。",
+      "approved": true,
+      "sourceSectionHash": "f42813f5b81a35492c6e5b35059bfe684f12bfab3fcb2faa4a3144f51276e8df"
+    },
+    {
+      "slug": "code-fin-arinvoiceservice-e3cf8c7e",
+      "lang": "zh",
+      "headingPath": "財務會計 › 早期誤加 / 100 使發票稅額縮成百分之一",
+      "text": "稅額的計算方式｜稅率以小數形式存放（例如百分之五存成 0.05），單據明細直接沿用該值，所以稅額就是該行金額乘上稅率，不需要再除以一百。",
+      "approved": true,
+      "sourceSectionHash": "ab72176acee525d7b055296ebc259dce3923f7732d2032c229c92eb4f7569506"
+    },
+    {
+      "slug": "code-fin-arinvoiceservice-1830b855",
+      "lang": "zh",
+      "headingPath": "財務會計 › 以來源出貨行號對應 AR 明細",
+      "text": "退貨以出貨行號對應發票明細｜退貨回沖時，以來源出貨的行號對應應收發票明細，不用品號比對。同一個品號出現在多行時，用品號會固定命中第一行，數量與單價因此錯位。",
+      "approved": true,
+      "sourceSectionHash": "8185bccc355cae213f8dec93ad91190a3381abfdfba03241cdbe1827eba3a78b"
+    },
+    {
+      "slug": "code-fin-arinvoiceservice-f5087343",
+      "lang": "zh",
+      "headingPath": "財務會計 › 已收款：本方案不動已結清發票的金額——改金額會讓憑證與",
+      "text": "已收款發票金額不可修改｜系統設計上，已經結清的發票金額是不能直接修改的，因為一旦修改會導致憑證與稅務申報資料之間產生不一致的情況。如果需要調整金額，必須透過另外開立折讓單來處理。",
+      "approved": true,
+      "sourceSectionHash": "dcc0a59dcdce2644ca325287a30dfa9a1ce1793e6fd461d55b4203cccd9746a3"
+    },
+    {
+      "slug": "code-fin-arinvoiceservice-01c07d8d",
+      "lang": "zh",
+      "headingPath": "財務會計 › 回沖金額在分錄之外先算好：它同時是分錄金額與回傳值，",
+      "text": "計算的金額在分錄和回傳值中是相同的｜此筆回沖金額是以本位幣含稅的方式先計算好的，它會同時作為系統記錄的分錄金額與後續回傳的值。",
+      "approved": false,
+      "sourceSectionHash": "a81867c625c98997ed316c13a0e21c59dfdda0b99e7657270ad63bd9ac7f957c"
+    },
+    {
+      "slug": "code-fin-arinvoiceservice-4e118e31",
+      "lang": "zh",
+      "headingPath": "財務會計 › 建立當下的簽核狀態，由呼叫端解析",
+      "text": "簽核狀態的判斷由呼叫端決定｜系統不會自動判斷當下的簽核狀態，而是由呼叫這個功能的外部程序根據自身邏輯來決定並傳入。",
+      "approved": false,
+      "sourceSectionHash": "faed8b0e38e1c6ee5b2508369d56a5383a9cb3c68a6e2ff4ddc6817adbda649f"
+    },
+    {
+      "slug": "code-fin-arinvoiceservice-e21bc59f",
+      "lang": "zh",
+      "headingPath": "財務會計 › 手動 AR 發票的開票分錄",
+      "text": "開票分錄的會計科目與金額規則｜此手動發票的開票分錄結構是，應將一筆金額記入「應收帳款」的借方，然後在各明細行中分別記入收入科目作為貸方，最後再以銷項稅額作為另一筆貸方。",
+      "approved": true,
+      "sourceSectionHash": "c095aa52865edfd7c04ca1afc4b292981657bc309ed57406567a195974184acc"
+    },
+    {
+      "slug": "code-fin-arinvoiceservice-e0eced79",
+      "lang": "zh",
+      "headingPath": "財務會計 › 用途一起濾——把費用科目填進 AR 發票會產出一張貸 5900",
+      "text": "應收發票可選的會計科目｜應收發票明細只能指定收入性質、而且允許手動分錄的科目。填進費用科目會產生一張借貸依然平衡、稽核也不會叫的錯誤傳票；而自動分錄專用的科目餘額由過帳維護，手動指定會與子帳對不起來。",
+      "approved": true,
+      "sourceSectionHash": "7b71c4cfdd939eccc43a0dca4a3eec18199ed1d236f3126c26ec4fd80910331e"
+    },
+    {
+      "slug": "code-fin-arinvoiceservice-bbcf3abd",
+      "lang": "zh",
+      "headingPath": "財務會計 › 作廢沖銷開票分錄：把本張發票原本的自動分錄「借貸對調」寫一筆反向",
+      "text": "開票分錄的自動沖銷規則說明｜此功能會針對原始發票所產生的自動分錄，寫入一筆方向相反的分錄來進行沖銷。若同時處理應付帳款（AP）的退貨回沖分錄，則兩者都會依此方式對調，以確保最終淨額為零。",
+      "approved": true,
+      "sourceSectionHash": "08d1f20d2b02621c6b40a9499aebe5bbf7672bb3995092551f8103fd45e4fcd6"
+    }
+  ]
+}

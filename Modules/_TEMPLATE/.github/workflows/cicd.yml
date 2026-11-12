@@ -1,0 +1,168 @@
+name: MES CI/CD
+# =============================================================================
+# 此為 CI/CD 模板。
+# 複製此檔案至專案 .github/workflows/cicd.yml，並依實際需求調整。
+#
+# 替換以下佔位符：
+#   {APP_NAME}       → 應用程式名稱，例如 smartfactory-mes-acme
+#   {REGISTRY}       → Container Registry URL，例如 ghcr.io/your-org
+# =============================================================================
+
+on:
+  push:
+    branches: [main, develop, 'feature/**', 'hotfix/**']
+  pull_request:
+    branches: [main, develop]
+
+env:
+  DOTNET_VERSION: '10.0.x'
+  REGISTRY: ghcr.io/${{ github.repository_owner }}
+  IMAGE_NAME: {APP_NAME}
+
+jobs:
+  # ── 建置與測試 ──────────────────────────────────────────────────────────────
+  build-and-test:
+    name: 建置與測試
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: SmartFactoryMES_Test
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore 相依套件
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore -c Release
+
+      - name: 執行 Unit Tests
+        run: |
+          dotnet test --no-build -c Release \
+            --logger "trx;LogFileName=test-results.trx" \
+            --collect:"XPlat Code Coverage" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
+        env:
+          ConnectionStrings__DefaultConnection: "Host=localhost;Database=SmartFactoryMES_Test;Username=testuser;Password=testpass"
+
+      - name: 上傳測試結果
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: '**/test-results.trx'
+
+      - name: 上傳覆蓋率報告
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          files: '**/coverage.cobertura.xml'
+          fail_ci_if_error: false
+
+  # ── 模組邊界驗證 ────────────────────────────────────────────────────────────
+  boundary-check:
+    name: 模組邊界驗證
+    uses: ./.github/workflows/validate-boundaries.yml
+    # 或引用 Core Repo 的 workflow（如果已設定）：
+    # uses: TsaiFisher/SmartFactory.MES/.github/workflows/validate-boundaries.yml@main
+
+  # ── 建置 Docker Image（僅 main/develop）──────────────────────────────────
+  docker-build:
+    name: 建置 Docker Image
+    runs-on: ubuntu-latest
+    needs: [build-and-test, boundary-check]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: 設定 Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 登入 Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 取得 Image 標籤
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+
+      - name: 建置並推送 Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ── 部署至 Staging（develop 分支）────────────────────────────────────────
+  deploy-staging:
+    name: 部署至 Staging
+    runs-on: ubuntu-latest
+    needs: docker-build
+    if: github.ref == 'refs/heads/develop'
+    environment:
+      name: staging
+      url: https://staging.smartfactory.tw
+
+    steps:
+      - name: 部署至 Staging 環境
+        # 替換為實際部署方式（SSH、kubectl、AWS ECS 等）
+        run: |
+          echo "部署至 Staging..."
+          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:develop"
+          # 範例：SSH 部署
+          # ssh user@staging-server 'docker pull ... && docker-compose up -d'
+
+  # ── 部署至 Production（main 分支，需 Approval）────────────────────────────
+  deploy-production:
+    name: 部署至 Production
+    runs-on: ubuntu-latest
+    needs: docker-build
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: production
+      url: https://smartfactory.tw
+
+    steps:
+      - name: 部署至 Production 環境
+        run: |
+          echo "部署至 Production..."
+          echo "Image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
+          # 範例：kubectl 部署
+          # kubectl set image deployment/mes-app app=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest

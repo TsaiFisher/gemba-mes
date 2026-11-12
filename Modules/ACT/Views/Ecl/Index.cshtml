@@ -1,0 +1,173 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.ACT.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.ACT.Models.EclAllowance>
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    bool canUpdate   = ViewBag.CanUpdate == true;
+    int  curPageSize = ViewBag.CurrentPageSize as int? ?? 20;
+    string searchPeriod = ViewBag.SearchPeriod as string ?? "";
+    var periodOptions   = ViewBag.PeriodOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    var lossRates = ViewBag.LossRates as IEnumerable<EclLossRate> ?? Enumerable.Empty<EclLossRate>();
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-percent me-2"></i>@Localizer["PageTitle"]</h1>
+    </div>
+
+    @Html.AntiForgeryToken()
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-3">
+                    <label class="form-label small">@Localizer["SearchPeriod"]</label>
+                    <select name="searchPeriod" class="form-select">
+                        <option value="">@L["AllPeriods"]</option>
+                        @foreach (var p in periodOptions)
+                        { <option value="@p" selected="@(searchPeriod == p)">@p</option> }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+                @if (canUpdate && !string.IsNullOrWhiteSpace(searchPeriod))
+                {
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-outline-warning"
+                                data-action="runEcl" data-period-id="@searchPeriod">
+                            <i class="bi bi-calculator me-1"></i>@Localizer["RunBatch"]
+                        </button>
+                    </div>
+                }
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        <div class="card shadow-sm mb-4">
+            <div class="table-responsive">
+                <table class="table table-hover table-sm align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Localizer["PeriodId"]</th>
+                            <th>@Localizer["AgingBucket"]</th>
+                            <th class="text-end">@Localizer["ArBalance"]</th>
+                            <th class="text-end">@Localizer["LossRate"]</th>
+                            <th class="text-end">@Localizer["EclAmount"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var r in Model)
+                    {
+                        <tr>
+                            <td>@r.PeriodId</td>
+                            <td><span class="badge bg-secondary">@r.AgingBucket</span></td>
+                            <td class="text-end">@r.ArBalance.ToString(moneyFmt)</td>
+                            <td class="text-end text-muted small">@(r.LossRate.ToString("P2"))</td>
+                            <td class="text-end fw-semibold @(r.EclAmount > 0 ? "text-danger" : "text-muted")">@r.EclAmount.ToString(moneyFmt)</td>
+                        </tr>
+                    }
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <td colspan="4" class="text-end small fw-semibold">@Localizer["TotalEcl"]</td>
+                            <td class="text-end fw-bold text-danger">@Model.Sum(r => r.EclAmount).ToString(moneyFmt)</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+
+    @if (lossRates.Any())
+    {
+        <div class="card shadow-sm">
+            <div class="card-header small fw-semibold">
+                <i class="bi bi-sliders me-2"></i>@Localizer["LossRateConfig"]
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Localizer["AgingBucket"]</th>
+                            <th class="text-end">@Localizer["AgingDaysFrom"]</th>
+                            <th class="text-end">@Localizer["AgingDaysTo"]</th>
+                            <th class="text-end">@Localizer["LossRate"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var lr in lossRates)
+                    {
+                        <tr>
+                            <td><span class="badge bg-secondary">@lr.AgingBucket</span></td>
+                            <td class="text-end small">@lr.AgingDaysFrom</td>
+                            <td class="text-end small">@(lr.AgingDaysTo < 0 ? "∞" : lr.AgingDaysTo.ToString())</td>
+                            <td class="text-end small fw-semibold">@(lr.LossRate.ToString("P2"))</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMsg"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+    <div id="errorToast" class="toast align-items-center text-bg-danger border-0">
+        <div class="d-flex">
+            <div class="toast-body" id="errorMsg"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    const token = () => document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+
+    function runEcl(e, el) {
+        const periodId = el.dataset.periodId;
+        fetch(`/Ecl/Run?periodId=${encodeURIComponent(periodId)}`, {
+            method: 'POST',
+            headers: { 'RequestVerificationToken': token(), 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(r => r.json().catch(() => ({ success: false, message: 'JSON parse error' })))
+        .then(d => {
+            const toastEl = document.getElementById(d.success ? 'successToast' : 'errorToast');
+            document.getElementById(d.success ? 'toastMsg' : 'errorMsg').textContent = d.message;
+            bootstrap.Toast.getOrCreateInstance(toastEl).show();
+            if (d.success) setTimeout(() => location.reload(), 800);
+        });
+    }
+</script>
+}

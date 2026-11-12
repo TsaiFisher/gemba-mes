@@ -1,0 +1,7 @@
+@using System.Globalization
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+@if (CultureInfo.CurrentUICulture.Name.StartsWith("zh"))
+{
+    <script src="~/lib/jquery-validation/dist/localization/messages_zh_TW.js"></script>
+}

@@ -1,0 +1,422 @@
+{
+  "sourcePath": ".claude/specifications/mobile-pwa.md",
+  "sourceHash": "cae4ccacb92642760440d7725c610d3dd8c5c4ec4076ab2d442f81627ac209cd",
+  "entries": [
+    {
+      "slug": "mobile-pwa-f34a184e",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 1. 舊系統現況盤點 › 1.1 技術堆疊",
+      "text": "系統技術架構現況說明｜目前使用的系統是基於舊的技術組合建成的，它使用了一套較早期的框架和後端技術。此外，雖然介面設計上備有「離線瀏覽」的開關，但實際的程式功能尚未實作支援離線操作。同時，使用者介面的文字內容是直接寫入系統中的，因此目前不支援多種語言切換。",
+      "approved": false,
+      "sourceSectionHash": "9c0a6a4d65aa91e59c39aa9303e117a405e0f2ff29fb4b7d35fabb5bf56f88b8"
+    },
+    {
+      "slug": "mobile-pwa-f48b362e",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 1. 舊系統現況盤點 › 1.2 功能盤點（舊系統 11 支，新增 1 支）",
+      "text": "生產流程的各個環節功能說明｜系統支援了從開工、報工合格或不良、生產檢驗、到最終完工入庫等一系列製造和倉儲相關的作業紀錄回報。此外，系統也新增了用於回報準備作業完成狀態以及機台狀態變動的功能。",
+      "approved": true,
+      "sourceSectionHash": "6508b02cbbf37f0e063bd6676db7511c44353a14eae6995b77a9aade283f572b"
+    },
+    {
+      "slug": "mobile-pwa-81cd662b",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 1. 舊系統現況盤點 › 1.3 共同工作流程",
+      "text": "流程概述：系統操作的基本步驟｜使用者在進行任何功能的操作時，都會先登入系統。接著，需要掃描關鍵單據的條碼，系統會根據這些條碼查詢並回傳該單據目前的狀態和可用的選項。之後，操作人員必須輸入或選擇相關的數量、目的地以及不良原因等資訊，最後提交後，系統才會寫入紀錄並顯示成功訊息，完成後才能繼續處理下一筆資料或切換到其他功能。",
+      "approved": false,
+      "sourceSectionHash": "c785cacc74b2e0c88ee65936cc2b95d98bb8f5b6b3a65045cb34ac7b979a4c2f"
+    },
+    {
+      "slug": "mobile-pwa-e6509b50",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 2. 為什麼要做成 PWA（而不是繼續 Cordova）",
+      "text": "行動裝置介面選擇的考量｜目前系統可以在瀏覽器中直接使用，無需透過應用商店下載或安裝。這代表使用者不需要進行手動更新，系統可以自動更新到最新版本。此外，它能同時在 iOS、Android、Windows 和 Mac 等多種作業系統上運行，並且只需要一套程式碼即可維護所有平台。",
+      "approved": false,
+      "sourceSectionHash": "5f99a109ac68926f2a3bb765a5381459dfe0b30c55494ef2676d51e43c23a054"
+    },
+    {
+      "slug": "mobile-pwa-97a6f42d",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 3. 建議的 PWA 架構",
+      "text": "PWA 架構的技術依據與限制｜系統將以既定的階段和版本作為主要參考標準，並使用瀏覽器儲存的認證方式來驗證使用者身份。關於介面架構的選擇，目前採用的模式是原始碼分離的方式，而非採用基於 Vue 或 React 等框架建置的單頁應用程式結構。",
+      "approved": false,
+      "sourceSectionHash": "d90e355c6362e2f24475675e0d9ad38bcbadd4c7df88d676ffa0626ea7e8b27f"
+    },
+    {
+      "slug": "mobile-pwa-80ea6653",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 4. 認證策略",
+      "text": "認證方式採用 Cookie 技術｜系統的登入驗證將使用 Cookie 的機制，此機制與桌上型電腦使用的驗證方式是共用的。",
+      "approved": false,
+      "sourceSectionHash": "f04cc39979573f4f4208cb3c629230937331ee0706fcd273681b5379237d8a9f"
+    },
+    {
+      "slug": "mobile-pwa-c2dd5018",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 4. 認證策略 › 4.1 問題",
+      "text": "認證方式：使用Cookie維持登入狀態｜由於本系統的行動裝置版本與桌上型電腦版本是同一個網站來源，並且預計離線時間都是短暫的中斷，因此可以沿用現有的Cookie機制來維持使用者登入狀態。",
+      "approved": false,
+      "sourceSectionHash": "f72329499c26ba67185951c5a0dbec135a49a4060ead4205e406016596b5abbf"
+    },
+    {
+      "slug": "mobile-pwa-da2633ed",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 6. 條碼掃描方案 › 6.1 技術選擇",
+      "text": "條碼掃描技術的選擇與適用性｜系統在處理條碼掃描時，會根據不同的瀏覽器環境來決定使用哪種底層技術。如果設備和瀏覽器支援原生的條碼偵測功能，則優先採用此方式以達到最佳性能；若原生功能不支援，系統將會切換到備用的跨平台方案來確保掃描功能能夠正常運作。",
+      "approved": false,
+      "sourceSectionHash": "9453173507838de392c69791b3fcfb84bf68dc6e5e46817856ac251529b82e46"
+    },
+    {
+      "slug": "mobile-pwa-e5d0d989",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 6. 條碼掃描方案 › 6.2 條碼類型支援",
+      "text": "條碼掃描支援的類型與用途｜系統目前支援使用三種不同類型的條碼進行掃描。當需要掃描派工單號時，必須使用 Code 128 格式的條碼；若要掃描容器號或工單號，則需使用 QR Code 格式的條碼；此外，用於外購品的產品條碼，則需要使用 EAN-13 格式的條碼。",
+      "approved": true,
+      "sourceSectionHash": "78a9ef375cbe70d66e716b1bf5a654e521c11d73c7f13bfc2ba3ed7ceb363531"
+    },
+    {
+      "slug": "mobile-pwa-8e247b25",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 6. 條碼掃描方案 › 6.3 UX 設計",
+      "text": "行動裝置掃描優先級與方式｜系統會依據不同的掃描來源來判斷資料的輸入順序，相機掃描的優先級最高，其次是外接掃描槍模擬鍵盤輸入，最後才是操作人員手動輸入。若使用外接掃描槍，系統會檢查輸入的字元長度是否達到預設的最小位數、相鄰字元間隔的時間是否一致且較短，並且必須以結束符號結尾，這些條件全部符合時才會觸發業務邏輯；如果無法確認是掃描槍輸入，則視為人工輸入，會正常進入輸入框。",
+      "approved": true,
+      "sourceSectionHash": "c774dfad63586224b428a8b1894095fc38f3d9ca1a1bb6b2ab33657739d1a82b"
+    },
+    {
+      "slug": "mobile-pwa-d764543c",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 7. 推薦的功能模組重組 › 7.1 MFG（生產執行）—— 屬於 mfg-domain.md 範圍",
+      "text": "派工與生產流程的執行規則｜使用者只能看到自己可以執行的派工，並且可以在這些派工中篩選特定的設備。在開始生產前，需要完成準備工作，這包括掃描特定識別碼、回報備料或換模/調機的完成狀態，並記錄實際花費的時間。之後才能進行開工作業，此時需再次掃描識別碼並確認設備和模具後方可執行。在生產過程中，使用者需要掃描已開工的識別碼來報告合格品或不良品的數量及容器號碼，並且可以對特定物料進行檢驗註記。當生產流程完成時，系統會自動觸發結案繳庫的動作。此外，設備的狀態變動也必須透過掃描設備的識別碼、選擇事件類型並確認後才能建立相關記錄。",
+      "approved": true,
+      "sourceSectionHash": "41476edb8d2ed89f615c6c44bb787c8adfc8a44d7e19b3b6d7194824504fbb4a"
+    },
+    {
+      "slug": "mobile-pwa-8df142c0",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 7. 推薦的功能模組重組 › 7.2 INV（倉儲執行）—— 屬於 INV 模組擴充",
+      "text": "出庫下架與入庫上架的流程規則｜當進行出庫下架時，系統會根據發料的類型來決定資料顯示和目的地。例如，如果材料是送給外部廠商使用，系統會以橘色標示提醒作業員此批材料將離開廠區；若為委外重工發料，則會顯示到特定的廠商名稱。在入庫上架時，除了正常的進貨流程外，也納入了廠商退回的材料需要上架到正式倉位，以及特定模式關閉時產生的待上架清單也會觸發此功能。",
+      "approved": true,
+      "sourceSectionHash": "569bf4806a32841b2ac58c680d144f524390fbfcecdccc907fe09e48e066994e"
+    },
+    {
+      "slug": "mobile-pwa-1bc157ff",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 7. 推薦的功能模組重組 › 7.3 共用元件",
+      "text": "個人化介面與共用功能說明｜使用者在系統中登入或切換角色後，會看到一個包含待辦事項數量和近期紀錄的個人首頁。此外，系統提供了一個全應用程式通用的條碼掃描器功能，並且會顯示當前資料同步的狀態資訊，包括網路連線狀況以及尚未同步的筆數。",
+      "approved": true,
+      "sourceSectionHash": "cb67aaeaf2ce514caddb473df53ede8183f1a9b11cec63d69358cfebdd34b7ac"
+    },
+    {
+      "slug": "mobile-pwa-344d83d9",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 7. 推薦的功能模組重組 › 7.4 機台狀態異動（agtr）UX 流程",
+      "text": "機台狀態異動的規則說明｜當操作員變更機台狀態時，如果新的狀態是不可用的，系統會將原先排定的派工任務退回待處理狀態，並且會讓正在進行中的派工任務自動暫停，以確保相關作業能被知會到。此外，若操作員在沒有網路的情況下記錄了機台狀態變動，當網路恢復後，這些紀錄會優先同步到系統中。",
+      "approved": true,
+      "sourceSectionHash": "27d07e10b0b2345dd43e7ca407b17d314d34fd70860a8e05b81b0907119724ad"
+    },
+    {
+      "slug": "mobile-pwa-cde441d3",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 9. 切片實作建議 › 前置條件確認（與後端對齐）",
+      "text": "行動裝置功能啟動的階段性要求｜系統的功能會分階段啟用，第一階段可以立即開始開發。第二階段需要等到後端完成特定模組和權限檢查機制後才能啟動。第三階段則必須在第二階段完成之後，並且後端需支援使用客戶識別碼來避免重複寫入資料。第四階段的啟動，要等第三階段完成，同時也與另一個模組的開發進度同步進行。最後，第五階段的功能需要等到前述所有階段都完成之後才能啟用。",
+      "approved": false,
+      "sourceSectionHash": "4d30196b534b88dea3a40c9383d0b89c83acee988abe97bd71bd10ec29178217"
+    },
+    {
+      "slug": "mobile-pwa-232420d0",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 9. 切片實作建議 › Phase E1：PWA 骨架（2-3 週）",
+      "text": "行動裝置的資料存取與掃描功能｜系統會自動使用您登入時建立的憑證來維持連線狀態，即使刷新頁面也不需要重新登入。此外，當您用相機或鍵盤掃描條碼時，系統會識別特定格式的條碼，並立即觸發相關的業務流程。",
+      "approved": true,
+      "sourceSectionHash": "b30c7246b945027c302891d00ecf07702d7b58dc8df51968af6b300b2f77648d"
+    },
+    {
+      "slug": "mobile-pwa-7ad789b5",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 9. 切片實作建議 › Phase E2：投產與報工（3-4 週）",
+      "text": "設備操作與進度追蹤規則｜當機台發生故障、保養或恢復等狀態變動時，相關的派工紀錄會自動受到影響。如果派工尚未開始，其狀態會變為待處理；若已在進行中，則會暫停。此外，系統會防止重複掃描同一筆派工來開工，並且如果報工的數量超過了預設限制，系統將無法接受該次報工。",
+      "approved": true,
+      "sourceSectionHash": "e8b18dd3f99fd6a36e7f7222a5f555b2271d6a4ae36ea206426592c0e5123a89"
+    },
+    {
+      "slug": "mobile-pwa-61b71449",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 9. 切片實作建議 › Phase E5：ETA 推送與優化（2-3 週）",
+      "text": "行動裝置推播與效能標準說明｜系統會透過手機通知的方式，在計算出下一張派工的時間預估後，將相關通知推送給使用者。此外，為了提升使用體驗，首頁的載入時間必須小於兩秒鐘，並且各畫面之間的切換過程需要是平順的。",
+      "approved": true,
+      "sourceSectionHash": "b1b8f4df1bb995c28486c1b233055977a3d86608e61062737eb4e3b8d183a24e"
+    },
+    {
+      "slug": "mobile-pwa-c483bdee",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10. 已確認規格與決策",
+      "text": "系統規格已確定並可用於開發｜原先需要討論和確認的相關問題已經經過審核，現在的版本是最終確定的規格，可以直接用來進行實際的系統建置工作。",
+      "approved": false,
+      "sourceSectionHash": "d10272f8cdd71a15ddf8ac6e48e2b45470ea14d46486c1d29aaddeac5daf9eb0"
+    },
+    {
+      "slug": "mobile-pwa-71f41555",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10. 已確認規格與決策 › 設備與環境",
+      "text": "設備使用與環境要求｜現場作業主要在安卓手機上進行，而蘋果的裝置則主要用於查詢資訊；系統需要支援透過無線網路或行動數據網路連線，並且當帳號切換時，必須清除先前登入留下的臨時資料，讓下一位使用者重新驗證身分。",
+      "approved": false,
+      "sourceSectionHash": "a3e3f18e7530a5a5c620d2baadbacbd39771f5e57f4f6b0aa63290433b56d05b"
+    },
+    {
+      "slug": "mobile-pwa-6073d970",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10. 已確認規格與決策 › 業務行為",
+      "text": "離線資料保留限制與同步規則｜系統會保留最近 4 小時的派工資料供使用，所有寫入佇列的資料在網路恢復後都會全部同步。多人報工衝突處理機制當一個派工尚未拆分時，系統會依據累計數量進行驗證，以防止總量超過預設的最大數量；如果實際記錄符合規定，則不會強制排除該筆紀錄。錯誤更正只能在桌機操作使用行動裝置無法修改已經提交的資料紀錄，所有需要修正的內容必須回到桌面的網頁介面進行操作，系統會留下完整的稽核記錄。班次報工需分開計算時間區段每次工作流程（從開始到結束）都會被獨立地記錄成一個作業時段，後續的班次開工時，會建立新的作業時段來分別記錄起訖時間和產出數量。",
+      "approved": true,
+      "sourceSectionHash": "252d7f03d91f3a78457bc4593fbe741edb9bc6e000660a71448c526621ffeda7"
+    },
+    {
+      "slug": "mobile-pwa-267f4eda",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10. 已確認規格與決策 › 整合",
+      "text": "手機端權限與廠別操作規則｜使用者在行動裝置上使用的功能權限是獨立於桌機的，主管可以針對每個具體的功能項目進行開關控制，決定作業員可以使用哪些按鈕。此外，系統會根據使用者的組織設定顯示一個預設的廠別，使用者也可以手動切換到其他廠別來操作相關資料，所有可使用的功能都必須符合該特定廠別所設定的手機模組權限。",
+      "approved": true,
+      "sourceSectionHash": "1a06d95929d9dc873e1e6adc104d632773f2975e7aeb0a6486b5e943d4b2c1ef"
+    },
+    {
+      "slug": "mobile-pwa-da336b57",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10. 已確認規格與決策 › 推播",
+      "text": "派工通知的接收與顯示規則｜當系統發送需要您確認的派工通知時，該通知會直接在您的行動裝置上顯示，並且點擊後會引導至專門的行動頁面進行查看和處理。",
+      "approved": true,
+      "sourceSectionHash": "7caa765659ea1cc79fb540175045b44763867341997ad3587d79a7560fde5dea"
+    },
+    {
+      "slug": "mobile-pwa-19992ff1",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.5 待我簽核 — 2026-09-08 交付（唯讀）／2026-09-09 開放簽核",
+      "text": "行動裝置待審核單據的判斷依據｜系統判定使用者需要處理的待審核單據，將完全沿用桌機版所使用的規則來決定，確保手機和桌機在判斷哪些單據需要簽核時是一致的。",
+      "approved": true,
+      "sourceSectionHash": "98762795540360ef380cbdff1154c252440d45ea31050aed9bd4666b05b18b84"
+    },
+    {
+      "slug": "mobile-pwa-c911d520",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.5 待我簽核 — 2026-09-08 交付（唯讀）／2026-09-09 開放簽核 › 三個刻意的決定",
+      "text": "單據簽核權限與流程的明確化｜目前，使用者只能在有完整內容資訊的單據上進行簽核操作；若單據缺乏足夠的摘要資訊，系統將不會顯示可供點擊的核准按鈕。此外，發票的金額計算方式與其他單據不同，它會使用交易幣的總額來呈現，而非本位幣的總額，以確保使用者看到的數字能與手上的實體單據對應。",
+      "approved": true,
+      "sourceSectionHash": "5557c41cbf0389eafdcbe75ec0d9bdbf982fbdd6ca7f02c856dd2c2e431b1b42"
+    },
+    {
+      "slug": "mobile-pwa-92efe562",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.5 待我簽核 — 2026-09-08 交付（唯讀）／2026-09-09 開放簽核 › 已知界線",
+      "text": "單別名稱與連結行為說明｜系統顯示的單別名稱會使用原始英文型別名，這與電腦版的一致；此外，點擊單據連結時，會在新分頁中開啟該單據的桌機版本頁面，並且如果某個單別尚未登錄單據連結，系統會明確提示使用者此單別尚未登錄單據連結。",
+      "approved": true,
+      "sourceSectionHash": "7a44455e0e02d0b78b9ab7fdfe5cef6fc19948547e940e162765416d37b7d89d"
+    },
+    {
+      "slug": "mobile-pwa-9153d3b4",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.6 廠別情境 — 2026-09-08 交付（第一、二階段）",
+      "text": "系統功能章節編號說明｜本系統的功能章節編號是依據實際的流程順序來規劃的，因此在介紹時會跳過某些編號，以確保各個功能的呈現順序與業務流程的邏輯順序一致。",
+      "approved": false,
+      "sourceSectionHash": "b31456c989a03b5821d6f3b69af4522c84d01a4a99fe6c2e7f205170b1eeb684"
+    },
+    {
+      "slug": "mobile-pwa-e7771399",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.6 廠別情境 — 2026-09-08 交付（第一、二階段） › 起點：不是「不能切」，是「不知道自己在哪」",
+      "text": "廠別資訊的來源與顯示規則｜系統會根據使用者登入時所在的裝置類型來決定其所能看到的廠別資訊。目前，無論使用桌機還是手機，系統都會採用同一組廠別識別碼作為依據。這意味著，即使現場人員沒有使用電腦設備，系統依然會依照既定的機制來判斷和顯示相關的廠別資料。",
+      "approved": true,
+      "sourceSectionHash": "4ee6d68d573cbea863dc585ce0518453e70768c66eb017d205d6358cb873bbd9"
+    },
+    {
+      "slug": "mobile-pwa-cc372f45",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.6 廠別情境 — 2026-09-08 交付（第一、二階段） › 第一階段（已交付）：顯示",
+      "text": "顯示廠別資訊與名稱｜系統會在首頁導覽列下方顯示您所屬的廠別資訊，此處會同時提供該廠別的中英文名稱，以供使用者參考。",
+      "approved": true,
+      "sourceSectionHash": "4f76ea9da57f1f9ba06706904d8f4be333a75f944e91293f69d7c5ffd6bb9966"
+    },
+    {
+      "slug": "mobile-pwa-cbf43b41",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.6 廠別情境 — 2026-09-08 交付（第一、二階段） › 第二階段（已交付）：先補掉切換會踩爆的洞",
+      "text": "機台狀態變更時必須符合當前廠區規則｜系統在處理離線佇列的資料時，如果無法確定該筆資料屬於哪個廠區，則會允許通過，以避免導致所有待同步資料都判定為失敗。",
+      "approved": true,
+      "sourceSectionHash": "8bafee32881db2d522b633b1137ef1189b6e9ecb0cab596b225a91be397a65e2"
+    },
+    {
+      "slug": "mobile-pwa-ea174423",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.6 廠別情境 — 2026-09-08 交付（第一、二階段） › 第三、四階段（已交付，2026-09-08 同日）",
+      "text": "廠別資料的顯示與切換規則｜使用者只能看到特定廠區的資料，系統會透過一個統一的方式來決定和管理這個限制。此功能確保了所有相關的資料查詢和操作都只針對當前設定的廠區進行，避免混用不同廠區的資訊。",
+      "approved": true,
+      "sourceSectionHash": "7dfb6557f437d11f4b1fc4ffa21bf9555ffb54bd57fa6ed8816bd408ecf8f71d"
+    },
+    {
+      "slug": "mobile-pwa-eca1252f",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.6 廠別情境 — 2026-09-08 交付（第一、二階段） › 第三、四階段（已交付，2026-09-08 同日） › 四個關鍵決定",
+      "text": "權限判斷依賴強制執行機制｜系統的權限判定是透過一個必須通過的強制執行層級來決定，如果無法通過此層級，則會被明確禁止存取相關功能。切換廠別時需清除所有快取資料當變更了所屬的廠別後，為了確保顯示的派工與機台資訊是最新的，系統必須清除所有相關的快取資料，而不是只針對特定幾個地方進行清理。",
+      "approved": true,
+      "sourceSectionHash": "d33bae60956d6ec714ca1a07aabb23c7180b58a55db9cf3e3fd6c948d1636133"
+    },
+    {
+      "slug": "mobile-pwa-673f9009",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.6 廠別情境 — 2026-09-08 交付（第一、二階段） › 第三、四階段（已交付，2026-09-08 同日） › 🚨 `Program.cs` 是 `merge=ours`，Core 的 DI 註冊不會自己過來",
+      "text": "廠別服務需手動加入系統依賴｜因為專案客製化了部分功能，所以當核心系統更新時，原本在核心系統中註冊的廠別切換服務，會被覆蓋掉而無法自動載入。因此，必須手動將此廠別切換服務加入到系統的依賴項中，以確保使用者可以在「使用者設定」頁面正常使用功能。",
+      "approved": true,
+      "sourceSectionHash": "f1d36b9f6d0b98f009ff8454a3c821594b91c1798be8d78604b48fe22db6ca57"
+    },
+    {
+      "slug": "mobile-pwa-51cfd978",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.6 廠別情境 — 2026-09-08 交付（第一、二階段） › 第三、四階段（已交付，2026-09-08 同日） › 🚨 切廠會影響**另一台裝置上開著的畫面**（2026-09-09 補守門）",
+      "text": "切換廠別會影響其他裝置上的資料建立｜當使用者在電腦上開啟某個廠別的單據新增或編輯介面，然後在手機上切換了不同的廠別後，再回到電腦按儲存時，系統會將該單據建檔到最後操作的那個廠別，且畫面上不會有任何提示。",
+      "approved": true,
+      "sourceSectionHash": "c7daf6dfebafce6a7ddb2977a538b6eef0cd2cff709639389d557db831752b41"
+    },
+    {
+      "slug": "mobile-pwa-abe546ac",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 10.6 廠別情境 — 2026-09-08 交付（第一、二階段） › 第三、四階段（已交付，2026-09-08 同日） › 沒有做的",
+      "text": "無法切換廠區時的行為規則｜當使用者嘗試在行動裝置上切換廠區但權限不足時，系統會回傳錯誤代碼，表示操作不允許。",
+      "approved": true,
+      "sourceSectionHash": "760d6eaef717f3141a298fcff5b744a7eb59fbb802ced0726a5f995181cf385e"
+    },
+    {
+      "slug": "mobile-pwa-4d0b65b3",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 11. 我的建議 › 11.1 整體判斷",
+      "text": "系統介面更新的考量與方向｜目前使用的行動裝置程式雖然相對簡單，但其所包含的功能定義和實際操作流程已經經過驗證且清晰可行。因此，在規劃新的網頁應用時，主要的重點是替換底層的技術架構，並強化設備離線時的使用能力，而不需要對現有的業務邏輯進行大幅度的修改。",
+      "approved": false,
+      "sourceSectionHash": "e9f653a429ff348f72ad10ad46f333de744c17fb7a519fa403a31e912bb3f372"
+    },
+    {
+      "slug": "mobile-pwa-44ac3db5",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 11. 我的建議 › 11.2 為什麼建議在 ORD 後做、與 MFG 並行",
+      "text": "行動裝置開發順序的建議｜目前規劃上，如果先開發行動裝置版本，會導致缺少了製造工單和派工相關的資料來源。因此，建議先完成桌面的製造功能後再開發行動裝置版本，這樣行動裝置版本就可以立即連線使用，而不需要準備模擬的測試資料。",
+      "approved": false,
+      "sourceSectionHash": "2ae62a31abb88366b304fa7547d01bd130a30e2509bc501fdafff35f9cfe8b23"
+    },
+    {
+      "slug": "mobile-pwa-8df94aa6",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 11. 我的建議 › 11.3 短期可立刻做的兩件事",
+      "text": "擴充行動版介面與後端資料交換規則｜目前系統的行動裝置版本會沿用現有的基礎結構，在其中新增製造相關的功能頁面。這些新功能將重複使用已有的掃描技術和服務工作者邏輯來運作，不需要進行新的前端框架編寫。此外，為了讓行動版介面與後端系統可以同時開發，所有資料交換的規範都必須依照標準化的契約來定義。",
+      "approved": false,
+      "sourceSectionHash": "5258a4605bf7c57d3135ada7fd5defe58c52c7918e65a79373adb776dbcaf887"
+    },
+    {
+      "slug": "mobile-pwa-e9becab1",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 11. 我的建議 › 11.4 已確認重點架構決策摘要",
+      "text": "行動裝置操作權限與紀錄處理規則｜使用者在手機上只能進行新增的作業，例如開工、報工、上下架或盤點等動作。對於已經存在的紀錄，則不能直接修改，所有錯誤更正都必須回到桌面的系統中處理，並且會留下完整的稽核記錄供查閱。",
+      "approved": true,
+      "sourceSectionHash": "67b8ac1975159a367996c6f24dceed47e791f0dd8e9fc916339f37f2d23da058"
+    },
+    {
+      "slug": "mobile-pwa-fd22e5a1",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 12. 自動測試規劃 › 12.1 後端 API 測試（xUnit + TestServer）",
+      "text": "帳號登入與資料篩選規則說明｜使用者必須提供正確的帳密才能成功登入系統。若提供的帳密錯誤，系統會回傳表示未授權的訊息。此外，查詢派工時，系統會根據使用者的廠別來過濾結果，確保使用者只能看到自己廠別的單據。",
+      "approved": true,
+      "sourceSectionHash": "8a04861ba4ad48a0bae13df47539ce6395cb30c67dc63da99fc729d8f2b0940e"
+    },
+    {
+      "slug": "mobile-pwa-67489ca6",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 12. 自動測試規劃 › 12.2 前端元件測試（Vitest + Vue Test Utils）",
+      "text": "元件測試範圍與驗證點說明｜系統會檢查條碼掃描功能是否能正確發出事件，以及在掃描失敗時能否切換到手動輸入模式。此外，當設備離線時，待處理的資料會被暫存，網路恢復後會依序傳送這些資料，且每個裝置都會有唯一的識別碼。系統也會驗證權杖（Token）的儲存機制，確保存取令牌和刷新令牌分別在不同的地方安全存放，並在登出時清除所有相關資訊。當存取令牌過期時，系統會自動使用刷新令牌重新取得新的存取令牌，然後重試發送原先失敗的請求；若刷新令牌也無法成功，則會導向登入頁面。此外，派工清單會顯示已排定的資料，如果沒有任何資料，也會有相應的提示訊息。在設定表單中，點擊開始按鈕後會呼叫相關服務，並在完成操作時更新派工狀態的顯示；機台狀態表單會根據掃描到的條碼來顯示當前的設備狀態，並且只會顯示與該狀態相符的操作按鈕，送出資料後也會更新顯示。最後，當機台進入不可用狀態時，系統會彈出警示訊息，告知使用者有多少張派工受到影響。",
+      "approved": false,
+      "sourceSectionHash": "458a92ed0613f40f0a97b46a59788d1f491654aea269b0cc1bacda8c263e0021"
+    },
+    {
+      "slug": "mobile-pwa-d1e7da64",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 12. 自動測試規劃 › 12.3 E2E PWA 測試（Playwright）",
+      "text": "PWA 端流程與資料同步規則｜使用者在行動裝置上進行的完整投產流程，必須包含登入、掃描派工單、設定開始到完成、開工、報工，並確認數量已累計。此外，系統也需支援離線狀態下的報工作業，當使用者切回線上後，系統會確認後端已經收到資料並正確寫入資料庫。若掃描條碼失敗，系統會顯示手動輸入的介面供使用者填寫。",
+      "approved": true,
+      "sourceSectionHash": "818c50b7deb9b659389499f49a61d824a285d51df2029d3b66b19f72eb55364d"
+    },
+    {
+      "slug": "mobile-pwa-e67aa7ee",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 12. 自動測試規劃 › 12.4 測試整合至開發流程",
+      "text": "自動化測試的執行時機與範圍｜系統在不同開發階段會進行不同的自動化測試。當開發人員在本地環境儲存資料後，系統會針對前端元件進行測試。當有新的程式碼提交到版本控制系統並建立了拉取請求時，系統會同時對後端介面和前端元件執行測試。只有當程式碼被合併到主要分支之後，才會執行包含所有功能（包括完整的行動裝置網頁）的全面性測試。",
+      "approved": false,
+      "sourceSectionHash": "ed1e25273e2e9ba1c59c38d04396c57b80b1aa5c82b378b445403f6cb7dcf102"
+    },
+    {
+      "slug": "mobile-pwa-acb4d851",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 14. IPQC / FPI 手機 UX 流程（製程品質檢驗）",
+      "text": "行動裝置的檢驗流程已完成建置｜目前在行動裝置上進行製程品質檢驗，可以讓檢驗人員減少來回移動的次數，並能更即時地更新相關資料。",
+      "approved": false,
+      "sourceSectionHash": "2a7dc0d976580af0dfda3fe03a603eba19de1456fd1d0dddadf132fe21ca038f"
+    },
+    {
+      "slug": "mobile-pwa-906d2a4f",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 14. IPQC / FPI 手機 UX 流程（製程品質檢驗） › 14.1 IPQC 觸發場景",
+      "text": "觸發點決定檢驗類型與負責人｜當物料進入生產過程後，系統會根據實際的作業進度來判斷需要進行哪一階段的品質檢驗，並由指定的品管人員或現場作業員執行相關的抽樣檢驗。",
+      "approved": true,
+      "sourceSectionHash": "bec6cfeb073a4858a2f4d33017ec38f3d929cda6d725fe837f1d6f0a5d851bdb"
+    },
+    {
+      "slug": "mobile-pwa-9624f38a",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 14. IPQC / FPI 手機 UX 流程（製程品質檢驗） › 14.3 手機端 IPQC 流程（UX / UI） › 流程總覽",
+      "text": "首件檢查與巡檢的流程規則說明｜當需要進行首件檢查時，如果系統判定需要此步驟，開工按鈕會變灰並顯示等待檢查的提示；若檢查失敗，則需通知人員重新執行首件檢查直到通過為止。在製程巡檢時，每次輸入量測數值後，系統會自動暫存當前的填寫內容，並且如果輸入的數值偏離了預設的正常範圍超過三倍標準差，手機會震動並顯示黃色警告訊息提醒使用者確認單位是否正確。",
+      "approved": true,
+      "sourceSectionHash": "942a53df1a2e9ff2be7d9d0c261bd570eb61cc589ac951f72a4aa213eeb5f0ff"
+    },
+    {
+      "slug": "mobile-pwa-141accb9",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 14. IPQC / FPI 手機 UX 流程（製程品質檢驗） › 14.4 檢驗結果的後續動作 › Pass（全部通過）",
+      "text": "檢驗結果通過後的後續動作｜當檢驗結果全部通過時，系統會顯示「檢驗通過」的提示訊息，並且允許相關生產或報工作業繼續進行，使用者將會回到派工清單頁面。",
+      "approved": true,
+      "sourceSectionHash": "eb6a9f128b02cfb9accf94e2e028a5d0f6277de6913e4f600661ead5e19c0ff7"
+    },
+    {
+      "slug": "mobile-pwa-ea8b9e6d",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 14. IPQC / FPI 手機 UX 流程（製程品質檢驗） › 14.4 檢驗結果的後續動作 › Fail（有不良項目）",
+      "text": "檢驗不合格後的後續處理流程｜當檢驗結果判定為不通過時，該批次的工作會自動暫停，系統會顯示此檢驗未通過並已暫停的訊息，提醒相關人員聯繫品管進行處理。此外，系統也會主動通知品管人員，讓他們知道有需要處理的項目，後續可透過重新量測、建立重工派工、不良品報廢或特殊條件通過等方式進行處理。",
+      "approved": true,
+      "sourceSectionHash": "ffd171075ea1fb68ce5c957ac4aec52e0d78fcf8b716fa6bb4111c7bc79d8c0f"
+    },
+    {
+      "slug": "mobile-pwa-a40999c2",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 14. IPQC / FPI 手機 UX 流程（製程品質檢驗） › 14.4 檢驗結果的後續動作 › Conditional（有條件通過，待簽核）",
+      "text": "檢驗結果待主管審核的流程規則｜當檢驗結果處於有條件通過的狀態時，系統會觸發品管主管進行審核。如果主管透過網頁同意此筆紀錄，則相關的派工作業將解除暫停狀態，可以繼續後續處理；若主管選擇拒絕簽核，則該派工作業會轉移至失敗處理流程。",
+      "approved": true,
+      "sourceSectionHash": "52356c00e4e9abd8a7e53f0b0a1e2da358b5440e444abed73723e42c2dd1aa1b"
+    },
+    {
+      "slug": "mobile-pwa-bc7bda2b",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 14. IPQC / FPI 手機 UX 流程（製程品質檢驗） › 14.5 IPQC 與報工流程的整合 › 觸發規則（由系統參數控制）",
+      "text": "觸發檢驗的條件與類型｜當系統設定要求進行首件檢查時，在完成設置後會強制執行首件檢查；若未通過此檢查，則無法開始開工。此外，如果系統設定要求進行製程巡檢，一旦開工就會自動建立巡檢單。另外，如果是關鍵零件，一定需要經過製程巡檢；當發生客訴回料或重工時，會同時觸發首件檢查和製程巡檢。新供應商的首批產品也會觸發製程巡檢。",
+      "approved": true,
+      "sourceSectionHash": "f7d01da5bb2810323ed9d4d5adce0c06bc016b0fef41ec4346c73bb65c8166bc"
+    },
+    {
+      "slug": "mobile-pwa-aa8d6434",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 14. IPQC / FPI 手機 UX 流程（製程品質檢驗） › 14.5 IPQC 與報工流程的整合 › 流程時序",
+      "text": "流程狀態轉換與檢驗規則｜當品管人員完成檢驗並提交了檢驗單據時，如果檢驗結果是合格的，則允許作業員進行報工累積；但若檢驗結果不合格或需要條件判斷，系統會將派工狀態暫停，此時無法進行報工累積。",
+      "approved": true,
+      "sourceSectionHash": "89e1caf81978be1239f3943c286ae113244055a00211a2deed63ab95189c437c"
+    },
+    {
+      "slug": "mobile-pwa-ca5f6802",
+      "lang": "zh",
+      "headingPath": "行動裝置 PWA 規劃草稿（mobile-pwa.md） › 14. IPQC / FPI 手機 UX 流程（製程品質檢驗） › 14.6 自動測試補充（IPQC）",
+      "text": "測試結果判定規則說明｜當所有實測值都符合既定的規範範圍時，系統會自動判斷為合格；如果存在任何不良項目，系統則會自動判斷為不合格，並將相關單據狀態變更為待處理。此外，檢驗的最終簽核流程是根據測試結果是否達到特定條件來觸發的，完成批准或拒絕後，工單的派工狀態也會隨之改變。",
+      "approved": true,
+      "sourceSectionHash": "65a031a74f7a146aab32bc2da4a3d54e9d0d8ccf48938b5bb03d53f932adeaa2"
+    }
+  ]
+}

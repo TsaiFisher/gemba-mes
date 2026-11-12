@@ -1,0 +1,54 @@
+{
+  "sourcePath": "Modules/QCR/Controllers/InspectionOrderController.cs",
+  "sourceHash": "372e21238a0d748ea2fc79f01ebc66e0b4b5b621fa6727ea6746cd287b828391",
+  "entries": [
+    {
+      "slug": "code-qcr-inspectionordercontroller-8ad1564e",
+      "lang": "zh",
+      "headingPath": "品質管理 › 待檢清單：= 且尚未檢驗的進貨明細",
+      "text": "待檢清單顯示未檢驗進貨明細｜此頁面會顯示那些狀態已經確認，但尚未經過檢驗的進貨明細資料。",
+      "approved": true,
+      "sourceSectionHash": "46b65a9326acc196db7ba0effb9169d9263fd6f720f58c13ced7cdd6a5c98af4"
+    },
+    {
+      "slug": "code-qcr-inspectionordercontroller-e39e90e0",
+      "lang": "zh",
+      "headingPath": "品質管理 › 批量與建議抽樣數一律由伺服端重算，不信任前端傳入",
+      "text": "批次與抽樣數由系統計算｜此介面所顯示的批次數量和建議抽樣數量，皆會由後端系統重新計算一次，不會採用使用者在前端輸入或傳入的值。",
+      "approved": true,
+      "sourceSectionHash": "a8591dc31bea71d636d5f1a96600b6e9b55f2b6c4ceb63731326ceb52e3a2ff1"
+    },
+    {
+      "slug": "code-qcr-inspectionordercontroller-76d0ea89",
+      "lang": "zh",
+      "headingPath": "品質管理 › 本清單與",
+      "text": "首件檢查待檢清單｜這份清單列出的是**還需要做首件檢查的派工**：該工序有要求首件檢查，而且還沒有任何一張判定為合格的首件檢驗單。已結案或暫停的派工不會列入。完成首件檢查並判定合格之後，該筆派工就會從清單上消失。",
+      "approved": true,
+      "sourceSectionHash": "600d925418fd0db03d36e437d1ef19574faf02c3e87ef67e9a83892d8b26e2e6"
+    },
+    {
+      "slug": "code-qcr-inspectionordercontroller-5b7f7b19",
+      "lang": "zh",
+      "headingPath": "品質管理 › 判定與派工狀態異動走 ，與手機端同一份實作",
+      "text": "檢驗單據的判定與派工狀態異動規則｜當完成檢驗結果登錄後，若判斷為合格，則會解鎖派工；若判斷為不合格，則會進入待處理狀態。",
+      "approved": true,
+      "sourceSectionHash": "3142857d61e71c1192f8b3e728ba4a7b5f4bdac1d765c8feb90d5c405b8f8dfe"
+    },
+    {
+      "slug": "code-qcr-inspectionordercontroller-d116ac85",
+      "lang": "zh",
+      "headingPath": "品質管理 › 語意上也只能是 —— 寫的是",
+      "text": "資料時間必須使用協定時區｜所有記錄的時間點都必須是世界標準時間（UTC），否則系統在進行製程能力分析時，可能會因為使用了非標準化的當地時間而導致計算出錯誤的批次結果。",
+      "approved": true,
+      "sourceSectionHash": "1ca36d166eab9719e96047aff21e44355d956035391b17be6facc5df14a4a75c"
+    },
+    {
+      "slug": "code-qcr-inspectionordercontroller-83e1249f",
+      "lang": "zh",
+      "headingPath": "品質管理 › 待檢清單列",
+      "text": "待檢清單判斷依據｜「待檢」是指某個工序需要進行 FPI 檢驗，但該檢驗單尚未判定為合格的情況；系統是根據此事實來判斷是否列出，而不是根據派工的狀態來決定。",
+      "approved": true,
+      "sourceSectionHash": "3e2c988e44cc70b0971d20b4479cf317350fbb9e4a8a479498ed4d2ce476522c"
+    }
+  ]
+}

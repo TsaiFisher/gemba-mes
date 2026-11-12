@@ -1,0 +1,5 @@
+# R33 baseline — 應該維持是空的。
+# 每頁筆數的 controller 預設值必須在 _PageSizeSelect 的選項清單內。
+#
+# 不要用這個檔擋掉違規：下拉顯示的值與畫面實際筆數不一致，是使用者看得到卻查不出原因的那種錯。
+# 正確做法是改預設值，或（真的有必要時）在 partial 的 pageSizeOptions 加上那個數字。

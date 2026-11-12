@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CarriedInCost" xml:space="preserve"><value>併入存貨價值</value></data>
+  <data name="ConfirmedQty" xml:space="preserve"><value>確認數量</value></data>
+  <data name="LeadDays" xml:space="preserve"><value>交期天數</value></data>
+  <data name="SlipDate" xml:space="preserve"><value>單據日期</value></data>
+  <data name="SlipId" xml:space="preserve"><value>發退料單號</value></data>
+  <data name="SlipNo" xml:space="preserve"><value>單號</value></data>
+  <data name="SplitQty" xml:space="preserve"><value>拆單數量</value></data>
+  <data name="TransferredQty" xml:space="preserve"><value>已轉數量</value></data>
+  <data name="DemandQty" xml:space="preserve"><value>需求數量</value></data>
+  <data name="DemandType" xml:space="preserve"><value>委外類型</value></data>
+  <data name="EffectiveFrom" xml:space="preserve"><value>有效起日</value></data>
+  <data name="IqcExempt" xml:space="preserve"><value>免驗直放</value></data>
+  <data name="QtyGood" xml:space="preserve"><value>良品數量</value></data>
+  <data name="QtyRejected" xml:space="preserve"><value>不良品數量</value></data>
+  <data name="StandardMaterialCost" xml:space="preserve"><value>標準材料成本</value></data>
+  <data name="StandardOverheadCost" xml:space="preserve"><value>標準製造費用</value></data>
+  <data name="ActualMaterialCost" xml:space="preserve"><value>實際材料成本</value></data>
+  <data name="ActualLaborCost" xml:space="preserve"><value>實際人工成本</value></data>
+  <data name="ActualOverheadCost" xml:space="preserve"><value>實際製造費用</value></data>
+  <data name="ActualOutsourceCost" xml:space="preserve"><value>實際委外成本</value></data>
+  <data name="WipMaterial" xml:space="preserve"><value>在製材料</value></data>
+  <data name="WipLabor" xml:space="preserve"><value>在製人工</value></data>
+  <data name="WipOverhead" xml:space="preserve"><value>在製製費</value></data>
+  <data name="WipTotal" xml:space="preserve"><value>在製合計</value></data>
+  <data name="QtyCompleted" xml:space="preserve"><value>已完工數量</value></data>
+  <data name="QtyInProcess" xml:space="preserve"><value>在製數量</value></data>
+  <data name="SnapshotAt" xml:space="preserve"><value>快照時間</value></data>
+  <data name="WorkOrdersRecosted" xml:space="preserve"><value>回刷工單數</value></data>
+  <data name="WipSnapshots" xml:space="preserve"><value>在製快照數</value></data>
+  <data name="LaborAdjustment" xml:space="preserve"><value>人工調整</value></data>
+  <data name="OverheadAdjustment" xml:space="preserve"><value>製費調整</value></data>
+  <data name="MachineHourlyRate" xml:space="preserve"><value>機台費率</value></data>
+  <data name="OpeningBalance" xml:space="preserve"><value>期初結存</value></data>
+  <data name="ClosingBalance" xml:space="preserve"><value>期末結存</value></data>
+  <data name="InQty" xml:space="preserve"><value>入庫數量</value></data>
+  <data name="OutQty" xml:space="preserve"><value>出庫數量</value></data>
+  <data name="Balance" xml:space="preserve"><value>結存數量</value></data>
+  <data name="TotalIn" xml:space="preserve"><value>入庫合計</value></data>
+  <data name="TotalOut" xml:space="preserve"><value>出庫合計</value></data>
+  <data name="ReservedQty" xml:space="preserve"><value>預留量</value></data>
+  <data name="SourceType" xml:space="preserve"><value>來源類型</value></data>
+  <data name="SourceDocId" xml:space="preserve"><value>來源單號</value></data>
+  <data name="RequiredDate" xml:space="preserve"><value>需求日期</value></data>
+  <data name="SessionId" xml:space="preserve"><value>上工序號</value></data>
+  <data name="ReportId" xml:space="preserve"><value>報工序號</value></data>
+  <data name="SetupStartAt" xml:space="preserve"><value>備料開始時間</value></data>
+  <data name="StartAt" xml:space="preserve"><value>上工開始時間</value></data>
+  <data name="ReportedAt" xml:space="preserve"><value>報工時間</value></data>
+  <data name="QtyOk" xml:space="preserve"><value>合格數量</value></data>
+  <data name="QtyNg" xml:space="preserve"><value>不良數量</value></data>
+  <data name="ActualQty" xml:space="preserve"><value>實際數量</value></data>
+  <data name="ContainerSeq" xml:space="preserve"><value>容器序號</value></data>
+  <data name="EventType" xml:space="preserve"><value>事件類型</value></data>
+  <data name="EventAt" xml:space="preserve"><value>事件時間</value></data>
+  <data name="OrderId" xml:space="preserve"><value>異動單號</value></data>
+  <data name="TargetStatus" xml:space="preserve"><value>目標狀態</value></data>
+  <data name="ClientTimestamp" xml:space="preserve"><value>客戶端時間戳記</value></data>
+  <data name="IssueMethod" xml:space="preserve"><value>發料方式</value></data>
+  <data name="BackflushTiming" xml:space="preserve"><value>後沖時機</value></data>
+  <data name="IssueSlipId" xml:space="preserve"><value>發料單號</value></data>
+  <data name="RequisitionId" xml:space="preserve"><value>領料單號</value></data>
+  <data name="RequestedAt" xml:space="preserve"><value>申請時間</value></data>
+  <data name="RequestedQty" xml:space="preserve"><value>申請數量</value></data>
+  <data name="IsDirty" xml:space="preserve"><value>有異動</value></data>
+  <data name="CountMode" xml:space="preserve"><value>盤點模式</value></data>
+  <data name="SheetStatus" xml:space="preserve"><value>清冊狀態</value></data>
+  <data name="SheetId" xml:space="preserve"><value>清冊單號</value></data>
+  <data name="BookQty" xml:space="preserve"><value>帳面量</value></data>
+  <data name="IsOverdue" xml:space="preserve"><value>是否逾期</value></data>
+  <data name="SpecCode" xml:space="preserve"><value>規格代碼</value></data>
+  <data name="SpecId" xml:space="preserve"><value>規格ID</value></data>
+  <data name="SpecName" xml:space="preserve"><value>規格名稱</value></data>
+  <data name="ScopeKey" xml:space="preserve"><value>適用範圍鍵</value></data>
+  <data name="HasSigmaWarning" xml:space="preserve"><value>有 Sigma 警告</value></data>
+  <data name="RequiresFpi" xml:space="preserve"><value>需要首件檢驗</value></data>
+  <data name="QtyScrap" xml:space="preserve"><value>報廢數量</value></data>
+  <data name="MaterialVarianceCost" xml:space="preserve"><value>材料差異成本</value></data>
+  <data name="PickedQty" xml:space="preserve"><value>已揀料數量</value></data>
+  <data name="StagingId" xml:space="preserve"><value>備料單號</value></data>
+  <data name="DocDate" xml:space="preserve"><value>單據日期</value></data>
+  <data name="Basis" xml:space="preserve"><value>分攤基準</value></data>
+  <data name="CostType" xml:space="preserve"><value>費用類別</value></data>
+  <data name="TotalLandedCost" xml:space="preserve"><value>待分攤費用總額</value></data>
+  <data name="PurchaseAmount" xml:space="preserve"><value>採購金額</value></data>
+  <data name="Weight" xml:space="preserve"><value>重量</value></data>
+  <data name="OriginalUnitCost" xml:space="preserve"><value>分攤前單價</value></data>
+  <data name="AllocatedCost" xml:space="preserve"><value>分攤費用</value></data>
+  <data name="CapitalizedCost" xml:space="preserve"><value>資本化金額</value></data>
+  <data name="ExpensedCost" xml:space="preserve"><value>費用化金額</value></data>
+  <data name="NewUnitCost" xml:space="preserve"><value>分攤後新單價</value></data>
+  <data name="GoodsReceiptLineNo" xml:space="preserve"><value>進貨明細序號</value></data>
+  <data name="LandedCostAllocationId" xml:space="preserve"><value>分攤單號</value></data>
+  <data name="MaterialRisk" xml:space="preserve">
+    <value>待料風險</value>
+  </data>
+  <data name="VoidDate" xml:space="preserve"><value>作廢日期</value></data>
+  <data name="GrossDemandQty" xml:space="preserve"><value>毛需求量</value></data>
+  <data name="IsSemi" xml:space="preserve"><value>半成品</value></data>
+  <data name="NewQuantity" xml:space="preserve"><value>新數量</value></data>
+  <data name="Outcome" xml:space="preserve"><value>結果</value></data>
+  <data name="Planned" xml:space="preserve"><value>暫定量</value></data>
+  <data name="PlannedQty" xml:space="preserve"><value>暫定量</value></data>
+  <data name="PlannedWorkOrderCount" xml:space="preserve"><value>可投產工單數</value></data>
+  <data name="Recalculated" xml:space="preserve"><value>重算量</value></data>
+  <data name="RecalculatedQty" xml:space="preserve"><value>重算量</value></data>
+  <data name="Released" xml:space="preserve"><value>已釋出</value></data>
+  <data name="ScaleFactor" xml:space="preserve"><value>比例因子</value></data>
+  <data name="Submitted" xml:space="preserve"><value>已送審</value></data>
+  <data name="RowCap" xml:space="preserve"><value>列數上限</value></data>
+  <data name="Truncated" xml:space="preserve"><value>已截斷</value></data>
+  <data name="APInvoiceId" xml:space="preserve"><value>應付發票單號</value></data>
+  <data name="APPaymentId" xml:space="preserve"><value>付款單號</value></data>
+  <data name="ARInvoiceId" xml:space="preserve"><value>應收發票單號</value></data>
+  <data name="ARReceiptId" xml:space="preserve"><value>收款單號</value></data>
+  <data name="AccountCode" xml:space="preserve"><value>科目代碼</value></data>
+  <data name="AccountName" xml:space="preserve"><value>科目名稱</value></data>
+  <data name="AccountType" xml:space="preserve"><value>科目用途</value></data>
+  <data name="AccountNo" xml:space="preserve"><value>帳號</value></data>
+  <data name="AchievementRate" xml:space="preserve"><value>達成率</value></data>
+  <data name="ActTotalCost" xml:space="preserve"><value>實際總成本</value></data>
+  <data name="Action" xml:space="preserve"><value>動作</value></data>
+  <data name="ActionKey" xml:space="preserve"><value>動作代碼</value></data>
+  <data name="ActionTime" xml:space="preserve"><value>動作時間</value></data>
+  <data name="ActualAmount" xml:space="preserve"><value>實際金額</value></data>
+  <data name="ActualLabor" xml:space="preserve"><value>實際人工</value></data>
+  <data name="ActualMaterial" xml:space="preserve"><value>實際材料</value></data>
+  <data name="ActualOverhead" xml:space="preserve"><value>實際製造費用</value></data>
+  <data name="ActualOutsource" xml:space="preserve"><value>實際委外成本</value></data>
+  <data name="ActualSampleQty" xml:space="preserve"><value>實際抽樣數</value></data>
+  <data name="ActualTotal" xml:space="preserve"><value>實際合計</value></data>
+  <data name="ActualUnitPrice" xml:space="preserve"><value>實際單價</value></data>
+  <data name="AgingBucket" xml:space="preserve"><value>帳齡區間</value></data>
+  <data name="AgingDays" xml:space="preserve"><value>帳齡天數</value></data>
+  <data name="AgingDaysFrom" xml:space="preserve"><value>帳齡起始天數</value></data>
+  <data name="AgingDaysTo" xml:space="preserve"><value>帳齡結束天數</value></data>
+  <data name="AllocatedAmount" xml:space="preserve"><value>分攤金額</value></data>
+  <data name="AllocatedAmountLocal" xml:space="preserve"><value>分攤金額(本幣)</value></data>
+  <data name="AllowedScrapRate" xml:space="preserve"><value>允許報廢率</value></data>
+  <data name="Amount" xml:space="preserve"><value>金額</value></data>
+  <data name="AmountLocal" xml:space="preserve"><value>金額(本幣)</value></data>
+  <data name="ApproverType" xml:space="preserve"><value>簽核者類型</value></data>
+  <data name="ArBalance" xml:space="preserve"><value>應收餘額</value></data>
+  <data name="AssessedAt" xml:space="preserve"><value>評估時間</value></data>
+  <data name="AvailableHours" xml:space="preserve"><value>可用工時</value></data>
+  <data name="AvailableQty" xml:space="preserve"><value>可用量</value></data>
+  <data name="BankName" xml:space="preserve"><value>銀行名稱</value></data>
+  <data name="BatchCount" xml:space="preserve"><value>批次數</value></data>
+  <data name="BatchMode" xml:space="preserve"><value>批量模式</value></data>
+  <data name="BatchQty" xml:space="preserve"><value>批量</value></data>
+  <data name="BomSeq" xml:space="preserve"><value>BOM 序號</value></data>
+  <data name="BookAmountLocal" xml:space="preserve"><value>帳面金額(本幣)</value></data>
+  <data name="BookRate" xml:space="preserve"><value>帳面匯率</value></data>
+  <data name="CalibrationFrequencyDays" xml:space="preserve"><value>校驗週期天數</value></data>
+  <data name="CanCreate" xml:space="preserve"><value>可新增</value></data>
+  <data name="CanDelete" xml:space="preserve"><value>可刪除</value></data>
+  <data name="CanPrint" xml:space="preserve"><value>可列印</value></data>
+  <data name="CanRead" xml:space="preserve"><value>可檢視</value></data>
+  <data name="CanUpdate" xml:space="preserve"><value>可修改</value></data>
+  <data name="Capacity" xml:space="preserve"><value>產能</value></data>
+  <data name="CarryingCost" xml:space="preserve"><value>持有成本</value></data>
+  <data name="ChecklistId" xml:space="preserve"><value>檢查表單號</value></data>
+  <data name="Cogs" xml:space="preserve"><value>銷貨成本</value></data>
+  <data name="ConsecutivePasses" xml:space="preserve"><value>連續合格次數</value></data>
+  <data name="Cost" xml:space="preserve"><value>成本</value></data>
+  <data name="CostDate" xml:space="preserve"><value>成本日期</value></data>
+  <data name="CostStatus" xml:space="preserve"><value>成本狀態</value></data>
+  <data name="CostVariance" xml:space="preserve"><value>成本差異</value></data>
+  <data name="Count" xml:space="preserve"><value>數量</value></data>
+  <data name="CountQty" xml:space="preserve"><value>盤點數量</value></data>
+  <data name="Credit" xml:space="preserve"><value>貸方</value></data>
+  <data name="Current" xml:space="preserve"><value>目前</value></data>
+  <data name="CustomerCode" xml:space="preserve"><value>客戶代碼</value></data>
+  <data name="DailyOvertimeHours" xml:space="preserve"><value>每日加班工時</value></data>
+  <data name="DailyRegularHours" xml:space="preserve"><value>每日正常工時</value></data>
+  <data name="Days30" xml:space="preserve"><value>30 天</value></data>
+  <data name="Days60" xml:space="preserve"><value>60 天</value></data>
+  <data name="Days90" xml:space="preserve"><value>90 天</value></data>
+  <data name="Days90Plus" xml:space="preserve"><value>90 天以上</value></data>
+  <data name="Debit" xml:space="preserve"><value>借方</value></data>
+  <data name="DefectRate" xml:space="preserve"><value>不良率</value></data>
+  <data name="Diff" xml:space="preserve"><value>差異</value></data>
+  <data name="DispatchCount" xml:space="preserve"><value>派工次數</value></data>
+  <data name="DispatchId" xml:space="preserve"><value>派工單號</value></data>
+  <data name="DisplayName" xml:space="preserve"><value>顯示名稱</value></data>
+  <data name="Disposition" xml:space="preserve"><value>處置</value></data>
+  <data name="DocId" xml:space="preserve"><value>單據編號</value></data>
+  <data name="DocLineNo" xml:space="preserve"><value>單據行號</value></data>
+  <data name="DowntimeHours" xml:space="preserve"><value>停機工時</value></data>
+  <data name="DueDate" xml:space="preserve"><value>到期日</value></data>
+  <data name="EclAmount" xml:space="preserve"><value>預期信用損失</value></data>
+  <data name="EfficiencyRate" xml:space="preserve"><value>效率</value></data>
+  <data name="End" xml:space="preserve"><value>結束</value></data>
+  <data name="EndDate" xml:space="preserve"><value>結束日期</value></data>
+  <data name="EndMinute" xml:space="preserve"><value>結束分鐘</value></data>
+  <data name="EntryDate" xml:space="preserve"><value>分錄日期</value></data>
+  <data name="ErpRetryCount" xml:space="preserve"><value>ERP 重試次數</value></data>
+  <data name="ErpSyncStatus" xml:space="preserve"><value>ERP 同步狀態</value></data>
+  <data name="EventCount" xml:space="preserve"><value>事件數</value></data>
+  <data name="ExcessScrapPenalty" xml:space="preserve"><value>超額報廢罰款</value></data>
+  <data name="ExchangeGainLoss" xml:space="preserve"><value>兌換損益</value></data>
+  <data name="ExchangeRate" xml:space="preserve"><value>匯率</value></data>
+  <data name="FailQty" xml:space="preserve"><value>不合格數</value></data>
+  <data name="FgFQC" xml:space="preserve"><value>成品 FQC</value></data>
+  <data name="FgIPQC" xml:space="preserve"><value>成品 IPQC</value></data>
+  <data name="FgIQC" xml:space="preserve"><value>成品 IQC</value></data>
+  <data name="FgRQC" xml:space="preserve"><value>成品 RQC</value></data>
+  <data name="FromUomCode" xml:space="preserve"><value>來源單位</value></data>
+  <data name="FulfillRate" xml:space="preserve"><value>達交率</value></data>
+  <data name="GrossMarginRate" xml:space="preserve"><value>毛利率</value></data>
+  <data name="GrossProfit" xml:space="preserve"><value>毛利</value></data>
+  <data name="IdleDays" xml:space="preserve"><value>閒置天數</value></data>
+  <data name="ImpairmentLoss" xml:space="preserve"><value>減損損失</value></data>
+  <data name="InspectedAt" xml:space="preserve"><value>檢驗時間</value></data>
+  <data name="InstrumentCode" xml:space="preserve"><value>儀器代碼</value></data>
+  <data name="InstrumentName" xml:space="preserve"><value>儀器名稱</value></data>
+  <data name="InventoryValue" xml:space="preserve"><value>庫存價值</value></data>
+  <data name="InvoiceDate" xml:space="preserve"><value>發票日期</value></data>
+  <data name="IsAllowed" xml:space="preserve"><value>是否允許</value></data>
+  <data name="IsApprovalRequired" xml:space="preserve"><value>是否需簽核</value></data>
+  <data name="IsCompleted" xml:space="preserve"><value>是否完成</value></data>
+  <data name="IsDefault" xml:space="preserve"><value>是否預設</value></data>
+  <data name="IsForecast" xml:space="preserve"><value>是否預測</value></data>
+  <data name="IsOutsource" xml:space="preserve"><value>是否委外</value></data>
+  <data name="IsPredictedLate" xml:space="preserve"><value>是否預測延遲</value></data>
+  <data name="IssuedQty" xml:space="preserve"><value>發料數量</value></data>
+  <data name="IsPull" xml:space="preserve"><value>領料用料</value></data>
+  <data name="RequestableQty" xml:space="preserve"><value>可申請領料量</value></data>
+  <data name="ReturnableQty" xml:space="preserve"><value>可退料量</value></data>
+  <data name="NetIssuedQty" xml:space="preserve"><value>淨發料量</value></data>
+  <data name="OpenQty" xml:space="preserve"><value>未發量</value></data>
+  <data name="ReadinessState" xml:space="preserve"><value>備齊狀態</value></data>
+  <data name="JournalId" xml:space="preserve"><value>分錄單號</value></data>
+  <data name="LastSeq" xml:space="preserve"><value>最後序號</value></data>
+  <data name="LastUpdatedAt" xml:space="preserve"><value>最後更新時間</value></data>
+  <data name="LateLines" xml:space="preserve"><value>延遲行數</value></data>
+  <data name="LineCount" xml:space="preserve"><value>行數</value></data>
+  <data name="LineSeq" xml:space="preserve"><value>行序號</value></data>
+  <data name="LossRate" xml:space="preserve"><value>損耗率</value></data>
+  <data name="LotCounter" xml:space="preserve"><value>批號流水</value></data>
+  <data name="LotSize" xml:space="preserve"><value>批量大小</value></data>
+  <data name="MakeQty" xml:space="preserve"><value>製造數量</value></data>
+  <data name="MaterialReadinessStatus" xml:space="preserve"><value>料況狀態</value></data>
+  <data name="MenuKey" xml:space="preserve"><value>選單代碼</value></data>
+  <data name="Method" xml:space="preserve"><value>方法</value></data>
+  <data name="Mode" xml:space="preserve"><value>模式</value></data>
+  <data name="ModuleActionId" xml:space="preserve"><value>模組動作編號</value></data>
+  <data name="ModuleId" xml:space="preserve"><value>模組編號</value></data>
+  <data name="ModuleKey" xml:space="preserve"><value>模組代碼</value></data>
+  <data name="Month" xml:space="preserve"><value>月份</value></data>
+  <data name="MonthlyPurchase" xml:space="preserve"><value>月採購額</value></data>
+  <data name="MonthlyRevenue" xml:space="preserve"><value>月營收</value></data>
+  <data name="MoveTime" xml:space="preserve"><value>移動時間</value></data>
+  <data name="MovementId" xml:space="preserve"><value>異動單號</value></data>
+  <data name="MrpRunId" xml:space="preserve"><value>MRP 執行單號</value></data>
+  <data name="MrpRunLineSeq" xml:space="preserve"><value>MRP 執行行序</value></data>
+  <data name="NcrStatus" xml:space="preserve"><value>NCR 狀態</value></data>
+  <data name="NetProfit" xml:space="preserve"><value>淨利</value></data>
+  <data name="InterPlantInTransit" xml:space="preserve"><value>在途存貨</value></data>
+  <data name="NetRealizableValue" xml:space="preserve"><value>淨變現價值</value></data>
+  <data name="NormalVl" xml:space="preserve"><value>正常檢驗水準</value></data>
+  <data name="NrvPrice" xml:space="preserve"><value>淨變現價格</value></data>
+  <data name="OnTimeLines" xml:space="preserve"><value>準時行數</value></data>
+  <data name="OnTimeRate" xml:space="preserve"><value>準時率</value></data>
+  <data name="OpenWorkOrders" xml:space="preserve"><value>未結工單數</value></data>
+  <data name="OperatingExpenses" xml:space="preserve"><value>營業費用</value></data>
+  <data name="OperatingProfit" xml:space="preserve"><value>營業利益</value></data>
+  <data name="OperationSeq" xml:space="preserve"><value>製程序號</value></data>
+  <data name="OrderCount" xml:space="preserve"><value>訂單數</value></data>
+  <data name="OrderedQty" xml:space="preserve"><value>訂購數量</value></data>
+  <data name="OtherExpenses" xml:space="preserve"><value>其他費用</value></data>
+  <data name="OtherIncome" xml:space="preserve"><value>其他收入</value></data>
+  <data name="OutboundCost" xml:space="preserve"><value>出庫成本</value></data>
+  <data name="OutsourcePurchaseOrderId" xml:space="preserve"><value>委外採購單號</value></data>
+  <data name="OutsourceQty" xml:space="preserve"><value>委外數量</value></data>
+  <data name="OutsourceReceiptId" xml:space="preserve"><value>委外進貨單號</value></data>
+  <data name="OutstandingAmount" xml:space="preserve"><value>未沖銷金額</value></data>
+  <data name="Overall" xml:space="preserve"><value>整體</value></data>
+  <data name="OverdueAP" xml:space="preserve"><value>逾期應付</value></data>
+  <data name="OverdueDays" xml:space="preserve"><value>逾期天數</value></data>
+  <data name="PaidAmount" xml:space="preserve"><value>已付金額</value></data>
+  <data name="PassQty" xml:space="preserve"><value>合格數</value></data>
+  <data name="PassesToNormal" xml:space="preserve"><value>轉正常次數</value></data>
+  <data name="PassesToReduce" xml:space="preserve"><value>轉減量次數</value></data>
+  <data name="PassesToSkipLot" xml:space="preserve"><value>轉跳批次數</value></data>
+  <data name="PaymentDate" xml:space="preserve"><value>付款日期</value></data>
+  <data name="PendingQty" xml:space="preserve"><value>待處理數量</value></data>
+  <data name="PeriodEndRate" xml:space="preserve"><value>期末匯率</value></data>
+  <data name="PeriodId" xml:space="preserve"><value>期別</value></data>
+  <data name="PlanQty" xml:space="preserve"><value>計畫數量</value></data>
+  <data name="PlannedEndDate" xml:space="preserve"><value>計畫結束日</value></data>
+  <data name="PlannedHours" xml:space="preserve"><value>計畫工時</value></data>
+  <data name="PlannedStartDate" xml:space="preserve"><value>計畫開始日</value></data>
+  <data name="PlantId" xml:space="preserve"><value>廠別</value></data>
+  <data name="Priority" xml:space="preserve"><value>優先順序</value></data>
+  <data name="ProductionBatchId" xml:space="preserve"><value>生產批號</value></data>
+  <data name="ProgressPct" xml:space="preserve"><value>進度百分比</value></data>
+  <data name="Provision" xml:space="preserve"><value>提列</value></data>
+  <data name="PurchaseQty" xml:space="preserve"><value>採購數量</value></data>
+  <data name="QtyCount" xml:space="preserve"><value>盤點數</value></data>
+  <data name="QtyDone" xml:space="preserve"><value>完成數量</value></data>
+  <data name="QtyRemaining" xml:space="preserve"><value>剩餘數量</value></data>
+  <data name="RestoredQty" xml:space="preserve"><value>已還回數量</value></data>
+  <data name="LayerId" xml:space="preserve"><value>成本層編號</value></data>
+  <data name="ConsumedDate" xml:space="preserve"><value>消耗日期</value></data>
+  <data name="QtySourceCleared" xml:space="preserve"><value>來源已清數量</value></data>
+  <data name="QualificationStatus" xml:space="preserve"><value>資格狀態</value></data>
+  <data name="Quantity" xml:space="preserve"><value>數量</value></data>
+  <data name="Level" xml:space="preserve"><value>階層</value></data>
+  <data name="IsMake" xml:space="preserve"><value>自製件</value></data>
+  <data name="QueueTime" xml:space="preserve"><value>等待時間</value></data>
+  <data name="Rank" xml:space="preserve"><value>排名</value></data>
+  <data name="ReceiptCount" xml:space="preserve"><value>進貨次數</value></data>
+  <data name="ReceivedAmount" xml:space="preserve"><value>已收金額</value></data>
+  <data name="ReceivedQty" xml:space="preserve"><value>已收數量</value></data>
+  <data name="ReceivedStockQty" xml:space="preserve"><value>已收數量（庫存單位）</value></data>
+  <data name="ReducedVl" xml:space="preserve"><value>減量檢驗水準</value></data>
+  <data name="ReportCount" xml:space="preserve"><value>報表數</value></data>
+  <data name="RequiredQty" xml:space="preserve"><value>需求數量</value></data>
+  <data name="RequiresFQC" xml:space="preserve"><value>需 FQC</value></data>
+  <data name="RequiresInspection" xml:space="preserve"><value>需檢驗</value></data>
+  <data name="RequiresRQC" xml:space="preserve"><value>需 RQC</value></data>
+  <data name="ReturnRate" xml:space="preserve"><value>退貨率</value></data>
+  <data name="ReturnedQty" xml:space="preserve"><value>退貨數量</value></data>
+  <data name="RevaluedAmountLocal" xml:space="preserve"><value>重評金額(本幣)</value></data>
+  <data name="RevaluedAt" xml:space="preserve"><value>重評時間</value></data>
+  <data name="Revenue" xml:space="preserve"><value>營收</value></data>
+  <data name="RoleId" xml:space="preserve"><value>角色編號</value></data>
+  <data name="SampleQty" xml:space="preserve"><value>抽樣數量</value></data>
+  <data name="SampleSize" xml:space="preserve"><value>抽樣量</value></data>
+  <data name="Scheduled" xml:space="preserve"><value>已排程</value></data>
+  <data name="ScheduledHours" xml:space="preserve"><value>排程工時</value></data>
+  <data name="ScheduledMinutes" xml:space="preserve"><value>排程分鐘</value></data>
+  <data name="ActualMinutes" xml:space="preserve"><value>實際工時分鐘</value></data>
+  <data name="ScrapRate" xml:space="preserve"><value>報廢率</value></data>
+  <data name="OffcutRate" xml:space="preserve"><value>下角率</value></data>
+  <data name="SeasonalIndex" xml:space="preserve"><value>季節指數</value></data>
+  <data name="SellingCost" xml:space="preserve"><value>銷售成本</value></data>
+  <data name="Seq" xml:space="preserve"><value>序號</value></data>
+  <data name="SeqNo" xml:space="preserve"><value>序號</value></data>
+  <data name="Sequence" xml:space="preserve"><value>順序</value></data>
+  <data name="SerialNo" xml:space="preserve"><value>序列號</value></data>
+  <data name="SetupTime" xml:space="preserve"><value>整備時間</value></data>
+  <data name="ShipCount" xml:space="preserve"><value>出貨次數</value></data>
+  <data name="ShippedStockQty" xml:space="preserve"><value>已出貨量（庫存單位）</value></data>
+  <data name="ShortageQty" xml:space="preserve"><value>短缺數量</value></data>
+  <data name="ShortfallQty" xml:space="preserve"><value>缺料數量</value></data>
+  <data name="SkipLotEnabled" xml:space="preserve"><value>啟用跳批</value></data>
+  <data name="SkipLotFrequency" xml:space="preserve"><value>跳批頻率</value></data>
+  <data name="Skipped" xml:space="preserve"><value>已略過</value></data>
+  <data name="SortOrder" xml:space="preserve"><value>排序</value></data>
+  <data name="SourceDocType" xml:space="preserve"><value>來源單據類型</value></data>
+  <data name="SourceMode" xml:space="preserve"><value>來源模式</value></data>
+  <data name="StandardLabor" xml:space="preserve"><value>標準人工</value></data>
+  <data name="StandardMaterial" xml:space="preserve"><value>標準材料</value></data>
+  <data name="StandardMinutes" xml:space="preserve"><value>標準分鐘</value></data>
+  <data name="StandardOverhead" xml:space="preserve"><value>標準製造費用</value></data>
+  <data name="Start" xml:space="preserve"><value>開始</value></data>
+  <data name="StartDate" xml:space="preserve"><value>開始日期</value></data>
+  <data name="StartMinute" xml:space="preserve"><value>開始分鐘</value></data>
+  <data name="State" xml:space="preserve"><value>狀態</value></data>
+  <data name="StdLabor" xml:space="preserve"><value>標準人工</value></data>
+  <data name="StdMaterial" xml:space="preserve"><value>標準材料</value></data>
+  <data name="StdOverhead" xml:space="preserve"><value>標準製造費用</value></data>
+  <data name="StdTotalCost" xml:space="preserve"><value>標準總成本</value></data>
+  <data name="StepName" xml:space="preserve"><value>步驟名稱</value></data>
+  <data name="StepNo" xml:space="preserve"><value>步驟編號</value></data>
+  <data name="SysQty" xml:space="preserve"><value>系統數量</value></data>
+  <data name="TightenedVl" xml:space="preserve"><value>加嚴檢驗水準</value></data>
+  <data name="TimeUnit" xml:space="preserve"><value>時間單位</value></data>
+  <data name="ToUomCode" xml:space="preserve"><value>目標單位</value></data>
+  <data name="Total" xml:space="preserve"><value>合計</value></data>
+  <data name="TotalAssets" xml:space="preserve"><value>資產總額</value></data>
+  <data name="TotalConfirmedQty" xml:space="preserve"><value>確認總數量</value></data>
+  <data name="TotalEquity" xml:space="preserve"><value>權益總額</value></data>
+  <data name="TotalGrossProfit" xml:space="preserve"><value>毛利總額</value></data>
+  <data name="TotalHours" xml:space="preserve"><value>總工時</value></data>
+  <data name="TotalLiabilities" xml:space="preserve"><value>負債總額</value></data>
+  <data name="TotalLines" xml:space="preserve"><value>總行數</value></data>
+  <data name="PeriodDebit" xml:space="preserve"><value>本期借方</value></data>
+  <data name="PeriodCredit" xml:space="preserve"><value>本期貸方</value></data>
+  <data name="IncludeZeroRows" xml:space="preserve"><value>顯示零餘額科目</value></data>
+  <data name="ReceiptLines" xml:space="preserve"><value>收貨明細數</value></data>
+  <data name="AvgUnitPriceLocal" xml:space="preserve"><value>加權平均單價（本幣）</value></data>
+  <data name="MinUnitPriceLocal" xml:space="preserve"><value>最低單價（本幣）</value></data>
+  <data name="MaxUnitPriceLocal" xml:space="preserve"><value>最高單價（本幣）</value></data>
+  <data name="TotalMarginRate" xml:space="preserve"><value>總毛利率</value></data>
+  <data name="OnTimeCount" xml:space="preserve"><value>準時筆數</value></data>
+  <data name="EvaluableCount" xml:space="preserve"><value>可評估筆數</value></data>
+  <data name="ProcessingFee" xml:space="preserve"><value>加工費</value></data>
+  <data name="ScrapPenalty" xml:space="preserve"><value>超耗扣款</value></data>
+  <data name="ScrapPenaltyRate" xml:space="preserve"><value>超耗佔比</value></data>
+  <data name="TotalReceiptCount" xml:space="preserve"><value>合計收貨筆數</value></data>
+  <data name="TotalOnTimeCount" xml:space="preserve"><value>合計準時筆數</value></data>
+  <data name="TotalEvaluableCount" xml:space="preserve"><value>合計可評估筆數</value></data>
+  <data name="TotalReceivedQty" xml:space="preserve"><value>合計收回成品量</value></data>
+  <data name="TotalProcessingFee" xml:space="preserve"><value>合計加工費</value></data>
+  <data name="TotalScrapPenalty" xml:space="preserve"><value>合計超耗扣款</value></data>
+  <data name="TotalScrapPenaltyRate" xml:space="preserve"><value>合計超耗佔比</value></data>
+  <data name="TotalOnTimeRate" xml:space="preserve"><value>合計準時率</value></data>
+  <data name="ItemCount" xml:space="preserve"><value>筆數</value></data>
+  <data name="ValuePercent" xml:space="preserve"><value>金額占比</value></data>
+  <data name="SampleCount" xml:space="preserve"><value>樣本數</value></data>
+  <data name="Mean" xml:space="preserve"><value>平均值</value></data>
+  <data name="StdDev" xml:space="preserve"><value>標準差</value></data>
+  <data name="MinValue" xml:space="preserve"><value>最小值</value></data>
+  <data name="MaxValue" xml:space="preserve"><value>最大值</value></data>
+  <data name="OutOfSpecCount" xml:space="preserve"><value>超規數</value></data>
+  <data name="Ucl" xml:space="preserve"><value>管制上限</value></data>
+  <data name="Lcl" xml:space="preserve"><value>管制下限</value></data>
+  <data name="PlannedMinutes" xml:space="preserve"><value>計畫工時(分)</value></data>
+  <data name="RunMinutes" xml:space="preserve"><value>稼動工時(分)</value></data>
+  <data name="IdealMinutes" xml:space="preserve"><value>理想工時(分)</value></data>
+  <data name="GoodQty" xml:space="preserve"><value>良品數</value></data>
+  <data name="VariableRatio" xml:space="preserve"><value>變動成本占比</value></data>
+  <data name="LowerBoundDays" xml:space="preserve"><value>區間下界天數</value></data>
+  <data name="TotalQty" xml:space="preserve"><value>總數量</value></data>
+  <data name="TotalRequestedQty" xml:space="preserve"><value>總需求數量</value></data>
+  <data name="TotalRevenue" xml:space="preserve"><value>總營收</value></data>
+  <data name="TotalValue" xml:space="preserve"><value>總價值</value></data>
+  <data name="TotalVariance" xml:space="preserve"><value>總差異</value></data>
+  <data name="TurnoverRate" xml:space="preserve"><value>週轉率</value></data>
+  <data name="Type" xml:space="preserve"><value>類型</value></data>
+  <data name="UnitTime" xml:space="preserve"><value>單位工時</value></data>
+  <data name="UtilizationRate" xml:space="preserve"><value>稼動率</value></data>
+  <data name="ValidFrom" xml:space="preserve"><value>生效日</value></data>
+  <data name="ValuePct" xml:space="preserve"><value>價值百分比</value></data>
+  <data name="VarLabor" xml:space="preserve"><value>人工差異</value></data>
+  <data name="VarLaborEfficiency" xml:space="preserve"><value>人工效率差異</value></data>
+  <data name="VarMaterial" xml:space="preserve"><value>材料差異</value></data>
+  <data name="VarOverhead" xml:space="preserve"><value>製造費用差異</value></data>
+  <data name="VarOverheadRate" xml:space="preserve"><value>製造費用率差異</value></data>
+  <data name="VarianceQty" xml:space="preserve"><value>差異數量</value></data>
+  <data name="VerificationLevel" xml:space="preserve"><value>驗證等級</value></data>
+  <data name="WipValue" xml:space="preserve"><value>在製品價值</value></data>
+  <data name="WorkOrderCount" xml:space="preserve"><value>工單數</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>工單號</value></data>
+  <data name="WorkOrderOnTimeRate" xml:space="preserve"><value>工單準時率</value></data>
+  <data name="YieldRate" xml:space="preserve"><value>良率</value></data>
+  <data name="DifferenceAmount" xml:space="preserve">
+    <value>差額</value>
+  </data>
+  <data name="IsPassed" xml:space="preserve">
+    <value>是否通過</value>
+  </data>
+  <data name="RunId" xml:space="preserve"><value>執行編號</value></data>
+  <data name="RunAt" xml:space="preserve"><value>執行時間</value></data>
+  <data name="FailureCount" xml:space="preserve"><value>異常筆數</value></data>
+  <data name="DurationMs" xml:space="preserve"><value>執行耗時（毫秒）</value></data>
+  <data name="FindingId" xml:space="preserve"><value>異常編號</value></data>
+  <data name="AuditTypeCount" xml:space="preserve"><value>異常類型數</value></data>
+  <data name="ReworkQty" xml:space="preserve"><value>重工數量</value></data>
+  <data name="VendorLiablePct" xml:space="preserve"><value>廠商責任比例</value></data>
+  <data name="VendorChargebackAmt" xml:space="preserve"><value>向廠商扣款</value></data>
+  <data name="ReworkProcessingFee" xml:space="preserve"><value>重工加工費</value></data>
+  <data name="LiabilityParty" xml:space="preserve"><value>責任歸屬</value></data>
+  <data name="ReworkCost" xml:space="preserve"><value>重工成本</value></data>
+  <data name="AvgOverdueDays" xml:space="preserve"><value>平均逾期天數</value></data>
+  <data name="MaxOverdueDays" xml:space="preserve"><value>最大逾期天數</value></data>
+  <data name="Delivery" xml:space="preserve"><value>交期</value></data>
+  <data name="DeliveryScore" xml:space="preserve"><value>交期分數</value></data>
+  <data name="EvaluationDate" xml:space="preserve"><value>評核日</value></data>
+  <data name="EvaluationYear" xml:space="preserve"><value>評核年度</value></data>
+  <data name="Evaluator" xml:space="preserve"><value>評核人</value></data>
+  <data name="NgQty" xml:space="preserve"><value>不良量</value></data>
+  <data name="OtdOnTimeLines" xml:space="preserve"><value>準時筆數</value></data>
+  <data name="OtdTotalLines" xml:space="preserve"><value>到料筆數</value></data>
+  <data name="Price" xml:space="preserve"><value>價格</value></data>
+  <data name="PriceScore" xml:space="preserve"><value>價格分數</value></data>
+  <data name="Quality" xml:space="preserve"><value>品質</value></data>
+  <data name="QualityScore" xml:space="preserve"><value>品質分數</value></data>
+  <data name="ResultStatus" xml:space="preserve"><value>評核結果</value></data>
+  <data name="Service" xml:space="preserve"><value>服務</value></data>
+  <data name="ServiceScore" xml:space="preserve"><value>服務分數</value></data>
+  <data name="TotalScore" xml:space="preserve"><value>總分</value></data>
+  <data name="DelegatorId" xml:space="preserve"><value>委託人</value></data>
+  <data name="DelegateId" xml:space="preserve"><value>代理人</value></data>
+  <data name="SkipSameApprover" xml:space="preserve"><value>同一簽核人自動跳簽</value></data>
+  <data name="AccumulatedShots" xml:space="preserve"><value>累計打次</value></data>
+  <data name="ToolingPmDue" xml:space="preserve"><value>模具需保養</value></data>
+  <data name="RecommendedSampleSize" xml:space="preserve"><value>建議抽樣數</value></data>
+  <data name="Success" xml:space="preserve"><value>成功</value></data>
+  <data name="SetupTimeUnit" xml:space="preserve"><value>整備時間單位</value></data>
+  <data name="StagingStaged" xml:space="preserve"><value>備料單已揀料完成，料件已移入備料倉。</value></data>
+  <data name="StagingOrderCreated" xml:space="preserve"><value>備料單已建立，請至備料單畫面確認鎖料並揀料移入備料倉。</value></data>
+  <data name="SessionCompleted" xml:space="preserve"><value>已完工，本次上工結束。</value></data>
+  <data name="DateBasis" xml:space="preserve"><value>日期基準</value></data>
+  <data name="UseLocalCurrency" xml:space="preserve"><value>以本幣顯示</value></data>
+  <data name="IdleDaysThreshold" xml:space="preserve"><value>呆滯天數門檻</value></data>
+  <data name="ToolKey" xml:space="preserve"><value>報表工具</value></data>
+  <data name="OwnerUserId" xml:space="preserve"><value>擁有者</value></data>
+  <data name="DefinitionId" xml:space="preserve"><value>報表定義</value></data>
+  <data name="TriggerType" xml:space="preserve"><value>觸發方式</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="RowCount" xml:space="preserve"><value>資料筆數</value></data>
+  <data name="UserId" xml:space="preserve"><value>使用者</value></data>
+  <data name="ScheduleKind" xml:space="preserve"><value>執行週期</value></data>
+  <data name="ScheduleHour" xml:space="preserve"><value>時</value></data>
+  <data name="ScheduleMinute" xml:space="preserve"><value>分</value></data>
+  <data name="ScheduleDayOfWeek" xml:space="preserve"><value>星期</value></data>
+  <data name="ScheduleDayOfMonth" xml:space="preserve"><value>每月第幾日</value></data>
+  <data name="OutputFormat" xml:space="preserve"><value>輸出格式</value></data>
+  <data name="IsFinalReceipt" xml:space="preserve"><value>本單為最後一批</value></data>
+  <data name="CarriedInMaterialCost" xml:space="preserve"><value>併入成品的在外原料價值</value></data>
+  <data name="ARCreditNoteId" xml:space="preserve"><value>折讓單號</value></data>
+  <data name="APDebitNoteId" xml:space="preserve"><value>折讓單號</value></data>
+  <data name="CreditedAmount" xml:space="preserve"><value>已折讓金額</value></data>
+  <data name="DebitedAmount" xml:space="preserve"><value>已折讓金額</value></data>
+  <data name="InvoiceLineNo" xml:space="preserve"><value>發票行號</value></data>
+  <data name="NoteDate" xml:space="preserve"><value>折讓日期</value></data>
+  <data name="HasCalendar" xml:space="preserve"><value>有工作日曆</value></data>
+  <data name="QualityHasData" xml:space="preserve"><value>品質分數有依據</value></data>
+  <data name="DeliveryHasData" xml:space="preserve"><value>交期分數有依據</value></data>
+  <data name="IsSystem" xml:space="preserve"><value>系統科目</value></data>
+  <data name="AllowManualEntry" xml:space="preserve"><value>可手動選用</value></data>
+  <data name="TradeTermCode" xml:space="preserve"><value>貿易條件</value></data>
+  <data name="DraftQty" xml:space="preserve"><value>草稿中數量</value></data>
+  <data name="OpoLineNo" xml:space="preserve"><value>委外採購單行號</value></data>
+  <data name="RemainingQty" xml:space="preserve"><value>未收數量</value></data>
+  <data name="Busy" xml:space="preserve"><value>排程執行中</value></data>
+  <data name="Held" xml:space="preserve"><value>轉暫停筆數</value></data>
+  <data name="IsMachineLocked" xml:space="preserve"><value>機台已指定</value></data>
+  <data name="LastRunAt" xml:space="preserve"><value>上次排程時間</value></data>
+  <data name="LastScheduled" xml:space="preserve"><value>上次排入筆數</value></data>
+  <data name="LastSkipped" xml:space="preserve"><value>上次未排入筆數</value></data>
+  <data name="OnHoldCount" xml:space="preserve"><value>暫停筆數</value></data>
+  <data name="PendingCount" xml:space="preserve"><value>待排筆數</value></data>
+  <data name="Resumed" xml:space="preserve"><value>恢復筆數</value></data>
+  <data name="Unscheduled" xml:space="preserve"><value>退回待排筆數</value></data>
+  <data name="BeforeDispatch" xml:space="preserve"><value>派工前自動重排</value></data>
+  <data name="CalendarChanged" xml:space="preserve"><value>日曆已變更</value></data>
+  <data name="CalendarFingerprint" xml:space="preserve"><value>日曆指紋</value></data>
+  <data name="DataAsOf" xml:space="preserve"><value>資料基準時刻</value></data>
+  <data name="IsStale" xml:space="preserve"><value>排程已過時</value></data>
+  <data name="OnChange" xml:space="preserve"><value>異動後自動重排</value></data>
+  <data name="Moved" xml:space="preserve"><value>調整筆數</value></data>
+  <data name="CalculatedAt" xml:space="preserve"><value>計算時間</value></data>
+  <data name="MedianGapMinutes" xml:space="preserve"><value>實際間隔中位數（分）</value></data>
+  <data name="PeriodDays" xml:space="preserve"><value>取樣天數</value></data>
+  <data name="SuggestedQueueMinutes" xml:space="preserve"><value>建議等候時間（分）</value></data>
+  <data name="MaterialCount" xml:space="preserve"><value>用料筆數</value></data>
+  <data name="WorkOrderType" xml:space="preserve"><value>工單類型</value></data>
+  <data name="ReworkLoss" xml:space="preserve"><value>重工損失</value></data>
+  <data name="IsWorkOrderMaterial" xml:space="preserve"><value>工單用料異動</value></data>
+  <data name="ChangesTruncated" xml:space="preserve"><value>明細已截斷</value></data>
+  <data name="Fenced" xml:space="preserve"><value>時界保留筆數</value></data>
+  <data name="FencedCount" xml:space="preserve"><value>時界保留筆數</value></data>
+  <data name="FinishedAt" xml:space="preserve"><value>完成時刻</value></data>
+  <data name="Kind" xml:space="preserve"><value>種類</value></data>
+  <data name="MachineChangedCount" xml:space="preserve"><value>換機台筆數</value></data>
+  <data name="MovedCount" xml:space="preserve"><value>改時段筆數</value></data>
+  <data name="NewlyScheduledCount" xml:space="preserve"><value>新排入筆數</value></data>
+  <data name="Rule" xml:space="preserve"><value>規則</value></data>
+  <data name="RunLogId" xml:space="preserve"><value>排程紀錄編號</value></data>
+  <data name="ScheduledCount" xml:space="preserve"><value>排入筆數</value></data>
+  <data name="SkippedCount" xml:space="preserve"><value>未排入筆數</value></data>
+  <data name="StartedAt" xml:space="preserve"><value>開始時刻</value></data>
+  <data name="TomorrowChangedCount" xml:space="preserve"><value>影響明天筆數</value></data>
+  <data name="Trigger" xml:space="preserve"><value>觸發方式</value></data>
+  <data name="UnscheduledCount" xml:space="preserve"><value>退回待排筆數</value></data>
+  <data name="QtyIncomingPo" xml:space="preserve"><value>採購在途量</value></data>
+  <data name="QtyIncomingOpo" xml:space="preserve"><value>委外在途量</value></data>
+  <data name="OnHand" xml:space="preserve"><value>在手量</value></data>
+  <data name="Reserved" xml:space="preserve"><value>預留量</value></data>
+  <data name="PlantOnHand" xml:space="preserve"><value>全廠在手量</value></data>
+  <data name="PlantReserved" xml:space="preserve"><value>全廠預留量</value></data>
+  <data name="PlantAvailable" xml:space="preserve"><value>全廠可用量</value></data>
+  <data name="ContainerUnitId" xml:space="preserve"><value>箱號</value></data>
+  <data name="OccurredAt" xml:space="preserve"><value>時間</value></data>
+  <data name="Recovered" xml:space="preserve"><value>已回收</value></data>
+</root>

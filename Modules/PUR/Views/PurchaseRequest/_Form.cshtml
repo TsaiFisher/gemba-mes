@@ -1,0 +1,300 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Services
+@using SmartFactory.MES.Modules.PUR.ViewModels
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.PUR.ViewModels.PurchaseRequestFormVm
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isNew      = string.IsNullOrEmpty(Model?.PurchaseRequestId);
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    bool canEdit = !isReadOnly && (isNew || (
+                      Model?.ApprovalStatus == SmartFactory.MES.Models.DocumentApprovalStatus.Draft ||
+                      Model?.ApprovalStatus == SmartFactory.MES.Models.DocumentApprovalStatus.Rejected));
+    // 結案僅限已核准請購單可執行（與 canEdit 互斥；詳見 mfg-domain.md §21.1 的 Approved && !IsClosed 慣例）。
+    bool canClose = !isReadOnly && !isNew
+                    && Model?.ApprovalStatus == SmartFactory.MES.Models.DocumentApprovalStatus.Approved;
+    var products = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uoms     = ViewBag.UomOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+}
+
+<form id="prForm" asp-action="Save" asp-controller="PurchaseRequest" method="post"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="PurchaseRequestId" />
+    <input type="hidden" asp-for="RowVersion" />
+    <input type="hidden" asp-for="RequestedBy" />
+    <input type="hidden" asp-for="ApprovalStatus" />
+
+    <fieldset @(!canEdit ? "disabled=\"disabled\"" : "")>
+    <div class="p-3">
+        <!-- 主檔 -->
+        <div class="row g-3 mb-4">
+            @if (!isNew)
+            {
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-semibold">@Localizer["PurchaseRequestId"]</label>
+                    <div class="form-control-plaintext fw-bold text-primary">@Model!.PurchaseRequestId</div>
+                </div>
+            }
+            <div class="col-12 col-md-4">
+                <label asp-for="RequestDate" class="form-label fw-semibold">@Localizer["RequestDate"]</label>
+                <input asp-for="RequestDate" type="date" class="form-control" />
+                <span asp-validation-for="RequestDate" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-4">
+                <label asp-for="Remarks" class="form-label fw-semibold">@Localizer["Remarks"]</label>
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+                <input asp-for="Remarks" class="form-control" maxlength="500" />
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- 明細 -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0"><i class="bi bi-list-ul me-1"></i>@Localizer["LinesTitle"]</h6>
+            <div class="d-flex gap-2">
+                @if (canEdit)
+                {
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-action="addLine">
+                        <i class="bi bi-plus-lg"></i> @Localizer["AddLine"]
+                    </button>
+                }
+                @* 「全部結案」移到頁尾按鈕列（見下方），與 canEdit 的 fieldset 脫鉤，
+                   核准後才啟用（fieldset disabled 會連帶鎖住其內任何 button）。 *@
+            </div>
+        </div>
+
+        <div id="linesContainer">
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm align-middle" id="linesTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="u-width-50px">@Localizer["LineNo"]</th>
+                            <th class="u-col-code">@Localizer["ProductCode"]</th>
+                            <th class="u-width-140px">@Localizer["DeliveryDate"]</th>
+                            <th class="u-col-num">@Localizer["RequestQty"]</th>
+                            <th class="u-width-100px">@Localizer["UomCode"]</th>
+                            <th class="u-width-50px">@Localizer["IsClosed"]</th>
+                            @if (canEdit) { <th class="u-width-60px"></th> }
+                        </tr>
+                    </thead>
+                    <tbody id="linesTbody">
+                        @for (int i = 0; i < (Model?.Lines.Count ?? 0); i++)
+                        {
+                            var line = Model!.Lines[i];
+                            <tr data-idx="@i">
+                                <td><input type="hidden" name="Lines[@i].LineNo" value="@line.LineNo" />@line.LineNo</td>
+                                <td>
+                                    <select name="Lines[@i].ProductCode" class="form-select form-select-sm" required>
+                                        <option value="">@SL["SelectProductOption"]</option>
+                                        @foreach (var p in products)
+                                        {
+                                            <option value="@p.ProductCode"
+                                                    data-purchase-uom="@p.PurchaseUom"
+                                                    data-stock-uom="@p.StockUom"
+                                                    selected="@(line.ProductCode == (string)p.ProductCode)">
+                                                @p.ProductCode - @p.ProductName
+                                            </option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input name="Lines[@i].DeliveryDate" type="date" class="form-control form-control-sm"
+                                           value="@line.DeliveryDate?.ToString("yyyy-MM-dd")" />
+                                </td>
+                                <td>
+                                    <input name="Lines[@i].RequestQty" type="number" class="form-control form-control-sm text-end line-qty"
+                                           value="@line.RequestQty" min="@UomStepHelper.GetMinPositive(uomDecimals, line.UomCode)" step="any" required />
+                                </td>
+                                <td>
+                                    <select name="Lines[@i].UomCode" data-uom-prefer="purchase" class="form-select form-select-sm line-uom" data-action-change="onUomChange">
+                                        <option value="">--</option>
+                                        @foreach (var u in uoms)
+                                        {
+                                            <option value="@u.UomCode" selected="@(line.UomCode == (string)u.UomCode)">
+                                                @u.UomCode
+                                            </option>
+                                        }
+                                    </select>
+                                    <input type="hidden" name="Lines[@i].StockUomCode" value="@line.StockUomCode" />
+                                    <input type="hidden" name="Lines[@i].StockQty" value="@line.StockQty" />
+                                </td>
+                                <td class="text-center">
+                                    <input name="Lines[@i].IsClosed" type="checkbox" class="form-check-input"
+                                           value="true" checked="@line.IsClosed" />
+                                </td>
+                                @if (canEdit)
+                                {
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-sm btn-outline-danger" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+    </div>
+    </fieldset>
+
+    <!-- Side Panel Footer -->
+    <div class="position-sticky bottom-0 bg-white border-top px-3 py-2 d-flex justify-content-between align-items-center gap-2">
+        <div>
+            @{
+                var (badgeClass, badgeText) = Model?.ApprovalStatus switch {
+                    SmartFactory.MES.Models.DocumentApprovalStatus.Draft => ("bg-secondary", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Models.DocumentApprovalStatus.Draft)),
+                    SmartFactory.MES.Models.DocumentApprovalStatus.PendingApproval => ("bg-warning text-dark", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Models.DocumentApprovalStatus.PendingApproval)),
+                    SmartFactory.MES.Models.DocumentApprovalStatus.Approved => ("bg-success", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Models.DocumentApprovalStatus.Approved)),
+                    SmartFactory.MES.Models.DocumentApprovalStatus.Rejected => ("bg-danger", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Models.DocumentApprovalStatus.Rejected)),
+                    _ => ("bg-secondary", SmartFactory.MES.Modules.INV.Services.DocStatusLabels.Label(SmartFactory.MES.Models.DocumentApprovalStatus.Draft))
+                };
+            }
+            @if (!isNew)
+            {
+                <span class="badge @badgeClass">@badgeText</span>
+            }
+        </div>
+        <div class="d-flex gap-2">
+            @if (!string.IsNullOrEmpty(Model?.PurchaseRequestId) && (bool?)ViewBag.CanPrint == true)
+            {
+                <a asp-action="Print" asp-route-id="@Model!.PurchaseRequestId" target="_blank"
+                   class="btn btn-outline-secondary">
+                    <i class="bi bi-printer"></i>
+                </a>
+            }
+            @if (isReadOnly)
+            {
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@SL["Close"]</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+                @if (canClose)
+                {
+                    <button type="button" class="btn btn-outline-warning"
+                            data-action="closeDoc" data-id="@Model!.PurchaseRequestId">
+                        <i class="bi bi-lock me-1"></i>@Localizer["CloseAll"]
+                    </button>
+                }
+                @if (!isNew && Model?.ApprovalStatus == SmartFactory.MES.Models.DocumentApprovalStatus.Draft)
+                {
+                    <button type="button" class="btn btn-outline-primary"
+                            data-action="submitApproval" data-id="@Model!.PurchaseRequestId" data-controller="PurchaseRequest">
+                        <i class="bi bi-send me-1"></i>@SL["Submit"]
+                    </button>
+                }
+                @if (!isNew && Model?.ApprovalStatus == SmartFactory.MES.Models.DocumentApprovalStatus.PendingApproval)
+                {
+                    <button type="button" class="btn btn-outline-warning"
+                            data-action="withdrawApproval" data-id="@Model!.PurchaseRequestId" data-controller="PurchaseRequest">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>@SL["Withdraw"]
+                    </button>
+                }
+                @if (Model?.ApprovalStatus != SmartFactory.MES.Models.DocumentApprovalStatus.PendingApproval
+                  && Model?.ApprovalStatus != SmartFactory.MES.Models.DocumentApprovalStatus.Approved)
+                {
+                    <button type="submit" class="btn btn-outline-primary" name="submit" value="save_and_submit">
+                        <i class="bi bi-send me-1"></i>@SL["SaveAndSubmit"]
+                    </button>
+                    <button type="submit" class="btn btn-primary" name="submit" value="save">
+                        <i class="bi bi-floppy me-1"></i>@Localizer["Save"]
+                    </button>
+                }
+            }
+        </div>
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    window.uomDecimals = Object.assign(window.uomDecimals || {}, @Html.Raw(System.Text.Json.JsonSerializer.Serialize(uomDecimals ?? new Dictionary<string,int>())));
+    function onUomChange(e, sel) {
+        var qty = sel.closest('tr').querySelector('.line-qty');
+        window.applyUomStep(qty, sel.value);
+    }
+    var lineCount = @(Model?.Lines.Count ?? 0);
+    var productsJson = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(products.Select(p => new { productCode = (string)p.ProductCode, productName = (string)p.ProductName, purchaseUom = (string?)p.PurchaseUom, stockUom = (string?)p.StockUom })));
+    var uomsJson = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(uoms.Select(u => new { uomCode = (string)u.UomCode, uomName = (string)u.UomName })));
+
+    function addLine() {
+        const idx = lineCount;
+        lineCount++;
+        const lineNo = document.querySelectorAll('#linesTbody tr').length + 1;
+
+        const productOpts = productsJson.map(p =>
+            `<option value="${p.productCode}" data-purchase-uom="${p.purchaseUom||''}" data-stock-uom="${p.stockUom||''}">${p.productCode} - ${p.productName}</option>`
+        ).join('');
+        const uomOpts = uomsJson.map(u =>
+            `<option value="${u.uomCode}">${u.uomCode}</option>`
+        ).join('');
+
+        const tr = document.createElement('tr');
+        tr.dataset.idx = idx;
+        tr.innerHTML = `
+            <td><input type="hidden" name="Lines[${idx}].LineNo" value="${lineNo}" />${lineNo}</td>
+            <td>
+                <select name="Lines[${idx}].ProductCode" class="form-select form-select-sm" required data-action-change="onProductChange">
+                    <option value="">${@(Json.Serialize(SL["SelectProductOption"].Value))}</option>${productOpts}
+                </select>
+            </td>
+            <td><input name="Lines[${idx}].DeliveryDate" type="date" class="form-control form-control-sm" /></td>
+            <td><input name="Lines[${idx}].RequestQty" type="number" class="form-control form-control-sm text-end line-qty" value="1" min="0" step="any" required /></td>
+            <td>
+                <select name="Lines[${idx}].UomCode" data-uom-prefer="purchase" class="form-select form-select-sm line-uom" data-action-change="onUomChange">
+                    <option value="">--</option>${uomOpts}
+                </select>
+                <input type="hidden" name="Lines[${idx}].StockUomCode" value="" />
+                <input type="hidden" name="Lines[${idx}].StockQty" value="0" />
+            </td>
+            <td class="text-center"><input name="Lines[${idx}].IsClosed" type="checkbox" class="form-check-input" value="true" /></td>
+            <td class="text-center">
+                <button type="button" class="btn btn-sm btn-outline-danger" data-action="removeLine" title="@Localizer["RemoveLine"]" aria-label="@Localizer["RemoveLine"]">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>`;
+        document.getElementById('linesTbody').appendChild(tr);
+        window.armValidation(document.getElementById('prForm')); // 動態列重註冊 unobtrusive 驗證（R6c）
+    }
+
+    function onProductChange(e, sel) {
+        const opt = sel.selectedOptions[0];
+        const purchaseUom = opt?.dataset.purchaseUom || '';
+        const stockUom = opt?.dataset.stockUom || '';
+        const row = sel.closest('tr');
+        const uomSel = row.querySelector('.line-uom');
+        const stockUomInput = row.querySelector('input[name$=".StockUomCode"]');
+        if (uomSel && purchaseUom) uomSel.value = purchaseUom;
+        if (stockUomInput) stockUomInput.value = stockUom;
+        const qty = row.querySelector('.line-qty');
+        if (qty && purchaseUom) window.applyUomStepAsync(qty, purchaseUom);
+    }
+
+    function removeLine(e, btn) {
+        btn.closest('tr').remove();
+        // 重新編排序號
+        document.querySelectorAll('#linesTbody tr').forEach((tr, i) => {
+            tr.cells[0].querySelector('input[type=hidden]').value = i + 1;
+            tr.cells[0].lastChild.textContent = i + 1;
+        });
+    }
+
+    function closeDoc(e, el) {
+        const docId = el.dataset.id;
+        if (!confirm('@Localizer["ConfirmCloseDoc"]')) return;
+        const token = document.querySelector('#prForm input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(`/PurchaseRequest/CloseDoc/${docId}`, {
+            method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ __RequestVerificationToken: token })
+        }).then(r => r.json()).then(d => {
+            if (d.success) { window.openPanel(`/PurchaseRequest/Edit/${docId}`); refreshList && refreshList(); }
+            else alert(d.message);
+        });
+    }
+</script>

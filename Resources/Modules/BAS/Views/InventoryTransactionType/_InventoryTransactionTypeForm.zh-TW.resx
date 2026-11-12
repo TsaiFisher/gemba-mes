@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>庫存異動類別維護</value></data>
+  <data name="AddEntry" xml:space="preserve"><value>新增異動類別</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>代號 / 名稱查詢</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>查詢類別代號或名稱</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入查詢條件後按「查詢」</value></data>
+  <data name="TypeCode" xml:space="preserve"><value>類別代號</value></data>
+  <data name="TypeName" xml:space="preserve"><value>類別名稱</value></data>
+  <data name="TypeCategory" xml:space="preserve"><value>異動類別</value></data>
+  <data name="SourceTypeCode" xml:space="preserve"><value>來源類別代號</value></data>
+  <data name="IsActive" xml:space="preserve"><value>啟用</value></data>
+  <data name="Active" xml:space="preserve"><value>啟用</value></data>
+  <data name="Inactive" xml:space="preserve"><value>停用</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Print" xml:space="preserve"><value>列印</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>匯出 Excel</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>匯出 CSV</value></data>
+  <data name="ExportJson" xml:space="preserve"><value>匯出 JSON</value></data>
+  <data name="TypeCodePlaceholder" xml:space="preserve"><value>例：IY001</value></data>
+  <data name="TypeCodeReadonlyHint" xml:space="preserve"><value>類別代號建立後無法修改</value></data>
+  <data name="Direction" xml:space="preserve"><value>異動方向</value></data>
+  <data name="Dir_In" xml:space="preserve"><value>入庫</value></data>
+  <data name="Dir_Out" xml:space="preserve"><value>出庫</value></data>
+  <data name="RequireLot" xml:space="preserve"><value>需填批號</value></data>
+  <data name="RequireDoc" xml:space="preserve"><value>需填單據</value></data>
+  <data name="IsSystemType" xml:space="preserve"><value>系統內建</value></data>
+  <data name="SystemTypeHint" xml:space="preserve"><value>系統內建類別不可刪除</value></data>
+  <data name="TypeCategoryHint" xml:space="preserve"><value>決定此異動類別在模組中的用途（如採購入庫、銷售出庫等）</value></data>
+  <data name="Cat_II" xml:space="preserve"><value>採購入庫</value></data>
+  <data name="Cat_IO" xml:space="preserve"><value>其他入庫</value></data>
+  <data name="Cat_IW" xml:space="preserve"><value>在製入庫</value></data>
+  <data name="Cat_IA" xml:space="preserve"><value>盤盈入庫</value></data>
+  <data name="Cat_IC" xml:space="preserve"><value>成本調整入</value></data>
+  <data name="Cat_ICC" xml:space="preserve"><value>跨廠調撥入</value></data>
+  <data name="Cat_IX" xml:space="preserve"><value>品檢放行入</value></data>
+  <data name="Cat_OI" xml:space="preserve"><value>銷售出庫</value></data>
+  <data name="Cat_OR" xml:space="preserve"><value>其他出庫</value></data>
+  <data name="Cat_QR" xml:space="preserve"><value>品檢退回</value></data>
+  <data name="Cat_QJ" xml:space="preserve"><value>品檢報廢</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="SystemTypeWarning" xml:space="preserve"><value>系統內建類型，部分欄位不可修改。</value></data>
+</root>

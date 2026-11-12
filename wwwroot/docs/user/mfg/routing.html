@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Routing — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>途程主檔 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link active"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/Routing &nbsp;|&nbsp; 產品製程工序與 BOM 用料定義</span><span lang="en">Route: /Routing &nbsp;|&nbsp; Defining the operations and BOM material of a product</span></div>
+    </div>
+
+    <p><span lang="zh">途程定義產品的加工順序（工序）與每道工序的用料（BOM）。工單建立時自動複製途程內容為工單工序與用料快照，因此修改途程只影響之後新建的工單。每道工序可設定工作中心、標準工時、QueueTime/MoveTime（MRP 前置期倒推用）、模具代碼與是否需要 IPQC 製程檢驗。</span><span lang="en">A routing defines the sequence of operations for a product and the material each operation uses (the BOM). When a work order is created the routing is copied into it as a snapshot of its operations and material, so changing a routing only affects work orders created afterwards. Each operation can carry a work center, a standard time, QueueTime and MoveTime (used when MRP works the lead time back), a tooling code and a flag for whether IPQC in-process inspection is required.</span></p>
+    <img class="screen-shot" src="img/routing.png" data-src-en="img/en/routing.png" alt="途程主檔畫面截圖" data-alt-en="Routing screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">途程主檔畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Routing screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">建立途程</span><span lang="en">Create routing</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」建立途程表頭，選擇適用產品。</span><span lang="en">Click "Add" to create the routing header and choose the product it applies to.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">逐道加入工序：選工作中心、填標準工時（UnitTime）、準備工時，視需要填模具代碼與「需要檢驗」旗標。</span><span lang="en">Add the operations one by one: choose the work center, enter the standard time (UnitTime) and the setup time, and where needed the tooling code and the "inspection required" flag.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">在工序下維護 BOM 用料明細：料號、標準用量、發料倉。</span><span lang="en">Maintain the BOM material lines under each operation: item, standard usage and issuing warehouse.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">儲存後（視設定）送審，核准後工單即可引用。</span><span lang="en">After saving it goes for approval (depending on the settings); once approved, work orders can use it.</span></div></div>
+    <div class="note-box"><i class="bi bi-slash-circle me-1 text-warning"></i><span lang="zh"><strong>工序「外包」勾選已停用：</strong>途程上不能再把工序設為委外，MRP 也不再依舊資料展開委外派工或委外建議（一律當廠內工序）。日常固定外包的那一段，請建成半成品品號（MRP 模式「委外」），由 MRP 產生它自己的委外工單；臨時把某道工序外包，請在排程畫面的派工面板按「轉為委外」。</span><span lang="en"><strong>The operation "Outsource" tick box is no longer available:</strong> an operation can no longer be set as outsourced on the routing, and MRP no longer creates outsourced dispatches or outsource suggestions from older data (such operations are treated as in-house). For a stage that is always subcontracted, make it a semi-finished product (MRP mode "Outsource") so MRP creates its own outsourced work order; to subcontract one operation as a one-off, use "Convert to Outsource" in the dispatch panel on the scheduling screen.</span></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">途程表頭</span><span lang="en">Routing header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">途程代碼</span><span lang="en">Routing ID</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">唯一識別，建立後不可修改</span><span lang="en">Unique identifier; cannot be changed after creation</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">此途程適用的成品／半成品；多階展開時以此判斷是否為自製件</span><span lang="en">Finished or semi-finished item the routing applies to; a multi-level explosion uses it to decide whether the item is made in house</span></td></tr>
+        <tr><td><span lang="zh">描述</span><span lang="en">Description</span></td><td><span lang="zh">途程名稱或用途說明</span><span lang="en">Routing name or description</span></td></tr>
+        <tr><td><span lang="zh">批量</span><span lang="en">Lot size</span></td><td><span lang="zh">標準批量。工時試算以此批量為基準攤提準備時間</span><span lang="en">Standard lot size. Setup time is spread over this lot size when hours are estimated</span></td></tr>
+        <tr><td><span lang="zh">緩衝天數</span><span lang="en">Buffer Days</span></td><td><span lang="zh">排程倒推時額外預留的天數，用於吸收不確定性</span><span lang="en">Extra days allowed when back-scheduling, to absorb uncertainty</span></td></tr>
+        <tr><td><span lang="zh">平均工時</span><span lang="en">Average hours</span></td><td><span lang="zh">整條途程的平均前置工時，供 MRP 粗估交期使用</span><span lang="en">Average lead time of the whole routing, used by MRP for a rough delivery estimate</span></td></tr>
+        <tr><td><span lang="zh">版本</span><span lang="en">Version</span></td><td><span lang="zh">工程變更控管用的版本識別</span><span lang="en">Version identifier used for engineering change control</span></td></tr>
+        <tr><td><span lang="zh">生效起日 / 生效迄日</span><span lang="en">Effective from / to</span></td><td><span lang="zh">途程的有效期間（含起訖日）；留空為不限。多階展開以查詢當日判斷是否有效</span><span lang="en">Effective period of the routing (inclusive); leave blank for no limit. The multi-level explosion judges validity on the query date</span></td></tr>
+        <tr><td><span lang="zh">狀態（啟用）</span><span lang="en">Status (active)</span></td><td><span lang="zh">停用或不在生效區間的途程一律視為無效，該品號在多階展開中被當成採購件</span><span lang="en">A routing that is inactive or outside its effective period counts as invalid, and the item is treated as a purchased part in the multi-level explosion</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">工序明細</span><span lang="en">Operations</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">序號</span><span lang="en">Seq</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">工序執行順序，決定前後工序的相依關係</span><span lang="en">Order in which the operations run, which sets the dependency between them</span></td></tr>
+        <tr><td><span lang="zh">名稱</span><span lang="en">Name</span></td><td><span lang="zh">工序名稱（如 DIP、組裝、測試）</span><span lang="en">Operation name (e.g. DIP, assembly, test)</span></td></tr>
+        <tr><td><span lang="zh">工作中心</span><span lang="en">Work Center</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">該工序執行的工作中心，決定產能與費率</span><span lang="en">Work center that performs the operation, which sets the capacity and the rate</span></td></tr>
+        <tr><td><span lang="zh">移轉方式</span><span lang="en">Transfer</span></td><td><span lang="zh">連續（Continuous，前工序邊做邊移轉）／批量（Batch，滿一個移轉批量才移轉）／整單（WholeOrder，整批完工才移轉）</span><span lang="en">Continuous (moved on as the previous operation produces) / Batch (moved on once a transfer batch is full) / WholeOrder (moved on only when the whole order is finished)</span></td></tr>
+        <tr><td><span lang="zh">移轉批量</span><span lang="en">Transfer Qty</span></td><td><span lang="zh">移轉方式為「批量」時，每次移轉的數量</span><span lang="en">Quantity moved each time when the transfer mode is "batch"</span></td></tr>
+        <tr><td><span lang="zh">開工容器 / 完工容器</span><span lang="en">Start container / Finish container</span></td><td><span lang="zh">工序進出料使用的標準容器；留空表示不以容器轉移</span><span lang="en">Standard container used to move material in and out of the operation; leave blank if containers are not used</span></td></tr>
+        <tr><td><span lang="zh">準備時間</span><span lang="en">Setup time</span></td><td><span lang="zh">換模、換線等生產前準備時間，每張派工單只計一次（時間單位可另設秒／分／時）</span><span lang="en">Preparation time before production such as changing tooling or lines, counted once per dispatch (the time unit can be set to seconds, minutes or hours)</span></td></tr>
+        <tr><td><span lang="zh">單位時間</span><span lang="en">Unit Time</span></td><td><span lang="zh">生產一個良品所需的標準工時，乘上數量即為加工時間</span><span lang="en">Standard time to produce one good piece; multiplied by the quantity it gives the processing time</span></td></tr>
+        <tr><td><span lang="zh">良率</span><span lang="en">Yield</span></td><td><span lang="zh">該工序投入→良品的產出良率（%），預設 100。MRP 以各階累積良率回推投產量</span><span lang="en">Yield from input to good output at this operation (%), 100 by default. MRP works the release quantity back from the cumulative yield of every level</span></td></tr>
+        <tr><td>SOP</td><td><span lang="zh">作業標準書編號，供現場查閱</span><span lang="en">Work instruction number, for reference on the shop floor</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">工序用料（料表）</span><span lang="en">Operation material (BOM)</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">序號</span><span lang="en">Seq</span></td><td><span lang="zh">用料行序</span><span lang="en">Material line seq</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">該工序要領用的料件</span><span lang="en">Item to be issued for the operation</span></td></tr>
+        <tr><td><span lang="zh">數量</span><span lang="en">Count</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">生產一個（或一個批量）所需的用量</span><span lang="en">Usage needed to produce one piece (or one lot)</span></td></tr>
+        <tr><td><span lang="zh">單位</span><span lang="en">UOM</span></td><td><span lang="zh">用料的計量單位</span><span lang="en">Unit of measure of the material</span></td></tr>
+        <tr><td><span lang="zh">損耗率%</span><span lang="en">Scrap %</span></td><td><span lang="zh">製程損耗的加成比例，需求量以此放大</span><span lang="en">Uplift for process loss, by which the demand is increased</span></td></tr>
+        <tr><td><span lang="zh">下角率%</span><span lang="en">Offcut %</span></td><td><span lang="zh">裁切剩餘無法再利用的加成比例，與損耗率同為外加法一併放大需求量</span><span lang="en">Uplift for offcuts that cannot be reused; like the scrap rate it is added on top and increases the demand</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="work-order.html"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>、<a href="mrp-run.html"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a></p>
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">工序的搬運時間與等候時間是</span><span lang="en">An operation's move time and queue time are </span><b><span lang="zh">這道工序做完、到下一道開工之間</span><span lang="en">the time between this operation finishing and the next one starting</span></b><span lang="zh">的時間，影響 MRP 倒推的開工日與排程的工序間隔。系統每晚 02:00 依近 90 天實際報工統計</span><span lang="en">; they affect the start dates MRP works back to and the gaps the scheduler leaves between operations. Every night at 02:00 the system works out a </span><b><span lang="zh">等候時間建議值</span><span lang="en">suggested queue time</span></b><span lang="zh">：同一張工單前一道下工到下一道上工的間隔，只算工作日曆上的上班時間（夜間、假日、休息不算），取中位數後扣掉本工序的搬運時間；首道工序之前不統計，樣本少於 5 筆不給建議。編輯工序時，等候時間欄位下方會顯示「建議 X（近 90 天實際報工 N 筆的中位數）」，按「套用」只會把值填進欄位，</span><span lang="en"> from the last 90 days of production reports: the gap from the previous operation's last clock-out to the next operation's first clock-in on the same work order, counting only working time on the work calendar (nights, holidays and breaks are excluded), taking the median and deducting this operation's move time. Nothing is calculated before the first operation, and there is no suggestion with fewer than 5 samples. When you edit an operation, the queue time field shows "Suggested X (median of N actual reports over the last 90 days)"; clicking "Apply" only fills in the field, and </span><b><span lang="zh">存檔途程後才生效</span><span lang="en">it takes effect only when you save the routing</span></b><span lang="zh">——系統不會自動改途程。</span><span lang="en"> — the system never changes routings by itself.</span>
+    </div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">修改途程不會回寫既有工單；已投產工單如需變更製程，請作廢重開工單。</span><span lang="en"> Changing a routing does not update existing work orders; to change the process on a work order that has been released, void it and open a new one.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

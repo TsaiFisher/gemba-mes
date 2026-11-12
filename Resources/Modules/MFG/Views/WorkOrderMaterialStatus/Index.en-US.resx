@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>WO Material Status</value></data>
+  <data name="Batch" xml:space="preserve"><value>Batch</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>Work Order</value></data>
+  <data name="MaterialCode" xml:space="preserve"><value>Material</value></data>
+  <data name="OnlyShort" xml:space="preserve"><value>Not-ready lines only</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchFirst" xml:space="preserve"><value>Press Search to list work order material status</value></data>
+  <data name="NoData" xml:space="preserve"><value>No material lines match the criteria</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>Export Excel</value></data>
+  <data name="TotalLines" xml:space="preserve"><value>Material Lines</value></data>
+  <data name="ShortLines" xml:space="preserve"><value>Shortage Lines</value></data>
+  <data name="PendingSubLines" xml:space="preserve"><value>Pending Sub-assembly</value></data>
+  <data name="OpenLines" xml:space="preserve"><value>Lines With Open Qty</value></data>
+  <data name="Status" xml:space="preserve"><value>WO Status</value></data>
+  <data name="OutputProduct" xml:space="preserve"><value>Output</value></data>
+  <data name="OperationSeq" xml:space="preserve"><value>Op</value></data>
+  <data name="ProductName" xml:space="preserve"><value>Name</value></data>
+  <data name="IssueMethod" xml:space="preserve"><value>Issue Method</value></data>
+  <data name="RequiredQty" xml:space="preserve"><value>Required</value></data>
+  <data name="IssuedQty" xml:space="preserve"><value>Issued</value></data>
+  <data name="ReturnedQty" xml:space="preserve"><value>Returned</value></data>
+  <data name="NetIssuedQty" xml:space="preserve"><value>Net Issued</value></data>
+  <data name="OpenQty" xml:space="preserve"><value>Open</value></data>
+  <data name="AvailableQty" xml:space="preserve"><value>Available</value></data>
+  <data name="ReadinessState" xml:space="preserve"><value>Readiness</value></data>
+  <data name="StateReady" xml:space="preserve"><value>Ready</value></data>
+  <data name="StateShortage" xml:space="preserve"><value>Shortage</value></data>
+  <data name="StatePendingSub" xml:space="preserve"><value>Pending Sub-assembly</value></data>
+  <data name="Push" xml:space="preserve"><value>Push</value></data>
+  <data name="Pull" xml:space="preserve"><value>Pull</value></data>
+  <data name="Backflush" xml:space="preserve"><value>Backflush</value></data>
+  <data name="Planned" xml:space="preserve"><value>Planned</value></data>
+  <data name="Released" xml:space="preserve"><value>Released</value></data>
+  <data name="InProgress" xml:space="preserve"><value>In Progress</value></data>
+  <data name="Completed" xml:space="preserve"><value>Completed</value></data>
+  <data name="Closed" xml:space="preserve"><value>Closed</value></data>
+  <data name="Void" xml:space="preserve"><value>Void</value></data>
+  <data name="FooterNote" xml:space="preserve"><value>Available = plant on-hand minus active on-hand reservations (quarantine warehouses excluded) plus this work order’s own reservation (stock MRP already locked for it), the same basis as the release material gate. Backflush lines are consumed at completion and sub-assembly lines depend on the child work order, so no available qty is shown for them.</value></data>
+  <data name="ShortBy" xml:space="preserve"><value>Short by</value></data>
+</root>

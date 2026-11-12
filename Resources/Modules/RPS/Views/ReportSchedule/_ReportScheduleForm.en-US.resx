@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="Name" xml:space="preserve"><value>Schedule Name</value></data>
+  <data name="ToolKey" xml:space="preserve"><value>Report</value></data>
+  <data name="SelectReport" xml:space="preserve"><value>Select a report</value></data>
+  <data name="ToolKeyHint" xml:space="preserve"><value>{0} report(s) are wired into scheduling and you are authorized to run. Other reports are not yet available for scheduling — please query or export them from their own report screens.</value></data>
+  <data name="ScheduleKind" xml:space="preserve"><value>Frequency</value></data>
+  <data name="ScheduleDaily" xml:space="preserve"><value>Daily</value></data>
+  <data name="ScheduleWeekly" xml:space="preserve"><value>Weekly</value></data>
+  <data name="ScheduleMonthly" xml:space="preserve"><value>Monthly</value></data>
+  <data name="ScheduleDayOfWeek" xml:space="preserve"><value>Day of Week</value></data>
+  <data name="Sunday" xml:space="preserve"><value>Sunday</value></data>
+  <data name="Monday" xml:space="preserve"><value>Monday</value></data>
+  <data name="Tuesday" xml:space="preserve"><value>Tuesday</value></data>
+  <data name="Wednesday" xml:space="preserve"><value>Wednesday</value></data>
+  <data name="Thursday" xml:space="preserve"><value>Thursday</value></data>
+  <data name="Friday" xml:space="preserve"><value>Friday</value></data>
+  <data name="Saturday" xml:space="preserve"><value>Saturday</value></data>
+  <data name="ScheduleDayOfMonth" xml:space="preserve"><value>Day of Month</value></data>
+  <data name="ScheduleDayOfMonthHint" xml:space="preserve"><value>If set to 29–31, months with fewer days fall back to the last day of that month.</value></data>
+  <data name="ScheduleHour" xml:space="preserve"><value>Hour (0–23)</value></data>
+  <data name="ScheduleMinute" xml:space="preserve"><value>Minute (0–59)</value></data>
+  <data name="OutputFormat" xml:space="preserve"><value>Output Format</value></data>
+  <data name="OutputFormatHint" xml:space="preserve"><value>Excel keeps column formatting; CSV is easier to import elsewhere.</value></data>
+  <data name="Recipients" xml:space="preserve"><value>Recipients</value></data>
+  <data name="SelectRecipients" xml:space="preserve"><value>Select recipients</value></data>
+  <data name="RecipientsHint" xml:space="preserve"><value>Reports are delivered to the recipient's Report Inbox, not by email. Permissions are re-checked at download time, so users who lost access will not receive the file.</value></data>
+  <data name="IsActive" xml:space="preserve"><value>Enable this schedule</value></data>
+  <data name="IsActiveHint" xml:space="preserve"><value>Disabled schedules no longer run. If the owner loses permission the system disables the schedule automatically and records the reason.</value></data>
+  <data name="Owner" xml:space="preserve"><value>Owner</value></data>
+  <data name="NextRunAt" xml:space="preserve"><value>Next Run</value></data>
+  <data name="NotScheduled" xml:space="preserve"><value>Not scheduled</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Period" xml:space="preserve"><value>Period</value></data>
+  <data name="PeriodHint" xml:space="preserve"><value>Schedules store a rolling period (e.g. "Last month") that is resolved to actual dates on every run — not a fixed date range.</value></data>
+  <data name="TargetPlant" xml:space="preserve"><value>Target plant</value></data>
+  <data name="TargetPlantHint" xml:space="preserve"><value>The report covers this plant's data only; the period and run time follow this plant's time zone. To schedule for another plant, switch to that plant first.</value></data>
+</root>

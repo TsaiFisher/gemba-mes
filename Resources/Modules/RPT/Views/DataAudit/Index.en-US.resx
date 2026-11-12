@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Data Audit Diagnostics</value></data>
+  <data name="RunNow" xml:space="preserve"><value>Run Audit Now</value></data>
+  <data name="MethodHint" xml:space="preserve"><value>All data-consistency checks (PO over-receipt, GR/IR, outsource balance, journal balance, inventory roll-forward, backflush consumption, denormalized-field drift, ERP sync…) run automatically at 02:00 daily. This page shows the latest result and trend; the same checks gate period closing.</value></data>
+  <data name="NoRunsYet" xml:space="preserve"><value>No audit runs yet; runs automatically at 02:00 daily, or click "Run Audit Now".</value></data>
+  <data name="LatestRunAt" xml:space="preserve"><value>Latest Run</value></data>
+  <data name="TriggerManual" xml:space="preserve"><value>Manual</value></data>
+  <data name="TriggerScheduled" xml:space="preserve"><value>Daily Schedule</value></data>
+  <data name="FailureCount" xml:space="preserve"><value>Findings</value></data>
+  <data name="AuditTypeCount" xml:space="preserve"><value>Audit Types</value></data>
+  <data name="Duration" xml:space="preserve"><value>Duration</value></data>
+  <data name="TrendTitle" xml:space="preserve"><value>Recent Findings Trend</value></data>
+  <data name="Findings" xml:space="preserve"><value>Finding Details</value></data>
+  <data name="Severity" xml:space="preserve"><value>Severity</value></data>
+  <data name="SeverityBlocking" xml:space="preserve"><value>Blocks close</value></data>
+  <data name="SeverityAdvisory" xml:space="preserve"><value>Advisory</value></data>
+  <data name="AuditType" xml:space="preserve"><value>Audit Type</value></data>
+  <data name="AllTypes" xml:space="preserve"><value>All Types</value></data>
+  <data name="Apply" xml:space="preserve"><value>Apply</value></data>
+  <data name="NoFindings" xml:space="preserve"><value>No findings in this run</value></data>
+  <data name="DocId" xml:space="preserve"><value>Document / Key</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="Plant" xml:space="preserve"><value>Plant</value></data>
+  <data name="Difference" xml:space="preserve"><value>Difference</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="AuditType_PO_OVER_RECEIPT" xml:space="preserve"><value>PO over-receipt</value></data>
+  <data name="AuditType_GRIR_OVER_INVOICE" xml:space="preserve"><value>Invoice exceeds receivable qty</value></data>
+  <data name="AuditType_GRIR_AGING" xml:space="preserve"><value>GR/IR accrual aged</value></data>
+  <data name="AuditType_OUTSOURCE_NEG_BALANCE" xml:space="preserve"><value>Negative outsourced balance</value></data>
+  <data name="AuditType_JOURNAL_UNBALANCED" xml:space="preserve"><value>Unbalanced journal entry</value></data>
+  <data name="AuditType_JOURNAL_DUPLICATE" xml:space="preserve"><value>Duplicate journal for one source</value></data>
+  <data name="AuditType_INV_ROLLFORWARD" xml:space="preserve"><value>Inventory roll-forward mismatch</value></data>
+  <data name="AuditType_SO_OVER_SHIPMENT" xml:space="preserve"><value>SO over-shipment</value></data>
+  <data name="AuditType_GS_NO_AR_INVOICE" xml:space="preserve"><value>Shipment without AR invoice</value></data>
+  <data name="AuditType_BACKFLUSH_MISMATCH" xml:space="preserve"><value>Backflush vs standard mismatch</value></data>
+  <data name="AuditType_WO_MATERIAL_NOT_ISSUED" xml:space="preserve"><value>WO completed without issue</value></data>
+  <data name="AuditType_SALES_RETURN_COST_DRIFT" xml:space="preserve"><value>Sales return cost drift</value></data>
+  <data name="AuditType_RETURN_SUBLEDGER_UNREVERSED" xml:space="preserve"><value>Return subledger not reversed</value></data>
+  <data name="AuditType_PO_RECEIVED_DRIFT" xml:space="preserve"><value>PO received qty drift</value></data>
+  <data name="AuditType_SO_SHIPPED_DRIFT" xml:space="preserve"><value>SO shipped qty drift</value></data>
+  <data name="AuditType_WIP_COST_NOT_FINAL" xml:space="preserve"><value>WO cost still preliminary</value></data>
+  <data name="AuditType_WIP_SNAPSHOT_MISSING" xml:space="preserve"><value>WIP snapshot missing</value></data>
+  <data name="AuditType_WIP_SNAPSHOT_STALE" xml:space="preserve"><value>WIP snapshot stale</value></data>
+  <data name="AuditType_WIP_SNAPSHOT_NEGATIVE" xml:space="preserve"><value>WIP snapshot has negative amount</value></data>
+  <data name="AuditType_WIP_VOID_LEAKAGE" xml:space="preserve"><value>Voided WIP with no cost outlet</value></data>
+  <data name="AuditType_WIP_IDENTITY_DRIFT" xml:space="preserve"><value>WIP identity does not hold</value></data>
+  <data name="AuditType_ERP_SYNC_LAG" xml:space="preserve"><value>ERP hand-off overdue</value></data>
+  <data name="AuditType_WO_COST_JOURNAL_DRIFT" xml:space="preserve"><value>WO cost vs subledger drift</value></data>
+  <data name="AuditType_ORPHAN_STOCK_MOVEMENT" xml:space="preserve"><value>Orphan stock movement</value></data>
+  <data name="AuditType_ORPHAN_JOURNAL_ENTRY" xml:space="preserve"><value>Orphan journal entry</value></data>
+  <data name="AuditType_ORPHAN_INVOICE" xml:space="preserve"><value>Orphan invoice</value></data>
+  <data name="RepairTitle" xml:space="preserve"><value>Cumulative fields that can be corrected automatically</value></data>
+  <data name="RepairHint" xml:space="preserve"><value>These are progress fields on documents whose correct value is fully determined by the source documents (PO received = total of non-void goods receipts; SO shipped = total of non-void shipments), so correcting them does not touch any accounts. Tick the rows and click "Correct selected"; the system recalculates once more when you submit, and the before/after values and who made the correction are kept in the audit log. Differences in journals, inventory and cost are not handled here — trace their cause from the findings below.</value></data>
+  <data name="RepairApply" xml:space="preserve"><value>Correct selected</value></data>
+  <data name="RepairConfirm" xml:space="preserve"><value>Recalculate the selected fields from their source documents and write them back? Every correction is recorded in the audit log.</value></data>
+  <data name="RepairSelectAll" xml:space="preserve"><value>Select all</value></data>
+  <data name="RepairType" xml:space="preserve"><value>Field</value></data>
+  <data name="RepairCurrent" xml:space="preserve"><value>Current</value></data>
+  <data name="RepairExpected" xml:space="preserve"><value>Should be</value></data>
+  <data name="RepairType_PO_RECEIVED_QTY" xml:space="preserve"><value>PO line received qty</value></data>
+  <data name="RepairType_SO_SHIPPED_QTY" xml:space="preserve"><value>SO line shipped qty</value></data>
+  <data name="AuditType_INV_GL_SUBLEDGER" xml:space="preserve"><value>Inventory GL ≠ subledger</value></data>
+  <data name="AuditType_INV_GL_DOC_DIFF" xml:space="preserve"><value>Document GL ≠ movement value</value></data>
+  <data name="AuditType_INV_GL_WIP_NEGATIVE" xml:space="preserve"><value>Negative work-order WIP</value></data>
+  <data name="AuditType_INV_GL_WIP_CLOSED" xml:space="preserve"><value>WIP left on closed work order</value></data>
+</root>

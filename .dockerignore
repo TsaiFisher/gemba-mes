@@ -1,0 +1,30 @@
+# 建置內容只需要原始碼。⚠️ 簽發私鑰、授權檔、加密連線字串、Security DLL 一律不得進映像——
+# 授權檔與 DLL 在執行期以唯讀方式掛載（見 docker-compose.yml），私鑰只存在簽發者本機。
+**/bin/
+**/obj/
+# 前端測試相依（jest）只在開發機有；送進建置內容只會拖慢建置，映像也用不到
+**/node_modules/
+.git/
+.github/
+.vs/
+.vscode/
+logs/
+**/*.pem
+!Resources/license-public.pem
+# 簽章私鑰與憑證：目前都在上面排除的目錄裡，這兩條是防日後放錯位置（強式名稱 .snk、開發憑證 .pfx）
+**/*.snk
+**/*.pfx
+license*.json
+**/license*.json
+appsettings.Development.json*
+appsettings.Production.json*
+.env
+Security/
+SmartFactory.MES.LicenseAuthority/
+SmartFactory.MES.Security/
+SmartFactory.MES.Tests/
+SmartFactory.MES.IntegrationTests/
+SmartFactory.MES.UITests/
+SECURITY-OPERATIONS.md
+*.bak*
+*.v2-*

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Inventory Ledger — INV User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>庫存異動帳本 — INV 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">INV 目錄</span><span lang="en">INV Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">INV 畫面</span><span lang="en">INV Screens</span></div>
+    <a href="inventory-balance.html" class="nav-link"><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></a>
+    <a href="stock-movement.html" class="nav-link"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a>
+    <a href="stock-ledger.html" class="nav-link active"><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></a>
+    <a href="warehouse-ops.html" class="nav-link"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a>
+    <a href="material-staging.html" class="nav-link"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a>
+    <a href="scrap-doc.html" class="nav-link"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></a>
+    <a href="loan-doc.html" class="nav-link"><span lang="zh">借入借出單</span><span lang="en">Loan Document</span></a>
+    <a href="sample-doc.html" class="nav-link"><span lang="zh">樣品/客供單</span><span lang="en">Sample/Consignment Docs</span></a>
+    <a href="inventory-count.html" class="nav-link"><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></a>
+    <a href="stock-adjustment.html" class="nav-link"><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></a>
+    <a href="../osp/outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="rework-material.html" class="nav-link"><span lang="zh">重工發退料單</span><span lang="en">Rework Material</span></a>
+    <a href="stock-transfer.html" class="nav-link"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a>
+    <a href="cross-plant-transfer.html" class="nav-link"><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></a>
+    <a href="inventory-valuation.html" class="nav-link"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a>
+    <a href="landed-cost-allocation.html" class="nav-link"><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></a>
+    <a href="stock-shortage.html" class="nav-link"><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></a>
+    <a href="slow-moving-inventory.html" class="nav-link"><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></a>
+    <a href="inventory-aging.html" class="nav-link"><span lang="zh">存貨庫齡分析</span><span lang="en">Inventory Aging Analysis</span></a>
+    <a href="inventory-value.html" class="nav-link"><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></a>
+    <a href="inventory-turnover.html" class="nav-link"><span lang="zh">庫存周轉率</span><span lang="en">Inventory Turnover</span></a>
+    <a href="stock-variance.html" class="nav-link"><span lang="zh">盤差分析</span><span lang="en">Stock Variance</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-journal-text me-2 text-primary"></i><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/StockLedger &nbsp;|&nbsp; 品號別期初/進/出/期末帳</span><span lang="en">Route: /StockLedger &nbsp;|&nbsp; Opening / in / out / closing ledger by item</span></div>
+    </div>
+
+    <p><span lang="zh">以品號為主體的庫存帳：期初量 → 各筆異動 → 期末量與金額，逐筆滾動餘額，供對帳與稽核。</span><span lang="en">A stock ledger per product: opening quantity → each movement → closing quantity and value, with a running balance for reconciliation and audit.</span></p>
+    <img class="screen-shot" src="img/stock-ledger.png" data-src-en="img/en/stock-ledger.png" alt="庫存分類帳畫面截圖" data-alt-en="Inventory ledger screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">庫存分類帳畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Inventory ledger screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">大區間查詢會自動截斷明細筆數，合計仍以 SQL 聚合保持正確。</span><span lang="en">A query over a wide range truncates the detail rows automatically; the totals stay correct because they are aggregated in SQL.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">異動明細帳一次只看一個料件</span><span lang="en">The movement ledger shows one item at a time</span></td></tr>
+        <tr><td><span lang="zh">起始日期 / 結束日期</span><span lang="en">Date from / Date to</span></td><td><span lang="zh">帳頁涵蓋的期間</span><span lang="en">Period covered by the ledger page</span></td></tr>
+        <tr><td><span lang="zh">儲位 / 批號</span><span lang="en">Location / Lot</span></td><td><span lang="zh">只看特定儲位或批次的進出</span><span lang="en">Shows the movements of one location or lot only</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">清單欄位</span><span lang="en">List columns</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">日期</span><span lang="en">Date</span></td><td><span lang="zh">異動發生日</span><span lang="en">Date the movement occurred</span></td></tr>
+        <tr><td><span lang="zh">摘要 / 來源</span><span lang="en">Summary / Source</span></td><td><span lang="zh">異動的業務說明與來源單據，可回溯原始作業</span><span lang="en">Description and source document of the movement, for tracing back to the original operation</span></td></tr>
+        <tr><td><span lang="zh">入庫數量</span><span lang="en">Receipt quantity</span></td><td><span lang="zh">該筆為入庫時的數量，出庫列為空白</span><span lang="en">Quantity when the row is a receipt; blank on issue rows</span></td></tr>
+        <tr><td><span lang="zh">出庫數量</span><span lang="en">Issue quantity</span></td><td><span lang="zh">該筆為出庫時的數量，入庫列為空白</span><span lang="en">Quantity when the row is an issue; blank on receipt rows</span></td></tr>
+        <tr><td><span lang="zh">結存數量</span><span lang="en">Balance</span></td><td><span lang="zh">逐筆累計後的餘額，供對帳使用</span><span lang="en">Running balance after each row, for reconciliation</span></td></tr>
+        <tr><td><span lang="zh">經辦人</span><span lang="en">Handler</span></td><td><span lang="zh">執行該次異動的使用者</span><span lang="en">User who performed the movement</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">該筆異動的補充說明</span><span lang="en">Notes for the movement</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="stock-movement.html"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Modules/MFG/Services/IWorkOrderCostFinalizationService.cs",
+  "sourceHash": "a1131955ae839fe952f906e6a22fc2675515911369779f9ad4dfddf13e97b1a7",
+  "entries": [
+    {
+      "slug": "code-mfg-iworkordercostfinalizationservice-f6dff573",
+      "lang": "zh",
+      "headingPath": "生產製造 › 工單成本月末結算",
+      "text": "工單成本結算規則說明｜系統在月結時會將當期初步計算的成本，固定為最終成本，以防止關帳後再被報工或重工等動作修改，且此流程不會重新計算費率。",
+      "approved": true
+    },
+    {
+      "slug": "code-mfg-iworkordercostfinalizationservice-c47a59de",
+      "lang": "zh",
+      "headingPath": "生產製造 › 回傳鎖定筆數",
+      "text": "工單成本轉為最終狀態的規則說明｜若所指定的會計期間已經關帳，系統將無法執行此操作。成功完成後，系統會回傳已鎖定的筆數。",
+      "approved": true
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Models.InventoryCountSheet>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool canCreate   = ViewBag.CanCreate == true;
+    bool canUpdate   = ViewBag.CanUpdate == true;
+    bool canPrint    = ViewBag.CanPrint  == true;
+    bool hasSearched = ViewBag.Searched  as bool? ?? false;
+    string sheetStatus = ViewBag.SheetStatus as string ?? "";
+    string countMode   = ViewBag.CountMode   as string ?? "";
+    string fromDate    = ViewBag.FromDate    as string ?? "";
+    string toDate      = ViewBag.ToDate      as string ?? "";
+    var userNames = ViewBag.UserNames as Dictionary<string, string> ?? new();
+    string sortOrder   = ViewBag.CurrentSort as string ?? "date_desc";
+    int    pageSize    = ViewBag.CurrentPageSize as int? ?? 20;
+}
+
+<div class="container-fluid py-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h4 mb-0"><i class="bi bi-clipboard2-check me-2"></i>@Localizer["PageTitle"]</h1>
+        @if (canCreate)
+        {
+            <button class="btn btn-primary btn-sm"
+                    data-url="@Url.Action("Create")" data-label="@Localizer["CreateSheet"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus me-1"></i>@Localizer["CreateSheet"]
+            </button>
+        }
+    </div>
+
+    <!-- 查詢列 -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body py-2">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["SheetStatus"]</label>
+                    <select name="sheetStatus" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllStatus"]</option>
+                        @foreach (var s in new[] { "Counting", "Closing", "Closed", "Void" })
+                        { <option value="@s" selected="@(sheetStatus == s)">@Localizer[s]</option> }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["CountMode"]</label>
+                    <select name="countMode" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllMode"]</option>
+                        <option value="WithSheet"    selected="@(countMode == "WithSheet")">@Localizer["WithSheet"]</option>
+                        <option value="WithoutSheet" selected="@(countMode == "WithoutSheet")">@Localizer["WithoutSheet"]</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["FromDate"]</label>
+                    <input type="date" name="fromDate" class="form-control form-control-sm" value="@fromDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ToDate"]</label>
+                    <input type="date" name="toDate" class="form-control form-control-sm" value="@toDate" />
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["SheetId"]</th>
+                                <th>@Localizer["CountMode"]</th>
+                                <th>@Localizer["SheetStatus"]</th>
+                                <th>@Localizer["Range"]</th>
+                                <th>@Localizer["SnapshotAt"]</th>
+                                <th>@Localizer["CreatedBy"]</th>
+                                <th>
+                                    <a asp-action="Index" asp-route-searched="true"
+                                       asp-route-sheetStatus="@sheetStatus" asp-route-countMode="@countMode"
+                                       asp-route-fromDate="@fromDate" asp-route-toDate="@toDate"
+                                       asp-route-sortOrder="@ViewBag.DateSort" class="text-decoration-none text-dark">
+                                        @Localizer["CreatedAt"]
+                                        @if (sortOrder == "date_asc") { <i class="bi bi-caret-up-fill"></i> }
+                                        else { <i class="bi bi-caret-down-fill"></i> }
+                                    </a>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model)
+                            {
+                                var statusBadge = s.SheetStatus switch {
+                                    "Counting" => "bg-primary",
+                                    "Closing"  => "bg-warning text-dark",
+                                    "Closed"   => "bg-success",
+                                    "Void"     => "bg-dark",
+                                    _          => "bg-secondary"
+                                };
+                                var detailUrl = Url.Action("Details", new { id = s.SheetId });
+                                var editUrl   = Url.Action("Edit",    new { id = s.SheetId });
+                                var itemsUrl  = Url.Action("CountItems", new { id = s.SheetId });
+                                <tr>
+                                    <td class="font-monospace fw-semibold">@s.SheetId</td>
+                                    <td><span class="badge bg-info text-dark">@Localizer[s.CountMode]</span></td>
+                                    <td><span class="badge @statusBadge">@Localizer[s.SheetStatus]</span></td>
+                                    <td class="small text-muted">
+                                        @(s.WhCodeFrom ?? "─") ～ @(s.WhCodeTo ?? "─")
+                                    </td>
+                                    <td class="small">@(s.SnapshotAt?.ToString("yyyy-MM-dd HH:mm") ?? "—")</td>
+                                    <td class="small">@(s.CreatedBy != null && userNames.TryGetValue(s.CreatedBy, out var cby) ? cby : s.CreatedBy ?? "—")</td>
+                                    <td class="small text-muted">@s.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                    <td class="text-nowrap">
+                                        @await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = s.SheetId }))
+                                        <a asp-action="CountItems" asp-route-id="@s.SheetId"
+                                           class="btn btn-outline-primary btn-sm py-0 me-1">
+                                            <i class="bi bi-list-check"></i> @Localizer["CountItems"]
+                                        </a>
+                                        @if (canUpdate && s.SheetStatus == "Counting")
+                                        {
+                                            <button class="btn btn-outline-warning btn-sm py-0 me-1"
+                                                    data-url="@editUrl" data-label="@s.SheetId"
+                                                    data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                        }
+                                        <button class="btn btn-outline-secondary btn-sm py-0"
+                                                data-url="@detailUrl" data-label="@s.SheetId"
+                                                data-action="openPanel"><i class="bi bi-eye"></i> @Localizer["View"]</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model,
+            new ViewDataDictionary(ViewData) {
+                ["action"] = "Index",
+                ["routeValues"] = new { searched = true, sheetStatus, countMode, fromDate, toDate, sortOrder, pageSize }
+            })
+    }
+</div>
+
+<!-- Side Panel -->
+<div class="offcanvas offcanvas-end u-min-width-560px u-max-width-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

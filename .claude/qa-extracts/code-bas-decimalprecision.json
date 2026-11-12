@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Modules/BAS/Services/DecimalPrecision.cs",
+  "sourceHash": "5946d750d8c70201e057560b9ab0f599ca21bf0fd07b913a89ee45485f549e18",
+  "entries": [
+    {
+      "slug": "code-bas-decimalprecision-ab06fa29",
+      "lang": "zh",
+      "headingPath": "基本資料 › 全系統可儲存的小數位數上限",
+      "text": "小數位數的儲存限制說明｜系統所有欄位在資料庫中是以最多保留四位小數點來儲存，因此無論主檔設定了多少位的小數位數，實際輸入的值都會被限制為最多四位小數。",
+      "approved": true
+    },
+    {
+      "slug": "code-bas-decimalprecision-648b0cf9",
+      "lang": "zh",
+      "headingPath": "基本資料 › **交易量與金額**——使用者輸入或由其累加而來，寫入前都經",
+      "text": "欄位數值精確度與適用範圍｜交易量和金額的資料會經過四捨五入到小數點後四位再寫入系統；單位比率、工時或匯率等計算出來的值，其精度為六位小數，且這些值不受單位的原始小數位數限制。稅率則以小數點後四位儲存。",
+      "approved": true
+    }
+  ]
+}

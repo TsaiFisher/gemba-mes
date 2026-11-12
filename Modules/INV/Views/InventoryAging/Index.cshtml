@@ -1,0 +1,162 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Modules.INV.ViewModels.InventoryAgingRowVm>
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched   = ViewBag.Searched as bool? ?? false;
+    bool   canPrint      = ViewBag.CanPrint == true;
+    string searchProduct = ViewBag.SearchProduct as string ?? "";
+    var    productOptions = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    bool   tooMany       = ViewBag.TooMany == true;
+    int    scanLimit     = ViewBag.ScanLimit as int? ?? 0;
+
+    var rows = Model ?? new List<SmartFactory.MES.Modules.INV.ViewModels.InventoryAgingRowVm>();
+    decimal totalValue = rows.Sum(r => r.InventoryValue);
+    int     totalCount = rows.Sum(r => r.ItemCount);
+    // 庫齡 91 天以上（後三桶）視為積壓警示
+    var agedRows = rows.Where(r => r.LowerBoundDays >= 91).ToList();
+    decimal agedValue = agedRows.Sum(r => r.InventoryValue);
+    decimal agedPct   = totalValue == 0 ? 0 : Math.Round(agedValue / totalValue * 100, 1);
+    bool hasData = rows.Any(r => r.ItemCount > 0);
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-hourglass-split me-2 text-secondary"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && hasSearched && hasData)
+        {
+            <a asp-action="Export" asp-route-searchProduct="@searchProduct"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-4">
+                    <label class="form-label small fw-semibold">@Localizer["Product"]</label>
+                    <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["Product"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(searchProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (tooMany)
+    {
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            @string.Format(Localizer["TooMany"].Value, scanLimit)
+        </div>
+    }
+    else if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (!hasData)
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 bg-primary text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["TotalInventoryValue"]</div>
+                    <div class="fs-5 fw-bold">@totalValue.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-secondary text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["TotalItemCount"]</div>
+                    <div class="fs-5 fw-bold">@totalCount</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-danger text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["AgedValue"]</div>
+                    <div class="fs-5 fw-bold">@agedValue.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-warning text-dark shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["AgedValuePercent"]</div>
+                    <div class="fs-5 fw-bold">@agedPct.ToString("N1")%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Localizer["AgeBucket"]</th>
+                        <th class="text-center">@Localizer["ItemCount"]</th>
+                        <th class="text-end">@Localizer["InventoryValue"]</th>
+                        <th class="text-end u-width-30pct">@Localizer["ValuePercent"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                @foreach (var row in paged)
+                {
+                    var aged = row.LowerBoundDays >= 91;
+                    <tr>
+                        <td><strong class="@(aged ? "text-danger" : "")">@row.BucketLabel</strong></td>
+                        <td class="text-center">@row.ItemCount</td>
+                        <td class="text-end">@row.InventoryValue.ToString(moneyFmt)</td>
+                        <td class="text-end">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="progress flex-grow-1 u-height-8px">
+                                    <div class="progress-bar @(aged ? "bg-danger" : "bg-info")"
+                                         role="progressbar" data-pct-width="@row.ValuePercent.ToString("0.##")"></div>
+                                </div>
+                                <span class="u-min-width-3p5rem">@row.ValuePercent.ToString("N1")%</span>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot class="table-secondary">
+                    <tr>
+                        <td class="fw-bold">@Localizer["Total"]</td>
+                        <td class="text-center fw-bold">@totalCount</td>
+                        <td class="text-end fw-bold">@totalValue.ToString(moneyFmt)</td>
+                        <td class="text-end fw-bold">100.0%</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    @await Html.PartialAsync("_Pagination", paged)
+    }
+</div>

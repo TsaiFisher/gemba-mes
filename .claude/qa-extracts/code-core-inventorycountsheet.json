@@ -1,0 +1,27 @@
+{
+  "sourcePath": "Models/InventoryCountSheet.cs",
+  "sourceHash": "94300284ff712d86195ea41540a3d986e57baa2df22423549ac15e3f197f4549",
+  "entries": [
+    {
+      "slug": "code-core-inventorycountsheet-06842edf",
+      "lang": "zh",
+      "headingPath": "系統共用 › 盤點清冊主檔",
+      "text": "盤點清冊的建立方式說明｜此功能提供兩種建立清冊的方式，一種是電腦根據預設範圍一次性產生明細清冊，另一種是透過手機邊掃描邊建檔。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-inventorycountsheet-476b9d7b",
+      "lang": "zh",
+      "headingPath": "系統共用 › 結帳時產生的盤盈虧調整單號",
+      "text": "盤盈虧調整單號的生成規則｜結帳時產生的盤盈虧調整單號是獨一無二的，一張清冊只會產生一個單號。如果系統狀態被改回「盤點中」，進行第二次結帳操作時，系統會另採一個新的單號來處理，這使得原本依賴行為判斷的防重複機制失效，可能導致同批差異被扣除兩次庫存。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-inventorycountsheet-d8f36b0c",
+      "lang": "zh",
+      "headingPath": "系統共用 › 樂觀並發控制",
+      "text": "資料一致性控制機制說明｜此系統會使用一個特殊的欄位來確保當多個使用者同時對同一筆單據進行過帳或盤點調整時，不會發生重複的處理。",
+      "approved": true
+    }
+  ]
+}

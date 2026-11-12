@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>月結作業</value></data>
+  <data name="PeriodId" xml:space="preserve"><value>期間</value></data>
+  <data name="Step" xml:space="preserve"><value>步驟</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="CompletedAt" xml:space="preserve"><value>完成時間</value></data>
+  <data name="CompletedBy" xml:space="preserve"><value>執行人</value></data>
+  <data name="Notes" xml:space="preserve"><value>備註</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="Init" xml:space="preserve"><value>初始化清單</value></data>
+  <data name="Complete" xml:space="preserve"><value>完成</value></data>
+  <data name="RunEclBatch" xml:space="preserve"><value>執行 ECL</value></data>
+  <data name="RunBatch" xml:space="preserve"><value>執行批次</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="StepName" xml:space="preserve"><value>作業項目</value></data>
+  <data name="SearchFirst" xml:space="preserve"><value>請輸入期間後按查詢</value></data>
+  <data name="NoData" xml:space="preserve"><value>本期間尚未初始化月結清單，請點擊「初始化清單」</value></data>
+  <data name="Skip" xml:space="preserve"><value>略過</value></data>
+  <data name="CancelClosing" xml:space="preserve"><value>取消月結</value></data>
+  <data name="FxRatesTitle" xml:space="preserve"><value>輸入期末匯率</value></data>
+  <data name="FxRatesHint" xml:space="preserve"><value>格式：每行一個幣別，如 USD:33.5（本位幣無需輸入）</value></data>
+  <data name="DeptCostTitle" xml:space="preserve"><value>輸入部門實際費用</value></data>
+  <data name="DeptCostHint" xml:space="preserve"><value>格式：每行「工作中心:實際人工:實際製費」，如 WC01:120000:60000。這是實際費率的分子，未輸入則無從重估</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="ConfirmRun" xml:space="preserve"><value>確認執行</value></data>
+  <data name="Step1Name" xml:space="preserve"><value>確認所有進貨/出貨已過帳</value></data>
+  <data name="Step2Name" xml:space="preserve"><value>盤點差異調整完成</value></data>
+  <data name="Step3Name" xml:space="preserve"><value>完成 WIP 評估快照</value></data>
+  <data name="Step4Name" xml:space="preserve"><value>計算工單實際成本</value></data>
+  <data name="Step5Name" xml:space="preserve"><value>更新 AVCO 均價</value></data>
+  <data name="Step6Name" xml:space="preserve"><value>應收/應付期末匯率重評（IAS 21）</value></data>
+  <data name="Step7Name" xml:space="preserve"><value>IAS 2 NRV 存貨減損評估</value></data>
+  <data name="Step8Name" xml:space="preserve"><value>封鎖庫存異動（PeriodStatus = Closing）</value></data>
+  <data name="Step9Name" xml:space="preserve"><value>產生期末調整分錄</value></data>
+  <data name="Step10Name" xml:space="preserve"><value>關帳（PeriodStatus = Closed）</value></data>
+  <data name="Note_WoFinalized" xml:space="preserve"><value>已鎖定 {0} 筆工單成本為 Final。</value></data>
+  <data name="Note_Skipped" xml:space="preserve"><value>[跳過] {0}</value></data>
+  <data name="Note_FxNone" xml:space="preserve"><value>外幣重評：本期沒有重評結果，未入帳</value></data>
+  <data name="Note_FxNoDiff" xml:space="preserve"><value>外幣重評：已入帳，無差額</value></data>
+  <data name="Note_FxPosted" xml:space="preserve"><value>外幣重評 {0}（次期初迴轉 {1}）</value></data>
+  <data name="Note_NrvNone" xml:space="preserve"><value>NRV 存貨跌價：本期沒有評估結果，未入帳</value></data>
+  <data name="Note_NrvNoDiff" xml:space="preserve"><value>NRV 存貨跌價：備抵已等於評估額 {0}，無差額</value></data>
+  <data name="Note_NrvIncrease" xml:space="preserve"><value>NRV 存貨跌價 {0}（增提 {1}）</value></data>
+  <data name="Note_NrvReverse" xml:space="preserve"><value>NRV 存貨跌價 {0}（迴轉 {1}）</value></data>
+  <data name="Note_EclNone" xml:space="preserve"><value>ECL 備抵損失：本期沒有評估結果，未入帳</value></data>
+  <data name="Note_EclNoDiff" xml:space="preserve"><value>ECL 備抵損失：備抵已等於評估額 {0}，無差額</value></data>
+  <data name="Note_EclIncrease" xml:space="preserve"><value>ECL 備抵損失 {0}（增提 {1}）</value></data>
+  <data name="Note_EclReverse" xml:space="preserve"><value>ECL 備抵損失 {0}（迴轉 {1}）</value></data>
+</root>

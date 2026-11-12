@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <data name="PageTitle"><value>生產準備看板</value></data>
+  <data name="PrepDate"><value>準備日期</value></data>
+  <data name="WorkCenter"><value>工作中心</value></data>
+  <data name="AllWorkCenters"><value>全部工作中心</value></data>
+  <data name="Refresh"><value>重新整理</value></data>
+  <data name="LegendConflict"><value>模具衝突</value></data>
+  <data name="LegendMatRisk"><value>待料風險</value></data>
+  <data name="LegendLate"><value>預測延遲</value></data>
+  <data name="LegendMaterialReady"><value>備料已就緒</value></data>
+  <data name="LegendMaterialNotReady"><value>尚未備料</value></data>
+  <data name="SummaryTotal"><value>總派工數</value></data>
+  <data name="SummaryConflict"><value>模具衝突</value></data>
+  <data name="SummaryMatRisk"><value>待料風險</value></data>
+  <data name="SummarySetupMin"><value>換模分鐘數（合計）</value></data>
+  <data name="Loading"><value>載入中...</value></data>
+  <data name="NoData"><value>該日無已排程派工</value></data>
+  <data name="LastRefresh"><value>上次更新：</value></data>
+  <data name="LoadFailed"><value>載入失敗，請重試</value></data>
+  <data name="FlagConflict"><value>模具衝突</value></data>
+  <data name="FlagLate"><value>延遲</value></data>
+  <data name="FlagMatRisk"><value>待料</value></data>
+  <data name="MatReady"><value>已備料</value></data>
+  <data name="MatPartial"><value>備料中</value></data>
+  <data name="MatNotReady"><value>未備料</value></data>
+  <data name="Unassigned"><value>（未指派機台）</value></data>
+  <data name="FlagCarryOver" xml:space="preserve"><value>延續（前一天開始）</value></data>
+</root>

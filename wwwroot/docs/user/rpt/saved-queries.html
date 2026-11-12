@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Saved Queries — RPT User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>常用查詢 — 管理報表使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">RPT 目錄</span><span lang="en">RPT contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">跨報表功能</span><span lang="en">Across reports</span></div>
+    <a href="saved-queries.html" class="nav-link active"><span lang="zh">常用查詢</span><span lang="en">Saved Queries</span></a>
+    <a href="report-schedule.html" class="nav-link"><span lang="zh">報表排程</span><span lang="en">Report Schedules</span></a>
+    <a href="report-inbox.html" class="nav-link"><span lang="zh">報表收件匣</span><span lang="en">Report Inbox</span></a>
+    <a href="report-run-history.html" class="nav-link"><span lang="zh">排程執行紀錄</span><span lang="en">Schedule Run History</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-bookmark-star me-2 text-primary"></i><span lang="zh">常用查詢</span><span lang="en">Saved Queries</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">把一組查詢條件存起來，下次一鍵重跑</span><span lang="en">Store a set of query criteria and re-run them with one click</span></div>
+    </div>
+
+    <p><span lang="zh">報表畫面的查詢列上方若出現「<strong>我的常用查詢</strong>」與「<strong>儲存此查詢</strong>」，表示這張報表支援常用查詢。它解決的是「每次都要重設一次同樣的條件」——存一次之後，下拉選它就會帶著條件重新查一次。</span><span lang="en">When "<strong>My saved queries</strong>" and "<strong>Save this query</strong>" appear above a report's search bar, that report supports saved queries. They solve the chore of re-entering the same criteria every time: save once, then pick it from the dropdown to re-run with those criteria.</span></p>
+
+    <h2 id="usage"><i class="bi bi-play-circle me-2 text-primary"></i><span lang="zh">怎麼用</span><span lang="en">How to use it</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在報表畫面先把查詢條件設好並查詢一次，確認結果是你要的。</span><span lang="en">Set the criteria on the report and run the search once, to confirm the result is what you want.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「儲存此查詢」，取一個看得懂的名字（例如「A 廠上月逾期採購」），並<strong>選一個期間</strong>（見下方說明）。</span><span lang="en">Click "Save this query", give it a name you will recognise (for example "Plant A overdue purchases last month"), and <strong>pick a period</strong> (see below).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">之後從「我的常用查詢」下拉選取即可重跑。不需要的用下拉裡的刪除鈕移除。</span><span lang="en">From then on, pick it from the "My saved queries" dropdown to re-run. Remove ones you no longer need with the delete button in the dropdown.</span></div></div>
+
+    <h2 id="period"><i class="bi bi-calendar-range me-2 text-primary"></i><span lang="zh">期間存的是「上個月」，不是「2026-08-01 ~ 2026-08-31」</span><span lang="en">The period is stored as "last month", not as a fixed date range</span></h2>
+
+    <div class="note-box">
+      <div class="fw-semibold mb-1"><i class="bi bi-arrow-repeat me-1"></i><span lang="zh">這是刻意的設計，也是常用查詢唯一的必填欄位</span><span lang="en">This is deliberate, and it is the one field you must fill in</span></div>
+      <p class="mb-0"><span lang="zh">吃期間的報表在存檔時<strong>一定要選一個相對期間</strong>（今天／上週／上個月／本季…）。存成固定日期的「上月銷售排行」，下個月點開還是上個月的資料——那正好是常用查詢的反面。選了相對期間，每次點開都會重新換算成當下的那一段。</span><span lang="en">Reports that take a period <strong>require a relative period</strong> when saved (today, last week, last month, this quarter…). A "last month's sales ranking" stored as fixed dates would still show that same month when opened next month — the opposite of what a saved query is for. With a relative period it is recalculated each time you open it.</span></p>
+    </div>
+
+    <div class="tip-box">
+      <div class="fw-semibold mb-1"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh">有些報表的期間選項比較少，那是刻意收窄的</span><span lang="en">Some reports offer fewer period options, deliberately</span></div>
+      <ul class="mb-0">
+        <li><span lang="zh"><strong>會計／財報類</strong>（資產負債表、損益表、試算表）只給「本會計期間／上一會計期間」。會計期間可以自訂起訖、與日曆月不同；存成「上月」雖然也跑得動，但在自訂期間的廠別，它不會是你以為的那一期。</span><span lang="en"><strong>Accounting and financial statements</strong> (balance sheet, profit and loss, trial balance) offer only "this accounting period / last accounting period". Accounting periods can have custom start and end dates that differ from calendar months, so "last month" — although it would run — would not be the period you had in mind at a plant using custom periods.</span></li>
+        <li><span lang="zh"><strong>年度型</strong>（採購金額分析）只給「今年／去年」。這張畫面選的是一個年度、看 12 個月，存成「上月」會靜靜變成一整年。</span><span lang="en"><strong>Annual reports</strong> (purchase amount analysis) offer only "this year / last year". That screen selects a year and shows twelve months, so "last month" would quietly widen into a whole year.</span></li>
+      </ul>
+    </div>
+
+    <h2 id="scope"><i class="bi bi-shield-check me-2 text-primary"></i><span lang="zh">權限與範圍</span><span lang="en">Permissions and scope</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">項目</span><span lang="en">Item</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">誰看得到</span><span lang="en">Who can see them</span></td><td><span lang="zh">常用查詢是<strong>個人的</strong>，只有自己看得到，不會分享給同部門或同角色</span><span lang="en">Saved queries are <strong>personal</strong>: only you see yours; they are not shared with your department or role</span></td></tr>
+        <tr><td><span lang="zh">權限怎麼算</span><span lang="en">How permission is checked</span></td><td><span lang="zh">每次點開都以<strong>當下的你</strong>重新判定權限。權限被調整後，舊的常用查詢會擋下來並顯示原因，不會沿用存檔當時的權限</span><span lang="en">Permission is re-evaluated as <strong>you are now</strong> every time you open one. If your permissions change, an old saved query is blocked with a reason rather than running under the permissions it was saved with</span></td></tr>
+        <tr><td><span lang="zh">存了哪些條件</span><span lang="en">Which criteria are stored</span></td><td><span lang="zh">只存該報表查詢列上看得到的欄位。畫面表達不了的條件不會被存進去，存檔時會告訴你丟掉了哪些</span><span lang="en">Only the fields visible on that report's search bar. Criteria the screen cannot express are not stored, and you are told which were dropped when you save</span></td></tr>
+        <tr><td><span lang="zh">廠別</span><span lang="en">Plant</span></td><td><span lang="zh">不存在常用查詢裡。重跑時一律用你<strong>當下切換的廠別</strong>，所以同一張常用查詢在不同廠會查出該廠的資料</span><span lang="en">Not stored. A re-run always uses the plant you are <strong>currently switched to</strong>, so the same saved query returns that plant's data</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="coverage"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">哪些報表有</span><span lang="en">Which reports have it</span></h2>
+    <p><span lang="zh">支援常用查詢的報表目前有 22 張，涵蓋庫存、訂單、採購、委外、製造、會計與財報。判斷方法很直接：<strong>查詢列上方有沒有那兩顆按鈕</strong>——沒有就是這張報表還沒納入，不是你的權限問題。</span><span lang="en">Twenty-two reports currently support saved queries, across inventory, sales, purchasing, outsourcing, manufacturing, accounting and financial statements. Telling them apart is straightforward: <strong>look for the two buttons above the search bar</strong>. If they are absent the report has not been included yet — it is not a permission problem.</span></p>
+
+    <div class="note-box">
+      <div class="fw-semibold mb-1"><i class="bi bi-calendar-check me-1"></i><span lang="zh">存成常用查詢之後，才能加排程</span><span lang="en">A saved query comes first, then a schedule</span></div>
+      <p class="mb-0"><span lang="zh">要讓報表定期自動產生並寄給指定收件人，流程是<strong>先存成常用查詢，再到「報表排程」加排程</strong>。沒有「直接把這次查詢變成排程」的捷徑，這是刻意的——排程會反覆執行，值得先確認一次條件是對的。</span><span lang="en">To have a report produced automatically and sent to recipients, the flow is <strong>save it as a saved query first, then add a schedule under "Report Schedules"</strong>. There is deliberately no shortcut that turns the current search straight into a schedule: a schedule runs again and again, so it is worth confirming the criteria once first.</span></p>
+    </div>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="report-schedule.html"><span lang="zh">報表排程</span><span lang="en">Report schedules</span></a>、<a href="report-inbox.html"><span lang="zh">報表收件匣</span><span lang="en">Report inbox</span></a>、<a href="../sys/qa-assistant.html"><span lang="zh">手冊問答助理</span><span lang="en">Manual Q&amp;A assistant</span></a></p>
+
+  </main>
+</div>
+</body>
+</html>

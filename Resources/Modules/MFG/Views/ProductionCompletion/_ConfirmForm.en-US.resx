@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="WorkOrderId" xml:space="preserve"><value>Work Order</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="QtyDone" xml:space="preserve"><value>Done Qty</value></data>
+  <data name="WhCode" xml:space="preserve"><value>Target Warehouse</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>Target Location</value></data>
+  <data name="LocationCodePlaceholder" xml:space="preserve"><value>Enter location code</value></data>
+  <data name="LotNo" xml:space="preserve"><value>Lot No.</value></data>
+  <data name="LotNoPlaceholder" xml:space="preserve"><value>Enter lot number (optional)</value></data>
+  <data name="BackflushNote" xml:space="preserve"><value>Backflush materials will be auto-deducted and actual material cost will be updated.</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm Putaway</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="PackByBox" xml:space="preserve"><value>Receive by box (one lot per box)</value></data>
+  <data name="PackByBoxHint" xml:space="preserve"><value>The completed quantity is split into boxes of the quantity below. Each box gets its own lot: the lot prefix plus the box number (e.g. PREFIX-01, PREFIX-02); the last box holds the remainder. If the lot is blank, the work order number is used as the prefix. After receipt you can print box labels; the QR code on each label is its lot.</value></data>
+  <data name="Container" xml:space="preserve"><value>Container</value></data>
+  <data name="BoxQty" xml:space="preserve"><value>Quantity per box</value></data>
+  <data name="BoxPreview" xml:space="preserve"><value>{0} boxes; last box {1}</value></data>
+  <data name="LotPrefix" xml:space="preserve"><value>Lot prefix</value></data>
+  <data name="CompletedTitle" xml:space="preserve"><value>Completion received</value></data>
+  <data name="PrintBoxLabels" xml:space="preserve"><value>Print box labels</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="BoxUnits" xml:space="preserve"><value>Box numbers (optional)</value></data>
+  <data name="BoxUnitsHint" xml:space="preserve"><value>If your boxes carry fixed QR labels, scan the boxes to fill in order (one per line; the count must equal the number of boxes). On receipt, box 1's lot is linked to the first box number, and so on. Leave blank to skip linking boxes.</value></data>
+  <data name="FillEmptyBoxes" xml:space="preserve"><value>Fill in empty boxes</value></data>
+  <data name="EmptyBoxesShort" xml:space="preserve"><value>Only {0} empty boxes were found but {1} are needed. Create more boxes or change the quantity per box.</value></data>
+</root>

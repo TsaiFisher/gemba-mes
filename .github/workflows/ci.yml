@@ -1,0 +1,52 @@
+# Gemba MES — 公開 CI
+#
+# 刻意只做「建置 + 單元測試」，理由是這一段**完全不需要授權檔**：
+# 單元測試不啟動應用程式，所以不會經過 Program.cs 的授權閘門。
+# （實測：過濾後的發布樹在沒有 license.json 的情況下 4,442 則全綠。）
+#
+# 整合測試與 UI 測試會以 WebApplicationFactory 啟動整個 app，那需要一份綁定
+# CI 指紋的授權。把那份授權放進公開 repo 有兩個選擇，兩個都不行：
+#   - 存成 repo secret → fork 來的 PR 拿不到，等於對外部貢獻者永遠是紅的
+#   - 提交進版控       → 連同 workflow 裡的錨定碼一起公開，等於發布一把萬用鑰匙
+# 所以那兩層留在私有倉庫跑。公開 CI 的職責是「這個 PR 有沒有把東西改壞」，
+# 那 4,442 則單元測試答得了。
+#
+# public repo 的 GitHub Actions 用標準 runner 是免費的。
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # fork PR 不需要、也不該拿到寫入權杖
+          persist-credentials: false
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore SmartFactory.MES.csproj
+
+      - name: Build
+        run: dotnet build SmartFactory.MES.csproj --no-restore --configuration Release
+
+      - name: Unit tests
+        # 含建置期一致性框架（ConventionTests，R0–R14 + Cx）。
+        # 違反專案慣例會在這裡紅，而不是等到執行時才出現「功能看起來好了、
+        # 實際上沒接上」那種症狀。
+        run: dotnet test SmartFactory.MES.Tests --configuration Release --verbosity normal

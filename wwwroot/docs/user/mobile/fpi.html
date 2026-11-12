@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="First Article (FPI) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>首件檢查 FPI — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link active"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clipboard2-check me-2 text-primary"></i><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/mfg/fpi.html &nbsp;|&nbsp; 備料完成後、開工前的首件驗證</span><span lang="en">Path: /mobile/mfg/fpi.html &nbsp;|&nbsp; First-piece verification after setup and before production</span></div>
+    </div>
+
+    <p><span lang="zh">列出待首件的派工。首件檢查合格後派工才可開工；不合格則需重新調機再驗。只有工序設定了需要首件檢查的派工才會出現在這裡——清單空白通常代表目前沒有這類派工，不是畫面異常。</span><span lang="en">Lists the dispatches awaiting first-piece inspection. A dispatch may only start once FPI passes; a failure means re-adjusting the machine and inspecting again. Only dispatches whose operation is set to require FPI appear here — an empty list usually means there are none right now, not that the screen is broken.</span></p>
+
+    <img class="screen-shot" src="img/fpi.png" data-src-en="img/en/fpi.png" alt="首件檢查畫面截圖" data-alt-en="First article screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">首件檢查畫面（兩張待首件派工，狀態徽章為「待首件」）</span><span lang="en">First article screen (two dispatches awaiting FPI, badged "Pending FPI")</span></div>
+
+    <h2 id="steps"><i class="bi bi-list-ol me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">用上方查詢列輸入工單或機台縮小範圍（選填）。</span><span lang="en">Narrow the list by typing a work order or machine in the search bar (optional).</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點該派工的<strong>「點擊開始首件」</strong>，進入 FPI 首件量測頁。</span><span lang="en">Tap <strong>"Start FPI"</strong> on the dispatch to open the FPI measurement screen.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">在量測頁選擇驗證等級（VL）、填入量測值與整批不良數，確認判定結果後送出。</span><span lang="en">On the measurement screen choose the verification level (VL), enter the measured values and the defect count, check the verdict and submit.</span></div></div>
+
+    <p class="text-muted small"><span lang="zh">量測頁的欄位與操作方式與製程檢驗（IPQC）相同，詳見該頁說明。</span><span lang="en">The fields and the way the measurement screen works are the same as for in-process inspection (IPQC); see that page.</span></p>
+
+    <h2 id="result"><i class="bi bi-check2-square me-2 text-primary"></i><span lang="zh">判定結果</span><span lang="en">The verdict</span></h2>
+
+    <p><span lang="zh">首件採 MIL-STD-1916 Ac=0：任一不良即判不合格。</span><span lang="en">First-piece inspection uses MIL-STD-1916 with Ac=0: any single defect fails it.</span></p>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-20pct"><span lang="zh">結果</span><span lang="en">Result</span></th><th><span lang="zh">後續</span><span lang="en">What happens next</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">合格</span><span lang="en">Pass</span></td><td><span lang="zh">派工放行為「備料完成」，可以開工。提示訊息為「首件合格，可開工」。</span><span lang="en">The dispatch is released to "Ready" and work can start. The message reads that FPI passed and work may begin.</span></td></tr>
+    <tr><td><span lang="zh">不合格</span><span lang="en">Fail</span></td><td><span lang="zh">派工轉為「暫停」（原因：首件不合格），提示訊息為「首件不合格，請重新調機」。重新調機後，由品管在桌機「派工作業 → 暫停處理」恢復，派工回到「待首件」再驗一次。</span><span lang="en">The dispatch goes on hold (reason: first-piece inspection failed), and the message reads that FPI failed and the machine needs re-adjusting. After re-adjusting, QC resumes it on the desktop under Dispatch Operations → Handle hold, and the dispatch returns to "Pending FPI" to be inspected again.</span></td></tr>
+    </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh">首件不合格與製程檢驗（IPQC）不合格都會讓派工轉為「暫停」，差別在恢復後的去處：首件不合格回到「待首件」重新量測，IPQC 不合格回到「生產中」。品質原因的暫停須由具檢驗單更新權限的人員恢復。</span><span lang="en">Both a failed first-piece inspection and a failed in-process inspection (IPQC) put the dispatch on hold. The difference is where it goes when resumed: after a failed first piece it returns to "Pending FPI" to be measured again; after a failed IPQC it returns to "In Progress". A hold for a quality reason can only be resumed by someone with update permission on inspection orders.</span></div>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

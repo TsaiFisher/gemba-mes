@@ -1,0 +1,46 @@
+# R22 baseline — 既有違規清單（回補時逐行刪除）。
+# 不在此清單的新違規會讓建置失敗。
+#
+# 三類，優先序不同：
+#
+# 【一】會寫進 DB 的單據業務日／採番年月段 —— 真缺陷，應優先回補。
+#   MFG/Controllers/MrpRunController、OutsourcePurchaseOrderController、OutsourceQuotationController
+#   MFG/Services/MfgApprovalSyncContributors、QCR/Controllers/InstrumentController
+#   BAS/Controllers/SpecialDayController
+#
+# 【二】報表／看板的查詢預設區間 —— 錯一天只是預設值不理想，不影響帳。
+#   ORD 的 DeliveryRate/OrderOverdue/ReturnRate/SalesRanking、
+#   PUR 的 OutsourceProgress/PurchaseOverdue/PurchasePrice/SupplierDeliveryRate、
+#   MFG 的 MachineDowntime/MaterialSlipProgress/ProductionEfficiency/Utilization、
+#   RPT/Services/DashboardService
+#
+# 【三】結構上拿不到 IDateTimeService，需先改設計 —— 目前 won't-fix。
+#   *FormVm.cs（ViewModel 屬性初始化式無法注入服務；Create 動作已由 controller 覆寫成
+#       GetLocalDate()，此預設值僅在表單未帶該欄位時才生效）
+#   Services/IDocNumberService.cs（businessDate 為 null 時的最後防線 fallback；
+#       正確作法是呼叫端一律明確傳入業務日，而非在此推測）
+#   ACT/Services/DataAuditService.cs（背景稽核工作，無 HTTP 使用者 ⇒ IUserContext 取不到
+#       廠別時區，會靜默 fallback 台北；正確作法是依受稽核的 plantId 查 Plant.DefaultTimeZone。
+#       目前僅用於帳齡容忍值的 cutoff，差一天不改變稽核結論）
+Modules/ACT/Services/DataAuditService.cs: 業務日取自 DateOnly.FromDateTime(DateTime.UtcNow)，應改用 IDateTimeService.GetLocalDate()
+Modules/BAS/Controllers/SpecialDayController.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/FIN/ViewModels/PaymentFormVm.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/MFG/Controllers/MachineDowntimeController.cs: 業務日取自 DateTime.UtcNow.Date，應改用 IDateTimeService.GetLocalDate()
+Modules/MFG/Controllers/MaterialSlipProgressController.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/MFG/Controllers/MrpRunController.cs: 業務日取自 DateOnly.FromDateTime(DateTime.UtcNow)，應改用 IDateTimeService.GetLocalDate()
+Modules/MFG/Controllers/OutsourcePurchaseOrderController.cs: 業務日取自 DateOnly.FromDateTime(DateTime.UtcNow)，應改用 IDateTimeService.GetLocalDate()
+Modules/MFG/Controllers/OutsourceQuotationController.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/MFG/Services/MfgApprovalSyncContributors.cs: 業務日取自 DateOnly.FromDateTime(DateTime.UtcNow)，應改用 IDateTimeService.GetLocalDate()
+Modules/ORD/ViewModels/GoodsShipmentFormVm.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/ORD/ViewModels/InternalOrderFormVm.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/ORD/ViewModels/SalesOrderFormVm.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/ORD/ViewModels/SalesReturnFormVm.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/PUR/Controllers/OutsourceProgressController.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/PUR/Controllers/PurchasePriceController.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/PUR/ViewModels/GoodsReceiptFormVm.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/PUR/ViewModels/GoodsReturnFormVm.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/PUR/ViewModels/PurchaseOrderFormVm.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/PUR/ViewModels/PurchaseRequestFormVm.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/QCR/Controllers/InstrumentController.cs: 業務日取自 DateTime.Today，應改用 IDateTimeService.GetLocalDate()
+Modules/RPT/Services/DashboardService.cs: 業務日取自 DateOnly.FromDateTime(DateTime.UtcNow)，應改用 IDateTimeService.GetLocalDate()
+Services/IDocNumberService.cs: 業務日取自 DateOnly.FromDateTime(DateTime.UtcNow)，應改用 IDateTimeService.GetLocalDate()

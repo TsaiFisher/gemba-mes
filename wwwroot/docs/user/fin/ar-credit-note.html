@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Sales Credit Note — FIN User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>銷貨折讓單 — FIN 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">FIN 目錄</span><span lang="en">FIN contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">FIN 畫面</span><span lang="en">FIN screens</span></div>
+    <a href="chart-of-account.html" class="nav-link"><span lang="zh">會計科目</span><span lang="en">Chart of Accounts</span></a>
+    <a href="ap-invoice.html" class="nav-link"><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></a>
+    <a href="ar-invoice.html" class="nav-link"><span lang="zh">應收帳款</span><span lang="en">AR Invoice</span></a>
+    <a href="ar-credit-note.html" class="nav-link active"><span lang="zh">銷貨折讓單</span><span lang="en">Sales Credit Note</span></a>
+    <a href="ap-debit-note.html" class="nav-link"><span lang="zh">進貨折讓單</span><span lang="en">Purchase Debit Note</span></a>
+    <a href="ap-payment.html" class="nav-link"><span lang="zh">付款作業</span><span lang="en">AP Payment</span></a>
+    <a href="ar-receipt.html" class="nav-link"><span lang="zh">收款作業</span><span lang="en">AR Receipt</span></a>
+    <a href="bank-account.html" class="nav-link"><span lang="zh">銀行帳戶</span><span lang="en">Bank Account</span></a>
+    <a href="ap-aging.html" class="nav-link"><span lang="zh">應付帳齡分析</span><span lang="en">AP Aging</span></a>
+    <a href="ar-aging.html" class="nav-link"><span lang="zh">應收帳齡分析</span><span lang="en">AR Aging</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-arrow-return-left me-2 text-primary"></i><span lang="zh">銷貨折讓單</span><span lang="en">Sales Credit Note</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/ARCreditNote</span><span lang="en">Route: /ARCreditNote</span></div>
+    </div>
+
+    <p><span lang="zh">出貨已開立應收發票、客戶已（部分）付款之後才發生銷退時，系統不會去改那張已結清的發票，而是自動產生一張折讓單草稿。確認後沖抵原發票的未結餘額並產生反向分錄。</span><span lang="en">When a sales return happens after the AR invoice has been issued and the customer has already paid in full or in part, the system does not amend the settled invoice. It drafts a credit note instead; confirming it offsets the original invoice balance and posts the reversing journal entry.</span></p>
+    <img class="screen-shot" src="img/ar-credit-note.png" data-src-en="img/en/ar-credit-note.png" alt="銷貨折讓單畫面截圖" data-alt-en="Sales credit note screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">銷貨折讓單畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Sales credit note screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <strong><span lang="zh">這張單不能手動新增或修改。</span><span lang="en">This document cannot be created or edited by hand.</span></strong>
+      <span lang="zh">每一個數字都來自退貨單與原發票（退了哪一張發票的哪一行、退了多少、原單價多少），由退貨過帳當下自動算出。開放手鍵就會折出與退貨量對不上的金額，而那正是關帳稽核在比的東西——手鍵的折讓沖不掉稽核，只會讓帳更難對。</span>
+      <span lang="en">Every figure comes from the return document and the original invoice — which invoice line was returned, how much, and at what price — and is calculated when the return is posted. Hand-keying would produce an amount that does not match the returned quantity, which is exactly what the period-close audit compares; such a note would not clear the audit and would only make reconciliation harder.</span>
+    </div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+
+    <h2 id="confirm-and-void"><i class="bi bi-check2-circle me-2 text-primary"></i><span lang="zh">確認與作廢</span><span lang="en">Confirm and void</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">草稿狀態按「確認」：沖抵原發票的未結餘額，並產生分錄（借 銷貨收入＋借 銷項稅額／貸 應收帳款）。</span><span lang="en">Click Confirm on a draft: the original invoice balance is offset, and the journal entry is posted (debit sales revenue and output VAT, credit accounts receivable).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">按「作廢」可撤銷。已過帳者會一併回沖分錄並把沖抵金額減回去；草稿直接轉作廢。</span><span lang="en">Click Void to reverse it. A posted note has its journal entry reversed and the offset amount put back; a draft simply becomes void.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">確認之前，資料稽核的「退貨已過帳但子帳未回沖」會一直擋著關帳——那是刻意的：草稿還沒沖任何東西。</span><span lang="en">Until it is confirmed, the "return posted but subledger not reversed" audit keeps blocking the period close — deliberately, because a draft has not offset anything yet.</span></div></div>
+
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class='badge bg-warning text-dark'><span lang="zh">草稿</span><span lang="en">Draft</span></span></td><td><span lang="zh">退貨過帳時自動產生，尚未沖抵任何金額，也還沒有分錄。</span><span lang="en">Created automatically when the return is posted; nothing has been offset yet and no journal entry exists.</span></td></tr>
+        <tr><td><span class='badge bg-success'><span lang="zh">已過帳</span><span lang="en">Posted</span></span></td><td><span lang="zh">已沖抵原發票未結餘額並產生分錄。</span><span lang="en">The original invoice balance has been offset and the journal entry posted.</span></td></tr>
+        <tr><td><span class='badge bg-secondary'><span lang="zh">已作廢</span><span lang="en">Void</span></span></td><td><span lang="zh">已撤銷；若曾過帳則分錄已回沖。</span><span lang="en">Reversed; if it had been posted, the journal entry has been reversed too.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。折讓單列印含客戶名稱、幣別與匯率，以及各行原發票與項次、品號、品名、數量、單價、金額與稅額，並印稅額、總額與本幣金額。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The credit note printout shows the customer name, currency and exchange rate, and for each line the original invoice and line, product code and name, quantity, unit price, amount and tax, with tax, total and local amount.</span></p>
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">表頭</span><span lang="en">Header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">折讓單號</span><span lang="en">Note No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">客戶</span><span lang="en">Customer</span></td><td><span lang="zh">取自來源退貨單</span><span lang="en">Taken from the source return document</span></td></tr>
+        <tr><td><span lang="zh">折讓日期</span><span lang="en">Note date</span></td><td><span lang="zh">＝退貨日，決定分錄落在哪個會計期間</span><span lang="en">The return date; it decides which accounting period the journal entry falls into</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">草稿／已過帳／已作廢</span><span lang="en">Draft / posted / void</span></td></tr>
+        <tr><td><span lang="zh">來源單號</span><span lang="en">Source doc</span></td><td><span lang="zh">產生這張折讓單的退貨單號</span><span lang="en">The return document that produced this note</span></td></tr>
+        <tr><td><span lang="zh">總金額／稅額／本幣金額</span><span lang="en">Total / tax / local amount</span></td><td><span lang="zh">各明細合計；本幣金額為分錄採用的金額</span><span lang="en">Sums of the lines; the local amount is what the journal entry uses</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">明細</span><span lang="en">Lines</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">序號</span><span lang="en">Seq</span></td><td><span lang="zh">明細行序</span><span lang="en">Line seq</span></td></tr>
+        <tr><td><span lang="zh">來源發票／行號</span><span lang="en">Source invoice / line</span></td><td><span lang="zh">被折讓的那一張發票與那一行。以**行號**對應而非品號——同品號多行時品號比對會固定命中第一行，量價因此錯位</span><span lang="en">The invoice and the line being credited. Matching is by <em>line number</em>, not item code: with the same item on several lines, matching by item would always hit the first one and misalign quantity and price</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">退回的料件</span><span lang="en">The item returned</span></td></tr>
+        <tr><td><span lang="zh">數量 / 單價</span><span lang="en">Qty / Unit price</span></td><td><span lang="zh">退回數量與**原發票**的未稅單價——不是退貨單上的單價，折讓沖的是當初開出去的那筆金額</span><span lang="en">The returned quantity and the unit price <em>on the original invoice</em> — not the price on the return document, because the note offsets the amount that was originally invoiced</span></td></tr>
+        <tr><td><span lang="zh">金額 / 稅額</span><span lang="en">Amount / Tax</span></td><td><span lang="zh">數量 × 單價，以及依原發票稅率計算的稅額</span><span lang="en">Quantity × unit price, and the tax at the original invoice's rate</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="ar-invoice.html"><span lang="zh">應收帳款</span><span lang="en">AR Invoice</span></a>、<a href="../ord/sales-return.html"><span lang="zh">銷貨退回單</span><span lang="en">Sales Return</span></a>、<a href="ar-receipt.html"><span lang="zh">收款作業</span><span lang="en">AR Receipt</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">為什麼不是直接改發票金額：</span><span lang="en">Why not just amend the invoice:</span></strong>
+      <span lang="zh">發票一旦開出去並申報過，金額就不能再動——折讓在稅務上是另一張憑證，不是把原憑證改小。因此本單<strong>不會</strong>變更原發票的總金額，只累加「已折讓金額」，未結餘額＝總金額 − 已收付 − 已折讓。</span>
+      <span lang="en">Once an invoice has been issued and filed, its amount cannot change: a credit note is a separate tax document, not a reduction of the original one. This document therefore never alters the invoice total; it accumulates a credited amount, and the open balance is total minus settled minus credited.</span>
+    </div>
+
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <strong><span lang="zh">發票已全額收付後才折讓：</span><span lang="en">Credit issued after the invoice was settled in full:</span></strong>
+      <span lang="zh">未結餘額會變成負數，代表客戶多付。這筆錢會以負數出現在帳齡分析與收款畫面的發票清單，請到<a href="ar-receipt.html#credit-balance">收款作業</a>以負數核銷辦理退款或抵用下一張發票。</span>
+      <span lang="en">The open balance becomes negative, meaning the customer has overpaid. It appears as a negative amount in the aging report and in the invoice list on the AR Receipt screen; go to <a href="ar-receipt.html#credit-balance">AR Receipt</a> and enter a negative allocation to refund it or apply it to the next invoice.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

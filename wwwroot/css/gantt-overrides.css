@@ -1,0 +1,41 @@
+/* 甘特圖（timelines-chart）樣式覆蓋。
+ *
+ * 刻意獨立成一支檔案、而不是改 wwwroot/lib/timelines-chart/timelines-chart.css：
+ * 那份是上游注入樣式的手抄副本（執行期注入的 <style> 在 CSP style-src 'self' 下會被擋），
+ * 升級時要能整份重抄比對。改在那裡的話下次升版會被覆蓋掉、或是逼人逐行 diff。
+ *
+ * 載入順序：Index.cshtml 先 <link> vendored 副本，再 <link> 本檔。
+ */
+
+/* 相鄰派工 bar 之間補一條分隔線。
+ *
+ * 上游是 `.series-segment { stroke: none }`。原本的著色是把批號雜湊到 360 個色相，
+ * 同一機台上相鄰的兩張派工幾乎必然不同色，所以沒有邊框也分得開。
+ * 改成狀態著色之後，大多數 bar 都是同一個「已排程」中性色，沒有邊框會**糊成一整條**
+ * ——看起來像一張很長的派工，反而比改之前難讀。
+ *
+ * 用白色而非深色：bar 之間的縫隙本來就是白底，白色描邊視覺上等同「把兩塊切開」，
+ * 不會在圖上多出一層網格線的噪訊。
+ *
+ * 產能列的灰帶也一併有描邊——那是可接受的副作用：每段產能本來就以日／班為單位，
+ * 描邊反而讓每日邊界更清楚。
+ */
+.timelines-chart .series-segment {
+    stroke: #fff;
+    stroke-width: 1;
+}
+
+/* 甘特圖圖例的三個色塊。
+ *
+ * 這三條原本在 wwwroot/css/csp-utilities.css，但那是 Core 既有檔——放在那裡會讓
+ * 整支檔案對 Core 永久分歧，而分歧的內容是「只有 ProjectZ 的 MFG 排程頁在用的顏色」。
+ * 上送 Core 也不對：Core 沒有 MFG 模組，那三條在 Core 是死碼。
+ * 搬到本檔（ProjectZ 專屬、且只有 Schedule/Index.cshtml 會載入）之後，
+ * csp-utilities.css 與 Core 逐位元組一致，漂移歸零。
+ *
+ * 命名沿用 u-* 慣例：它們仍然是「自 inline style 外部化」的產物，
+ * CSP style-src 'self' 之下 <span style="background:…"> 會被整段擋掉。
+ */
+.u-background-4a7ba7{background:#4a7ba7 !important}
+.u-background-c5ccd4{background:#c5ccd4 !important}
+.u-color-212529{color:#212529 !important}

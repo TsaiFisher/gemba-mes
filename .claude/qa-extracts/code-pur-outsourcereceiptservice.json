@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/PUR/Services/OutsourceReceiptService.cs",
+  "sourceHash": "b80e797b4e6ab8a1d7c5f3222e068efdec262d120fee14713d54cd87ba276f00",
+  "entries": [
+    {
+      "slug": "code-pur-outsourcereceiptservice-0716e3fb",
+      "lang": "zh",
+      "headingPath": "採購 › 確認收貨一次做完廢品罰扣、庫存過帳、在途→在手",
+      "text": "收貨確認一次完成多項作業的流程說明｜在確認收貨時，系統會一次性處理廢品罰扣、庫存過帳（簡化模式）、以及將在途的數量轉為在手的狀態，並且自動產生應付發票。",
+      "approved": true,
+      "sourceSectionHash": "007e4f1863ac97a9c7cc9b91149479fc37643dcef60103d6eb3928dcb4f10ea0"
+    },
+    {
+      "slug": "code-pur-outsourcereceiptservice-4a15521f",
+      "lang": "zh",
+      "headingPath": "採購 › 未設簽核流程時",
+      "text": "簽核流程未設定時的直接核准規則｜當該單據沒有設定任何簽核流程時，系統會直接允許核准，這與其他模組提交審核的慣例一致。",
+      "approved": true,
+      "sourceSectionHash": "c5d7035969ec4708f2def217ae8325ddf47755e4eec03560079c4197ee5a5caf"
+    },
+    {
+      "slug": "code-pur-outsourcereceiptservice-c21ea00e",
+      "lang": "zh",
+      "headingPath": "採購 › 被報廢的料實體消失、價值還在存貨科目",
+      "text": "超耗扣款分錄的會計處理規則｜被廠商報廢掉的物料，其價值雖然在存貨科目中仍存在，但實際已消失，因此向廠商求償時，應使用存貨科目進行沖銷，而不是進料差異科目。此外，由於收貨過帳當下已經將全額加工費貸記到特定應付科目，所以此處的處理必須確保該科目的金額能歸零，以避免兩邊計算出不一致的差額。",
+      "approved": true,
+      "sourceSectionHash": "8583332ba87492951f6eafa1e222aa46c472dd01fd0880d449acd63725363587"
+    },
+    {
+      "slug": "code-pur-outsourcereceiptservice-297b88d4",
+      "lang": "zh",
+      "headingPath": "採購 › 後端權威重算每行金額並回傳表頭本幣合計： = 數量 × 單價",
+      "text": "明細金額計算與資料填寫規則｜明細的金額是根據數量乘以單價來推算，稅金則是將這個計算出來的金額再乘以稅率。最終的總額是這兩者相加，所有這些計算都是以交易幣為基礎的。此外，系統會將這個總額轉換成本幣，而表頭的總計則統一使用本幣進行累加，因為明細單據的貨幣別可能各不相同。",
+      "approved": true,
+      "sourceSectionHash": "d1c084d9f7f080094430e018f98e1f48f42926b4b9dd171d9e014b74b3172809"
+    }
+  ]
+}

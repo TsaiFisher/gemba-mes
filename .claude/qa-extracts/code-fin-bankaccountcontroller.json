@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/FIN/Controllers/BankAccountController.cs",
+  "sourceHash": "0c619a3e670859db286fa99bdb148330c51408459ef75ace8ca0ebf3290ebbc8",
+  "entries": [
+    {
+      "slug": "code-fin-bankaccountcontroller-bc969e54",
+      "lang": "zh",
+      "headingPath": "財務會計 › 於是「有讀取權、沒有建立權」的角色**看得到選單",
+      "text": "列表檢視只需讀取權｜列表是讀取動作，只要具備該畫面的讀取權限就能開啟，不需要建立權。選單本身也是以讀取權過濾的，兩邊採同一個判準，才不會出現「選單上看得到、點進去卻被擋下」的情況。",
+      "approved": false,
+      "sourceSectionHash": "f33256282af6ce1c434b8a3ba63655572aa26b5f13b78d1ca86d06e78191cc02"
+    },
+    {
+      "slug": "code-fin-bankaccountcontroller-cdabf779",
+      "lang": "zh",
+      "headingPath": "財務會計 › 以資料庫是否已存在該筆為準才是正確的判別",
+      "text": "主鍵判斷依據應改用資料庫狀態｜系統判斷帳戶是新增還是編輯，必須以資料庫中是否已經存在該筆記錄為準，而不是單純看使用者輸入的帳號是否為空。否則會導致新增時被誤判為編輯，進而無法成功建立新的銀行帳戶資料。",
+      "approved": true,
+      "sourceSectionHash": "0d85a05381507f4559ac38443ea73266469c95885c69f7350c5ecef3b2209245"
+    }
+  ]
+}

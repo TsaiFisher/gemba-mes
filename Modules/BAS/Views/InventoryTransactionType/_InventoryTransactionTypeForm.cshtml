@@ -1,0 +1,90 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.InventoryTransactionType
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    bool isEdit = ViewBag.IsEdit as bool? ?? false;
+}
+
+<form id="invTxTypeForm" method="post"
+      asp-action="@(isEdit ? "Edit" : "Create")"
+      asp-route-id="@(isEdit ? Model.TypeCode : null)"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+
+    <div class="p-3">
+        <div class="row g-3">
+            <div class="col-12 col-md-4">
+                <label asp-for="TypeCode" class="form-label fw-semibold">@Localizer["TypeCode"] <span class="text-danger">*</span></label>
+                @if (isEdit)
+                {
+                    <div class="form-control-plaintext fw-bold text-primary">@Model.TypeCode</div>
+                    <input type="hidden" asp-for="TypeCode" />
+                }
+                else
+                {
+                    <input asp-for="TypeCode" class="form-control" maxlength="20" />
+                    <span asp-validation-for="TypeCode" class="text-danger small"></span>
+                }
+            </div>
+            <div class="col-12 col-md-8">
+                <label asp-for="TypeName" class="form-label fw-semibold">@Localizer["TypeName"] <span class="text-danger">*</span></label>
+                <input asp-for="TypeName" class="form-control" maxlength="100" />
+                <span asp-validation-for="TypeName" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="TypeCategory" class="form-label fw-semibold">@Localizer["TypeCategory"]</label>
+                <span asp-validation-for="TypeCategory" class="text-danger small"></span>
+                <input asp-for="TypeCategory" class="form-control" maxlength="20"
+                       placeholder="Purchase / Transfer / Adjustment …" />
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="Direction" class="form-label fw-semibold">@Localizer["Direction"] <span class="text-danger">*</span></label>
+                <span asp-validation-for="Direction" class="text-danger small"></span>
+                <select asp-for="Direction" class="form-select">
+                    <option value="1">@SL["DirectionInbound"]</option>
+                    <option value="-1">@SL["DirectionOutbound"]</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-3">
+                <label asp-for="SourceTypeCode" class="form-label fw-semibold">@Localizer["SourceTypeCode"]</label>
+                <span asp-validation-for="SourceTypeCode" class="text-danger small"></span>
+                <input asp-for="SourceTypeCode" class="form-control" maxlength="20" />
+            </div>
+            <div class="col-12">
+                <div class="d-flex gap-4">
+                    <div class="form-check">
+                        <input asp-for="RequireLot" class="form-check-input" type="checkbox" />
+                        <label asp-for="RequireLot" class="form-check-label">@Localizer["RequireLot"]</label>
+                        <span asp-validation-for="RequireLot" class="text-danger small"></span>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="RequireDoc" class="form-check-input" type="checkbox" />
+                        <label asp-for="RequireDoc" class="form-check-label">@Localizer["RequireDoc"]</label>
+                        <span asp-validation-for="RequireDoc" class="text-danger small"></span>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                        <label asp-for="IsActive" class="form-check-label">@Localizer["IsActive"]</label>
+                        <span asp-validation-for="IsActive" class="text-danger small"></span>
+                    </div>
+                </div>
+            </div>
+            @if (isEdit && Model.IsSystemType)
+            {
+                <div class="col-12">
+                    <div class="alert alert-warning py-2 mb-0 small">
+                        <i class="bi bi-lock-fill me-1"></i>@Localizer["SystemTypeWarning"]
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="offcanvas-footer border-top p-3 d-flex gap-2">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>@Localizer["Save"]</button>
+        <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+    </div>
+</form>

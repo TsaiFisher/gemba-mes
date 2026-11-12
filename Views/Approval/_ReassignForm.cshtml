@@ -1,0 +1,54 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject SmartFactory.MES.Services.IApprovalDocumentTypeLabels DocTypeLabels
+@model SmartFactory.MES.Models.ApprovalRequest
+
+@{
+    var users = ViewBag.Users as Microsoft.AspNetCore.Mvc.Rendering.SelectList;
+}
+
+<form method="post" asp-action="ReassignApprover" asp-controller="Approval"
+      asp-route-id="@Model.Id" data-ajax="true">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["DocTypeAndId"]</label>
+        <div><span class="badge bg-secondary me-1">@DocTypeLabels.Get(Model.DocumentType)</span><code>@Model.DocumentId</code></div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(ViewBag.CurrentActiveApproverId as string))
+    {
+        <div class="alert alert-warning py-2 small">
+            <i class="bi bi-exclamation-triangle-fill me-1"></i>
+            @Localizer["CurrentApprover"]：<strong>@ViewBag.CurrentActiveApproverId</strong>
+        </div>
+    }
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["NewApprover"] <span class="text-danger">*</span></label>
+        <select name="newApproverId" class="form-select" required>
+            <option value="">@Localizer["SelectUser"]</option>
+            @if (users != null)
+            {
+                @foreach (var u in users)
+                {
+                    <option value="@u.Value">@u.Text</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["ReassignReason"]</label>
+        <input type="text" name="reason" class="form-control" placeholder="@Localizer["ReasonPlaceholder"]" />
+    </div>
+
+    <div class="d-flex gap-2 mt-4">
+        <button type="submit" class="btn btn-warning">
+            <i class="bi bi-person-fill-gear me-1"></i>@Localizer["ConfirmReassign"]
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">
+            @Localizer["Cancel"]
+        </button>
+    </div>
+</form>

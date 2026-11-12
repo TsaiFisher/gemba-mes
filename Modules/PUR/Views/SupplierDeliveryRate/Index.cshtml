@@ -1,0 +1,241 @@
+@using SmartFactory.MES.Services
+@using System.Text.Json
+@model SmartFactory.MES.Modules.PUR.ViewModels.SupplierDeliveryRateVm
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    ViewData["Title"] = L["PageTitle"].Value;
+    bool searched        = ViewBag.Searched == true;
+    bool canPrint        = ViewBag.CanPrint == true;
+    var vm               = Model ?? new();
+    var rows             = vm.SupplierRows;
+    var monthRows        = vm.MonthRows;
+    int total            = rows.Sum(r => r.TotalLines);
+    int onTime           = rows.Sum(r => r.OnTimeLines);
+    decimal overallRate  = total == 0 ? 0m : Math.Round((decimal)onTime / total * 100, 1);
+    string curSupplier   = ViewBag.SearchSupplier as string ?? "";
+    string curSource     = ViewBag.Source as string ?? "All";
+    var supplierOptions  = ViewBag.SupplierOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-3">
+    <h4 class="mb-3">@L["PageTitle"]</h4>
+
+    @* 口徑 2026-09-21 變更（納入「已逾期未交」）。數字會比以前低，而且低得有道理——
+       不講的話，使用者只會看到達成率莫名其妙掉下來。 *@
+    <div class="alert alert-secondary py-2 small">
+        <i class="bi bi-info-circle me-1"></i>@L["MethodHint"]
+    </div>
+
+    @await Html.PartialAsync("_SavedQueries", "SupplierDeliveryRate")
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-2">
+                <label class="form-label">@L["FromDate"]</label>
+                <input type="date" name="fromDate" class="form-control" value="@ViewBag.FromDate" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">@L["ToDate"]</label>
+                <input type="date" name="toDate" class="form-control" value="@ViewBag.ToDate" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">@L["Supplier"]</label>
+                <select name="searchSupplier" class="form-select form-select-sm select2-enable w-100"
+                        data-placeholder="@L["AllSuppliers"]" data-allow-clear="true">
+                    <option value=""></option>
+                    @foreach (var s in supplierOptions)
+                    {
+                        <option value="@s.CompanyCode" selected="@(curSupplier == (string)s.CompanyCode)">@s.CompanyCode — @s.CompanyName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">@L["Source"]</label>
+                <select name="source" class="form-select">
+                    <option value="All" selected="@(curSource == "All")">@L["SourceAll"]</option>
+                    <option value="PO" selected="@(curSource == "PO")">@L["SourcePo"]</option>
+                    <option value="OSP" selected="@(curSource == "OSP")">@L["SourceOsp"]</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" name="searched" value="true" class="btn btn-primary w-100 px-4">
+                    <i class="bi bi-search"></i> @L["Search"]
+                </button>
+            </div>
+        </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @if (!searched)
+    {
+        <div class="alert alert-info">@L["SearchFirst"]</div>
+    }
+    else if (!rows.Any())
+    {
+        <div class="alert alert-warning">@L["NoData"]</div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <strong>@L["ResultTitle"]</strong>
+                <span class="text-muted ms-1">@rows.Count @L["Suppliers"]</span>
+                <span class="ms-3">@L["OverallRate"]：
+                    <span class="badge @(overallRate >= 95 ? "bg-success" : overallRate >= 80 ? "bg-warning text-dark" : "bg-danger") fs-6">
+                        @overallRate%
+                    </span>
+                </span>
+            </div>
+            @if (canPrint)
+            {
+                <div class="d-flex gap-2">
+                    <a asp-action="Export" asp-route-fromDate="@ViewBag.FromDate"
+                       asp-route-toDate="@ViewBag.ToDate" asp-route-searchSupplier="@ViewBag.SearchSupplier"
+                       asp-route-source="@curSource" asp-route-view="month"
+                       class="btn btn-outline-success btn-sm">
+                        <i class="bi bi-file-earmark-excel"></i> @L["ExportMonthly"]
+                    </a>
+                    <a asp-action="Export" asp-route-fromDate="@ViewBag.FromDate"
+                       asp-route-toDate="@ViewBag.ToDate" asp-route-searchSupplier="@ViewBag.SearchSupplier"
+                       asp-route-source="@curSource" asp-route-view="supplier"
+                       class="btn btn-outline-success btn-sm">
+                        <i class="bi bi-file-earmark-excel"></i> @L["ExportExcel"]
+                    </a>
+                </div>
+            }
+        </div>
+
+        <div class="card shadow-sm mb-3">
+            <div class="card-header py-2 fw-semibold">@L["MonthlyTrend"]</div>
+            <div class="card-body"><canvas id="otdChart" height="90"></canvas></div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-5">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header py-2 fw-semibold">@L["MonthlyTable"]</div>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover table-bordered mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>@L["YearMonth"]</th>
+                                    <th class="text-end">@L["TotalLines"]</th>
+                                    <th class="text-end">@L["OnTimeRate"]</th>
+                                    <th class="text-end">@L["AvgOverdueDays"]</th>
+                                    <th class="text-end">@L["MaxOverdueDays"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var m in monthRows)
+                                {
+                                    <tr>
+                                        <td>@m.YearMonth</td>
+                                        <td class="text-end">@m.TotalLines</td>
+                                        <td class="text-end">
+                                            <span class="badge @(m.OnTimeRate >= 95 ? "bg-success" : m.OnTimeRate >= 80 ? "bg-warning text-dark" : "bg-danger")">
+                                                @m.OnTimeRate%
+                                            </span>
+                                        </td>
+                                        <td class="text-end">@m.AvgOverdueDays.ToString("N1")</td>
+                                        <td class="text-end">@m.MaxOverdueDays</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header py-2 fw-semibold">@L["SupplierRanking"]</div>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover table-bordered mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>@L["SupplierCode"]</th>
+                                    <th class="text-end">@L["TotalLines"]</th>
+                                    <th class="text-end">@L["OnTimeLines"]</th>
+                                    <th class="text-end">@L["LateLines"]</th>
+                                    <th class="text-end">@L["OnTimeRate"]</th>
+                                    <th class="text-end">@L["AvgOverdueDays"]</th>
+                                    <th class="text-end">@L["MaxOverdueDays"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                                @foreach (var r in paged)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span class="fw-semibold">@r.SupplierCode</span>
+                                            @if (!string.IsNullOrEmpty(r.SupplierName))
+                                            {
+                                                <div class="small text-muted">@r.SupplierName</div>
+                                            }
+                                        </td>
+                                        <td class="text-end">@r.TotalLines</td>
+                                        <td class="text-end text-success">@r.OnTimeLines</td>
+                                        <td class="text-end @(r.LateLines > 0 ? "text-danger" : "")">@r.LateLines</td>
+                                        <td class="text-end">
+                                            <span class="badge @(r.OnTimeRate >= 95 ? "bg-success" : r.OnTimeRate >= 80 ? "bg-warning text-dark" : "bg-danger")">
+                                                @r.OnTimeRate%
+                                            </span>
+                                        </td>
+                                        <td class="text-end">@r.AvgOverdueDays.ToString("N1")</td>
+                                        <td class="text-end">@r.MaxOverdueDays</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot class="table-secondary fw-bold">
+                                <tr>
+                                    <td>@L["Total"]</td>
+                                    <td class="text-end">@total</td>
+                                    <td class="text-end text-success">@onTime</td>
+                                    <td class="text-end @(total - onTime > 0 ? "text-danger" : "")">@(total - onTime)</td>
+                                    <td class="text-end">@overallRate%</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                @await Html.PartialAsync("_Pagination", paged)
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+@if (searched && monthRows.Any())
+{
+<script src="~/lib/chart.js/chart.umd.min.js" nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)"></script>
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    const labels = @Html.Raw(JsonSerializer.Serialize(monthRows.Select(m => m.YearMonth)));
+    const values = @Html.Raw(JsonSerializer.Serialize(monthRows.Select(m => m.OnTimeRate)));
+    // 單一序列折線（OTD Rate 月趨勢）：單一色相、免圖例，數值以 tooltip 呈現
+    new Chart(document.getElementById('otdChart'), {
+        type: 'line',
+        data: { labels, datasets: [{
+            label: '@L["OnTimeRate"]',
+            data: values,
+            borderColor: 'rgba(13,110,253,0.9)',
+            backgroundColor: 'rgba(13,110,253,0.15)',
+            fill: true, tension: 0.3, pointRadius: 4,
+        }]},
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false },
+                       tooltip: { callbacks: { label: c => c.parsed.y + '%' } } },
+            scales: {
+                y: { min: 0, max: 100, ticks: { callback: v => v + '%' },
+                     grid: { color: 'rgba(0,0,0,0.06)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+})();
+</script>
+}
+}

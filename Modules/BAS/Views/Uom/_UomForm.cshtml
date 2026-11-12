@@ -1,0 +1,63 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.Uom
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    string action = isEdit ? "Edit" : "Create";
+}
+
+<form method="post" asp-action="@action" asp-controller="Uom" asp-route-code="@(isEdit ? Model.UomCode : null)"
+      data-ajax="true" class="p-1">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["UomCode"] <span class="text-danger">*</span></label>
+        @if (isEdit)
+        {
+            <input type="text" class="form-control bg-light" value="@Model.UomCode" readonly />
+            <input type="hidden" asp-for="UomCode" />
+            <div class="form-text text-muted">@Localizer["UomCodeReadonlyHint"]</div>
+        }
+        else
+        {
+            <input asp-for="UomCode" class="form-control u-text-transform-uppercase" />
+        }
+        <span asp-validation-for="UomCode" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["UomName"] <span class="text-danger">*</span></label>
+        <input asp-for="UomName" class="form-control" />
+        <span asp-validation-for="UomName" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["DecimalPlaces"]</label>
+        <input asp-for="DecimalPlaces" type="number" min="0" max="4" class="form-control" />
+        <span asp-validation-for="DecimalPlaces" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["Remarks"]</label>
+        <textarea asp-for="Remarks" class="form-control" rows="2"></textarea>
+        <span asp-validation-for="Remarks" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-4">
+        <div class="form-check">
+            <input type="checkbox" asp-for="IsActive" class="form-check-input" id="uomIsActive" />
+            <label class="form-check-label fw-semibold" for="uomIsActive">@Localizer["IsActive"]</label>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+            @Localizer["Cancel"]
+        </button>
+    </div>
+</form>

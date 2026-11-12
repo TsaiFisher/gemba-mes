@@ -1,0 +1,64 @@
+@model PrivacyModel
+@inject IConfiguration Configuration
+@{
+    // ProjectZ's additions to the Core privacy policy (Core only describes what Core itself does).
+    // The periods below are code defaults; if the operator overrides them in appsettings, update this page too.
+    var qaEnabled = Configuration.GetValue<bool>("Features:QaAssistant:Enabled");
+    var qaDays = Configuration.GetValue<int?>("Features:QaAssistant:TurnRetentionDays") ?? 90;
+    var telemetryDays = Configuration.GetValue<int?>("Telemetry:RetentionDays") is > 0 and var td ? td : 30;
+    var alertWebhook = !string.IsNullOrWhiteSpace(Configuration["Security:AlertWebhookUrl"]);
+    var org = Model.Organization ?? "your organization";
+}
+<h2 class="h5 mt-4">Mobile push notifications</h2>
+<p>
+    If you allow notifications in the mobile app, the system stores the push subscription provided by your browser
+    and delivers notifications through your browser or operating system vendor's push service (for example Google, Apple, or Mozilla);
+    notification content is encrypted in transit as required by the Web Push standard.
+    You can turn notifications off at any time in your device or browser settings.
+</p>
+
+<h2 class="h5 mt-4">Clearing data on mobile sign-out</h2>
+<p>When you sign out of the mobile app, the system clears offline data, drafts, and submission records associated with your account from that device.</p>
+
+<h2 class="h5 mt-4">Mobile app health reports</h2>
+<p>
+    To catch problems on shop-floor devices early, the mobile app periodically reports how it is running to this system's server:
+    page error messages and details, response times of each function, disconnection periods, the number of operations not yet sent from the device,
+    the network type, the mobile app version and the browser identification string (User-Agent),
+    together with the signed-in account and plant at the time, and a random identifier stored in the browser to tell devices apart (not a hardware identifier).
+    This data stays on <strong>@org</strong>'s server, is used by system administrators for troubleshooting, and is deleted automatically after @telemetryDays days.
+</p>
+
+@if (alertWebhook)
+{
+    <h2 class="h5 mt-4">Security alert notifications</h2>
+    <p>
+        When the system detects a suspected attack (for example a burst of sign-in attempts), it sends the alert type, the source IP address and the time
+        to the notification URL configured by the operator so that it can be handled promptly. That URL may belong to an external messaging or monitoring service used by the operator.
+    </p>
+}
+
+@if (qaEnabled)
+{
+    <h2 class="h5 mt-4">Data query assistant</h2>
+    <p>
+        When you use the data query assistant, the system records your user ID, the question text, the interpreted result, and the number of rows returned.
+        These records are used to confirm follow-up questions and to improve the query features, and are deleted automatically after @qaDays days.
+        Questions are processed by the language model service configured by the operator, which by default runs on the same server as this system;
+        they are not sent to external AI services.
+    </p>
+}
+
+<h2 class="h5 mt-4">Automatic deletion</h2>
+<p>The system automatically deletes data past its retention period every day (defaults shown; the operator may change them):</p>
+<ul>
+    <li>Audit logs and approval history: 730 days</li>
+    <li>Password history: only the 24 most recent entries per user are kept (hashes only, used to prevent password reuse)</li>
+    <li>Scheduled report output files: 90 days</li>
+    <li>Material requirements planning (MRP) run records: 180 days</li>
+    <li>Mobile app health reports: @telemetryDays days</li>
+    @if (qaEnabled)
+    {
+        <li>Data query assistant records: @qaDays days</li>
+    }
+</ul>

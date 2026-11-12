@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PageTitle" xml:space="preserve"><value>System Parameters</value></data>
+  <data name="CompanyName" xml:space="preserve"><value>Company Info</value></data>
+  <data name="CompanyNameZh" xml:space="preserve"><value>Company Name (Chinese)</value></data>
+  <data name="CompanyNameEn" xml:space="preserve"><value>Company Name (English)</value></data>
+  <data name="CompanyShortZh" xml:space="preserve"><value>Short Name (Chinese)</value></data>
+  <data name="CompanyShortEn" xml:space="preserve"><value>Short Name (English)</value></data>
+  <data name="CompanyNameZhPlaceholder" xml:space="preserve"><value>e.g. 台灣智慧工廠股份有限公司</value></data>
+  <data name="CompanyNameEnPlaceholder" xml:space="preserve"><value>e.g. Taiwan Smart Factory Co., Ltd.</value></data>
+  <data name="CompanyShortZhPlaceholder" xml:space="preserve"><value>e.g. 智慧工廠</value></data>
+  <data name="CompanyShortEnPlaceholder" xml:space="preserve"><value>e.g. TSF</value></data>
+  <data name="ShortNameHint" xml:space="preserve"><value>Shown in the top-left navbar; falls back to company name if empty</value></data>
+  <data name="CompanyLogo" xml:space="preserve"><value>Company Logo</value></data>
+  <data name="CurrentLogo" xml:space="preserve"><value>Current Logo</value></data>
+  <data name="RemoveLogo" xml:space="preserve"><value>Remove Logo</value></data>
+  <data name="UploadLogo" xml:space="preserve"><value>Upload Logo</value></data>
+  <data name="ReplaceLogo" xml:space="preserve"><value>Replace Logo</value></data>
+  <data name="LogoHint" xml:space="preserve"><value>Supports jpg / png / gif / webp, max 2 MB</value></data>
+  <data name="Preview" xml:space="preserve"><value>Preview</value></data>
+  <data name="Save" xml:space="preserve"><value>Save Settings</value></data>
+  <data name="Reset" xml:space="preserve"><value>Reset</value></data>
+</root>

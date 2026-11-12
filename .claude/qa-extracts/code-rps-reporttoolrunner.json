@@ -1,0 +1,78 @@
+{
+  "sourcePath": "Modules/RPS/Services/ReportToolRunner.cs",
+  "sourceHash": "ff82c32ce2507741468ad7494e84fa9cad5271a251cb7aa097c8e1c476f9e780",
+  "entries": [
+    {
+      "slug": "code-rps-reporttoolrunner-e3adfd55",
+      "lang": "zh",
+      "headingPath": "報表 › 同一段組裝程式碼，否則兩邊欄位會隨時間漂移",
+      "text": "匯出檔案需走統一程式碼路徑｜排程產生的 Excel 檔案和畫面按鈕匯出的 Excel 必須使用同一段組裝程式碼，否則兩份資料雖然各自正確，但內容會不同。",
+      "approved": true,
+      "sourceSectionHash": "cdd63892cd53c5b648c3250b6a0f1772db17f4d7d8883b07b1276db6d8fa7b8d"
+    },
+    {
+      "slug": "code-rps-reporttoolrunner-426ad7d9",
+      "lang": "zh",
+      "headingPath": "報表 › 依  還原請求並執行",
+      "text": "報表執行需指定時間時區｜若無法解讀輸入的參數，系統會拋出例外錯誤，不會使用預設值來生成看似正常但內容為預設期間的報表。",
+      "approved": true,
+      "sourceSectionHash": "9379f3891ab6d920fb224cfdb07714700e1a8d4083f10afd79d2d3c62d541e5b"
+    },
+    {
+      "slug": "code-rps-reporttoolrunner-02ec9750",
+      "lang": "zh",
+      "headingPath": "報表 › 時區注入在這一點，而不是在每支工具裡",
+      "text": "時區判斷依據優先級說明｜系統會以呼叫端明確指定的時區為準，即使排程設定了不同的時區，也將以呼叫端提供的時區為最高優先級的參考。",
+      "approved": true,
+      "sourceSectionHash": "9043c0dc6951260caa53e241e715c96f335dceae7dee4d7a0f34c9997c5f5616"
+    },
+    {
+      "slug": "code-rps-reporttoolrunner-6c32539d",
+      "lang": "zh",
+      "headingPath": "報表 › 但十六支工具沒有一支照著做——它們一律  之後拿去字面比對，",
+      "text": "自然語言查詢不能指定其他廠別｜透過自然語言查詢報表時，查詢範圍一律是使用者目前所在、且有權限的廠別，無法用提問要求查其他廠別的資料。排程產生的報表則依排程所屬的廠別查詢。",
+      "approved": true,
+      "sourceSectionHash": "a0f8baef4d1a7be87ed1cae5cbdc09ca4474d5b0a793e02a8885e41b28742e4b"
+    },
+    {
+      "slug": "code-rps-reporttoolrunner-bf73d9b0",
+      "lang": "zh",
+      "headingPath": "報表 › 「資料列在哪」由工具自己回答，",
+      "text": "資料列在哪由系統自動回答｜此功能現在會讓工具自行決定資料列的位置，不再需要程式碼來猜測回傳的內容類型。",
+      "approved": true,
+      "sourceSectionHash": "40c020d2d9b4e1dd46d963db9ee440afcb82eb4a6fef49e304900b571bb9d87f"
+    },
+    {
+      "slug": "code-rps-reporttoolrunner-1a489457",
+      "lang": "zh",
+      "headingPath": "報表 › 欄序、欄頭與取值全部由工具宣告，",
+      "text": "匯出報表時的語言顯示規則｜系統在匯出報表時，會根據收件人的語系來決定報表的欄位標題，因此同一份報表即使有不同語系的屬性名稱，也會呈現為單一版本。",
+      "approved": true,
+      "sourceSectionHash": "180c007368015e3f9001b29dbd0db6f723ae71986c7f8991be69ad65c6625bba"
+    },
+    {
+      "slug": "code-rps-reporttoolrunner-3e3508dc",
+      "lang": "zh",
+      "headingPath": "報表 › 執行紀錄與收件匣顯示的查詢期間",
+      "text": "執行紀錄顯示的查詢期間｜報表執行紀錄與收件匣顯示的查詢期間，就是報表實際查詢的日期區間；排程設定的相對期間（例如「昨天」）會依排程的時區與廠別換算成實際日期。",
+      "approved": true,
+      "sourceSectionHash": "217ebf00ddb7d62d396446ca34206105a34d7f4112b57ca918467db987f9d4db"
+    },
+    {
+      "slug": "code-rps-reporttoolrunner-6b474abf",
+      "lang": "zh",
+      "headingPath": "報表 › 依工具宣告的欄位把資料列投影成標題列＋資料列",
+      "text": "資料列轉標題列的結構說明｜系統現在會使用工具共同宣告的一份欄位清單，來決定資料的標題和內容。",
+      "approved": true,
+      "sourceSectionHash": "03443ab6f1ae69c0d477849633b427baae349fce7bea3782d13b8617c6c06774"
+    },
+    {
+      "slug": "code-rps-reporttoolrunner-e0e578ac",
+      "lang": "zh",
+      "headingPath": "報表 › 零筆是合法結果",
+      "text": "報表空資料判斷規則｜當系統查詢結果確實沒有任何資料時，輸出的檔案會保留欄位標題，以區分是「查過但無資料」還是「產出失敗」。",
+      "approved": true,
+      "sourceSectionHash": "edb1e771a5815a12c48e5d562738ac76bd106bf9a0241735394c5668a61eaa98"
+    }
+  ]
+}

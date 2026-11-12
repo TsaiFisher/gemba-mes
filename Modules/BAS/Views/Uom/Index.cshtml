@@ -1,0 +1,504 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Services
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.BAS.Models.Uom>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    var canCreate = ViewBag.CanCreate as bool? ?? false;
+    var canUpdate = ViewBag.CanUpdate as bool? ?? false;
+    var canDelete = ViewBag.CanDelete as bool? ?? false;
+    bool hasSearched = ViewBag.Searched == true;
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.CurrentSort as string ?? "";
+        if (cur == col + "_asc") return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-rulers"></i> @Localizer["PageTitle"]</h1>
+        @if (canCreate)
+        {
+            <button type="button" class="btn btn-primary"
+                    data-url="@Url.Action("Create", "Uom")"
+                    data-label="@Localizer["AddEntry"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus-lg"></i> @Localizer["AddEntry"]
+            </button>
+        }
+    </div>
+
+    <!-- 查詢列 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-center">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                <div class="col-12 col-md-auto flex-grow-1">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" name="searchTerm" class="form-control"
+                               placeholder="@Localizer["SearchPlaceholder"]" value="@ViewBag.SearchTerm" />
+                        @if (!string.IsNullOrEmpty(ViewBag.SearchTerm as string))
+                        {
+                            <a asp-action="Index" asp-route-searched="true"
+                               asp-route-pageSize="@ViewBag.CurrentPageSize"
+                               class="btn btn-outline-secondary bg-white text-muted">
+                                <i class="bi bi-x-circle"></i>
+                            </a>
+                        }
+                        <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                        @if (ViewBag.CanPrint as bool? ?? false)
+                        {
+                            <button type="button" class="btn btn-outline-info ms-2" data-action="printPage">
+                                <i class="bi bi-printer"></i> @Localizer["Print"]
+                            </button>
+                            <div class="btn-group ms-1">
+                                <a asp-action="Export" asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-format="xlsx" class="btn btn-outline-success">
+                                    <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                                </a>
+                                <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown"></button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-action="Export"
+                                           asp-route-searchTerm="@ViewBag.SearchTerm" asp-route-format="csv">
+                                        <i class="bi bi-filetype-csv me-2"></i>@Localizer["ExportCsv"]</a></li>
+                                    <li><a class="dropdown-item" asp-action="Export"
+                                           asp-route-searchTerm="@ViewBag.SearchTerm" asp-route-format="json">
+                                        <i class="bi bi-filetype-json me-2"></i>@Localizer["ExportJson"]</a></li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.CodeSort"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["UomCode"] <i class="bi @sortIcon("code")"></i>
+                                </a>
+                            </th>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["UomName"] <i class="bi @sortIcon("name")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["DecimalPlaces"]</th>
+                            <th>@Localizer["Remarks"]</th>
+                            <th>@Localizer["IsActive"]</th>
+                            <th class="text-end pe-4">@Localizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr><td colspan="6" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>@Localizer["NoData"]
+                            </td></tr>
+                        }
+                        else
+                        {
+                            foreach (var u in Model)
+                            {
+                                <tr>
+                                    <td class="fw-medium">@u.UomCode</td>
+                                    <td>@u.UomName</td>
+                                    <td>@u.DecimalPlaces</td>
+                                    <td class="text-muted small">@u.Remarks</td>
+                                    <td>
+                                        @if (u.IsActive)
+                                        {
+                                            <span class="badge bg-success">@Localizer["Active"]</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">@Localizer["Inactive"]</span>
+                                        }
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group">
+                                            @if (canUpdate)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                        data-url="@Url.Action("Edit", "Uom", new { code = u.UomCode })"
+                                                        data-label="@($"{Localizer["Edit"].Value}：{u.UomName}")"
+                                                        data-code="@u.UomCode"
+                                                        data-action="openDetailPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                            }
+                                            @if (canDelete)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        data-url="@Url.Action("Delete", "Uom", new { code = u.UomCode })"
+                                                        data-label="@u.UomName"
+                                                        data-action="deleteItem"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel (Master-Detail with Tabs) -->
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-90vw-1200px" id="crudPanel" tabindex="-1"
+     aria-labelledby="crudPanelLabel">
+    <div class="offcanvas-header border-bottom bg-primary text-white py-3">
+        <h5 class="offcanvas-title mb-0" id="crudPanelTitle"></h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+        <!-- Tabs -->
+        <ul class="nav nav-tabs px-3 pt-2" id="panelTabs">
+            <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabMaster">@Localizer["TabMaster"]</button>
+            </li>
+            <li class="nav-item u-display-none" id="tabDetailNavItem">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabDetail" data-action="loadConversions">@Localizer["Conversions"]</button>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active p-3" id="tabMaster">
+                <div id="crudPanelBody"></div>
+            </div>
+            <div class="tab-pane fade p-3" id="tabDetail">
+                <div id="conversionSection">
+                    <!-- Conversion table loaded via AJAX -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i><span id="successToastMsg"></span></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Anti-Forgery for AJAX -->
+<form class="u-display-none" id="__AjaxAntiForgery">@Html.AntiForgeryToken()</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/module-validation.js" asp-append-version="true"></script>
+    @await Html.PartialAsync("_JsLocalization")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    const _uomList = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+        (ViewBag.UomCodeList as IEnumerable<object>) ?? new List<object>()
+    ));
+
+    const _productList = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+        (ViewBag.ProductCodeList as IEnumerable<object>) ?? new List<object>()
+    ));
+
+    var _currentUomCode = null;
+
+    function getToken() {
+        return document.querySelector('#__AjaxAntiForgery input[name="__RequestVerificationToken"]').value;
+    }
+
+    function showToast(msg) {
+        document.getElementById('successToastMsg').textContent = msg;
+        new bootstrap.Toast(document.getElementById('successToast')).show();
+    }
+
+    function openPanel(e, el) {
+        const url = el.dataset.url, title = el.dataset.label;
+        _currentUomCode = null;
+        document.getElementById('tabDetailNavItem').classList.add('u-display-none');
+        document.getElementById('crudPanelTitle').textContent = title;
+        const body = document.getElementById('crudPanelBody');
+        body.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-3 text-muted small">' + @(Json.Serialize(SL["Loading"].Value)) + '</p></div>';
+        // Switch to master tab
+        new bootstrap.Tab(document.querySelector('[data-bs-target="#tabMaster"]')).show();
+        new bootstrap.Offcanvas(document.getElementById('crudPanel')).show();
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+            .then(html => { body.innerHTML = DOMPurify.sanitize(html); bindPanelForms(); })
+            .catch(() => { body.innerHTML = '<div class="alert alert-danger m-3">' + @(Json.Serialize(SL["LoadFailed"].Value)) + '</div>'; });
+    }
+
+    function openDetailPanel(e, el) {
+        const url = el.dataset.url, title = el.dataset.label, uomCode = el.dataset.code;
+        _currentUomCode = uomCode;
+        document.getElementById('tabDetailNavItem').classList.remove('u-display-none');
+        document.getElementById('crudPanelTitle').textContent = title;
+        const body = document.getElementById('crudPanelBody');
+        body.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-3 text-muted small">' + @(Json.Serialize(SL["Loading"].Value)) + '</p></div>';
+        new bootstrap.Tab(document.querySelector('[data-bs-target="#tabMaster"]')).show();
+        new bootstrap.Offcanvas(document.getElementById('crudPanel')).show();
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+            .then(html => { body.innerHTML = DOMPurify.sanitize(html); bindPanelForms(); })
+            .catch(() => { body.innerHTML = '<div class="alert alert-danger m-3">' + @(Json.Serialize(SL["LoadFailed"].Value)) + '</div>'; });
+    }
+
+    function bindPanelForms() {
+        document.querySelectorAll('#crudPanelBody form[data-ajax="true"]').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitPanel(this);
+            });
+        });
+        document.querySelectorAll('#crudPanelBody [data-dismiss-panel]').forEach(btn => {
+            btn.addEventListener('click', () =>
+                bootstrap.Offcanvas.getInstance(document.getElementById('crudPanel'))?.hide());
+        });
+    }
+
+    function submitPanel(form) {
+        const submitter = form.querySelector('[type="submit"]');
+        const orig = submitter.innerHTML;
+        submitter.disabled = true;
+        submitter.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>';
+        const fd = new FormData(form);
+        if (submitter.name) fd.set(submitter.name, submitter.value);
+        fetch(form.action, {
+            method: 'POST',
+            body: fd,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(r => {
+            const ct = r.headers.get('Content-Type') || '';
+            return ct.includes('application/json')
+                ? r.json().then(d => ({ isJson: true, data: d }))
+                : r.text().then(h => ({ isJson: false, html: h }));
+        })
+        .then(result => {
+            if (result.isJson && result.data.success) {
+                bootstrap.Offcanvas.getInstance(document.getElementById('crudPanel')).hide();
+                showToast(result.data.message);
+                setTimeout(() => location.reload(), 1200);
+            } else if (result.isJson && !result.data.success) {
+                submitter.disabled = false; submitter.innerHTML = orig;
+                alert(result.data.message);
+            } else {
+                document.getElementById('crudPanelBody').innerHTML = DOMPurify.sanitize(result.html);
+                bindPanelForms();
+            }
+        })
+        .catch(() => { submitter.disabled = false; submitter.innerHTML = orig; alert(window.i18n.t('SaveFailed')); });
+    }
+
+    function deleteItem(e, el) {
+        const url = el.dataset.url, name = el.dataset.label;
+        if (!confirm(window.i18n.t('ConfirmDelete').replace('{0}', name))) return;
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+            body: '__RequestVerificationToken=' + encodeURIComponent(getToken())
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) {
+                showToast(result.message);
+                setTimeout(() => location.reload(), 1200);
+            } else {
+                alert(result.message || window.i18n.t('DeleteFailed'));
+            }
+        })
+        .catch(() => alert(window.i18n.t('DeleteFailed')));
+    }
+
+    // ---- Conversion Detail Tab ----
+    function loadConversions() {
+        if (!_currentUomCode) return;
+        const sec = document.getElementById('conversionSection');
+        sec.innerHTML = '<div class="text-center py-4"><div class="spinner-border text-primary"></div></div>';
+        fetch('@Url.Action("GetConversions", "Uom")?uomCode=' + encodeURIComponent(_currentUomCode),
+              { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => r.json())
+            .then(list => renderConversions(list))
+            .catch(() => { sec.innerHTML = '<div class="alert alert-danger">' + @(Json.Serialize(SL["LoadFailed"].Value)) + '</div>'; });
+    }
+
+    function renderConversions(list) {
+        const token = getToken();
+        let html = `
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0 fw-bold">@Localizer["Conversions"]</h6>
+            <button class="btn btn-sm btn-primary" data-action="showConversionForm">
+                <i class="bi bi-plus-lg"></i> @Localizer["AddConversion"]
+            </button>
+        </div>
+        <div id="convFormArea"></div>
+        <table class="table table-sm table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>@Localizer["ProductCode"]</th>
+                    <th>@Localizer["ToUom"]</th>
+                    <th>@Localizer["Numerator"]</th>
+                    <th>@Localizer["Denominator"]</th>
+                    <th class="text-end">@Localizer["Actions"]</th>
+                </tr>
+            </thead>
+            <tbody>`;
+        if (!list || list.length === 0) {
+            html += `<tr><td colspan="5" class="text-center text-muted py-3">@Localizer["NoData"]</td></tr>`;
+        } else {
+            list.forEach(c => {
+                // 空品號＝全域換算。標成 badge 而不是留白，否則「這一列到底套用到誰」要靠猜。
+                const scope = c.productCode
+                    ? `<span class="badge bg-info-subtle text-info-emphasis">${escHtml(c.productCode)}</span>`
+                    : `<span class="badge bg-secondary-subtle text-secondary-emphasis">@Localizer["AllProducts"]</span>`;
+                html += `<tr>
+                    <td>${scope}</td>
+                    <td class="fw-medium">${escHtml(c.toUomCode)}</td>
+                    <td>${c.numerator}</td>
+                    <td>${c.denominator}</td>
+                    <td class="text-end">
+                        <button class="btn btn-sm btn-outline-secondary me-1" data-action="showConversionForm" data-row="${escHtml(JSON.stringify(c))}"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                        <button class="btn btn-sm btn-outline-danger" data-action="deleteConversion" data-product-code="${escHtml(c.productCode)}" data-from-uom-code="${escHtml(c.fromUomCode)}" data-to-uom-code="${escHtml(c.toUomCode)}"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                    </td>
+                </tr>`;
+            });
+        }
+        html += `</tbody></table>`;
+        document.getElementById('conversionSection').innerHTML = html;
+    }
+
+    function showConversionForm(e, el) {
+        const data = el.dataset.row ? JSON.parse(el.dataset.row) : null;
+        const isEdit = data !== null;
+        const toUomCode = isEdit ? data.toUomCode : '';
+        const productCode = isEdit ? (data.productCode || '') : '';
+        const numerator = isEdit ? data.numerator : 1;
+        const denominator = isEdit ? data.denominator : 1;
+        const toUomHtml = isEdit
+          ? `<input type="text" id="convToUom" class="form-control form-control-sm" value="${escHtml(toUomCode)}" readonly />`
+          : `<select id="convToUom" class="form-select form-select-sm">
+               <option value="">—</option>
+               ${_uomList.filter(u => u.UomCode !== _currentUomCode).map(u => `<option value="${escHtml(u.UomCode)}">${escHtml(u.UomCode)} — ${escHtml(u.UomName)}</option>`).join('')}
+             </select>`;
+        // 品號是主鍵的一部分，改品號＝換一列，所以編輯時鎖住（與 ToUom 同樣處理）。
+        const productHtml = isEdit
+          ? `<input type="text" id="convProduct" class="form-control form-control-sm" value="${escHtml(productCode)}" readonly />`
+          : `<select id="convProduct" class="form-select form-select-sm">
+               <option value="">@Localizer["AllProducts"]</option>
+               ${_productList.map(p => `<option value="${escHtml(p.ProductCode)}">${escHtml(p.ProductCode)} — ${escHtml(p.ProductName)}</option>`).join('')}
+             </select>`;
+        const html = `
+        <div class="card card-body mb-3 border-primary">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["ProductCode"]</label>
+                    ${productHtml}
+                    <div class="form-text small">@Localizer["ProductConversionHint"]</div>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ToUom"] <span class="text-danger">*</span></label>
+                    ${toUomHtml}
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Numerator"]</label>
+                    <input type="number" id="convNumerator" class="form-control form-control-sm" step="0.000001" value="${numerator}" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Denominator"]</label>
+                    <input type="number" id="convDenominator" class="form-control form-control-sm" step="0.000001" value="${denominator}" />
+                </div>
+                <div class="col-md-3 d-flex gap-1">
+                    <button class="btn btn-sm btn-primary" data-action="saveConversion"><i class="bi bi-check-lg"></i> @Localizer["Save"]</button>
+                    <button class="btn btn-sm btn-outline-secondary" data-action="clearTarget" data-target="convFormArea">@Localizer["Cancel"]</button>
+                </div>
+            </div>
+        </div>`;
+        document.getElementById('convFormArea').innerHTML = html;
+    }
+
+    function saveConversion() {
+        const toUomCode   = document.getElementById('convToUom').value.trim();
+        const productCode = document.getElementById('convProduct').value.trim();
+        const numerator   = document.getElementById('convNumerator').value;
+        const denominator = document.getElementById('convDenominator').value;
+        if (!toUomCode) { alert(window.i18n.t('FieldRequiredFmt').replace('{0}', '@Localizer["ToUom"]')); return; }
+        const body = new URLSearchParams({
+            __RequestVerificationToken: getToken(),
+            fromUomCode: _currentUomCode,
+            toUomCode,
+            productCode,
+            numerator,
+            denominator
+        });
+        fetch('@Url.Action("SaveConversion", "Uom")', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+            body
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) { showToast(result.message); loadConversions(); }
+            else { alert(result.message); }
+        })
+        .catch(() => alert(window.i18n.t('SaveFailed')));
+    }
+
+    function deleteConversion(e, el) {
+        const fromCode = el.dataset.fromUomCode, toCode = el.dataset.toUomCode;
+        const productCode = el.dataset.productCode || '';
+        if (!confirm(window.i18n.t('ConfirmDeleteConversion'))) return;
+        const body = new URLSearchParams({
+            __RequestVerificationToken: getToken(),
+            fromCode,
+            toCode,
+            productCode
+        });
+        fetch('@Url.Action("DeleteConversion", "Uom")', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+            body
+        })
+        .then(r => r.json())
+        .then(result => {
+            if (result.success) { showToast(result.message); loadConversions(); }
+            else { alert(result.message); }
+        })
+        .catch(() => alert(window.i18n.t('DeleteFailed')));
+    }
+
+    function escHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+</script>
+}

@@ -1,0 +1,35 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model IReadOnlyList<SmartFactory.MES.Modules.BAS.Services.ContainerUnitLeft>
+@{ var print = ViewData["Print"] as bool? == true; var inv = System.Globalization.CultureInfo.InvariantCulture; }
+
+@* 單據的「出廠箱號」：由 ContainerUnitsLeftViewComponent 從單據出庫的批號反推（container-tracking.md §9.10） *@
+<div class="@(print ? "mt-3" : "card mx-3 mb-3")" data-testid="units-left">
+    <div class="@(print ? "fw-semibold mb-1" : "card-header py-2")"><i class="bi bi-box-seam me-1"></i>@Localizer["Title"]</div>
+    <table class="table table-sm mb-0 @(print ? "table-bordered" : "")">
+        <thead class="table-light">
+            <tr>
+                <th>@Localizer["UnitId"]</th>
+                <th>@Localizer["Product"]</th>
+                <th>@Localizer["LotNo"]</th>
+                <th class="text-end">@Localizer["Qty"]</th>
+                @if (!print) { <th>@Localizer["State"]</th> }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr>
+                    <td>@if (print) { @r.UnitId } else { <a href="/ContainerUnit?searchTerm=@Uri.EscapeDataString(r.UnitId)&searched=true" target="_blank">@r.UnitId</a> }</td>
+                    <td>@r.ProductCode</td>
+                    <td>@r.LotNo</td>
+                    <td class="text-end">@r.Qty.ToString("0.######", inv)</td>
+                    @if (!print)
+                    {
+                        <td><span class="badge @(r.Recovered ? "bg-secondary" : "bg-warning text-dark")">@(r.Recovered ? Localizer["Recovered"] : Localizer["Offsite"])</span></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

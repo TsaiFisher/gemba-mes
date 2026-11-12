@@ -1,0 +1,9 @@
+/* 庫存查詢
+   自 inv/stock.html 內聯 <style> 外部化：CSP style-src 已移除 'unsafe-inline'（Program.cs），
+   內聯 <style> 區塊會被瀏覽器整段擋掉。各頁 class 名稱互有衝突（如 .dispatch-card），故一頁一檔。 */
+
+.stock-card { border-left: 4px solid #198754; }
+.qty-text   { font-size: 1.4rem; font-weight: 700; }
+.scan-zone  { border: 2px dashed #dee2e6; border-radius: 12px; min-height: 100px;
+              display: flex; align-items: center; justify-content: center;
+              cursor: pointer; flex-direction: column; gap: .5rem; }

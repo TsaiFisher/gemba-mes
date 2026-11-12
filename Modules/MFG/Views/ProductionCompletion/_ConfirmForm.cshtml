@@ -1,0 +1,213 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@model WorkOrder
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    var qtyDone    = (decimal)(ViewBag.QtyDone ?? 0m);
+    var defaultWh  = ViewBag.DefaultWh  as string ?? "";
+    var defaultLoc = ViewBag.DefaultLoc as string ?? "";
+    var warehouses = ViewBag.Warehouses as List<Warehouse> ?? new();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string? productUom = ViewBag.ProductUom as string;
+    var containers = ViewBag.Containers as List<Container> ?? new();
+    var defaultContainer = ViewBag.DefaultContainer as string;
+    var defaultBoxQty = ViewBag.DefaultBoxQty as decimal?;
+    var inv = System.Globalization.CultureInfo.InvariantCulture;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+}
+
+<div class="p-3">
+    <dl class="row mb-3">
+        <dt class="col-sm-4">@Localizer["WorkOrderId"]</dt>
+        <dd class="col-sm-8 font-monospace">@Model.WorkOrderId</dd>
+        <dt class="col-sm-4">@Localizer["ProductCode"]</dt>
+        <dd class="col-sm-8">@Model.ProductCode</dd>
+        <dt class="col-sm-4">@Localizer["QtyDone"]</dt>
+        <dd class="col-sm-8 fw-bold text-success">@qtyDone.ToString(QtyFmt(productUom))</dd>
+    </dl>
+
+    <div class="alert alert-info small py-2">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["BackflushNote"]
+    </div>
+
+    <form id="panelForm" method="post" action="@Url.Action("Complete", new { id = Model.WorkOrderId })" data-fail-msg="@SL["OperationFailed"]">
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["WhCode"] <span class="text-danger">*</span></label>
+            <select name="whCode" class="form-select" id="whSelect" data-action-change="onWhChange">
+                <option value="">@SL["Select"]</option>
+                @foreach (var wh in warehouses)
+                {
+                    <option value="@wh.WhCode" selected="@(wh.WhCode == defaultWh)">@wh.WhCode — @wh.WhName</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["LocationCode"] <span class="text-danger">*</span></label>
+            <input type="text" name="locationCode" class="form-control" id="locationInput"
+                   value="@defaultLoc" placeholder="@Localizer["LocationCodePlaceholder"]" required />
+            <span class="text-danger small" data-valmsg-for="locationCode" data-valmsg-replace="true"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" id="lotLabel" data-lot="@Localizer["LotNo"]" data-prefix="@Localizer["LotPrefix"]">@Localizer["LotNo"]</label>
+            <input type="text" name="lotNo" class="form-control" maxlength="45"
+                   placeholder="@Localizer["LotNoPlaceholder"]" />
+        </div>
+
+        @* 分箱入庫（container-tracking.md §8 L1+）：一箱一個批號，入庫後列印箱標籤 *@
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="packByBox" value="true" id="packByBox" />
+            <label class="form-check-label" for="packByBox">@Localizer["PackByBox"]</label>
+        </div>
+        <div id="boxBlock" class="border rounded p-2 mb-3 d-none">
+            <div class="form-text mb-2">@Localizer["PackByBoxHint"]</div>
+            <div class="mb-2">
+                <label class="form-label">@Localizer["Container"]</label>
+                <select name="containerCode" class="form-select" id="boxContainer">
+                    <option value="">--</option>
+                    @foreach (var c in containers)
+                    {
+                        <option value="@c.ContainerCode" data-capacity="@(c.MaxCapacity?.ToString("0.######", inv))"
+                                selected="@(c.ContainerCode == defaultContainer)">@c.ContainerCode — @c.ContainerName</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-1">
+                <label class="form-label">@Localizer["BoxQty"] <span class="text-danger">*</span></label>
+                <input type="number" name="boxQty" id="boxQty" class="form-control"
+                       step="@UomStepHelper.GetStep(uomDecimals, productUom)" min="@UomStepHelper.GetMinPositive(uomDecimals, productUom)"
+                       value="@(defaultBoxQty?.ToString("0.######", inv))" />
+                <span class="text-danger small" data-valmsg-for="boxQty" data-valmsg-replace="true"></span>
+            </div>
+            <div class="small text-muted" id="boxPreview" data-qty-done="@qtyDone.ToString(inv)"
+                 data-template="@Localizer["BoxPreview", "{0}", "{1}"]"></div>@* 佔位符原樣保留給 JS 代入 *@
+            @* 指定箱號（container-tracking.md §9）：箱子重複使用、貼固定 QR 時，入庫同時把每箱批號綁到箱子 *@
+            <div class="mt-2">
+                <label class="form-label" for="boxUnitIds">@Localizer["BoxUnits"]</label>
+                <textarea name="boxUnitIds" id="boxUnitIds" rows="3" class="form-control font-monospace"></textarea>
+                <span class="text-danger small" data-valmsg-for="boxUnitIds" data-valmsg-replace="true"></span>
+                <div class="d-flex justify-content-between align-items-center mt-1">
+                    <div class="form-text">@Localizer["BoxUnitsHint"]</div>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="fillEmptyBoxes"
+                            data-url="@Url.Action("EmptyBoxUnits", new { workOrderId = Model.WorkOrderId })"
+                            data-short-template="@Localizer["EmptyBoxesShort", "{0}", "{1}"]">@Localizer["FillEmptyBoxes"]</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+            <button type="submit" class="btn btn-success" name="submit" value="complete">
+                <i class="bi bi-box-arrow-in-down-right me-1"></i>@Localizer["Confirm"]
+            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+        </div>
+    </form>
+
+    <div id="boxDone" class="d-none">
+        <div class="alert alert-success"><i class="bi bi-check-circle me-1"></i>@Localizer["CompletedTitle"]</div>
+        <div class="d-flex gap-2">
+            <a id="boxLabelLink" class="btn btn-primary" href="#" target="_blank" rel="noopener">
+                <i class="bi bi-printer me-1"></i>@Localizer["PrintBoxLabels"]
+            </a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        </div>
+    </div>
+</div>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    (function () {
+        const form = document.getElementById('panelForm');
+        const pack = document.getElementById('packByBox');
+        const block = document.getElementById('boxBlock');
+        const container = document.getElementById('boxContainer');
+        const boxQty = document.getElementById('boxQty');
+        const preview = document.getElementById('boxPreview');
+        const lotLabel = document.getElementById('lotLabel');
+        const qtyDone = parseFloat(preview.dataset.qtyDone) || 0;
+
+        function renderPreview() {
+            const per = parseFloat(boxQty.value);
+            if (!(per > 0) || !(qtyDone > 0)) { preview.textContent = ''; return; }
+            const n = Math.ceil(qtyDone / per);
+            const last = +(qtyDone - per * (n - 1)).toFixed(6);
+            preview.textContent = preview.dataset.template.replace('{0}', n).replace('{1}', last);
+        }
+
+        pack.addEventListener('change', function () {
+            block.classList.toggle('d-none', !pack.checked);
+            lotLabel.textContent = pack.checked ? lotLabel.dataset.prefix : lotLabel.dataset.lot;
+            renderPreview();
+        });
+        container.addEventListener('change', function () {
+            const cap = container.selectedOptions[0]?.dataset.capacity;
+            if (cap) boxQty.value = cap;
+            renderPreview();
+        });
+        boxQty.addEventListener('input', renderPreview);
+
+        // 帶入空箱：依目前箱數向伺服器要該種類的空箱號，一行一個填入（可再手動改或改用掃描）
+        const fillBtn = document.getElementById('fillEmptyBoxes');
+        fillBtn.addEventListener('click', function () {
+            const per = parseFloat(boxQty.value);
+            if (!container.value || !(per > 0) || !(qtyDone > 0)) return;
+            const n = Math.ceil(qtyDone / per);
+            fetch(fillBtn.dataset.url + '&containerCode=' + encodeURIComponent(container.value) + '&take=' + n,
+                  { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(r => r.json())
+                .then(res => {
+                    if (!res.success) { alert(res.message); return; }
+                    document.getElementById('boxUnitIds').value = res.data.join('\n');
+                    if (res.data.length < n)
+                        alert(fillBtn.dataset.shortTemplate.replace('{0}', res.data.length).replace('{1}', n));
+                });
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!pack.checked) { submitPanel(this, this.querySelector('[type=submit]')); return; }
+
+            // 分箱：成功後留在面板顯示「列印箱標籤」——要由使用者點擊開新視窗，fetch 完才 window.open 會被瀏覽器擋掉。
+            // 標頭與 crud-panel.js 的 submitPanel 相同（防偽權杖＋畫面廠別）。
+            fetch(form.action, {
+                method: 'POST', body: new FormData(form),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'RequestVerificationToken': form.querySelector('input[name="__RequestVerificationToken"]').value,
+                    'X-Plant-Context': document.getElementById('__PlantContext')?.dataset.plant || ''
+                }
+            })
+                .then(r => r.json())
+                .then(res => {
+                    if (!res.success) { alert(res.message); return; }
+                    // 有綁箱號時伺服器不給 labelUrl（箱子已有固定 QR），只留「關閉」
+                    const labelLink = document.getElementById('boxLabelLink');
+                    if (res.data?.labelUrl) labelLink.href = res.data.labelUrl;
+                    else labelLink.classList.add('d-none');
+                    form.classList.add('d-none');
+                    document.getElementById('boxDone').classList.remove('d-none');
+                    toastSuccess(res.message);
+                    // 不呼叫 refreshList()：它會立刻關面板並重新整理，「列印箱標籤」就看不到了。改在面板關閉時才重新整理清單。
+                    document.getElementById('sidePanel')?.addEventListener('hidden.bs.offcanvas',
+                        () => window.location.reload(), { once: true });
+                })
+                .catch(() => alert(form.dataset.failMsg || 'Error'));
+        });
+
+        renderPreview();
+    })();
+
+    window.onWhChange = async function (e, sel) {
+        const loc = document.getElementById('locationInput');
+        if (!sel.value) { loc.value = ''; return; }
+        try {
+            const res = await fetch(`/api/warehouse/${sel.value}/default-location`);
+            if (res.ok) { const d = await res.json(); if (d.locationCode) loc.value = d.locationCode; }
+        } catch { /* 忽略，讓使用者手動輸入 */ }
+    }
+</script>

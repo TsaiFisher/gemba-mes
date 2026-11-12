@@ -1,0 +1,169 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.FIN.Models.APPayment>
+@using SmartFactory.MES.Modules.FIN.Models
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = L["APPayment"];
+    bool canUpdate      = ViewBag.CanUpdate == true;
+    bool hasSearched    = ViewBag.Searched as bool? ?? false;
+    int  curPageSize    = ViewBag.CurrentPageSize as int? ?? 20;
+    string curSupplier  = ViewBag.SearchSupplier as string ?? "";
+    var supplierOptions = ViewBag.SupplierOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-cash-coin me-2"></i>@L["APPayment"]</h1>
+        @if (ViewBag.CanCreate == true) {
+            <button class="btn btn-primary"
+                    data-url="/APPayment/Create" data-label="@L["NewAPPayment"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus-lg"></i> @L["Create"]
+            </button>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@L["SupplierCode"]</label>
+                    <select name="searchSupplier" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@L["AllSuppliers"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var s in supplierOptions)
+                        {
+                            <option value="@s.CompanyCode" selected="@(curSupplier == (string)s.CompanyCode)">@s.CompanyCode — @s.CompanyName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-2">
+                    <label class="form-label small">@L["Status"]</label>
+                    <select name="searchStatus" class="form-select">
+                        <option value="">@L["All"]</option>
+                        @foreach (APPaymentStatus s in Enum.GetValues<APPaymentStatus>())
+                        { <option value="@s" selected="@(ViewBag.SearchStatus?.ToString() == s.ToString())">@FinEnumDisplay.Text(L, s)</option> }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@L["Search"]</button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@L["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@L["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["APPaymentId"]</th>
+                        <th>@L["SupplierCode"]</th>
+                        <th>@L["PaymentDate"]</th>
+                        <th class="text-end">@L["AmountLocal"]</th>
+                        <th>@L["Status"]</th>
+                        <th>@L["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var p in Model)
+                {
+                    var badge = p.Status switch {
+                        APPaymentStatus.Paid     => "bg-success",
+                        APPaymentStatus.Void     => "bg-secondary",
+                        APPaymentStatus.Approved => "bg-info text-dark",
+                        _                        => "bg-warning text-dark"
+                    };
+                    <tr>
+                        <td><code>@p.APPaymentId</code></td>
+                        <td>@p.SupplierCode</td>
+                        <td>@p.PaymentDate.ToString("yyyy-MM-dd")</td>
+                        <td class="text-end">@p.AmountLocal.ToString(moneyFmt)</td>
+                        <td><span class="badge @badge">@FinEnumDisplay.Text(L, p.Status)</span></td>
+                        <td>
+                            @await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = p.APPaymentId }))
+                            <button class="btn btn-sm btn-outline-secondary me-1"
+                                    data-url="/APPayment/Details/@p.APPaymentId" data-label="@p.APPaymentId"
+                                    data-action="openPanel"><i class="bi bi-eye"></i> @L["View"]</button>
+                            @* 確認鈕的條件必須與服務層一致（FinPaymentService.ConfirmAPPaymentAsync
+                               只擋 Paid/Void）。原本寫成「Status == Approved」，但全系統沒有任何
+                               地方會把付款單設成 Approved——建立即為 Draft，於是確認鈕永遠不渲染，
+                               付款單在畫面上再也無法完成核銷。 *@
+                            @if (canUpdate && p.Status != APPaymentStatus.Paid && p.Status != APPaymentStatus.Void)
+                            {
+                                <button class="btn btn-sm btn-outline-success me-1" data-action="confirmPayment" data-id="@p.APPaymentId"><i class="bi bi-check2-circle"></i> @L["Confirm"]</button>
+                            }
+                            @* 作廢鈕對「已付款」也要顯示——那正是伺服端唯一會做回沖的狀態
+                               （VoidAPPaymentAsync：Draft 只翻狀態，Paid 才回補發票已核銷金額、
+                               銀行餘額並開 APPayment-Void 回沖傳票）。原本這裡把 Paid 排除掉，
+                               等於整條作廢回沖從畫面完全走不到，付錯款的人只能改資料庫。
+                               2026-09-05 人工驗收 4-3 實測發現。*@
+                            @if (canUpdate && p.Status != APPaymentStatus.Void)
+                            {
+                                <button class="btn btn-sm btn-outline-danger" data-action="voidPayment" data-id="@p.APPaymentId"><i class="bi bi-x-circle"></i> @L["Void"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_Pagination", Model)
+    }
+
+</div>
+
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-600px-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="sidePanelBody"></div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@L["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function postAction(url, confirmMsg) {
+        if (confirmMsg && !confirm(confirmMsg)) return;
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(url, { method: 'POST', headers: { 'RequestVerificationToken': token, 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(async r => {
+                const d = await r.json().catch(() => ({ success: false, message: window.i18n.t('OperationFailed') }));
+                if (d.success) { window.toastSuccess && window.toastSuccess(); setTimeout(() => location.reload(), 800); }
+                else alert(d.message || window.i18n.t('OperationFailed'));
+            }).catch(() => alert(window.i18n.t('OperationFailed')));
+    }
+    function confirmPayment(e, el) { postAction(`/APPayment/Confirm/${el.dataset.id}`, window.i18n.t('ConfirmAPPayment')); }
+    function voidPayment(e, el)    { postAction(`/APPayment/Void/${el.dataset.id}`,    window.i18n.t('ConfirmVoid')); }
+</script>
+}

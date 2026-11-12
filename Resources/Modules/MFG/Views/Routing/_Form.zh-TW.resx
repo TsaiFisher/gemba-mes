@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="SecMaster" xml:space="preserve"><value>途程主檔</value></data>
+  <data name="TabOps" xml:space="preserve"><value>工序與用料</value></data>
+  <data name="RoutingId" xml:space="preserve"><value>途程代碼</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="RoutingName" xml:space="preserve"><value>途程名稱</value></data>
+  <data name="BatchSize" xml:space="preserve"><value>批量</value></data>
+  <data name="BufferDays" xml:space="preserve"><value>緩衝天數</value></data>
+  <data name="AvgLeadTime" xml:space="preserve"><value>平均工時（小時）</value></data>
+  <data name="Active" xml:space="preserve"><value>啟用</value></data>
+  <data name="SecOps" xml:space="preserve"><value>工序明細</value></data>
+  <data name="AddOp" xml:space="preserve"><value>新增工序</value></data>
+  <data name="OpsHint" xml:space="preserve"><value>點選工序列以在下方第三層維護該工序的用料（BOM）。</value></data>
+  <data name="ColSeq" xml:space="preserve"><value>序號</value></data>
+  <data name="ColName" xml:space="preserve"><value>名稱</value></data>
+  <data name="ColWorkCenter" xml:space="preserve"><value>工作中心</value></data>
+  <data name="ColTransMode" xml:space="preserve"><value>移轉方式</value></data>
+  <data name="ColTransQty" xml:space="preserve"><value>移轉批量</value></data>
+  <data name="ColContIn" xml:space="preserve"><value>開工容器</value></data>
+  <data name="ColContOut" xml:space="preserve"><value>完工容器</value></data>
+  <data name="ColSetup" xml:space="preserve"><value>準備時間</value></data>
+  <data name="ColUnitTime" xml:space="preserve"><value>單位時間</value></data>
+  <data name="ColSop" xml:space="preserve"><value>SOP</value></data>
+  <data name="ColActions" xml:space="preserve"><value>操作</value></data>
+  <data name="OpFormAdd" xml:space="preserve"><value>新增工序</value></data>
+  <data name="OpFormEdit" xml:space="preserve"><value>編輯工序</value></data>
+  <data name="FldSeq" xml:space="preserve"><value>序號 *</value></data>
+  <data name="FldName" xml:space="preserve"><value>名稱</value></data>
+  <data name="FldWorkCenter" xml:space="preserve"><value>工作中心 *</value></data>
+  <data name="FldUom" xml:space="preserve"><value>單位 *</value></data>
+  <data name="PleaseSelect" xml:space="preserve"><value>請選擇</value></data>
+  <data name="TransContinuous" xml:space="preserve"><value>連續</value></data>
+  <data name="TransBatch" xml:space="preserve"><value>批次</value></data>
+  <data name="TransWhole" xml:space="preserve"><value>整批</value></data>
+  <data name="FldTransMode" xml:space="preserve"><value>移轉方式</value></data>
+  <data name="FldTransQty" xml:space="preserve"><value>移轉批量</value></data>
+  <data name="FldSetup" xml:space="preserve"><value>準備時間</value></data>
+  <data name="FldUnitTime" xml:space="preserve"><value>單位時間 *</value></data>
+  <data name="FldSop" xml:space="preserve"><value>SOP 編號</value></data>
+  <data name="FldTimeUnit" xml:space="preserve"><value>時間單位</value></data>
+  <data name="FldSetupTimeUnit" xml:space="preserve"><value>準備時間單位</value></data>
+  <data name="FldUnitTimeUnit" xml:space="preserve"><value>單件時間單位</value></data>
+  <data name="TimeSec" xml:space="preserve"><value>秒</value></data>
+  <data name="TimeMin" xml:space="preserve"><value>分</value></data>
+  <data name="TimeHour" xml:space="preserve"><value>時</value></data>
+  <data name="ColYield" xml:space="preserve"><value>良率</value></data>
+  <data name="FldYield" xml:space="preserve"><value>良率 %</value></data>
+  <data name="FldMoveTime" xml:space="preserve"><value>移轉時間</value></data>
+  <data name="FldQueueTime" xml:space="preserve"><value>等待時間</value></data>
+  <data name="FldTooling" xml:space="preserve"><value>治具/模具</value></data>
+  <data name="Version" xml:space="preserve"><value>版本</value></data>
+  <data name="EffectiveFrom" xml:space="preserve"><value>生效起日</value></data>
+  <data name="EffectiveTo" xml:space="preserve"><value>生效迄日</value></data>
+  <data name="ChkContIn" xml:space="preserve"><value>開工容器</value></data>
+  <data name="ChkContOut" xml:space="preserve"><value>完工容器</value></data>
+  <data name="ContNone" xml:space="preserve"><value>（不使用）</value></data>
+  <data name="ChkOutsource" xml:space="preserve"><value>外包</value></data>
+  <data name="ChkFpi" xml:space="preserve"><value>需首件檢查</value></data>
+  <data name="ChkInspect" xml:space="preserve"><value>需檢驗</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Confirm" xml:space="preserve"><value>確認</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="SecBom" xml:space="preserve"><value>用料清單</value></data>
+  <data name="AddBom" xml:space="preserve"><value>新增用料</value></data>
+  <data name="BomColSeq" xml:space="preserve"><value>序號</value></data>
+  <data name="BomColProduct" xml:space="preserve"><value>品號</value></data>
+  <data name="BomColQty" xml:space="preserve"><value>數量</value></data>
+  <data name="BomColUom" xml:space="preserve"><value>單位</value></data>
+  <data name="BomColScrap" xml:space="preserve"><value>損耗率%</value></data>
+  <data name="BomColOffcut" xml:space="preserve"><value>下角率%</value></data>
+  <data name="BomColActions" xml:space="preserve"><value>操作</value></data>
+  <data name="BomFormAdd" xml:space="preserve"><value>新增用料</value></data>
+  <data name="BomFormEdit" xml:space="preserve"><value>編輯用料</value></data>
+  <data name="BomFldSeq" xml:space="preserve"><value>序號 *</value></data>
+  <data name="BomFldProduct" xml:space="preserve"><value>品號 *</value></data>
+  <data name="BomFldQty" xml:space="preserve"><value>數量 *</value></data>
+  <data name="BomFldUom" xml:space="preserve"><value>單位 *</value></data>
+  <data name="BomFldScrap" xml:space="preserve"><value>損耗率%</value></data>
+  <data name="BomFldOffcut" xml:space="preserve"><value>下角率%</value></data>
+  <data name="BomFldOffcutHint" xml:space="preserve"><value>加工後可回收下腳料（如板材/皮革邊料）之比率，用以拉高投入量；與損耗率不同，下角料有殘值，本欄僅影響投入量計算，不建下角料入庫/成本。</value></data>
+  <data name="NoOps" xml:space="preserve"><value>尚無工序</value></data>
+  <data name="NoBoms" xml:space="preserve"><value>尚無用料</value></data>
+  <data name="BomTitleFmt" xml:space="preserve"><value>工序 {{0}} — 用料清單</value></data>
+  <data name="JsOpSeqInvalid" xml:space="preserve"><value>請輸入有效的工序序號。</value></data>
+  <data name="JsOpWcRequired" xml:space="preserve"><value>請選擇工作中心。</value></data>
+  <data name="JsOpUomRequired" xml:space="preserve"><value>請選擇單位。</value></data>
+  <data name="JsOpUnitInvalid" xml:space="preserve"><value>請輸入有效的單位時間。</value></data>
+  <data name="JsOpSeqDupFmt" xml:space="preserve"><value>工序序號 {{0}} 已存在。</value></data>
+  <data name="JsOpDelConfirmFmt" xml:space="preserve"><value>確定刪除工序 {{0}}？</value></data>
+  <data name="JsBomSelectOpFirst" xml:space="preserve"><value>請先選擇工序。</value></data>
+  <data name="JsBomSeqInvalid" xml:space="preserve"><value>請輸入有效的序號。</value></data>
+  <data name="JsBomProductRequired" xml:space="preserve"><value>請輸入品號。</value></data>
+  <data name="JsBomQtyInvalid" xml:space="preserve"><value>請輸入有效數量。</value></data>
+  <data name="JsBomUomRequired" xml:space="preserve"><value>請選擇單位。</value></data>
+  <data name="JsBomSeqDupFmt" xml:space="preserve"><value>用料序號 {{0}} 已存在。</value></data>
+  <data name="JsBomDelConfirm" xml:space="preserve"><value>確定刪除此用料？</value></data>
+  <data name="JsBomOffcutInvalid" xml:space="preserve"><value>下角率不可為負值。</value></data>
+  <data name="QueueSuggestApply" xml:space="preserve"><value>套用</value></data>
+  <data name="QueueSuggestFmt" xml:space="preserve"><value>建議 {0} {1}（近 {3} 天實際報工 {2} 筆的中位數，已扣搬運時間）</value></data>
+  <data name="BomColIssueMethod" xml:space="preserve"><value>發料方式</value></data>
+  <data name="BomFldIssueMethod" xml:space="preserve"><value>發料方式</value></data>
+  <data name="BomFldIssueMethodHint" xml:space="preserve"><value>發料＝投產後倉庫主動發；領料＝現場用手機申請；後沖＝完工時系統自動扣帳</value></data>
+  <data name="IssueMethodPush" xml:space="preserve"><value>發料</value></data>
+  <data name="IssueMethodPull" xml:space="preserve"><value>領料</value></data>
+  <data name="IssueMethodBackflush" xml:space="preserve"><value>後沖</value></data>
+  <data name="OutsourceOpDisabledHint" xml:space="preserve"><value>途程工序委外已停用：日常委外請把委外段建成半成品（MRP 模式「委外」），臨時外包請在派工畫面按「轉委外」。</value></data>
+</root>

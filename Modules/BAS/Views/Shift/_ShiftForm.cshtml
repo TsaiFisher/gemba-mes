@@ -1,0 +1,82 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.Models.Shift
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    string action = isEdit ? "Edit" : "Create";
+}
+
+<form method="post" asp-action="@action" asp-controller="Shift" asp-route-shiftCode="@(isEdit ? Model.ShiftCode : null)"
+      data-ajax="true" class="p-1">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["ShiftCode"] <span class="text-danger">*</span></label>
+        @if (isEdit)
+        {
+            <input type="text" class="form-control bg-light" value="@Model.ShiftCode" readonly />
+            <input type="hidden" asp-for="ShiftCode" />
+            <div class="form-text text-muted">@Localizer["ShiftCodeReadonlyHint"]</div>
+        }
+        else
+        {
+            <input asp-for="ShiftCode" class="form-control u-text-transform-uppercase" placeholder="@Localizer["ShiftCodePlaceholder"]"
+                   />
+        }
+        <span asp-validation-for="ShiftCode" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["ShiftName"] <span class="text-danger">*</span></label>
+        <input asp-for="ShiftName" class="form-control" />
+        <span asp-validation-for="ShiftName" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["StartTime"]</label>
+        <input type="time" name="StartTime" value="@(Model.StartTime?.ToString("HH:mm") ?? "")" class="form-control js-shift-time" />
+        <span asp-validation-for="StartTime" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["EndTime"]</label>
+        <input type="time" name="EndTime" value="@(Model.EndTime?.ToString("HH:mm") ?? "")" class="form-control js-shift-time" />
+        <span asp-validation-for="EndTime" class="text-danger small"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-6 mb-3">
+            <label class="form-label fw-semibold">@Localizer["BreakStart"]</label>
+            <input type="time" name="BreakStart" value="@(Model.BreakStart?.ToString("HH:mm") ?? "")" class="form-control js-shift-time" />
+        </div>
+        <div class="col-6 mb-3">
+            <label class="form-label fw-semibold">@Localizer["BreakEnd"]</label>
+            <input type="time" name="BreakEnd" value="@(Model.BreakEnd?.ToString("HH:mm") ?? "")" class="form-control js-shift-time" />
+        </div>
+    </div>
+    <div class="form-text text-muted mb-3">@Localizer["BreakHint"]</div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["WorkMinutes"]</label>
+        <input asp-for="WorkMinutes" type="number" step="1" class="form-control bg-light" id="shiftWorkMinutes" readonly />
+        <div class="form-text text-muted">@Localizer["WorkMinutesAutoHint"]</div>
+    </div>
+
+    <div class="mb-4">
+        <div class="form-check">
+            <input type="checkbox" asp-for="IsActive" class="form-check-input" id="shiftIsActive" />
+            <label class="form-check-label fw-semibold" for="shiftIsActive">@Localizer["IsActive"]</label>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss-panel="true">
+            @Localizer["Cancel"]
+        </button>
+    </div>
+</form>

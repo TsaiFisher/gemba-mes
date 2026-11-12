@@ -1,0 +1,14 @@
+@*
+    Core 擴充點：廠別維護面板的模組專屬設定區塊（Core 版本為空注解）。
+
+    ⚠️ 本檔是 Core 與 ProjectZ **各自新增的同名檔**（不存在於 fork 點），
+    已登錄 scripts/core-drift-baseline.txt。刻意只保留這一行委派——
+    所有 ProjectZ 專屬設定一律加在 _ProjectZPlantParams.cshtml，不要加在這裡。
+    如此本檔對 Core 的漂移永久固定為一行，Core 日後改動此檔時 merge 成本趨近於零。
+    （與 Views/SystemParam/_SystemParamModuleExtensions.cshtml 的既有模式一致。）
+
+    ⚠️ 2026-08-21 更正：本檔原本寫「列於 core-drift-baseline.txt」，**當時並沒有**——
+    漂移守門的候選集只看「ProjectZ 改過的 Core 既有檔」，本檔不在 fork 點所以整支被跳過，
+    於是它分歧了也沒人知道、也不可能被登錄。守門已補上這一類的偵測，本檔同批補登。
+*@
+@await Html.PartialAsync("_ProjectZPlantParams")

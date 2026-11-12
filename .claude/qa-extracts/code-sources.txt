@@ -1,0 +1,381 @@
+# 程式碼來源清單（§10.11.13／待決 #50）
+#
+# 這份檔案是**閘門，不是設定**：`qa-extract-generate.py` 對 .cs 一律預設拒絕，
+# 只有列在這裡的才跑得起來。新增一支＝一個要被審的動作，在 PR diff 裡看得見。
+#
+# 檔名命中紅線（授權／指紋／2FA／密碼／權杖／加密／驗證授權）的，
+# **列了也照樣被拒絕**——那一道在腳本裡，守的是有人手滑把它加進來的那一次。
+#
+# 格式：<repo 相對路徑>            # 註解
+# 第一批的選法（§10.11.13）：BAS＋FIN＋INV 落在缺口帶 0.45–0.65 的註解單位所在的檔案。
+# 選它們不是因為缺口比例最高，是**一輪審得完**——規格 .md 那次 457 段一次上桌，
+# 審核節奏被拖成三週。
+#
+# 行末數字＝當初量到的缺口帶單位數／這支檔案實際切得出的單位數，僅供排審核順序，
+# 不是閘門的一部分。
+
+
+# ── BAS　基本資料（30 支／76 單位） ──
+Modules/BAS/Controllers/DocNumberConfigController.cs              # 缺口 9 ／ 切出 9
+Modules/BAS/Controllers/UomController.cs                          # 缺口 6 ／ 切出 6
+Modules/BAS/Controllers/WorkCenterController.cs                   # 缺口 3 ／ 切出 5
+Modules/BAS/Controllers/ProductController.cs                      # 缺口 3 ／ 切出 4
+Modules/BAS/Controllers/ShiftGroupController.cs                   # 缺口 4 ／ 切出 4
+Modules/BAS/Services/MasterReferenceGuard.cs                      # 缺口 3 ／ 切出 4
+Modules/BAS/Services/UomService.cs                                # 缺口 2 ／ 切出 4
+Modules/BAS/Controllers/CurrencyApiController.cs                  # 缺口 3 ／ 切出 3
+Modules/BAS/Services/IUomService.cs                               # 缺口 3 ／ 切出 3
+Modules/BAS/Services/PlantParamService.cs                         # 缺口 2 ／ 切出 3
+Modules/BAS/BASModule.cs                                          # 缺口 1 ／ 切出 2
+Modules/BAS/Controllers/CompanyController.cs                      # 缺口 2 ／ 切出 2
+Modules/BAS/Controllers/ContainerController.cs                    # 缺口 2 ／ 切出 2
+Modules/BAS/Controllers/CurrencyController.cs                     # 缺口 2 ／ 切出 2
+Modules/BAS/Controllers/TaxController.cs                          # 缺口 2 ／ 切出 2
+Modules/BAS/Controllers/WarehouseController.cs                    # 缺口 1 ／ 切出 2
+Modules/BAS/Models/DocNumberConfig.cs                             # 缺口 2 ／ 切出 2
+Modules/BAS/Models/PlantParamCatalog.cs                           # 缺口 1 ／ 切出 2
+Modules/BAS/Models/Product.cs                                     # 缺口 2 ／ 切出 2
+Modules/BAS/Services/DecimalPrecision.cs                          # 缺口 1 ／ 切出 2
+Modules/BAS/Services/PlantDefaultLocationResolver.cs              # 缺口 2 ／ 切出 2
+Modules/BAS/Controllers/ShiftController.cs                        # 缺口 1 ／ 切出 1
+Modules/BAS/Controllers/ToolingController.cs                      # 缺口 1 ／ 切出 1
+Modules/BAS/Models/Shift.cs                                       # 缺口 1 ／ 切出 1
+Modules/BAS/Models/ShiftGroup.cs                                  # 缺口 1 ／ 切出 1
+Modules/BAS/Models/Tooling.cs                                     # 缺口 1 ／ 切出 1
+Modules/BAS/Models/WorkCenter.cs                                  # 缺口 1 ／ 切出 1
+Modules/BAS/Services/BasApprovalSyncContributors.cs               # 缺口 1 ／ 切出 1
+Modules/BAS/Services/UomConversionNotFoundException.cs            # 缺口 1 ／ 切出 1
+Modules/BAS/Services/UomStepHelper.cs                             # 缺口 1 ／ 切出 1
+
+# ── FIN　財務會計（8 支／25 單位） ──
+Modules/FIN/Services/APInvoiceService.cs                          # 缺口 7 ／ 切出 11
+Modules/FIN/Services/ARInvoiceService.cs                          # 缺口 3 ／ 切出 4
+Modules/FIN/Services/FinPaymentService.cs                         # 缺口 3 ／ 切出 3
+Modules/FIN/Controllers/APPaymentController.cs                    # 缺口 2 ／ 切出 2
+Modules/FIN/Models/APInvoice.cs                                   # 缺口 2 ／ 切出 2
+Modules/FIN/Controllers/ARAgingController.cs                      # 缺口 1 ／ 切出 1
+Modules/FIN/Controllers/BankAccountController.cs                  # 缺口 1 ／ 切出 1
+Modules/FIN/FinEnumDisplay.cs                                     # 缺口 1 ／ 切出 1
+
+# ── INV　庫存管理（28 支／92 單位） ──
+Modules/INV/Services/IInventoryReservationService.cs              # 缺口 5 ／ 切出 13
+Modules/INV/Controllers/WarehouseApiController.Fulfillment.cs     # 缺口 6 ／ 切出 8
+Modules/INV/Controllers/MaterialStagingController.cs              # 缺口 4 ／ 切出 6
+Modules/INV/Services/InventoryPostingService.cs                   # 缺口 3 ／ 切出 6
+Modules/INV/Services/InventoryReservationService.cs               # 缺口 3 ／ 切出 6
+Modules/INV/Controllers/InventoryCountController.cs               # 缺口 4 ／ 切出 5
+Modules/INV/Reporting/SlowMovingInventoryTool.cs                  # 缺口 2 ／ 切出 5
+Modules/INV/Reporting/InventoryValuationTool.cs                   # 缺口 3 ／ 切出 4
+Modules/INV/Services/MaterialStagingService.cs                    # 缺口 2 ／ 切出 4
+Modules/INV/Controllers/OutsourceMaterialController.cs            # 缺口 1 ／ 切出 3
+Modules/INV/Controllers/StockLedgerController.cs                  # 缺口 3 ／ 切出 3
+Modules/INV/Reporting/StockShortageTool.cs                        # 缺口 1 ／ 切出 3
+Modules/INV/Services/InventoryAgingCalculator.cs                  # 缺口 2 ／ 切出 3
+Modules/INV/Controllers/InventoryAgingController.cs               # 缺口 1 ／ 切出 2
+Modules/INV/Controllers/InventoryValuationController.cs           # 缺口 1 ／ 切出 2
+Modules/INV/Controllers/ReworkMaterialController.cs               # 缺口 1 ／ 切出 2
+Modules/INV/Controllers/StockAdjustmentController.cs              # 缺口 1 ／ 切出 2
+Modules/INV/Controllers/WarehouseApiController.cs                 # 缺口 1 ／ 切出 2
+Modules/INV/Models/MaterialStagingOrder.cs                        # 缺口 1 ／ 切出 2
+Modules/INV/Services/IInventoryService.cs                         # 缺口 2 ／ 切出 2
+Modules/INV/Services/InventoryService.cs                          # 缺口 2 ／ 切出 2
+Modules/INV/Models/IInventoryDocument.cs                          # 缺口 1 ／ 切出 1
+Modules/INV/Models/SampleDoc.cs                                   # 缺口 1 ／ 切出 1
+Modules/INV/Models/ScrapDoc.cs                                    # 缺口 1 ／ 切出 1
+Modules/INV/Services/IInventoryPostingService.cs                  # 缺口 1 ／ 切出 1
+Modules/INV/ViewModels/InventoryValuationRow.cs                   # 缺口 1 ／ 切出 1
+Modules/INV/ViewModels/MaterialStagingFormVm.cs                   # 缺口 1 ／ 切出 1
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# 第二批（2026-08-25）：PUR ＋ ORD ＋ 簽核 ＋ 權限　42 支／缺口帶 109 單位
+#
+# 選法與第一批相同（0.45–0.65 缺口帶所在的檔案，§10.11.13 那張模組表），
+# 只是換四個桶。第一批退回 6／177（3.4%），提示詞不動。
+#
+# ⚠️ 「簽核」與「權限」兩桶的檔案**不在 `Modules/` 底下**（Core 主體功能）。
+#    §10.11.13 記過這件事：第一版依目錄分桶時「簽核 0 則」是假零。
+#
+# ⚠️ 這四桶的控制器與第一批的 INV 控制器**共用同一批複製貼上的註解**
+#    （「開單僅同步核准狀態顯示，不觸發自動過帳」等，見 DECISIONS.md）。
+#    跨檔重複掃描（`qa-extract-worklist.py` 的 duplicate_flags）這次必須先跑再審。
+# ══════════════════════════════════════════════════════════════════════════
+
+# ── PUR　採購（21 支／36 單位） ──
+Modules/PUR/Controllers/GoodsReceiptController.cs                 # 缺口 4 ／ 切出 8
+Modules/PUR/Controllers/OutsourceReceiptController.cs             # 缺口 4 ／ 切出 7
+Modules/PUR/Services/OutsourceReceiptService.cs          # 2026-10-08 補：#229 把同名 Controller 的帳務邏輯搬進來，已審規則隨之消失
+Modules/PUR/Services/PurchaseService.cs                           # 缺口 4 ／ 切出 7
+Modules/PUR/Services/OutsourceScrapCalculator.cs                  # 缺口 3 ／ 切出 4
+Modules/PUR/Controllers/GoodsReturnController.cs                  # 缺口 2 ／ 切出 3
+Modules/PUR/Controllers/PurchaseOrderController.cs                # 缺口 2 ／ 切出 2
+Modules/PUR/Models/PurchaseOrderLine.cs                           # 缺口 2 ／ 切出 2
+Modules/PUR/Services/OutsourceReworkCostCalculator.cs             # 缺口 2 ／ 切出 3
+Modules/PUR/Controllers/OutsourceProgressController.cs            # 缺口 1 ／ 切出 2
+Modules/PUR/Controllers/OutsourceReworkController.cs              # 缺口 1 ／ 切出 2
+Modules/PUR/Controllers/PurchaseAmountController.cs               # 缺口 1 ／ 切出 2
+Modules/PUR/Controllers/PurchaseRequestController.cs              # 缺口 1 ／ 切出 1
+Modules/PUR/Controllers/VendorEvaluationController.cs             # 缺口 1 ／ 切出 2
+Modules/PUR/Models/PurchaseRequestLine.cs                         # 缺口 1 ／ 切出 1
+Modules/PUR/Models/VendorPriceList.cs                             # 缺口 1 ／ 切出 2
+Modules/PUR/Services/IPurchaseService.cs                          # 缺口 1 ／ 切出 1
+Modules/PUR/Services/OtdFactService.cs                            # 缺口 1 ／ 切出 1
+Modules/PUR/Services/PurchaseApprovalSyncContributors.cs          # 缺口 1 ／ 切出 1
+Modules/PUR/Services/VendorEvaluationScoreService.cs              # 缺口 1 ／ 切出 2
+Modules/PUR/ViewModels/PurchaseOrderFormVm.cs                     # 缺口 1 ／ 切出 1
+
+# ── ORD　訂單出貨（11 支／27 單位） ──
+Modules/ORD/Controllers/SalesReturnController.cs                  # 缺口 5 ／ 切出 7
+Modules/ORD/Controllers/GoodsShipmentController.cs                # 缺口 4 ／ 切出 5
+Modules/ORD/Controllers/SalesOrderController.cs                   # 缺口 4 ／ 切出 6
+Modules/ORD/Controllers/InternalOrderController.cs                # 缺口 3 ／ 切出 5
+Modules/ORD/Models/SalesOrderLine.cs                              # 缺口 2 ／ 切出 2
+Modules/ORD/Reporting/OrderOverdueTool.cs                         # 缺口 2 ／ 切出 3
+Modules/ORD/Reporting/ReturnRateTool.cs                           # 缺口 2 ／ 切出 3
+Modules/ORD/Reporting/SalesRankingTool.cs                         # 缺口 2 ／ 切出 4
+Modules/ORD/Controllers/DeliveryRateController.cs                 # 缺口 1 ／ 切出 1
+Modules/ORD/Controllers/OrderOverdueController.cs                 # 缺口 1 ／ 切出 1
+Modules/ORD/Controllers/SalesRankingController.cs                 # 缺口 1 ／ 切出 1
+
+# ── 簽核　（7 支／22 單位；Core 主體，不在 Modules/ 底下） ──
+Services/ApprovalService.cs                                       # 缺口 10 ／ 切出 18
+Controllers/ApprovalController.cs                                 # 缺口 4 ／ 切出 4
+Models/ApprovalModels.cs                                          # 缺口 4 ／ 切出 4
+Controllers/ApprovalTemplateController.cs                         # 缺口 1 ／ 切出 1
+Services/IApprovalNotifier.cs                                     # 缺口 1 ／ 切出 2
+Services/IApprovalSyncContributor.cs                              # 缺口 1 ／ 切出 1
+ViewComponents/PendingApprovalBadgeViewComponent.cs               # 缺口 1 ／ 切出 1
+
+# ── 權限　（3 支／24 單位；同上為 Core 主體） ──
+# ⚠️ 這三支的註解有相當比例是「為什麼這樣寫」的實作取捨，提示詞第 7 條會讓模型棄權。
+#    產出比預期低是**正常**的，不是模型壞掉。真正值錢的是機密報表分級與資料可見範圍那幾段。
+Services/RolePermissionSeeder.cs                                  # 缺口 16 ／ 切出 18
+Services/ProjectZMenuContributor.cs                               # 缺口 6 ／ 切出 9
+Services/PermissionGate.cs                                        # 缺口 2 ／ 切出 2
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# 第三批（2026-08-26）：MFG　62 支／缺口帶 162 單位（該批檔案切得出 271 個單位）
+#
+# 選法與前兩批相同（0.45–0.65 缺口帶所在的檔案）。這一批**明顯比第二批大**
+# （第二批 41 支／109 單位／產出 140 則），預估產出約 200 則。
+# 不再往下切一半：MFG 是一個領域，切一半會讓「排程怎麼算」跟「派工怎麼派」
+# 分兩輪審，審第一輪時沒有第二輪的對照，反而更難判。
+#
+# ⚠️ **QA 桶（158 單位／36 支）刻意整桶不收。** 它是這套助理自己的實作，
+#    註解密度高所以在缺口排名衝到第二——**排名高不等於該收**。
+#    「排程引擎怎麼算的」對使用者有意義，「檢索器怎麼寫的」沒有，
+#    而且會讓語料自我指涉（問 Q&A 的行為，答案引用 Q&A 的原始碼註解）。
+#    這不是先後順序問題，是**永久排除**；要改要先改這段註解。
+#
+# 收完這批之後還沒收的：RPS 79／27、Core 其他 74／24、ACT 23／11、
+# QCR 15／7、_Shared 15／5。QCR 最小，適合當第四批的收尾。
+# ══════════════════════════════════════════════════════════════════════════
+
+# ── MFG　製造（62 支／162 單位） ──
+Modules/MFG/Services/SchedulingEngine.cs                         # 缺口 24 ／ 切出 33
+Modules/MFG/Services/MrpEngine.cs                                # 缺口 21 ／ 切出 30
+Modules/MFG/Controllers/ScheduleController.cs                    # 缺口 11 ／ 切出 18
+Modules/MFG/Controllers/DispatchController.cs                    # 缺口 10 ／ 切出 22
+Modules/MFG/Services/ToolingShotService.cs                       # 缺口 5 ／ 切出 5
+Modules/MFG/Services/WorkingTimeWalker.cs                        # 缺口 5 ／ 切出 6
+Modules/MFG/Services/MrpRunExecutionService.cs                   # 缺口 4 ／ 切出 8
+Modules/MFG/Services/ProductionCostAccrualService.cs             # 缺口 4 ／ 切出 4
+Modules/MFG/Services/WorkOrderReleaseService.cs                  # 缺口 4 ／ 切出 8
+Modules/MFG/Controllers/RoutingController.cs                     # 缺口 3 ／ 切出 3
+Modules/MFG/Controllers/WorkCalendarController.cs                # 缺口 3 ／ 切出 3
+Modules/MFG/Services/ISchedulingEngine.cs                        # 缺口 3 ／ 切出 5
+Modules/MFG/Services/MrpReRunEvaluation.cs                       # 缺口 3 ／ 切出 3
+Modules/MFG/Services/OeeService.cs                               # 缺口 3 ／ 切出 4
+Modules/MFG/Services/ProductionCompletionService.cs              # 缺口 3 ／ 切出 5
+Modules/MFG/Services/StagingSourceService.cs                     # 缺口 3 ／ 切出 3
+Modules/MFG/Controllers/MaterialSlipController.cs                # 缺口 2 ／ 切出 3
+Modules/MFG/Services/MaterialSlipService.cs              # 2026-10-08 補：#229 把同名 Controller 的帳務邏輯搬進來，已審規則隨之消失
+Modules/MFG/Models/RoutingBom.cs                                 # 缺口 2 ／ 切出 3
+Modules/MFG/Services/EtaRecalculator.cs                          # 缺口 2 ／ 切出 4
+Modules/MFG/Services/MrpAutoExpandService.cs                     # 缺口 2 ／ 切出 2
+Modules/MFG/Services/MrpPurchaseVariance.cs                      # 缺口 2 ／ 切出 2
+Modules/MFG/Services/QueueTimeBackfillService.cs                 # 缺口 2 ／ 切出 2
+Modules/MFG/Services/ReportEtaNotifier.cs                        # 缺口 2 ／ 切出 3
+Modules/MFG/Controllers/MachineDowntimeController.cs             # 缺口 1 ／ 切出 1
+Modules/MFG/Controllers/MrpRunController.cs                      # 缺口 1 ／ 切出 6
+Modules/MFG/Controllers/MrpVarianceDecisionController.cs         # 缺口 1 ／ 切出 3
+Modules/MFG/Controllers/OrderChangeDecisionController.cs         # 缺口 1 ／ 切出 2
+Modules/MFG/Controllers/OutsourcePurchaseOrderController.cs      # 缺口 1 ／ 切出 4
+Modules/MFG/Controllers/OutsourceQuotationController.cs          # 缺口 1 ／ 切出 2
+Modules/MFG/Controllers/ProductionBatchController.cs             # 缺口 1 ／ 切出 3
+Modules/MFG/Controllers/ProductionCompletionController.cs        # 缺口 1 ／ 切出 1
+Modules/MFG/Controllers/UtilizationController.cs                 # 缺口 1 ／ 切出 1
+Modules/MFG/Controllers/WorkOrderController.cs                   # 缺口 1 ／ 切出 8
+Modules/MFG/Controllers/WorkOrderMaterialStatusController.cs     # 缺口 1 ／ 切出 3
+Modules/MFG/Controllers/WorkOrderVarianceController.cs           # 缺口 1 ／ 切出 1
+Modules/MFG/MfgEnumDisplay.cs                                    # 缺口 1 ／ 切出 1
+Modules/MFG/Models/Analytics/LineStatusDashboardVm.cs            # 缺口 1 ／ 切出 1
+Modules/MFG/Models/Dispatch.cs                                   # 缺口 1 ／ 切出 6
+Modules/MFG/Models/MachineStatusOrder.cs                         # 缺口 1 ／ 切出 2
+Modules/MFG/Models/MaterialSlip.cs                               # 缺口 1 ／ 切出 2
+Modules/MFG/Models/MrpRun.cs                                     # 缺口 1 ／ 切出 1
+Modules/MFG/Models/MrpRunLine.cs                                 # 缺口 1 ／ 切出 1
+Modules/MFG/Models/OeeReport.cs                                  # 缺口 1 ／ 切出 1
+Modules/MFG/Models/OperationTimeUnitExtensions.cs                # 缺口 1 ／ 切出 1
+Modules/MFG/Models/OutsourceQuotation.cs                         # 缺口 1 ／ 切出 2
+Modules/MFG/Models/ProductionReportContainer.cs                  # 缺口 1 ／ 切出 1
+Modules/MFG/Services/ActualRateReestimationService.cs            # 缺口 1 ／ 切出 3
+Modules/MFG/Services/IMfgSimplifiedModeService.cs                # 缺口 1 ／ 切出 3
+Modules/MFG/Services/IMrpEngine.cs                               # 缺口 1 ／ 切出 4
+Modules/MFG/Services/IMultiLevelBomService.cs                    # 缺口 1 ／ 切出 2
+Modules/MFG/Services/IOperationSequenceGuard.cs                  # 缺口 1 ／ 切出 2
+Modules/MFG/Services/IProductionCostAccrualService.cs            # 缺口 1 ／ 切出 2
+Modules/MFG/Services/IWorkOrderCostFinalizationService.cs        # 缺口 1 ／ 切出 2
+Modules/MFG/Services/IWorkOrderReleaseService.cs                 # 缺口 1 ／ 切出 5
+Modules/MFG/Services/LineStatusAnalyticsService.cs               # 缺口 1 ／ 切出 2
+Modules/MFG/Services/MfgApprovalSyncContributors.cs              # 缺口 1 ／ 切出 1
+Modules/MFG/Services/MrpRunResult.cs                             # 缺口 1 ／ 切出 5
+Modules/MFG/Services/MultiLevelBomService.cs                     # 缺口 1 ／ 切出 1
+Modules/MFG/Services/OperationSequenceGuard.cs                   # 缺口 1 ／ 切出 1
+Modules/MFG/Services/WipBalanceCalculator.cs                     # 缺口 1 ／ 切出 2
+Modules/MFG/Services/WorkOrderCostCalculator.cs                  # 缺口 1 ／ 切出 2
+Modules/MFG/Services/WorkOrderCostFinalizationService.cs         # 缺口 1 ／ 切出 1
+
+# ── FIN　補完（1 支／1 單位） ──
+# 順手收尾：FIN 在第一批就收了 8 支，只剩這一支落在缺口帶。
+# 留著它會讓 FIN 永遠停在「快收完」，而剩一支的成本趨近於零。
+Modules/FIN/Models/IErpSyncDocument.cs                           # 缺口 1 ／ 切出 1
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# 第四批（2026-08-26）：手機 API ＋ QCR　10 支／缺口帶 26 單位
+#
+# 這一批小，是**刻意的收尾批**：QCR 與手機是缺口帶裡剩下最小的兩桶，
+# 一輪審得完（前一批 246 則是上限，不是常態）。
+#
+# ⚠️ **手機不在 `Modules/` 底下**，在 `Api/Mobile/`。第三批的模組表把它歸進
+#    「Core 其他」，於是表面上看不出有手機——**與「簽核 0 則是假零」同一個形狀的錯**：
+#    依目錄分桶，桶名就會漏掉不照目錄長的東西。這次是使用者問「有沒有規劃手機」才查出來。
+#
+# ⚠️ `Api/Mobile/MobileAuthController.cs`（缺口 2）**故意不列**：檔名含 `Auth`，
+#    `CODE_REDLINE` 會拒絕，列了也跑不起來。那是登入路徑，拒絕是對的。
+#
+# 註：手機的**使用者面**規則已經在語料裡（`mobile-pwa.md` 在 `.md` 那批擷取過），
+#     這一批補的是**後端行為**那一半（報工、領料、推播的實際判定）。
+# ══════════════════════════════════════════════════════════════════════════
+
+# ── 手機 API（3 支／11 單位；不在 Modules/ 底下） ──
+Api/Mobile/MobileMfgController.cs                              # 缺口 8 ／ 切出 9
+Api/Mobile/MobileInvController.cs                              # 缺口 2 ／ 切出 4
+Api/Mobile/MobilePushController.cs                             # 缺口 1 ／ 切出 2
+
+# ── QCR　品質管理（7 支／15 單位） ──
+Modules/QCR/Controllers/InspectionOrderController.cs           # 缺口 4 ／ 切出 9
+Modules/QCR/Services/IqcInspectionService.cs                   # 缺口 4 ／ 切出 5
+Modules/QCR/Services/IIqcInspectionService.cs                  # 缺口 2 ／ 切出 3
+Modules/QCR/Services/QcrReturnService.cs                       # 缺口 2 ／ 切出 2
+Modules/QCR/Controllers/InspectionSpecController.cs            # 缺口 1 ／ 切出 1
+Modules/QCR/Controllers/NcrController.cs                       # 缺口 1 ／ 切出 2
+Modules/QCR/Services/ISpcAnalysisService.cs                    # 缺口 1 ／ 切出 1
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# 第五批（2026-08-26）：把缺口帶收乾淨　69 支／缺口帶 193 單位
+#
+# 這是**最後一批**。收完之後 0.45–0.65 缺口帶只剩系統助理（QA）自己的程式碼，
+# 而那一桶是永久排除的（助理不需要會回答自己怎麼實作的）。
+#
+# 為什麼連「1 支／1 單位」的尾巴也收：留著它們會讓每一桶永遠停在「快收完」，
+# 而剩一支的成本趨近於零——同第三批收 FIN 最後一支的理由。
+#
+# ⚠️ `Program.cs` 列在這裡是**新開的做法**，配合這一批加的第三道紅線
+#    （`CODE_REDLINE_BODY`，段落層）。前兩道比對的都是檔名，而 `Program.cs:665`
+#    是整段啟動授權驗證（含 Internal License 的 clientCode）——檔名一個字都不命中。
+#    現在那 4 段（:96 DataProtection 金鑰、:342 健康檢查揭露、:665 授權驗證、
+#    :744 驗證失敗行為）會在送模型前被攔掉並列印行號，本文不印。
+#    **沒有那道紅線就不准列 `Program.cs`。**
+#
+# ⚠️ `Data/ApplicationDbContext.cs` 列在這裡**不違反「不得修改 ApplicationDbContext」**：
+#    擷取只讀不寫。整條管線沒有任何一步會改動來源檔。
+# ══════════════════════════════════════════════════════════════════════════
+
+# ── 報表與排程寄送（27 支／79 單位） ──
+Modules/RPS/Contracts/ReportRequestBase.cs                    # 缺口 8
+Modules/RPS/Controllers/ReportScheduleController.cs           # 缺口 7
+Modules/RPS/Services/ReportDispatcherService.cs               # 缺口 7
+Modules/RPS/Services/SavedQueryService.cs                     # 缺口 5
+Modules/RPS/Controllers/ReportInboxController.cs              # 缺口 4
+Modules/RPS/Models/ReportDefinition.cs                        # 缺口 4
+Modules/RPS/Services/ToolParamsToSavedQuery.cs                # 缺口 4
+Modules/RPS/Contracts/IReportTool.cs                          # 缺口 3
+Modules/RPS/Controllers/SavedQueryController.cs               # 缺口 3
+Modules/RPS/RPSModule.cs                                      # 缺口 3
+Modules/RPS/Services/ReportFileStore.cs                       # 缺口 3
+Modules/RPS/Services/ReportSchedulePermissionChecker.cs       # 缺口 3
+Modules/RPS/Services/ReportToolCatalog.cs                     # 缺口 3
+Modules/RPS/Services/ReportToolRunner.cs                      # 缺口 3
+Modules/RPS/Contracts/LegacyQueryPeriod.cs                    # 缺口 2
+Modules/RPS/Models/ReportRecipient.cs                         # 缺口 2
+Modules/RPS/Models/ReportRun.cs                               # 缺口 2
+Modules/RPS/Services/ReportScheduleCalculator.cs              # 缺口 2
+Modules/RPS/Services/ReportScreenBindings.cs                  # 缺口 2
+Modules/RPS/ViewModels/ReportScheduleFormVm.cs                # 缺口 2
+Modules/RPS/Contracts/IReportToolAccessBatch.cs               # 缺口 1
+Modules/RPS/Controllers/ReportRunHistoryController.cs         # 缺口 1
+Modules/RPS/ReportToolsFeature.cs                             # 缺口 1
+Modules/RPS/Services/RelativePeriodResolver.cs                # 缺口 1
+Modules/RPS/Services/ReportRetentionJobService.cs             # 缺口 1
+Modules/RPS/Services/ReportSchedulingDisabledNotice.cs        # 缺口 1
+Modules/RPS/ViewModels/ReportInboxItemVm.cs                   # 缺口 1
+
+# ── Core 主體（24 支／75 單位） ──
+Data/ApplicationDbContextExtensions.cs                        # 缺口 15
+Program.cs                                                    # 缺口 9
+Modules/_Shared/ModuleControllerBase.cs                       # 缺口 7
+Filters/PlantFormEnhancementFilter.cs                         # 缺口 6
+Modules/_Shared/DocumentStateMachines.cs                      # 缺口 5
+Services/CurrencyService.cs                                   # 缺口 5
+Models/ProjectZSystemParam.cs                                 # 缺口 4
+Services/HelpDocResolver.cs                                   # 缺口 4
+Models/InventoryCountSheet.cs                                 # 缺口 3
+Filters/DbUniqueViolationExceptionFilter.cs                   # 缺口 2
+Services/LocalizedValidationExtensions.cs                     # 缺口 2
+Controllers/CodeEntryController.cs                            # 缺口 1
+Controllers/UserSettingsController.cs                         # 缺口 1
+Data/ApplicationDbContext.cs                                  # 缺口 1
+Models/CodeEntry.cs                                           # 缺口 1
+Models/InspectionSpec.cs                                      # 缺口 1
+Modules/_Shared/DocEnumDisplay.cs                             # 缺口 1
+ProjectZValidationResource.cs                                 # 缺口 1
+Services/DateTimeService.cs                                   # 缺口 1
+Services/DomainEvent.cs                                       # 缺口 1
+Services/ICodeEntryReferenceChecker.cs                        # 缺口 1
+Services/IUserContext.cs                                      # 缺口 1
+Services/MilStd1916Service.cs                                 # 缺口 1
+Services/SamplingPlanService.cs                               # 缺口 1
+
+# ── 帳務（11 支／23 單位） ──
+Modules/ACT/Services/DataAuditService.cs                      # 缺口 10
+Modules/ACT/ActEnumDisplay.cs                                 # 缺口 2
+Modules/ACT/Services/IDataAuditService.cs                     # 缺口 2
+Modules/ACT/Services/Jobs/MrpRunRetentionJobService.cs        # 缺口 2
+Modules/ACT/Controllers/MonthEndController.cs                 # 缺口 1
+Modules/ACT/Models/JournalEntry.cs                            # 缺口 1
+Modules/ACT/Services/IDataAuditRunService.cs                  # 缺口 1
+Modules/ACT/Services/Jobs/ApprovalHistoryRetentionJobService.cs# 缺口 1
+Modules/ACT/Services/Jobs/AuditLogRetentionJobService.cs      # 缺口 1
+Modules/ACT/Services/Jobs/DailyDataAuditJobService.cs         # 缺口 1
+Modules/ACT/StandardAccounts.cs                               # 缺口 1
+
+# ── 單號（1 支／8 單位） ──
+Services/IDocNumberService.cs                                 # 缺口 8
+
+# ── 稽核（2 支／3 單位） ──
+Data/AuditPiiMasker.cs                                        # 缺口 2
+Data/AuditInterceptor.cs                                      # 缺口 1
+
+# ── 報表產出（1 支／2 單位） ──
+Modules/RPT/Services/DataAuditReportService.cs                # 缺口 2
+
+# ── 簽核（2 支／2 單位） ──
+Modules/_Shared/ApprovalDocumentQueries.cs                    # 缺口 1
+Modules/_Shared/PushApprovalNotifier.cs                       # 缺口 1
+
+# ── 背景排程（1 支／1 單位） ──
+Services/QuarantineWarehouseSeeder.cs                         # 缺口 1

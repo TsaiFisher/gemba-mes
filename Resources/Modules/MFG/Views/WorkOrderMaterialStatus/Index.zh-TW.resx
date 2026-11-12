@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>工單用料狀況</value></data>
+  <data name="Batch" xml:space="preserve"><value>生產批</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>工單號</value></data>
+  <data name="MaterialCode" xml:space="preserve"><value>料件品號</value></data>
+  <data name="OnlyShort" xml:space="preserve"><value>只顯示未齊料</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="SearchFirst" xml:space="preserve"><value>按查詢以顯示工單用料狀況</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無符合條件的用料資料</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>匯出 Excel</value></data>
+  <data name="TotalLines" xml:space="preserve"><value>用料筆數</value></data>
+  <data name="ShortLines" xml:space="preserve"><value>缺料筆數</value></data>
+  <data name="PendingSubLines" xml:space="preserve"><value>待下階完工</value></data>
+  <data name="OpenLines" xml:space="preserve"><value>尚有未發料</value></data>
+  <data name="Status" xml:space="preserve"><value>工單狀態</value></data>
+  <data name="OutputProduct" xml:space="preserve"><value>產出品號</value></data>
+  <data name="OperationSeq" xml:space="preserve"><value>工序</value></data>
+  <data name="ProductName" xml:space="preserve"><value>品名</value></data>
+  <data name="IssueMethod" xml:space="preserve"><value>發料方式</value></data>
+  <data name="RequiredQty" xml:space="preserve"><value>需求量</value></data>
+  <data name="IssuedQty" xml:space="preserve"><value>已發料</value></data>
+  <data name="ReturnedQty" xml:space="preserve"><value>已退料</value></data>
+  <data name="NetIssuedQty" xml:space="preserve"><value>淨發料</value></data>
+  <data name="OpenQty" xml:space="preserve"><value>未發量</value></data>
+  <data name="AvailableQty" xml:space="preserve"><value>可用量</value></data>
+  <data name="ReadinessState" xml:space="preserve"><value>備齊狀態</value></data>
+  <data name="StateReady" xml:space="preserve"><value>已備齊</value></data>
+  <data name="StateShortage" xml:space="preserve"><value>缺料</value></data>
+  <data name="StatePendingSub" xml:space="preserve"><value>待下階完工</value></data>
+  <data name="Push" xml:space="preserve"><value>發料</value></data>
+  <data name="Pull" xml:space="preserve"><value>領料</value></data>
+  <data name="Backflush" xml:space="preserve"><value>後沖</value></data>
+  <data name="Planned" xml:space="preserve"><value>已規劃</value></data>
+  <data name="Released" xml:space="preserve"><value>已釋出</value></data>
+  <data name="InProgress" xml:space="preserve"><value>生產中</value></data>
+  <data name="Completed" xml:space="preserve"><value>完工</value></data>
+  <data name="Closed" xml:space="preserve"><value>已關閉</value></data>
+  <data name="Void" xml:space="preserve"><value>作廢</value></data>
+  <data name="FooterNote" xml:space="preserve"><value>可用量＝廠級在手量 − 有效在手預留（排除待驗倉）＋ 本工單自身預留（MRP 已為本工單鎖住的量），與投產料況閘口同口徑；後沖料於完工時才扣，下階自製料以子工單完工與否判定，故不列可用量。</value></data>
+  <data name="ShortBy" xml:space="preserve"><value>尚缺</value></data>
+</root>

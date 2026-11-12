@@ -1,0 +1,60 @@
+@model SmartFactory.MES.Modules.FIN.Models.BankAccount
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+@{
+    bool isNew = string.IsNullOrEmpty(Model.AccountId);
+    var currencies = ViewBag.CurrencyOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<form id="panelForm" method="post" asp-action="Save" asp-controller="BankAccount"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    @* 這裡原本有一個無條件渲染的 <input type="hidden" asp-for="AccountId" />，
+       與下方可見輸入框同名（AccountId）。新增時隱藏欄位為空字串、可見欄位才有使用者
+       輸入的值，POST 會送出兩個同名值，模型繫結取第一個（空）→ [Required] 失敗 →
+       ModelState 恆 invalid → 面板靜默重繪，「新增銀行帳戶」永遠建不出資料。
+       編輯時可見欄位是 readonly，而 readonly 欄位一樣會送出值（不同於 disabled），
+       故不需要隱藏欄位代勞，直接移除。 *@
+    <div class="p-3">
+    <div class="mb-2">
+        <label class="form-label small fw-semibold" asp-for="AccountId">@L["AccountId"] <span class="text-danger">*</span></label>
+        <input asp-for="AccountId" class="form-control form-control-sm" readonly="@(!isNew)" />
+        <span asp-validation-for="AccountId" class="text-danger small"></span>
+    </div>
+    <div class="mb-2">
+        <label class="form-label small fw-semibold" asp-for="BankName">@L["BankName"] <span class="text-danger">*</span></label>
+        <input asp-for="BankName" class="form-control form-control-sm" />
+        <span asp-validation-for="BankName" class="text-danger small"></span>
+    </div>
+    <div class="mb-2">
+        <label class="form-label small fw-semibold" asp-for="AccountNo">@L["AccountNo"] <span class="text-danger">*</span></label>
+        <input asp-for="AccountNo" class="form-control form-control-sm" />
+        <span asp-validation-for="AccountNo" class="text-danger small"></span>
+    </div>
+    <div class="mb-2">
+        <label class="form-label small fw-semibold" asp-for="CurrencyCode">@L["CurrencyCode"]</label>
+        <select asp-for="CurrencyCode" class="form-select form-select-sm">
+            <option value="">@SL["Select"]</option>
+            @foreach (var c in currencies)
+            {
+                <option value="@c.Code" selected="@(Model.CurrencyCode == (string)c.Code)">@c.Code — @c.Name</option>
+            }
+        </select>
+        <span asp-validation-for="CurrencyCode" class="text-danger small"></span>
+    </div>
+    <div class="mb-2 form-check">
+        <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+        <label class="form-check-label small" asp-for="IsActive">@L["IsActive"]</label>
+        <span asp-validation-for="IsActive" class="text-danger small"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label small fw-semibold" asp-for="Remarks">@L["Remarks"]</label>
+        <textarea asp-for="Remarks" class="form-control form-control-sm" rows="2"></textarea>
+        <span asp-validation-for="Remarks" class="text-danger small"></span>
+    </div>
+    </div><!-- /p-3 -->
+    <div class="position-sticky bottom-0 bg-white border-top px-3 py-2 d-flex gap-2">
+        <button type="submit" class="btn btn-primary btn-sm">@L["Save"]</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="offcanvas">@L["Cancel"]</button>
+    </div>
+</form>

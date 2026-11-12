@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/RPS/Controllers/ReportInboxController.cs",
+  "sourceHash": "f6ab482a3d93b41c125231463302f77b2eb86e008be2b429b5b2832adf6fa96a",
+  "entries": [
+    {
+      "slug": "code-rps-reportinboxcontroller-b6619752",
+      "lang": "zh",
+      "headingPath": "報表 › 而這裡每次下載都會重新檢查一次權限",
+      "text": "報表收件匣的資料存取規則｜此收件匣僅提供查看和下載功能，使用者無法新增、修改或刪除任何紀錄。此外，每次下載時系統都會重新檢查一次使用者的權限。",
+      "approved": true,
+      "sourceSectionHash": "031f56a43d94320df108a921d8e740fc0ec505e62b1df126cec52ff2628a4a3c"
+    },
+    {
+      "slug": "code-rps-reportinboxcontroller-2dfc859a",
+      "lang": "zh",
+      "headingPath": "報表 › 這一段必須寫在查詢層——撈出來再篩漏一個條件就是越權讀取",
+      "text": "資料可見性規則說明｜只有當使用者是該單據的擁有者，或是收件人清單中包含此使用者的情況下，才能看到這筆單據的紀錄。",
+      "approved": true,
+      "sourceSectionHash": "60cfabffa1484e6434b7660d1033a4d1eb0d8560d063178b9249768e3fb97b9d"
+    },
+    {
+      "slug": "code-rps-reportinboxcontroller-757c67aa",
+      "lang": "zh",
+      "headingPath": "報表 › 下載一份已產生的報表",
+      "text": "下載報表需確認三層權限｜系統在下載已產生的報表時，會依據三個條件進行檢查：首先是使用者是否有權限讀取此畫面；其次是這份報表是否屬於當前使用者的範圍；最後，系統會再次驗證使用者目前是否仍具備查看該報表的權限。",
+      "approved": true,
+      "sourceSectionHash": "ac5e3227163ade23c03c1b9f432ae8bbcc268eaf4fdc487a9bbf38326d94fb17"
+    }
+  ]
+}

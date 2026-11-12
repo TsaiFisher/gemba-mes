@@ -1,0 +1,201 @@
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.QA.ViewModels.ExtractChunkVm>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched == true;
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.CurrentSort as string ?? "";
+        if (cur == col + "_asc") return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+
+    var curSource = ViewBag.SourcePath as string;
+    var curState  = ViewBag.State as string;
+    var curTerm   = ViewBag.SearchTerm as string;
+    var sources   = ViewBag.SourceOptions as List<string> ?? new List<string>();
+
+    var stateOptions = new[]
+    {
+        (Value: "effective", Label: Localizer["StateEffective"].Value),
+        (Value: "pending",   Label: Localizer["StatePending"].Value),
+        (Value: "stale",     Label: Localizer["StateStale"].Value),
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-journal-check"></i> @Localizer["PageTitle"]</h1>
+    </div>
+
+    <div class="alert alert-info small">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["HelpText"]
+    </div>
+
+    @* 三個總數放在查詢列之前：這一頁存在的理由是讓「有東西被排除了」一眼看得到，
+       而分頁後的清單本身回答不了這件事。 *@
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body py-3">
+                    <div class="text-muted small">@Localizer["StateEffective"]</div>
+                    <div class="fs-4 fw-semibold text-success">@ViewBag.EffectiveCount</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body py-3">
+                    <div class="text-muted small">@Localizer["StatePending"]</div>
+                    <div class="fs-4 fw-semibold text-secondary">@ViewBag.PendingCount</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body py-3">
+                    <div class="text-muted small">@Localizer["StateStale"]</div>
+                    <div class="fs-4 fw-semibold @((ViewBag.StaleCount as int? ?? 0) > 0 ? "text-danger" : "text-muted")">@ViewBag.StaleCount</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+
+                <div class="col-12 col-md-4">
+                    <label class="form-label small fw-semibold">@Localizer["SourcePath"]</label>
+                    <select name="sourcePath" class="form-select form-select-sm">
+                        <option value="">@Localizer["All"]</option>
+                        @foreach (var s in sources)
+                        {
+                            <option value="@s" selected="@(curSource == s)">@s</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["State"]</label>
+                    <select name="state" class="form-select form-select-sm">
+                        <option value="">@Localizer["All"]</option>
+                        @foreach (var opt in stateOptions)
+                        {
+                            <option value="@opt.Value" selected="@(curState == opt.Value)">@opt.Label</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["SearchTerm"]</label>
+                    <input type="text" name="searchTerm" class="form-control form-control-sm"
+                           value="@curTerm" placeholder="@Localizer["SearchTermPlaceholder"]" />
+                </div>
+
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Localizer["PageCode"]</th>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.HeadingSort"
+                                   asp-route-sourcePath="@curSource" asp-route-state="@curState"
+                                   asp-route-searchTerm="@curTerm"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["HeadingPath"] <i class="bi @sortIcon("heading")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["SourcePath"]</th>
+                            <th>@Localizer["State"]</th>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.IndexedAtSort"
+                                   asp-route-sourcePath="@curSource" asp-route-state="@curState"
+                                   asp-route-searchTerm="@curTerm"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["IndexedAt"] <i class="bi @sortIcon("indexedat")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["Text"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr><td colspan="6" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>@Localizer["NoData"]
+                            </td></tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="small font-monospace">@item.PageCode</td>
+                                    <td class="fw-medium small">@item.HeadingPath</td>
+                                    <td class="text-muted small">@item.SourcePath</td>
+                                    <td>
+                                        @* 過期優先於未核可：過期是「本來會答、現在不答了」，
+                                           那才是使用者察覺不到而需要有人處理的狀態。 *@
+                                        @if (item.IsStale)
+                                        {
+                                            <span class="badge bg-danger">@Localizer["StateStale"]</span>
+                                        }
+                                        else if (!item.Approved)
+                                        {
+                                            <span class="badge bg-secondary">@Localizer["StatePending"]</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">@Localizer["StateEffective"]</span>
+                                        }
+                                    </td>
+                                    <td class="small text-nowrap">
+                                        @item.IndexedAt.ToString("yyyy-MM-dd HH:mm") <span class="text-muted">(UTC)</span>
+                                    </td>
+                                    <td class="small text-muted">
+                                        @if (item.Approved)
+                                        {
+                                            @item.Text
+                                        }
+                                        else
+                                        {
+                                            @* 未核可＝尚未有人審過內文；畫面不顯示，理由見 QaExtractController。 *@
+                                            <span class="fst-italic">@Localizer["TextHiddenPending"]</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>

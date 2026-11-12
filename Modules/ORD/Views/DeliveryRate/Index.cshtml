@@ -1,0 +1,121 @@
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Modules.ORD.ViewModels.DeliveryRateRowVm>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool   hasSearched     = ViewBag.Searched as bool? ?? false;
+    bool   canPrint        = ViewBag.CanPrint == true;
+    string fromDate        = ViewBag.FromDate       as string ?? "";
+    string toDate          = ViewBag.ToDate         as string ?? "";
+    string searchCustomer   = ViewBag.SearchCustomer as string ?? "";
+    var customerOptions     = ViewBag.CustomerOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-calendar-check me-2 text-info"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && hasSearched && Model != null && Model.Any())
+        {
+            <a asp-action="Export" asp-route-fromDate="@fromDate" asp-route-toDate="@toDate" asp-route-searchCustomer="@searchCustomer"
+               class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    @* 口徑 2026-09-21 變更（納入「已逾期未出」，期間基準由出貨日改為預交日）。
+       數字會比以前低，而且低得有道理——不講的話使用者只會看到達成率莫名其妙掉下來。 *@
+    <div class="alert alert-secondary py-2 small">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["MethodHint"]
+    </div>
+
+    @* 常用查詢入口（§7.9-6）。放在查詢卡片之外——partial 內有按鈕與輸入框，
+       塞進下面那張卡的 <form> 內會變成巢狀表單。 *@
+    @await Html.PartialAsync("_SavedQueries", "DeliveryRate")
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["FromDate"]</label>
+                    <input type="date" name="fromDate" class="form-control" value="@fromDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["ToDate"]</label>
+                    <input type="date" name="toDate" class="form-control" value="@toDate" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Customer"]</label>
+                    <select name="searchCustomer" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllCustomers"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var c in customerOptions)
+                        {
+                            <option value="@c.CompanyCode" selected="@(searchCustomer == (string)c.CompanyCode)">@c.CompanyCode — @c.CompanyName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-success text-center"><i class="bi bi-check-circle me-1"></i>@Localizer["NoData"]</div>
+    }
+    else
+    {
+        var totalLines  = Model.Sum(r => r.TotalLines);
+        var onTimeLines = Model.Sum(r => r.OnTimeLines);
+        var overallRate = totalLines > 0 ? Math.Round((decimal)onTimeLines / totalLines * 100, 2) : 0;
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">@Localizer["ResultTitle"] (@Model.Count @Localizer["Customers"])</span>
+                <span class="badge bg-info">@Localizer["OverallRate"]：@overallRate%</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["Customer"]</th>
+                                <th class="text-center">@Localizer["TotalLines"]</th>
+                                <th class="text-center">@Localizer["OnTimeLines"]</th>
+                                <th class="text-center">@Localizer["LateLines"]</th>
+                                <th class="text-center">@Localizer["OnTimeRate"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var paged = ReportPaging.Page(Model, ViewData, Context); }
+                            @foreach (var row in paged)
+                            {
+                                var rateClass = row.OnTimeRate >= 95 ? "text-success fw-bold" : row.OnTimeRate >= 80 ? "text-warning" : "text-danger fw-bold";
+                                <tr>
+                                    <td>@row.CompanyCode</td>
+                                    <td class="text-center">@row.TotalLines</td>
+                                    <td class="text-center text-success">@row.OnTimeLines</td>
+                                    <td class="text-center text-danger">@row.LateLines</td>
+                                    <td class="text-center @rateClass">@row.OnTimeRate%</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @await Html.PartialAsync("_Pagination", paged)
+        </div>
+    }
+</div>

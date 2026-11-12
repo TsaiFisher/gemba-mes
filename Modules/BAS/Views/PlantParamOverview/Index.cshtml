@@ -1,0 +1,104 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@using SmartFactory.MES.Modules.BAS.ViewModels
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.BAS.ViewModels.PlantParamOverviewVm
+
+@*
+    各廠參數覆寫一覽（唯讀）。編輯入口只有一個：廠別管理 → 編輯 → 參數設定頁籤。
+    參數清單與這裡的列順序同樣來自 PlantParamCatalog，新增參數不必改本檔。
+*@
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool canPrint = ViewBag.CanPrint == true;
+
+    var plants = Model?.Plants ?? new List<PlantParamOverviewPlant>();
+    var rows   = Model?.Rows   ?? new List<PlantParamOverviewRow>();
+
+    // 值一律經過這層再顯示：空字串與未設定在報表上必須看得出差別。
+    Func<string?, string> display = v => string.IsNullOrEmpty(v) ? Localizer["EmptyValue"].Value : v;
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-diagram-3 me-2 text-secondary"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && plants.Count > 0)
+        {
+            <a asp-action="Export" asp-route-format="xlsx" class="btn btn-outline-success btn-sm">
+                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+            </a>
+        }
+    </div>
+
+    <div class="alert alert-light border d-flex align-items-start">
+        <i class="bi bi-info-circle me-2 mt-1"></i>
+        <div>
+            @Localizer["ReadOnlyHint"]
+            <div class="small text-muted">@Localizer["ResolutionHint"]</div>
+        </div>
+    </div>
+
+    @if (plants.Count == 0)
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoPlants"]</div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-sm table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="u-width-20pct">@Localizer["Parameter"]</th>
+                            <th class="u-width-12pct">@Localizer["GlobalValue"]</th>
+                            @foreach (var p in plants)
+                            {
+                                <th>
+                                    <div class="fw-bold">@p.Id</div>
+                                    <div class="small text-muted fw-normal">@p.Name</div>
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var moduleGroup in rows.GroupBy(r => r.Def.Module))
+                        {
+                            <tr class="table-light">
+                                <td colspan="@(plants.Count + 2)" class="fw-bold small">
+                                    @Localizer[moduleGroup.Key + "Settings"]
+                                </td>
+                            </tr>
+
+                            @foreach (var row in moduleGroup)
+                            {
+                                var overriddenCount = row.Cells.Count(c => c.State == PlantParamOverviewCell.Overridden);
+                                <tr>
+                                    <td>
+                                        @Localizer[row.Def.ResourceKey]
+                                        @if (overriddenCount > 0)
+                                        {
+                                            <span class="badge bg-warning text-dark ms-1">@Localizer["OverriddenCount", overriddenCount]</span>
+                                        }
+                                        <div class="small text-muted font-monospace">@row.Def.Key</div>
+                                    </td>
+                                    <td class="text-muted">@display(row.GlobalValue)</td>
+                                    @foreach (var cell in row.Cells)
+                                    {
+                                        @if (cell.State == PlantParamOverviewCell.Overridden)
+                                        {
+                                            <td><span class="badge bg-warning text-dark">@display(cell.DisplayValue)</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-muted small">@Localizer["Inherited"]</td>
+                                        }
+                                    }
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

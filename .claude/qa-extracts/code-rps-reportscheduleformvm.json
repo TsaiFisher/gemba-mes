@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/RPS/ViewModels/ReportScheduleFormVm.cs",
+  "sourceHash": "8c6a0fe31e36674912b2211ffe15247a4e8fd306ae940fb13f685d83b4296268",
+  "entries": [
+    {
+      "slug": "code-rps-reportscheduleformvm-9630f8e8",
+      "lang": "zh",
+      "headingPath": "報表 › 報表的查詢期間，**存滾動視窗不存絕對日期**",
+      "text": "查詢期間依據滾動視窗而非絕對日期｜當系統儲存了特定時間範圍的報表時，即使在後續月份執行生成該報表，輸出的資料內容仍會是先前設定的時間範圍的數據。只有那些不依賴指定時間區間的報表才能接受空值作為查詢期間的輸入。",
+      "approved": true,
+      "sourceSectionHash": "d8b688bd4b1d2e60463281423cd65a31ee15ab9c05144f6b25829ffb1d7b0f89"
+    },
+    {
+      "slug": "code-rps-reportscheduleformvm-e66c1541",
+      "lang": "zh",
+      "headingPath": "報表 › 選 29–31 時，沒有那一天的月份會**取當月最後一日**——",
+      "text": "報表日期範圍的月份處理規則｜當選擇的日期範圍包含 29 到 31 日，但該月份實際天數不足時，系統會取用該月的最後一天作為計算依據，而不是跳過該月。",
+      "approved": true,
+      "sourceSectionHash": "a8521aff60d2902ec51a7c4ccc1f62c88cb3c5dbbd87b2815820cacb9145661b"
+    }
+  ]
+}

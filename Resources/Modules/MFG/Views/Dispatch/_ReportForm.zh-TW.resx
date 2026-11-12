@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="DispatchId" xml:space="preserve"><value>派工單號</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>工單號</value></data>
+  <data name="Quantity" xml:space="preserve"><value>派工量</value></data>
+  <data name="QtyDone" xml:space="preserve"><value>已完工量</value></data>
+  <data name="Remaining" xml:space="preserve"><value>剩餘量</value></data>
+  <data name="Operator" xml:space="preserve"><value>目前操作員</value></data>
+  <data name="QtyOk" xml:space="preserve"><value>合格數量</value></data>
+  <data name="QtyOkPlaceholder" xml:space="preserve"><value>輸入合格數量</value></data>
+  <data name="QtyNg" xml:space="preserve"><value>不良數量</value></data>
+  <data name="QtyNgPlaceholder" xml:space="preserve"><value>輸入不良數量（可為 0）</value></data>
+  <data name="ContainerCode" xml:space="preserve"><value>容器代碼</value></data>
+  <data name="ContainerDefaultHint" xml:space="preserve"><value>預設為此工序設定的完工容器，可改選或留空</value></data>
+  <data name="Submit" xml:space="preserve"><value>送出報工</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="NoOpenSession" xml:space="preserve"><value>目前無進行中的上工記錄，請先上工再報工。</value></data>
+  <data name="ToolingPmDueAlert" xml:space="preserve"><value>模具 {0} 累計打次已達保養門檻，系統已（或即將）自動建立保養停機單，請聯繫模具工程師安排保養。</value></data>
+  <data name="NgReasonCode" xml:space="preserve"><value>不良原因</value></data>
+  <data name="SubmitReport" xml:space="preserve"><value>報工（繼續生產）</value></data>
+  <data name="CompleteSession" xml:space="preserve"><value>完工（結束本次上工）</value></data>
+  <data name="ReportVsCompleteHint" xml:space="preserve"><value>生產中可多次報工（例如每完成一批轉移就回報一次）；按「完工」才結束本次上工並結算工時，數量累計達標時派工自動結案。</value></data>
+  <data name="ContainerUnitId" xml:space="preserve"><value>箱號</value></data>
+  <data name="ContainerUnitIdPlaceholder" xml:space="preserve"><value>掃描箱子上的 QR 碼</value></data>
+  <data name="ContainerUnitIdHint" xml:space="preserve"><value>合格數裝進這個箱子並記在箱子上；下一道工序整箱接手時掃同一個箱號即可。</value></data>
+</root>

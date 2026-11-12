@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Outsource Progress — OSP User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>委外進度追蹤 — OSP 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">委外管理目錄</span><span lang="en">Outsourcing Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="index.html#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">OSP 畫面</span><span lang="en">OSP Screens</span></div>
+    <a href="outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="outsource-progress.html" class="nav-link active"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關</span><span lang="en">Related</span></div>
+    <a href="../rpt/outsource-performance.html" class="nav-link"><span lang="zh">委外對帳報表（RPT）</span><span lang="en">Outsource reconciliation report (RPT)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-building me-2 text-primary"></i><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/OutsourceProgress &nbsp;|&nbsp; 委外單發料/收貨進度總覽</span><span lang="en">Route: /OutsourceProgress &nbsp;|&nbsp; Overview of issue and receipt progress per outsource order</span></div>
+    </div>
+
+    <p><span lang="zh">追蹤各委外採購單的委外量、已驗收量與逾期情形（委外稽催表），掌握外包產能與到貨風險。拆單行以本行拆單量計算；已驗收量含「已確認」以上的委外收貨。</span><span lang="en">Tracks the ordered, accepted and overdue quantities of every outsource PO, giving a view of subcontracted capacity and delivery risk. Split lines are measured by their own quantity, and the accepted quantity includes outsource receipts that are confirmed or later.</span></p>
+    <img class="screen-shot" src="img/outsource-progress.png" data-src-en="img/en/outsource-progress.png" alt="委外進度追蹤畫面截圖" data-alt-en="Outsource progress screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">委外進度追蹤畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Outsource progress screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列可依「發單日區間、供應商、品號」過濾後點「查詢」。</span><span lang="en">Filter by order date range, supplier and product in the search bar, then click "Search".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">「逾期 ≥ 天」可只列逾期達 N 天以上的行；「僅逾期」勾選則列出全部逾期行。逾期天數以徽章顯示（≥14 天黃、≥30 天紅）。</span><span lang="en">"Overdue ≥ Days" lists only lines overdue by at least N days; checking "Overdue Only" lists every overdue line. Overdue days appear as a badge (yellow from 14 days, red from 30).</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">發單日（起 / 迄）</span><span lang="en">Order date (from / to)</span></td><td><span lang="zh">依委外採購單的開單日期區間篩選</span><span lang="en">Filters by the order date range of the outsource PO</span></td></tr>
+        <tr><td><span lang="zh">供應商 / 品號</span><span lang="en">Supplier / Product</span></td><td><span lang="zh">各自縮小查詢範圍</span><span lang="en">each narrows the query scope</span></td></tr>
+        <tr><td><span lang="zh">逾期 ≥ 天 / 僅顯示逾期</span><span lang="en">Overdue ≥ Days / Overdue Only</span></td><td><span lang="zh">只列出逾期達指定天數以上的委外單</span><span lang="en">Lists only outsource orders overdue by at least the given number of days</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">委外採購單號</span><span lang="en">OPO No.</span></td><td><span lang="zh">委外加工的採購單，可回溯明細</span><span lang="en">The outsource purchase order, so the detail can be traced</span></td></tr>
+        <tr><td><span lang="zh">供應商代號</span><span lang="en">Supplier</span></td><td><span lang="zh">承接加工的委外廠商</span><span lang="en">Subcontractor doing the work</span></td></tr>
+        <tr><td><span lang="zh">發單日 / 預交日</span><span lang="en">Order Date / Delivery Date</span></td><td><span lang="zh">開單日期與承諾交回日</span><span lang="en">Order date and promised return date</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">委外加工的料件</span><span lang="en">Item sent out for processing</span></td></tr>
+        <tr><td><span lang="zh">委外量 / 已驗收量 / 未驗收量</span><span lang="en">Ordered / Received / Pending</span></td><td><span lang="zh">發出的加工數量、已收回並驗收的數量，以及仍在廠商端的差額</span><span lang="en">Quantity sent for processing, quantity received and accepted, and the balance still at the subcontractor</span></td></tr>
+        <tr><td><span lang="zh">進度%</span><span lang="en">Progress%</span></td><td><span lang="zh">已驗收量 ÷ 委外量</span><span lang="en">Received ÷ Ordered</span></td></tr>
+        <tr><td><span lang="zh">逾期天數</span><span lang="en">Overdue Days</span></td><td><span lang="zh">查詢日 － 預交日；委外在製品仍屬本公司存貨，逾期同時是交期與存貨風險</span><span lang="en">Query date − promised delivery date; work in progress at a subcontractor is still your inventory, so an overdue item is both a delivery and an inventory risk</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="outsource-purchase-order.html"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>、<a href="outsource-receipt.html"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

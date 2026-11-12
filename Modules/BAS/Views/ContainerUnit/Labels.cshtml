@@ -1,0 +1,27 @@
+@*
+    箱子固定標籤（container-tracking.md §9）：貼在實體箱子上長期使用，QR 內容＝箱號。
+    不印內容（品號／批號／數量）——箱子重複使用，內容每次裝貨都不同，掃箱號即可查目前內容。
+    樣式在 box-label.css（CSP style-src 'self'，R38）。
+*@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model List<SmartFactory.MES.Modules.BAS.Controllers.ContainerUnitController.UnitLabel>
+@{
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Localizer["Title"].Value;
+}
+<link rel="stylesheet" href="~/css/box-label.css" asp-append-version="true" />
+
+<div class="box-label-grid">
+    @foreach (var u in Model)
+    {
+        <div class="box-label">
+            <div class="box-label-qr">@Html.Raw(u.QrSvg)</div>
+            <div class="box-label-body">
+                <div class="box-label-lot">@u.ContainerUnitId</div>
+                <div class="box-label-product">@u.ContainerName</div>
+                <div class="box-label-meta">@Localizer["ScanHint"]</div>
+            </div>
+        </div>
+    }
+</div>

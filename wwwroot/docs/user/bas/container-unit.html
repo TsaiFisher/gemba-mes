@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Boxes (Container Units) — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>箱子（容器個體） — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="container-unit.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link active"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-qr-code me-2 text-primary"></i><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/ContainerUnit &nbsp;|&nbsp; 重複使用的實體箱子：固定 QR 標籤、目前內容與歷程</span><span lang="en">Route: /ContainerUnit &nbsp;|&nbsp; Reusable physical boxes: fixed QR labels, current contents and history</span></div>
+    </div>
+    <p><span lang="zh"><a href="container.html">容器主檔</a>定義的是容器<strong>種類</strong>；這個畫面管理的是一個一個<strong>實體箱子</strong>。每個箱子有一個固定箱號，印成 QR 標籤貼在箱上長期使用。箱子每次裝貨都會綁到一個新的批號（在<a href="../mfg/production-completion.html#boxing">完工入庫的分箱入庫</a>指定箱號），之後掃箱子就知道裡面裝什麼、還剩多少、在哪個儲位。</span><span lang="en">The <a href="container.html">container master</a> defines container <strong>types</strong>; this screen manages the individual <strong>physical boxes</strong>. Each box has a fixed box number, printed as a QR label and stuck on the box for long-term use. Every time a box is filled it is linked to a new lot (by giving box numbers in <a href="../mfg/production-completion.html#boxing">receiving by box in production completion</a>), so scanning the box tells you what is inside, how much is left and which location it is in.</span></p>
+
+    <div class="tip-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <span lang="zh"><strong>規定：一個箱子不得混裝。</strong>一箱只放一個品號的一個批號（生產中的箱子：只放一張工單一道工序的產出）。系統只記「箱子目前綁定哪個批號」，箱內數量直接取該批號在庫存帳上的數量；混裝的話，箱子顯示的內容就不是實際內容。</span><span lang="en"><strong>Rule: never mix contents in a box.</strong> A box holds one lot of one item only (a box used in production: the output of one operation of one work order only). The system only records which lot a box is linked to and reads the quantity straight from that lot in the stock ledger; if a box is mixed, what the system shows is not what is in the box.</span>
+    </div>
+
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">箱子狀態</span><span lang="en">Box status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge bg-success"><span lang="zh">空箱</span><span lang="en">Empty</span></span></td><td><span lang="zh">沒有綁定批號，或綁定的批號在帳上已經歸零（領完、出完、報廢完）。可以再裝貨；系統<strong>自動</strong>判斷，不需要手動回收。</span><span lang="en">Not linked to a lot, or the linked lot is down to zero in the ledger (fully issued, shipped or scrapped). It can be filled again; the system works this out <strong>automatically</strong>, with no manual return step.</span></td></tr>
+        <tr><td><span class="badge bg-primary"><span lang="zh">使用中</span><span lang="en">In use</span></span></td><td><span lang="zh">綁定的批號在帳上還有數量，這時不能拿來裝別的貨。</span><span lang="en">The linked lot still has stock on hand, so the box cannot be filled with anything else.</span></td></tr>
+        <tr><td><span class="badge bg-warning text-dark"><span lang="zh">在製</span><span lang="en">In process</span></span></td><td><span lang="zh">報工時裝進了某張工單某道工序的產出（在製品，還沒入庫）。只有同一張工單可以接著用；工單結案或作廢後<strong>自動</strong>視為空箱。</span><span lang="en">Production output of one operation of a work order was reported into it (work in process, not yet received). Only the same work order can keep using it; once the work order is closed or voided the box <strong>automatically</strong> counts as empty.</span></td></tr>
+        <tr><td><span class="badge bg-info text-dark"><span lang="zh">廠外</span><span lang="en">Off-site</span></span></td><td><span lang="zh">箱裡的批號已經跟著出貨、委外發料、借出、樣品出貨、退貨給供應商或跨廠調撥等單據全部出廠，箱子跟貨走了。系統<strong>自動</strong>判斷；箱子回來後要「回收」才變回空箱，在那之前不能拿來裝貨。被領料、報廢用完的箱子仍在廠內，是空箱。</span><span lang="en">The box's lot has left the plant in full with a shipment, outsource issue, loan, sample shipment, return to supplier or cross-plant transfer, so the box went with the goods. The system works this out <strong>automatically</strong>; when the box comes back it must be recovered before it is empty again, and until then it cannot be filled. A box whose lot was used up by material issues or scrap is still in the plant and is empty.</span></td></tr>
+        <tr><td><span class="badge bg-secondary"><span lang="zh">停用</span><span lang="en">Inactive</span></span></td><td><span lang="zh">損壞或報廢的箱子。停用後不能再裝貨，資料與歷程保留。</span><span lang="en">A damaged or retired box. It can no longer be filled; its data and history are kept.</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">建立箱子與列印標籤</span><span lang="en">Create boxes and print labels</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「建立箱子」，選容器種類、輸入箱號前綴（預設 BX）與數量，按「建立」。箱號＝前綴-五位流水號（例：BX-00001），接續該前綴目前最大號，全公司不重複。</span><span lang="en">Click "Create Boxes", choose the container type, enter a box number prefix (BX is prefilled) and a quantity, then click "Create". Box number = prefix-5-digit sequence (e.g. BX-00001), continuing from the highest number used with that prefix, unique company-wide.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">查詢剛建立的箱子，點「列印本頁標籤」（或單一箱子的印表機圖示），把標籤貼在箱子上。標籤的 QR 碼就是箱號，<strong>不印內容</strong>：內容每次裝貨都不同，掃箱號即可查目前內容。</span><span lang="en">Search for the new boxes and click "Print labels on this page" (or the printer icon on a single box), then stick the labels on the boxes. The label's QR code is the box number and <strong>does not show the contents</strong>: the contents change each time the box is filled, and scanning the box number shows what is in it now.</span></div></div>
+    <h3><span lang="zh">裝箱與搬移</span><span lang="en">Fill and move boxes</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">完工入庫勾「分箱入庫」，在「箱號」欄依序掃入要裝的箱子，或按「帶入空箱」自動帶入該種類的空箱。箱號數量要等於箱數；入庫時第 1 箱的批號綁到第 1 個箱號，依此類推。詳見<a href="../mfg/production-completion.html#boxing">完工入庫</a>。</span><span lang="en">In production completion, tick "Receive by box" and scan the boxes to fill into the "Box numbers" field in order, or click "Fill in empty boxes" to fill in empty boxes of that type. The number of box numbers must equal the number of boxes; on receipt, box 1's lot is linked to the first box number, and so on. See <a href="../mfg/production-completion.html#boxing">production completion</a>.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">整箱搬儲位用<a href="../inv/stock-transfer.html">同廠調撥</a>：在明細的批號欄直接掃箱號，系統會換成該箱目前的批號，並帶出品號、撥出儲位與整箱數量。</span><span lang="en">To relocate a whole box, use a <a href="../inv/stock-transfer.html">stock transfer</a>: scan the box number into the line's lot field and the box's current lot, item, source location and full quantity are filled in.</span></div></div>
+    <h2 id="pack"><i class="bi bi-box-seam me-2 text-primary"></i><span lang="zh">進貨上架裝箱、既有庫存裝箱與換箱</span><span lang="en">Packing at put-away, packing existing stock and re-boxing</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進貨（或借入、銷退等入庫）上架時，在<a href="../inv/warehouse-ops.html">倉庫作業</a>或<a href="../mobile/putaway.html">手機入庫上架</a>的「裝入箱號」掃空箱，批號留空由系統產生新批號（單號-行號-流水號），上架後箱子綁到這一批。自己填批號也可以，但必須是沒用過的批號。</span><span lang="en">When putting away a receipt (or a loan-in, sales return and so on), scan an empty box into "Fill box" in <a href="../inv/warehouse-ops.html">Warehouse Operations</a> or on the <a href="../mobile/putaway.html">phone put-away screen</a>. Leave the lot blank and the system creates a new one (document-line-sequence); after put-away the box is linked to that lot. You can enter your own lot instead, but it must be one that has not been used.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">已經在庫的散裝貨要裝箱：清單上方點「裝箱」，掃空箱、輸入品號、點選要裝的那份庫存（儲位＋批號）並填數量。系統在同一個儲位把這份庫存換成新批號（數量與成本不變，留下一張已過帳的<a href="../inv/stock-transfer.html">同廠調撥單</a>），箱子綁到新批號。空箱的內容面板也有「裝箱」。</span><span lang="en">To pack loose goods already on hand, click "Pack" above the list, scan the empty box, enter the product code, choose what to pack (location and lot) and the quantity. The system relabels those goods with a new lot in the same location (quantity and cost unchanged, recorded as a posted <a href="../inv/stock-transfer.html">stock transfer</a>) and links the box to the new lot. An empty box's details panel also has "Pack".</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">換箱（舊箱壞了、整箱倒到另一個箱子）：在「裝箱」的「來源箱號」掃舊箱，品號、儲位、批號與數量自動帶出；裝好之後舊箱的批號歸零，自動變空箱。要取消裝箱或換箱，作廢那張調撥單即可。</span><span lang="en">Re-boxing (the old box is damaged, or a whole box is emptied into another one): in "Pack", scan the old box into "From box" and its product, location, lot and quantity are filled in; afterwards the old box's lot is down to zero and it becomes empty automatically. To undo packing or re-boxing, void that transfer.</span></div></div>
+    <h2 id="wip"><i class="bi bi-gear me-2 text-primary"></i><span lang="zh">生產中使用箱子</span><span lang="en">Use boxes during production</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh"><a href="../mfg/dispatch.html">派工</a>報工時在「箱號」欄掃箱子（手機報工掃容器 QR 也可以掃箱號）。報工的合格數就記在這個箱子上，箱子綁到這張工單的這道工序。同一道工序可以分好幾次報進同一箱，數量會累加。</span><span lang="en">When reporting production on a <a href="../mfg/dispatch.html">dispatch</a>, scan the box into the "Box No." field (on the phone, the container QR scan also accepts a box number). The good quantity is recorded on that box, and the box is linked to this operation of this work order. One operation can report into the same box several times; the quantities add up.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">整箱交給下一道工序：下一站報工時掃<strong>同一個箱號</strong>，箱子就改由那一站接手，數量從那一站的報工重新算起（上一站的已經交出去了）。</span><span lang="en">Hand the whole box to the next operation: when the next station reports, it scans <strong>the same box number</strong>. The box is taken over by that station, and its quantity restarts from that station's reports (the previous station's output has been handed on).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">最後一道做完，完工入庫勾「分箱入庫」時掃這些箱子（「帶入空箱」會先帶出這張工單的在製箱），箱子就轉成「使用中」並綁到新的成品批號。</span><span lang="en">After the last operation, scan these boxes when ticking "Receive by box" in production completion ("Fill in empty boxes" lists this work order's in-process boxes first). The boxes then become "In use" and are linked to the new finished-goods lots.</span></div></div>
+    <div class="tip-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <span lang="zh">桌機報工掃到裝著別張工單在製品、或裝著庫存批號的箱子，整筆報工會被擋下，請換箱。手機報工（可能是斷線後補送）不擋：報工照收、箱子不綁，畫面會提示原因。在製箱的數量是「放進去時」的紀錄；工序間只拿走一部分的話，系統不追蹤，請以「清空」或換箱處理。</span><span lang="en">If a desktop report scans a box that already holds some other work order's work in process, or an inventory lot, the whole report is rejected; swap in an empty box. A phone report (which may be resent after a lost connection) is not rejected: the report is saved, the box is not linked, and the screen shows why. An in-process box's quantity is what was put in; if only part of it is taken between operations the system does not track that, so clear the box or swap in an empty one.</span>
+    </div>
+    <h2 id="offsite"><i class="bi bi-truck me-2 text-primary"></i><span lang="zh">出廠與回收</span><span lang="en">Leaving the plant and coming back</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">整箱出庫時在<a href="../inv/warehouse-ops.html">倉庫作業</a>的出庫面板（或<a href="../mobile/pick.html">手機出庫下架</a>）掃箱號，系統帶出該箱的批號與數量。出貨、委外發料等單據把這個批號全部出完後，箱子就自動變成「廠外」，內容面板會顯示是跟著哪一張單據、出給哪個對象。</span><span lang="en">When issuing a whole box, scan the box number in the issue panel of <a href="../inv/warehouse-ops.html">Warehouse Operations</a> (or on the <a href="../mobile/pick.html">phone pick screen</a>) and the box's lot and quantity are filled in. Once a shipment, outsource issue or similar document has issued all of that lot, the box automatically shows as "Off-site", and the details panel shows which document it left with and the party it went to.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">箱子回來後，在清單上方點「回收」，把箱號一行一個掃進去（或在單一箱子的內容面板按「回收」）。回收後變成空箱，可以再裝。不在廠外的箱子不能回收，會列出原因。</span><span lang="en">When boxes come back, click "Recover" above the list and scan the box numbers in, one per line (or click "Recover" in a single box's details panel). Recovered boxes become empty and can be filled again. A box that is not off-site cannot be recovered, and the reason is listed.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">跟<a href="../inv/cross-plant-transfer.html">跨廠調撥</a>到別廠的箱子：目的廠收貨後，在目的廠的箱子畫面「回收」這些箱號。箱子改屬目的廠；箱裡的批號已經收進目的廠，所以直接是「使用中」，之後在目的廠照常使用。</span><span lang="en">Boxes sent to a second plant with a <a href="../inv/cross-plant-transfer.html">cross-plant transfer</a>: after the destination plant receives the goods, use "Recover" on the destination plant's Boxes screen for those box numbers. The boxes move to the destination plant, and since their lot has been received there they are "In use" straight away and are used there as normal.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">出貨單、借出、委外發料、退貨、樣品出貨與跨廠調撥的單據面板與列印，會在明細下方列出「出廠箱號」：這張單據出掉的批號對到哪些箱子、各多少，以及箱子回收了沒有。單據本身不必另外填箱號。</span><span lang="en">The panels and printouts of shipments, loans out, outsource issues, purchase returns, sample shipments and cross-plant transfers list "Boxes shipped" below the lines: which boxes the document's lots belong to, how much each held, and whether each box has come back. You do not enter box numbers on the document itself.</span></div></div>
+    <h2 id="maintain"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢與維護</span><span lang="en">Look up and maintain</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢欄可直接掃箱子上的 QR 碼，也可輸入批號或品號。點「內容」看目前內容（品號、批號、各儲位數量、裝箱單號）與最近 50 筆歷程。</span><span lang="en">The search box accepts a scan of the QR code on the box, or a lot or item number. Click "Details" to see the current contents (item, lot, quantity per location, filling document) and the latest 50 history entries.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">「清空」：實物已經倒出、但帳上那個批號還有數量時使用（例如剩下的改成散裝）。只解除箱子與批號的對應，<strong>不動庫存帳</strong>。</span><span lang="en">"Clear": use it when the box has been emptied physically but its lot still has stock in the ledger (for example the remainder is now held loose). It only removes the link between box and lot and <strong>does not change stock</strong>.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">「停用」：箱子損壞或報廢時使用，之後可再「啟用」。</span><span lang="en">"Deactivate": use it when a box is damaged or retired; it can be reactivated later.</span></div></div>
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">內容面板若提示「同一箱的批號出現在多個儲位」，表示有人只搬了箱內一部分貨到別的儲位，等於從箱子拿出來了，請確認實物。</span><span lang="en">If the details panel says the box's lot is in more than one location, someone relocated only part of the box, which means it was taken out of the box. Check the physical box.</span>
+    </div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">建立箱子</span><span lang="en">Create boxes</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">容器種類</span><span lang="en">Container Type</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">箱子屬於哪一種容器（容器主檔，只列啟用中）</span><span lang="en">Which container type the boxes belong to (container master, active only)</span></td></tr>
+        <tr><td><span lang="zh">箱號前綴</span><span lang="en">Box number prefix</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">1～10 個英數字，系統轉成大寫</span><span lang="en">1 to 10 letters or digits, converted to upper case</span></td></tr>
+        <tr><td><span lang="zh">建立數量</span><span lang="en">Number of boxes</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">一次 1～500 個</span><span lang="en">1 to 500 at a time</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">清單欄位</span><span lang="en">List columns</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">箱號</span><span lang="en">Box No.</span></td><td><span lang="zh">固定 QR 標籤的內容，建立後不可修改</span><span lang="en">The content of the fixed QR label; cannot be changed once created</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">空箱／使用中／在製／廠外／停用，見上方「箱子狀態」</span><span lang="en">Empty / In use / In process / Off-site / Inactive; see "Box status" above</span></td></tr>
+        <tr><td><span lang="zh">品號／批號</span><span lang="en">Item / Lot No.</span></td><td><span lang="zh">使用中的箱子目前綁定的品號與批號；空箱不顯示</span><span lang="en">Item and lot the box is linked to while in use; blank for empty boxes</span></td></tr>
+        <tr><td><span lang="zh">出廠單號</span><span lang="en">Left with</span></td><td><span lang="zh">廠外的箱子是跟著哪一張單據出廠的</span><span lang="en">The document an off-site box left the plant with</span></td></tr>
+        <tr><td><span lang="zh">工單／工序</span><span lang="en">Work order / Op</span></td><td><span lang="zh">在製箱目前屬於哪張工單的哪道工序</span><span lang="en">Which work order and operation an in-process box belongs to</span></td></tr>
+        <tr><td><span lang="zh">數量</span><span lang="en">Qty</span></td><td><span lang="zh">使用中：該批號在本廠各儲位的在手量合計（取自庫存帳），不是另外記的數字。在製：這道工序報進這箱的合格數合計</span><span lang="en">In use: total on-hand quantity of that lot across this plant's locations (taken from the stock ledger), not a separately kept figure. In process: total good quantity this operation reported into the box</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="container.html"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a> ・ <a href="../mfg/production-completion.html#boxing"><span lang="zh">完工入庫</span><span lang="en">Production Completion</span></a> ・ <a href="../inv/stock-transfer.html"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a> ・ <a href="../mfg/dispatch.html"><span lang="zh">派工</span><span lang="en">Dispatch</span></a></p>
+  </main>
+</div>
+</body>
+</html>

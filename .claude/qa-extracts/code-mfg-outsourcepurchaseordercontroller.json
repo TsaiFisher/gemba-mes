@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/MFG/Controllers/OutsourcePurchaseOrderController.cs",
+  "sourceHash": "17e496721c3f689fc1e92b3580f54051bc07e2bd433d16253648847357761c6b",
+  "entries": [
+    {
+      "slug": "code-mfg-outsourcepurchaseordercontroller-a99cd3ba",
+      "lang": "zh",
+      "headingPath": "生產製造 › 委外採購單 / 轉委外 / 拆單",
+      "text": "委外採購單的處理規則說明｜系統會將整品和工序的委外需求，透過一個統一的流程來處理；如果需要拆分數量到不同的廠商或交期，系統支援此種情況，並且在建立單據時，會自動查詢並帶入委外單價。",
+      "approved": true,
+      "sourceSectionHash": "6eff2999ef19e979270280b92dee8e741b7289b57d44c4318607925305d718d2"
+    },
+    {
+      "slug": "code-mfg-outsourcepurchaseordercontroller-b2ef7167",
+      "lang": "zh",
+      "headingPath": "生產製造 › 轉委外清單：整合 ，顯示未完全轉換的委外建議",
+      "text": "轉委外清單篩選未完成的建議｜系統會顯示那些需求數量減去已轉移數量後仍大於零的委外建議。如果過去沒有建立過相關的委外需求，系統仍然會保留顯示供使用者手動轉換。",
+      "approved": true,
+      "sourceSectionHash": "60837720a0dbcef71b7eb1e2086518d9e4249b9cad00b6bdbe3d7d0a659bf07c"
+    },
+    {
+      "slug": "code-mfg-outsourcepurchaseordercontroller-468e03b6",
+      "lang": "zh",
+      "headingPath": "生產製造 › 建立委外採購單",
+      "text": "單據拆分與來源判斷規則｜當沒有指定需求單的識別碼時，系統會自動建立一個需求單紀錄，並將所有資料轉換到這個新建立的需求單上。",
+      "approved": true,
+      "sourceSectionHash": "e050384e0ecbd99417cbb444f0cf66c06c5e71dd25ce817f1d7ad65f8087673c"
+    },
+    {
+      "slug": "code-mfg-outsourcepurchaseordercontroller-1f4a9445",
+      "lang": "zh",
+      "headingPath": "生產製造 › 實作與理由見",
+      "text": "委外報價的四層查詢｜建立委外採購單時自動帶入的委外加工單價，依「廠商＋品號＋途程＋工序」由精確到概略共四層順序查詢，取最先命中的那一層。這份查詢只有一個定義，畫面、批次產生與報表三處共用。",
+      "approved": true,
+      "sourceSectionHash": "2bca3d68da6fea48f7ff9b4062fb705a7020800b70dcfc8b04ac733b68867f67"
+    }
+  ]
+}

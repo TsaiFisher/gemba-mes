@@ -1,0 +1,82 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Services
+@using SmartFactory.MES.Modules.INV.ViewModels
+@inject IViewLocalizer Localizer
+@inject IUomService UomService
+@model StockLedgerVm
+@{
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Localizer["DocTitle"].Value;
+
+    var uomDecimals = await UomService.GetAllDecimalPlacesAsync();
+    var dp = (!string.IsNullOrEmpty(Model.StockUomCode) && uomDecimals.TryGetValue(Model.StockUomCode, out var v)) ? v : 4;
+    string fmt = dp <= 0 ? "N0" : $"N{dp}";
+    string period = $"{Model.DateFrom?.ToString("yyyy-MM-dd") ?? "…"} ~ {Model.DateTo?.ToString("yyyy-MM-dd") ?? "…"}";
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div class="print-title-block">
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["DocTitle"]</div>
+        <div class="print-doc-number">@Localizer["ProductCode"]：@Model.ProductCode @Model.ProductName ／ @Localizer["Period"]：@period</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-field-grid">
+        <div class="print-field-label">@Localizer["StockUom"]</div>
+        <div class="print-field-value">@Model.StockUomCode</div>
+        <div class="print-field-label">@Localizer["OpeningBalance"]</div>
+        <div class="print-field-value">@Model.OpeningBalance.ToString(fmt)</div>
+        <div class="print-field-label">@Localizer["ClosingBalance"]</div>
+        <div class="print-field-value">@Model.ClosingBalance.ToString(fmt)</div>
+    </div>
+</div>
+
+<table class="print-table">
+    <thead>
+        <tr>
+            <th>@Localizer["Date"]</th>
+            <th>@Localizer["Summary"]</th>
+            <th class="u-text-align-right">@Localizer["InQty"]</th>
+            <th class="u-text-align-right">@Localizer["OutQty"]</th>
+            <th class="u-text-align-right">@Localizer["Balance"]</th>
+            <th>@Localizer["Handler"]</th>
+            <th>@Localizer["Remark"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@(Model.DateFrom?.ToString("yyyy-MM-dd") ?? "-")</td>
+            <td>@Localizer["OpeningBalance"]</td>
+            <td class="u-text-align-right">-</td>
+            <td class="u-text-align-right">-</td>
+            <td class="u-text-align-right">@Model.OpeningBalance.ToString(fmt)</td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var r in Model.Rows)
+        {
+            <tr>
+                <td>@r.MovementDate.ToString("yyyy-MM-dd")</td>
+                <td>@r.TypeCode @r.Summary</td>
+                <td class="u-text-align-right">@(r.InQty == 0 ? "" : r.InQty.ToString(fmt))</td>
+                <td class="u-text-align-right">@(r.OutQty == 0 ? "" : r.OutQty.ToString(fmt))</td>
+                <td class="u-text-align-right">@r.Balance.ToString(fmt)</td>
+                <td>@r.Handler</td>
+                <td>@r.DocNo @(string.IsNullOrEmpty(r.SourceDocNo) ? "" : "← " + r.SourceDocNo) @r.Remark</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td>@Localizer["ClosingBalance"]</td>
+            <td class="u-text-align-right">@Model.TotalIn.ToString(fmt)</td>
+            <td class="u-text-align-right">@Model.TotalOut.ToString(fmt)</td>
+            <td class="u-text-align-right">@Model.ClosingBalance.ToString(fmt)</td>
+            <td colspan="2"></td>
+        </tr>
+    </tfoot>
+</table>

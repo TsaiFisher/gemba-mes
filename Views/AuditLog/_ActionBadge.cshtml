@@ -1,0 +1,21 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model string
+
+@*
+    稽核日誌「操作」欄的 badge。三個顯示端（Index 列表、Details 頁、_AuditLogDetails 側面板）
+    共用這一份，避免再出現「其中一個漏列了某種 Action」——列表頁的操作欄空白就是這樣來的。
+    判讀與樣式都出自 AuditAction，這裡只負責把資源鍵換成文字。
+*@
+@{
+    var resourceKey = AuditAction.ResourceKey(Model);
+}
+@if (resourceKey is null)
+{
+    @* 未知值：原樣顯示字串本身，不要留白 *@
+    <span class="badge @AuditAction.BadgeCss(Model)">@(string.IsNullOrEmpty(Model) ? "-" : Model)</span>
+}
+else
+{
+    <span class="badge @AuditAction.BadgeCss(Model)">@Localizer[resourceKey]</span>
+}

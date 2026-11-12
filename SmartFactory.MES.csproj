@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="1.5.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="8.0.2" />
+    <PackageReference Include="ClosedXML" Version="0.104.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.14" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    <PackageReference Include="QRCoder" Version="1.6.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="10.0.14" />
+    <PackageReference Include="WebPush" Version="1.0.11" />
+  </ItemGroup>
+
+  <!-- 安全修正 H3：頂層釘定，蓋掉 WebPush 1.0.11 依賴鏈帶入的高風險 transitive 版本
+       （Newtonsoft.Json 10.0.3 GHSA-5crp-9r3c-p9vr / System.Net.Http 4.3.3 GHSA-7jgj-8wvc-jh57
+        / System.Text.RegularExpressions 4.3.0 GHSA-cmhx-cq75-c4mj）。
+       中期解為改用維護中的推播套件（見 security-assessment-and-plan.md H3）。 -->
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <!-- 授權相關的內部型別（LicenseCrl / CrlDocument / LicenseCrlService 的測試用建構式）
+       開放給測試組件。刻意不把它們改成 public：撤銷清單的驗簽與信任根不該是
+       應用程式其他部分叫得到的 API。 -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>SmartFactory.MES.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <!-- License 公鑰嵌入為 Embedded Resource；私鑰由 SmartFactory 保管，不進版控 -->
+  <ItemGroup>
+    <EmbeddedResource Include="Resources/license-public.pem" />
+  </ItemGroup>
+
+  <!-- Phase 2：Security Anchor DLL 自動複製至輸出目錄的 Security/ 子目錄 -->
+  <!-- DLL 原始碼在 SmartFactory.MES.Security/（不進顧問 Git），此處只複製編譯結果 -->
+  <ItemGroup>
+    <None Include="Security/SmartFactory.MES.Security.dll" Condition="Exists('Security/SmartFactory.MES.Security.dll')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Security/SmartFactory.MES.Security.dll</Link>
+    </None>
+  </ItemGroup>
+
+  <!-- 設定檔/授權檔自動複製至輸出目錄，避免每次手動同步（含 gitignore 的本機檔） -->
+  <!-- appsettings*.json 由 Web SDK 隱含納入，須用 Update 改 metadata（Include 會重複） -->
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.Development.json" Condition="Exists('appsettings.Development.json')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <!-- Always（非 PreserveNewest）：PreserveNewest 比對時間戳，重新核發的 license.json
+         若 mtime 早於輸出目錄既有副本（cp -p / scp -p / tar 解壓 / 從別台機器帶入皆會
+         保留原時間戳）就不會被覆蓋，app 與 UITests 會沿用舊授權。 -->
+    <None Include="license.json" Condition="Exists('license.json')">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);SmartFactory.MES.Tests\**;SmartFactory.MES.UITests\**;SmartFactory.MES.IntegrationTests\**;SmartFactory.MES.LicenseAuthority\**;SmartFactory.MES.Security\**;SmartFactory.MES.MachineId\**;tools\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="User Management — System Administration Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>使用者管理 — 系統管理使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">系統管理目錄</span><span lang="en">System Administration contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link active"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-people me-2 text-primary"></i><span lang="zh">使用者管理</span><span lang="en">User Management</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">選單位置：管理系統 → 使用者管理 &nbsp;|&nbsp; 權限：目前身份為 Admin</span><span lang="en">Menu: System Administration → User Management &nbsp;|&nbsp; Permission: current role is Admin</span></div>
+    </div>
+
+    <p><span lang="zh">使用者管理維護系統的</span><span lang="en">User management maintains the </span><b><span lang="zh">登入帳號</span><span lang="en">sign-in accounts</span></b><span lang="zh">，包含帳號、Email、介面語系，以及這個人被指派了哪些</span><span lang="en"> of the system: the user name, the e-mail address, the interface language, and which </span><b><span lang="zh">角色</span><span lang="en">roles</span></b><span lang="zh">。使用者本身不帶任何功能權限——</span><span lang="en"> the person has been given. A user carries no permissions of their own: </span><b><span lang="zh">權限一律掛在角色上</span><span lang="en">permissions always sit on the role</span></b><span lang="zh">，指派角色才是給權限的動作。</span><span lang="en">, so assigning a role is what actually grants access.</span></p>
+
+    <div class="note-box"><i class="bi bi-shield-lock-fill me-1 text-warning"></i>
+      <strong><span lang="zh">僅系統管理員可進入：</span><span lang="en">System administrators only:</span></strong><span lang="zh">本畫面（以及角色、組織架構、廠別、權限設定、手機權限、兩步驟驗證重置）只在</span><span lang="en"> This screen — and role, organization, plant, permission settings, mobile permissions and two-step verification reset with it — is available only while the </span><b><span lang="zh">目前身份為 Admin</span><span lang="en">current role is Admin</span></b><span lang="zh">時出現在選單、也才進得去；屬於 Admin 但切換成其他身份時同樣進不去。這幾個畫面不在權限矩陣裡設定。</span><span lang="en">; someone who belongs to Admin but has switched to another role cannot open it either. These screens are not set in the permission matrix.</span>
+    </div>
+
+    <img class="screen-shot" src="img/user.png" data-src-en="img/en/user.png" alt="使用者管理畫面截圖" data-alt-en="User management screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">使用者管理畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">User management screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">帳號</span><span lang="en">User name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">登入時輸入的名稱，全系統唯一。稽核日誌記錄的就是這個名稱。</span><span lang="en">The name typed at sign-in; unique across the system. This is the name recorded in the audit log.</span></td></tr>
+        <tr><td><span lang="zh">Email</span><span lang="en">E-mail</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">同時是登入頁「Email」欄位所輸入的值。建立時系統直接標記為已確認，不寄發驗證信。</span><span lang="en">Also the value typed into the "E-mail" box on the sign-in page. It is marked as confirmed on creation; no verification mail is sent.</span></td></tr>
+        <tr><td><span lang="zh">初始密碼</span><span lang="en">Initial password</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">只在</span><span lang="en">Appears </span><b><span lang="zh">新增</span><span lang="en">only when creating</span></b><span lang="zh">時出現；編輯既有使用者時不顯示此欄位，也無法由此改密碼（見下方「忘記密碼怎麼辦」）。</span><span lang="en"> a user; it is not shown when editing an existing one, and a password cannot be changed here (see "What to do about a forgotten password" below).</span></td></tr>
+        <tr><td><span lang="zh">語系</span><span lang="en">Language</span></td><td></td><td><span lang="zh">只在</span><span lang="en">Appears only when </span><b><span lang="zh">編輯</span><span lang="en">editing</span></b><span lang="zh">時出現，從下拉選擇「依廠別預設」「繁體中文」或「English」。選了語言就以個人為準；選「依廠別預設」（留空）則登入或切換廠別時採用所在廠別的預設語系。本人在畫面上切換語系後，會自動存成個人語系。</span><span lang="en">; choose "Follow plant default", Traditional Chinese or English from the list. A chosen language always takes priority; "Follow plant default" (empty) uses the default language of the user's current plant when signing in or switching plants. Once the user switches language on screen, that choice is saved as their personal language.</span></td></tr>
+        <tr><td><span lang="zh">個人時區</span><span lang="en">Personal Time Zone</span></td><td></td><td><span lang="zh">只在</span><span lang="en">Appears only when </span><b><span lang="zh">編輯</span><span lang="en">editing</span></b><span lang="zh">時出現。留空即</span><span lang="en">. Left empty it means </span><b><span lang="zh">跟隨廠別時區</span><span lang="en">follow the plant time zone</span></b><span lang="zh">，這是多數帳號該有的狀態；只有該使用者目前所在的廠別本身沒有設定時區時，這個值才會生效。</span><span lang="en">, which is what most accounts should be; the value takes effect only when the plant the person is currently in has no time zone of its own.</span></td></tr>
+        <tr><td><span lang="zh">角色</span><span lang="en">Roles</span></td><td></td><td><span lang="zh">可勾選</span><span lang="en">You may tick </span><b><span lang="zh">多個</span><span lang="en">more than one</span></b><span lang="zh">。清單中每個角色後面的括號顯示「所屬組織單位 / 可用廠別」，例如「(總公司 / ADM、P1、P2)」；沒有掛組織單位的顯示「系統」，角色未限制廠別的顯示「所有廠別」。使用者登入後在「個人設定」切換目前生效的角色。</span><span lang="en">. Each role in the list shows "organization unit / plants it may use" in brackets, for example "(Head Office / ADM, P1, P2)"; a role with no organization unit shows "System", and a role not restricted to particular plants shows "all plants". After signing in the user switches the role currently in effect under "Personal settings".</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">查詢使用者</span><span lang="en">Searching for a user</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點選左側選單「管理系統 &gt; 使用者管理」。</span><span lang="en">Choose "System Administration &gt; User Management" in the left-hand menu.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">在查詢列輸入帳號或 Email 的關鍵字（留空表示全部），按「查詢」。</span><span lang="en">Type part of a user name or e-mail address in the search bar (leave it empty for everyone) and click "Search".</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點欄位標題可切換排序（帳號／Email／語系），下方可調整每頁筆數。</span><span lang="en">Click a column heading to sort by it (user name, e-mail or language); the page size can be changed below the list.</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">剛進入畫面時清單是</span><span lang="en">The list is </span><b><span lang="zh">空的</span><span lang="en">empty</span></b><span lang="zh">，這不是沒有資料——本系統的查詢型畫面一律要先按下「查詢」才會載入資料。</span><span lang="en"> when you first open the screen. That does not mean there is no data: every search screen in this system loads its data only after "Search" is clicked.</span>
+    </div>
+
+    <h3><span lang="zh">新增使用者</span><span lang="en">Adding a user</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點右上角「新增」，右側滑出表單。</span><span lang="en">Click "Add" in the top right corner; the form slides out on the right.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">填入帳號、Email 與初始密碼。</span><span lang="en">Fill in the user name, the e-mail address and the initial password.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">在角色清單勾選這位使用者該有的角色（可複選，也可先不勾之後再補）。</span><span lang="en">Tick the roles this person should have (more than one is allowed, and they can be added later).</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">按「儲存」。密碼不符合規則時，錯誤訊息會顯示在表單上方。</span><span lang="en">Click "Save". If the password does not meet the rules, the message appears at the top of the form.</span></div></div>
+
+    <h3><span lang="zh">調整某人的角色</span><span lang="en">Changing someone's roles</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查出該使用者，點列表上的編輯開啟表單。</span><span lang="en">Find the user and click edit in the list to open the form.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">勾選要新增的角色、取消勾選要移除的角色，按「儲存」。系統會依勾選結果補上差異並移除多餘的角色。</span><span lang="en">Tick the roles to add and untick the ones to remove, then click "Save". The system adds what is newly ticked and removes what is no longer ticked.</span></div></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">移除角色會立刻改變對方看得到的畫面：</span><span lang="en">Removing a role changes what the person sees immediately:</span></strong><span lang="zh">若被移除的角色正好是對方目前作用中的角色，對方的選單與可用功能會跟著變動。調整前建議先確認對方手上沒有進行中的作業。</span><span lang="en"> if the role removed happens to be the one currently in effect for that person, their menu and the functions available to them change with it. It is worth checking that they have no work in progress before you change it.</span>
+    </div>
+
+    <h2 id="password-rules"><i class="bi bi-key me-2 text-primary"></i><span lang="zh">密碼規則</span><span lang="en">Password rules</span></h2>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">規則</span><span lang="en">Rule</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">長度</span><span lang="en">Length</span></td><td><span lang="zh">至少 8 個字元。</span><span lang="en">At least 8 characters.</span></td></tr>
+        <tr><td><span lang="zh">組成</span><span lang="en">Composition</span></td><td><span lang="zh">必須同時含有數字、大寫字母與小寫字母。是否強制特殊符號由系統組態決定，預設</span><span lang="en">It must contain a digit, an upper-case letter and a lower-case letter. Whether a special character is compulsory is decided by the system configuration, and by default it is </span><b><span lang="zh">不強制</span><span lang="en">not required</span></b><span lang="zh">。</span><span lang="en">.</span></td></tr>
+        <tr><td><span lang="zh">弱密碼阻擋</span><span lang="en">Weak-password block</span></td><td><span lang="zh">與帳號或 Email 相同、以及常見弱密碼字典中的密碼會被拒絕，即使長度與組成都合格。</span><span lang="en">A password that matches the user name or e-mail address, or that appears in the common weak-password dictionary, is rejected even when the length and composition are fine.</span></td></tr>
+        <tr><td><span lang="zh">帳號鎖定</span><span lang="en">Account lockout</span></td><td><span lang="zh">連續</span><span lang="en">After </span><b><span lang="zh">5 次</span><span lang="en">5</span></b><span lang="zh">登入失敗即鎖定</span><span lang="en"> failed sign-in attempts in a row the account is locked for </span><b><span lang="zh">30 分鐘</span><span lang="en">30 minutes</span></b><span lang="zh">，新建立的帳號同樣適用。</span><span lang="en">; this applies to newly created accounts too.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box"><i class="bi bi-question-circle-fill me-1 text-primary"></i>
+      <strong><span lang="zh">忘記密碼怎麼辦：</span><span lang="en">What to do about a forgotten password:</span></strong><span lang="zh">本畫面的編輯功能不含改密碼。使用者可自行透過登入頁的忘記密碼流程重設；若是遺失兩階段驗證的驗證器而登不進來，請改用「兩階段驗證管理」畫面替對方重置。</span><span lang="en"> editing here does not cover passwords. The user can reset their own through the forgotten-password flow on the sign-in page; if they are locked out because they lost their two-factor authenticator, use the "Two-Factor Administration" screen to reset it for them instead.</span>
+    </div>
+
+    <h2 id="deleting-a-user"><i class="bi bi-trash me-2 text-primary"></i><span lang="zh">刪除使用者</span><span lang="en">Deleting a user</span></h2>
+    <p><span lang="zh">當這位使用者還有下列任一情況時，系統會擋下刪除並顯示原因：</span><span lang="en">The system blocks the deletion and tells you why when any of the following is true of the user:</span></p>
+    <table class="table table-bordered table-sm field-table">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">擋下的原因</span><span lang="en">Reason it is blocked</span></th><th><span lang="zh">處理方式</span><span lang="en">What to do</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">已發起的簽核流程（進行中）</span><span lang="en">An approval flow they started is still running</span></td><td><span lang="zh">等該流程簽完，或請對方（或管理員）撤回該申請單。</span><span lang="en">Wait for the flow to finish, or have them (or an administrator) withdraw the request.</span></td></tr>
+        <tr><td><span lang="zh">待簽核的簽核流程</span><span lang="en">An approval flow is waiting for them to sign</span></td><td><span lang="zh">先到「所有簽核記錄」把該單的簽核人重新指派給別人，再刪除。</span><span lang="en">Reassign the approver of that request to somebody else under "All Approval Requests" first, then delete.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-person-dash-fill me-1 text-warning"></i>
+      <strong><span lang="zh">離職者建議不要直接刪除：</span><span lang="en">It is better not to delete somebody who has left:</span></strong><span lang="zh">刪除會讓帳號從系統消失，但稽核日誌與簽核歷程中留存的是當時的帳號名稱，不會跟著清掉。較安全的做法是</span><span lang="en"> deleting removes the account from the system, while the audit log and the approval history keep the user name recorded at the time. The safer approach is to </span><b><span lang="zh">取消其所有角色</span><span lang="en">remove all of their roles</span></b><span lang="zh">，讓對方登入後看不到任何功能，帳號本身保留。</span><span lang="en">, so that they see no functions after signing in while the account itself is kept.</span>
+    </div>
+
+    <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
+    <p><span lang="zh">查詢結果可匯出 Excel（.xlsx）、CSV 或 JSON，內容為帳號、Email、語系與角色清單，並套用目前的查詢條件與排序。</span><span lang="en">The results can be exported as Excel (.xlsx), CSV or JSON, containing the user name, e-mail, language and list of roles, with the current search criteria and sort order applied.</span></p>
+  </main>
+</div>
+</body>
+</html>

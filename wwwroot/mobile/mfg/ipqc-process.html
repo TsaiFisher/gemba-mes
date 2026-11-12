@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#ffc107">
+    <link rel="manifest" href="/mobile/manifest.json">
+    <link rel="apple-touch-icon" href="/mobile/icons/apple-touch-icon-180.png">
+    <title data-i18n="ipqc_proc.page_title">IPQC 製程量測</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+    <link rel="stylesheet" href="/mobile/css/mfg-ipqc-process.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-warning mobile-navbar px-3">
+    <button type="button" data-action="historyBack" data-fallback="/mobile/mfg/ipqc.html"
+            class="btn btn-link text-dark p-0 me-2" data-i18n-title="common.back_prev" title="返回">
+        <i class="bi bi-arrow-left fs-5"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.back_prev">返回</span>
+    </button>
+    <span class="navbar-brand fw-bold mb-0 h1 flex-grow-1 text-dark">
+        <i class="bi bi-clipboard2-pulse me-2"></i><span data-i18n="ipqc_proc.title">IPQC 製程量測</span>
+    </span>
+    <a href="/mobile/home.html" class="btn btn-outline-dark btn-sm me-1" data-i18n-title="common.back" title="回首頁"><i class="bi bi-house-door"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="nav.home">首頁</span></a>
+    <button class="btn btn-outline-dark btn-sm me-1" data-action="toggleLang" data-lang-toggle title="Language">EN</button>
+    <button class="btn btn-outline-dark btn-sm" data-action="logout" data-i18n-title="common.logout" title="登出">
+        <i class="bi bi-box-arrow-right"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.logout">登出</span>
+    </button>
+</nav>
+
+<div class="container-fluid py-3 px-3">
+
+    <!-- 派工資訊卡 -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body py-2 px-3">
+            <div class="fw-bold" id="lblDispatch" data-i18n="common.loading">載入中…</div>
+            <div class="small text-muted" id="lblMachine">—</div>
+
+            <!-- n / Ac / Re 三格顯示 -->
+            <div class="ac-re-grid mt-2" id="acReGrid">
+                <div class="ac-re-cell cell-n">
+                    <div class="small u-font-weight-400" data-i18n="ipqc_proc.sample_n">應抽 n</div>
+                    <div id="calcN">—</div>
+                </div>
+                <div class="ac-re-cell cell-ac">
+                    <div class="small u-font-weight-400" data-i18n="ipqc_proc.accept_ac">允收 Ac</div>
+                    <div>0</div>
+                </div>
+                <div class="ac-re-cell cell-re">
+                    <div class="small u-font-weight-400" data-i18n="ipqc_proc.reject_re">拒收 Re</div>
+                    <div>1</div>
+                </div>
+            </div>
+
+            <!-- VL 選擇 -->
+            <div class="mt-2 d-flex align-items-center gap-2 small">
+                <span class="text-muted" data-i18n="ipqc_proc.vl_label">驗證等級</span>
+                <select id="vlSelect" class="form-select form-select-sm u-max-width-180px" data-action-change="recalcN">
+                    <option value="3" data-i18n="ipqc_proc.vl_iii">VL-III</option>
+                    <option value="4" selected data-i18n="ipqc_proc.vl_iv">VL-IV（一般製程）</option>
+                    <option value="5" data-i18n="ipqc_proc.vl_v">VL-V</option>
+                    <option value="6" data-i18n="ipqc_proc.vl_vi">VL-VI（關鍵工序）</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- MIL-STD-1916 規則說明 -->
+    <div class="std-banner p-2 mb-3 small" data-i18n-html="ipqc_proc.banner">
+        <strong>MIL-STD-1916 Ac=0</strong>：任何不良品即全批拒批，派工自動轉 OnHold，請聯繫品管。
+    </div>
+
+    <!-- 規格項目量測 -->
+    <div class="card shadow-sm mb-3" id="specCard">
+        <div class="card-header bg-white py-2 d-flex justify-content-between align-items-center">
+            <span class="fw-semibold small" data-i18n="ipqc_proc.items_title">量測項目</span>
+            <button class="btn btn-sm btn-outline-secondary" data-action="addCustomRow">
+                <i class="bi bi-plus me-1"></i><span data-i18n="ipqc_proc.add_item">自訂項目</span>
+            </button>
+        </div>
+        <div class="card-body py-2 px-3" id="specItemRows">
+            <div class="text-center text-muted small py-2">
+                <div class="spinner-border spinner-border-sm me-1"></div><span data-i18n="ipqc_proc.loading_spec">載入規格…</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 不良計數（Ac=0 整批） -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-header bg-white py-2">
+            <span class="fw-semibold small" data-i18n="ipqc_proc.count_title">Ac=0 整批計數</span>
+        </div>
+        <div class="card-body py-3">
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label small fw-semibold text-center w-100">
+                        <span data-i18n="ipqc_proc.actual_n">實際抽取數</span><br>
+                        <small class="text-muted"><span data-i18n="ipqc_proc.actual_n_hint">（建議 ≥</span> <span id="nHint">—</span>）</small>
+                    </label>
+                    <input type="number" id="sampleQty" class="form-control qty-input btn-mobile"
+                           min="1" step="any" inputmode="decimal" value="0"
+                           data-action-input="updateResult">
+                </div>
+                <div class="col-6">
+                    <label class="form-label small fw-semibold text-center w-100 text-danger">
+                        <span data-i18n="ipqc_proc.fail_qty">整批不良數</span><br><small data-i18n="ipqc_proc.fail_hint">（≥1 即停線）</small>
+                    </label>
+                    <input type="number" id="failQty" class="form-control qty-input btn-mobile text-danger"
+                           min="0" step="any" inputmode="decimal" value="0"
+                           data-action-input="updateResult">
+                </div>
+            </div>
+
+            <!-- 警告 -->
+            <div id="failWarn" class="p-2 mb-3 small u-display-none u-background-f8d7da u-border-radius-8px">
+                <i class="bi bi-exclamation-triangle-fill text-danger me-1"></i>
+                <strong data-i18n="ipqc_proc.fail_warn">Ac=0 — 發現不良品，派工將暫停，請聯繫品管。</strong>
+            </div>
+
+            <!-- 結果預覽 -->
+            <div class="text-center mb-3">
+                <div class="fw-semibold small mb-1" data-i18n="ipqc_proc.result">判定結果</div>
+                <div id="resultPreview" class="result-pass fw-bold" data-i18n="ipqc_proc.pass">✓ 合格</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small fw-semibold" data-i18n="ipqc_proc.remarks">備註（不良描述、改善措施…）</label>
+                <textarea id="remarks" class="form-control btn-mobile u-font-size-16px" rows="2"
+                         ></textarea>
+            </div>
+
+            <div class="d-grid">
+                <button class="btn btn-warning btn-lg action-btn" id="btnSubmit" data-action="submitIpqc">
+                    <i class="bi bi-check-circle me-2"></i><span data-i18n="ipqc_proc.submit">送出 IPQC 結果</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="toast-container"></div>
+
+<script src="/mobile/js/telemetry.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/data-action.js"></script>
+<script src="/mobile/js/nav.js"></script>
+<script src="/mobile/js/i18n.js"></script>
+<script src="/mobile/js/i18n.modules.js"></script>
+    <script src="/mobile/js/api.js"></script>
+<script src="/mobile/js/auth.js"></script>
+<script src="/mobile/mfg/ipqc-process.page.js"></script>
+</body>
+</html>

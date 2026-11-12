@@ -1,0 +1,106 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@model SmartFactory.MES.Modules.ORD.Models.GoodsShipment
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@inject SmartFactory.MES.Modules._Shared.Printing.PrintNameService PrintNameSvc
+@{
+    var names = await PrintNameSvc.ForAsync(Model);
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    var userNames = ViewBag.UserNames as Dictionary<string, string> ?? new Dictionary<string, string>();
+    string UserDisplay(string? id) => id != null && userNames.TryGetValue(id, out var n) ? n : (id ?? "");
+    ViewData["Title"] = Localizer["DocTitle"].Value;
+    var currencyDecimals = ViewBag.CurrencyDecimals as IReadOnlyDictionary<string, int>;
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    var baseCurrency = ViewBag.BaseCurrency as string;
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div class="print-title-block">
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["DocTitle"]</div>
+        <div class="print-doc-number">@Localizer["DocNo"]：@Model.GoodsShipmentId ／ @Localizer["DocDate"]：@Model.ShipDate.ToString("yyyy-MM-dd")</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-section-title">@L["Print_BasicInfo"]</div>
+    <div class="print-field-grid">
+        <div class="print-field-label">@Localizer["Customer"]</div>
+        <div class="print-field-value">@names.CompanyWith(Model.CompanyCode)</div>
+        <div class="print-field-label">@Localizer["SalesOrderId"]</div>
+        <div class="print-field-value">@Model.SalesOrderId</div>
+        <div class="print-field-label">@Localizer["ShipAddress"]</div>
+        <div class="print-field-value">@Model.ShipAddress</div>
+        <div class="print-field-label">@Localizer["Status"]</div>
+        <div class="print-field-value">@SmartFactory.MES.Modules._Shared.DocEnumDisplay.Text(L, Model.Status)</div>
+        <div class="print-field-label">@Localizer["CreatedBy"]</div>
+        <div class="print-field-value">@UserDisplay(Model.CreatedBy)</div>
+        @if (!string.IsNullOrEmpty(Model.Remarks))
+        {
+            <div class="print-field-label">@Localizer["Remarks"]</div>
+            <div class="print-field-value">@Model.Remarks</div>
+        }
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-section-title">@L["Print_Details"]</div>
+    <table class="print-table">
+        <thead>
+            <tr>
+                <th>@Localizer["ColNo"]</th>
+                <th>@Localizer["ProductCode"]</th>
+                <th>@L["Print_ProductName"]</th>
+                <th class="text-end">@Localizer["ShipQty"]</th>
+                <th>@Localizer["Uom"]</th>
+                <th class="text-end">@Localizer["UnitPrice"]</th>
+                <th>@Localizer["Currency"]</th>
+                <th class="text-end">@Localizer["LineAmount"]</th>
+                <th>@Localizer["WhCode"]</th>
+                <th>@Localizer["LocationCode"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var l in Model.Lines.OrderBy(x => x.LineNo))
+            {
+                <tr>
+                    <td>@l.LineNo</td>
+                    <td>@l.ProductCode</td>
+                    <td>@names.Product(l.ProductCode)</td>
+                    <td class="text-end">@l.ShipQty.ToString(QtyFmt(l.UomCode))</td>
+                    <td>@names.UomWith(l.UomCode)</td>
+                    <td class="text-end">@l.UnitPrice.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, l.CurrencyCode))</td>
+                    <td>@names.CurrencyWith(l.CurrencyCode)</td>
+                    <td class="text-end">@l.LineAmount.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, l.CurrencyCode))</td>
+                    <td>@names.WarehouseWith(l.WhCode)</td>
+                    <td>@names.LocationWith(l.LocationCode)</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            @* 合計必須是**上面那一欄的加總**：明細印的是交易幣，而表頭 TotalAmount 是本幣
+               （各明細 AmountLocal 加總）。原本直接把本幣總額擺在這裡，本國幣單據上剛好相等、
+               外幣單據上就變成「欄裡是 USD、合計是 NTD」而且沒有任何幣別標示（5-9）。
+               明細可為不同幣別，故逐幣別各出一列；本幣總額另立一列並標明。 *@
+            @foreach (var g in Model.Lines.GroupBy(x => x.CurrencyCode ?? "").OrderBy(x => x.Key))
+            {
+                <tr>
+                    <td colspan="6" class="text-end fw-bold">@Localizer["Total"] @g.Key</td>
+                    <td class="text-end fw-bold">@g.Sum(x => x.LineAmount).ToString(CurrencyStepHelper.GetFormat(currencyDecimals, g.Key))</td>
+                        <td colspan="2"></td>
+                </tr>
+            }
+            <tr>
+                <td colspan="6" class="text-end text-muted">@L["Print_LocalTotal"] @baseCurrency</td>
+                <td class="text-end text-muted">@Model.TotalAmount.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, baseCurrency))</td>
+                        <td colspan="2"></td>
+            </tr>
+        </tfoot>
+    </table>
+    @await Component.InvokeAsync("ContainerUnitsLeft", new { docNo = Model.GoodsShipmentId, print = true })
+</div>
+
+@await Html.PartialAsync("_PrintBase")

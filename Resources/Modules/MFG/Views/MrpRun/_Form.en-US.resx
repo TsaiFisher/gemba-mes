@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="SecMaster" xml:space="preserve"><value>Basic Info</value></data>
+  <data name="MrpRunId" xml:space="preserve"><value>Run No.</value></data>
+  <data name="AutoNumberHint" xml:space="preserve"><value>(auto-numbered on save)</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="StatusDraft" xml:space="preserve"><value>Draft</value></data>
+  <data name="StatusExecuted" xml:space="preserve"><value>Executed</value></data>
+  <data name="Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="SecLines" xml:space="preserve"><value>Demand Lines</value></data>
+  <data name="AddLine" xml:space="preserve"><value>Add Line</value></data>
+  <data name="LinesHint" xml:space="preserve"><value>Add the products, demand quantities and due dates to plan; click "Execute MRP" to expand into production batches and work orders.</value></data>
+  <data name="ColSeq" xml:space="preserve"><value>#</value></data>
+  <data name="ColProduct" xml:space="preserve"><value>Product</value></data>
+  <data name="ColQty" xml:space="preserve"><value>Demand Qty</value></data>
+  <data name="ColDueDate" xml:space="preserve"><value>Due Date</value></data>
+  <data name="ColMode" xml:space="preserve"><value>MRP Mode</value></data>
+  <data name="ColStockQty" xml:space="preserve"><value>Stock</value></data>
+  <data name="ColPurchaseQty" xml:space="preserve"><value>Purchase</value></data>
+  <data name="ColOutsourceQty" xml:space="preserve"><value>Outsource</value></data>
+  <data name="ColMakeQty" xml:space="preserve"><value>Make</value></data>
+  <data name="ColBatch" xml:space="preserve"><value>Batch</value></data>
+  <data name="ColError" xml:space="preserve"><value>Pre-check Error</value></data>
+  <data name="ColSalesOrder" xml:space="preserve"><value>Sales Order</value></data>
+  <data name="ColActions" xml:space="preserve"><value>Actions</value></data>
+  <data name="LineFormAdd" xml:space="preserve"><value>Add Line</value></data>
+  <data name="LineFormEdit" xml:space="preserve"><value>Edit Line</value></data>
+  <data name="FldProduct" xml:space="preserve"><value>Product</value></data>
+  <data name="FldQty" xml:space="preserve"><value>Demand Qty</value></data>
+  <data name="FldDueDate" xml:space="preserve"><value>Due Date</value></data>
+  <data name="FldSalesOrder" xml:space="preserve"><value>Sales Order (optional)</value></data>
+  <data name="PleaseSelect" xml:space="preserve"><value>Please select</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="SaveDraft" xml:space="preserve"><value>Save Draft</value></data>
+  <data name="Execute" xml:space="preserve"><value>Execute MRP</value></data>
+  <data name="ExecuteConfirm" xml:space="preserve"><value>Execute MRP expansion? This run can no longer be edited afterwards.</value></data>
+  <data name="NoLines" xml:space="preserve"><value>No demand lines yet</value></data>
+  <data name="ImportOrders" xml:space="preserve"><value>Import Orders</value></data>
+  <data name="ImportTitle" xml:space="preserve"><value>Import Order Lines</value></data>
+  <data name="ImportHint" xml:space="preserve"><value>Select open order lines and enter this run's quantity (default = remaining = order qty − expanded qty).</value></data>
+  <data name="ImportNone" xml:space="preserve"><value>No un-expanded order lines.</value></data>
+  <data name="ImpKind" xml:space="preserve"><value>Type</value></data>
+  <data name="ImpSo" xml:space="preserve"><value>Order-Line</value></data>
+  <data name="ImpProduct" xml:space="preserve"><value>Product</value></data>
+  <data name="ImpOrderQty" xml:space="preserve"><value>Order Qty</value></data>
+  <data name="ImpCommitted" xml:space="preserve"><value>Expanded</value></data>
+  <data name="ImpRemaining" xml:space="preserve"><value>Remaining</value></data>
+  <data name="ImpDate" xml:space="preserve"><value>Due Date</value></data>
+  <data name="ImpThisQty" xml:space="preserve"><value>This Run Qty</value></data>
+  <data name="ImportAdd" xml:space="preserve"><value>Add Selected</value></data>
+  <data name="ModeStock" xml:space="preserve"><value>Stock</value></data>
+  <data name="ModePurchase" xml:space="preserve"><value>Purchase</value></data>
+  <data name="ModeOutsource" xml:space="preserve"><value>Outsource</value></data>
+  <data name="ModeMake" xml:space="preserve"><value>Make</value></data>
+  <data name="JsLineProductRequired" xml:space="preserve"><value>Please select a product.</value></data>
+  <data name="JsLineQtyInvalid" xml:space="preserve"><value>Demand quantity must be greater than 0.</value></data>
+  <data name="JsLineDateRequired" xml:space="preserve"><value>Please enter a due date.</value></data>
+  <data name="JsLineDelConfirm" xml:space="preserve"><value>Delete this demand line?</value></data>
+  <data name="ColPriority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+</root>

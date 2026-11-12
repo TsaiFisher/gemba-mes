@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SlowMovingInventory.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="SlowMovingInventory.ProductName" xml:space="preserve">
+    <value>品名</value>
+  </data>
+  <data name="SlowMovingInventory.LocationCode" xml:space="preserve">
+    <value>儲位</value>
+  </data>
+  <data name="SlowMovingInventory.LotNo" xml:space="preserve">
+    <value>批號</value>
+  </data>
+  <data name="SlowMovingInventory.QtyOnHand" xml:space="preserve">
+    <value>庫存量</value>
+  </data>
+  <data name="SlowMovingInventory.UnitCost" xml:space="preserve">
+    <value>單位成本</value>
+  </data>
+  <data name="SlowMovingInventory.InventoryValue" xml:space="preserve">
+    <value>庫存金額</value>
+  </data>
+  <data name="SlowMovingInventory.LastMovementDate" xml:space="preserve">
+    <value>最後異動日</value>
+  </data>
+  <data name="SlowMovingInventory.IdleDays" xml:space="preserve">
+    <value>呆滯天數</value>
+  </data>
+  <data name="StockShortage.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="StockShortage.ProductName" xml:space="preserve">
+    <value>品名</value>
+  </data>
+  <data name="StockShortage.UomCode" xml:space="preserve">
+    <value>庫存單位</value>
+  </data>
+  <data name="StockShortage.SafetyStock" xml:space="preserve">
+    <value>安全存量</value>
+  </data>
+  <data name="StockShortage.QtyOnHand" xml:space="preserve">
+    <value>在手量（不含待驗）</value>
+  </data>
+  <data name="StockShortage.QtyReserved" xml:space="preserve">
+    <value>預留量</value>
+  </data>
+  <data name="StockShortage.QtyAvailable" xml:space="preserve">
+    <value>目前可用</value>
+  </data>
+  <data name="StockShortage.ShortageQty" xml:space="preserve">
+    <value>目前缺口</value>
+  </data>
+  <data name="SalesRanking.Rank" xml:space="preserve">
+    <value>名次</value>
+  </data>
+  <data name="SalesRanking.GroupKeyCustomer" xml:space="preserve">
+    <value>客戶</value>
+  </data>
+  <data name="SalesRanking.GroupKeyProduct" xml:space="preserve">
+    <value>品項</value>
+  </data>
+  <data name="SalesRanking.TotalAmount" xml:space="preserve">
+    <value>銷售金額</value>
+  </data>
+  <data name="SalesRanking.OrderCount" xml:space="preserve">
+    <value>訂單數</value>
+  </data>
+  <data name="SalesRanking.LineCount" xml:space="preserve">
+    <value>明細筆數</value>
+  </data>
+  <data name="OrderOverdue.SalesOrderId" xml:space="preserve">
+    <value>訂單號</value>
+  </data>
+  <data name="OrderOverdue.CompanyCode" xml:space="preserve">
+    <value>客戶</value>
+  </data>
+  <data name="OrderOverdue.OrderDate" xml:space="preserve">
+    <value>訂單日</value>
+  </data>
+  <data name="OrderOverdue.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="OrderOverdue.LineNo" xml:space="preserve">
+    <value>行號</value>
+  </data>
+  <data name="OrderOverdue.DeliveryDate" xml:space="preserve">
+    <value>預交日</value>
+  </data>
+  <data name="OrderOverdue.OrderQty" xml:space="preserve">
+    <value>訂購量</value>
+  </data>
+  <data name="OrderOverdue.ShippedQty" xml:space="preserve">
+    <value>已出量</value>
+  </data>
+  <data name="OrderOverdue.PendingQty" xml:space="preserve">
+    <value>未出量</value>
+  </data>
+  <data name="OrderOverdue.OverdueDays" xml:space="preserve">
+    <value>逾期天數</value>
+  </data>
+  <data name="ReturnRate.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="ReturnRate.CompanyCode" xml:space="preserve">
+    <value>客戶代號</value>
+  </data>
+  <data name="ReturnRate.ShippedQty" xml:space="preserve">
+    <value>出貨量</value>
+  </data>
+  <data name="ReturnRate.ReturnedQty" xml:space="preserve">
+    <value>退貨量</value>
+  </data>
+  <data name="ReturnRate.ReturnRate" xml:space="preserve">
+    <value>退貨率%</value>
+  </data>
+  <data name="DeliveryRate.CompanyCode" xml:space="preserve">
+    <value>客戶代號</value>
+  </data>
+  <data name="DeliveryRate.TotalLines" xml:space="preserve">
+    <value>應出明細數</value>
+  </data>
+  <data name="DeliveryRate.OnTimeLines" xml:space="preserve">
+    <value>準時筆數</value>
+  </data>
+  <data name="DeliveryRate.LateLines" xml:space="preserve">
+    <value>逾期筆數</value>
+  </data>
+  <data name="DeliveryRate.OnTimeRate" xml:space="preserve">
+    <value>達成率%</value>
+  </data>
+  <data name="PurchaseOverdue.PurchaseOrderId" xml:space="preserve">
+    <value>採購單號</value>
+  </data>
+  <data name="PurchaseOverdue.SupplierCode" xml:space="preserve">
+    <value>供應商</value>
+  </data>
+  <data name="PurchaseOverdue.OrderDate" xml:space="preserve">
+    <value>採購日</value>
+  </data>
+  <data name="PurchaseOverdue.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="PurchaseOverdue.LineNo" xml:space="preserve">
+    <value>行號</value>
+  </data>
+  <data name="PurchaseOverdue.DeliveryDate" xml:space="preserve">
+    <value>預交日</value>
+  </data>
+  <data name="PurchaseOverdue.OrderQty" xml:space="preserve">
+    <value>採購量</value>
+  </data>
+  <data name="PurchaseOverdue.ReceivedQty" xml:space="preserve">
+    <value>已到量</value>
+  </data>
+  <data name="PurchaseOverdue.PendingQty" xml:space="preserve">
+    <value>未到量</value>
+  </data>
+  <data name="PurchaseOverdue.OverdueDays" xml:space="preserve">
+    <value>逾期天數</value>
+  </data>
+  <data name="PurchaseOverdue.Buyer" xml:space="preserve">
+    <value>採購員</value>
+  </data>
+  <data name="WorkOrderProgress.WorkOrderId" xml:space="preserve">
+    <value>工單號</value>
+  </data>
+  <data name="WorkOrderProgress.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="WorkOrderProgress.Type" xml:space="preserve">
+    <value>類型</value>
+  </data>
+  <data name="WorkOrderProgress.Status" xml:space="preserve">
+    <value>狀態</value>
+  </data>
+  <data name="WorkOrderProgress.PlannedStartDate" xml:space="preserve">
+    <value>計劃開工</value>
+  </data>
+  <data name="WorkOrderProgress.PlannedEndDate" xml:space="preserve">
+    <value>計劃完工</value>
+  </data>
+  <data name="WorkOrderProgress.Quantity" xml:space="preserve">
+    <value>計劃量</value>
+  </data>
+  <data name="WorkOrderProgress.QtyDone" xml:space="preserve">
+    <value>完工量</value>
+  </data>
+  <data name="WorkOrderProgress.ProgressPct" xml:space="preserve">
+    <value>進度%</value>
+  </data>
+  <data name="WorkOrderProgress.IsOverdue" xml:space="preserve">
+    <value>逾期</value>
+  </data>
+  <data name="DefectRate.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="DefectRate.QtyOk" xml:space="preserve">
+    <value>合格量</value>
+  </data>
+  <data name="DefectRate.QtyNg" xml:space="preserve">
+    <value>不良量</value>
+  </data>
+  <data name="DefectRate.TotalQty" xml:space="preserve">
+    <value>總量</value>
+  </data>
+  <data name="DefectRate.DefectRate" xml:space="preserve">
+    <value>不良率%</value>
+  </data>
+  <data name="DefectRate.ReportCount" xml:space="preserve">
+    <value>報工筆數</value>
+  </data>
+  <data name="MrpAchievement.MrpRunId" xml:space="preserve">
+    <value>MRP批次</value>
+  </data>
+  <data name="MrpAchievement.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="MrpAchievement.RequiredDate" xml:space="preserve">
+    <value>需求日期</value>
+  </data>
+  <data name="MrpAchievement.RequiredQty" xml:space="preserve">
+    <value>計劃量</value>
+  </data>
+  <data name="MrpAchievement.ActualQty" xml:space="preserve">
+    <value>實際量</value>
+  </data>
+  <data name="MrpAchievement.AchievementRate" xml:space="preserve">
+    <value>達成率%</value>
+  </data>
+  <data name="MrpAchievement.ShortfallQty" xml:space="preserve">
+    <value>短缺量</value>
+  </data>
+  <data name="MrpAchievement.ValidationError" xml:space="preserve">
+    <value>錯誤</value>
+  </data>
+  <data name="WorkOrderProgress.OverdueYes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="InventoryValuation.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="InventoryValuation.ProductName" xml:space="preserve">
+    <value>品名</value>
+  </data>
+  <data name="InventoryValuation.LocationCode" xml:space="preserve">
+    <value>儲位</value>
+  </data>
+  <data name="InventoryValuation.LotNo" xml:space="preserve">
+    <value>批號</value>
+  </data>
+  <data name="InventoryValuation.QtyOnHand" xml:space="preserve">
+    <value>在庫量</value>
+  </data>
+  <data name="InventoryValuation.UnitCost" xml:space="preserve">
+    <value>均價</value>
+  </data>
+  <data name="InventoryValuation.TotalValue" xml:space="preserve">
+    <value>評估金額</value>
+  </data>
+  <data name="GrossMargin.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="GrossMargin.Revenue" xml:space="preserve">
+    <value>出貨金額</value>
+  </data>
+  <data name="GrossMargin.Cost" xml:space="preserve">
+    <value>成本</value>
+  </data>
+  <data name="GrossMargin.GrossProfit" xml:space="preserve">
+    <value>毛利</value>
+  </data>
+  <data name="GrossMargin.GrossMarginRate" xml:space="preserve">
+    <value>毛利率%</value>
+  </data>
+  <data name="GrossMargin.ShipCount" xml:space="preserve">
+    <value>出貨次數</value>
+  </data>
+  <data name="MarginAnalysis.DimensionName" xml:space="preserve">
+    <value>維度</value>
+  </data>
+  <data name="MarginAnalysis.Revenue" xml:space="preserve">
+    <value>營收</value>
+  </data>
+  <data name="MarginAnalysis.Cost" xml:space="preserve">
+    <value>銷貨成本</value>
+  </data>
+  <data name="MarginAnalysis.GrossProfit" xml:space="preserve">
+    <value>毛利</value>
+  </data>
+  <data name="MarginAnalysis.GrossMarginRate" xml:space="preserve">
+    <value>毛利率%</value>
+  </data>
+  <data name="MarginAnalysis.ShipCount" xml:space="preserve">
+    <value>出貨筆數</value>
+  </data>
+  <data name="OutsourcePerformance.SupplierCode" xml:space="preserve">
+    <value>委外廠商</value>
+  </data>
+  <data name="OutsourcePerformance.SupplierName" xml:space="preserve">
+    <value>廠商名稱</value>
+  </data>
+  <data name="OutsourcePerformance.ReceiptCount" xml:space="preserve">
+    <value>收貨筆數</value>
+  </data>
+  <data name="OutsourcePerformance.OnTimeRate" xml:space="preserve">
+    <value>準時率%</value>
+  </data>
+  <data name="OutsourcePerformance.ReceivedQty" xml:space="preserve">
+    <value>收回成品量</value>
+  </data>
+  <data name="OutsourcePerformance.ProcessingFee" xml:space="preserve">
+    <value>加工費</value>
+  </data>
+  <data name="OutsourcePerformance.ScrapPenalty" xml:space="preserve">
+    <value>超耗扣款</value>
+  </data>
+  <data name="OutsourcePerformance.ScrapPenaltyRate" xml:space="preserve">
+    <value>超耗佔比%</value>
+  </data>
+  <data name="ProfitLoss.AccountCode" xml:space="preserve">
+    <value>科目代碼</value>
+  </data>
+  <data name="ProfitLoss.AccountName" xml:space="preserve">
+    <value>科目名稱</value>
+  </data>
+  <data name="ProfitLoss.Category" xml:space="preserve">
+    <value>分類</value>
+  </data>
+  <data name="ProfitLoss.Amount" xml:space="preserve">
+    <value>金額</value>
+  </data>
+  <data name="BalanceSheet.Category" xml:space="preserve">
+    <value>類別</value>
+  </data>
+  <data name="BalanceSheet.AccountCode" xml:space="preserve">
+    <value>科目代碼</value>
+  </data>
+  <data name="BalanceSheet.AccountName" xml:space="preserve">
+    <value>科目名稱</value>
+  </data>
+  <data name="BalanceSheet.Balance" xml:space="preserve">
+    <value>餘額</value>
+  </data>
+  <data name="BalanceSheet.CategoryAssets" xml:space="preserve">
+    <value>資產</value>
+  </data>
+  <data name="BalanceSheet.CategoryLiabilities" xml:space="preserve">
+    <value>負債</value>
+  </data>
+  <data name="BalanceSheet.CategoryEquity" xml:space="preserve">
+    <value>股東權益</value>
+  </data>
+  <data name="ContributionMargin.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="ContributionMargin.ProductName" xml:space="preserve">
+    <value>品名</value>
+  </data>
+  <data name="ContributionMargin.Revenue" xml:space="preserve">
+    <value>營收</value>
+  </data>
+  <data name="ContributionMargin.Cost" xml:space="preserve">
+    <value>銷貨成本</value>
+  </data>
+  <data name="ContributionMargin.VariableRatio" xml:space="preserve">
+    <value>變動占比%</value>
+  </data>
+  <data name="ContributionMargin.VariableCost" xml:space="preserve">
+    <value>變動成本</value>
+  </data>
+  <data name="ContributionMargin.ContributionMargin" xml:space="preserve">
+    <value>邊際貢獻</value>
+  </data>
+  <data name="ContributionMargin.ContributionRate" xml:space="preserve">
+    <value>貢獻率%</value>
+  </data>
+  <data name="OutsourcePrice.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="OutsourcePrice.SupplierCode" xml:space="preserve">
+    <value>委外廠商</value>
+  </data>
+  <data name="OutsourcePrice.SupplierName" xml:space="preserve">
+    <value>廠商名稱</value>
+  </data>
+  <data name="OutsourcePrice.ReceiptDate" xml:space="preserve">
+    <value>收貨日</value>
+  </data>
+  <data name="OutsourcePrice.ReceiptId" xml:space="preserve">
+    <value>收貨單號</value>
+  </data>
+  <data name="OutsourcePrice.ActualUnitPrice" xml:space="preserve">
+    <value>實際單價</value>
+  </data>
+  <data name="OutsourcePrice.CurrencyCode" xml:space="preserve">
+    <value>幣別</value>
+  </data>
+  <data name="OutsourcePrice.QuotedUnitPrice" xml:space="preserve">
+    <value>報價單價</value>
+  </data>
+  <data name="OutsourcePrice.QuotationId" xml:space="preserve">
+    <value>報價單號</value>
+  </data>
+  <data name="OutsourcePrice.PriceDiff" xml:space="preserve">
+    <value>差異</value>
+  </data>
+  <data name="OutsourcePrice.PriceDiffPct" xml:space="preserve">
+    <value>差異%</value>
+  </data>
+  <data name="OutsourcePriceTrend.YearMonth" xml:space="preserve">
+    <value>年月</value>
+  </data>
+  <data name="OutsourcePriceTrend.ReceiptLines" xml:space="preserve">
+    <value>收貨明細數</value>
+  </data>
+  <data name="OutsourcePriceTrend.AvgUnitPrice" xml:space="preserve">
+    <value>加權平均單價（本幣）</value>
+  </data>
+  <data name="OutsourcePriceTrend.MinUnitPrice" xml:space="preserve">
+    <value>最低單價</value>
+  </data>
+  <data name="OutsourcePriceTrend.MaxUnitPrice" xml:space="preserve">
+    <value>最高單價</value>
+  </data>
+  <data name="SupplierDeliveryRate.SupplierCode" xml:space="preserve">
+    <value>供應商</value>
+  </data>
+  <data name="SupplierDeliveryRate.SupplierName" xml:space="preserve">
+    <value>廠商名稱</value>
+  </data>
+  <data name="SupplierDeliveryRate.TotalLines" xml:space="preserve">
+    <value>應交明細數</value>
+  </data>
+  <data name="SupplierDeliveryRate.OnTimeLines" xml:space="preserve">
+    <value>準時筆數</value>
+  </data>
+  <data name="SupplierDeliveryRate.LateLines" xml:space="preserve">
+    <value>逾期筆數</value>
+  </data>
+  <data name="SupplierDeliveryRate.OnTimeRate" xml:space="preserve">
+    <value>達成率%</value>
+  </data>
+  <data name="SupplierDeliveryRate.AvgOverdueDays" xml:space="preserve">
+    <value>平均逾期天數</value>
+  </data>
+  <data name="SupplierDeliveryRate.MaxOverdueDays" xml:space="preserve">
+    <value>最大逾期天數</value>
+  </data>
+  <data name="SupplierDeliveryRate.YearMonth" xml:space="preserve">
+    <value>年月</value>
+  </data>
+  <data name="PurchaseAmount.GroupKeySupplier" xml:space="preserve">
+    <value>供應商</value>
+  </data>
+  <data name="PurchaseAmount.GroupKeyProduct" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="PurchaseAmount.YearMonth" xml:space="preserve">
+    <value>年月</value>
+  </data>
+  <data name="PurchaseAmount.TotalAmount" xml:space="preserve">
+    <value>採購金額(本幣)</value>
+  </data>
+  <data name="PurchaseAmount.ReceiptCount" xml:space="preserve">
+    <value>進貨筆數</value>
+  </data>
+  <data name="PurchasePrice.ProductCode" xml:space="preserve">
+    <value>品號</value>
+  </data>
+  <data name="PurchasePrice.SupplierCode" xml:space="preserve">
+    <value>供應商</value>
+  </data>
+  <data name="PurchasePrice.ReceiptDate" xml:space="preserve">
+    <value>進貨日</value>
+  </data>
+  <data name="PurchasePrice.GoodsReceiptId" xml:space="preserve">
+    <value>進貨單號</value>
+  </data>
+  <data name="PurchasePrice.ActualUnitPrice" xml:space="preserve">
+    <value>實際單價</value>
+  </data>
+  <data name="PurchasePrice.CurrencyCode" xml:space="preserve">
+    <value>幣別</value>
+  </data>
+  <data name="PurchasePrice.StandardUnitPrice" xml:space="preserve">
+    <value>標準單價</value>
+  </data>
+  <data name="PurchasePrice.PriceDiff" xml:space="preserve">
+    <value>差異</value>
+  </data>
+  <data name="PurchasePrice.PriceDiffPct" xml:space="preserve">
+    <value>差異%</value>
+  </data>
+  <data name="TrialBalance.AccountCode" xml:space="preserve">
+    <value>科目代碼</value>
+  </data>
+  <data name="TrialBalance.AccountName" xml:space="preserve">
+    <value>科目名稱</value>
+  </data>
+  <data name="TrialBalance.OpeningBalance" xml:space="preserve">
+    <value>期初餘額</value>
+  </data>
+  <data name="TrialBalance.PeriodDebit" xml:space="preserve">
+    <value>本期借方</value>
+  </data>
+  <data name="TrialBalance.PeriodCredit" xml:space="preserve">
+    <value>本期貸方</value>
+  </data>
+  <data name="TrialBalance.ClosingBalance" xml:space="preserve">
+    <value>期末餘額</value>
+  </data>
+  <data name="StockShortage.QtyIncomingPo" xml:space="preserve">
+    <value>採購在途</value>
+  </data>
+  <data name="StockShortage.QtyIncomingOpo" xml:space="preserve">
+    <value>委外在途</value>
+  </data>
+  <data name="StockShortage.QtyProjected" xml:space="preserve">
+    <value>預計可用</value>
+  </data>
+  <data name="StockShortage.ProjectedShortageQty" xml:space="preserve">
+    <value>預計缺口</value>
+  </data>
+</root>

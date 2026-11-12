@@ -1,0 +1,12 @@
+/* 投產報工 — 開工作業
+   自 mfg/sessions.html 內聯 <style> 外部化：CSP style-src 已移除 'unsafe-inline'（Program.cs），
+   內聯 <style> 區塊會被瀏覽器整段擋掉。各頁 class 名稱互有衝突（如 .dispatch-card），故一頁一檔。 */
+
+.step-panel  { border-radius: 12px; }
+.step-number { width: 28px; height: 28px; border-radius: 50%; display: inline-flex;
+               align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; }
+.info-row { display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #dee2e6; padding: .4rem 0; }
+.info-row:last-child { border-bottom: none; }
+.timer { font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.phase-done  { opacity: .5; text-decoration: line-through; }

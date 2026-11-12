@@ -1,0 +1,80 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@inject IViewLocalizer Localizer
+@model DefectCode
+
+@{
+    bool isNew = string.IsNullOrEmpty(Model.Code);
+    string action = isNew ? "Create" : "Edit";
+    string title  = isNew ? Localizer["AddTitle"].Value : Localizer["EditTitle"].Value;
+}
+
+<form id="sideForm" method="post" action="@Url.Action(action)"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+
+    <div class="offcanvas-body">
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["Code"] <span class="text-danger">*</span></label>
+            @if (isNew)
+            {
+                <input asp-for="Code" class="form-control font-monospace text-uppercase"
+                       maxlength="20" required placeholder="@Localizer["CodePlaceholder"]" />
+                <span asp-validation-for="Code" class="text-danger small"></span>
+            }
+            else
+            {
+                <input type="hidden" asp-for="Code" />
+                <input class="form-control font-monospace bg-light" value="@Model.Code" readonly />
+            }
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["Name"] <span class="text-danger">*</span></label>
+            <input asp-for="Name" class="form-control" maxlength="100" required />
+            <span asp-validation-for="Name" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["ApplicableTypes"]</label>
+            <div class="d-flex flex-wrap gap-3 pt-1">
+                <div class="form-check">
+                    <input asp-for="FgIQC"  class="form-check-input" type="checkbox" id="FgIQC" />
+                    <label class="form-check-label" for="FgIQC">@Localizer["FgIQC"]</label>
+                </div>
+                <div class="form-check">
+                    <input asp-for="FgIPQC" class="form-check-input" type="checkbox" id="FgIPQC" />
+                    <label class="form-check-label" for="FgIPQC">@Localizer["FgIPQC"]</label>
+                </div>
+                <div class="form-check">
+                    <input asp-for="FgFQC"  class="form-check-input" type="checkbox" id="FgFQC" />
+                    <label class="form-check-label" for="FgFQC">@Localizer["FgFQC"]</label>
+                </div>
+                <div class="form-check">
+                    <input asp-for="FgRQC"  class="form-check-input" type="checkbox" id="FgRQC" />
+                    <label class="form-check-label" for="FgRQC">@Localizer["FgRQC"]</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3 form-check form-switch">
+            <input asp-for="IsActive" class="form-check-input" type="checkbox" id="IsActive" />
+            <label class="form-check-label" for="IsActive">@Localizer["IsActive"]</label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["Remarks"]</label>
+            <textarea asp-for="Remarks" class="form-control" rows="2" maxlength="500"></textarea>
+            <span asp-validation-for="Remarks" class="text-danger small"></span>
+        </div>
+    </div>
+
+    <div class="offcanvas-footer border-top p-3 d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-secondary" data-action="closeSidePanel">
+            @Localizer["Close"]
+        </button>
+    </div>
+</form>

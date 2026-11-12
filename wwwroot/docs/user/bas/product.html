@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Product Master — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>產品主檔 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="product.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link active"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-box me-2 text-primary"></i><span lang="zh">產品主檔</span><span lang="en">Product Master</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/Product &nbsp;|&nbsp; 所有料件、成品、半成品的基本資料</span><span lang="en">Route: /BAS/Product &nbsp;|&nbsp; Basic data of every material, finished and semi-finished item</span></div>
+    </div>
+
+    <p><span lang="zh">產品主檔是採購、庫存、製造各模組的核心主檔。每個料號均需在此建立，並設定計量單位、成本、MRP 參數等。新增或修改產品可能需要通過簽核流程。</span><span lang="en">The product master is the core master data of purchasing, inventory and manufacturing. Every product code is created here together with its unit of measure, cost and MRP parameters. Creating or changing a product may require approval.</span></p>
+    <img class="screen-shot" src="img/product.png" data-src-en="img/en/product.png" alt="產品主檔畫面截圖" data-alt-en="Product master screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">產品主檔畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Product master screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">基本資料</span><span lang="en">Basic Info</span></h3>
+    <table class="table table-sm field-table border mb-3">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">產品代碼</span><span lang="en">Product Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">唯一料號，建立後不可修改</span><span lang="en">Unique product code; cannot be changed once created</span></td></tr>
+        <tr><td><span lang="zh">產品名稱</span><span lang="en">Product Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">料件完整名稱</span><span lang="en">Full product name</span></td></tr>
+        <tr><td><span lang="zh">規格</span><span lang="en">Spec</span></td><td></td><td><span lang="zh">型號、材質、尺寸等補充說明</span><span lang="en">Notes such as model, material and dimensions</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後無法在新單據中選取</span><span lang="en">Once inactive, cannot be selected on new documents</span></td></tr>
+        <tr><td><span lang="zh">是否批號管制</span><span lang="en">Lot Controlled</span></td><td></td><td><span lang="zh">勾選後進貨/領料需填入批號</span><span lang="en">Once checked, receipts and issues must carry a lot number</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></h3>
+    <table class="table table-sm field-table border mb-3">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">庫存計量單位</span><span lang="en">Stock UOM</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">庫存管理使用的計量單位（例：PCS、KG）</span><span lang="en">Unit used for inventory management (e.g. PCS, KG)</span></td></tr>
+        <tr><td><span lang="zh">採購計量單位</span><span lang="en">Purchase UOM</span></td><td></td><td><span lang="zh">向廠商採購時使用的計量單位，可與庫存單位不同</span><span lang="en">Unit used when buying from suppliers; may differ from the stock UOM</span></td></tr>
+        <tr><td><span lang="zh">銷售計量單位</span><span lang="en">Sales UOM</span></td><td></td><td><span lang="zh">銷售給客戶時使用的計量單位</span><span lang="en">Unit used when selling to customers</span></td></tr>
+        <tr><td><span lang="zh">庫存模式</span><span lang="en">Stock Mode</span></td><td></td><td><span lang="zh">一般庫存 / 虛擬料件（不實際入庫）</span><span lang="en">Normal stock / phantom item (never physically received)</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">成本與供應參數</span><span lang="en">Cost and supply parameters</span></h3>
+    <table class="table table-sm field-table border mb-3">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">標準成本</span><span lang="en">Standard Cost</span></td><td></td><td><span lang="zh">用於製造成本差異分析的標準單位成本</span><span lang="en">Standard unit cost used in manufacturing cost variance analysis</span></td></tr>
+        <tr><td><span lang="zh">安全庫存</span><span lang="en">Safety Stock</span></td><td></td><td><span lang="zh">庫存低於此數量時觸發警示</span><span lang="en">Triggers an alert when stock falls below this quantity</span></td></tr>
+        <tr><td><span lang="zh">前置天數</span><span lang="en">Lead Time (days)</span></td><td></td><td><span lang="zh">一般採購或製造所需工作天數，MRP 計算使用</span><span lang="en">Working days normally needed to buy or make the item; used by MRP</span></td></tr>
+        <tr><td><span lang="zh">急件前置天數</span><span lang="en">Rush Lead Time (days)</span></td><td></td><td><span lang="zh">緊急採購的最短天數</span><span lang="en">Shortest number of days for a rush purchase</span></td></tr>
+        <tr><td><span lang="zh">MRP 模式</span><span lang="en">MRP Mode</span></td><td></td><td><span lang="zh">自製（Make）/ 外購（Buy）/ 委外（Outsource）</span><span lang="en">Make / Buy / Outsource</span></td></tr>
+        <tr><td><span lang="zh">委外每日產量</span><span lang="en">Outsource Daily Output</span></td><td></td><td><span lang="zh">委外模式下，廠商每日可供貨量（MRP 計算用）</span><span lang="en">Quantity the supplier can deliver per day in outsource mode (used by MRP)</span></td></tr>
+        <tr><td><span lang="zh">保存期限（天）</span><span lang="en">Shelf Life (days)</span></td><td></td><td><span lang="zh">批號管制品的效期天數，批號入庫時自動計算到期日</span><span lang="en">Shelf life in days for lot-controlled items; the expiry date is calculated when the lot is received</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">製程關聯</span><span lang="en">Process links</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">途程</span><span lang="en">Routing</span></td><td></td><td><span lang="zh">綁定製程途程，工單建立時自動帶入工序</span><span lang="en">Bound to a routing so that operations are filled in automatically when a work order is created</span></td></tr>
+        <tr><td><span lang="zh">產品類別</span><span lang="en">Product Category</span></td><td></td><td><span lang="zh">可多選，決定適用的倉庫預設與批號管制</span><span lang="en">Multi-select; drives the default warehouse and lot control that apply</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="approval-flow"><i class="bi bi-check2-circle me-2 text-primary"></i><span lang="zh">簽核流程</span><span lang="en">Approval flow</span></h2>
+    <p><span lang="zh">若管理者啟用了產品主檔的簽核範本，新增或修改後需送審，主管核准後才可在採購/工單中使用。</span><span lang="en">If an approval template is enabled for the product master, new or changed products must be submitted and approved before they can be used on purchase orders or work orders.</span></p>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <h3><span lang="zh">新增產品</span><span lang="en">Add Product</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進入「基本資料 &gt; 產品主檔」，點右上角「新增」。</span><span lang="en">Go to "Basic Data &gt; Product Master" and click "Add" in the top right corner.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">填入產品代碼、名稱、庫存計量單位（必填）。</span><span lang="en">Enter the product code, name and stock UOM (required).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">視需要填入成本、安全庫存、MRP 模式、前置天數。</span><span lang="en">Enter cost, safety stock, MRP mode and lead time as required.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">點「儲存」，若需簽核則接著點「送審」。</span><span lang="en">Click "Save", then click "Submit" if approval is required.</span></div></div>
+
+    <h3><span lang="zh">查詢產品</span><span lang="en">Searching products</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列可輸入料號或名稱關鍵字，並可依「庫存模式」篩選。</span><span lang="en">Enter a product code or name keyword in the search bar; you can also filter by "Stock Mode".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點擊欄標題可排序；預設按產品代碼升序排列。</span><span lang="en">Click a column header to sort; the default is product code ascending.</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">新增產品後若發現無相應計量單位，請先至「計量單位」畫面建立，再回來設定產品。</span><span lang="en">If the unit of measure you need does not exist when adding a product, create it on the Unit of Measure screen first and then come back.</span>
+    </div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">產品代碼建立後不可修改。修改標準成本會影響後續工單的成本差異計算，請謹慎操作。</span><span lang="en"> The product code cannot be changed once created. Changing the standard cost affects the cost variance of later work orders, so proceed with care.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

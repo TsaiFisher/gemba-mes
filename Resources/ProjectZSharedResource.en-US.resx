@@ -1,0 +1,1273 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root xmlns:ns1="urn:schemas-microsoft-com:xml-msdata" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:schema id="root">
+    <xs:element name="root" ns1:IsDataSet="true">
+    </xs:element>
+  </xs:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="RevenueAccount" xml:space="preserve">
+    <value>Revenue Account</value>
+  </data>
+  <data name="ManualArInvoiceScopeWarning" xml:space="preserve">
+    <value>Manual AR invoices are for revenue without a shipment (services, miscellaneous income). Bill normal shipments through the goods shipment flow — invoicing the same product both ways lands the revenue in two different accounts and reports will not reconcile.</value>
+  </data>
+  <data name="TaxCode" xml:space="preserve">
+    <value>Tax Code</value>
+  </data>
+  <data name="ManualInvoice" xml:space="preserve">
+    <value>Manual Invoice</value>
+  </data>
+  <data name="ManualInvoiceNeedsLine" xml:space="preserve">
+    <value>At least one line is required</value>
+  </data>
+  <data name="ManualInvoiceScopeWarning" xml:space="preserve">
+    <value>Manual invoices never touch inventory — the entry debits an expense account directly. If this is really a goods purchase, use a goods receipt instead; using this form would permanently understate inventory with no warning.</value>
+  </data>
+  <data name="ManualInvoiceAmountHint" xml:space="preserve">
+    <value>Amounts are computed on the server from quantity x unit price and the tax rate from the tax master.</value>
+  </data>
+  <data name="ExpenseAccount" xml:space="preserve">
+    <value>Expense Account</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="AddLine" xml:space="preserve">
+    <value>Add line</value>
+  </data>
+  <data name="InvoiceLines" xml:space="preserve">
+    <value>Invoice Lines</value>
+  </data>
+  <data name="ExchangeRateAutoHint" xml:space="preserve">
+    <value>Leave blank to look up by invoice date</value>
+  </data>
+  <data name="DeleteFailedSystemAccount" xml:space="preserve"><value>This is a system account used by automatic postings and cannot be deleted. Deactivate it instead.</value></data>
+  <data name="ChartOfAccount" xml:space="preserve">
+    <value>Chart of Accounts</value>
+  </data>
+  <data name="BasManagement" xml:space="preserve"><value>Master Data</value></data>
+  <data name="CompanyMaster" xml:space="preserve"><value>Company / Customer</value></data>
+  <data name="ProductCategoryMaster" xml:space="preserve"><value>Product Category</value></data>
+  <data name="ProductMaster" xml:space="preserve"><value>Product Master</value></data>
+  <data name="TaxMaster" xml:space="preserve"><value>Tax Code</value></data>
+  <data name="CurrencyMaster" xml:space="preserve"><value>Currency / Exchange Rate</value></data>
+  <data name="UomMaster" xml:space="preserve"><value>Unit of Measure</value></data>
+  <data name="ContainerMaster" xml:space="preserve"><value>Container / Packaging</value></data>
+  <data name="ToolingMaster" xml:space="preserve"><value>Tooling</value></data>
+  <data name="InventoryTransactionType" xml:space="preserve"><value>Inventory Transaction Type</value></data>
+  <data name="WorkCenterMaster" xml:space="preserve"><value>Work Center</value></data>
+  <data name="WarehouseMaster" xml:space="preserve"><value>Warehouse / Location</value></data>
+  <data name="ShiftGroupMaster" xml:space="preserve"><value>Shift Group</value></data>
+  <data name="ShiftMaster" xml:space="preserve"><value>Shift</value></data>
+  <data name="SpecialDayMaster" xml:space="preserve"><value>Special Day</value></data>
+  <data name="DocNumberConfig" xml:space="preserve"><value>Doc Number Config</value></data>
+  <data name="MfgManagement" xml:space="preserve"><value>Manufacturing Execution</value></data>
+  <data name="Routing" xml:space="preserve"><value>Routing Master</value></data>
+  <data name="MultiLevelBom" xml:space="preserve"><value>Multi-Level BOM</value></data>
+  <data name="MultiLevelRouting" xml:space="preserve"><value>Multi-Level Routing</value></data>
+  <data name="MrpRun" xml:space="preserve"><value>MRP Run</value></data>
+  <data name="WorkOrder" xml:space="preserve"><value>Work Orders</value></data>
+  <data name="ProductionBatch" xml:space="preserve"><value>Production Batches</value></data>
+  <data name="BatchRelease" xml:space="preserve"><value>Batch Release</value></data>
+  <data name="MrpAlreadyExecuted" xml:space="preserve"><value>This MRP run has been executed and can no longer be edited, re-run or deleted.</value></data>
+  <data name="MrpNotExecuted" xml:space="preserve"><value>This MRP run has not been executed yet; run it before attempting a re-run.</value></data>
+  <data name="WorkOrderNotPlanned" xml:space="preserve"><value>Only work orders in the Planned status can be released.</value></data>
+  <data name="ReleaseSuccess" xml:space="preserve"><value>Work order released; standard cost computed.</value></data>
+  <data name="ReleaseSubmitted" xml:space="preserve"><value>Work order released and submitted for approval.</value></data>
+  <data name="ReleaseNotNeeded" xml:space="preserve"><value>The quantity available at release already covers the gross demand (planned {0}, recalculated 0), so this work order does not need to be produced and cannot be released. If it is not needed, use "Void".</value></data>
+  <data name="BatchReleaseSkippedFmt" xml:space="preserve"><value>Skipped {0}: recalculated to 0, not needed (void them).</value></data>
+  <data name="ReleaseRecalcConfirm" xml:space="preserve"><value>Production quantity was recalculated against current inventory; please confirm before releasing.</value></data>
+  <data name="ReleaseMaterialBlocked" xml:space="preserve"><value>Material shortage cannot be covered by in-transit supply in time; cannot release.</value></data>
+  <data name="BatchNothingToRelease" xml:space="preserve"><value>This production batch has no planned work orders to release.</value></data>
+  <data name="BatchMaterialBlocked" xml:space="preserve"><value>A work order in this batch is short of material with insufficient in-transit; the whole batch cannot be released.</value></data>
+  <data name="BatchRecalcConfirm" xml:space="preserve"><value>Some work orders in this batch were recalculated; please confirm before releasing the batch.</value></data>
+  <data name="BatchReleaseSuccess" xml:space="preserve"><value>Batch released.</value></data>
+  <data name="WorkOrderNotPending" xml:space="preserve"><value>Only work orders pending approval can be withdrawn.</value></data>
+  <data name="WorkOrderWithdrawn" xml:space="preserve"><value>Release approval withdrawn; work order reverted to Planned.</value></data>
+  <data name="OrderKindSales" xml:space="preserve"><value>Sales Order</value></data>
+  <data name="OrderKindInternal" xml:space="preserve"><value>Internal Order</value></data>
+  <data name="IsFinalReceipt" xml:space="preserve"><value>Final receipt (settle excess scrap and outstanding material)</value></data>
+  <data name="IsFinalReceiptHint" xml:space="preserve"><value>Settled automatically once the ordered quantity is fully received. Tick this when the supplier short-ships but has declared the job finished, otherwise the un-returned material stays on the outstanding balance.</value></data>
+  <data name="OutsourcePurchaseOrder" xml:space="preserve"><value>Outsource PO</value></data>
+  <data name="OutsourceQuotation" xml:space="preserve"><value>Outsource Quotation</value></data>
+  <data name="OutsourceWhole" xml:space="preserve"><value>Whole-product</value></data>
+  <data name="OutsourceOp" xml:space="preserve"><value>Operation</value></data>
+  <data name="OutsourceNoSelection" xml:space="preserve"><value>Select at least one dispatch to convert.</value></data>
+  <data name="OutsourceSupplierRequired" xml:space="preserve"><value>Please select a supplier.</value></data>
+  <data name="OutsourceNotDraft" xml:space="preserve"><value>Only draft outsource POs can be confirmed or deleted.</value></data>
+  <data name="OutsourceConfirmed" xml:space="preserve"><value>Outsource PO confirmed.</value></data>
+  <data name="WorkCalendar" xml:space="preserve"><value>Work Calendar</value></data>
+  <data name="PlannedDowntime" xml:space="preserve"><value>Planned Downtime</value></data>
+  <data name="EndMustAfterStart" xml:space="preserve"><value>End time must be later than start time.</value></data>
+  <data name="MachineRequired" xml:space="preserve"><value>Please select a machine.</value></data>
+  <data name="WorkCenterOrMachineRequired" xml:space="preserve"><value>Please specify at least a work center or a machine.</value></data>
+  <data name="BomSelfReferenceError" xml:space="preserve"><value>A BOM material cannot be the same as the routing's product (would cause a BOM cycle).</value></data>
+  <data name="PurManagement" xml:space="preserve"><value>Purchasing</value></data>
+  <data name="OspManagement" xml:space="preserve"><value>Outsourcing</value></data>
+  <data name="PurchaseRequest" xml:space="preserve"><value>Purchase Request</value></data>
+  <data name="PurchaseOrder" xml:space="preserve"><value>Purchase Order</value></data>
+  <data name="GoodsReceipt" xml:space="preserve"><value>Goods Receipt</value></data>
+  <data name="GoodsReturn" xml:space="preserve"><value>Goods Return</value></data>
+  <data name="OrdManagement" xml:space="preserve"><value>Order Management</value></data>
+  <data name="SalesOrder" xml:space="preserve"><value>Sales Order</value></data>
+  <data name="GoodsShipment" xml:space="preserve"><value>Goods Shipment</value></data>
+  <data name="SalesReturn" xml:space="preserve"><value>Sales Return</value></data>
+  <data name="InternalOrder" xml:space="preserve"><value>Internal Order</value></data>
+  <data name="InvManagement" xml:space="preserve"><value>Inventory</value></data>
+  <data name="InventoryBalance" xml:space="preserve"><value>Inventory Balance</value></data>
+  <data name="StockMovement" xml:space="preserve"><value>Stock Movements</value></data>
+  <data name="StockLedger" xml:space="preserve"><value>Inventory Ledger</value></data>
+  <data name="InventoryValuation" xml:space="preserve"><value>Inventory Valuation</value></data>
+  <data name="LandedCostAllocation" xml:space="preserve"><value>Landed Cost Allocation</value></data>
+  <data name="WarehouseOps" xml:space="preserve"><value>Warehouse Operations</value></data>
+  <data name="MaterialStaging" xml:space="preserve"><value>Material Staging</value></data>
+  <data name="ScrapDoc" xml:space="preserve"><value>Scrap Documents</value></data>
+  <data name="LoanDoc" xml:space="preserve"><value>Loan Documents</value></data>
+  <data name="SampleDoc" xml:space="preserve"><value>Sample/Consignment Docs</value></data>
+  <data name="InventoryCount" xml:space="preserve"><value>Inventory Count</value></data>
+  <data name="StockAdjustment" xml:space="preserve"><value>Stock Adjustment</value></data>
+  <data name="OutsourceMaterial" xml:space="preserve"><value>Outsource Material</value></data>
+  <data name="ReworkMaterial" xml:space="preserve"><value>Rework Material</value></data>
+  <data name="StockTransfer" xml:space="preserve"><value>Stock Transfer</value></data>
+  <data name="CrossPlantTransfer" xml:space="preserve"><value>Cross-Plant Transfer</value></data>
+  
+  <data name="SheetNotEditable" xml:space="preserve"><value>This count sheet cannot be modified in its current state.</value></data>
+  <data name="SheetAlreadyClosed" xml:space="preserve"><value>This count sheet has already been closed with adjustment document {0}; it cannot be closed again.</value></data>
+  <data name="SheetNotDeletable" xml:space="preserve"><value>This count sheet cannot be deleted.</value></data>
+  <data name="SheetHasCountedItems" xml:space="preserve"><value>The sheet has counted items and cannot be regenerated.</value></data>
+  <data name="CountSaved" xml:space="preserve"><value>First count saved.</value></data>
+  <data name="RecountRequiresFirstCount" xml:space="preserve"><value>Please complete the first count before recounting.</value></data>
+  <data name="FirstCountLockedAfterRecount" xml:space="preserve"><value>This line has been recounted; the first count can no longer be changed.</value></data>
+  <data name="OfflineClientIdInvalid" xml:space="preserve"><value>The offline item identifier is invalid and cannot be synced.</value></data>
+  <data name="OfflineReplayAlreadyProcessed" xml:space="preserve"><value>This offline item was already processed (resend); nothing was posted twice.</value></data>
+  <data name="RecountDifferentUser" xml:space="preserve"><value>Recounter must be different from the first counter (segregation of duties).</value></data>
+  <data name="RecountSaved" xml:space="preserve"><value>Recount saved.</value></data>
+  <data name="CloseHasPending" xml:space="preserve"><value>There are {0} pending item(s). Please complete counting before closing.</value></data>
+  <data name="SheetCloseSuccess" xml:space="preserve"><value>Sheet closed. Adjustment document {0} created.</value></data>
+  <data name="SheetCloseNoVariance" xml:space="preserve"><value>Sheet closed with no variance; no adjustment document was created.</value></data>
+  <data name="GenerateItemsSuccess" xml:space="preserve"><value>Snapshot complete. {0} item(s) generated.</value></data>
+  
+  <data name="RecordNotFound" xml:space="preserve"><value>This record no longer exists (it may have been deleted).</value></data>
+  <data name="NoCreatePermission" xml:space="preserve"><value>You do not have create permission.</value></data>
+  <data name="NoUpdatePermission" xml:space="preserve"><value>You do not have update permission.</value></data>
+  <data name="NoDeletePermission" xml:space="preserve"><value>You do not have delete permission.</value></data>
+  <data name="CreateSuccess" xml:space="preserve"><value>Created successfully.</value></data>
+  <data name="UpdateSuccess" xml:space="preserve"><value>Updated successfully.</value></data>
+  <data name="DeleteSuccess" xml:space="preserve"><value>Deleted successfully.</value></data>
+  <data name="DuplicateRecord" xml:space="preserve"><value>This record already exists.</value></data>
+  <data name="BatchSelectShiftGroup" xml:space="preserve"><value>Please select a shift group.</value></data>
+  <data name="BatchShiftNotFound" xml:space="preserve"><value>No shift schedule found for this shift group.</value></data>
+  <data name="BatchGenerateDone" xml:space="preserve"><value>Batch generation complete. {0} record(s) created.</value></data>
+  <data name="LoadFailed" xml:space="preserve"><value>Failed to load. Please try again.</value></data>
+  <data name="OperationFailed" xml:space="preserve"><value>Operation failed.</value></data>
+  <data name="RefCodeNotFound" xml:space="preserve"><value>Code {0} does not exist.</value></data>
+  <data name="RefCodeOtherPlant" xml:space="preserve"><value>Code {0} belongs to another plant and cannot be used here.</value></data>
+  <data name="RefCodeInactive" xml:space="preserve"><value>Code {0} is inactive and cannot be used.</value></data>
+  <data name="ConfirmSubmitApproval" xml:space="preserve"><value>Submit for approval?</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>Withdraw the approval request?</value></data>
+  <data name="ConfirmDeleteSimple" xml:space="preserve"><value>Are you sure to delete?</value></data>
+  <data name="ConfirmVoid" xml:space="preserve"><value>Are you sure to void?</value></data>
+  <data name="ConfirmVoidInvoice" xml:space="preserve"><value>Are you sure to void this invoice?</value></data>
+  <data name="ConfirmReceiveOutsource" xml:space="preserve"><value>Confirm outsource receipt and post inventory?</value></data>
+  <data name="ConfirmAPPayment" xml:space="preserve"><value>Confirm payment and post?</value></data>
+  <data name="ConfirmARReceipt" xml:space="preserve"><value>Confirm receipt and post?</value></data>
+  <data name="VoidFailed" xml:space="preserve"><value>Void failed</value></data>
+  <data name="ConfirmDelete" xml:space="preserve"><value>Delete "{0}"?</value></data>
+  
+  <data name="Print_Print" xml:space="preserve"><value>Print</value></data>
+  <data name="Print_Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Print_BasicInfo" xml:space="preserve"><value>Basic Info</value></data>
+  <data name="Print_Details" xml:space="preserve"><value>Details</value></data>
+  <data name="Print_Total" xml:space="preserve"><value>Total</value></data>
+  <data name="Print_Sign_Created" xml:space="preserve"><value>Prepared</value></data>
+  <data name="Print_Sign_Reviewed" xml:space="preserve"><value>Reviewed</value></data>
+  <data name="Print_Sign_Approved" xml:space="preserve"><value>Approved</value></data>
+  <data name="Print_Sign_Date" xml:space="preserve"><value>Date</value></data>
+  <data name="Print_Sign_OnBehalf" xml:space="preserve"><value>{0} (for {1})</value></data>
+  <data name="Print_Sign_Separator" xml:space="preserve"><value>, </value></data>
+  <data name="Print_PrintedAt" xml:space="preserve"><value>Printed At</value></data>
+  <data name="InvSourceQueryFailed" xml:space="preserve"><value>Failed to query source</value></data>
+  <data name="InvNoOpenSourceLines" xml:space="preserve"><value>No open source lines found</value></data>
+  <data name="InvSelectSourceLine" xml:space="preserve"><value>Select Source Line</value></data>
+  <data name="InvColDocNo" xml:space="preserve"><value>Doc No.</value></data>
+  <data name="InvColProduct" xml:space="preserve"><value>Product</value></data>
+  <data name="InvColOrigQty" xml:space="preserve"><value>Original Qty</value></data>
+  <data name="InvColRemaining" xml:space="preserve"><value>Remaining</value></data>
+  <data name="InvColUom" xml:space="preserve"><value>Unit</value></data>
+  <data name="UomCode" xml:space="preserve"><value>Unit</value></data>
+  <data name="InvActionSelect" xml:space="preserve"><value>Select</value></data>
+  
+  <data name="SaveFailed" xml:space="preserve"><value>Save failed. Please try again.</value></data>
+  <data name="DeleteFailed" xml:space="preserve"><value>Delete failed. Please try again.</value></data>
+  <data name="ConfirmDeleteContact" xml:space="preserve"><value>Delete this contact?</value></data>
+  <data name="ConfirmDeleteConversion" xml:space="preserve"><value>Delete this conversion?</value></data>
+  <data name="ConfirmDeleteLocation" xml:space="preserve"><value>Delete this location?</value></data>
+  <data name="ConfirmDeleteRateOn" xml:space="preserve"><value>Delete exchange rate on {0}?</value></data>
+  <data name="FieldRequiredFmt" xml:space="preserve"><value>{0} is required</value></data>
+  <data name="FieldsRequiredFmt" xml:space="preserve"><value>{0} and {1} are required</value></data>
+  <data name="Schedule" xml:space="preserve"><value>Production Schedule</value></data>
+  <data name="ScheduleRunSuccess" xml:space="preserve"><value>Schedule complete: {0} dispatched, {1} skipped.</value></data>
+  <data name="GanttActualRowSuffix" xml:space="preserve"><value> Actual</value></data>
+  <data name="PriorityOutOfRange" xml:space="preserve"><value>Priority must be between 1 and 9999.</value></data>
+  <data name="ScheduleQuery" xml:space="preserve"><value>Schedule Query</value></data>
+  <data name="PreparationBoard" xml:space="preserve"><value>Preparation Board</value></data>
+  <data name="Dispatch" xml:space="preserve"><value>Dispatch Operations</value></data>
+  <data name="LineStatus" xml:space="preserve"><value>Production Line Status</value></data>
+  <data name="DispatchInvalidStatusForSetup" xml:space="preserve"><value>Invalid dispatch status for setup. Must be Scheduled or ReadyToStart.</value></data>
+  <data name="SetupAlreadyOpen" xml:space="preserve"><value>An open setup record already exists for this dispatch.</value></data>
+  <data name="SetupStarted" xml:space="preserve"><value>Setup started. Click "Setup Done" when preparation is complete.</value></data>
+  <data name="DispatchNotInSetup" xml:space="preserve"><value>Dispatch is not in Setup In Progress status.</value></data>
+  <data name="SetupNotFound" xml:space="preserve"><value>No open setup record found.</value></data>
+  <data name="SetupDone" xml:space="preserve"><value>Setup complete. Dispatch status updated to Ready to Start.</value></data>
+  <data name="SetupDonePendingFpi" xml:space="preserve"><value>Setup complete. This operation requires first-piece inspection, so the dispatch is now Pending FPI. QC must pass the FPI before work can start.</value></data>
+  <data name="DispatchCannotStart" xml:space="preserve"><value>Dispatch cannot be started. Must be Scheduled, ReadyToStart, or InProgress.</value></data>
+  <data name="DispatchPendingFpi" xml:space="preserve"><value>This operation requires first-piece inspection (FPI) and no passed FPI order exists yet, so work cannot start. QC must complete the first-piece measurement first.</value></data>
+  <data name="DispatchMaterialShortageBlocked" xml:space="preserve"><value>Materials are not ready; cannot start (gate set to Block). Replenish stock or get a supervisor override first.</value></data>
+  <data name="DispatchMaterialShortageWarning" xml:space="preserve"><value>Warning: this work order may be short of materials. Started anyway — watch for shortage risk.</value></data>
+  <data name="DispatchMachineUnavailableBlocked" xml:space="preserve"><value>The machine is currently "{0}" and cannot be started. Check the machine status or use another machine.</value></data>
+  <data name="DispatchMachineUnavailableWarning" xml:space="preserve"><value>Warning: the machine is currently "{0}". Started anyway — check whether its status needs updating.</value></data>
+  <data name="SessionAlreadyOpen" xml:space="preserve"><value>An active session already exists for this dispatch. Please stop it first.</value></data>
+  <data name="SessionStarted" xml:space="preserve"><value>Session started. Dispatch is now In Progress.</value></data>
+  <data name="SessionNotFound" xml:space="preserve"><value>Session not found.</value></data>
+  <data name="ContainerNotFound" xml:space="preserve"><value>The container does not exist or is inactive. Please select again.</value></data>
+  <data name="SessionNotOpen" xml:space="preserve"><value>This session is already closed or does not exist.</value></data>
+  <data name="SessionStopped" xml:space="preserve"><value>Session stopped. Actual labor hours have been accumulated to cost.</value></data>
+  <data name="DispatchNotInProgress" xml:space="preserve"><value>Dispatch is not In Progress. Cannot submit report.</value></data>
+  <data name="ReportQtyRequired" xml:space="preserve"><value>Qty OK or Qty NG must be greater than 0.</value></data>
+  <data name="OverReport" xml:space="preserve"><value>Over-report: cumulative Qty OK would exceed dispatch quantity. Please verify.</value></data>
+  <data name="ReportPrevOperationShortage" xml:space="preserve"><value>The previous operation has not produced enough quantity. Complete it before reporting this operation.</value></data>
+  <data name="ReportCreated" xml:space="preserve"><value>Report submitted successfully.</value></data>
+  <data name="ConcurrencyConflict" xml:space="preserve"><value>Data was modified by another user. Please reload and try again.</value></data>
+  <data name="ProductionCompletion" xml:space="preserve"><value>Production Putaway</value></data>
+  <data name="WorkOrderNotCompleted" xml:space="preserve"><value>Work order status is not Completed; cannot process putaway.</value></data>
+  <data name="WorkOrderNotApproved" xml:space="preserve"><value>The source work order has not been approved; cannot create material slip.</value></data>
+  <data name="WorkOrderCannotVoid" xml:space="preserve"><value>A closed or voided work order cannot be voided again.</value></data>
+  <data name="WorkOrderHasProduction" xml:space="preserve"><value>This work order has production reports and cannot be voided.</value></data>
+  <data name="WorkOrderHasIssuedMaterial" xml:space="preserve"><value>This work order has issued materials that have not been returned and cannot be voided. Please return the materials first.</value></data>
+  <data name="WorkOrderVoided" xml:space="preserve"><value>Work order voided; inventory reservations have been released.</value></data>
+  <data name="WorkOrderHasConfirmedSlip" xml:space="preserve"><value>This work order has picked but unposted issue slips ({0}) and cannot be voided. Have the warehouse cancel them and put the material back, or post them and return the materials.</value></data>
+  <data name="WorkOrderHasOutsourcePo" xml:space="preserve"><value>This work order has outsource purchase orders ({0}) and cannot be voided. Delete draft outsource POs first; void confirmed ones first (only possible before any receipt and once materials at the vendor are returned).</value></data>
+  <data name="OpoVoidNotConfirmed" xml:space="preserve"><value>Only confirmed outsource purchase orders can be voided; delete a draft instead.</value></data>
+  <data name="OpoVoidHasReceipts" xml:space="preserve"><value>This outsource purchase order already has receipts ({0}) and cannot be voided. Delete draft receipts first and void posted ones.</value></data>
+  <data name="OpoVoidMaterialAtVendor" xml:space="preserve"><value>Materials are still at the vendor and have not been returned ({0}); cannot void. Return them with an outsource return slip first.</value></data>
+  <data name="OpoVoided" xml:space="preserve"><value>Outsource purchase order voided; the outsource demand can be converted again.</value></data>
+  <data name="WorkOrderNotApprovedCannotStart" xml:space="preserve"><value>The work order is pending approval or was rejected; production cannot start.</value></data>
+  <data name="WorkOrderNotReleasedCannotStart" xml:space="preserve"><value>The work order is not released or in production (it may have been withdrawn or rejected); production cannot start.</value></data>
+  <data name="SlipSourceWorkOrderVoided" xml:space="preserve"><value>Source work order {0} has been voided; this slip cannot be posted.</value></data>
+  <data name="SlipSourceWorkOrderClosed" xml:space="preserve"><value>Source work order {0} is closed (received and costed); no more material can be issued to it, only returned.</value></data>
+  <data name="OsrSourceWorkOrderVoided" xml:space="preserve"><value>Source work order {0} has been voided; the outsource receipt cannot be confirmed.</value></data>
+  <data name="WhAndLocationRequired" xml:space="preserve"><value>Warehouse and location are required.</value></data>
+  <data name="CompletionSuccess" xml:space="preserve"><value>Putaway succeeded: inventory updated, work order closed.</value></data>
+  <data name="FQCRequired" xml:space="preserve"><value>FQC inspection (Pass) is required before putaway for this work order.</value></data>
+  <data name="ReworkQtyRequired" xml:space="preserve"><value>Rework quantity must be greater than zero.</value></data>
+  <data name="ReworkOperationsRequired" xml:space="preserve"><value>Tick at least one operation to redo.</value></data>
+  <data name="ReworkOperationsInvalid" xml:space="preserve"><value>The ticked operations are not on the original work order.</value></data>
+  <data name="ReworkCreated" xml:space="preserve"><value>Rework work order created. Please release it from Work Order list to proceed with scheduling.</value></data>
+  <data name="MachineStatusOrder" xml:space="preserve"><value>Machine Status Events</value></data>
+  <data name="InvalidEventType" xml:space="preserve"><value>Unsupported event type.</value></data>
+  <data name="MachineNotFound" xml:space="preserve"><value>Machine not found.</value></data>
+  <data name="MaterialSlip" xml:space="preserve"><value>Material Slips</value></data>
+  <data name="WorkOrderMaterialStatus" xml:space="preserve"><value>WO Material Status</value></data>
+  <data name="MaterialIssueSlip" xml:space="preserve"><value>Issue Slips</value></data>
+  <data name="MaterialRequisition" xml:space="preserve"><value>Material Requisitions</value></data>
+  <data name="WorkOrderVariance" xml:space="preserve"><value>WO Cost Variance</value></data>
+  <data name="SlipNotDraft" xml:space="preserve"><value>Material slip is not in Draft status.</value></data>
+  <data name="SlipNotPending" xml:space="preserve"><value>Requisition is not in Pending status; cannot approve.</value></data>
+  <data name="SlipNotApproved" xml:space="preserve"><value>Material slip must be Approved before starting to pick.</value></data>
+  <data name="SlipNotPicking" xml:space="preserve"><value>Material slip is not in Picking status.</value></data>
+  <data name="SlipNotConfirmed" xml:space="preserve"><value>Material slip must be Confirmed before posting.</value></data>
+  <data name="SlipAlreadyIssued" xml:space="preserve"><value>A posted, closed or cancelled slip cannot be cancelled.</value></data>
+  <data name="SlipCannotDelete" xml:space="preserve"><value>Only Draft or Cancelled slips can be deleted.</value></data>
+  <data name="SlipCategoryNotApplicable" xml:space="preserve"><value>This action does not apply to this slip category.</value></data>
+  <data name="SlipApproved" xml:space="preserve"><value>Material slip approved.</value></data>
+  <data name="SlipSubmitted" xml:space="preserve"><value>Requisition submitted for approval.</value></data>
+  <data name="SlipPickingStarted" xml:space="preserve"><value>Picking started.</value></data>
+  <data name="SlipConfirmed" xml:space="preserve"><value>Picking confirmed — ready to post.</value></data>
+  <data name="SlipIssued" xml:space="preserve"><value>Material slip posted to inventory.</value></data>
+  <data name="SlipCancelled" xml:space="preserve"><value>Material slip cancelled.</value></data>
+  <data name="ReqNotPending" xml:space="preserve"><value>Requisition is not in Pending status; cannot approve.</value></data>
+  <data name="ReqApproved" xml:space="preserve"><value>Requisition approved.</value></data>
+  <data name="VendorPriceList" xml:space="preserve"><value>Vendor Price List</value></data>
+  <data name="VendorPriceListDuplicate" xml:space="preserve"><value>A price already exists for this Supplier / Product / Currency / Valid-From combination. Change the date or edit the existing record.</value></data>
+  <data name="SupplierSuspended" xml:space="preserve"><value>This supplier is SUSPENDED. Please confirm before proceeding.</value></data>
+  <data name="SupplierProbation" xml:space="preserve"><value>This supplier is on PROBATION. Please monitor quality and delivery.</value></data>
+  <data name="SupplierQualificationExpired" xml:space="preserve"><value>This supplier's qualification has EXPIRED. Please notify QA for re-evaluation.</value></data>
+  <data name="QcrManagement" xml:space="preserve"><value>Quality Management</value></data>
+  <data name="InspectionSpec" xml:space="preserve"><value>Inspection Specs</value></data>
+  <data name="SpecCode" xml:space="preserve"><value>Spec Code</value></data>
+  <data name="SpecName" xml:space="preserve"><value>Spec Name</value></data>
+  <data name="DefectCode" xml:space="preserve"><value>Defect Codes</value></data>
+  <data name="Instrument" xml:space="preserve"><value>Inspection Instruments</value></data>
+  <data name="InstrumentCode" xml:space="preserve"><value>Instrument Code</value></data>
+  <data name="InstrumentName" xml:space="preserve"><value>Instrument Name</value></data>
+  <data name="InspectionOrder" xml:space="preserve"><value>Inspection Orders</value></data>
+  <data name="CalibrateSuccess" xml:space="preserve"><value>Calibration recorded, dates updated</value></data>
+  <data name="CalibrateConfirm" xml:space="preserve"><value>Confirm calibration for serial no. {0}? System will auto-update last and next calibration dates.</value></data>
+  <data name="Ncr" xml:space="preserve"><value>Non-Conformance Reports</value></data>
+  <data name="NcrExecuteConfirm" xml:space="preserve"><value>Execute NCR disposal? This cannot be undone.</value></data>
+  <data name="NcrSubmitConfirm" xml:space="preserve"><value>Submit this Use As-Is request for approval?</value></data>
+  <data name="InventoryCountCloseConfirm" xml:space="preserve"><value>Close this count sheet? Variances will be posted as an inventory adjustment.</value></data>
+  <data name="NcrCloseConfirm" xml:space="preserve"><value>Close this NCR?</value></data>
+  <data name="NcrNotEditable" xml:space="preserve"><value>NCR is not in Open status and cannot be edited.</value></data>
+  <data name="NcrNotDeletable" xml:space="preserve"><value>NCR has been executed or closed and cannot be deleted.</value></data>
+  <data name="NcrNotExecutable" xml:space="preserve"><value>NCR cannot be executed in its current status.</value></data>
+  <data name="SubmitOnlyForUseAsIs" xml:space="preserve"><value>Only Use As-Is disposition requires approval submission.</value></data>
+  <data name="UseAsIsRequiresApproval" xml:space="preserve"><value>Use As-Is disposition must be approved before execution.</value></data>
+  <data name="SubmitSuccess" xml:space="preserve"><value>Submitted for approval.</value></data>
+  <data name="CloseRequiresExecuted" xml:space="preserve"><value>NCR must be executed before it can be closed.</value></data>
+  <data name="CloseSuccess" xml:space="preserve"><value>NCR closed.</value></data>
+  <data name="ExecuteSuccess" xml:space="preserve"><value>Disposal executed successfully.</value></data>
+  <data name="ExecuteFailed" xml:space="preserve"><value>Disposal execution failed</value></data>
+  <data name="ScrapNeedsLocation" xml:space="preserve"><value>Scrap disposition requires warehouse and location code.</value></data>
+  <data name="ScrapExecuted" xml:space="preserve"><value>Scrap executed, Scrap Doc: {0}</value></data>
+  <data name="ReworkExecuted" xml:space="preserve"><value>Rework work order created: {0}</value></data>
+  <data name="ReworkAdvisory" xml:space="preserve"><value>Source work order not found. Please create rework work order manually.</value></data>
+  <data name="ReturnExecutedAdvisory" xml:space="preserve"><value>Return flagged. Please create a goods return in the purchasing module.</value></data>
+  <data name="ReturnDraftCreated" xml:space="preserve"><value>Draft goods return {0} created. Please confirm and post it in the purchasing module.</value></data>
+  <data name="UseAsIsExecuted" xml:space="preserve"><value>Use As-Is executed.</value></data>
+  <data name="HasSerialsError" xml:space="preserve"><value>This instrument has serial records and cannot be deleted.</value></data>
+  <data name="DuplicateCode" xml:space="preserve"><value>This code already exists. Please use a different code.</value></data>
+  <data name="DuplicateCodeOtherPlant" xml:space="preserve"><value>This code is already used by another plant (not visible in the current plant). Please use a different code.</value></data>
+  <data name="DuplicateOperationSeq" xml:space="preserve"><value>Duplicate operation sequence numbers. Please correct them before saving.</value></data>
+  <data name="DbUniqueViolation" xml:space="preserve"><value>Save failed: a record with the same key (code/number) already exists. Please change it and try again.</value></data>
+  <data name="DbForeignKeyViolation" xml:space="preserve"><value>Operation failed: the data is referenced by other documents. Please handle the related documents first and try again.</value></data>
+  <data name="OrderReferencedByMrpCannotDelete" xml:space="preserve"><value>This order has been included in MRP run {0} and cannot be deleted. Remove the demand line from the draft run first, or re-run the executed MRP without this order.</value></data>
+  <data name="DocNumberResetFinerThanDate" xml:space="preserve"><value>The reset cycle cannot be finer than the date format: monthly reset requires YYMM or finer, yearly reset requires a year part; otherwise numbers will repeat after each reset.</value></data>
+  <data name="DocNumberStemDuplicate" xml:space="preserve"><value>The numbering pattern (prefix + separator + date format) duplicates another rule of the same document type; independent sequences would produce identical numbers. Please use a distinct prefix.</value></data>
+  <data name="DocNumberPlantOverlap" xml:space="preserve"><value>Plant "{0}" is already covered by another rule of the same document type; a plant can belong to only one rule. Please uncheck it or edit that rule.</value></data>
+  <data name="DocNumberPlantEmptyForbidden" xml:space="preserve"><value>A plant-specific rule must have at least one plant selected. To revert to the all-plants default rule, delete this entry instead.</value></data>
+  <data name="DocNumberStemLockedInUse" xml:space="preserve"><value>This rule has already issued numbers; the prefix, separator, and date format can no longer be changed (existing documents use this format). Create a separate plant-specific rule if a different format is needed.</value></data>
+  <data name="DocNumberConfigMissing" xml:space="preserve"><value>Document type "{0}" has no numbering rule configured yet. Please add one under BAS → Document Number Settings and try again.</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>Saved successfully.</value></data>
+  
+  <data name="OutsourceReceipt" xml:space="preserve"><value>Outsource Receipt</value></data>
+  
+  <data name="FinManagement" xml:space="preserve"><value>Finance</value></data>
+  <data name="APInvoice" xml:space="preserve"><value>AP Invoice</value></data>
+  <data name="ARInvoice" xml:space="preserve"><value>AR Invoice</value></data>
+  <data name="APPayment" xml:space="preserve"><value>AP Payment</value></data>
+  <data name="ARReceipt" xml:space="preserve"><value>AR Receipt</value></data>
+  <data name="BankAccount" xml:space="preserve"><value>Bank Account</value></data>
+  <data name="APAging" xml:space="preserve"><value>AP Aging</value></data>
+  <data name="ARAging" xml:space="preserve"><value>AR Aging</value></data>
+  
+  <data name="APInvoiceId" xml:space="preserve"><value>AP Invoice No.</value></data>
+  <data name="ARInvoiceId" xml:space="preserve"><value>AR Invoice No.</value></data>
+  <data name="APPaymentId" xml:space="preserve"><value>Payment No.</value></data>
+  <data name="APInvoiceAllocation" xml:space="preserve"><value>AP Invoice Allocation</value></data>
+  <data name="LoadInvoicesHint" xml:space="preserve"><value>Select a supplier to load open invoices</value></data>
+  <data name="PleaseSelectSupplier" xml:space="preserve"><value>Please select a supplier first</value></data>
+  <data name="TotalAllocated" xml:space="preserve"><value>Total Allocated:</value></data>
+  <data name="NoOpenInvoices" xml:space="preserve"><value>No open invoices for this supplier</value></data>
+  <data name="InvoiceNo" xml:space="preserve"><value>Invoice No.</value></data>
+  <data name="SourceDoc" xml:space="preserve"><value>Source Doc</value></data>
+  <data name="OutstandingAmt" xml:space="preserve"><value>Outstanding</value></data>
+  <data name="AllocAmt" xml:space="preserve"><value>Alloc. Amount</value></data>
+  
+  <data name="AsOf" xml:space="preserve"><value>As of</value></data>
+  <data name="AllocationDetail" xml:space="preserve"><value>Allocation Details</value></data>
+  <data name="Amount" xml:space="preserve"><value>Amount</value></data>
+  <data name="GoodsReceiptDate" xml:space="preserve"><value>Goods Receipt Date</value></data>
+  <data name="ReceiptQty" xml:space="preserve"><value>Receipt Qty</value></data>
+  <data name="UnitCost" xml:space="preserve"><value>Unit Cost</value></data>
+  <data name="LoadFromOpo" xml:space="preserve"><value>Load from OPO</value></data>
+  <data name="OutsourcePurchaseOrderNo" xml:space="preserve"><value>OPO No.</value></data>
+  <data name="OutsourcePurchaseOrderId" xml:space="preserve"><value>OPO No.</value></data>
+  <data name="AccountOrBankName" xml:space="preserve"><value>Account / Bank Name</value></data>
+  
+  <data name="SelectCustomer" xml:space="preserve"><value>— Select Customer —</value></data>
+  <data name="CollectionDate" xml:space="preserve"><value>Collection Date</value></data>
+  <data name="CollectionMethod" xml:space="preserve"><value>Collection Method</value></data>
+  <data name="ReceiptAmount" xml:space="preserve"><value>Receipt Amount</value></data>
+  <data name="ARInvoiceAllocation" xml:space="preserve"><value>AR Invoice Allocation</value></data>
+  <data name="LoadARInvoicesHint" xml:space="preserve"><value>Select a customer to load open invoices</value></data>
+  <data name="PleaseSelectCustomer" xml:space="preserve"><value>Please select a customer first</value></data>
+  <data name="NoOpenARInvoices" xml:space="preserve"><value>No open invoices for this customer</value></data>
+  <data name="ARReceiptId" xml:space="preserve"><value>Receipt No.</value></data>
+  <data name="OutsourceReceiptId" xml:space="preserve"><value>Receipt No.</value></data>
+  <data name="InvoiceDate" xml:space="preserve"><value>Invoice Date</value></data>
+  <data name="DueDate" xml:space="preserve"><value>Due Date</value></data>
+  <data name="PaidAmount" xml:space="preserve"><value>Paid Amount</value></data>
+  <data name="ReceivedAmount" xml:space="preserve"><value>Received Amount</value></data>
+  <data name="AmountLocal" xml:space="preserve"><value>Local Amount</value></data>
+  <data name="PaymentDate" xml:space="preserve"><value>Payment Date</value></data>
+  <data name="ReceiptDate_Fin" xml:space="preserve"><value>Receipt Date</value></data>
+  <data name="PaymentMethod" xml:space="preserve"><value>Payment Method</value></data>
+  <data name="BankName" xml:space="preserve"><value>Bank Name</value></data>
+  <data name="AccountNo" xml:space="preserve"><value>Account No.</value></data>
+  <data name="CurrencyCode" xml:space="preserve"><value>Currency</value></data>
+  <data name="CurrencyCodePlaceholder" xml:space="preserve"><value>e.g. USD</value></data>
+  <data name="Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="OutstandingBalance" xml:space="preserve"><value>Outstanding Balance</value></data>
+  <data name="AgingCurrent" xml:space="preserve"><value>Current</value></data>
+  <data name="Aging30" xml:space="preserve"><value>1-30 Days</value></data>
+  <data name="Aging60" xml:space="preserve"><value>31-60 Days</value></data>
+  <data name="Aging90" xml:space="preserve"><value>61-90 Days</value></data>
+  <data name="Aging90Plus" xml:space="preserve"><value>Over 90 Days</value></data>
+  <data name="AgingTotal" xml:space="preserve"><value>Total</value></data>
+  <data name="CustomerCode" xml:space="preserve"><value>Customer</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="Create" xml:space="preserve"><value>Create</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>Export Excel</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>Export CSV</value></data>
+  <data name="ExportJson" xml:space="preserve"><value>Export JSON</value></data>
+  <data name="NoData" xml:space="preserve"><value>No data found</value></data>
+  <data name="DateRangeRequired" xml:space="preserve"><value>This report divides by the length of the query period, so a start and end date are required.</value></data>
+  <data name="PageSize" xml:space="preserve"><value>Per page</value></data>
+  <data name="SearchFirst" xml:space="preserve"><value>Enter search criteria then click Search</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Detail" xml:space="preserve"><value>Detail</value></data>
+  <data name="LineNo" xml:space="preserve"><value>Line</value></data>
+  <data name="IsActive" xml:space="preserve"><value>Active</value></data>
+  <data name="ExchangeGainLoss" xml:space="preserve"><value>Exchange Gain/Loss</value></data>
+  <data name="AccountId" xml:space="preserve"><value>Account ID</value></data>
+  
+  <data name="PeriodCreated" xml:space="preserve"><value>Period {0} created</value></data>
+  <data name="PeriodStartedClosing" xml:space="preserve"><value>Period {0} is now in closing</value></data>
+  <data name="PeriodClosed" xml:space="preserve"><value>Period {0} closed</value></data>
+  <data name="PeriodReopened" xml:space="preserve"><value>Period {0} reopened</value></data>
+  <data name="ChecklistInitialized" xml:space="preserve"><value>Month-end checklist initialized</value></data>
+  <data name="StepCompleted" xml:space="preserve"><value>Step {0} completed</value></data>
+  <data name="ClosingCancelled" xml:space="preserve"><value>Closing cancelled; the period is postable again</value></data>
+  <data name="NrvBatchCompleted" xml:space="preserve"><value>NRV assessment complete: {0} items</value></data>
+  <data name="FxRevBatchCompleted" xml:space="preserve"><value>FX revaluation complete: {0} entries</value></data>
+  <data name="ActualRateReestCompleted" xml:space="preserve"><value>Actual rate re-estimation complete: {0} work orders recosted, {1} WIP snapshots</value></data>
+  <data name="EclBatchCompleted" xml:space="preserve"><value>ECL calculated, total allowance: {0}</value></data>
+  <data name="EclBatchCompleted2" xml:space="preserve"><value>ECL calculated: {0} aging buckets</value></data>
+  
+  <data name="ActManagement" xml:space="preserve"><value>Period Close / IFRS</value></data>
+  <data name="AccountingPeriod" xml:space="preserve"><value>Accounting Periods</value></data>
+  <data name="JournalEntry" xml:space="preserve"><value>Management Journal</value></data>
+  <data name="MonthEnd" xml:space="preserve"><value>Month-End Close</value></data>
+  <data name="TrialBalance" xml:space="preserve"><value>Trial Balance</value></data>
+  <data name="DepartmentActualCost" xml:space="preserve"><value>Department Actual Cost</value></data>
+  <data name="DepartmentActualCostDuplicate" xml:space="preserve"><value>A department actual cost already exists for this period/work center. Please edit it instead.</value></data>
+  <data name="AmountMustBeNonNegative" xml:space="preserve"><value>Amount must not be negative.</value></data>
+  <data name="PeriodId" xml:space="preserve"><value>Period</value></data>
+  <data name="WorkCenterCode" xml:space="preserve"><value>Work Center</value></data>
+  <data name="ActualLaborCost" xml:space="preserve"><value>Actual Labor Cost</value></data>
+  <data name="ActualOverheadCost" xml:space="preserve"><value>Actual Overhead Cost</value></data>
+  <data name="UpdatedAt" xml:space="preserve"><value>Updated At</value></data>
+  <data name="NrvAssessment" xml:space="preserve"><value>IAS 2 NRV Assessment</value></data>
+  <data name="EclAllowance" xml:space="preserve"><value>IFRS 9 ECL Allowance</value></data>
+  
+  <data name="RptManagement" xml:space="preserve"><value>Management Reports</value></data>
+  <data name="ProfitLoss" xml:space="preserve"><value>Profit &amp; Loss</value></data>
+  <data name="GrossMargin" xml:space="preserve"><value>Gross Margin Analysis</value></data>
+  <data name="BalanceSheet" xml:space="preserve"><value>Balance Sheet</value></data>
+  <data name="ConsolidatedStatement" xml:space="preserve"><value>Consolidated Statements</value></data>
+  <data name="Consolidated_NoPlant" xml:space="preserve"><value>Specify at least one plant</value></data>
+  <data name="OutsourcePerformance" xml:space="preserve"><value>Outsource Reconciliation &amp; Scrap</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>Dashboard</value></data>
+  
+  <data name="OrderOverdue" xml:space="preserve"><value>Overdue Sales Orders</value></data>
+  <data name="PurchaseOverdue" xml:space="preserve"><value>Overdue Purchase Orders</value></data>
+  <data name="StockShortage" xml:space="preserve"><value>Stock Shortage</value></data>
+  <data name="SlowMovingInventory" xml:space="preserve"><value>Slow-Moving Inventory</value></data>
+  <data name="InventoryAging" xml:space="preserve"><value>Inventory Aging Analysis</value></data>
+  <data name="SpcAnalysis" xml:space="preserve"><value>SPC Process Capability</value></data>
+  <data name="MarginAnalysis" xml:space="preserve"><value>Multi-Dimension Margin</value></data>
+  <data name="Oee" xml:space="preserve"><value>OEE (Equipment Effectiveness)</value></data>
+  <data name="ContributionMargin" xml:space="preserve"><value>Product Contribution Margin</value></data>
+  <data name="NoPermission" xml:space="preserve"><value>Insufficient permission</value></data>
+  <data name="SavedAsDefault" xml:space="preserve"><value>Saved as system default</value></data>
+  <data name="WorkOrderProgress" xml:space="preserve"><value>Work Order Progress</value></data>
+  <data name="DefectRate" xml:space="preserve"><value>Defect Rate</value></data>
+  
+  <data name="SupplierCode" xml:space="preserve"><value>Supplier</value></data>
+  <data name="TotalAmount" xml:space="preserve"><value>Total Amount</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>Approval Status</value></data>
+  <data name="ReceiptDate" xml:space="preserve"><value>Receipt Date</value></data>
+  
+  <data name="LineAmount" xml:space="preserve"><value>Line Amount</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product Code</value></data>
+  <data name="Qty" xml:space="preserve"><value>Quantity</value></data>
+  <data name="SourceDocId" xml:space="preserve"><value>Source Document</value></data>
+  <data name="TaxAmount" xml:space="preserve"><value>Tax Amount</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>Unit Price</value></data>
+  
+  <data name="Select" xml:space="preserve"><value>— Select —</value></data>
+  <data name="SelectSupplier" xml:space="preserve"><value>— Select Supplier —</value></data>
+  <data name="ExchangeRate" xml:space="preserve"><value>Exchange Rate</value></data>
+  <data name="PaymentAmount" xml:space="preserve"><value>Payment Amount</value></data>
+  <data name="Reference" xml:space="preserve"><value>Reference</value></data>
+  <data name="InspectionSubmitted" xml:space="preserve"><value>Inspection result submitted. Status: {0}</value></data>
+  
+  <data name="StagingErrPendingApproval" xml:space="preserve"><value>Staging order is pending approval. Withdraw first before editing.</value></data>
+  <data name="StagingErrDraftOrReject" xml:space="preserve"><value>Only Draft or Rejected orders can be submitted for approval.</value></data>
+  <data name="ReturnWithoutIssueHistory" xml:space="preserve"><value>No posted issue found for product {0}; the return cost cannot be determined.</value></data>
+  <data name="StagingApprovedNoWorkflow" xml:space="preserve"><value>Approved (no approval workflow configured).</value></data>
+  <data name="StagingSubmitted" xml:space="preserve"><value>Submitted for approval.</value></data>
+  <data name="StagingAutoApproved" xml:space="preserve"><value>Submitted; all steps were auto-skipped and the document is approved.</value></data>
+  <data name="StagingErrMustBePending" xml:space="preserve"><value>Only orders pending approval can be withdrawn.</value></data>
+  <data name="StagingWithdrawFailed" xml:space="preserve"><value>Withdraw failed. Please confirm you are the requester.</value></data>
+  <data name="StagingWithdrawn" xml:space="preserve"><value>Withdrawn. Order returned to Draft.</value></data>
+  <data name="StagingErrDraftToConfirm" xml:space="preserve"><value>Only Draft orders can be confirmed.</value></data>
+  <data name="StagingErrNeedApproval" xml:space="preserve"><value>Please complete approval before confirming the order.</value></data>
+  <data name="CloseErrNeedApproval" xml:space="preserve"><value>Not yet approved; cannot be closed.</value></data>
+  <data name="ReopenErrNeedApproval" xml:space="preserve"><value>Not yet approved; cannot reopen the line.</value></data>
+  <data name="CloseErrVoided" xml:space="preserve"><value>This order has been voided and cannot be closed.</value></data>
+  <data name="StagingConfirmed" xml:space="preserve"><value>Staging order confirmed. Inventory reservations created.</value></data>
+  <data name="StagingVoided" xml:space="preserve"><value>Staging order voided.</value></data>
+  <data name="StagingNotFound" xml:space="preserve"><value>Staging order not found.</value></data>
+  <data name="StagingErrDeletePending" xml:space="preserve"><value>Cannot delete: approval is pending. Withdraw first.</value></data>
+  <data name="StagingErrDraftToDelete" xml:space="preserve"><value>Only Draft orders can be deleted.</value></data>
+  <data name="StagingDeleted" xml:space="preserve"><value>Staging order deleted.</value></data>
+  
+  <data name="NoVoidPermission" xml:space="preserve"><value>You do not have void permission.</value></data>
+  <data name="NoConfirmPermission" xml:space="preserve"><value>You do not have confirm permission.</value></data>
+  <data name="Voided" xml:space="preserve"><value>Voided successfully.</value></data>
+  <data name="OutsourceVoidBlockedByPaidInvoice" xml:space="preserve"><value>This receipt has a paid AP invoice and cannot be voided. Reverse the payment first.</value></data>
+  <data name="APPaymentConfirmed" xml:space="preserve"><value>Payment confirmed and posted.</value></data>
+  <data name="APPaymentVoided" xml:space="preserve"><value>Payment voided and reversed.</value></data>
+  <data name="ARReceiptConfirmed" xml:space="preserve"><value>Receipt confirmed and posted.</value></data>
+  <data name="ARReceiptVoided" xml:space="preserve"><value>Receipt voided and reversed.</value></data>
+  <data name="DispatchCannotAdjustStatus" xml:space="preserve"><value>Cannot adjust this dispatch in its current status. Only Pending/Scheduled are allowed.</value></data>
+  <data name="MachineCodeRequired" xml:space="preserve"><value>Machine code cannot be empty.</value></data>
+  <data name="ReassignMachineSuccess" xml:space="preserve"><value>Machine reassigned. Slot released — please run the scheduler.</value></data>
+  <data name="SplitMinTwo" xml:space="preserve"><value>At least two split entries are required.</value></data>
+  <data name="SplitQtySumMismatch" xml:space="preserve"><value>Split quantities must sum to the original dispatch quantity.</value></data>
+  <data name="SplitQtyPositive" xml:space="preserve"><value>Each split quantity must be greater than zero.</value></data>
+  <data name="SplitSuccess" xml:space="preserve"><value>Split into {0} parts. Please run the scheduler.</value></data>
+  <data name="ToOutsourceSuccess" xml:space="preserve"><value>Converted to outsource. Machine slot released — create an outsource PO in purchasing.</value></data>
+  <data name="CreateFailedDuplicate" xml:space="preserve"><value>Create failed. This code may already exist.</value></data>
+  <data name="DeleteFailedReferenced" xml:space="preserve"><value>Delete failed. This record may be referenced by other data.</value></data>
+  <data name="ProductInUseCannotDelete" xml:space="preserve"><value>Cannot delete. This product is used in a routing or still has inventory on hand. Clear related data first.</value></data>
+  <data name="CurrencyInUseCannotDelete" xml:space="preserve"><value>Cannot delete. This currency is set as base currency or already used in documents. Update related settings first.</value></data>
+  <data name="DocTypeInUseCannotDelete" xml:space="preserve"><value>Cannot delete. This document number config has already been used (numbers have been issued).</value></data>
+  <data name="ToolingInUseCannotDelete" xml:space="preserve"><value>Cannot delete. This tooling is used in a routing operation, setup, dispatch, or production session. Clear related data first.</value></data>
+  <data name="ContainerInUseCannotDelete" xml:space="preserve"><value>Cannot delete. This container is used in a routing operation's start/finish container setting or a production report. Clear related data first.</value></data>
+  <data name="WorkCenterInUseCannotDelete" xml:space="preserve"><value>Cannot delete. This work center is used in a routing operation, work order operation, machine status change, work calendar, planned downtime, department cost, or rework document. Clear related data first.</value></data>
+  <data name="ShiftGroupInUseCannotDelete" xml:space="preserve"><value>Cannot delete. This shift group is set as a work center's default shift group or used in a work calendar. Update related settings first.</value></data>
+  <data name="WarehouseInUseCannotDelete" xml:space="preserve"><value>Cannot delete. This warehouse has storage locations or is used in a stock transfer, goods receipt, or goods shipment document. Clear related data first.</value></data>
+  <data name="UomInUseCannotDelete" xml:space="preserve"><value>Cannot delete. This unit of measure is set as a product's stock unit, or used in a UOM conversion or routing BOM. Clear related data first.</value></data>
+  <data name="CompanyInUseCannotDelete" xml:space="preserve"><value>Cannot delete. This business partner is used in a purchasing, sales, outsourcing, or AP/AR document. Clear related data first.</value></data>
+  <data name="TaxInUseCannotDelete" xml:space="preserve"><value>Cannot delete. This tax code is set as a business partner's or sales order's default tax, or used in a purchasing/sales/outsourcing/AP/AR document line. Clear related data first.</value></data>
+  <data name="PendingApprovalCannotEdit" xml:space="preserve"><value>This record is pending approval and cannot be edited.</value></data>
+  <data name="SubmittedForApprovalCreate" xml:space="preserve"><value>Record created and submitted for approval. Awaiting supervisor approval.</value></data>
+  <data name="SubmittedForApprovalUpdate" xml:space="preserve"><value>Record updated and resubmitted for approval. Awaiting supervisor approval.</value></data>
+  <data name="SystemTypeSemanticsLocked" xml:space="preserve"><value>Direction, category and source type of a built-in transaction type cannot be changed.</value></data>
+  <data name="SystemRecordCannotDelete" xml:space="preserve"><value>Built-in system records cannot be deleted.</value></data>
+  <data name="DraftOnlyCanEdit" xml:space="preserve"><value>Only draft documents can be edited.</value></data>
+  <data name="DraftOnlyCanSubmit" xml:space="preserve"><value>Only draft documents can be submitted for approval.</value></data>
+  <data name="DraftOnlyCanConfirmOut" xml:space="preserve"><value>Only draft documents can be confirmed for dispatch.</value></data>
+  <data name="ConfirmedOnlyCanWithdraw" xml:space="preserve"><value>Only confirmed documents can be withdrawn.</value></data>
+  <data name="ConfirmedOnlyCanUnconfirm" xml:space="preserve"><value>Only confirmed documents can be unconfirmed.</value></data>
+  <data name="ShipmentVoidReturnFirst" xml:space="preserve"><value>This shipment has sales return {0}; void the return first.</value></data>
+  <data name="ShipmentVoidInvoiceFirst" xml:space="preserve"><value>This shipment has AR invoice {0}; void the invoice first (reverse any receipts before that).</value></data>
+  <data name="ReceiptVoidReturnFirst" xml:space="preserve"><value>This goods receipt has purchase return {0}; void the return first.</value></data>
+  <data name="ReceiptVoidInvoiceFirst" xml:space="preserve"><value>This goods receipt has AP invoice {0}; void the invoice first (reverse any payments before that).</value></data>
+  <data name="ReturnVoidNoteFirst" xml:space="preserve"><value>This return has credit/debit note {0}; void the note first.</value></data>
+  <data name="SalesReturnVoidInvoiceLive" xml:space="preserve"><value>This sales return has already reduced AR invoice {0}, and the system will not add the amount back automatically, so it cannot be voided. If the return was a mistake, create a new shipment to send these goods back to the customer; a new AR invoice will be issued for it (a return does not free up the order's shipped quantity, so if the order is fully shipped, do not link the new shipment to it).</value></data>
+  <data name="GoodsReturnVoidInvoiceLive" xml:space="preserve"><value>This purchase return has already reduced AP invoice {0}, and the system will not add the amount back automatically, so it cannot be voided. If the return was a mistake, create a new goods receipt to receive these goods back; a new payable will be recognized for it (a return does not free up the purchase order's received quantity, so if the order is fully received, do not link the new receipt to it).</value></data>
+  <data name="ShipmentUnconfirmInvoiceFirst" xml:space="preserve"><value>AR invoice {0} was issued when this shipment was confirmed; void the invoice before cancelling the confirmation. Confirming again issues a new invoice from the updated shipment.</value></data>
+  <data name="SlipClosedWoReturnJournal" xml:space="preserve"><value>Return {1} after work order {0} was closed (cost already in finished goods; difference to manufacturing cost variance)</value></data>
+  <data name="ReissueFromSource" xml:space="preserve"><value>Reissue from source</value></data>
+  <data name="ConfirmReissueInvoice" xml:space="preserve"><value>Reissue a new invoice from the source document?</value></data>
+  <data name="ReissueFailed" xml:space="preserve"><value>Reissue failed</value></data>
+  <data name="InvoiceReissuedFmt" xml:space="preserve"><value>Invoice {0} has been reissued</value></data>
+  <data name="PostedOnlyCanVoid" xml:space="preserve"><value>Only posted documents can be voided.</value></data>
+  <data name="PostedOnlyCanVoidAndReopen" xml:space="preserve"><value>Only posted documents can be voided and reopened.</value></data>
+  <data name="InTransitOnlyCanReceive" xml:space="preserve"><value>Only in-transit documents can confirm receipt.</value></data>
+  <data name="InTransitOnlyCanWithdraw" xml:space="preserve"><value>Only in-transit documents can be withdrawn.</value></data>
+  <data name="SourcePlantOnlyCanSubmit" xml:space="preserve"><value>Only the source plant can submit for approval.</value></data>
+  <data name="SourcePlantOnlyCanWithdraw" xml:space="preserve"><value>Only the source plant can withdraw the submission.</value></data>
+  <data name="SourcePlantOnlyCanConfirmOut" xml:space="preserve"><value>Only the source plant can confirm dispatch.</value></data>
+  <data name="SourcePlantOnlyCanWithdrawOut" xml:space="preserve"><value>Only the source plant can withdraw dispatch.</value></data>
+  <data name="SourcePlantOnlyCanDelete" xml:space="preserve"><value>Only the source plant can delete this document.</value></data>
+  <data name="DestPlantOnlyCanReceive" xml:space="preserve"><value>Only the destination plant can confirm receipt.</value></data>
+  <data name="DestPlantReceivedCannotWithdraw" xml:space="preserve"><value>Cannot withdraw: destination plant has already received.</value></data>
+  <data name="InvalidDestinationPlant" xml:space="preserve"><value>Destination plant cannot be empty or same as source plant.</value></data>
+  <data name="Posted" xml:space="preserve"><value>Document posted.</value></data>
+  <data name="PostedSimple" xml:space="preserve"><value>Document posted (simplified mode).</value></data>
+  <data name="ConfirmedAwaitingWarehouse" xml:space="preserve"><value>Confirmed, awaiting warehouse operation.</value></data>
+  <data name="ConfirmedAwaitingPutaway" xml:space="preserve"><value>Confirmed, awaiting putaway.</value></data>
+  <data name="ConfirmedAwaitingPickup" xml:space="preserve"><value>Confirmed, awaiting picking.</value></data>
+  <data name="ConfirmedAwaitingPick" xml:space="preserve"><value>Confirmed, awaiting warehouse pick.</value></data>
+  <data name="CrossPlantDispatched" xml:space="preserve"><value>Cross-plant transfer dispatched, awaiting receipt.</value></data>
+  <data name="CrossPlantReceived" xml:space="preserve"><value>Cross-plant transfer received and posted.</value></data>
+  <data name="AllocationConfirmed" xml:space="preserve"><value>Allocation confirmed, inventory cost updated.</value></data>
+  <data name="VoidedAndReversed" xml:space="preserve"><value>Document voided and reversed.</value></data>
+  <data name="HasWarehouseOpsCannotDelete" xml:space="preserve"><value>Cannot delete: document contains executed warehouse operations.</value></data>
+  <data name="HasPostedLinesCannotDelete" xml:space="preserve"><value>Cannot delete: document contains posted lines.</value></data>
+  <data name="HasShipmentCannotDelete" xml:space="preserve"><value>Cannot delete: document has shipment records.</value></data>
+  <data name="HasPutawayCannotDelete" xml:space="preserve"><value>Cannot delete: putaway operations exist.</value></data>
+  <data name="HasPutawayCannotUnconfirm" xml:space="preserve"><value>Cannot unconfirm: putaway operations exist.</value></data>
+  <data name="HasPickingCannotUnconfirm" xml:space="preserve"><value>Cannot unconfirm: picking operations exist.</value></data>
+  <data name="HasReturnsCannotDelete" xml:space="preserve"><value>Cannot delete: receipt has return lines. Please void related return documents first.</value></data>
+  <data name="HasReceiptsCannotDelete" xml:space="preserve"><value>Cannot delete: purchase order already has goods receipts. Delete the related receipts first.</value></data>
+  <data name="WarehouseStartedCannotWithdraw" xml:space="preserve"><value>Cannot withdraw: warehouse operations have started.</value></data>
+  <data name="WarehouseStartedContactStaff" xml:space="preserve"><value>Cannot withdraw: warehouse operations started, please contact warehouse staff.</value></data>
+  <data name="ConfirmedAllocationCannotDelete" xml:space="preserve"><value>Confirmed allocation documents cannot be deleted.</value></data>
+  <data name="AlreadyVoidedCannotConfirm" xml:space="preserve"><value>Document is voided and cannot be confirmed.</value></data>
+  <data name="AlreadyPostedCannotRepost" xml:space="preserve"><value>Already posted, cannot confirm again.</value></data>
+  <data name="AlreadyPostedNeedReverse" xml:space="preserve"><value>Please reverse the posting before editing.</value></data>
+  <data name="AddLineFirst" xml:space="preserve"><value>Please add at least one line item first.</value></data>
+  <data name="NoLinesCannotConfirm" xml:space="preserve"><value>Cannot confirm: document has no lines.</value></data>
+  <data name="SelectReceiptLineFirst" xml:space="preserve"><value>Please select at least one receipt line.</value></data>
+  <data name="DocNotConfirmedCannotPutaway" xml:space="preserve"><value>Document is not confirmed. Cannot putaway.</value></data>
+  <data name="GoodsReceiptMustPutawayToQuarantineFirst" xml:space="preserve"><value>This line has not passed IQC inspection yet; it can only be put away to the quarantine warehouse.</value></data>
+  <data name="DocNotConfirmedCannotPickup" xml:space="preserve"><value>Document is not confirmed. Cannot pick.</value></data>
+  <data name="DocPendingApprovalWarehouse" xml:space="preserve"><value>Document has not completed the approval process.</value></data>
+  <data name="LocationNotExist" xml:space="preserve"><value>Location does not exist.</value></data>
+  <data name="LocationNotInWarehouse" xml:space="preserve"><value>Location does not exist or does not belong to the specified warehouse.</value></data>
+  <data name="LocationCodeRequired" xml:space="preserve"><value>Location code is required.</value></data>
+  <data name="PutawayCompleted" xml:space="preserve"><value>Putaway completed.</value></data>
+  <data name="PickupCompleted" xml:space="preserve"><value>Picking completed.</value></data>
+  <data name="PickQtyRequired" xml:space="preserve"><value>Pick quantity must be greater than 0.</value></data>
+  <data name="StocktakeNoLines" xml:space="preserve"><value>At least one stocktake line is required.</value></data>
+  <data name="StocktakePickupNoLines" xml:space="preserve"><value>At least one pickup line is required.</value></data>
+  <data name="QtyMustBePositive" xml:space="preserve"><value>Quantity must be greater than 0.</value></data>
+  <data name="StocktakeNoDiff" xml:space="preserve"><value>Stocktake matches system stock — no discrepancy.</value></data>
+  <data name="StocktakeDiffRecorded" xml:space="preserve"><value>Stocktake discrepancy recorded. Please confirm the stock adjustment on desktop.</value></data>
+  <data name="AutoPostFailed" xml:space="preserve"><value>Document {0} auto-post failed: {1}</value></data>
+  <data name="ProductMustSelectSource" xml:space="preserve"><value>Product {0} must select a source document.</value></data>
+  <data name="LoanInboundUnitPriceRequired" xml:space="preserve"><value>Product {0} is a borrow-in movement and requires a unit price. Borrowed material is costed at its borrow-in value when issued to production; a zero price understates both work order material cost and finished goods unit cost.</value></data>
+  <data name="ProductReverseQtyExceeds" xml:space="preserve"><value>Product {0}: reverse quantity ({1}) exceeds the remaining reversible quantity ({2}) from source.</value></data>
+  <data name="InvalidTransactionTypeOutsource" xml:space="preserve"><value>Invalid transaction type {0}. Outsource material documents only accept OO or OR.</value></data>
+  <data name="InvalidTransactionTypeRework" xml:space="preserve"><value>Invalid transaction type {0}. Rework material documents only accept RI or RR.</value></data>
+  <data name="ReworkMaterialUseWorkOrderSlip" xml:space="preserve"><value>Work order {0} exists. For rework with a work order, use a Work Order Material Slip (Rework Issue / Rework Return) so the work order's issued/returned quantities are updated and rework cost is settled at completion. This document is only for rework without a work order.</value></data>
+  <data name="OutsourcePONotFound" xml:space="preserve"><value>Outsource purchase order {0} not found.</value></data>
+  <data name="PutawayQtyExceeds" xml:space="preserve"><value>Putaway quantity exceeds pending quantity (remaining: {0}).</value></data>
+  <data name="PickQtyExceeds" xml:space="preserve"><value>Pick quantity exceeds pending quantity (remaining: {0}).</value></data>
+  <data name="TypeCodeNotSupportPutaway" xml:space="preserve"><value>TypeCode {0} does not support putaway.</value></data>
+  <data name="TypeCodeNotSupportPickup" xml:space="preserve"><value>TypeCode {0} does not support pickup.</value></data>
+  <data name="InventoryTypeCodeNotFound" xml:space="preserve"><value>Inventory transaction type {0} not found.</value></data>
+  <data name="LocationPickNotExist" xml:space="preserve"><value>Location {0} does not exist.</value></data>
+  <data name="LocationWarehouseMismatch" xml:space="preserve"><value>Location warehouse ({0}) does not match document warehouse ({1}).</value></data>
+  <data name="SalesRanking" xml:space="preserve"><value>Sales Ranking</value></data>
+  <data name="SalesTrend" xml:space="preserve"><value>Sales Trend</value></data>
+  <data name="DeliveryRate" xml:space="preserve"><value>Delivery Rate</value></data>
+  <data name="ReturnRate" xml:space="preserve"><value>Return Rate</value></data>
+  <data name="SalesForecast" xml:space="preserve"><value>Sales Forecast</value></data>
+  <data name="SupplierDeliveryRate" xml:space="preserve"><value>Supplier Delivery Rate</value></data>
+  <data name="PurchaseAmount" xml:space="preserve"><value>Purchase Amount</value></data>
+  <data name="PurchasePrice" xml:space="preserve"><value>Purchase Price</value></data>
+  <data name="OutsourceProgress" xml:space="preserve"><value>Outsource Progress</value></data>
+  <data name="OutsourcePrice" xml:space="preserve"><value>Outsource Price Analysis</value></data>
+  <data name="InventoryValue" xml:space="preserve"><value>Inventory Value</value></data>
+  <data name="InventoryTurnover" xml:space="preserve"><value>Inventory Turnover</value></data>
+  <data name="StockVariance" xml:space="preserve"><value>Stock Variance</value></data>
+  <data name="WipReport" xml:space="preserve"><value>WIP Report</value></data>
+  <data name="Utilization" xml:space="preserve"><value>Utilization</value></data>
+  <data name="ProductionEfficiency" xml:space="preserve"><value>Production Efficiency</value></data>
+  <data name="MachineDowntime" xml:space="preserve"><value>Machine Downtime</value></data>
+  <data name="MaterialSlipProgress" xml:space="preserve"><value>Material Slip Progress</value></data>
+  <data name="MrpAchievement" xml:space="preserve"><value>MRP Achievement</value></data>
+  <data name="BadDebtProvision" xml:space="preserve"><value>Bad Debt Provision (ECL)</value></data>
+  <data name="AllSuppliers" xml:space="preserve"><value>All Suppliers</value></data>
+  <data name="AllCustomers" xml:space="preserve"><value>All Customers</value></data>
+  <data name="CostFinalizePeriodRequired" xml:space="preserve"><value>Please provide accounting period (YYYYMM).</value></data>
+  <data name="CostFinalizeSuccess" xml:space="preserve"><value>{0} work order cost record(s) locked as Final.</value></data>
+  <data name="OrderChangeDecision" xml:space="preserve"><value>Order Change Decision</value></data>
+  <data name="DataAudit" xml:space="preserve"><value>Data Audit Diagnostics</value></data>
+  <data name="FieldTelemetry" xml:space="preserve"><value>Field Telemetry</value></data>
+  <data name="DataAuditRunDone" xml:space="preserve"><value>Audit run completed with {0} finding(s)</value></data>
+  <data name="DataRepairNothingSelected" xml:space="preserve"><value>Select the items to correct first</value></data>
+  <data name="DataRepairDone" xml:space="preserve"><value>Corrected {0} item(s) ({1} already matched on recalculation, {2} document(s) not found)</value></data>
+  <data name="AdminManagement" xml:space="preserve"><value>Security Administration</value></data>
+  <data name="TwoFactorAdmin" xml:space="preserve"><value>Two-Factor Reset</value></data>
+  <data name="OutsourceRework" xml:space="preserve"><value>Outsource Rework</value></data>
+  <data name="OutsourceReworkId" xml:space="preserve"><value>Rework No</value></data>
+  <data name="OriginalDispatch" xml:space="preserve"><value>Original Dispatch</value></data>
+  <data name="SourceNcr" xml:space="preserve"><value>Source NCR</value></data>
+  <data name="ReworkOpo" xml:space="preserve"><value>Rework Outsource PO</value></data>
+  <data name="ReworkReason" xml:space="preserve"><value>Rework Reason</value></data>
+  <data name="ReworkQty" xml:space="preserve"><value>Rework Qty</value></data>
+  <data name="ReworkCost" xml:space="preserve"><value>Rework Cost</value></data>
+  <data name="ProcessingFee" xml:space="preserve"><value>Processing Fee</value></data>
+  <data name="ReworkCostSection" xml:space="preserve"><value>Cost / Claim (Liability + Dual Path)</value></data>
+  <data name="LiabilityParty" xml:space="preserve"><value>Liability Party</value></data>
+  <data name="LiabilityVendor" xml:space="preserve"><value>Vendor Liability</value></data>
+  <data name="LiabilityUs" xml:space="preserve"><value>Our Liability</value></data>
+  <data name="LiabilityShared" xml:space="preserve"><value>Shared Liability</value></data>
+  <data name="VendorLiablePct" xml:space="preserve"><value>Vendor Liable %</value></data>
+  <data name="VendorChargebackAmt" xml:space="preserve"><value>Vendor Chargeback</value></data>
+  <data name="ReworkProcessingFee" xml:space="preserve"><value>Rework Processing Fee</value></data>
+  <data name="ReworkSend" xml:space="preserve"><value>Send</value></data>
+  <data name="ReworkReceive" xml:space="preserve"><value>Receive</value></data>
+  <data name="ReworkSent" xml:space="preserve"><value>Sent to outsource vendor.</value></data>
+  <data name="ReworkReceived" xml:space="preserve"><value>Rework items received.</value></data>
+  <data name="ReworkOnlyDraftCanSend" xml:space="preserve"><value>Only draft can be sent.</value></data>
+  <data name="ReworkOnlySentCanReceive" xml:space="preserve"><value>Only sent documents can be received.</value></data>
+  <data name="ReworkReceivedCannotVoid" xml:space="preserve"><value>Received or voided rework documents cannot be voided.</value></data>
+  <data name="ReworkQtyMustBePositive" xml:space="preserve"><value>Rework quantity must be greater than 0.</value></data>
+  <data name="VendorLiablePctRange" xml:space="preserve"><value>Vendor liable percentage must be between 0 and 100.</value></data>
+  <data name="ConfirmSendRework" xml:space="preserve"><value>Send to outsource vendor for rework?</value></data>
+  <data name="ConfirmReceiveRework" xml:space="preserve"><value>Confirm rework items received?</value></data>
+  <data name="ConfirmVoidRework" xml:space="preserve"><value>Void this rework document?</value></data>
+  <data name="DispatchNotFound" xml:space="preserve"><value>Dispatch {0} not found.</value></data>
+  <data name="NcrNotFound" xml:space="preserve"><value>NCR {0} not found.</value></data>
+  <data name="OpoNotFound" xml:space="preserve"><value>Outsource PO {0} not found.</value></data>
+  <data name="ReturnReworkExecuted" xml:space="preserve"><value>Outsource rework doc {0} created as draft; please fill in cost and liability details.</value></data>
+  <data name="ReturnReworkNeedsQty" xml:space="preserve"><value>NCR quantity must be greater than 0 to execute return-rework.</value></data>
+  <data name="OpoSupplierMismatch" xml:space="preserve"><value>Outsource PO {0} belongs to supplier {1}, which differs from this document's supplier.</value></data>
+  <data name="ProductNotInDispatch" xml:space="preserve"><value>Product {0} is not in the material requirements of dispatch {1}.</value></data>
+  <data name="OutsourceIssueExceedsRequired" xml:space="preserve"><value>Product {0} issue qty {1} exceeds remaining issuable qty {2} (required minus issued by other docs).</value></data>
+  <data name="Void" xml:space="preserve"><value>Void</value></data>
+  <data name="All" xml:space="preserve"><value>All</value></data>
+  <data name="CreatedAt" xml:space="preserve"><value>Created At</value></data>
+  <data name="VendorEvaluation" xml:space="preserve"><value>Vendor Evaluation</value></data>
+  <data name="VendorEvalDuplicate" xml:space="preserve"><value>An evaluation for this supplier and year/quarter already exists. Edit the existing record.</value></data>
+  <data name="VendorEvalFollowUpRequired" xml:space="preserve"><value>A follow-up action is required when the result is Fail.</value></data>
+  <data name="VendorEvalNotEditable" xml:space="preserve"><value>This evaluation is pending approval or approved and cannot be modified/deleted. Withdraw the approval request first.</value></data>
+  <data name="VendorEvalSelectSupplierFirst" xml:space="preserve"><value>Please select a supplier first.</value></data>
+  <data name="VendorEvalBasisFmt" xml:space="preserve"><value>Period receipts {0} / NCR defects {1}; deliveries {2} lines / on-time {3} (no data = full score)</value></data>
+  <data name="ToolingPmAutoOrderNote" xml:space="preserve"><value>Tooling {0} reached its PM shot threshold; maintenance downtime order created automatically</value></data>
+  <data name="MrpArchived" xml:space="preserve"><value>MRP run {0} archived; {1} un-started production batch(es) voided. Started work is left untouched.</value></data>
+  <data name="MrpPurchaseVariance" xml:space="preserve"><value>MRP Purchase Variances</value></data>
+  <data name="MrpVarianceDecision" xml:space="preserve"><value>MRP Variance Decisions</value></data>
+  <data name="NoRowsSelected" xml:space="preserve"><value>Select at least one row first.</value></data>
+  <data name="VarianceNotClosable" xml:space="preserve"><value>this variance kind cannot be resolved by closing</value></data>
+  <data name="VarianceLineMissing" xml:space="preserve"><value>purchase request line not found</value></data>
+  <data name="VarianceAlreadyOrdered" xml:space="preserve"><value>the line has already been ordered</value></data>
+  <data name="VariancePendingApproval" xml:space="preserve"><value>the purchase request is pending approval; withdraw it first</value></data>
+  <data name="VarianceResolvedByClose" xml:space="preserve"><value>Closed from the decision list</value></data>
+  <data name="VarianceResolvedManually" xml:space="preserve"><value>Manually confirmed as handled</value></data>
+  <data name="VarianceCloseResult" xml:space="preserve"><value>{0} line(s) closed, {1} skipped.</value></data>
+  <data name="VarianceAckResult" xml:space="preserve"><value>{0} variance(s) marked as handled.</value></data>
+  <data name="IqcAlreadyDone" xml:space="preserve"><value>IQC has already been completed for this receipt line.</value></data>
+  <data name="FpiAlreadyPassed" xml:space="preserve"><value>This dispatch already has a passed FPI order; no need to record it again.</value></data>
+  <data name="FpiPassed" xml:space="preserve"><value>First-piece inspection passed. The dispatch is unlocked and ready to start.</value></data>
+  <data name="FpiFailed" xml:space="preserve"><value>First-piece inspection failed. The dispatch is now On Hold. Resolve the issue and record the first piece again.</value></data>
+  <data name="IqcInvalidSampleQty" xml:space="preserve"><value>Actual sample quantity must be greater than 0.</value></data>
+  <data name="IqcMissingReceipt" xml:space="preserve"><value>Goods receipt number is missing.</value></data>
+  <data name="IqcFailQtyExceedsSample" xml:space="preserve"><value>Fail quantity cannot exceed the actual sample quantity.</value></data>
+  <data name="APInvoiceStatusOpen" xml:space="preserve"><value>Open</value></data>
+  <data name="APInvoiceStatusPartialPaid" xml:space="preserve"><value>Partially Paid</value></data>
+  <data name="APInvoiceStatusPaid" xml:space="preserve"><value>Paid</value></data>
+  <data name="APInvoiceStatusVoid" xml:space="preserve"><value>Void</value></data>
+  <data name="ARInvoiceStatusOpen" xml:space="preserve"><value>Open</value></data>
+  <data name="ARInvoiceStatusPartialReceived" xml:space="preserve"><value>Partially Received</value></data>
+  <data name="ARInvoiceStatusReceived" xml:space="preserve"><value>Received</value></data>
+  <data name="ARInvoiceStatusVoid" xml:space="preserve"><value>Void</value></data>
+  <data name="APPaymentStatusDraft" xml:space="preserve"><value>Draft</value></data>
+  <data name="APPaymentStatusPending" xml:space="preserve"><value>Pending Approval</value></data>
+  <data name="APPaymentStatusApproved" xml:space="preserve"><value>Approved</value></data>
+  <data name="APPaymentStatusPaid" xml:space="preserve"><value>Paid</value></data>
+  <data name="APPaymentStatusVoid" xml:space="preserve"><value>Void</value></data>
+  <data name="ARReceiptStatusDraft" xml:space="preserve"><value>Draft</value></data>
+  <data name="ARReceiptStatusPending" xml:space="preserve"><value>Pending Approval</value></data>
+  <data name="ARReceiptStatusApproved" xml:space="preserve"><value>Approved</value></data>
+  <data name="ARReceiptStatusReceived" xml:space="preserve"><value>Received</value></data>
+  <data name="ARReceiptStatusVoid" xml:space="preserve"><value>Void</value></data>
+  <data name="PaymentMethodCash" xml:space="preserve"><value>Cash</value></data>
+  <data name="PaymentMethodWire" xml:space="preserve"><value>Wire Transfer</value></data>
+  <data name="PaymentMethodCheque" xml:space="preserve"><value>Cheque</value></data>
+  <data name="PaymentMethodBill" xml:space="preserve"><value>Bill</value></data>
+  <data name="PeriodStatusOpen" xml:space="preserve"><value>Open</value></data>
+  <data name="PeriodStatusClosing" xml:space="preserve"><value>Closing</value></data>
+  <data name="PeriodStatusClosed" xml:space="preserve"><value>Closed</value></data>
+  <data name="PeriodStatusReopened" xml:space="preserve"><value>Reopened</value></data>
+  <data name="JournalEntryTypeAutomatic" xml:space="preserve"><value>Automatic</value></data>
+  <data name="JournalEntryTypeManual" xml:space="preserve"><value>Manual</value></data>
+  <data name="JournalEntryTypeAdjustment" xml:space="preserve"><value>Adjustment</value></data>
+  <data name="ChecklistItemStatusPending" xml:space="preserve"><value>Pending</value></data>
+  <data name="ChecklistItemStatusInProgress" xml:space="preserve"><value>In Progress</value></data>
+  <data name="ChecklistItemStatusCompleted" xml:space="preserve"><value>Completed</value></data>
+  <data name="ChecklistItemStatusSkipped" xml:space="preserve"><value>Skipped</value></data>
+  <data name="SourceDocTypeAPInvoice" xml:space="preserve"><value>AP Invoice</value></data>
+  <data name="SourceDocTypeAPInvoiceReturn" xml:space="preserve"><value>AP Invoice Return</value></data>
+  <data name="SourceDocTypeAPPayment" xml:space="preserve"><value>AP Payment</value></data>
+  <data name="SourceDocTypeARReceipt" xml:space="preserve"><value>AR Receipt</value></data>
+  <data name="SourceDocTypeWorkOrderCompletion" xml:space="preserve"><value>Work Order Completion</value></data>
+  <data name="SourceDocTypeActualRateReest" xml:space="preserve"><value>Actual Rate Re-estimation</value></data>
+  <data name="SourceDocTypeLandedCostAllocation" xml:space="preserve"><value>Landed Cost Allocation</value></data>
+  <data name="SourceDocTypeLandedCostAllocationVoid" xml:space="preserve"><value>Landed Cost Allocation Void</value></data>
+  <data name="SourceDocTypeInv" xml:space="preserve"><value>Inventory Movement</value></data>
+  <data name="SourceDocTypeManual" xml:space="preserve"><value>Manual Entry</value></data>
+  <data name="AllSourceDocTypes" xml:space="preserve"><value>All Source Types</value></data>
+  <data name="AllPeriods" xml:space="preserve"><value>All Periods</value></data>
+  <data name="SelectPeriod" xml:space="preserve"><value>Select Period</value></data>
+  <data name="SelectCurrency" xml:space="preserve"><value>Select Currency</value></data>
+  <data name="MonthEndSkipReason" xml:space="preserve"><value>Skipped</value></data>
+  <data name="FxRatesRequired" xml:space="preserve"><value>Enter at least one currency rate.</value></data>
+  <data name="DeptCostRequired" xml:space="preserve"><value>Enter actual costs for at least one work center.</value></data>
+  <data name="DocStatusDraft" xml:space="preserve"><value>Draft</value></data>
+  <data name="DocStatusConfirmed" xml:space="preserve"><value>Confirmed</value></data>
+  <data name="DocStatusInTransit" xml:space="preserve"><value>In Transit</value></data>
+  <data name="DocStatusPosted" xml:space="preserve"><value>Posted</value></data>
+  <data name="DocStatusVoid" xml:space="preserve"><value>Void</value></data>
+  <data name="WorkOrderStatusPlanned" xml:space="preserve"><value>Planned</value></data>
+  <data name="WorkOrderStatusReleased" xml:space="preserve"><value>Released</value></data>
+  <data name="WorkOrderStatusInProgress" xml:space="preserve"><value>In Progress</value></data>
+  <data name="WorkOrderStatusCompleted" xml:space="preserve"><value>Completed</value></data>
+  <data name="WorkOrderStatusClosed" xml:space="preserve"><value>Closed</value></data>
+  <data name="WorkOrderStatusVoid" xml:space="preserve"><value>Void</value></data>
+  <data name="DispatchStatusPending" xml:space="preserve"><value>Pending</value></data>
+  <data name="DispatchStatusScheduled" xml:space="preserve"><value>Scheduled</value></data>
+  <data name="DispatchStatusSetupInProgress" xml:space="preserve"><value>Setup In Progress</value></data>
+  <data name="DispatchStatusReadyToStart" xml:space="preserve"><value>Ready to Start</value></data>
+  <data name="DispatchStatusInProgress" xml:space="preserve"><value>In Progress</value></data>
+  <data name="DispatchStatusClosed" xml:space="preserve"><value>Closed</value></data>
+  <data name="DispatchStatusOnHold" xml:space="preserve"><value>On Hold</value></data>
+  <data name="DispatchStatusPendingFPI" xml:space="preserve"><value>Pending FPI</value></data>
+  <data name="MaterialSlipStatusDraft" xml:space="preserve"><value>Draft</value></data>
+  <data name="MaterialSlipStatusPending" xml:space="preserve"><value>Pending Approval</value></data>
+  <data name="MaterialSlipStatusApproved" xml:space="preserve"><value>Approved</value></data>
+  <data name="MaterialSlipStatusPicking" xml:space="preserve"><value>Picking</value></data>
+  <data name="MaterialSlipStatusConfirmed" xml:space="preserve"><value>Confirmed</value></data>
+  <data name="MaterialSlipStatusPosted" xml:space="preserve"><value>Posted</value></data>
+  <data name="MaterialSlipStatusClosed" xml:space="preserve"><value>Closed</value></data>
+  <data name="MaterialSlipStatusCancelled" xml:space="preserve"><value>Cancelled</value></data>
+  <data name="CostStatusPreliminary" xml:space="preserve"><value>Preliminary</value></data>
+  <data name="CostStatusFinal" xml:space="preserve"><value>Final</value></data>
+  <data name="WorkOrderTypeNormal" xml:space="preserve"><value>Normal</value></data>
+  <data name="WorkOrderTypeRework" xml:space="preserve"><value>Rework</value></data>
+  <data name="WorkOrderTypeOutsource" xml:space="preserve"><value>Outsource</value></data>
+  <data name="MachineStatusAvailable" xml:space="preserve"><value>Available</value></data>
+  <data name="MachineStatusStandby" xml:space="preserve"><value>Standby</value></data>
+  <data name="MachineStatusExternalRepair" xml:space="preserve"><value>External Repair</value></data>
+  <data name="MachineStatusBreakDown" xml:space="preserve"><value>Breakdown</value></data>
+  <data name="MachineStatusModification" xml:space="preserve"><value>Modification</value></data>
+  <data name="MachineStatusLoaned" xml:space="preserve"><value>Loaned</value></data>
+  <data name="MachineStatusRetired" xml:space="preserve"><value>Retired</value></data>
+  <data name="MachineStatusMaintenance" xml:space="preserve"><value>Maintenance</value></data>
+  <data name="MachineEventCI" xml:space="preserve"><value>Restore to Available</value></data>
+  <data name="MachineEventII" xml:space="preserve"><value>Set to Standby</value></data>
+  <data name="MachineEventDI" xml:space="preserve"><value>Breakdown</value></data>
+  <data name="MachineEventDO" xml:space="preserve"><value>Breakdown Resolved</value></data>
+  <data name="MachineEventHI" xml:space="preserve"><value>Start Maintenance</value></data>
+  <data name="MachineEventHO" xml:space="preserve"><value>Maintenance Done</value></data>
+  <data name="MachineEventEO" xml:space="preserve"><value>Enter Modification</value></data>
+  <data name="MachineEventFO" xml:space="preserve"><value>Loan Out</value></data>
+  <data name="MachineEventFI" xml:space="preserve"><value>Return from Loan</value></data>
+  <data name="MachineEventGO" xml:space="preserve"><value>Retire / Scrap</value></data>
+  <data name="MachineEventCO" xml:space="preserve"><value>Send for External Repair</value></data>
+  <data name="OutsourceReworkStatusDraft" xml:space="preserve"><value>Draft</value></data>
+  <data name="OutsourceReworkStatusSent" xml:space="preserve"><value>Sent</value></data>
+  <data name="OutsourceReworkStatusReceived" xml:space="preserve"><value>Received</value></data>
+  <data name="OutsourceReworkStatusVoid" xml:space="preserve"><value>Void</value></data>
+  <data name="NewARReceipt" xml:space="preserve"><value>New AR Receipt</value></data>
+  <data name="NewAPPayment" xml:space="preserve"><value>New AP Payment</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="SavedQuery_NoUser" xml:space="preserve"><value>Cannot identify the current user. Please sign in again and retry.</value></data>
+  <data name="SavedQuery_ParamsInvalid" xml:space="preserve"><value>The query conditions could not be read. Run the query again before saving.</value></data>
+  <data name="QaSaveQueryTurnGone" xml:space="preserve"><value>That query could not be found (it may have passed its retention period). Ask again before saving.</value></data>
+  <data name="QaSaveQueryDroppedFmt" xml:space="preserve"><value>({0} have no matching field on the report screen and were not saved, so this saved query is broader than the question you just asked.)</value></data>
+  <data name="SavedQuery_MyQueries" xml:space="preserve"><value>My Saved Queries</value></data>
+  <data name="SavedQuery_SaveThis" xml:space="preserve"><value>Save This Query</value></data>
+  <data name="SavedQuery_Name" xml:space="preserve"><value>Query Name</value></data>
+  <data name="SavedQuery_NamePlaceholder" xml:space="preserve"><value>e.g. Last Month Sales Ranking</value></data>
+  <data name="SavedQuery_Period" xml:space="preserve"><value>Period</value></data>
+  <data name="SavedQuery_PeriodHint" xml:space="preserve"><value>A relative period is stored; it is resolved to actual dates each time you open it.</value></data>
+  <data name="SavedQuery_Loading" xml:space="preserve"><value>Loading…</value></data>
+  <data name="SavedQuery_Empty" xml:space="preserve"><value>No saved queries yet.</value></data>
+  <data name="SavedQuery_LoadFailed" xml:space="preserve"><value>Loading failed. Please try again.</value></data>
+  <data name="SavedQuery_Saved" xml:space="preserve"><value>Saved.</value></data>
+  <data name="SavedQuery_DeleteConfirm" xml:space="preserve"><value>Delete this saved query?</value></data>
+  <data name="SavedQuery_NoPermissionBadge" xml:space="preserve"><value>No permission</value></data>
+  <data name="SavedQuery_InvalidBadge" xml:space="preserve"><value>Definition invalid</value></data>
+  <data name="SavedQuery_NameRequired" xml:space="preserve"><value>Please enter a query name.</value></data>
+  <data name="SavedQuery_NameTooLong" xml:space="preserve"><value>Query name is too long (max 100 characters).</value></data>
+  <data name="SavedQuery_PeriodRequired" xml:space="preserve"><value>This report requires a period.</value></data>
+  <data name="SavedQuery_Forbidden" xml:space="preserve"><value>You do not have permission for this report.</value></data>
+  <data name="SavedQuery_NoFiscalPeriod" xml:space="preserve"><value>This plant has no accounting period covering that range, so this saved query cannot run. Create the period first under Accounting Period Management.</value></data>
+  <data name="SavedQuery_UnknownTool" xml:space="preserve"><value>Report not found.</value></data>
+  <data name="SavedQuery_Invalid" xml:space="preserve"><value>This definition is no longer valid. Please save it again.</value></data>
+  <data name="RelativePeriod_Today" xml:space="preserve"><value>Today</value></data>
+  <data name="RelativePeriod_Yesterday" xml:space="preserve"><value>Yesterday</value></data>
+  <data name="RelativePeriod_ThisWeek" xml:space="preserve"><value>This Week</value></data>
+  <data name="RelativePeriod_LastWeek" xml:space="preserve"><value>Last Week</value></data>
+  <data name="RelativePeriod_ThisMonth" xml:space="preserve"><value>This Month</value></data>
+  <data name="RelativePeriod_LastMonth" xml:space="preserve"><value>Last Month</value></data>
+  <data name="RelativePeriod_ThisQuarter" xml:space="preserve"><value>This Quarter</value></data>
+  <data name="RelativePeriod_LastQuarter" xml:space="preserve"><value>Last Quarter</value></data>
+  <data name="RelativePeriod_ThisFiscalPeriod" xml:space="preserve"><value>This Fiscal Period</value></data>
+  <data name="RelativePeriod_LastFiscalPeriod" xml:space="preserve"><value>Last Fiscal Period</value></data>
+  <data name="RelativePeriod_ThisYear" xml:space="preserve"><value>This Year</value></data>
+  <data name="RelativePeriod_LastYear" xml:space="preserve"><value>Last Year</value></data>
+  <data name="RelativePeriod_Last7Days" xml:space="preserve"><value>Last 7 Days</value></data>
+  <data name="RelativePeriod_Last30Days" xml:space="preserve"><value>Last 30 Days</value></data>
+  <data name="RelativePeriod_Last90Days" xml:space="preserve"><value>Last 90 Days</value></data>
+  <data name="RelativePeriod_MonthToDate" xml:space="preserve"><value>Month to Date</value></data>
+  <data name="RelativePeriod_QuarterToDate" xml:space="preserve"><value>Quarter to Date</value></data>
+  <data name="RelativePeriod_YearToDate" xml:space="preserve"><value>Year to Date</value></data>
+  <data name="ReportSchedule" xml:space="preserve"><value>Report Schedules</value></data>
+  <data name="ReportInbox" xml:space="preserve"><value>Report Inbox</value></data>
+  <data name="ReportRunHistory" xml:space="preserve"><value>Schedule Run History</value></data>
+  <data name="QaExtract" xml:space="preserve"><value>Rule Extracts</value></data>
+  <data name="QaManagement" xml:space="preserve"><value>Manual Assistant</value></data>
+  <data name="QaAssistant" xml:space="preserve"><value>Ask the Manual</value></data>
+  <data name="QaConfirmMonetary" xml:space="preserve"><value>This query returns monetary values. The system runs several costing bases in parallel (AVCO / standard / actual); picking the wrong one still yields plausible numbers, so please confirm the query conditions below before running it.</value></data>
+  <data name="QaConfirmMultipleTools" xml:space="preserve"><value>This question may map to more than one query. Choose the one to run and confirm its conditions.</value></data>
+  <data name="QaConfirmExpired" xml:space="preserve"><value>This confirmation is no longer valid (already run, or expired). Please ask again.</value></data>
+  <data name="QaTooManyRounds" xml:space="preserve"><value>The clarification limit has been reached. Please use the report screen instead.</value></data>
+  <data name="QaEgressBlocked" xml:space="preserve"><value>Natural-language data queries are disabled because the configured inference service is not trusted to receive operational data. Manual Q&amp;A still works; please ask your administrator to review the inference endpoint setting.</value></data>
+  <data name="QaInferenceUnavailable" xml:space="preserve"><value>The assistant cannot answer right now. Please try again later, or contact your administrator if this continues.</value></data>
+  <data name="QaIndexOutOfDate" xml:space="preserve"><value>The manual index needs to be updated. Please contact your administrator.</value></data>
+  <data name="QaParamsInvalid" xml:space="preserve"><value>Could not build valid query conditions from this question. Please rephrase it or use the report screen directly.</value></data>
+  <data name="QaNotReadyContactAdmin" xml:space="preserve"><value>Please contact your administrator.</value></data>
+  <data name="QuestionRequired" xml:space="preserve"><value>Please enter a question first.</value></data>
+  <data name="QuestionTooLongFmt" xml:space="preserve"><value>Please keep the question under {0} characters.</value></data>
+  <data name="RebuildDoneFmt" xml:space="preserve"><value>Index rebuild finished: {0} file(s) re-parsed, {1} chunk(s) written, {2} embedded; {3} still pending.</value></data>
+  <data name="RebuildEmbedFailed" xml:space="preserve"><value>The lexical index is complete, but embedding failed (semantic search will keep using the old vectors): </value></data>
+  <data name="StreamIncomplete" xml:space="preserve"><value>The answer was interrupted while streaming. Please try again.</value></data>
+  <data name="ConfirmRunNow" xml:space="preserve"><value>Run this schedule now? The report will be produced on the next scan (within about a minute).</value></data>
+  <data name="DuplicateName" xml:space="preserve"><value>This name already exists. Please use a different name.</value></data>
+  <data name="ReportToolForbidden" xml:space="preserve"><value>You are not authorized to run this report.</value></data>
+  <data name="ReportScheduleQueued" xml:space="preserve"><value>Queued for immediate run. The report will appear in your inbox once produced.</value></data>
+  <data name="ReportFileExpired" xml:space="preserve"><value>This report file passed its retention period and was purged. Please run the schedule again.</value></data>
+  <data name="PlantParamOverview" xml:space="preserve">
+    <value>Plant Parameter Overview</value>
+  </data>
+  <data name="ArNotReversedAfterSettlement" xml:space="preserve"><value>{0} was not reversed from receivables: the source invoice is already settled, and settled invoices are never amended. Credit note {1} has been drafted — confirm it under Sales Credit Notes.</value></data>
+  <data name="ApNotReversedAfterSettlement" xml:space="preserve"><value>{0} was not reversed from payables: the source invoice is already settled, and settled invoices are never amended. Debit note {1} has been drafted — confirm it under Purchase Debit Notes.</value></data>
+  <data name="ARCreditNote" xml:space="preserve"><value>Sales Credit Notes</value></data>
+  <data name="APDebitNote" xml:space="preserve"><value>Purchase Debit Notes</value></data>
+  <data name="ARCreditNoteId" xml:space="preserve"><value>Credit Note No.</value></data>
+  <data name="APDebitNoteId" xml:space="preserve"><value>Debit Note No.</value></data>
+  <data name="NoteDate" xml:space="preserve"><value>Note Date</value></data>
+  <data name="CreditNoteStatusDraft" xml:space="preserve"><value>Draft</value></data>
+  <data name="CreditNoteStatusPosted" xml:space="preserve"><value>Posted</value></data>
+  <data name="CreditNoteStatusVoid" xml:space="preserve"><value>Void</value></data>
+  <data name="CreditNoteAutoGeneratedHint" xml:space="preserve"><value>Credit notes are drafted automatically when a return is posted; amounts come from the returned quantity and the original invoice price, so they cannot be created or edited by hand. Confirming one offsets the original invoice balance and posts the journal entry.</value></data>
+  <data name="ConfirmPostCreditNote" xml:space="preserve"><value>Confirm this credit note? It will offset the original invoice balance and post a journal entry.</value></data>
+  <data name="ConfirmVoidCreditNote" xml:space="preserve"><value>Void this credit note? A posted note will have its journal entry reversed.</value></data>
+  <data name="PostFailed" xml:space="preserve"><value>Posting failed</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Print_LocalTotal" xml:space="preserve"><value>Total (local currency)</value></data>
+  <data name="Print_ProductName" xml:space="preserve"><value>Product Name</value></data>
+  <data name="Print_MaterialRequirements" xml:space="preserve"><value>Materials to Issue</value></data>
+  <data name="Print_ReturnedQty" xml:space="preserve"><value>Returned Qty</value></data>
+  <data name="Print_ToIssueQty" xml:space="preserve"><value>Qty to Issue</value></data>
+  <data name="Print_IssueMethod" xml:space="preserve"><value>Issue Method</value></data>
+  <data name="Print_IssueMethod_Push" xml:space="preserve"><value>Push</value></data>
+  <data name="Print_IssueMethod_Pull" xml:space="preserve"><value>Pull</value></data>
+  <data name="Print_IssueMethod_Backflush" xml:space="preserve"><value>Backflush</value></data>
+  <data name="Print_ChildWorkOrder" xml:space="preserve"><value>Child WO</value></data>
+  <data name="Print_AccountCode" xml:space="preserve"><value>Account Code</value></data>
+  <data name="Print_AccountName" xml:space="preserve"><value>Account Name</value></data>
+  <data name="Print_ActualSampleQty" xml:space="preserve"><value>Actual Sample Qty</value></data>
+  <data name="Print_AllocatedAmount" xml:space="preserve"><value>Allocated Amount</value></data>
+  <data name="Print_AllocatedCost" xml:space="preserve"><value>Allocated Cost</value></data>
+  <data name="Print_AllocationBasis" xml:space="preserve"><value>Allocation Basis</value></data>
+  <data name="Print_Allocations" xml:space="preserve"><value>Allocations</value></data>
+  <data name="Print_Amount" xml:space="preserve"><value>Amount</value></data>
+  <data name="Print_AmountLocal" xml:space="preserve"><value>Local Amount</value></data>
+  <data name="Print_ApprovalStatus" xml:space="preserve"><value>Approval Status</value></data>
+  <data name="Print_ApprovedBy" xml:space="preserve"><value>Approved By</value></data>
+  <data name="Print_ApprovedQty" xml:space="preserve"><value>Approved Qty</value></data>
+  <data name="Print_BankAccount" xml:space="preserve"><value>Bank Account</value></data>
+  <data name="Print_Category" xml:space="preserve"><value>Category</value></data>
+  <data name="Print_ClosedBy" xml:space="preserve"><value>Closed By</value></data>
+  <data name="Print_ConfirmedBy" xml:space="preserve"><value>Confirmed By</value></data>
+  <data name="Print_ConfirmedQty" xml:space="preserve"><value>Confirmed Qty</value></data>
+  <data name="Print_Conforming" xml:space="preserve"><value>Pass</value></data>
+  <data name="Print_CorrectiveAction" xml:space="preserve"><value>Corrective Action</value></data>
+  <data name="Print_CostType" xml:space="preserve"><value>Cost Type</value></data>
+  <data name="Print_CountMode" xml:space="preserve"><value>Count Mode</value></data>
+  <data name="Print_CreatedAt" xml:space="preserve"><value>Created At</value></data>
+  <data name="Print_CreatedBy" xml:space="preserve"><value>Created By</value></data>
+  <data name="Print_Credit" xml:space="preserve"><value>Credit</value></data>
+  <data name="Print_Currency" xml:space="preserve"><value>Currency</value></data>
+  <data name="Print_Customer" xml:space="preserve"><value>Customer</value></data>
+  <data name="Print_Debit" xml:space="preserve"><value>Debit</value></data>
+  <data name="Print_DefectCode" xml:space="preserve"><value>Defect Code</value></data>
+  <data name="Print_Description" xml:space="preserve"><value>Description</value></data>
+  <data name="Print_DispatchQty" xml:space="preserve"><value>Dispatch Qty</value></data>
+  <data name="Print_Disposition" xml:space="preserve"><value>Disposition</value></data>
+  <data name="Print_DocDate" xml:space="preserve"><value>Document Date</value></data>
+  <data name="Print_DocNo" xml:space="preserve"><value>Doc No.</value></data>
+  <data name="Print_DueDate" xml:space="preserve"><value>Due Date</value></data>
+  <data name="Print_EntryDate" xml:space="preserve"><value>Entry Date</value></data>
+  <data name="Print_ExchangeGainLoss" xml:space="preserve"><value>Exchange Gain/Loss</value></data>
+  <data name="Print_ExchangeRate" xml:space="preserve"><value>Exchange Rate</value></data>
+  <data name="Print_ExecutedBy" xml:space="preserve"><value>Executed By</value></data>
+  <data name="Print_ExpectedDate" xml:space="preserve"><value>Expected Date</value></data>
+  <data name="Print_FailQty" xml:space="preserve"><value>Fail Qty</value></data>
+  <data name="Print_FirstCountQty" xml:space="preserve"><value>First Count</value></data>
+  <data name="Print_From" xml:space="preserve"><value>From</value></data>
+  <data name="Print_FromPlant" xml:space="preserve"><value>From Plant</value></data>
+  <data name="Print_FromWarehouse" xml:space="preserve"><value>From Warehouse</value></data>
+  <data name="Print_GoodsReceipt" xml:space="preserve"><value>Goods Receipt - Line</value></data>
+  <data name="Print_InspectedAt" xml:space="preserve"><value>Inspected At</value></data>
+  <data name="Print_InspectionItem" xml:space="preserve"><value>Inspection Item</value></data>
+  <data name="Print_InspectionType" xml:space="preserve"><value>Inspection Type</value></data>
+  <data name="Print_Inspector" xml:space="preserve"><value>Inspector</value></data>
+  <data name="Print_InvoiceDate" xml:space="preserve"><value>Invoice Date</value></data>
+  <data name="Print_InvoiceNo" xml:space="preserve"><value>Invoice No.</value></data>
+  <data name="Print_IssuedAt" xml:space="preserve"><value>Issued At</value></data>
+  <data name="Print_IssuedBy" xml:space="preserve"><value>Issued By</value></data>
+  <data name="Print_IssuedQty" xml:space="preserve"><value>Issued Qty</value></data>
+  <data name="Print_JournalType" xml:space="preserve"><value>Journal Type</value></data>
+  <data name="Print_Judgement" xml:space="preserve"><value>Result</value></data>
+  <data name="Print_LineNo" xml:space="preserve"><value>Line</value></data>
+  <data name="Print_LinkedDocs" xml:space="preserve"><value>Linked Documents</value></data>
+  <data name="Print_Location" xml:space="preserve"><value>Location</value></data>
+  <data name="Print_LotNo" xml:space="preserve"><value>Lot No.</value></data>
+  <data name="Print_LotSize" xml:space="preserve"><value>Lot Size</value></data>
+  <data name="Print_LowerSpec" xml:space="preserve"><value>Lower Spec</value></data>
+  <data name="Print_Machine" xml:space="preserve"><value>Machine</value></data>
+  <data name="Print_Materials" xml:space="preserve"><value>Materials</value></data>
+  <data name="Print_MeasuredValue" xml:space="preserve"><value>Measured</value></data>
+  <data name="Print_NewUnitCost" xml:space="preserve"><value>New Unit Cost</value></data>
+  <data name="Print_No" xml:space="preserve"><value>No</value></data>
+  <data name="Print_NonConforming" xml:space="preserve"><value>Fail</value></data>
+  <data name="Print_Operation" xml:space="preserve"><value>Operation</value></data>
+  <data name="Print_OperationSeq" xml:space="preserve"><value>Op. Seq</value></data>
+  <data name="Print_OrderDate" xml:space="preserve"><value>Order Date</value></data>
+  <data name="Print_OriginalUnitCost" xml:space="preserve"><value>Original Unit Cost</value></data>
+  <data name="Print_Outsource" xml:space="preserve"><value>Outsourced</value></data>
+  <data name="Print_PaymentDate" xml:space="preserve"><value>Payment Date</value></data>
+  <data name="Print_PaymentMethod" xml:space="preserve"><value>Payment Method</value></data>
+  <data name="Print_Period" xml:space="preserve"><value>Period</value></data>
+  <data name="Print_PickedQty" xml:space="preserve"><value>Picked Qty</value></data>
+  <data name="Print_Product" xml:space="preserve"><value>Product</value></data>
+  <data name="Print_ProductCode" xml:space="preserve"><value>Product Code</value></data>
+  <data name="Print_PurchaseAmount" xml:space="preserve"><value>Purchase Amount</value></data>
+  <data name="Print_Qty" xml:space="preserve"><value>Qty</value></data>
+  <data name="Print_QtyDone" xml:space="preserve"><value>Qty Done</value></data>
+  <data name="Print_QtyReceived" xml:space="preserve"><value>Qty Received</value></data>
+  <data name="Print_QtyShipped" xml:space="preserve"><value>Qty Shipped</value></data>
+  <data name="Print_ReceiptDate" xml:space="preserve"><value>Receipt Date</value></data>
+  <data name="Print_RecountQty" xml:space="preserve"><value>Recount</value></data>
+  <data name="Print_Reference" xml:space="preserve"><value>Reference</value></data>
+  <data name="Print_Remarks" xml:space="preserve"><value>Remarks</value></data>
+  <data name="Print_RequestedBy" xml:space="preserve"><value>Requested By</value></data>
+  <data name="Print_RequestedQty" xml:space="preserve"><value>Requested Qty</value></data>
+  <data name="Print_RequiredQty" xml:space="preserve"><value>Required Qty</value></data>
+  <data name="Print_RootCause" xml:space="preserve"><value>Root Cause</value></data>
+  <data name="Print_SampleSize" xml:space="preserve"><value>Sample Size</value></data>
+  <data name="Print_ScheduledEnd" xml:space="preserve"><value>Scheduled End</value></data>
+  <data name="Print_ScheduledStart" xml:space="preserve"><value>Scheduled Start</value></data>
+  <data name="Print_Seq" xml:space="preserve"><value>Seq</value></data>
+  <data name="Print_SnapshotAt" xml:space="preserve"><value>Snapshot At</value></data>
+  <data name="Print_SourceDoc" xml:space="preserve"><value>Source Document</value></data>
+  <data name="Print_StagedBy" xml:space="preserve"><value>Staged By</value></data>
+  <data name="Print_StagingLocation" xml:space="preserve"><value>Staging Area</value></data>
+  <data name="Print_Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Print_Subtotal" xml:space="preserve"><value>Subtotal</value></data>
+  <data name="Print_Supplier" xml:space="preserve"><value>Supplier</value></data>
+  <data name="Print_TargetValue" xml:space="preserve"><value>Target</value></data>
+  <data name="Print_Tax" xml:space="preserve"><value>Tax</value></data>
+  <data name="Print_TaxAmount" xml:space="preserve"><value>Tax Amount</value></data>
+  <data name="Print_Title_APDebitNote" xml:space="preserve"><value>AP Debit Note</value></data>
+  <data name="Print_Title_APInvoice" xml:space="preserve"><value>AP Invoice</value></data>
+  <data name="Print_Title_APPayment" xml:space="preserve"><value>AP Payment</value></data>
+  <data name="Print_Title_ARCreditNote" xml:space="preserve"><value>AR Credit Note</value></data>
+  <data name="Print_Title_ARInvoice" xml:space="preserve"><value>AR Invoice</value></data>
+  <data name="Print_Title_ARReceipt" xml:space="preserve"><value>AR Receipt</value></data>
+  <data name="Print_Title_CrossPlantTransfer" xml:space="preserve"><value>Cross-Plant Transfer</value></data>
+  <data name="Print_Title_Dispatch" xml:space="preserve"><value>Dispatch Order</value></data>
+  <data name="Print_Title_InspectionOrder" xml:space="preserve"><value>Inspection Order</value></data>
+  <data name="Print_Title_InventoryCount" xml:space="preserve"><value>Inventory Count Sheet</value></data>
+  <data name="Print_Title_JournalEntry" xml:space="preserve"><value>Journal Voucher</value></data>
+  <data name="Print_Title_LandedCostAllocation" xml:space="preserve"><value>Landed Cost Allocation</value></data>
+  <data name="Print_Title_MaterialSlip" xml:space="preserve"><value>Material Slip</value></data>
+  <data name="Print_Title_MaterialStaging" xml:space="preserve"><value>Material Staging Order</value></data>
+  <data name="Print_Title_Ncr" xml:space="preserve"><value>Non-Conformance Report</value></data>
+  <data name="Print_Title_OutsourcePurchaseOrder" xml:space="preserve"><value>Outsource Purchase Order</value></data>
+  <data name="Print_Title_OutsourceReceipt" xml:space="preserve"><value>Outsource Receipt</value></data>
+  <data name="Print_Title_OutsourceRework" xml:space="preserve"><value>Outsource Rework Order</value></data>
+  <data name="Print_To" xml:space="preserve"><value>To</value></data>
+  <data name="Print_ToPlant" xml:space="preserve"><value>To Plant</value></data>
+  <data name="Print_ToWarehouse" xml:space="preserve"><value>To Warehouse</value></data>
+  <data name="Print_Tooling" xml:space="preserve"><value>Tooling</value></data>
+  <data name="Print_TotalAmount" xml:space="preserve"><value>Total Amount</value></data>
+  <data name="Print_TotalLandedCost" xml:space="preserve"><value>Total Landed Cost</value></data>
+  <data name="Print_TransferDate" xml:space="preserve"><value>Transfer Date</value></data>
+  <data name="Print_TxnType" xml:space="preserve"><value>Transaction Type</value></data>
+  <data name="Print_UnitPrice" xml:space="preserve"><value>Unit Price</value></data>
+  <data name="Print_Uom" xml:space="preserve"><value>UOM</value></data>
+  <data name="Print_UpperSpec" xml:space="preserve"><value>Upper Spec</value></data>
+  <data name="Print_Warehouse" xml:space="preserve"><value>Warehouse</value></data>
+  <data name="Print_WorkCenter" xml:space="preserve"><value>Work Center</value></data>
+  <data name="Print_WorkOrder" xml:space="preserve"><value>Work Order</value></data>
+  <data name="Print_Yes" xml:space="preserve"><value>Yes</value></data>
+  <data name="DepartmentCode" xml:space="preserve"><value>Department</value></data>
+  <data name="RequestedBy" xml:space="preserve"><value>Requested By</value></data>
+  <data name="DeliveryAddress" xml:space="preserve"><value>Delivery Address</value></data>
+  <data name="ColQuality" xml:space="preserve"><value>Quality</value></data>
+  <data name="ColDelivery" xml:space="preserve"><value>Delivery</value></data>
+  <data name="ColPrice" xml:space="preserve"><value>Price</value></data>
+  <data name="ColService" xml:space="preserve"><value>Service</value></data>
+  <data name="ColResult" xml:space="preserve"><value>Result</value></data>
+  <data name="ColPeriod" xml:space="preserve"><value>Period</value></data>
+  <data name="ColTotal" xml:space="preserve"><value>Total</value></data>
+  <data name="EvalResultPass" xml:space="preserve"><value>Pass</value></data>
+  <data name="EvalResultConditional" xml:space="preserve"><value>Conditional</value></data>
+  <data name="EvalResultFail" xml:space="preserve"><value>Fail</value></data>
+  <data name="FollowUpAction" xml:space="preserve"><value>Follow-up action</value></data>
+  <data name="RootCause" xml:space="preserve"><value>Root Cause Analysis</value></data>
+  <data name="CorrectiveAction" xml:space="preserve"><value>Corrective &amp; Preventive Action (8D)</value></data>
+  <data name="Disposition" xml:space="preserve"><value>Disposition</value></data>
+  <data name="LotNo" xml:space="preserve"><value>Lot No.</value></data>
+  <data name="MobileApprovalConflict" xml:space="preserve"><value>This document has changed state — it may have been withdrawn, already handled by someone else, or advanced to another step — so nothing was signed. The list has been reloaded; please check the current status.</value></data>
+  <data name="PlantContextChanged" xml:space="preserve"><value>This screen was opened under plant "{0}", but your active plant is now "{1}" (it may have been switched on your phone or in another tab). Nothing was saved, to keep the record from landing in the wrong plant. Switch back to plant "{0}" and submit again; to create it in plant "{1}" instead, reload the page and fill it in again.</value></data>
+  <data name="PlantContextSwitchBackConfirm" xml:space="preserve"><value>Switch your plant back to "{0}" now and save what you have filled in?
+(Choose Cancel to leave it unsaved; the panel stays as it is.)</value></data>
+  <data name="PlantContextMissing" xml:space="preserve"><value>This screen is missing the plant it was opened under (it may have been opened before a system update). To avoid saving to the wrong plant, nothing was saved. Please refresh the page and submit again.</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Submit" xml:space="preserve"><value>Submit</value></data>
+  <data name="View" xml:space="preserve"><value>View</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>Remove line</value></data>
+  <data name="PeriodRequired" xml:space="preserve"><value>This report requires a query period.</value></data>
+  <data name="Journal_AccountRequired" xml:space="preserve"><value>Choose an account.</value></data>
+  <data name="Journal_AccountNotSelectable" xml:space="preserve"><value>This account is not open for manual selection.</value></data>
+  <data name="Journal_AmountNegative" xml:space="preserve"><value>The amount cannot be negative.</value></data>
+  <data name="Journal_AmountRequired" xml:space="preserve"><value>Enter a debit or a credit amount.</value></data>
+  <data name="Journal_BothSidesFilled" xml:space="preserve"><value>A line cannot carry both a debit and a credit.</value></data>
+  <data name="Journal_TwoLinesRequired" xml:space="preserve"><value>A journal needs at least two lines (one debit, one credit).</value></data>
+  <data name="Journal_Unbalanced" xml:space="preserve"><value>Debits and credits do not balance.</value></data>
+  <data name="Journal_Balanced" xml:space="preserve"><value>Balanced</value></data>
+  <data name="Journal_DiffLabel" xml:space="preserve"><value>Difference</value></data>
+  <data name="NewManualJournal" xml:space="preserve"><value>Manual journal</value></data>
+  <data name="Journal_PasteResultFmt" xml:space="preserve"><value>{0} line(s) filled, {1} skipped (unknown account or not manually selectable).</value></data>
+  <data name="TradeTerm" xml:space="preserve"><value>Trade Term (Incoterms)</value></data>
+  <data name="ActivationDate" xml:space="preserve"><value>Activation date</value></data>
+  <data name="ApprovalLabelPrefix" xml:space="preserve"><value>Approval: </value></data>
+  <data name="Brand" xml:space="preserve"><value>Brand</value></data>
+  <data name="CalibrationCycleDays" xml:space="preserve"><value>Calibration cycle (days)</value></data>
+  <data name="CalibrationInfo" xml:space="preserve"><value>Calibration</value></data>
+  <data name="CalibrationMethod" xml:space="preserve"><value>Calibration method</value></data>
+  <data name="ContactJobTitle" xml:space="preserve"><value>Job title</value></data>
+  <data name="ContactMobile" xml:space="preserve"><value>Mobile</value></data>
+  <data name="ContactName" xml:space="preserve"><value>Name</value></data>
+  <data name="ContactPhone" xml:space="preserve"><value>Phone</value></data>
+  <data name="Custodian" xml:space="preserve"><value>Custodian</value></data>
+  <data name="DeactivationDate" xml:space="preserve"><value>Deactivation date</value></data>
+  <data name="Department" xml:space="preserve"><value>Department</value></data>
+  <data name="DirectionInbound" xml:space="preserve"><value>+1 Inbound</value></data>
+  <data name="DirectionOutbound" xml:space="preserve"><value>-1 Outbound</value></data>
+  <data name="DocLabelPrefix" xml:space="preserve"><value>Document: </value></data>
+  <data name="InstrumentSpecs" xml:space="preserve"><value>Instrument specifications</value></data>
+  <data name="LastCalibrationDate" xml:space="preserve"><value>Last calibration date</value></data>
+  <data name="Loading" xml:space="preserve"><value>Loading…</value></data>
+  <data name="Model" xml:space="preserve"><value>Model</value></data>
+  <data name="MonthShortNames" xml:space="preserve"><value>Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec</value></data>
+  <data name="NextCalibrationDate" xml:space="preserve"><value>Next calibration date</value></data>
+  <data name="NoAvailableLines" xml:space="preserve"><value>No available lines</value></data>
+  <data name="NoContacts" xml:space="preserve"><value>No contacts yet</value></data>
+  <data name="NoMatchingRecords" xml:space="preserve"><value>No matching records.</value></data>
+  <data name="PendingQty" xml:space="preserve"><value>Pending qty</value></data>
+  <data name="PiecesFmt" xml:space="preserve"><value>{0} pcs</value></data>
+  <data name="Precision" xml:space="preserve"><value>Precision</value></data>
+  <data name="QtyThisTime" xml:space="preserve"><value>This qty</value></data>
+  <data name="RecordsCountFmt" xml:space="preserve"><value>{0} records</value></data>
+  <data name="SaveAndSubmit" xml:space="preserve"><value>Save and submit</value></data>
+  <data name="SelectDepartmentFirst" xml:space="preserve"><value>Please select the department first.</value></data>
+  <data name="SelectPartyFirst" xml:space="preserve"><value>Please select the party code first.</value></data>
+  <data name="SelectProductOption" xml:space="preserve"><value>-- Select product --</value></data>
+  <data name="SelectSupplierFirst" xml:space="preserve"><value>Please select the supplier first.</value></data>
+  <data name="SelectWorkCenterFirst" xml:space="preserve"><value>Please select the work center first.</value></data>
+  <data name="SerialAdd" xml:space="preserve"><value>Add serial</value></data>
+  <data name="SerialNo" xml:space="preserve"><value>Serial No.</value></data>
+  <data name="ServerNoResponse" xml:space="preserve"><value>No response from the server</value></data>
+  <data name="ShiftAllDayNote" xml:space="preserve"><value>Regular hours = 24 with start and end left blank means a continuous 24-hour day (four shifts, two rotations).</value></data>
+  <data name="ShiftAutoFromShift" xml:space="preserve"><value>Filled in from the shift</value></data>
+  <data name="ShiftAutoSumNet" xml:space="preserve"><value>Summed from the shifts' net hours</value></data>
+  <data name="ShiftOvertimeHours" xml:space="preserve"><value>Overtime hours</value></data>
+  <data name="ShiftRegularHours" xml:space="preserve"><value>Regular hours</value></data>
+  <data name="ShiftWorkEnd" xml:space="preserve"><value>End time</value></data>
+  <data name="ShiftWorkStart" xml:space="preserve"><value>Start time</value></data>
+  <data name="Specification" xml:space="preserve"><value>Specification</value></data>
+  <data name="Tolerance" xml:space="preserve"><value>Tolerance</value></data>
+  <data name="Total" xml:space="preserve"><value>Total</value></data>
+  <data name="Unconfirm" xml:space="preserve"><value>Revert confirmation</value></data>
+  <data name="VoidReasonPrompt" xml:space="preserve"><value>Enter a reason for voiding (optional):</value></data>
+  <data name="WeekdayNamesMonFirst" xml:space="preserve"><value>Mon,Tue,Wed,Thu,Fri,Sat,Sun</value></data>
+  <data name="WeekdayShortSunFirst" xml:space="preserve"><value>Sun,Mon,Tue,Wed,Thu,Fri,Sat</value></data>
+  <data name="WholeYear" xml:space="preserve"><value>Whole year</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>Withdraw</value></data>
+  <data name="YearMonthFmt" xml:space="preserve"><value>{1}/{0}</value></data>
+  <data name="ScreenHelpTitle" xml:space="preserve"><value>Help for this screen</value></data>
+  <data name="DocsHeader" xml:space="preserve"><value>Documentation</value></data>
+  <data name="DocsCenter" xml:space="preserve"><value>Documentation center</value></data>
+  <data name="UserManualLink" xml:space="preserve"><value>User manual</value></data>
+  <data name="AdminManualLink" xml:space="preserve"><value>Administrator manual (Chinese)</value></data>
+  <data name="MaintenanceManualLink" xml:space="preserve"><value>Maintenance manual (Chinese)</value></data>
+  <data name="GoLiveChecklistLink" xml:space="preserve"><value>Go-live checklist (Chinese)</value></data>
+  <data name="BaseCurrencyInfoFmt" xml:space="preserve"><value>Base currency: &lt;strong&gt;{0}&lt;/strong&gt;. The rates below are "1 {0} = X foreign currency". To change it, edit &lt;code&gt;base_currency&lt;/code&gt; in {1}.</value></data>
+  <data name="BaseCurrencyNotSetFmt" xml:space="preserve"><value>The base currency is not set. Exchange rates are based on it (1 base currency = X foreign currency). Go to {0} and add Key = &lt;code&gt;base_currency&lt;/code&gt; with Value = the base currency code (for example &lt;code&gt;TWD&lt;/code&gt;).</value></data>
+  <data name="LoanType_BR" xml:space="preserve"><value>Return borrowed</value></data>
+  <data name="LoanType_IB" xml:space="preserve"><value>Borrow in</value></data>
+  <data name="LoanType_IL" xml:space="preserve"><value>Lend out</value></data>
+  <data name="LoanType_LR" xml:space="preserve"><value>Lent goods returned</value></data>
+  <data name="SampleType_CI" xml:space="preserve"><value>Customer-supplied receipt</value></data>
+  <data name="SampleType_CR" xml:space="preserve"><value>Customer-supplied return</value></data>
+  <data name="SampleType_SO" xml:space="preserve"><value>Sample shipment</value></data>
+  <data name="SampleType_SR" xml:space="preserve"><value>Sample return</value></data>
+  <data name="SerialDeleteConfirmFmt" xml:space="preserve"><value>Delete serial "{0}"?</value></data>
+  <data name="SerialEditFmt" xml:space="preserve"><value>Edit serial {0}</value></data>
+  <data name="StatusActive" xml:space="preserve"><value>Active</value></data>
+  <data name="StatusInactive" xml:space="preserve"><value>Inactive</value></data>
+  <data name="SystemParamLink" xml:space="preserve"><value>System Parameters</value></data>
+  <data name="YearFmt" xml:space="preserve"><value>{0}</value></data>
+  <data name="GanttOutsourceRow" xml:space="preserve"><value>Outsource</value></data>
+  <data name="GanttCapacityRowSuffix" xml:space="preserve"><value> Capacity</value></data>
+  <data name="SlipSourceLocationRequired" xml:space="preserve"><value>Line(s) {0}: source warehouse/location is required.</value></data>
+  <data name="SlipReturnLocationRequired" xml:space="preserve"><value>Line(s) {0}: return-to location is required.</value></data>
+  <data name="SlipNotPickable" xml:space="preserve"><value>This slip cannot be picked in its current status (requisitions must be approved first; posted or cancelled slips cannot be processed).</value></data>
+  <data name="SlipNothingPicked" xml:space="preserve"><value>No line has a quantity; nothing to post.</value></data>
+  <data name="SlipRequisitionPullOnly" xml:space="preserve"><value>{0} is not a pull material (push and backflush materials are handled by the warehouse/system); it cannot be requested.</value></data>
+  <data name="SlipRequisitionExceedsRemaining" xml:space="preserve"><value>{0}: requested quantity exceeds the {1} still available to request for this work order (required − issued − pending requests).</value></data>
+  <data name="SlipUomMustBeStock" xml:space="preserve"><value>The unit "{1}" of {0} is not its stock unit {2}. Material slips are always in the stock unit (work-order materials, issue/return limits and posting all use it); use {2} instead.</value></data>
+  <data name="SlipSourceWorkOrderNotFound" xml:space="preserve"><value>Source work order "{0}" does not exist; check the source document number.</value></data>
+  <data name="SlipProductNotInWorkOrder" xml:space="preserve"><value>{0} is not an in-house material of work order {1} (materials of outsourced operations cannot be requested or returned in-house).</value></data>
+  <data name="SlipReturnExceedsIssued" xml:space="preserve"><value>{0}: return quantity exceeds the {1} issued and not yet returned for this work order.</value></data>
+  <data name="ExchangeRateNotFound" xml:space="preserve"><value>No exchange rate for {0} on {1}. Maintain the rate first.</value></data>
+  <data name="OutsourcePoNotReceivable" xml:space="preserve"><value>This outsourcing PO is not confirmed and cannot be received.</value></data>
+  <data name="OutsourceReceiveLocationRequired" xml:space="preserve"><value>In simplified mode receiving posts stock immediately; every line needs a warehouse and location.</value></data>
+  <data name="OutsourcePoLineNotFound" xml:space="preserve"><value>The line was not found on the outsourcing PO.</value></data>
+  <data name="Journal_CostCenterInvalid" xml:space="preserve"><value>The cost center is not an organization unit of this plant.</value></data>
+  <data name="Journal_ReversedFmt" xml:space="preserve"><value>{0} reversed by {1}.</value></data>
+  <data name="SourceDocTypeManualReversal" xml:space="preserve"><value>Manual entry reversal</value></data>
+  <data name="DispatchNotOnHold" xml:space="preserve"><value>This dispatch is not on hold.</value></data>
+  <data name="DispatchResumeNeedsQuality" xml:space="preserve"><value>A hold caused by a quality failure can only be resumed by staff with update permission on inspection orders.</value></data>
+  <data name="DispatchResumeMachineDown" xml:space="preserve"><value>The machine is still down. Wait until it is available again, or switch to another machine.</value></data>
+  <data name="DispatchResumed" xml:space="preserve"><value>Dispatch resumed.</value></data>
+  <data name="DispatchSwitchSameMachine" xml:space="preserve"><value>Select a machine other than the current one.</value></data>
+  <data name="DispatchSwitchMachineDown" xml:space="preserve"><value>The selected machine is not available for production.</value></data>
+  <data name="DispatchSwitched" xml:space="preserve"><value>Dispatch {0} continues on machine {1}. Set up and start after it is scheduled.</value></data>
+  <data name="DispatchShortClosed" xml:space="preserve"><value>Remaining quantity closed.</value></data>
+  <data name="DispatchStatusCancelled" xml:space="preserve"><value>Cancelled</value></data>
+  <data name="MachineHasOpenDispatchCannotDelete" xml:space="preserve"><value>Machine {0} still has unfinished dispatches and cannot be deleted. Complete, switch, or close those dispatches first.</value></data>
+  <data name="ScheduleRunBusy" xml:space="preserve"><value>Another schedule run is in progress for this plant. Try again shortly.</value></data>
+  <data name="ScheduleRunConflict" xml:space="preserve"><value>Some dispatches were changed during the run (for example, a production report). Nothing was saved. Run the schedule again.</value></data>
+  <!-- 簽核畫面單據類型名稱（IApprovalDocumentTypeLabelContributor） -->
+  <data name="ApprovalDocType_PurchaseRequest" xml:space="preserve"><value>Purchase Request</value></data>
+  <data name="ApprovalDocType_PurchaseOrder" xml:space="preserve"><value>Purchase Order</value></data>
+  <data name="ApprovalDocType_GoodsReceipt" xml:space="preserve"><value>Goods Receipt</value></data>
+  <data name="ApprovalDocType_GoodsReturn" xml:space="preserve"><value>Goods Return</value></data>
+  <data name="ApprovalDocType_OutsourceReceipt" xml:space="preserve"><value>Outsource Receipt</value></data>
+  <data name="ApprovalDocType_VendorEvaluation" xml:space="preserve"><value>Vendor Evaluation</value></data>
+  <data name="ApprovalDocType_Company" xml:space="preserve"><value>Company / Customer</value></data>
+  <data name="ApprovalDocType_Product" xml:space="preserve"><value>Product Master</value></data>
+  <data name="ApprovalDocType_Tax" xml:space="preserve"><value>Tax Code</value></data>
+  <data name="ApprovalDocType_ScrapDoc" xml:space="preserve"><value>Scrap Document</value></data>
+  <data name="ApprovalDocType_LoanDoc" xml:space="preserve"><value>Loan Document</value></data>
+  <data name="ApprovalDocType_SampleDoc" xml:space="preserve"><value>Sample / Consignment Doc</value></data>
+  <data name="ApprovalDocType_StockAdjustment" xml:space="preserve"><value>Stock Adjustment</value></data>
+  <data name="ApprovalDocType_OutsourceMaterial" xml:space="preserve"><value>Outsource Material</value></data>
+  <data name="ApprovalDocType_ReworkMaterial" xml:space="preserve"><value>Rework Material</value></data>
+  <data name="ApprovalDocType_StockTransfer" xml:space="preserve"><value>Stock Transfer</value></data>
+  <data name="ApprovalDocType_CrossPlantTransfer" xml:space="preserve"><value>Cross-Plant Transfer</value></data>
+  <data name="ApprovalDocType_LandedCostAllocation" xml:space="preserve"><value>Landed Cost Allocation</value></data>
+  <data name="ApprovalDocType_MaterialStagingOrder" xml:space="preserve"><value>Material Staging</value></data>
+  <data name="ApprovalDocType_SalesOrder" xml:space="preserve"><value>Sales Order</value></data>
+  <data name="ApprovalDocType_GoodsShipment" xml:space="preserve"><value>Goods Shipment</value></data>
+  <data name="ApprovalDocType_SalesReturn" xml:space="preserve"><value>Sales Return</value></data>
+  <data name="ApprovalDocType_InternalOrder" xml:space="preserve"><value>Internal Order</value></data>
+  <data name="ApprovalDocType_WorkOrder" xml:space="preserve"><value>Work Order</value></data>
+  <data name="ApprovalDocType_NonConformanceReport" xml:space="preserve"><value>Non-Conformance Report</value></data>
+  <data name="ApprovalDocType_APInvoice" xml:space="preserve"><value>AP Invoice</value></data>
+  <data name="ApprovalDocType_ARInvoice" xml:space="preserve"><value>AR Invoice</value></data>
+  <data name="ApprovalDocType_APPayment" xml:space="preserve"><value>AP Payment</value></data>
+  <data name="ApprovalDocType_ARReceipt" xml:space="preserve"><value>AR Receipt</value></data>
+  <data name="ContainerUnit" xml:space="preserve"><value>Boxes (Container Units)</value></data>
+  <data name="ContainerUnitCreatedFmt" xml:space="preserve"><value>Created {0} boxes: {1} to {2}</value></data>
+  <data name="ContainerUnitPackedFmt" xml:space="preserve"><value>Packed box {0}, lot {1} (stock transfer {2})</value></data>
+  <data name="ContainerUnitPackIncomplete" xml:space="preserve"><value>Specify the box, item and location</value></data>
+  <data name="ContainerUnitRecoveredFmt" xml:space="preserve"><value>Recovered {0} boxes</value></data>
+  <data name="ContainerUnitRecoverEmpty" xml:space="preserve"><value>Scan or enter the box numbers to recover</value></data>
+  <data name="Mob_SubscriptionInvalid" xml:space="preserve"><value>Invalid push subscription or notification.</value></data>
+  <data name="Mob_SubscriptionLimit" xml:space="preserve"><value>The device subscription limit has been reached.</value></data>
+</root>

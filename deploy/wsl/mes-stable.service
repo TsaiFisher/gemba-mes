@@ -1,0 +1,22 @@
+# SmartFactory MES 穩定版（WSL 使用者服務）。由 ~/bin/mes 管理，請勿手動 enable/disable。
+# 原始檔：deploy/wsl/mes-stable.service（安裝位置 ~/.config/systemd/user/；說明見 deploy/wsl-stable-release.md）
+# 來源：~/mes-stable/current → releases/<時間>-<commit>（mes publish 產生）
+# 與開發 app（F5／dotnet watch）共用 5110/7054 與 ProjectZ 資料庫——兩者互斥，切換用 mes stable／mes dev。
+[Unit]
+Description=SmartFactory MES 穩定版（WSL）
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/mes-stable/current
+ExecStart=/usr/lib/dotnet/dotnet %h/mes-stable/current/SmartFactory.MES.dll
+# Development：開發授權只允許此環境；2FA 登入跳過也只在此環境成立。
+Environment=ASPNETCORE_ENVIRONMENT=Development
+Environment="ASPNETCORE_URLS=https://localhost:7054;http://localhost:5110"
+Environment=DOTNET_NOLOGO=1
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=30
+
+[Install]
+WantedBy=default.target

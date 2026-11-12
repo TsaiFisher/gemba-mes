@@ -1,0 +1,203 @@
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model PaginatedList<SmartFactory.MES.Modules.PUR.Models.VendorPriceList>
+@using SmartFactory.MES.Modules.BAS.Services
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    var currencyDecimals = await Precision.CurrencyDecimalsAsync();
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    var suppliers    = ViewBag.SupplierOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var currencies   = ViewBag.CurrencyOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var productOptions = ViewBag.ProductOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var sort         = ViewBag.CurrentSort as string ?? "supplier_asc";
+    bool activeOnly  = ViewBag.ActiveOnly is bool b && b;
+    string supplierCode = ViewBag.SupplierCode as string ?? "";
+    string productCode  = ViewBag.ProductCode  as string ?? "";
+    string currencyCode = ViewBag.CurrencyCode as string ?? "";
+    int    pageSize     = ViewBag.CurrentPageSize as int? ?? 20;
+}
+
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        @if (ViewBag.CanCreate == true)
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                        data-url="@Url.Action("Create")"
+                        data-label="@Localizer["AddTitle"]"
+                        data-action="openPanel">
+                    <i class="bi bi-plus-circle"></i> @Localizer["AddTitle"]
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body py-2">
+            <form method="get" action="@Url.Action("Index")" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@sort" />
+                <div class="col-md-3">
+                    <label class="form-label mb-0">@Localizer["LabelSupplier"]</label>
+                    <select name="supplierCode" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllSuppliers"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (dynamic s in suppliers)
+                        {
+                            <option value="@s.CompanyCode" selected="@(supplierCode == (string)s.CompanyCode)">@s.CompanyCode — @s.CompanyName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label mb-0">@Localizer["LabelProduct"]</label>
+                    <select name="productCode" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["AllProducts"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var p in productOptions)
+                        {
+                            <option value="@p.ProductCode" selected="@(productCode == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label mb-0">@Localizer["LabelCurrency"]</label>
+                    <select name="currencyCode" class="form-select form-select-sm">
+                        <option value="">@Localizer["AllCurrencies"]</option>
+                        @foreach (dynamic c in currencies)
+                        {
+                            if ((string)c.CurrencyCode == (string)(ViewBag.CurrencyCode ?? ""))
+                            {
+                                <option value="@c.CurrencyCode" selected="selected">@c.CurrencyCode</option>
+                            }
+                            else
+                            {
+                                <option value="@c.CurrencyCode">@c.CurrencyCode</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="activeOnly" value="true"
+                               id="chkActive" @(activeOnly ? "checked" : "") />
+                        <label class="form-check-label" for="chkActive">@Localizer["ActiveOnly"]</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-4">
+                        <i class="bi bi-search"></i> @Localizer["Search"]
+                    </button>
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-sm align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th><a href="@Url.Action("Index", new { sortOrder = sort == "supplier_asc" ? "supplier_desc" : "supplier_asc", searched = true, supplierCode, productCode, currencyCode, activeOnly, pageSize })">@Localizer["ColSupplier"] @SortIcon(sort, "supplier_asc", "supplier_desc")</a></th>
+                    <th><a href="@Url.Action("Index", new { sortOrder = sort == "product_asc" ? "product_desc" : "product_asc", searched = true, supplierCode, productCode, currencyCode, activeOnly, pageSize })">@Localizer["ColProduct"] @SortIcon(sort, "product_asc", "product_desc")</a></th>
+                    <th>@Localizer["ColCurrency"]</th>
+                    <th class="text-end">@Localizer["ColUnitPrice"]</th>
+                    <th class="text-end">@Localizer["ColMinQty"]</th>
+                    <th><a href="@Url.Action("Index", new { sortOrder = sort == "valid_from" ? "valid_from_desc" : "valid_from", searched = true, supplierCode, productCode, currencyCode, activeOnly, pageSize })">@Localizer["ColValidFrom"] @SortIcon(sort, "valid_from", "valid_from_desc")</a></th>
+                    <th>@Localizer["ColValidTo"]</th>
+                    <th>@Localizer["ColActive"]</th>
+                    <th>@Localizer["ColActions"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null) @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SupplierCode<br/><small class="text-muted">@item.Supplier?.CompanyName</small></td>
+                        <td>@item.ProductCode<br/><small class="text-muted">@item.Product?.ProductName</small></td>
+                        <td>@item.CurrencyCode</td>
+                        <td class="text-end">@item.UnitPrice.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, @item.CurrencyCode))</td>
+                        <td class="text-end">@(item.MinQty.HasValue ? item.MinQty.Value.ToString(moneyFmt) : "—")</td>
+                        <td>@item.ValidFrom.ToString("yyyy-MM-dd")</td>
+                        <td>@(item.ValidTo.HasValue ? item.ValidTo.Value.ToString("yyyy-MM-dd") : "—")</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success">@Localizer["Active"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@Localizer["Inactive"]</span>
+                            }
+                        </td>
+                        <td>
+                            @if (ViewBag.CanUpdate == true)
+                            {
+                                <button type="button" class="btn btn-sm btn-warning"
+                                        data-url="@Url.Action("Edit", new { id = item.Id })"
+                                        data-label="@Localizer["EditTitle"]"
+                                        data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                            }
+                            @if (ViewBag.CanDelete == true)
+                            {
+                                <button type="button" class="btn btn-sm btn-danger"
+                                        data-action="deleteItem" data-url="@Url.Action("Delete")" data-id="@item.Id"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center py-3">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel offcanvas -->
+<div class="offcanvas offcanvas-end u-min-width-560px u-max-width-90vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}
+
+@functions {
+    Microsoft.AspNetCore.Html.IHtmlContent SortIcon(string current, string asc, string desc)
+    {
+        if (current == asc)  return new Microsoft.AspNetCore.Html.HtmlString("<i class=\"bi bi-sort-up\"></i>");
+        if (current == desc) return new Microsoft.AspNetCore.Html.HtmlString("<i class=\"bi bi-sort-down\"></i>");
+        return Microsoft.AspNetCore.Html.HtmlString.Empty;
+    }
+}

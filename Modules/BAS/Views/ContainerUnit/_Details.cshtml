@@ -1,0 +1,185 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@inject IViewLocalizer Localizer
+@inject SmartFactory.MES.Services.IDateTimeService DateTimeSvc
+@model ContainerUnit
+@{
+    bool canUpdate = ViewBag.CanUpdate == true;
+    bool canPrint  = ViewBag.CanPrint == true;
+    var content = ViewBag.Content as IReadOnlyList<ContainerUnitStock> ?? Array.Empty<ContainerUnitStock>();
+    var history = ViewBag.History as List<ContainerUnitHistory> ?? new();
+    var total = content.Sum(c => c.Qty);
+    bool bound = !string.IsNullOrEmpty(Model.LotNo) || Model.WorkOrderId != null;
+    bool inWip = ViewBag.InWip == true && total <= 0;
+    var wipQty = ViewBag.WipQty as decimal? ?? 0m;
+    var offsite = ViewBag.Offsite as ContainerUnitOffsite;
+}
+
+<div class="p-1">
+    <dl class="row mb-3">
+        <dt class="col-4">@Localizer["ContainerUnitId"]</dt>
+        <dd class="col-8 font-monospace fw-semibold">@Model.ContainerUnitId</dd>
+        <dt class="col-4">@Localizer["ContainerCode"]</dt>
+        <dd class="col-8">@Model.ContainerCode — @ViewBag.ContainerName</dd>
+        <dt class="col-4">@Localizer["Status"]</dt>
+        <dd class="col-8">
+            @if (!Model.IsActive) { <span class="badge bg-secondary">@Localizer["StatusInactive"]</span> }
+            else if (total > 0) { <span class="badge bg-primary">@Localizer["StatusInUse"]</span> }
+            else if (inWip) { <span class="badge bg-warning text-dark">@Localizer["StatusInWip"]</span> }
+            else if (offsite != null) { <span class="badge bg-info text-dark">@Localizer["StatusOffsite"]</span> }
+            else { <span class="badge bg-success">@Localizer["StatusEmpty"]</span> }
+        </dd>
+    </dl>
+
+    <h6 class="border-bottom pb-1">@Localizer["ContentTitle"]</h6>
+    @if (total > 0)
+    {
+        <dl class="row mb-2">
+            <dt class="col-4">@Localizer["ProductCode"]</dt>
+            <dd class="col-8">@Model.ProductCode — @ViewBag.ProductName</dd>
+            <dt class="col-4">@Localizer["LotNo"]</dt>
+            <dd class="col-8 font-monospace">@Model.LotNo</dd>
+            <dt class="col-4">@Localizer["BoundDocNo"]</dt>
+            <dd class="col-8">@Model.BoundDocNo</dd>
+        </dl>
+        <table class="table table-sm">
+            <thead class="table-light"><tr><th>@Localizer["LocationCode"]</th><th class="text-end">@Localizer["Qty"]</th></tr></thead>
+            <tbody>
+                @foreach (var c in content)
+                {
+                    <tr><td>@c.LocationCode</td><td class="text-end">@c.Qty.ToString("0.####")</td></tr>
+                }
+            </tbody>
+        </table>
+        @if (content.Count > 1)
+        {
+            <div class="alert alert-warning py-1 small">@Localizer["SplitLocationsHint"]</div>
+        }
+    }
+    else if (inWip)
+    {
+        <dl class="row mb-2">
+            <dt class="col-4">@Localizer["ProductCode"]</dt>
+            <dd class="col-8">@Model.ProductCode — @ViewBag.ProductName</dd>
+            <dt class="col-4">@Localizer["WorkOrderId"]</dt>
+            <dd class="col-8 font-monospace">@Model.WorkOrderId</dd>
+            <dt class="col-4">@Localizer["OperationSeq"]</dt>
+            <dd class="col-8">@Model.OperationSeq</dd>
+            <dt class="col-4">@Localizer["WipQty"]</dt>
+            <dd class="col-8">@wipQty.ToString("0.####")</dd>
+        </dl>
+        <div class="alert alert-info py-1 small">@Localizer["WipHint"]</div>
+    }
+    else if (offsite != null)
+    {
+        <dl class="row mb-2">
+            <dt class="col-4">@Localizer["ProductCode"]</dt>
+            <dd class="col-8">@Model.ProductCode — @ViewBag.ProductName</dd>
+            <dt class="col-4">@Localizer["LotNo"]</dt>
+            <dd class="col-8 font-monospace">@Model.LotNo</dd>
+            <dt class="col-4">@Localizer["OutDoc"]</dt>
+            <dd class="col-8">@OutTypeLabel(offsite.TypeCode) <span class="font-monospace">@offsite.DocNo</span>（@offsite.MovementDate.ToString("yyyy-MM-dd")）</dd>
+            <dt class="col-4">@Localizer["OutParty"]</dt>
+            <dd class="col-8">@(offsite.Party ?? "—")</dd>
+        </dl>
+        <div class="alert alert-info py-1 small">@Localizer["OffsiteHint"]</div>
+    }
+    else
+    {
+        <p class="text-muted small">@Localizer["EmptyHint"]</p>
+    }
+
+    <h6 class="border-bottom pb-1 mt-3">@Localizer["HistoryTitle"]</h6>
+    <table class="table table-sm small">
+        <thead class="table-light">
+            <tr><th>@Localizer["OccurredAt"]</th><th>@Localizer["Action"]</th><th>@Localizer["LotNo"]</th><th class="text-end">@Localizer["Qty"]</th><th>@Localizer["DocNo"]</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var h in history)
+            {
+                <tr>
+                    <td>@DateTimeSvc.ToLocalTime(h.OccurredAt).ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@ActionLabel(h.Action)</td>
+                    <td class="font-monospace">@(h.LotNo ?? (h.WorkOrderId == null ? null : $"{h.WorkOrderId} / {h.OperationSeq}"))</td>
+                    <td class="text-end">@h.Qty?.ToString("0.####")</td>
+                    <td>@h.DocNo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="position-sticky bottom-0 bg-white border-top py-2 d-flex justify-content-end gap-2 flex-wrap">
+    @if (canPrint)
+    {
+        <a class="btn btn-outline-secondary" target="_blank" href="@Url.Action("Labels", new { ids = Model.ContainerUnitId })">
+            <i class="bi bi-printer me-1"></i>@Localizer["PrintLabel"]
+        </a>
+    }
+    @if (canUpdate && Model.IsActive && total <= 0 && !inWip && offsite == null)
+    {
+        <button type="button" class="btn btn-outline-primary" data-action="openPanel"
+                data-url="@Url.Action("Pack", new { id = Model.ContainerUnitId })" data-label="@Localizer["Pack"]">
+            <i class="bi bi-box-seam me-1"></i>@Localizer["Pack"]
+        </button>
+    }
+    @if (canUpdate && offsite != null)
+    {
+        <form method="post" action="@Url.Action("Recover", new { unitIds = Model.ContainerUnitId })"
+              data-action-submit="confirmSubmitPanel" data-confirm="@Localizer["ConfirmRecover"]">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-primary"><i class="bi bi-box-arrow-in-down me-1"></i>@Localizer["Recover"]</button>
+        </form>
+    }
+    @if (canUpdate && bound && offsite == null)
+    {
+        <form method="post" action="@Url.Action("Clear", new { id = Model.ContainerUnitId })"
+              data-action-submit="confirmSubmitPanel" data-confirm="@Localizer["ConfirmClear"]">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-warning"><i class="bi bi-eraser me-1"></i>@Localizer["Clear"]</button>
+        </form>
+    }
+    @if (canUpdate)
+    {
+        <form method="post" action="@Url.Action("SetActive", new { id = Model.ContainerUnitId, active = !Model.IsActive })"
+              data-action-submit="confirmSubmitPanel" data-confirm="@(Model.IsActive ? Localizer["ConfirmDeactivate"] : Localizer["ConfirmActivate"])">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn @(Model.IsActive ? "btn-outline-danger" : "btn-outline-success")">
+                @(Model.IsActive ? Localizer["Deactivate"] : Localizer["Activate"])
+            </button>
+        </form>
+    }
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+</div>
+
+@functions {
+    // 出廠異動類型→顯示名稱（ContainerUnitService.LeavePlantTypeCodes）；逐一寫出 key 才能讓 R1 對帳 resx
+    string OutTypeLabel(string typeCode) => typeCode switch
+    {
+        "GS" => Localizer["OutType_GS"].Value,
+        "SO" => Localizer["OutType_SO"].Value,
+        "CR" => Localizer["OutType_CR"].Value,
+        "IL" => Localizer["OutType_IL"].Value,
+        "BR" => Localizer["OutType_BR"].Value,
+        "PF" => Localizer["OutType_PF"].Value,
+        "OT" => Localizer["OutType_OT"].Value,
+        "OO" => Localizer["OutType_OO"].Value,
+        "NO" => Localizer["OutType_NO"].Value,
+        "XP" => Localizer["OutType_XP"].Value,
+        _    => typeCode,
+    };
+
+    // 歷程動作代碼→顯示名稱；逐一寫出 key 才能讓 R1 對帳 resx
+    string ActionLabel(string action) => action switch
+    {
+        ContainerUnitActions.Create     => Localizer["Action_Create"].Value,
+        ContainerUnitActions.Bind       => Localizer["Action_Bind"].Value,
+        ContainerUnitActions.WipLoad    => Localizer["Action_WipLoad"].Value,
+        ContainerUnitActions.Clear      => Localizer["Action_Clear"].Value,
+        ContainerUnitActions.Recover    => Localizer["Action_Recover"].Value,
+        ContainerUnitActions.Deactivate => Localizer["Action_Deactivate"].Value,
+        ContainerUnitActions.Activate   => Localizer["Action_Activate"].Value,
+        _                               => action,
+    };
+}

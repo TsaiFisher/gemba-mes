@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="FinanceSettings" xml:space="preserve"><value>財務設定</value></data>
+  <data name="BaseCurrency" xml:space="preserve"><value>本幣（基準幣別）</value></data>
+  <data name="BaseCurrencyHint" xml:space="preserve"><value>幣別匯率以本幣為基準（1 本幣 = X 外幣）。請先至「幣別維護」建立幣別資料。</value></data>
+  <data name="NotSet" xml:space="preserve"><value>未設定</value></data>
+  <data name="InventorySettings" xml:space="preserve"><value>庫存設定</value></data>
+  <data name="InvSimplifiedMode" xml:space="preserve"><value>簡化模式</value></data>
+  <data name="InvSimplifiedModeHint" xml:space="preserve"><value>啟用後，進貨/退貨單儲存時自動使用預設儲位過帳，無需倉庫另行作業。關閉則採兩階段：業務建單→倉庫入/出架。</value></data>
+  <data name="MfgSettings" xml:space="preserve"><value>製造設定</value></data>
+  <data name="MfgSimplifiedMode" xml:space="preserve"><value>製造簡化模式</value></data>
+  <data name="MfgSimplifiedModeHint" xml:space="preserve"><value>開啟後 MRP 展開完成即自動投產，工單直接進入可排程／可開工狀態，免經投產閘門與釋出簽核。標準成本快照、Push 料領料單、委外採購單、在途鎖定均照常產生；缺料改由開工時的物料備齊閘口提示。適合接單即生產、不做產能排程的小型工廠。未設定＝完整流程。</value></data>
+  <data name="InvDefaultCostMethod" xml:space="preserve"><value>預設成本計價方式</value></data>
+  <data name="MovingAverage" xml:space="preserve"><value>移動加權平均 (MA)</value></data>
+  <data name="Fifo" xml:space="preserve"><value>先進先出 (FIFO)</value></data>
+  <data name="SrmSettings" xml:space="preserve"><value>採購（SRM）設定</value></data>
+  <data name="SrmWeightQuality" xml:space="preserve"><value>評分權重—品質</value></data>
+  <data name="SrmWeightDelivery" xml:space="preserve"><value>評分權重—交期</value></data>
+  <data name="SrmWeightPrice" xml:space="preserve"><value>評分權重—價格</value></data>
+  <data name="SrmWeightService" xml:space="preserve"><value>評分權重—服務</value></data>
+  <data name="SrmWeightHint" xml:space="preserve"><value>供應商評分卡總分＝四項分數依此權重加權平均（權重總和不必為 100；全為 0 或留空時回預設 30/30/20/20）。</value></data>
+  <data name="MfgAutoScheduleOnChange" xml:space="preserve"><value>異動後自動重排排程</value></data>
+  <data name="MfgAutoScheduleBeforeDispatch" xml:space="preserve"><value>派工前自動重排排程</value></data>
+  <data name="MfgAutoScheduleDailyTime" xml:space="preserve"><value>每日自動重排時刻（HH:mm）</value></data>
+  <data name="MfgAutoScheduleHeader" xml:space="preserve"><value>自動重排排程</value></data>
+  <data name="MfgAutoScheduleHint" xml:space="preserve"><value>未開啟時排程只在按「執行排程」時更新。自動重排與手動相同：準備中、準備完成、待首件、生產中與暫停的派工不移動，其餘重新配置。各廠可在「廠別」的參數頁籤覆寫。</value></data>
+  <data name="MfgAutoScheduleOnChangeHint" xml:space="preserve"><value>投產、拆分、換機、完工、取消、機台狀態、工作日曆或計劃停機有異動後，安靜 90 秒（持續異動最多等 10 分鐘）自動重排。</value></data>
+  <data name="MfgAutoScheduleBeforeDispatchHint" xml:space="preserve"><value>開啟派工作業、手機派工清單、生產準備看板、生產排程，以及 17:00 生產準備提醒送出前，若排程已過時先重排（約數秒）。</value></data>
+  <data name="MfgAutoScheduleDailyTimeHint" xml:space="preserve"><value>每天此時刻全量重排一次，例如 16:00（早於 17:00 準備提醒）。留空＝不使用。錯過時刻（如停機）時當天補跑。</value></data>
+  <data name="MfgAutoScheduleRule" xml:space="preserve"><value>自動重排的排序規則</value></data>
+  <data name="MfgAutoScheduleRuleNotSet" xml:space="preserve"><value>未設定（優先順序）</value></data>
+  <data name="MfgAutoScheduleRuleHint" xml:space="preserve"><value>自動重排依此規則排序生產批；也是生產排程頁規則下拉的預設。手動執行排程時仍可另選。</value></data>
+  <data name="MfgAutoScheduleFreezeHours" xml:space="preserve"><value>凍結時界（小時）</value></data>
+  <data name="MfgAutoScheduleFreezeHoursHint" xml:space="preserve"><value>自動重排時，已排且在此時數內開工的派工保留原機台與時段（現場可能已照排程備料、備模）。留空或 0＝不使用，上限 168。手動執行排程不套用。</value></data>
+  <data name="Rule_Priority" xml:space="preserve"><value>優先順序</value></data>
+  <data name="Rule_EDD" xml:space="preserve"><value>最早到期日</value></data>
+  <data name="Rule_SPT" xml:space="preserve"><value>最短工時</value></data>
+  <data name="Rule_FIFO" xml:space="preserve"><value>先進先出</value></data>
+  <data name="Rule_LIFO" xml:space="preserve"><value>後進先出</value></data>
+</root>

@@ -1,0 +1,20 @@
+{
+  "sourcePath": "Data/AuditPiiMasker.cs",
+  "sourceHash": "a44629e2cfb761ab8b043788d548c85dd37b4983510f7e84ef5d1a0d43629b97",
+  "entries": [
+    {
+      "slug": "code-core-auditpiimasker-1567f7bf",
+      "lang": "zh",
+      "headingPath": "系統共用 › 依「屬性名稱」判定",
+      "text": "資料判斷依屬性名稱決定遮罩規則｜系統會根據「屬性名稱」來判定哪些資訊需要被遮罩，例如電子郵件等個人識別資訊。只有在透過此機制判定的欄位才會受到遮罩處理。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-auditpiimasker-559efe03",
+      "lang": "zh",
+      "headingPath": "系統共用 › 否則原值原樣回傳",
+      "text": "資料顯示的內容是否會被隱藏｜如果某個屬性是個人識別資訊，且該屬性的值是一個不為空的文字，系統會回傳經過遮罩處理後的字串；否則，會直接回傳原始的值，包含空值或非文字型別。",
+      "approved": true
+    }
+  ]
+}

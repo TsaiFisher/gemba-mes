@@ -1,0 +1,102 @@
+{
+  "sourcePath": "Program.cs",
+  "sourceHash": "ff084c0489bfe989d4502b80fe9cad10e7977635871112d66ed09efa8576cc97",
+  "entries": [
+    {
+      "slug": "code-core-program-fbc45c29",
+      "lang": "zh",
+      "headingPath": "系統共用 › L4：特殊字元要求改為可選",
+      "text": "密碼強度要求已放寬｜系統不再強制要求密碼中必須包含特殊字元，因為主要的弱密碼防護已經改由檢查帳號名、電子郵件或常見弱密碼字典來負責。",
+      "approved": true,
+      "sourceSectionHash": "1f6f538e8def54f536b04a6efdb7344c24501d706e569b55ec4703db8ebfd831"
+    },
+    {
+      "slug": "code-core-program-d6b8895d",
+      "lang": "zh",
+      "headingPath": "系統共用 › 信號來源：速率限制器",
+      "text": "安全告警與登入嘗試的處理規則｜系統會記錄結構化的安全事件日誌供集中式監控系統擷取；當設定了特定的網路通知網址時，系統也會發送一次不需回覆的通知。此外，如果帳號登入的嘗試次數過多，系統會拒絕該登入行為。",
+      "approved": true,
+      "sourceSectionHash": "5ca48c139277181ee2f983d2b4c5c90f10d68d3fd228a4c776880e32145e6390"
+    },
+    {
+      "slug": "code-core-program-95f0a58d",
+      "lang": "zh",
+      "headingPath": "系統共用 › M6： — 預設拒絕所有跨來源",
+      "text": "系統權限限制與存取範圍｜系統預設不允許來自其他網域的資料傳輸請求。",
+      "approved": true,
+      "sourceSectionHash": "56f8fd70bd335d7646804affbb986a1be6ed71242dd805519bfea2f470f64949"
+    },
+    {
+      "slug": "code-core-program-5f248f6e",
+      "lang": "zh",
+      "headingPath": "系統共用 › 且對分散來源的暴破無區隔意義",
+      "text": "登入限制機制說明｜系統會根據使用者的連線來源位址來計算登入次數，以防止單一來源的暴力破解行為。這樣設計的好處是，即使有其他來源在嘗試登入，也不會影響到本個來源的登入權限。",
+      "approved": true,
+      "sourceSectionHash": "11bd60b2db905c4cd1fb05f7798c2c20e729424efdbda5354d1d6f2a13574ecb"
+    },
+    {
+      "slug": "code-core-program-dc499ef9",
+      "lang": "zh",
+      "headingPath": "系統共用 › M6：速率限制拒絕＝登入暴力破解信號 → 觸發安全告警",
+      "text": "速率限制觸發安全告警機制｜當系統偵測到登入嘗試達到一定次數的失敗紀錄時，會自動觸發一次安全告警。此告警的產生不會影響使用者接收到的拒絕回應。",
+      "approved": true,
+      "sourceSectionHash": "9a09e7b8e535f965a1d87f7e6909d9e56d4e3d9c0367cbbe279089243da9873c"
+    },
+    {
+      "slug": "code-core-program-118e38e9",
+      "lang": "zh",
+      "headingPath": "系統共用 › 跨廠別寫入守門：畫面在 A 廠渲染",
+      "text": "跨廠別寫入時的限制規則｜當使用者在一個廠區（A 廠）建立資料，但實際送出或儲存時已經切換到另一個廠區（B 廠），系統會阻止這次儲存，並要求使用者重新整理畫面。",
+      "approved": true,
+      "sourceSectionHash": "6f1e06ceb88e4d80215ef71520909600629cc1c48c71b23fb96540f7de4445e1"
+    },
+    {
+      "slug": "code-core-program-6655ad84",
+      "lang": "zh",
+      "headingPath": "系統共用 › 驗證訊息在地化",
+      "text": "驗證訊息的語言切換規則｜系統在進行資料驗證時，會根據當前使用的語言來顯示欄位的必填或長度限制提示訊息。",
+      "approved": true,
+      "sourceSectionHash": "9f1e167756f35131e6344802df55af9f77270e7ed1cac81af80be06911cf4d23"
+    },
+    {
+      "slug": "code-core-program-69b22982",
+      "lang": "zh",
+      "headingPath": "系統共用 › H2： — 每請求產生隨機值，存入 \"\"",
+      "text": "安全內容策略的隨機值生成與使用｜系統在每次請求時會產生一個隨機值，並將此值儲存起來，之後會在網頁的腳本標籤中加入這個隨機值作為驗證。",
+      "approved": true,
+      "sourceSectionHash": "e5ae8abdb2e33a313017d1de542124d0a86e85340de1574867ff7fa7a3fc6907"
+    },
+    {
+      "slug": "code-core-program-090ac552",
+      "lang": "zh",
+      "headingPath": "系統共用 › 一律導向該模組的手機列表頁",
+      "text": "手機模組的入口點規則說明｜系統在進入特定模組時，會直接引導到該模組的行動裝置列表頁面。",
+      "approved": true,
+      "sourceSectionHash": "fe1da816cdb69b275ad3c1ac9d8982533f92bf1ec9eae593f6834a41edfae56e"
+    },
+    {
+      "slug": "code-core-program-04e4d66b",
+      "lang": "zh",
+      "headingPath": "系統共用 › 乾淨部署自動建立 8 個角色並依角色矩陣種選單權限",
+      "text": "自動建立角色與權限的規則｜系統會自動建立八個角色，並根據預設的角色矩陣來設定選單權限；如果該角色已經有權限設定，則不會覆蓋現有的手動設定。",
+      "approved": true,
+      "sourceSectionHash": "ba94a3700e79e92143b41a4bc0ef5925054410f708eca44006bb7944820093be"
+    },
+    {
+      "slug": "code-core-program-70fb14e0",
+      "lang": "zh",
+      "headingPath": "系統共用 › 乾淨部署/既有部署升級時，自動為尚無待驗倉的廠別各建一座",
+      "text": "系統預設建立待驗倉庫｜當進行乾淨部署或既有部署升級時，如果某個廠別尚未建立待驗倉庫，系統會自動為該廠別建置一個待驗倉庫，這樣才能讓收貨上架閘門有地方使用。",
+      "approved": true,
+      "sourceSectionHash": "bb572c24207982c126e15fcf2784999e0d8d08dd89eab48a6b4bf521ba1119b0"
+    },
+    {
+      "slug": "code-core-program-4af24a16",
+      "lang": "zh",
+      "headingPath": "系統共用 › 原本的條件是「僅在期間表完全為空時建立」",
+      "text": "系統啟動時會自動補齊月份資訊｜系統在啟動時會檢查並補齊到目前年度的月份資料，但不會修改已存在的月份紀錄，也不會回填當月之前的任何缺口。",
+      "approved": true,
+      "sourceSectionHash": "1af2fa0348f080448ea167c17336e4b69b8cef54be863b518d24cdc3957ddb51"
+    }
+  ]
+}

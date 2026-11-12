@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/MFG/Services/MaterialSlipService.cs",
+  "sourceHash": "3f15efce6356149fc4c244e3aadc4a14de8b56cd41fe8368c24ed62fd08e6998",
+  "entries": [
+    {
+      "slug": "code-mfg-materialslipservice-8a235033",
+      "lang": "zh",
+      "headingPath": "生產製造 › 手機要能「掃描揀料後直接過帳」時若再寫一份，",
+      "text": "過帳與建單的處理機制｜所有關於發退料單的過帳和建立單據的邏輯，都統一在一個地方處理，以確保庫存異動、工單用料累計回寫、預留消耗以及退料成本等四個相關動作只會執行一次。",
+      "approved": false,
+      "sourceSectionHash": "9980c4e00706609c3cd85cba054b7f4611d1bcccecdd538ad9acd5fb28c92d1b"
+    },
+    {
+      "slug": "code-mfg-materialslipservice-10dea216",
+      "lang": "zh",
+      "headingPath": "生產製造 › 重建明細對來源工單用料的對應",
+      "text": "發退料對應工單用料的方式｜發料與退料的每一行都對應到工單上的一筆用料，對應鍵是「工序序號＿用料序號」。這個對應由系統維護、不由表單填寫，它決定過帳後已發與已退的數量記到哪一筆用料上。編輯單據時明細會整批重建，對應也要一併重建：先沿用列號與品號都沒變的舊值，其餘以品號回查工單用料，只有唯一命中才採用；對不出來就留空，不記到別筆料上。",
+      "approved": true,
+      "sourceSectionHash": "dee87f62426ab00d508113de31025b98213dccefcd9b39fe09c05a80ef5bf90e"
+    }
+  ]
+}

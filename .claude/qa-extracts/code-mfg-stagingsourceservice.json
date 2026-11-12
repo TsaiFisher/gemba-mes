@@ -1,0 +1,54 @@
+{
+  "sourcePath": "Modules/MFG/Services/StagingSourceService.cs",
+  "sourceHash": "291768e186b69cc328844f922643378cf2dbb9df46a16490c8bd1c68a02e1d30",
+  "entries": [
+    {
+      "slug": "code-mfg-stagingsourceservice-3735041f",
+      "lang": "zh",
+      "headingPath": "生產製造 › 它在完工時才由系統直接沖銷，先搬進備料倉只會讓帳面和實際各走各的",
+      "text": "完工時才沖銷材料數量｜此系統記錄的未發料量，只有在生產作業完成時才會由系統直接沖銷。如果只是將物料移動到備料倉，僅會造成帳面紀錄和實際庫存狀態不一致的情況。",
+      "approved": true,
+      "sourceSectionHash": "7657f1ad5805333bab201c8907ac01d90ea3678b1249c690e4c3717c2d0e0ce4"
+    },
+    {
+      "slug": "code-mfg-stagingsourceservice-332b26df",
+      "lang": "zh",
+      "headingPath": "生產製造 › 生產批層級：該批底下所有未結案工單彙總",
+      "text": "生產批層級：未結案工單彙總｜此功能會匯總一個生產批次下所有尚未完成的作業指派，並且會逐行記錄每個作業指派的資料，以備將來進行轉移認人時使用。",
+      "approved": true,
+      "sourceSectionHash": "9c2d026595df0b64bdbe42e16e35f7d459dcc80f137bde392b156a7b3f5ef2c9"
+    },
+    {
+      "slug": "code-mfg-stagingsourceservice-b3c92d03",
+      "lang": "zh",
+      "headingPath": "生產製造 › 扣掉既有備料單已經鎖住的量",
+      "text": "備料數量會扣除已鎖定的份額｜系統在計算可用的材料數量時，會自動減去所有尚未作廢的備料單已經佔用並鎖定的份量。這樣可以確保同一批材料不會因為重複開立備料單而導致被過度鎖定，避免後續確認工單時出現可用量不足或錯誤指派給其他工單的情況。",
+      "approved": true,
+      "sourceSectionHash": "2bda461c44c2a40173ad7126dfc8b5c4f5a4b54b7571d1a6dab3740c8400a58b"
+    },
+    {
+      "slug": "code-mfg-stagingsourceservice-6625843f",
+      "lang": "zh",
+      "headingPath": "生產製造 › 沒設定範本的廠別直接視為已核准，",
+      "text": "流程判定規則說明｜如果該廠別沒有設定任何核准範本，系統會直接視為已核准，這樣可以確保現場開完單後不會停留在需要人簽核的待審狀態。",
+      "approved": true,
+      "sourceSectionHash": "4fe3d5b20de705902a066459c6737c81272cd04792cfe276ceed7ffc39e3f25a"
+    },
+    {
+      "slug": "code-mfg-stagingsourceservice-8fbfc513",
+      "lang": "zh",
+      "headingPath": "生產製造 › 派工來源：除了表頭掛本派工的單，也要找「明細行掛本派工」的單——",
+      "text": "派工來源的備料單限制說明｜系統會檢查表頭和明細行掛本派工的單據，如果已經有工單或生產批層級開立了備料單，則不允許再為同一物料開立新的備料單。",
+      "approved": true,
+      "sourceSectionHash": "0549408ecac767cbeee650c54fad2238f5805c5c2765367c1ed9938d6fdee3d2"
+    },
+    {
+      "slug": "code-mfg-stagingsourceservice-741bb10d",
+      "lang": "zh",
+      "headingPath": "生產製造 › 備料倉三層解析：開單指定 &gt",
+      "text": "備料倉三層解析的倉庫限制說明｜系統在決定備料單的目標倉庫時，會檢查每一層設定的值是否與當前操作的廠別相符；如果無法驗證某一層的倉庫資訊屬於該廠別，則視為該層未進行設定，並繼續往下一層尋找。",
+      "approved": true,
+      "sourceSectionHash": "7fe8cafaf8763ba4af9b23f317bab2e61a57adaf7ef638b6bc6c64f0d98a7523"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "sourcePath": "Modules/RPS/Contracts/IReportTool.cs",
+  "sourceHash": "8c50295eade94c7da52a43605ede088ddae14ec914cd3f3337f7ce002bb822c5",
+  "entries": [
+    {
+      "slug": "code-rps-ireporttool-7fe2149e",
+      "lang": "zh",
+      "headingPath": "報表 › 報表工具契約",
+      "text": "報表工具的資料過濾規則說明｜系統在查詢資料時，廠別和資料層級的篩選是根據執行當下的使用者資訊來判定的。這些資訊來自於系統的執行範圍，因此不會因為傳入的使用者物件而改變原本的資料過濾行為。",
+      "approved": true,
+      "sourceSectionHash": "4f256e3f9c8d960f404a8131adfdf2694e39bafebd7c1a2ef4d0d439aa9da594"
+    },
+    {
+      "slug": "code-rps-ireporttool-ba5fe402",
+      "lang": "zh",
+      "headingPath": "報表 › 執行本工具所需的權限",
+      "text": "權限設定需依報表實際檢查｜系統的權限判斷不能套用統一的慣例，必須根據每個報表的畫面進行個別的實際檢查。目前所有報表的畫面閘門都是「可讀」，但這不代表未來所有畫面都會是這樣，若有任何畫面改變了其閘門設定，這裡也必須同步修改。",
+      "approved": true,
+      "sourceSectionHash": "13ffa5e9642417b3b5db2732fe1c7abec4aa2bcbc961986869ecfa734c39dbac"
+    },
+    {
+      "slug": "code-rps-ireporttool-e2a30b4d",
+      "lang": "zh",
+      "headingPath": "報表 › 本工具的輸出是否含金額",
+      "text": "報表是否包含金額的判斷規則｜此屬性僅回答自然語言入口可以詢問的問題，它不影響任何存取權限的判定。系統判斷一個報表是否含有金額欄位時，是根據回傳型別中是否存在金額欄位來決定的。",
+      "approved": true,
+      "sourceSectionHash": "3f73842895aae0f052976c57fa2e75d679b11d55416e78e10d731c095e21c269"
+    },
+    {
+      "slug": "code-rps-ireporttool-c7f0dcfc",
+      "lang": "zh",
+      "headingPath": "報表 › 本工具是否需要期間參數才能執行",
+      "text": "報表執行是否需要期間參數｜本工具在排程時必須明確判斷是否需要輸入期間參數才能執行。",
+      "approved": true,
+      "sourceSectionHash": "a36e39553f2e3b1cfcc3f08c23b931da6993af7d55b2051c5d454406ecabae0f"
+    },
+    {
+      "slug": "code-rps-ireporttool-7d17f22b",
+      "lang": "zh",
+      "headingPath": "報表 › 匯出／排程用的**整份**資料列",
+      "text": "匯出排程時會取得完整資料列｜系統用於排程或匯出的資料，會一次性提供所有資料的完整列表，不會依照畫面介面設定的分頁限制。若無法產生資料，必須明確拋出錯誤訊息，而不是回傳空資料集。",
+      "approved": true,
+      "sourceSectionHash": "53838821fae671c41b0e443487bd1a6ec9dee2a5b1ad90246824324f0f9fd2df"
+    },
+    {
+      "slug": "code-rps-ireporttool-66252ccf",
+      "lang": "zh",
+      "headingPath": "報表 › 匯出的一欄：標題資源鍵 ＋ 從一列資料取出該欄的值",
+      "text": "匯出資料的結構與呈現方式｜系統會將標題和對應的數值組合在同一欄位中輸出，而不是分開兩組欄位。這樣設計是為了避免因資料數量不一致而導致報表內容錯亂顯示。",
+      "approved": false
+    },
+    {
+      "slug": "code-rps-ireporttool-d2718665",
+      "lang": "zh",
+      "headingPath": "報表 › 的實作輔助：把基底請求轉回",
+      "text": "報表工具請求的型別判斷規則｜系統會根據工具所聲明的請求類型來進行資料轉換，如果聲明的類型與實際實作的介面不一致，則必須明確指出是哪一個工具、預期什麼樣的類型以及實際收到的類型。",
+      "approved": true,
+      "sourceSectionHash": "0c0ba0a79d6cddeb5e3249efbb326d909ae0916590680334aa18b058dc3c59d4"
+    },
+    {
+      "slug": "code-rps-ireporttool-13fd8d2e",
+      "lang": "zh",
+      "headingPath": "報表 › 工具的權限宣告動詞",
+      "text": "權限動詞的設定規則｜系統中所有工具的權限宣告動詞都需要明確指定，不能使用預設值。",
+      "approved": true,
+      "sourceSectionHash": "bf5d463c074f6500dbd2d236cc7dc23c390eb66f03e4131ff48f639da5c03c26"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Shift — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>班別 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="shift.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link active"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clock me-2 text-primary"></i><span lang="zh">班別</span><span lang="en">Shift</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/Shift &nbsp;|&nbsp; 生產班別定義與工時設定</span><span lang="en">Route: /BAS/Shift &nbsp;|&nbsp; Production shift definitions and working hours</span></div>
+    </div>
+    <p><span lang="zh">班別定義各工作時段（如日班、夜班），並設定每班可用工作分鐘數。班別設定後在「班別群組」中組合成每週排班表，供排程引擎計算可用產能。</span><span lang="en">Shifts define the working periods (day shift, night shift, …) and the work minutes available in each. Shifts are then combined into a weekly schedule in Shift Group, which the scheduling engine uses to calculate capacity.</span></p>
+    <img class="screen-shot" src="img/shift.png" data-src-en="img/en/shift.png" alt="班別畫面截圖" data-alt-en="Shift screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">班別畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Shift screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">班別代碼</span><span lang="en">Shift Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">唯一識別碼（例：DAY、NIGHT、EVE）</span><span lang="en">Unique code (e.g. DAY, NIGHT, EVE)</span></td></tr>
+        <tr><td><span lang="zh">班別名稱</span><span lang="en">Shift Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">完整名稱（例：日班、夜班、晚班）</span><span lang="en">Full name (e.g. day shift, night shift, evening shift)</span></td></tr>
+        <tr><td><span lang="zh">工作分鐘數</span><span lang="en">Work Minutes</span></td><td></td><td><span lang="zh">此班次的淨工作時間（分鐘），已扣除休息時間。例：日班 8h 扣午休 30min = 450min</span><span lang="en">Net working time of this shift in minutes, with breaks deducted. Example: an 8-hour day shift minus a 30-minute lunch break = 450 min</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後不可在班別群組中選取</span><span lang="en">Once inactive, cannot be selected in shift groups</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進入「基本資料 &gt; 班別」，點「新增」。</span><span lang="en">Go to "Basic Data &gt; Shift" and click "Add".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">填入班別代碼、名稱、工作分鐘數。</span><span lang="en">Enter the shift code, name and work minutes.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點「儲存」。接著至「班別群組」設定每週各日使用的班別。</span><span lang="en">Click "Save". Then go to Shift Group to set which shift each day of the week uses.</span></div></div>
+
+    <h2 id="shift-setup-flow"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">班別設定流程</span><span lang="en">Shift setup flow</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><strong><span lang="zh">班別（Shift）</span><span lang="en">Shift</span></strong><span lang="zh">：定義每個班次的工作時間（本畫面）。</span><span lang="en">: defines the working time of each shift (this screen).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><strong><a href="shift-group.html"><span lang="zh">班別群組（ShiftGroup）</span><span lang="en">Shift Group</span></a></strong><span lang="zh">：將班別組合成每週七日的排班表。</span><span lang="en">: combines shifts into a seven-day weekly schedule.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><strong><a href="work-center.html"><span lang="zh">工作中心（WorkCenter）</span><span lang="en">Work Center</span></a></strong><span lang="zh">：將班別群組指定給工作中心。</span><span lang="en">: assigns a shift group to a work center.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><strong><a href="special-day.html"><span lang="zh">特殊日（SpecialDay）</span><span lang="en">Special Day</span></a></strong><span lang="zh">：設定假日/補班日覆蓋常規班表。</span><span lang="en">: overrides the regular schedule with holidays and compensatory workdays.</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">工作分鐘數應填淨工時（已扣休息），排程引擎直接以此計算派工時段長度。標準 8 小時扣 1 小時午休 = 填 420 分鐘。</span><span lang="en">Enter net working minutes with breaks already deducted; the scheduling engine uses this directly as the length of a dispatch slot. A standard 8 hours minus a 1-hour lunch break = 420 minutes.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

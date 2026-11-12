@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Inventory Transaction Type Maintenance</value></data>
+  <data name="AddEntry" xml:space="preserve"><value>Add Transaction Type</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>Code / Name Search</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Search type code or name</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>Enter search criteria and click Search</value></data>
+  <data name="TypeCode" xml:space="preserve"><value>Type Code</value></data>
+  <data name="TypeName" xml:space="preserve"><value>Type Name</value></data>
+  <data name="TypeCategory" xml:space="preserve"><value>Category</value></data>
+  <data name="SourceTypeCode" xml:space="preserve"><value>Source Type Code</value></data>
+  <data name="IsActive" xml:space="preserve"><value>Active</value></data>
+  <data name="Active" xml:space="preserve"><value>Active</value></data>
+  <data name="Inactive" xml:space="preserve"><value>Inactive</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="NoData" xml:space="preserve"><value>No data found</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Delete" xml:space="preserve"><value>Delete</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Print" xml:space="preserve"><value>Print</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>Export Excel</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>Export CSV</value></data>
+  <data name="ExportJson" xml:space="preserve"><value>Export JSON</value></data>
+  <data name="TypeCodePlaceholder" xml:space="preserve"><value>e.g. IY001</value></data>
+  <data name="TypeCodeReadonlyHint" xml:space="preserve"><value>Type code cannot be changed after creation</value></data>
+  <data name="Direction" xml:space="preserve"><value>Direction</value></data>
+  <data name="Dir_In" xml:space="preserve"><value>Inbound</value></data>
+  <data name="Dir_Out" xml:space="preserve"><value>Outbound</value></data>
+  <data name="RequireLot" xml:space="preserve"><value>Require Lot</value></data>
+  <data name="RequireDoc" xml:space="preserve"><value>Require Document</value></data>
+  <data name="IsSystemType" xml:space="preserve"><value>System Built-in</value></data>
+  <data name="SystemTypeHint" xml:space="preserve"><value>System built-in types cannot be deleted</value></data>
+  <data name="TypeCategoryHint" xml:space="preserve"><value>Determines the role of this type in module workflows (e.g. purchase receipt, sales issue)</value></data>
+  <data name="Cat_II" xml:space="preserve"><value>Purchase Receipt</value></data>
+  <data name="Cat_IO" xml:space="preserve"><value>Other Inbound</value></data>
+  <data name="Cat_IW" xml:space="preserve"><value>WIP Inbound</value></data>
+  <data name="Cat_IA" xml:space="preserve"><value>Inventory Gain</value></data>
+  <data name="Cat_IC" xml:space="preserve"><value>Cost Adjustment In</value></data>
+  <data name="Cat_ICC" xml:space="preserve"><value>Inter-Plant Transfer In</value></data>
+  <data name="Cat_IX" xml:space="preserve"><value>QC Release In</value></data>
+  <data name="Cat_OI" xml:space="preserve"><value>Sales Issue</value></data>
+  <data name="Cat_OR" xml:space="preserve"><value>Other Outbound</value></data>
+  <data name="Cat_QR" xml:space="preserve"><value>QC Return</value></data>
+  <data name="Cat_QJ" xml:space="preserve"><value>QC Scrap</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="SystemTypeWarning" xml:space="preserve"><value>System-defined type; some fields cannot be modified.</value></data>
+</root>

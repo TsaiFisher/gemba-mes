@@ -1,0 +1,18 @@
+# SmartFactory MES 穩定版資料庫每日備份（WSL 使用者服務，由 mes-backup.timer 觸發）。
+# 原始檔：deploy/wsl/mes-backup.service；安裝與說明見 deploy/disaster-recovery.md。
+# 密碼走 ~/.pgpass（chmod 600），不寫在這裡。加密／異地：在 ~/.config/mes-backup.env 設 BACKUP_GPG_RECIPIENT／BACKUP_RCLONE_REMOTE。
+[Unit]
+Description=SmartFactory MES 資料庫備份
+
+[Service]
+Type=oneshot
+# 備份是明文的完整資料：只有本人讀得到（原本落地是 664，同群組都能讀）
+UMask=0077
+Environment=PGHOST=localhost
+Environment=PGPORT=5432
+Environment=PGUSER=dev
+Environment=PGDATABASE=ProjectZ
+Environment=BACKUP_DIR=%h/db-backups
+Environment=RETENTION_DAYS=14
+EnvironmentFile=-%h/.config/mes-backup.env
+ExecStart=%h/ProjectZ/scripts/backup-db.sh

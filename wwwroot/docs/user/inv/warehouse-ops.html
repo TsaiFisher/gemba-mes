@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Warehouse Operations — INV User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>倉庫作業 — INV 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">INV 目錄</span><span lang="en">INV Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">INV 畫面</span><span lang="en">INV Screens</span></div>
+    <a href="inventory-balance.html" class="nav-link"><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></a>
+    <a href="stock-movement.html" class="nav-link"><span lang="zh">庫存異動明細</span><span lang="en">Stock Movements</span></a>
+    <a href="stock-ledger.html" class="nav-link"><span lang="zh">庫存異動帳本</span><span lang="en">Inventory Ledger</span></a>
+    <a href="warehouse-ops.html" class="nav-link active"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a>
+    <a href="material-staging.html" class="nav-link"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a>
+    <a href="scrap-doc.html" class="nav-link"><span lang="zh">報廢單</span><span lang="en">Scrap Doc</span></a>
+    <a href="loan-doc.html" class="nav-link"><span lang="zh">借入借出單</span><span lang="en">Loan Document</span></a>
+    <a href="sample-doc.html" class="nav-link"><span lang="zh">樣品/客供單</span><span lang="en">Sample/Consignment Docs</span></a>
+    <a href="inventory-count.html" class="nav-link"><span lang="zh">盤點清冊</span><span lang="en">Inventory Count</span></a>
+    <a href="stock-adjustment.html" class="nav-link"><span lang="zh">庫存調整單</span><span lang="en">Stock Adjustment</span></a>
+    <a href="../osp/outsource-material.html" class="nav-link"><span lang="zh">委外發退料單</span><span lang="en">Outsource Material</span></a>
+    <a href="rework-material.html" class="nav-link"><span lang="zh">重工發退料單</span><span lang="en">Rework Material</span></a>
+    <a href="stock-transfer.html" class="nav-link"><span lang="zh">同廠調撥單</span><span lang="en">Stock Transfer</span></a>
+    <a href="cross-plant-transfer.html" class="nav-link"><span lang="zh">跨廠調撥單</span><span lang="en">Cross-Plant Transfer</span></a>
+    <a href="inventory-valuation.html" class="nav-link"><span lang="zh">庫存評估表</span><span lang="en">Inventory Valuation</span></a>
+    <a href="landed-cost-allocation.html" class="nav-link"><span lang="zh">進料費用分攤</span><span lang="en">Landed Cost Allocation</span></a>
+    <a href="stock-shortage.html" class="nav-link"><span lang="zh">缺貨分析</span><span lang="en">Stock Shortage</span></a>
+    <a href="slow-moving-inventory.html" class="nav-link"><span lang="zh">呆滯庫存分析</span><span lang="en">Slow-Moving Inventory</span></a>
+    <a href="inventory-aging.html" class="nav-link"><span lang="zh">存貨庫齡分析</span><span lang="en">Inventory Aging Analysis</span></a>
+    <a href="inventory-value.html" class="nav-link"><span lang="zh">庫存價值分析</span><span lang="en">Inventory Value</span></a>
+    <a href="inventory-turnover.html" class="nav-link"><span lang="zh">庫存周轉率</span><span lang="en">Inventory Turnover</span></a>
+    <a href="stock-variance.html" class="nav-link"><span lang="zh">盤差分析</span><span lang="en">Stock Variance</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-box-arrow-in-down me-2 text-primary"></i><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/WarehouseOps &nbsp;|&nbsp; 倉管人員統一執行台（上架/揀貨）</span><span lang="en">Route: /WarehouseOps &nbsp;|&nbsp; One execution desk for warehouse staff (put-away / picking)</span></div>
+    </div>
+
+    <p><span lang="zh">倉管人員的統一工作台：彙整所有已確認待執行的單據（進貨上架、發料/出貨揀貨、調撥等），逐儲位輸入實際執行量。每次儲存即寫入庫存異動並更新庫存（同一交易），行全部執行完畢後來源單據自動過帳。支援行動裝置掃碼作業。</span><span lang="en">A single workbench for warehouse staff: it gathers every confirmed document waiting to be executed (receipt put-away, issue and shipment picking, transfers …) and takes the quantity actually handled at each location. Each save writes the stock movement and updates the balance in the same transaction, and the source document posts automatically once all lines are done. Barcode scanning on mobile devices is supported.</span></p>
+    <img class="screen-shot" src="img/warehouse-ops.png" data-src-en="img/en/warehouse-ops.png" alt="倉庫作業畫面截圖" data-alt-en="Warehouse operations screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">倉庫作業畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Warehouse operations screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">執行</span><span lang="en">Execute</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在待辦清單選擇單據，開啟儲位明細。</span><span lang="en">Pick a document from the to-do list to open its location detail.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">入庫：選/掃目標儲位輸入上架量；要直接裝箱時在「裝入箱號」掃空箱，批號留空由系統產生新批號，上架後箱子就綁到這一批；出庫：畫面顯示各儲位在手量，輸入揀貨量；整箱出庫可在上方「掃箱號」欄掃<a href="../bas/container-unit.html">箱子</a>的 QR，系統把該箱批號的數量直接填進對應的儲位列。</span><span lang="en">Receipts: choose or scan the target location and enter the put-away quantity; to put it straight into a box, scan an empty box into "Fill box" and leave the lot blank so the system creates a new lot, and the box is linked to that lot on put-away. Issues: the screen shows the on-hand quantity per location, and you enter the picked quantity; to issue a whole box, scan the <a href="../bas/container-unit.html">box</a> QR into the box field above the list and the box's lot quantity is filled into the matching location rows.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">儲存即過帳該筆明細；全部行完成後單據自動轉「已過帳」。</span><span lang="en">Saving posts that line; once every line is done the document turns to "Posted".</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">待辦清單欄位</span><span lang="en">To-do list fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">單號</span><span lang="en">Doc No</span></td><td><span lang="zh">待執行的來源單據（進貨、發料、出貨、調撥等）</span><span lang="en">Source documents waiting to be executed (receipts, issues, shipments, transfers …)</span></td></tr>
+        <tr><td><span lang="zh">行號</span><span lang="en">Line</span></td><td><span lang="zh">該單據的明細行序號；同一單據的不同料件分行執行</span><span lang="en">Line number within the document; different items on the same document are executed line by line</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">本行要上架或揀出的料件</span><span lang="en">Item to be put away or picked on this line</span></td></tr>
+        <tr><td><span lang="zh">待處理量</span><span lang="en">Pending Qty</span></td><td><span lang="zh">該行尚未執行的剩餘數量；歸零後該行完成</span><span lang="en">Quantity on the line still to be executed; the line is complete when it reaches zero</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">儲位明細欄位</span><span lang="en">Location detail fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">倉庫 / 儲位</span><span lang="en">WH / Location</span></td><td><span lang="zh">入庫為上架目標位置（可自行選擇或掃碼）；出庫為系統列出的可揀位置</span><span lang="en">For receipts it is the target put-away location (chosen or scanned); for issues it is the pickable location listed by the system</span></td></tr>
+        <tr><td><span lang="zh">批號</span><span lang="en">Lot</span></td><td><span lang="zh">批號管制品的批次；入庫需指定，出庫依先進先出建議</span><span lang="en">Lot for lot-controlled items; required on receipt, suggested by FIFO on issue</span></td></tr>
+        <tr><td><span lang="zh">在手量</span><span lang="en">On Hand</span></td><td><span lang="zh">（出庫）該儲位／批號目前的在手量，也就是這次最多能揀的數量。預留記在「廠 × 品號」、不分儲位，所以這裡不扣預留；全廠還剩多少可用請看「庫存餘額」上方的品號彙總</span><span lang="en">(Issue) Current on-hand quantity in that location and lot, which is the most you can pick from it. Reservations are kept per plant and product, not per location, so they are not deducted here; see the product summary at the top of Inventory Balance for what remains available plant-wide</span></td></tr>
+        <tr><td><span lang="zh">下架量</span><span lang="en">Pick Qty</span></td><td><span lang="zh">（出庫）本次實際揀出的數量</span><span lang="en">(Issue) Quantity actually picked</span></td></tr>
+        <tr><td><span lang="zh">上架量</span><span lang="en">Put-Away Qty</span></td><td><span lang="zh">（入庫）本次實際上架到該儲位的數量</span><span lang="en">(Receipt) Quantity actually put away into that location</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="inventory-balance.html"><span lang="zh">庫存餘額查詢</span><span lang="en">Inventory Balance</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">出庫遇「庫存已變動」提示表示他人同時異動了同儲位，請重新查詢後再送出。</span><span lang="en"> A "stock has changed" message on an issue means somebody moved the same location at the same time; query again and resubmit.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

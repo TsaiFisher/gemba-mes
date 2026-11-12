@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="/mobile/manifest.json">
+    <link rel="apple-touch-icon" href="/mobile/icons/apple-touch-icon-180.png">
+    <title data-i18n="iqc.page_title">進料檢驗 IQC</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+    <link rel="stylesheet" href="/mobile/css/inv-iqc.css">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark mobile-navbar px-3 u-background-6f42c1">
+    <button type="button" data-action="historyBack" data-fallback="/mobile/inv/list.html"
+            class="btn btn-link text-white p-0 me-2" data-i18n-title="common.back_prev" title="返回">
+        <i class="bi bi-arrow-left fs-5"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.back_prev">返回</span>
+    </button>
+    <span class="navbar-brand fw-bold mb-0 h1 flex-grow-1">
+        <i class="bi bi-shield-check me-2"></i>
+        <span data-i18n="iqc.title">進料檢驗 IQC</span>
+    </span>
+    <a href="/mobile/home.html" class="btn btn-outline-light btn-sm me-1" data-i18n-title="common.back" title="回首頁"><i class="bi bi-house-door"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="nav.home">首頁</span></a>
+    <button class="btn btn-outline-light btn-sm me-1" data-action="toggleLang" data-lang-toggle title="Language">EN</button>
+            <button class="btn btn-outline-light btn-sm" data-action="logout" data-i18n-title="common.logout" title="登出">
+        <i class="bi bi-box-arrow-right"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.logout">登出</span>
+    </button>
+</nav>
+
+<div class="container-fluid py-3 px-3">
+
+    <!-- MIL-STD-1916 說明橫幅 -->
+    <div class="std-banner p-2 mb-3 small" data-i18n-html="iqc.banner">
+        <strong>MIL-STD-1916</strong>：允收數 Ac=0，發現任何不良品即全批拒收。樣本數依批量與驗證等級（VL）自動計算。
+    </div>
+
+    <!-- 步驟一：選擇待檢進貨明細 -->
+    <div id="stepList">
+        <div class="input-group mb-2">
+            <input type="text" id="docSearch" class="form-control btn-mobile"
+                   data-i18n-placeholder="iqc.search_ph"
+                   placeholder="搜尋單號或品號" data-action-input="searchItems">
+            <button class="btn btn-outline-secondary" data-action="loadPending" data-i18n-title="common.refresh" title="重新整理">
+                <i class="bi bi-arrow-repeat"></i><span class="ms-1" data-i18n="common.refresh">重新整理</span>
+            </button>
+        </div>
+        <div id="pendingList">
+            <div class="text-center text-muted py-3">
+                <div class="spinner-border spinner-border-sm me-1"></div><span data-i18n="common.loading">載入中…</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 步驟二：填寫檢驗結果 -->
+    <div class="u-display-none" id="stepForm">
+
+        <!-- 品項 + MIL-STD-1916 資訊 -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-body py-2 px-3">
+                <div class="d-flex justify-content-between align-items-start mb-1">
+                    <div>
+                        <div class="fw-bold" id="selDocNo">—</div>
+                        <div class="small text-muted" id="selProduct">—</div>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary" data-action="resetForm">
+                        <i class="bi bi-arrow-left me-1"></i><span data-i18n="iqc.reselect">重選</span>
+                    </button>
+                </div>
+                <div class="d-flex gap-3 small">
+                    <div><span data-i18n="iqc.arrival_qty">到貨量</span>：<strong id="selQty">—</strong> <span id="selUom">—</span></div>
+                    <div class="text-muted">VL：<strong class="u-color-6f42c1" id="selVl">—</strong></div>
+                </div>
+                <!-- MIL-STD-1916 計算結果 -->
+                <div class="mt-2 p-2 std-banner small">
+                    <div class="d-flex justify-content-between">
+                        <span data-i18n="iqc.calc_n">📐 計算應抽樣數（n）</span>
+                        <strong id="calcN" class="fs-6 u-color-6f42c1">—</strong>
+                    </div>
+                    <div class="d-flex justify-content-between text-muted">
+                        <span data-i18n="iqc.accept_ac">允收數 Ac</span><span class="fw-bold text-success">0</span>
+                    </div>
+                    <div class="d-flex justify-content-between text-muted">
+                        <span data-i18n="iqc.reject_re">拒收數 Re</span><span class="fw-bold text-danger">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 抽樣輸入 -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <span class="fw-semibold small" data-i18n="iqc.sample_log">抽樣記錄</span>
+                <span class="badge ms-2 u-background-6f42c1 u-font-size-p7rem">MIL-STD-1916 Ac=0</span>
+            </div>
+            <div class="card-body py-3">
+
+                <!-- VL 選擇（可覆寫規格預設） -->
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold" data-i18n="iqc.vl_select">驗證等級（VL）</label>
+                    <select id="vlSelect" class="form-select btn-mobile" data-action-change="recalcN">
+                        <option value="1" data-i18n="iqc.vl_i">VL-I（最寬鬆，最少樣本）</option>
+                        <option value="2" data-i18n="iqc.vl_ii">VL-II</option>
+                        <option value="3" data-i18n="iqc.vl_iii">VL-III</option>
+                        <option value="4" selected data-i18n="iqc.vl_iv">VL-IV（一般 IQC 建議）</option>
+                        <option value="5" data-i18n="iqc.vl_v">VL-V</option>
+                        <option value="6" data-i18n="iqc.vl_vi">VL-VI（關鍵零組件）</option>
+                        <option value="7" data-i18n="iqc.vl_vii">VL-VII（安全件）</option>
+                    </select>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold text-center w-100">
+                            <span data-i18n="iqc.actual_sample">實際抽取數</span>
+                            <span class="text-muted"><span data-i18n="iqc.hint_pre">（建議 ≥</span> <span id="nHint">—</span>）</span>
+                        </label>
+                        <input type="number" id="sampleQty" class="form-control qty-input btn-mobile"
+                               min="1" step="any" inputmode="decimal" value="0"
+                               data-action-input="onSampleChange">
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-semibold text-center w-100 text-danger">
+                            <span data-i18n="iqc.fail_qty">不良數（發現即拒批）</span>
+                        </label>
+                        <input type="number" id="failQty" class="form-control qty-input btn-mobile text-danger"
+                               min="0" step="any" inputmode="decimal" value="0"
+                               data-action-input="onFailChange">
+                    </div>
+                </div>
+
+                <!-- Ac=0 警告 -->
+                <div class="fail-warn p-2 mb-3 small" id="failWarn">
+                    <i class="bi bi-exclamation-triangle-fill text-danger me-1"></i>
+                    <strong data-i18n="iqc.fail_warn">發現不良品，依 MIL-STD-1916 Ac=0 規則，此批將被拒批。</strong>
+                </div>
+
+                <!-- 判定結果預覽 -->
+                <div class="mb-3 text-center">
+                    <div class="fw-semibold small mb-1" data-i18n="iqc.result">判定結果</div>
+                    <div id="resultPreview" class="result-badge-pass fw-bold fs-6" data-i18n="iqc.pass_preview">
+                        ✓ 合格（Pass）
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold" data-i18n="iqc.remarks">備註（不良原因等）</label>
+                    <textarea id="remarks" class="form-control btn-mobile u-font-size-16px" rows="2"
+                              data-i18n-placeholder="iqc.remarks_ph" placeholder="不良描述、特殊說明…"></textarea>
+                </div>
+
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-lg action-btn" id="btnSubmit" data-action="submitIqc">
+                        <i class="bi bi-check-circle me-2"></i><span data-i18n="iqc.submit">送出檢驗結果</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="toast-container"></div>
+
+<script src="/mobile/js/telemetry.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/data-action.js"></script>
+<script src="/mobile/js/nav.js"></script>
+<script src="/mobile/js/i18n.js"></script>
+<script src="/mobile/js/i18n.modules.js"></script>
+    <script src="/mobile/js/api.js"></script>
+<script src="/mobile/js/auth.js"></script>
+<script src="/mobile/inv/iqc.page.js"></script>
+</body>
+</html>

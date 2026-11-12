@@ -1,0 +1,158 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.RPT.Models.BalanceSheetReport?
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    bool canPrint    = ViewBag.CanPrint == true;
+    string asOfPeriod = ViewBag.AsOfPeriod as string ?? "";
+    var periodOptions = ViewBag.PeriodOptions as IEnumerable<string> ?? Enumerable.Empty<string>();
+    int baseDp = ViewBag.BaseCurrencyDp as int? ?? 2;
+    string moneyFmt = baseDp <= 0 ? "N0" : $"N{baseDp}";
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-bank me-2"></i>@Localizer["PageTitle"]</h1>
+        @if (canPrint && Model != null)
+        {
+            <div class="d-flex gap-2">
+                <a asp-action="Print" asp-route-asOfPeriod="@asOfPeriod"
+                   target="_blank" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-printer"></i> @Localizer["Print"]
+                </a>
+                <a asp-action="Export" asp-route-asOfPeriod="@asOfPeriod"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                </a>
+            </div>
+        }
+    </div>
+
+    @* 常用查詢放在查詢表單**外面**：partial 內沒有 <form>，但巢狀 form 在 HTML 無效，
+       放進去瀏覽器會把內層拆掉，送出的欄位少一半。 *@
+    @await Html.PartialAsync("_SavedQueries", "BalanceSheet")
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["AsOfPeriod"]</label>
+                    <select name="asOfPeriod" class="form-select">
+                        <option value="">@Localizer["SelectPeriod"]</option>
+                        @foreach (var p in periodOptions)
+                        { <option value="@p" selected="@(asOfPeriod == p)">@p</option> }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchFirst"]
+        </div>
+    }
+    else if (Model == null)
+    {
+        <div class="alert alert-warning text-center">@Localizer["NoData"]</div>
+    }
+    else
+    {
+    @*
+        四張合計卡而不是三張：本服務刻意不做期末結轉（損益科目 4~8 不併入權益），
+        所以「資產 = 負債 + 權益」在這張表上本來就不會成立，差額正是本期損益。
+        只擺三張的話，畫面上就是一組湊不起來、又看不出少了什麼的數字。
+    *@
+    decimal netProfit = ViewBag.NetProfit as decimal? ?? 0m;
+    <div class="row g-3 mb-2">
+        <div class="col-md-3">
+            <div class="card border-0 bg-primary text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["TotalAssets"]</div>
+                    <div class="fs-4 fw-bold">@Model.TotalAssets.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-danger text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["TotalLiabilities"]</div>
+                    <div class="fs-4 fw-bold">@Model.TotalLiabilities.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-success text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["TotalEquity"]</div>
+                    <div class="fs-4 fw-bold">@Model.TotalEquity.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 bg-secondary text-white shadow-sm">
+                <div class="card-body text-center">
+                    <div class="fs-6 mb-1">@Localizer["NetProfitUnclosed"]</div>
+                    <div class="fs-4 fw-bold">@netProfit.ToString(moneyFmt)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    var equationDiff = Model.TotalAssets - (Model.TotalLiabilities + Model.TotalEquity + netProfit);
+    <div class="alert @(equationDiff == 0m ? "alert-light" : "alert-warning") py-2 small mb-4">
+        <i class="bi @(equationDiff == 0m ? "bi-check-circle" : "bi-exclamation-triangle")"></i>
+        @Localizer["AccountingEquation"]
+        @if (equationDiff != 0m)
+        {
+            <strong class="ms-2">@Localizer["EquationDiff"] @equationDiff.ToString(moneyFmt)</strong>
+        }
+    </div>
+
+    @foreach (var section in Model.Sections.Where(s => s.Items.Any()))
+    {
+        var (headerCss, catLabel) = section.Category switch {
+            "Assets"      => ("table-primary",   Localizer["Assets"].Value),
+            "Liabilities" => ("table-danger",    Localizer["Liabilities"].Value),
+            "Equity"      => ("table-success",   Localizer["Equity"].Value),
+            _             => ("table-secondary", section.Category)
+        };
+        <div class="card shadow-sm mb-3">
+            <div class="table-responsive">
+                <table class="table table-sm table-hover align-middle mb-0">
+                    <thead class="@headerCss">
+                        <tr>
+                            <th colspan="3">@catLabel</th>
+                            <th class="text-end fw-bold">@(section.Total.ToString(moneyFmt))</th>
+                        </tr>
+                        <tr class="table-light">
+                            <th>@Localizer["AccountCode"]</th>
+                            <th>@Localizer["AccountName"]</th>
+                            <th></th>
+                            <th class="text-end">@Localizer["Balance"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in section.Items)
+                    {
+                        <tr>
+                            <td><code>@item.AccountCode</code></td>
+                            <td>@item.AccountName</td>
+                            <td></td>
+                            <td class="text-end">@item.Balance.ToString(moneyFmt)</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    }
+</div>

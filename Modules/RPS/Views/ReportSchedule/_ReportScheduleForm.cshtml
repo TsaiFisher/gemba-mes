@@ -1,0 +1,187 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject SmartFactory.MES.Services.IDateTimeService DateTimeSvc
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@using SmartFactory.MES.Modules.RPS.Contracts
+@model SmartFactory.MES.Modules.RPS.ViewModels.ReportScheduleFormVm
+
+@{
+    bool isEdit = ViewBag.IsEdit == true;
+    string action = isEdit ? "Edit" : "Create";
+
+    var toolOptions = (ViewBag.ToolOptions as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>();
+
+    // 期間欄位只對「吃期間」的報表顯示。新增時還沒選報表 → 先收起來。
+    // 判定來源是工具自己宣告的 IReportToolDescriptor.RequiresPeriod，不是這裡猜的。
+    var selectedTool = toolOptions.FirstOrDefault(t => (string)t.ToolKey == Model.ToolKey);
+    var showPeriod   = selectedTool is not null && (bool)selectedTool.RequiresPeriod;
+    var userOptions = (ViewBag.UserOptions as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>();
+}
+
+<form method="post" asp-action="@action" asp-controller="ReportSchedule"
+      asp-route-id="@(isEdit ? Model.Id : 0)" data-action-submit="submitPanel" class="p-1">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+    @* 對象廠別唯讀顯示：報表只查這個廠別的資料、期間與執行時刻依它的時區。
+       新增＝目前所在廠別，編輯＝原本的廠別；要建其他廠別的排程，先切換廠別。 *@
+    <div class="alert alert-info small py-2 mb-3" id="targetPlant">
+        <div>
+            <strong>@Localizer["TargetPlant"]：</strong>@Model.PlantLabel
+            @if (!string.IsNullOrWhiteSpace(Model.TimeZoneId))
+            {
+                <span class="text-muted">(@Model.TimeZoneId)</span>
+            }
+        </div>
+        <div class="text-muted">@Localizer["TargetPlantHint"]</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["Name"] <span class="text-danger">*</span></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["ToolKey"] <span class="text-danger">*</span></label>
+        <select asp-for="ToolKey" class="form-select select2-enable w-100"
+                data-placeholder="@Localizer["SelectReport"]" data-action-change="onReportToolChange">
+            <option value=""></option>
+            @foreach (var tool in toolOptions)
+            {
+                @* 顯示名稱由 Controller 以 ProjectZSharedResource 解析（鍵＝ToolKey＝MenuKey）。
+                   這裡若印 @tool.ToolKey，英文介面下看到的會是 "InventoryValuation" 這種內部識別字。
+                   data-requires-period 讓期間欄位跟著所選報表出現或收起——庫存評估表看的是
+                   當下快照，長出一個永遠不生效的期間下拉比少一個欄位更難解釋。 *@
+                <option value="@tool.ToolKey" data-requires-period="@(((bool)tool.RequiresPeriod).ToString().ToLowerInvariant())">@tool.DisplayName</option>
+            }
+        </select>
+        <div class="form-text text-muted">@string.Format(Localizer["ToolKeyHint"].Value, toolOptions.Count())</div>
+        <span asp-validation-for="ToolKey" class="text-danger small"></span>
+    </div>
+
+    @* §5.2.1：排程一律存**滾動視窗**不存絕對日期——存成 7/1~7/31 的「上月銷售排行」，
+       下個月寄出來的還是七月那一份。這也是為什麼這裡是一個相對期間下拉而不是兩個日期輸入框。
+       顯示／隱藏一律 classList 切 u-display-none，禁用 style.display（R14）。 *@
+    <div class="mb-3 @(showPeriod ? "" : "u-display-none")" id="rowPeriod">
+        <label class="form-label fw-semibold">@Localizer["Period"] <span class="text-danger">*</span></label>
+        <select asp-for="Period" class="form-select">
+            <option value=""></option>
+            @foreach (var p in Enum.GetValues<RelativePeriod>())
+            {
+                <option value="@p">@L["RelativePeriod_" + p]</option>
+            }
+        </select>
+        <div class="form-text text-muted">@Localizer["PeriodHint"]</div>
+        <span asp-validation-for="Period" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["ScheduleKind"] <span class="text-danger">*</span></label>
+        <select asp-for="ScheduleKind" class="form-select" id="scheduleKind"
+                data-action-change="onScheduleKindChange">
+            <option value="Daily">@Localizer["ScheduleDaily"]</option>
+            <option value="Weekly">@Localizer["ScheduleWeekly"]</option>
+            <option value="Monthly">@Localizer["ScheduleMonthly"]</option>
+        </select>
+        <span asp-validation-for="ScheduleKind" class="text-danger small"></span>
+    </div>
+
+    @* 顯示／隱藏一律用 classList 切 u-display-none，禁用 style.display（R14）。 *@
+    <div class="mb-3 @(Model.ScheduleKind == SmartFactory.MES.Modules.RPS.Models.ReportScheduleKind.Weekly ? "" : "u-display-none")"
+         id="rowDayOfWeek">
+        <label class="form-label fw-semibold">@Localizer["ScheduleDayOfWeek"]</label>
+        <select asp-for="ScheduleDayOfWeek" class="form-select">
+            <option value="0">@Localizer["Sunday"]</option>
+            <option value="1">@Localizer["Monday"]</option>
+            <option value="2">@Localizer["Tuesday"]</option>
+            <option value="3">@Localizer["Wednesday"]</option>
+            <option value="4">@Localizer["Thursday"]</option>
+            <option value="5">@Localizer["Friday"]</option>
+            <option value="6">@Localizer["Saturday"]</option>
+        </select>
+        <span asp-validation-for="ScheduleDayOfWeek" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3 @(Model.ScheduleKind == SmartFactory.MES.Modules.RPS.Models.ReportScheduleKind.Monthly ? "" : "u-display-none")"
+         id="rowDayOfMonth">
+        <label class="form-label fw-semibold">@Localizer["ScheduleDayOfMonth"]</label>
+        <input asp-for="ScheduleDayOfMonth" type="number" min="1" max="31" step="1" class="form-control" />
+        <div class="form-text text-muted">@Localizer["ScheduleDayOfMonthHint"]</div>
+        <span asp-validation-for="ScheduleDayOfMonth" class="text-danger small"></span>
+    </div>
+
+    <div class="row g-2 mb-3">
+        <div class="col-6">
+            <label class="form-label fw-semibold">@Localizer["ScheduleHour"]</label>
+            <input asp-for="ScheduleHour" type="number" min="0" max="23" step="1" class="form-control" />
+            <span asp-validation-for="ScheduleHour" class="text-danger small"></span>
+        </div>
+        <div class="col-6">
+            <label class="form-label fw-semibold">@Localizer["ScheduleMinute"]</label>
+            <input asp-for="ScheduleMinute" type="number" min="0" max="59" step="1" class="form-control" />
+            <span asp-validation-for="ScheduleMinute" class="text-danger small"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["OutputFormat"] <span class="text-danger">*</span></label>
+        <select asp-for="OutputFormat" class="form-select">
+            <option value="Excel">Excel (.xlsx)</option>
+            <option value="Csv">CSV (.csv)</option>
+        </select>
+        <div class="form-text text-muted">@Localizer["OutputFormatHint"]</div>
+        <span asp-validation-for="OutputFormat" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label fw-semibold">@Localizer["Recipients"]</label>
+        <select asp-for="RecipientUserIds" class="form-select select2-enable w-100" multiple
+                data-placeholder="@Localizer["SelectRecipients"]">
+            @foreach (var user in userOptions)
+            {
+                <option value="@user.Id">@user.Name</option>
+            }
+        </select>
+        <div class="form-text text-muted">@Localizer["RecipientsHint"]</div>
+        <span asp-validation-for="RecipientUserIds" class="text-danger small"></span>
+    </div>
+
+    <div class="mb-4">
+        <div class="form-check">
+            <input type="checkbox" asp-for="IsActive" class="form-check-input" id="scheduleIsActive" />
+            <label class="form-check-label fw-semibold" for="scheduleIsActive">@Localizer["IsActive"]</label>
+        </div>
+        <div class="form-text text-muted">@Localizer["IsActiveHint"]</div>
+    </div>
+
+    @if (isEdit)
+    {
+        <div class="alert alert-light border small">
+            <div><strong>@Localizer["Owner"]：</strong>@Model.OwnerUserName</div>
+            <div>
+                <strong>@Localizer["NextRunAt"]：</strong>
+                @if (Model.NextRunAt.HasValue)
+                {
+                    var local = SmartFactory.MES.Modules.RPS.Services.ReportPlantDisplay.ToScheduleLocal(Model.NextRunAt.Value, Model.TimeZoneId);
+                    @((local ?? DateTimeSvc.ToLocalTime(Model.NextRunAt.Value)).ToString("yyyy-MM-dd HH:mm"))
+                }
+                else
+                {
+                    @Localizer["NotScheduled"]
+                }
+            </div>
+        </div>
+    }
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-1"></i>@Localizer["Save"]
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-action="closeSidePanel">
+            @Localizer["Cancel"]
+        </button>
+    </div>
+</form>

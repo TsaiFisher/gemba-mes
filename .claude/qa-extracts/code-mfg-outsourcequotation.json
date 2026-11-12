@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/MFG/Models/OutsourceQuotation.cs",
+  "sourceHash": "f7f74a0418954a07e3eb2dbc00da3c9ba845434cd2d16ab51369d63200fb58f5",
+  "entries": [
+    {
+      "slug": "code-mfg-outsourcequotation-9fb1495e",
+      "lang": "zh",
+      "headingPath": "生產製造 › 委外報價主檔— 全域主檔，不隸屬廠別",
+      "text": "報價單自動帶入單價的查詢規則｜系統會根據採購單建立時，依序以四個層級的組合來尋找並帶入委外加工的單價。優先順序由高到低是：先看廠商代碼、產品代碼、工序路徑和作業順序的組合；若無則看前三者的組合；再看廠商代碼和產品代碼的組合；最後，僅以廠商代碼來決定單價。",
+      "approved": true,
+      "sourceSectionHash": "b1e33df9bf4ec6b76245f9356641dc8f6107e01cf5cf4e060f24eff181583847"
+    },
+    {
+      "slug": "code-mfg-outsourcequotation-aafd1ac3",
+      "lang": "zh",
+      "headingPath": "生產製造 › 合約允收損耗率",
+      "text": "合約損耗率的設定規則說明｜如果沒有在合約中約定損耗條款，則不會進行任何扣款；若明確約定零容忍，只要發生短交就會全額求償。",
+      "approved": true,
+      "sourceSectionHash": "3551d7aaa040602138c744e200ff2bf234463af05a13a07d93a5114e76c78bff"
+    },
+    {
+      "slug": "code-mfg-outsourcequotation-0469d871",
+      "lang": "zh",
+      "headingPath": "生產製造 › 生效區間不得倒置",
+      "text": "生效區間日期不能倒置｜系統在查詢消費時，會檢查起始日期必須小於等於當天，且結束日期若有設定則必須大於等於當天；如果資料的起訖日期是倒過來的，雖然可以儲存和列表看得到，但進行價格或途程查詢時會找不到任何結果。",
+      "approved": true,
+      "sourceSectionHash": "8d60ead3d4ad0ed87d10b4dbab1ea34c398eb0e978383870b182c106344a02d9"
+    }
+  ]
+}

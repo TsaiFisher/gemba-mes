@@ -1,0 +1,133 @@
+{
+  "sourcePath": "Services/ApprovalService.cs",
+  "sourceHash": "e8b6ee9c2991bc66a8cac4c0b71d2a12e75d2fc977bf02a8b85a467ca5d3da03",
+  "entries": [
+    {
+      "slug": "code-core-approvalservice-5cd463ba",
+      "lang": "zh",
+      "headingPath": "系統共用 › 未設線上簽核→",
+      "text": "簽核狀態依據是否設定線上流程｜如果沒有設定線上簽核，系統會直接判定為已核准；否則，系統會預設為草稿狀態，需要後續按送審才能進入流程。",
+      "approved": true,
+      "sourceSectionHash": "6bfb49af699d02d3e1a40cb04b6a81b2cc54d629654a25ffd6df10b445d2183b"
+    },
+    {
+      "slug": "code-core-approvalservice-8790b796",
+      "lang": "zh",
+      "headingPath": "系統共用 › 業務文件被刪除時連動取消其進行中的簽核申請",
+      "text": "文件刪除會取消進行中的簽核申請｜當業務文件被刪除時，系統會自動將該文件的簽核申請狀態設為已撤回，並記錄到稽核紀錄中。如果原來的申請單狀態不是「待審核」，則不會執行此動作。",
+      "approved": true,
+      "sourceSectionHash": "7fad314142b15cb402a111d7c6dfff225bb3b092d4ff3fdd93c8d1893fec7b48"
+    },
+    {
+      "slug": "code-core-approvalservice-6b3724ba",
+      "lang": "zh",
+      "headingPath": "系統共用 › 「待我簽核」清單",
+      "text": "待我簽核的資料篩選規則｜此清單會依照送審的時間由舊到新來排列，並且系統會根據目前流程步驟所設定的角色或使用者目標，來判斷誰可以查看這筆待簽核的資料。如果該流程已經指派了特定的審核人，則只有這位指定的人才能看到；若沒有指派特定審核人，則會依據當前步驟的權責角色進行比對。",
+      "approved": true,
+      "sourceSectionHash": "f0b1562b7c5fb6c9d4b54125759824ec6cfcbd07ccd15c9074b965ec35ea6cb5"
+    },
+    {
+      "slug": "code-core-approvalservice-74059386",
+      "lang": "zh",
+      "headingPath": "系統共用 › 這個人是否為某張簽核申請的**關係人**",
+      "text": "是否為簽核申請的關係人｜此功能用來判斷目前登入的使用者是否與某張簽核申請有相關聯，包含是申請人、目前的審核人、系統指派到該步驟的角色或個人，或是過去曾參與過本單據流程的人員。這樣設計的目的是為了讓使用者可以回溯查看自己曾經處理過的單據內容與歷程。",
+      "approved": true,
+      "sourceSectionHash": "d95d206373a7bf86fc4e3f2832064073987a23505a61e5a66fd59092e8b899a2"
+    },
+    {
+      "slug": "code-core-approvalservice-4031ac7a",
+      "lang": "zh",
+      "headingPath": "系統共用 › 僅處理可確定簽核人的單",
+      "text": "代理人設定生效時的單據處理規則｜當系統設定了代理人後，會將目前處於待審核狀態且原先卡在委託人身上的申請單，改派給指定的代理人。此機制會針對所有可確定簽核人的單據進行處理。",
+      "approved": true,
+      "sourceSectionHash": "e75ab11d632b49466d0124a24e312b5df39610fc9c63dcad313e363da0443e12"
+    },
+    {
+      "slug": "code-core-approvalservice-9749b1b7",
+      "lang": "zh",
+      "headingPath": "系統共用 › 既有測試/呼叫端不需調整",
+      "text": "既有測試/呼叫端不需調整｜若未提供特定時間服務，則會使用空實作或以協調世界時（UTC）作為替代標準。此時間服務用於判斷代理期間的「今日」，目的是為了避免使用 UTC 日期在起訖日當天早晚數小時出現日期計算上的誤差。",
+      "approved": true,
+      "sourceSectionHash": "ad8f618b41760f71fa6c8c079ec61b6ca1017891d5ceb8228787ec149e734da4"
+    },
+    {
+      "slug": "code-core-approvalservice-b36318ab",
+      "lang": "zh",
+      "headingPath": "系統共用 › 再套用簽核代理設定僅對可確定的單一簽核人",
+      "text": "簽核流程的自動跳過規則說明｜系統會根據已完成的簽核人清單來判斷是否需要執行某個簽核步驟，如果該步驟的簽核人已經在申請人或先前實際簽核人的名單中，則會自動跳過此步驟並記錄為已跳過。",
+      "approved": true,
+      "sourceSectionHash": "a6960275334d35597ea0dcd61d4de220294198e4af0564530822ab3982ab3c88"
+    },
+    {
+      "slug": "code-core-approvalservice-0fc54231",
+      "lang": "zh",
+      "headingPath": "系統共用 › 落點： 型以解析結果為準",
+      "text": "落點判斷依據的權重順序｜系統會先以主管層級解析出來的結果作為主要的落點判定標準；只有在需要使用代理時，才會用使用者層級的設定來覆蓋這個結果。如果沒有用到代理機制，則維持原有的空值狀態，其判斷邏輯與步驟目標比對是保持一致的；角色層級的落點判定永遠不會有任何值。",
+      "approved": true,
+      "sourceSectionHash": "d2f39786c816e1a62d640096a76f61f5f7b8509261817b5a37ab86de1fbf559f"
+    },
+    {
+      "slug": "code-core-approvalservice-12938013",
+      "lang": "zh",
+      "headingPath": "系統共用 › 多筆生效時取最近建立者",
+      "text": "簽核代理人判斷規則｜系統會根據使用者當前所在時區，檢查哪些簽核代理人在目前日期是有效的；如果有多個有效代理人，則採用建立時間最近的那一位。但若該代理人就是申請單據的提出者本人，則不會套用此規則。此外，此機制只會判斷一層級的代理關係，不會遞迴展開檢查更深層次的代理人。",
+      "approved": true,
+      "sourceSectionHash": "d3b37b7af1494333476116a4a979cdb13d8eac3990b596621b88e0f745168bdf"
+    },
+    {
+      "slug": "code-core-approvalservice-beb179ff",
+      "lang": "zh",
+      "headingPath": "系統共用 › 找不到回",
+      "text": "直屬主管的判定規則｜如果無法找到申請人對應的主管，系統會將該欄位留空，需要人員手動指定。若有多個可能的直屬主管，則以使用者名稱字典序最小的那一位為準。",
+      "approved": true,
+      "sourceSectionHash": "0f72c433753d26dc945bd4294ea137b3a67b51a6218d95f53a21667e4dfad7f8"
+    },
+    {
+      "slug": "code-core-approvalservice-8d957970",
+      "lang": "zh",
+      "headingPath": "系統共用 › 簽核人驗證",
+      "text": "權限限制：只能由指定人員或角色進行審批｜系統只允許目前流程步驟所指派的特定簽核人或角色才能執行此操作，以防止未經授權的使用者直接提交核准他人單據。",
+      "approved": true,
+      "sourceSectionHash": "e0a2721be78c19292df98027672fa55b1c4518f1aa29fc26922365d236462d8e"
+    },
+    {
+      "slug": "code-core-approvalservice-52c4e7a7",
+      "lang": "zh",
+      "headingPath": "系統共用 › 核准/駁回/退回完成後，回寫各業務文件的狀態欄位",
+      "text": "狀態回寫機制說明｜核准、駁回或退回完成後，系統會通知所有已註冊的擴充模組來更新相關業務文件的狀態。如果沒有任何擴充模組執行，則會使用核心內建的表單來更新狀態。",
+      "approved": true,
+      "sourceSectionHash": "24cf93c5cec4057c95a13fb3a15ebcd160671ce23b536bc12476df08ac6a31b5"
+    },
+    {
+      "slug": "code-core-approvalservice-b8a0bc88",
+      "lang": "zh",
+      "headingPath": "系統共用 › 新簽核人必須是實際存在的使用者",
+      "text": "簽核人必須是系統內現有使用者｜指派給審核的人，必須是目前系統中實際存在的帳號。這樣可以確保申請單不會因為指派了不存在或已刪除的帳號而無法被看到。",
+      "approved": true,
+      "sourceSectionHash": "d861380d46575d3f2899add6de228875fb06cbf8d988aa941a8965eb9fc5dcd4"
+    },
+    {
+      "slug": "code-core-approvalservice-ffdca29b",
+      "lang": "zh",
+      "headingPath": "系統共用 › 代理是跟著「人」走的全域設定",
+      "text": "代理設定的範圍與篩選限制｜系統在處理待簽單時，會將委託人在所有廠別和資料範圍內的待簽單都納入考量，因此僅以身分條件來限定查詢範圍，不會放寬任何狀態上的過濾條件。",
+      "approved": true,
+      "sourceSectionHash": "74b8a1fd7864dbf250d259e0c862ad41f821b38346798d8254340a587a68c9e0"
+    },
+    {
+      "slug": "code-core-approvalservice-8a62c9f6",
+      "lang": "zh",
+      "headingPath": "系統共用 › 任一單被並發先行處理即整批未落地",
+      "text": "代理人改派待簽單未生效時，重新儲存設定可再觸發｜設定代理人之後，系統會把原簽核者的待簽單整批改派給代理人。如果這期間有任何一張待簽單被其他人先處理掉，整批改派就不會生效；此時代理人設定本身仍然存在，重新儲存一次設定即可再次觸發改派。",
+      "approved": true
+    },
+    {
+      "slug": "code-core-approvalservice-047e2e2e",
+      "lang": "zh",
+      "headingPath": "系統共用 › 廠別與層級權限由全域查詢過濾器套用",
+      "text": "待我簽核的權限判斷規則｜系統在查詢「待我簽核」的單據時，會根據是否指派了特定的審核人來決定範圍。如果已經指定了審核人，則只顯示該特定使用者可以看到的資料；如果沒有指派審核人，則會依據當前流程步驟的角色和使用者進行比對判斷。此外，所有關於廠別與層級的權限限制，都會透過全域查詢過濾器來套用，這代表簽核的作用範圍是限定在單一的公司或廠別內。",
+      "approved": true,
+      "sourceSectionHash": "6a8cb8c71f74ef919baae468649f5f8ae17c25ed7eb4ad6f3d33964a9689958f"
+    }
+  ]
+}

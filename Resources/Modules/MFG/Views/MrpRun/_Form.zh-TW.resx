@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="SecMaster" xml:space="preserve"><value>基本資料</value></data>
+  <data name="MrpRunId" xml:space="preserve"><value>執行單號</value></data>
+  <data name="AutoNumberHint" xml:space="preserve"><value>（存檔後系統自動編號）</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="StatusDraft" xml:space="preserve"><value>草稿</value></data>
+  <data name="StatusExecuted" xml:space="preserve"><value>已展開</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="SecLines" xml:space="preserve"><value>需求列</value></data>
+  <data name="AddLine" xml:space="preserve"><value>新增需求列</value></data>
+  <data name="LinesHint" xml:space="preserve"><value>加入待展開的品號、需求量與交期；按「執行 MRP」展開為生產批與工單。</value></data>
+  <data name="ColSeq" xml:space="preserve"><value>序</value></data>
+  <data name="ColProduct" xml:space="preserve"><value>品號</value></data>
+  <data name="ColQty" xml:space="preserve"><value>需求量</value></data>
+  <data name="ColDueDate" xml:space="preserve"><value>交期</value></data>
+  <data name="ColMode" xml:space="preserve"><value>產銷模式</value></data>
+  <data name="ColStockQty" xml:space="preserve"><value>庫存滿足</value></data>
+  <data name="ColPurchaseQty" xml:space="preserve"><value>採購量</value></data>
+  <data name="ColOutsourceQty" xml:space="preserve"><value>委外量</value></data>
+  <data name="ColMakeQty" xml:space="preserve"><value>自製量</value></data>
+  <data name="ColBatch" xml:space="preserve"><value>生產批</value></data>
+  <data name="ColError" xml:space="preserve"><value>預檢錯誤</value></data>
+  <data name="ColSalesOrder" xml:space="preserve"><value>來源訂單</value></data>
+  <data name="ColActions" xml:space="preserve"><value>操作</value></data>
+  <data name="LineFormAdd" xml:space="preserve"><value>新增需求列</value></data>
+  <data name="LineFormEdit" xml:space="preserve"><value>編輯需求列</value></data>
+  <data name="FldProduct" xml:space="preserve"><value>品號</value></data>
+  <data name="FldQty" xml:space="preserve"><value>需求量</value></data>
+  <data name="FldDueDate" xml:space="preserve"><value>交期</value></data>
+  <data name="FldSalesOrder" xml:space="preserve"><value>來源訂單（選填）</value></data>
+  <data name="PleaseSelect" xml:space="preserve"><value>請選擇</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Confirm" xml:space="preserve"><value>確定</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="SaveDraft" xml:space="preserve"><value>儲存草稿</value></data>
+  <data name="Execute" xml:space="preserve"><value>執行 MRP</value></data>
+  <data name="ExecuteConfirm" xml:space="preserve"><value>確定要執行 MRP 展開嗎？展開後此執行單將無法再修改。</value></data>
+  <data name="NoLines" xml:space="preserve"><value>尚無需求列</value></data>
+  <data name="ImportOrders" xml:space="preserve"><value>匯入訂單</value></data>
+  <data name="ImportTitle" xml:space="preserve"><value>匯入訂單明細</value></data>
+  <data name="ImportHint" xml:space="preserve"><value>勾選未結案訂單明細並輸入本次排程量（預設為剩餘量＝訂單量−已展開量）。</value></data>
+  <data name="ImportNone" xml:space="preserve"><value>目前無未展開的訂單明細。</value></data>
+  <data name="ImpKind" xml:space="preserve"><value>類型</value></data>
+  <data name="ImpSo" xml:space="preserve"><value>訂單-項</value></data>
+  <data name="ImpProduct" xml:space="preserve"><value>品號</value></data>
+  <data name="ImpOrderQty" xml:space="preserve"><value>訂單量</value></data>
+  <data name="ImpCommitted" xml:space="preserve"><value>已展開</value></data>
+  <data name="ImpRemaining" xml:space="preserve"><value>剩餘</value></data>
+  <data name="ImpDate" xml:space="preserve"><value>交期</value></data>
+  <data name="ImpThisQty" xml:space="preserve"><value>本次排程量</value></data>
+  <data name="ImportAdd" xml:space="preserve"><value>加入選取</value></data>
+  <data name="ModeStock" xml:space="preserve"><value>庫存</value></data>
+  <data name="ModePurchase" xml:space="preserve"><value>採購</value></data>
+  <data name="ModeOutsource" xml:space="preserve"><value>委外</value></data>
+  <data name="ModeMake" xml:space="preserve"><value>自製</value></data>
+  <data name="JsLineProductRequired" xml:space="preserve"><value>請選擇品號。</value></data>
+  <data name="JsLineQtyInvalid" xml:space="preserve"><value>需求量必須大於 0。</value></data>
+  <data name="JsLineDateRequired" xml:space="preserve"><value>請輸入交期。</value></data>
+  <data name="JsLineDelConfirm" xml:space="preserve"><value>確定刪除此需求列？</value></data>
+  <data name="ColPriority" xml:space="preserve">
+    <value>優先序</value>
+  </data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+</root>

@@ -1,0 +1,133 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Text.Json
+@inject IViewLocalizer Localizer
+@model PlannedDowntime
+
+@{
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    var workCenters = ViewBag.WorkCenters as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var machinesByWc = ViewBag.MachinesByWc ?? new Dictionary<string, object>();
+    var downtimeTypeOptions = ViewBag.DowntimeTypeOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<form method="post" action="@(Model.Id == 0 ? Url.Action("Create") : Url.Action("Edit", new { id = Model.Id }))"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+    <fieldset @(isReadOnly ? "disabled=\"disabled\"" : "")>
+        <div class="mb-3">
+            <label class="form-label">@Localizer["WorkCenterOpt"]</label>
+            <select class="form-select" asp-for="WorkCenterId" id="pdWorkCenter">
+                <option value="">@Localizer["SelectPlaceholder"]</option>
+                @foreach (dynamic wc in workCenters)
+                {
+                    <option value="@wc.WorkCenterCode">@wc.WorkCenterCode — @wc.WorkCenterName</option>
+                }
+            </select>
+            <span asp-validation-for="WorkCenterId" class="text-danger small"></span>
+            <div class="form-text">@Localizer["ScopeHint"]</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["MachineCode"]</label>
+            <select class="form-select" asp-for="MachineCode" id="pdMachine">
+                <option value="">@Localizer["MachineWholeWc"]</option>
+            </select>
+            <span asp-validation-for="MachineCode" class="text-danger small"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["StartTime"] <span class="text-danger">*</span></label>
+                    <input type="datetime-local" class="form-control" asp-for="StartTime" asp-format="{0:yyyy-MM-ddTHH:mm}" required />
+                    <span asp-validation-for="StartTime" class="text-danger small"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["EndTime"] <span class="text-danger">*</span></label>
+                    <input type="datetime-local" class="form-control" asp-for="EndTime" asp-format="{0:yyyy-MM-ddTHH:mm}" required />
+                    <span asp-validation-for="EndTime" class="text-danger small"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["DowntimeType"]</label>
+            <select class="form-select" asp-for="DowntimeType">
+                <option value="">@Localizer["TypeNone"]</option>
+                @foreach (dynamic o in downtimeTypeOptions)
+                {
+                    <option value="@o.Code">@o.Code — @o.DisplayName</option>
+                }
+            </select>
+            <span asp-validation-for="DowntimeType" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Reason"]</label>
+            <input type="text" class="form-control" asp-for="Reason" maxlength="200" />
+            <span asp-validation-for="Reason" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" asp-for="IsActive" id="pdIsActive" />
+                <label class="form-check-label" for="pdIsActive">@Localizer["IsActive"]</label>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="modal-footer">
+        @if (isReadOnly)
+        {
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-secondary" name="cancel" value="cancel" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+        }
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    var machinesByWc = @Html.Raw(JsonSerializer.Serialize(machinesByWc));
+    var allMachines = [];
+    Object.keys(machinesByWc).forEach(function (wc) {
+        machinesByWc[wc].forEach(function (m) { allMachines.push(m); });
+    });
+    var ph = "@Localizer["MachineWholeWc"]";   // 機台留空＝整個工作中心
+    var wcEl = document.getElementById('pdWorkCenter');
+    var mcEl = document.getElementById('pdMachine');
+    var curWc = "@Model.WorkCenterId";
+    var curMachine = "@Model.MachineCode";
+
+    function fillMachines(wc, selected) {
+        var list = (wc && machinesByWc[wc]) ? machinesByWc[wc] : allMachines;
+        var html = '<option value="">' + ph + '</option>';
+        list.forEach(function (m) {
+            html += '<option value="' + m.code + '"' + (m.code === selected ? ' selected' : '') + '>' + m.code + ' — ' + m.name + '</option>';
+        });
+        mcEl.innerHTML = html;
+    }
+
+    if (wcEl && mcEl) {
+        // 工作中心改變 → 依該中心重列機台（保留仍有效的選取）
+        wcEl.addEventListener('change', function () { fillMachines(this.value, mcEl.value); });
+        // 選機台時若工作中心留空 → 回填該機台所屬工作中心
+        mcEl.addEventListener('change', function () {
+            if (!wcEl.value && this.value) {
+                var code = this.value;
+                for (var wc in machinesByWc) {
+                    if (machinesByWc[wc].some(function (m) { return m.code === code; })) { wcEl.value = wc; break; }
+                }
+            }
+        });
+        fillMachines(curWc, curMachine);
+    }
+})();
+</script>

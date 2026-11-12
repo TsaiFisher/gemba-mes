@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/INV/Services/IInventoryPostingService.cs",
+  "sourceHash": "34d9802b62ae2d4fc4b350ab24816c6bd49aafa786a1db845aff723702587f57",
+  "entries": [
+    {
+      "slug": "code-inv-iinventorypostingservice-ffeda253",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 完整模式：過帳單一",
+      "text": "過帳單一的流程與狀態變更規則｜當所有的明細項目都完成處理後，相關單據的狀態會自動更新為已結案。",
+      "approved": true,
+      "sourceSectionHash": "db89eb6a4dd4b37e36007e231878fba54efe52bd50a32427ff1970a95f307fc0"
+    },
+    {
+      "slug": "code-inv-iinventorypostingservice-fa7d2079",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 入庫時併入單位成本、但**不再產生分錄**的既有存貨價值",
+      "text": "入庫成本併入，不產生會計分錄｜當收貨確認並完成倉庫上架的流程時，系統會將在外原料的價值併回成品，以確保該筆材料費用能與實際的實體庫存掛鉤。",
+      "approved": true,
+      "sourceSectionHash": "7437d7025ddc675953730c40b77e9e2341e16844d8e5ccc1227652fef9b04cfd"
+    },
+    {
+      "slug": "code-inv-iinventorypostingservice-63ae7b7e",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 換批號用於既有庫存裝箱／換箱：數量與單位成本原樣帶過去",
+      "text": "換批號用於既有庫存裝箱／換箱：數量與單位成本原樣｜無法指定批號時，系統會預設使用與撥出相同的批號。當進行既有庫存的裝箱或換箱操作時，數量和單位成本會沿用原有的數值帶入。",
+      "approved": true,
+      "sourceSectionHash": "39424fa00df8f18049db99f070fb03d5c83da0eeeb2d64db28a84d24d1c96ee1"
+    }
+  ]
+}

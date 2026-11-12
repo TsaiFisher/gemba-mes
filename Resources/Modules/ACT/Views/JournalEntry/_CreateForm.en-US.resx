@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="EntryDate" xml:space="preserve"><value>Entry date</value></data>
+  <data name="EntryDateHint" xml:space="preserve"><value>Determines which accounting period the entry falls in. Cannot be created if that period is closed or closing.</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="Lines" xml:space="preserve"><value>Journal lines</value></data>
+  <data name="AddLine" xml:space="preserve"><value>Add line</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>Remove</value></data>
+  <data name="AccountCode" xml:space="preserve"><value>Account</value></data>
+  <data name="Debit" xml:space="preserve"><value>Debit</value></data>
+  <data name="Credit" xml:space="preserve"><value>Credit</value></data>
+  <data name="CostCenter" xml:space="preserve"><value>Cost centre</value></data>
+  <data name="LineDescription" xml:space="preserve"><value>Line description</value></data>
+  <data name="Total" xml:space="preserve"><value>Total</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="ManualJournalNotice" xml:space="preserve"><value>Manual journals are entered in the base currency. Only accounts flagged as manually selectable are listed — inventory, GR/IR accrual and the like are maintained by automatic postings and a hand-entered line there will not reconcile with the subledger.</value></data>
+  <data name="PasteLines" xml:space="preserve"><value>Paste lines</value></data>
+  <data name="PasteApply" xml:space="preserve"><value>Parse and fill</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="PastePlaceholder" xml:space="preserve"><value>6201	1000		Utilities
+1130		1000	Bank payment</value></data>
+  <data name="PasteHint" xml:space="preserve"><value>One entry per line: account code, debit, credit, line description, separated by tab or comma (use tab if the amounts carry thousand separators). The account must be flagged as manually selectable or the line is skipped. This is how opening balances are entered in one go.</value></data>
+  <data name="PasteFilledFmt" xml:space="preserve"><value>{0} line(s) filled.</value></data>
+  <data name="PasteNotFoundFmt" xml:space="preserve"><value>Skipped, account not found: {0}.</value></data>
+  <data name="PasteNotManualFmt" xml:space="preserve"><value>Skipped, not enabled for manual entry: {0} (tick "Allow manual entry" under Chart of Accounts).</value></data>
+  <data name="PasteNoCodeFmt" xml:space="preserve"><value>Skipped {0} line(s) with no account code.</value></data>
+  <data name="ManualAccountNote" xml:space="preserve"><value>Account selection and pasting only accept accounts flagged "Allow manual entry" in the Chart of Accounts. Accounts posted automatically by documents (receivables, payables, inventory, etc.) are deliberately closed to manual entry, otherwise the general ledger would no longer agree with the subledgers; adjust them through the corresponding document, or ask accounting to enable the account in the Chart of Accounts.</value></data>
+</root>

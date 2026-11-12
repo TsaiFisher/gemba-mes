@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d6efd;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a58ca;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 齒輪圖示 -->
+  <g transform="translate(8, 8)">
+    <!-- 外齒輪 -->
+    <path d="M22 4 L25 0 L27 4 L32 3 L32 7 L36 9 L33 12 L35 17 L31 18 L31 23 L27 23 L25 27 L22 24 L18 27 L16 23 L12 23 L12 18 L8 17 L10 12 L7 9 L11 7 L11 3 L16 4 Z"
+          fill="url(#grad)" />
+    <!-- 內圓 -->
+    <circle cx="22" cy="13" r="5.5" fill="white" />
+    <!-- 內圓點 -->
+    <circle cx="22" cy="13" r="2.5" fill="url(#grad)" />
+  </g>
+
+  <!-- 文字 Smart -->
+  <text x="50" y="26"
+        font-family="'Segoe UI', Arial, sans-serif"
+        font-size="18" font-weight="700"
+        fill="#0d6efd" letter-spacing="0.5">Smart</text>
+
+  <!-- 文字 Factory -->
+  <text x="50" y="46"
+        font-family="'Segoe UI', Arial, sans-serif"
+        font-size="14" font-weight="400"
+        fill="#495057" letter-spacing="2">FACTORY</text>
+
+  <!-- 底線裝飾 -->
+  <line x1="50" y1="50" x2="185" y2="50"
+        stroke="#0d6efd" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+</svg>

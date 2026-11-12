@@ -1,0 +1,246 @@
+@using SmartFactory.MES.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IDateTimeService DateTimeSvc
+@model SmartFactory.MES.Modules.RPT.Models.FieldTelemetryReportVm
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    Func<DateTime, string> local = utc => DateTimeSvc.ToLocalTime(utc).ToString("MM-dd HH:mm");
+    var slowPct = Model.ApiCalls > 0 ? (Model.ApiSlow * 100m / Model.ApiCalls) : 0m;
+    Func<string, string> kindName = k =>
+    {
+        var s = Localizer.GetString("Kind_" + k);
+        return s.ResourceNotFound ? k : s.Value;
+    };
+    // 裝置代號是隨機 UUID，只顯示前 8 碼辨認用；title 保留全碼
+    Func<string, string> shortId = id => id.Length > 8 ? id[..8] : id;
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1><i class="bi bi-broadcast me-2 text-primary"></i>@Localizer["PageTitle"]</h1>
+        <form asp-action="Index" method="get" class="d-flex align-items-center gap-2" id="periodForm">
+            <label class="form-label small mb-0" for="hoursSel">@Localizer["Period"]</label>
+            <select name="hours" id="hoursSel" class="form-select form-select-sm w-auto">
+                <option value="24" selected="@(Model.Hours == 24)">@Localizer["Last24h"]</option>
+                <option value="168" selected="@(Model.Hours == 168)">@Localizer["Last7d"]</option>
+                <option value="720" selected="@(Model.Hours == 720)">@Localizer["Last30d"]</option>
+            </select>
+            <input type="hidden" name="kind" value="@Model.SelectedKind" />
+        </form>
+    </div>
+    <div class="form-text mb-3">@Localizer["MethodHint"]</div>
+
+    <!-- KPI 卡 -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card border-0 @(Model.ErrorCount > 0 ? "bg-danger" : "bg-success") text-white shadow-sm"><div class="card-body text-center">
+                <div class="fs-6 mb-1">@Localizer["KpiErrors"]</div>
+                <div class="fs-4 fw-bold" data-kpi="errors">@Model.ErrorCount.ToString("N0")</div>
+            </div></div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 @(slowPct >= 5 ? "bg-warning text-dark" : "bg-info text-white") shadow-sm"><div class="card-body text-center">
+                <div class="fs-6 mb-1">@Localizer["KpiSlow"]</div>
+                <div class="fs-4 fw-bold" data-kpi="slow">@slowPct.ToString("N1")%</div>
+                <div class="small">@string.Format(Localizer["KpiSlowSub"].Value, Model.ApiSlow.ToString("N0"), Model.ApiCalls.ToString("N0"), Model.ApiFailures.ToString("N0"))</div>
+                <div class="small">@string.Format(Localizer["KpiConflictSub"].Value, Model.ApiConflicts.ToString("N0"))</div>
+            </div></div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 bg-secondary text-white shadow-sm"><div class="card-body text-center">
+                <div class="fs-6 mb-1">@Localizer["KpiOffline"]</div>
+                <div class="fs-4 fw-bold" data-kpi="offline">@Model.OfflineCount.ToString("N0")</div>
+                <div class="small">@string.Format(Localizer["KpiOfflineSub"].Value, Model.OfflineMinutes.ToString("N0"))</div>
+            </div></div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 @(Model.DevicesWithPending > 0 ? "bg-warning text-dark" : "bg-primary text-white") shadow-sm"><div class="card-body text-center">
+                <div class="fs-6 mb-1">@Localizer["KpiPending"]</div>
+                <div class="fs-4 fw-bold" data-kpi="pending">@Model.DevicesWithPending.ToString("N0")</div>
+                <div class="small">@string.Format(Localizer["KpiPendingSub"].Value, Model.ActiveDevices.ToString("N0"))</div>
+            </div></div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <!-- 裝置現況 -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header fw-semibold">@Localizer["Devices"]</div>
+                @if (!Model.Devices.Any())
+                {
+                    <div class="card-body text-muted text-center py-4">@Localizer["NoData"]</div>
+                }
+                else
+                {
+                    <div class="table-responsive"><table class="table table-sm table-hover align-middle mb-0" id="deviceTable">
+                        <thead class="table-light"><tr>
+                            <th>@Localizer["Device"]</th><th>@Localizer["User"]</th><th>@Localizer["LastSeen"]</th>
+                            <th class="text-end">@Localizer["Pending"]</th><th class="text-end">@Localizer["OldestMin"]</th>
+                            <th>@Localizer["Network"]</th><th>@Localizer["Version"]</th>
+                        </tr></thead>
+                        <tbody>
+                        @foreach (var d in Model.Devices.Take(50))
+                        {
+                            <tr class="@(d.QueuePending > 0 ? "table-warning" : "")">
+                                <td><code title="@d.DeviceId">@shortId(d.DeviceId)</code></td>
+                                <td>@d.UserName</td>
+                                <td>@local(d.LastSeenUtc)</td>
+                                <td class="text-end fw-semibold">@d.QueuePending</td>
+                                <td class="text-end">@d.QueueOldestMinutes</td>
+                                <td class="small">@d.NetType@(d.RttMs != null ? $" · {d.RttMs} ms" : "")</td>
+                                <td class="small">@d.AppVersion</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table></div>
+                }
+            </div>
+        </div>
+        <!-- 前端錯誤排行 -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header fw-semibold">@Localizer["TopErrors"]</div>
+                @if (!Model.TopErrors.Any())
+                {
+                    <div class="card-body text-success text-center py-4"><i class="bi bi-check-circle me-1"></i>@Localizer["NoErrors"]</div>
+                }
+                else
+                {
+                    <div class="table-responsive"><table class="table table-sm table-hover align-middle mb-0" id="errorTable">
+                        <thead class="table-light"><tr>
+                            <th>@Localizer["Message"]</th><th>@Localizer["Page"]</th>
+                            <th class="text-end">@Localizer["Count"]</th><th class="text-end">@Localizer["DeviceCount"]</th><th>@Localizer["LastSeen"]</th>
+                        </tr></thead>
+                        <tbody>
+                        @foreach (var e in Model.TopErrors)
+                        {
+                            <tr>
+                                <td class="small"><span class="badge text-bg-danger me-1">@kindName(e.Kind)</span>@e.Message</td>
+                                <td class="small">@e.Page</td>
+                                <td class="text-end">@e.Count</td>
+                                <td class="text-end">@e.Devices</td>
+                                <td>@local(e.LastSeenUtc)</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table></div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- API 耗時與失敗 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header fw-semibold">@Localizer["Endpoints"]</div>
+        @if (!Model.Endpoints.Any())
+        {
+            <div class="card-body text-muted text-center py-4">@Localizer["NoData"]</div>
+        }
+        else
+        {
+            <div class="table-responsive"><table class="table table-sm table-hover align-middle mb-0" id="endpointTable">
+                <thead class="table-light"><tr>
+                    <th>@Localizer["Endpoint"]</th><th class="text-end">@Localizer["Calls"]</th>
+                    <th class="text-end">@Localizer["AvgMs"]</th><th class="text-end">@Localizer["MaxMs"]</th>
+                    <th class="text-end">@Localizer["Slow3To10"]</th><th class="text-end">@Localizer["Over10s"]</th>
+                    <th class="text-end">@Localizer["Failures"]</th>
+                    <th class="text-end" title="@Localizer["ConflictsHint"]">@Localizer["Conflicts"]</th>
+                </tr></thead>
+                <tbody>
+                @foreach (var r in Model.Endpoints)
+                {
+                    <tr class="@(r.Failures > 0 || r.Over10s > 0 ? "table-danger" : r.Slow3To10 > 0 ? "table-warning" : "")">
+                        <td><code>@r.Endpoint</code></td>
+                        <td class="text-end">@r.Calls.ToString("N0")</td>
+                        <td class="text-end">@r.AvgMs.ToString("N0")</td>
+                        <td class="text-end">@r.MaxMs.ToString("N0")</td>
+                        <td class="text-end">@r.Slow3To10</td>
+                        <td class="text-end">@r.Over10s</td>
+                        <td class="text-end fw-semibold">@r.Failures</td>
+                        <td class="text-end">@r.Conflicts</td>
+                    </tr>
+                }
+                </tbody>
+            </table></div>
+        }
+    </div>
+
+    <!-- 最近事件 -->
+    <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span class="fw-semibold">@Localizer["Recent"]</span>
+            <form asp-action="Index" method="get" class="d-flex align-items-center gap-2" id="kindForm">
+                <input type="hidden" name="hours" value="@Model.Hours" />
+                <select name="kind" id="kindSel" class="form-select form-select-sm w-auto">
+                    <option value="">@Localizer["AllKinds"]</option>
+                    @foreach (var k in new[] { "Error", "Rejection", "Offline", "Queue" })
+                    {
+                        <option value="@k" selected="@(k == Model.SelectedKind)">@kindName(k)</option>
+                    }
+                </select>
+                <button type="submit" class="btn btn-outline-primary btn-sm">@Localizer["Apply"]</button>
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+        @if (!Model.Recent.Any())
+        {
+            <div class="card-body text-muted text-center py-4">@Localizer["NoData"]</div>
+        }
+        else
+        {
+            var paged = ReportPaging.Page(Model.Recent, ViewData, Context);
+            <div class="table-responsive"><table class="table table-sm table-hover align-middle mb-0" id="recentTable">
+                <thead class="table-light"><tr>
+                    <th>@Localizer["ReceivedAt"]</th><th>@Localizer["Kind"]</th><th>@Localizer["Device"]</th><th>@Localizer["User"]</th>
+                    <th>@Localizer["Page"]</th><th>@Localizer["Message"]</th>
+                </tr></thead>
+                <tbody>
+                @foreach (var e in paged)
+                {
+                    <tr>
+                        <td class="text-nowrap">@local(e.ReceivedAt)</td>
+                        <td><span class="badge @(e.Kind is "Error" or "Rejection" ? "text-bg-danger" : "text-bg-secondary")">@kindName(e.Kind)</span></td>
+                        <td>@if (e.DeviceId != null) { <code title="@e.DeviceId">@shortId(e.DeviceId)</code> }</td>
+                        <td>@e.UserName</td>
+                        <td class="small">@e.Page</td>
+                        <td class="small">
+                            @if (e.Kind == "Offline")
+                            {
+                                @string.Format(Localizer["OfflineFmt"].Value, ((e.DurationMs ?? 0) / 1000).ToString("N0"))
+                            }
+                            else if (e.Kind == "Queue")
+                            {
+                                @string.Format(Localizer["QueueFmt"].Value, e.QueuePending ?? 0, e.QueueOldestMinutes ?? 0)
+                            }
+                            else
+                            {
+                                @e.Message
+                                @if (!string.IsNullOrEmpty(e.Detail))
+                                {
+                                    <details><summary class="text-muted">@Localizer["Detail"]</summary><pre class="small mb-0 text-wrap">@e.Detail</pre></details>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table></div>
+            @await Html.PartialAsync("_Pagination", paged)
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    // 篩選下拉即選即查
+    ['hoursSel', 'kindSel'].forEach(function (id) {
+        const sel = document.getElementById(id);
+        if (sel) sel.addEventListener('change', function () { sel.form.submit(); });
+    });
+})();
+</script>
+}

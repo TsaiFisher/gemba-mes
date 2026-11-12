@@ -1,0 +1,1273 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root xmlns:ns1="urn:schemas-microsoft-com:xml-msdata" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:schema id="root">
+    <xs:element name="root" ns1:IsDataSet="true">
+    </xs:element>
+  </xs:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="RevenueAccount" xml:space="preserve">
+    <value>收入科目</value>
+  </data>
+  <data name="ManualArInvoiceScopeWarning" xml:space="preserve">
+    <value>手動應收發票用於「沒有出貨的收入」（服務費、雜項收入）。正常出貨開票請走出貨單——同一個成品若兩條路徑都開票，會落到兩個營收科目，報表對帳就對不起來。</value>
+  </data>
+  <data name="TaxCode" xml:space="preserve">
+    <value>稅別</value>
+  </data>
+  <data name="ManualInvoice" xml:space="preserve">
+    <value>手動建單</value>
+  </data>
+  <data name="ManualInvoiceNeedsLine" xml:space="preserve">
+    <value>至少要有一行明細</value>
+  </data>
+  <data name="ManualInvoiceScopeWarning" xml:space="preserve">
+    <value>手動發票不進存貨——分錄直接借費用科目。若這筆其實是「該進存貨的進貨」，請走進貨單，不要用這張表單（用了會讓存貨永久少計，而且沒有任何訊號）。</value>
+  </data>
+  <data name="ManualInvoiceAmountHint" xml:space="preserve">
+    <value>金額由伺服器依數量×單價與稅率計算，稅率取自稅別主檔。</value>
+  </data>
+  <data name="ExpenseAccount" xml:space="preserve">
+    <value>費用科目</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>摘要</value>
+  </data>
+  <data name="AddLine" xml:space="preserve">
+    <value>新增列</value>
+  </data>
+  <data name="InvoiceLines" xml:space="preserve">
+    <value>發票明細</value>
+  </data>
+  <data name="ExchangeRateAutoHint" xml:space="preserve">
+    <value>留空＝依發票日自動查匯率</value>
+  </data>
+  <data name="DeleteFailedSystemAccount" xml:space="preserve"><value>此為系統科目，自動分錄會用到，不可刪除。若不再使用請改為停用。</value></data>
+  <data name="ChartOfAccount" xml:space="preserve">
+    <value>會計科目</value>
+  </data>
+  <data name="BasManagement" xml:space="preserve"><value>基本資料管理</value></data>
+  <data name="CompanyMaster" xml:space="preserve"><value>廠商 / 客戶</value></data>
+  <data name="ProductCategoryMaster" xml:space="preserve"><value>產品類別</value></data>
+  <data name="ProductMaster" xml:space="preserve"><value>產品主檔</value></data>
+  <data name="TaxMaster" xml:space="preserve"><value>稅別</value></data>
+  <data name="CurrencyMaster" xml:space="preserve"><value>幣別 / 匯率</value></data>
+  <data name="UomMaster" xml:space="preserve"><value>計量單位</value></data>
+  <data name="ContainerMaster" xml:space="preserve"><value>容器 / 包材</value></data>
+  <data name="ToolingMaster" xml:space="preserve"><value>模具</value></data>
+  <data name="InventoryTransactionType" xml:space="preserve"><value>庫存異動類型</value></data>
+  <data name="WorkCenterMaster" xml:space="preserve"><value>工作中心</value></data>
+  <data name="WarehouseMaster" xml:space="preserve"><value>倉庫 / 儲位</value></data>
+  <data name="ShiftGroupMaster" xml:space="preserve"><value>班制</value></data>
+  <data name="ShiftMaster" xml:space="preserve"><value>班別</value></data>
+  <data name="SpecialDayMaster" xml:space="preserve"><value>特殊日</value></data>
+  <data name="DocNumberConfig" xml:space="preserve"><value>單號設定</value></data>
+  <data name="MfgManagement" xml:space="preserve"><value>製造執行</value></data>
+  <data name="Routing" xml:space="preserve"><value>途程主檔</value></data>
+  <data name="MultiLevelBom" xml:space="preserve"><value>多階料表</value></data>
+  <data name="MultiLevelRouting" xml:space="preserve"><value>多階途程</value></data>
+  <data name="MrpRun" xml:space="preserve"><value>MRP 執行</value></data>
+  <data name="WorkOrder" xml:space="preserve"><value>工單查詢</value></data>
+  <data name="ProductionBatch" xml:space="preserve"><value>生產批查詢</value></data>
+  <data name="BatchRelease" xml:space="preserve"><value>生產批投產</value></data>
+  <data name="MrpAlreadyExecuted" xml:space="preserve"><value>此 MRP 執行單已展開，無法修改、重跑或刪除。</value></data>
+  <data name="MrpNotExecuted" xml:space="preserve"><value>此 MRP 執行單尚未展開，請先執行再重跑。</value></data>
+  <data name="WorkOrderNotPlanned" xml:space="preserve"><value>只有「已規劃」狀態的工單可釋出。</value></data>
+  <data name="ReleaseSuccess" xml:space="preserve"><value>工單已釋出，標準成本已計算。</value></data>
+  <data name="ReleaseSubmitted" xml:space="preserve"><value>工單已釋出並送出簽核。</value></data>
+  <data name="ReleaseNotNeeded" xml:space="preserve"><value>投產當下的可用量已滿足毛需求（暫定 {0}，重算為 0），這張工單不需生產，不能投產。若確定不需要，請按「作廢」。</value></data>
+  <data name="BatchReleaseSkippedFmt" xml:space="preserve"><value>略過 {0}：重算為 0，不需生產（請作廢）。</value></data>
+  <data name="ReleaseRecalcConfirm" xml:space="preserve"><value>投產量已依即時庫存重算，請確認後再投產。</value></data>
+  <data name="ReleaseMaterialBlocked" xml:space="preserve"><value>料件不足且在途供給無法及時補齊，無法投產。</value></data>
+  <data name="BatchNothingToRelease" xml:space="preserve"><value>此生產批無「已規劃」狀態的工單可投產。</value></data>
+  <data name="BatchMaterialBlocked" xml:space="preserve"><value>批內有工單缺料且在途補不足，整批不可投產。</value></data>
+  <data name="BatchRecalcConfirm" xml:space="preserve"><value>批內有工單投產量已重算，請確認後再整批投產。</value></data>
+  <data name="BatchReleaseSuccess" xml:space="preserve"><value>整批已投產。</value></data>
+  <data name="WorkOrderNotPending" xml:space="preserve"><value>僅待審核狀態的工單可撤回。</value></data>
+  <data name="WorkOrderWithdrawn" xml:space="preserve"><value>已撤回釋出簽核，工單退回「已規劃」。</value></data>
+  <data name="OrderKindSales" xml:space="preserve"><value>銷售訂單</value></data>
+  <data name="OrderKindInternal" xml:space="preserve"><value>內部訂單</value></data>
+  <data name="IsFinalReceipt" xml:space="preserve"><value>本單為最後一批（結清超耗與在外原料）</value></data>
+  <data name="IsFinalReceiptHint" xml:space="preserve"><value>收足訂購量時會自動結清；廠商短交但已宣告完工時，請勾選本欄，否則未收回的原料會一直掛在在外餘額。</value></data>
+  <data name="OutsourcePurchaseOrder" xml:space="preserve"><value>委外採購單</value></data>
+  <data name="OutsourceQuotation" xml:space="preserve"><value>委外報價主檔</value></data>
+  <data name="OutsourceWhole" xml:space="preserve"><value>整品委外</value></data>
+  <data name="OutsourceOp" xml:space="preserve"><value>工序委外</value></data>
+  <data name="OutsourceNoSelection" xml:space="preserve"><value>請至少勾選一筆待轉委外的派工。</value></data>
+  <data name="OutsourceSupplierRequired" xml:space="preserve"><value>請選擇委外廠商。</value></data>
+  <data name="OutsourceNotDraft" xml:space="preserve"><value>只有草稿狀態的委外採購單可確認或刪除。</value></data>
+  <data name="OutsourceConfirmed" xml:space="preserve"><value>委外採購單已確認。</value></data>
+  <data name="WorkCalendar" xml:space="preserve"><value>工作日曆</value></data>
+  <data name="PlannedDowntime" xml:space="preserve"><value>計劃停機</value></data>
+  <data name="EndMustAfterStart" xml:space="preserve"><value>停機迄必須晚於停機起。</value></data>
+  <data name="MachineRequired" xml:space="preserve"><value>請選擇機台。</value></data>
+  <data name="WorkCenterOrMachineRequired" xml:space="preserve"><value>請至少指定工作中心或機台。</value></data>
+  <data name="BomSelfReferenceError" xml:space="preserve"><value>用料清單的品號不可與途程的產品相同（會造成用料循環）。</value></data>
+  <data name="PurManagement" xml:space="preserve"><value>採購管理</value></data>
+  <data name="OspManagement" xml:space="preserve"><value>委外管理</value></data>
+  <data name="PurchaseRequest" xml:space="preserve"><value>請購單</value></data>
+  <data name="PurchaseOrder" xml:space="preserve"><value>採購單</value></data>
+  <data name="GoodsReceipt" xml:space="preserve"><value>進貨單</value></data>
+  <data name="GoodsReturn" xml:space="preserve"><value>進貨退出</value></data>
+  <data name="OrdManagement" xml:space="preserve"><value>訂單管理</value></data>
+  <data name="SalesOrder" xml:space="preserve"><value>銷售訂單</value></data>
+  <data name="GoodsShipment" xml:space="preserve"><value>出貨單</value></data>
+  <data name="SalesReturn" xml:space="preserve"><value>銷退單</value></data>
+  <data name="InternalOrder" xml:space="preserve"><value>內部訂單</value></data>
+  <data name="InvManagement" xml:space="preserve"><value>庫存管理</value></data>
+  <data name="InventoryBalance" xml:space="preserve"><value>庫存餘額查詢</value></data>
+  <data name="StockMovement" xml:space="preserve"><value>庫存異動明細</value></data>
+  <data name="StockLedger" xml:space="preserve"><value>庫存異動帳本</value></data>
+  <data name="InventoryValuation" xml:space="preserve"><value>庫存評估表</value></data>
+  <data name="LandedCostAllocation" xml:space="preserve"><value>進料費用分攤</value></data>
+  <data name="WarehouseOps" xml:space="preserve"><value>倉庫作業</value></data>
+  <data name="MaterialStaging" xml:space="preserve"><value>備料單</value></data>
+  <data name="ScrapDoc" xml:space="preserve"><value>報廢單</value></data>
+  <data name="LoanDoc" xml:space="preserve"><value>借入借出單</value></data>
+  <data name="SampleDoc" xml:space="preserve"><value>樣品/客供單</value></data>
+  <data name="InventoryCount" xml:space="preserve"><value>盤點清冊</value></data>
+  <data name="StockAdjustment" xml:space="preserve"><value>庫存調整單</value></data>
+  <data name="OutsourceMaterial" xml:space="preserve"><value>委外發退料單</value></data>
+  <data name="ReworkMaterial" xml:space="preserve"><value>重工發退料單</value></data>
+  <data name="StockTransfer" xml:space="preserve"><value>同廠調撥單</value></data>
+  <data name="CrossPlantTransfer" xml:space="preserve"><value>跨廠調撥單</value></data>
+  
+  <data name="SheetNotEditable" xml:space="preserve"><value>盤點清冊狀態不允許此操作。</value></data>
+  <data name="SheetAlreadyClosed" xml:space="preserve"><value>此盤點清冊已結帳並產生盤盈虧調整單 {0}，不可重複結帳。</value></data>
+  <data name="SheetNotDeletable" xml:space="preserve"><value>此盤點清冊無法刪除。</value></data>
+  <data name="SheetHasCountedItems" xml:space="preserve"><value>清冊已有已初盤記錄，無法執行此操作。</value></data>
+  <data name="CountSaved" xml:space="preserve"><value>初盤量已儲存。</value></data>
+  <data name="RecountRequiresFirstCount" xml:space="preserve"><value>請先完成初盤再進行覆盤。</value></data>
+  <data name="FirstCountLockedAfterRecount" xml:space="preserve"><value>此明細已覆盤，初盤量不可再修改。</value></data>
+  <data name="OfflineClientIdInvalid" xml:space="preserve"><value>離線資料的識別碼格式不正確，無法同步。</value></data>
+  <data name="OfflineReplayAlreadyProcessed" xml:space="preserve"><value>這筆離線資料先前已處理過（重送），未重複入帳。</value></data>
+  <data name="RecountDifferentUser" xml:space="preserve"><value>覆盤人員不得與初盤人員相同（職責分離）。</value></data>
+  <data name="RecountSaved" xml:space="preserve"><value>覆盤量已儲存。</value></data>
+  <data name="CloseHasPending" xml:space="preserve"><value>尚有 {0} 筆待盤明細，請完成後再執行結帳。</value></data>
+  <data name="SheetCloseSuccess" xml:space="preserve"><value>盤點結帳完成，調整單 {0} 已建立。</value></data>
+  <data name="SheetCloseNoVariance" xml:space="preserve"><value>盤點結帳完成，無差異，未產生調整單。</value></data>
+  <data name="GenerateItemsSuccess" xml:space="preserve"><value>快照完成，共產生 {0} 筆明細。</value></data>
+  
+  <data name="RecordNotFound" xml:space="preserve"><value>此單據已不存在（可能已被刪除）。</value></data>
+  <data name="NoCreatePermission" xml:space="preserve"><value>您沒有新增權限。</value></data>
+  <data name="NoUpdatePermission" xml:space="preserve"><value>您沒有修改權限。</value></data>
+  <data name="NoDeletePermission" xml:space="preserve"><value>您沒有刪除權限。</value></data>
+  <data name="CreateSuccess" xml:space="preserve"><value>新增成功。</value></data>
+  <data name="UpdateSuccess" xml:space="preserve"><value>更新成功。</value></data>
+  <data name="DeleteSuccess" xml:space="preserve"><value>刪除成功。</value></data>
+  <data name="DuplicateRecord" xml:space="preserve"><value>此記錄已存在。</value></data>
+  <data name="BatchSelectShiftGroup" xml:space="preserve"><value>請選擇班制代號。</value></data>
+  <data name="BatchShiftNotFound" xml:space="preserve"><value>找不到此班制的排班設定。</value></data>
+  <data name="BatchGenerateDone" xml:space="preserve"><value>批次產生完成，共新增 {0} 筆記錄。</value></data>
+  <data name="LoadFailed" xml:space="preserve"><value>載入失敗，請重試。</value></data>
+  <data name="OperationFailed" xml:space="preserve"><value>操作失敗。</value></data>
+  <data name="RefCodeNotFound" xml:space="preserve"><value>代碼 {0} 不存在。</value></data>
+  <data name="RefCodeOtherPlant" xml:space="preserve"><value>代碼 {0} 屬於其他廠別，不可於本廠使用。</value></data>
+  <data name="RefCodeInactive" xml:space="preserve"><value>代碼 {0} 已停用，不可使用。</value></data>
+  <data name="ConfirmSubmitApproval" xml:space="preserve"><value>確定要送出審核嗎？</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>確定要撤回嗎？</value></data>
+  <data name="ConfirmDeleteSimple" xml:space="preserve"><value>確定刪除？</value></data>
+  <data name="ConfirmVoid" xml:space="preserve"><value>確定作廢？</value></data>
+  <data name="ConfirmVoidInvoice" xml:space="preserve"><value>確定作廢此發票？</value></data>
+  <data name="ConfirmReceiveOutsource" xml:space="preserve"><value>確定確認收貨並過帳？</value></data>
+  <data name="ConfirmAPPayment" xml:space="preserve"><value>確認付款並入帳？</value></data>
+  <data name="ConfirmARReceipt" xml:space="preserve"><value>確認收款並入帳？</value></data>
+  <data name="VoidFailed" xml:space="preserve"><value>作廢失敗</value></data>
+  <data name="ConfirmDelete" xml:space="preserve"><value>確定要刪除「{0}」嗎？</value></data>
+  
+  <data name="Print_Print" xml:space="preserve"><value>列印</value></data>
+  <data name="Print_Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="Print_BasicInfo" xml:space="preserve"><value>基本資料</value></data>
+  <data name="Print_Details" xml:space="preserve"><value>明細</value></data>
+  <data name="Print_Total" xml:space="preserve"><value>合計</value></data>
+  <data name="Print_Sign_Created" xml:space="preserve"><value>製作</value></data>
+  <data name="Print_Sign_Reviewed" xml:space="preserve"><value>審核</value></data>
+  <data name="Print_Sign_Approved" xml:space="preserve"><value>核准</value></data>
+  <data name="Print_Sign_Date" xml:space="preserve"><value>日期</value></data>
+  <data name="Print_Sign_OnBehalf" xml:space="preserve"><value>{0}（代 {1}）</value></data>
+  <data name="Print_Sign_Separator" xml:space="preserve"><value>、</value></data>
+  <data name="Print_PrintedAt" xml:space="preserve"><value>列印時間</value></data>
+  <data name="InvSourceQueryFailed" xml:space="preserve"><value>查詢來源失敗</value></data>
+  <data name="InvNoOpenSourceLines" xml:space="preserve"><value>查無尚未沖銷的來源明細</value></data>
+  <data name="InvSelectSourceLine" xml:space="preserve"><value>選擇來源明細</value></data>
+  <data name="InvColDocNo" xml:space="preserve"><value>單號</value></data>
+  <data name="InvColProduct" xml:space="preserve"><value>品號</value></data>
+  <data name="InvColOrigQty" xml:space="preserve"><value>原量</value></data>
+  <data name="InvColRemaining" xml:space="preserve"><value>剩餘量</value></data>
+  <data name="InvColUom" xml:space="preserve"><value>單位</value></data>
+  <data name="UomCode" xml:space="preserve"><value>單位</value></data>
+  <data name="InvActionSelect" xml:space="preserve"><value>選取</value></data>
+  
+  <data name="SaveFailed" xml:space="preserve"><value>儲存失敗，請重試。</value></data>
+  <data name="DeleteFailed" xml:space="preserve"><value>刪除失敗，請重試。</value></data>
+  <data name="ConfirmDeleteContact" xml:space="preserve"><value>確定要刪除此聯絡人？</value></data>
+  <data name="ConfirmDeleteConversion" xml:space="preserve"><value>確定要刪除此換算設定？</value></data>
+  <data name="ConfirmDeleteLocation" xml:space="preserve"><value>確定要刪除此儲位？</value></data>
+  <data name="ConfirmDeleteRateOn" xml:space="preserve"><value>確定要刪除 {0} 的匯率？</value></data>
+  <data name="FieldRequiredFmt" xml:space="preserve"><value>{0} 不可為空</value></data>
+  <data name="FieldsRequiredFmt" xml:space="preserve"><value>{0} 和 {1} 不可為空</value></data>
+  <data name="Schedule" xml:space="preserve"><value>生產排程</value></data>
+  <data name="ScheduleRunSuccess" xml:space="preserve"><value>排程完成：已排 {0} 筆，跳過 {1} 筆。</value></data>
+  <data name="GanttActualRowSuffix" xml:space="preserve"><value>實際</value></data>
+  <data name="PriorityOutOfRange" xml:space="preserve"><value>優先序須介於 1 到 9999 之間。</value></data>
+  <data name="ScheduleQuery" xml:space="preserve"><value>排程查詢</value></data>
+  <data name="PreparationBoard" xml:space="preserve"><value>生產準備看板</value></data>
+  <data name="Dispatch" xml:space="preserve"><value>派工作業</value></data>
+  <data name="LineStatus" xml:space="preserve"><value>產線即時看板</value></data>
+  <data name="DispatchInvalidStatusForSetup" xml:space="preserve"><value>派工狀態不允許開始備料，須為「已排定」或「備料完成」。</value></data>
+  <data name="SetupAlreadyOpen" xml:space="preserve"><value>此派工已有進行中的備料記錄，請先完成備料。</value></data>
+  <data name="SetupStarted" xml:space="preserve"><value>備料已開始，請完成備料後點擊「備料完成」。</value></data>
+  <data name="DispatchNotInSetup" xml:space="preserve"><value>派工未處於備料中狀態，無法完成備料。</value></data>
+  <data name="SetupNotFound" xml:space="preserve"><value>找不到進行中的備料記錄。</value></data>
+  <data name="SetupDone" xml:space="preserve"><value>備料完成，派工已更新為「備料完成」狀態。</value></data>
+  <data name="SetupDonePendingFpi" xml:space="preserve"><value>備料完成。本工序需首件檢查，派工已轉為「待首件」，請品管人員完成 FPI 後才能開工。</value></data>
+  <data name="DispatchCannotStart" xml:space="preserve"><value>派工狀態不允許開工，須為「已排定」、「備料完成」或「生產中」。</value></data>
+  <data name="DispatchPendingFpi" xml:space="preserve"><value>本工序需首件檢查（FPI），尚未有通過的首件檢驗單，無法開工。請品管人員先完成首件量測。</value></data>
+  <data name="DispatchMaterialShortageBlocked" xml:space="preserve"><value>物料未備齊，無法開工（系統設定為阻擋）。請補貨或洽主管覆寫後再開工。</value></data>
+  <data name="DispatchMaterialShortageWarning" xml:space="preserve"><value>注意：本工單物料可能不足，已開工但請留意缺料風險。</value></data>
+  <data name="DispatchMachineUnavailableBlocked" xml:space="preserve"><value>機台目前為「{0}」，不可開工。請先確認機台狀態或改用其他機台。</value></data>
+  <data name="DispatchMachineUnavailableWarning" xml:space="preserve"><value>注意：機台目前為「{0}」，已開工但請確認機台狀態是否需要更新。</value></data>
+  <data name="SessionAlreadyOpen" xml:space="preserve"><value>此派工已有進行中的上工記錄，請先下工再重新上工。</value></data>
+  <data name="SessionStarted" xml:space="preserve"><value>上工成功，派工已進入「生產中」狀態。</value></data>
+  <data name="SessionNotFound" xml:space="preserve"><value>找不到指定的上工記錄。</value></data>
+  <data name="ContainerNotFound" xml:space="preserve"><value>容器不存在或已停用，請重新選擇。</value></data>
+  <data name="SessionNotOpen" xml:space="preserve"><value>此上工記錄已下工或不存在。</value></data>
+  <data name="SessionStopped" xml:space="preserve"><value>下工成功，實際工時已計入成本。</value></data>
+  <data name="DispatchNotInProgress" xml:space="preserve"><value>派工未處於「生產中」狀態，無法報工。</value></data>
+  <data name="ReportQtyRequired" xml:space="preserve"><value>合格數量或不良數量至少填入一個大於 0 的值。</value></data>
+  <data name="OverReport" xml:space="preserve"><value>超量報工：合格數量累計將超過派工總量，請確認後再提交。</value></data>
+  <data name="ReportPrevOperationShortage" xml:space="preserve"><value>前一工序的完成數量不足，本工序無法報工。請先完成前工序。</value></data>
+  <data name="ReportCreated" xml:space="preserve"><value>報工成功。</value></data>
+  <data name="ConcurrencyConflict" xml:space="preserve"><value>資料已被其他人修改，請重新載入後再操作。</value></data>
+  <data name="ProductionCompletion" xml:space="preserve"><value>完工入庫</value></data>
+  <data name="WorkOrderNotCompleted" xml:space="preserve"><value>工單狀態非「已完工」，無法入庫。</value></data>
+  <data name="WorkOrderNotApproved" xml:space="preserve"><value>來源工單尚未核准，無法建立發料單。</value></data>
+  <data name="WorkOrderCannotVoid" xml:space="preserve"><value>已結案或已作廢的工單無法再次作廢。</value></data>
+  <data name="WorkOrderHasProduction" xml:space="preserve"><value>此工單已有派工回報紀錄，無法作廢。</value></data>
+  <data name="WorkOrderHasIssuedMaterial" xml:space="preserve"><value>此工單已有領出未退回的物料，無法作廢。請先開立退料單將物料退回。</value></data>
+  <data name="WorkOrderVoided" xml:space="preserve"><value>工單已作廢，庫存預留已釋放。</value></data>
+  <data name="WorkOrderHasConfirmedSlip" xml:space="preserve"><value>此工單有倉庫已確認揀料、尚未過帳的發料單（{0}），無法作廢。請倉庫先取消該發料單並把料放回原儲位，或過帳後開立退料單退回。</value></data>
+  <data name="WorkOrderHasOutsourcePo" xml:space="preserve"><value>此工單已轉委外採購單（{0}），無法作廢。草稿委外採購單請先刪除；已確認者請先作廢委外採購單（須尚未收貨、在外原料已退回）。</value></data>
+  <data name="OpoVoidNotConfirmed" xml:space="preserve"><value>只有「已確認」的委外採購單可以作廢；草稿請直接刪除。</value></data>
+  <data name="OpoVoidHasReceipts" xml:space="preserve"><value>此委外採購單已有收貨單（{0}），無法作廢。草稿收貨單請先刪除；已過帳者請先作廢收貨。</value></data>
+  <data name="OpoVoidMaterialAtVendor" xml:space="preserve"><value>仍有料在廠商端尚未退回（{0}），無法作廢。請先開立委外退料單將料退回。</value></data>
+  <data name="OpoVoided" xml:space="preserve"><value>委外採購單已作廢，委外建議可重新轉單。</value></data>
+  <data name="WorkOrderNotApprovedCannotStart" xml:space="preserve"><value>工單送審中或已被退回，尚未核准，無法開工。</value></data>
+  <data name="WorkOrderNotReleasedCannotStart" xml:space="preserve"><value>工單不是「已投產」或「生產中」（可能已撤回或被駁回），無法開工。</value></data>
+  <data name="SlipSourceWorkOrderVoided" xml:space="preserve"><value>來源工單 {0} 已作廢，此發退料單無法過帳。</value></data>
+  <data name="SlipSourceWorkOrderClosed" xml:space="preserve"><value>來源工單 {0} 已結案（入庫完成、成本已結算），不能再發料；只能退料。</value></data>
+  <data name="OsrSourceWorkOrderVoided" xml:space="preserve"><value>來源工單 {0} 已作廢，無法確認委外收貨。</value></data>
+  <data name="WhAndLocationRequired" xml:space="preserve"><value>倉庫與儲位不可為空。</value></data>
+  <data name="CompletionSuccess" xml:space="preserve"><value>入庫成功：庫存已更新，工單已結案。</value></data>
+  <data name="FQCRequired" xml:space="preserve"><value>此工單需先完成 FQC 完工檢驗（Pass），方可執行入庫作業。</value></data>
+  <data name="ReworkQtyRequired" xml:space="preserve"><value>重工數量必須大於零。</value></data>
+  <data name="ReworkOperationsRequired" xml:space="preserve"><value>請至少勾選一道要重做的工序。</value></data>
+  <data name="ReworkOperationsInvalid" xml:space="preserve"><value>勾選的工序不在原工單上。</value></data>
+  <data name="ReworkCreated" xml:space="preserve"><value>重工工單已建立，請前往工單查詢釋出後排程。</value></data>
+  <data name="MachineStatusOrder" xml:space="preserve"><value>機台狀態異動</value></data>
+  <data name="InvalidEventType" xml:space="preserve"><value>不支援的事件類型。</value></data>
+  <data name="MachineNotFound" xml:space="preserve"><value>找不到此機台。</value></data>
+  <data name="MaterialSlip" xml:space="preserve"><value>發退料單</value></data>
+  <data name="WorkOrderMaterialStatus" xml:space="preserve"><value>工單用料狀況</value></data>
+  <data name="MaterialIssueSlip" xml:space="preserve"><value>發料單</value></data>
+  <data name="MaterialRequisition" xml:space="preserve"><value>領料單</value></data>
+  <data name="WorkOrderVariance" xml:space="preserve"><value>工單成本差異</value></data>
+  <data name="SlipNotDraft" xml:space="preserve"><value>發退料單非草稿狀態，無法操作。</value></data>
+  <data name="SlipNotPending" xml:space="preserve"><value>領料單非「待核准」狀態，無法核准。</value></data>
+  <data name="SlipNotApproved" xml:space="preserve"><value>發退料單尚未審核，無法開始揀料。</value></data>
+  <data name="SlipNotPicking" xml:space="preserve"><value>發退料單非「揀料中」狀態，無法確認揀料完成。</value></data>
+  <data name="SlipNotConfirmed" xml:space="preserve"><value>發退料單尚未確認揀料，無法過帳。</value></data>
+  <data name="SlipAlreadyIssued" xml:space="preserve"><value>已過帳、已結案或已取消的發退料單無法取消。</value></data>
+  <data name="SlipCannotDelete" xml:space="preserve"><value>僅草稿或取消狀態可刪除。</value></data>
+  <data name="SlipCategoryNotApplicable" xml:space="preserve"><value>此操作不適用於此類別的發退料單。</value></data>
+  <data name="SlipApproved" xml:space="preserve"><value>發退料單已核准。</value></data>
+  <data name="SlipSubmitted" xml:space="preserve"><value>領料申請已送審。</value></data>
+  <data name="SlipPickingStarted" xml:space="preserve"><value>已開始揀料。</value></data>
+  <data name="SlipConfirmed" xml:space="preserve"><value>揀料完成確認，等待過帳。</value></data>
+  <data name="SlipIssued" xml:space="preserve"><value>發退料單已過帳。</value></data>
+  <data name="SlipCancelled" xml:space="preserve"><value>發退料單已取消。</value></data>
+  <data name="ReqNotPending" xml:space="preserve"><value>領料單非「待核准」狀態，無法核准。</value></data>
+  <data name="ReqApproved" xml:space="preserve"><value>領料申請已核准。</value></data>
+  <data name="VendorPriceList" xml:space="preserve"><value>廠商單價目錄</value></data>
+  <data name="VendorPriceListDuplicate" xml:space="preserve"><value>此廠商/品號/幣別/有效起日組合已存在，請修改有效起日或編輯既有筆資料。</value></data>
+  <data name="SupplierSuspended" xml:space="preserve"><value>此廠商資格狀態為「暫停」，請確認後再繼續。</value></data>
+  <data name="SupplierProbation" xml:space="preserve"><value>此廠商處於觀察期，請留意品質與交期。</value></data>
+  <data name="SupplierQualificationExpired" xml:space="preserve"><value>此廠商資格已過期，請通知品保重新評核。</value></data>
+  <data name="QcrManagement" xml:space="preserve"><value>品質管理</value></data>
+  <data name="InspectionSpec" xml:space="preserve"><value>檢驗規範</value></data>
+  <data name="SpecCode" xml:space="preserve"><value>規範代碼</value></data>
+  <data name="SpecName" xml:space="preserve"><value>規範名稱</value></data>
+  <data name="DefectCode" xml:space="preserve"><value>不良項目代碼</value></data>
+  <data name="Instrument" xml:space="preserve"><value>檢驗儀器</value></data>
+  <data name="InstrumentCode" xml:space="preserve"><value>儀器代碼</value></data>
+  <data name="InstrumentName" xml:space="preserve"><value>儀器名稱</value></data>
+  <data name="InspectionOrder" xml:space="preserve"><value>檢驗單查詢</value></data>
+  <data name="CalibrateSuccess" xml:space="preserve"><value>校正完成，已更新校正日期</value></data>
+  <data name="CalibrateConfirm" xml:space="preserve"><value>確定對序號「{0}」執行校正？系統將自動更新最後校正日與下次校正日。</value></data>
+  <data name="Ncr" xml:space="preserve"><value>不合格品單（NCR）</value></data>
+  <data name="NcrExecuteConfirm" xml:space="preserve"><value>確定執行此 NCR 處置？執行後無法還原。</value></data>
+  <data name="NcrSubmitConfirm" xml:space="preserve"><value>確定送審此特採申請？</value></data>
+  <data name="InventoryCountCloseConfirm" xml:space="preserve"><value>確定結帳此盤點清冊？結帳後會依差異自動產生庫存調整單並過帳。</value></data>
+  <data name="NcrCloseConfirm" xml:space="preserve"><value>確定結案此 NCR？</value></data>
+  <data name="NcrNotEditable" xml:space="preserve"><value>NCR 非待處置狀態，無法編輯。</value></data>
+  <data name="NcrNotDeletable" xml:space="preserve"><value>NCR 已執行或結案，無法刪除。</value></data>
+  <data name="NcrNotExecutable" xml:space="preserve"><value>NCR 目前狀態無法執行處置。</value></data>
+  <data name="SubmitOnlyForUseAsIs" xml:space="preserve"><value>僅特採（UseAsIs）處置需要送審。</value></data>
+  <data name="UseAsIsRequiresApproval" xml:space="preserve"><value>特採處置必須先取得核准後方可執行。</value></data>
+  <data name="SubmitSuccess" xml:space="preserve"><value>已送審，等待主管核准。</value></data>
+  <data name="CloseRequiresExecuted" xml:space="preserve"><value>需先執行處置後才能結案。</value></data>
+  <data name="CloseSuccess" xml:space="preserve"><value>NCR 已結案。</value></data>
+  <data name="ExecuteSuccess" xml:space="preserve"><value>處置執行完成。</value></data>
+  <data name="ExecuteFailed" xml:space="preserve"><value>處置執行失敗</value></data>
+  <data name="ScrapNeedsLocation" xml:space="preserve"><value>報廢處置必須指定倉庫與儲位。</value></data>
+  <data name="ScrapExecuted" xml:space="preserve"><value>報廢完成，報廢單號：{0}</value></data>
+  <data name="ReworkExecuted" xml:space="preserve"><value>重工工單已建立：{0}</value></data>
+  <data name="ReworkAdvisory" xml:space="preserve"><value>找不到原始工單，重工工單請手動建立。</value></data>
+  <data name="ReturnExecutedAdvisory" xml:space="preserve"><value>退回標記完成，請至採購模組建立退貨單。</value></data>
+  <data name="ReturnDraftCreated" xml:space="preserve"><value>已自動建立採購退貨草稿單 {0}，請至採購模組確認過帳。</value></data>
+  <data name="UseAsIsExecuted" xml:space="preserve"><value>特採執行完成。</value></data>
+  <data name="DuplicateCode" xml:space="preserve"><value>此代碼已存在，請使用不同代碼。</value></data>
+  <data name="DuplicateCodeOtherPlant" xml:space="preserve"><value>此代碼已被其他廠別使用（本廠查詢不會顯示），請使用不同代碼。</value></data>
+  <data name="DuplicateOperationSeq" xml:space="preserve"><value>工序序號重複，請修正後再儲存。</value></data>
+  <data name="DbUniqueViolation" xml:space="preserve"><value>儲存失敗：相同鍵值（代碼／單號）的資料已存在，請更換後重試。</value></data>
+  <data name="DbForeignKeyViolation" xml:space="preserve"><value>操作失敗：資料已被其他單據引用，請先處理相關單據後再試。</value></data>
+  <data name="OrderReferencedByMrpCannotDelete" xml:space="preserve"><value>此訂單已納入 MRP 執行單 {0}，無法刪除。草稿執行單請先移除該需求列；已展開者請先重跑排除此訂單。</value></data>
+  <data name="DocNumberResetFinerThanDate" xml:space="preserve"><value>重置週期不可比日期格式細：月重置需含年月（YYMM 以上）、年重置需含年度，否則序號重置後會重發相同單號。</value></data>
+  <data name="DocNumberStemDuplicate" xml:space="preserve"><value>編號規則（前置碼＋分隔符＋日期格式）與同單據類型的其他設定重複，各廠序號獨立起算會產生相同單號，請改用不同前置碼。</value></data>
+  <data name="DocNumberPlantOverlap" xml:space="preserve"><value>廠別「{0}」已歸屬同單據類型的其他設定，一個廠別僅能對應一筆規則，請取消勾選或修改該設定。</value></data>
+  <data name="DocNumberPlantEmptyForbidden" xml:space="preserve"><value>專屬規則至少須勾選一個廠別；若要改回全廠適用的預設規則，請直接刪除此筆設定。</value></data>
+  <data name="DocNumberStemLockedInUse" xml:space="preserve"><value>此規則已編過號，前置碼、分隔符與日期格式不可再變更（既有單據已使用此編號格式）。如需不同格式，請另建一筆廠別專屬規則。</value></data>
+  <data name="DocNumberConfigMissing" xml:space="preserve"><value>單據類型「{0}」尚未設定編號規則，請先至 BAS → 單號設定 新增後再試。</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>儲存成功。</value></data>
+  <data name="HasSerialsError" xml:space="preserve"><value>此儀器已有序號紀錄，無法刪除。</value></data>
+  
+  <data name="OutsourceReceipt" xml:space="preserve"><value>委外收貨</value></data>
+  
+  <data name="FinManagement" xml:space="preserve"><value>財務管理</value></data>
+  <data name="APInvoice" xml:space="preserve"><value>應付帳款</value></data>
+  <data name="ARInvoice" xml:space="preserve"><value>應收帳款</value></data>
+  <data name="APPayment" xml:space="preserve"><value>付款作業</value></data>
+  <data name="ARReceipt" xml:space="preserve"><value>收款作業</value></data>
+  <data name="BankAccount" xml:space="preserve"><value>銀行帳戶</value></data>
+  <data name="APAging" xml:space="preserve"><value>應付帳齡分析</value></data>
+  <data name="ARAging" xml:space="preserve"><value>應收帳齡分析</value></data>
+  
+  <data name="APInvoiceId" xml:space="preserve"><value>應付發票號</value></data>
+  <data name="ARInvoiceId" xml:space="preserve"><value>應收發票號</value></data>
+  <data name="APPaymentId" xml:space="preserve"><value>付款單號</value></data>
+  <data name="APInvoiceAllocation" xml:space="preserve"><value>核銷應付發票</value></data>
+  <data name="LoadInvoicesHint" xml:space="preserve"><value>選擇供應商後自動載入未結發票</value></data>
+  <data name="PleaseSelectSupplier" xml:space="preserve"><value>請先選擇供應商</value></data>
+  <data name="TotalAllocated" xml:space="preserve"><value>累計核銷：</value></data>
+  <data name="NoOpenInvoices" xml:space="preserve"><value>此供應商目前無未結發票</value></data>
+  <data name="InvoiceNo" xml:space="preserve"><value>發票號</value></data>
+  <data name="SourceDoc" xml:space="preserve"><value>來源單</value></data>
+  <data name="OutstandingAmt" xml:space="preserve"><value>未結金額</value></data>
+  <data name="AllocAmt" xml:space="preserve"><value>核銷金額</value></data>
+  
+  <data name="AsOf" xml:space="preserve"><value>截至日</value></data>
+  <data name="AllocationDetail" xml:space="preserve"><value>核銷明細</value></data>
+  <data name="Amount" xml:space="preserve"><value>金額</value></data>
+  <data name="GoodsReceiptDate" xml:space="preserve"><value>收貨日期</value></data>
+  <data name="ReceiptQty" xml:space="preserve"><value>收貨數量</value></data>
+  <data name="UnitCost" xml:space="preserve"><value>單位成本</value></data>
+  <data name="LoadFromOpo" xml:space="preserve"><value>從委外採購單帶入</value></data>
+  <data name="OutsourcePurchaseOrderNo" xml:space="preserve"><value>委外採購單號</value></data>
+  <data name="OutsourcePurchaseOrderId" xml:space="preserve"><value>委外採購單號</value></data>
+  <data name="AccountOrBankName" xml:space="preserve"><value>帳戶代號 / 銀行名稱</value></data>
+  
+  <data name="SelectCustomer" xml:space="preserve"><value>— 選擇客戶 —</value></data>
+  <data name="CollectionDate" xml:space="preserve"><value>收款日期</value></data>
+  <data name="CollectionMethod" xml:space="preserve"><value>收款方式</value></data>
+  <data name="ReceiptAmount" xml:space="preserve"><value>收款金額</value></data>
+  <data name="ARInvoiceAllocation" xml:space="preserve"><value>核銷應收發票</value></data>
+  <data name="LoadARInvoicesHint" xml:space="preserve"><value>選擇客戶後自動載入未結發票</value></data>
+  <data name="PleaseSelectCustomer" xml:space="preserve"><value>請先選擇客戶</value></data>
+  <data name="NoOpenARInvoices" xml:space="preserve"><value>此客戶目前無未結發票</value></data>
+  <data name="ARReceiptId" xml:space="preserve"><value>收款單號</value></data>
+  <data name="OutsourceReceiptId" xml:space="preserve"><value>委外收貨單號</value></data>
+  <data name="InvoiceDate" xml:space="preserve"><value>發票日期</value></data>
+  <data name="DueDate" xml:space="preserve"><value>到期日</value></data>
+  <data name="PaidAmount" xml:space="preserve"><value>已付金額</value></data>
+  <data name="ReceivedAmount" xml:space="preserve"><value>已收金額</value></data>
+  <data name="AmountLocal" xml:space="preserve"><value>本幣金額</value></data>
+  <data name="PaymentDate" xml:space="preserve"><value>付款日期</value></data>
+  <data name="ReceiptDate_Fin" xml:space="preserve"><value>收款日期</value></data>
+  <data name="PaymentMethod" xml:space="preserve"><value>付款方式</value></data>
+  <data name="BankName" xml:space="preserve"><value>銀行名稱</value></data>
+  <data name="AccountNo" xml:space="preserve"><value>帳號</value></data>
+  <data name="CurrencyCode" xml:space="preserve"><value>幣別</value></data>
+  <data name="CurrencyCodePlaceholder" xml:space="preserve"><value>例：USD</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="OutstandingBalance" xml:space="preserve"><value>未結金額</value></data>
+  <data name="AgingCurrent" xml:space="preserve"><value>未到期</value></data>
+  <data name="Aging30" xml:space="preserve"><value>1-30天</value></data>
+  <data name="Aging60" xml:space="preserve"><value>31-60天</value></data>
+  <data name="Aging90" xml:space="preserve"><value>61-90天</value></data>
+  <data name="Aging90Plus" xml:space="preserve"><value>90天以上</value></data>
+  <data name="AgingTotal" xml:space="preserve"><value>合計</value></data>
+  <data name="CustomerCode" xml:space="preserve"><value>客戶</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="Create" xml:space="preserve"><value>新增</value></data>
+  <data name="ExportExcel" xml:space="preserve"><value>匯出 Excel</value></data>
+  <data name="ExportCsv" xml:space="preserve"><value>匯出 CSV</value></data>
+  <data name="ExportJson" xml:space="preserve"><value>匯出 JSON</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無符合條件的資料</value></data>
+  <data name="DateRangeRequired" xml:space="preserve"><value>本報表的數字以查詢期間為分母，請先指定起訖日期。</value></data>
+  <data name="PageSize" xml:space="preserve"><value>每頁筆數</value></data>
+  <data name="SearchFirst" xml:space="preserve"><value>請輸入查詢條件後按查詢以載入資料</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Detail" xml:space="preserve"><value>明細</value></data>
+  <data name="LineNo" xml:space="preserve"><value>序號</value></data>
+  <data name="IsActive" xml:space="preserve"><value>啟用</value></data>
+  <data name="ExchangeGainLoss" xml:space="preserve"><value>匯兌損益</value></data>
+  <data name="AccountId" xml:space="preserve"><value>帳戶代號</value></data>
+  
+  <data name="PeriodCreated" xml:space="preserve"><value>已建立期間 {0}</value></data>
+  <data name="PeriodStartedClosing" xml:space="preserve"><value>期間 {0} 已進入月結狀態</value></data>
+  <data name="PeriodClosed" xml:space="preserve"><value>期間 {0} 已關帳</value></data>
+  <data name="PeriodReopened" xml:space="preserve"><value>期間 {0} 已重開帳</value></data>
+  <data name="ChecklistInitialized" xml:space="preserve"><value>月結清單已初始化</value></data>
+  <data name="StepCompleted" xml:space="preserve"><value>步驟 {0} 已完成</value></data>
+  <data name="ClosingCancelled" xml:space="preserve"><value>已取消月結，期間回到可過帳狀態</value></data>
+  <data name="NrvBatchCompleted" xml:space="preserve"><value>NRV 評估完成，共 {0} 筆</value></data>
+  <data name="FxRevBatchCompleted" xml:space="preserve"><value>匯率重評完成，共 {0} 筆</value></data>
+  <data name="ActualRateReestCompleted" xml:space="preserve"><value>工單實際費率重估完成，回刷完工工單 {0} 張、在製品快照 {1} 筆</value></data>
+  <data name="EclBatchCompleted" xml:space="preserve"><value>ECL 計算完成，準備金合計 {0}</value></data>
+  <data name="EclBatchCompleted2" xml:space="preserve"><value>ECL 計算完成，共 {0} 個帳齡區間</value></data>
+  
+  <data name="ActManagement" xml:space="preserve"><value>結帳/IFRS</value></data>
+  <data name="AccountingPeriod" xml:space="preserve"><value>會計期間</value></data>
+  <data name="JournalEntry" xml:space="preserve"><value>管理日記帳</value></data>
+  <data name="MonthEnd" xml:space="preserve"><value>月結作業</value></data>
+  <data name="TrialBalance" xml:space="preserve"><value>試算表</value></data>
+  <data name="DepartmentActualCost" xml:space="preserve"><value>部門實際費用</value></data>
+  <data name="DepartmentActualCostDuplicate" xml:space="preserve"><value>同期間／工作中心已存在一筆部門實際費用，請改用編輯。</value></data>
+  <data name="AmountMustBeNonNegative" xml:space="preserve"><value>金額不可為負數。</value></data>
+  <data name="PeriodId" xml:space="preserve"><value>會計期間</value></data>
+  <data name="WorkCenterCode" xml:space="preserve"><value>工作中心</value></data>
+  <data name="ActualLaborCost" xml:space="preserve"><value>實際人工費用</value></data>
+  <data name="ActualOverheadCost" xml:space="preserve"><value>實際製造費用</value></data>
+  <data name="UpdatedAt" xml:space="preserve"><value>更新時間</value></data>
+  <data name="NrvAssessment" xml:space="preserve"><value>IAS 2 NRV 評估</value></data>
+  <data name="EclAllowance" xml:space="preserve"><value>IFRS 9 ECL 準備</value></data>
+  
+  <data name="RptManagement" xml:space="preserve"><value>管理報表</value></data>
+  <data name="ProfitLoss" xml:space="preserve"><value>損益表</value></data>
+  <data name="GrossMargin" xml:space="preserve"><value>毛利分析</value></data>
+  <data name="BalanceSheet" xml:space="preserve"><value>資產負債表</value></data>
+  <data name="ConsolidatedStatement" xml:space="preserve"><value>合併財報</value></data>
+  <data name="Consolidated_NoPlant" xml:space="preserve"><value>請至少指定一個廠別</value></data>
+  <data name="OutsourcePerformance" xml:space="preserve"><value>委外加工對帳與損耗分析</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>管理儀表板</value></data>
+  
+  <data name="OrderOverdue" xml:space="preserve"><value>訂單逾期跟催</value></data>
+  <data name="PurchaseOverdue" xml:space="preserve"><value>採購逾期跟催</value></data>
+  <data name="StockShortage" xml:space="preserve"><value>缺貨分析</value></data>
+  <data name="SlowMovingInventory" xml:space="preserve"><value>呆滯庫存分析</value></data>
+  <data name="InventoryAging" xml:space="preserve"><value>存貨庫齡分析</value></data>
+  <data name="SpcAnalysis" xml:space="preserve"><value>SPC 製程能力分析</value></data>
+  <data name="MarginAnalysis" xml:space="preserve"><value>多維度銷售毛利分析</value></data>
+  <data name="Oee" xml:space="preserve"><value>OEE 設備綜合效率</value></data>
+  <data name="ContributionMargin" xml:space="preserve"><value>產品邊際貢獻分析</value></data>
+  <data name="NoPermission" xml:space="preserve"><value>權限不足</value></data>
+  <data name="SavedAsDefault" xml:space="preserve"><value>已儲存為系統預設</value></data>
+  <data name="WorkOrderProgress" xml:space="preserve"><value>工單進度報表</value></data>
+  <data name="DefectRate" xml:space="preserve"><value>不良率報表</value></data>
+  
+  <data name="SupplierCode" xml:space="preserve"><value>供應商</value></data>
+  <data name="TotalAmount" xml:space="preserve"><value>合計金額</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>簽核狀態</value></data>
+  <data name="ReceiptDate" xml:space="preserve"><value>進貨日期</value></data>
+  
+  <data name="LineAmount" xml:space="preserve"><value>行金額</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>產品代號</value></data>
+  <data name="Qty" xml:space="preserve"><value>數量</value></data>
+  <data name="SourceDocId" xml:space="preserve"><value>源單號</value></data>
+  <data name="TaxAmount" xml:space="preserve"><value>稅額</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>單價</value></data>
+  
+  <data name="Select" xml:space="preserve"><value>— 選擇 —</value></data>
+  <data name="SelectSupplier" xml:space="preserve"><value>— 選擇供應商 —</value></data>
+  <data name="ExchangeRate" xml:space="preserve"><value>匯率</value></data>
+  <data name="PaymentAmount" xml:space="preserve"><value>付款金額</value></data>
+  <data name="Reference" xml:space="preserve"><value>參考號</value></data>
+  <data name="InspectionSubmitted" xml:space="preserve"><value>檢驗結果已提交，狀態: {0}</value></data>
+  
+  <data name="StagingErrPendingApproval" xml:space="preserve"><value>備料單審核中，請先撤回後再修改。</value></data>
+  <data name="StagingErrDraftOrReject" xml:space="preserve"><value>僅草稿或退回狀態可送審。</value></data>
+  <data name="ReturnWithoutIssueHistory" xml:space="preserve"><value>品號 {0} 查無已過帳的發料紀錄，無法決定退料成本，請確認是否退錯單據。</value></data>
+  <data name="StagingApprovedNoWorkflow" xml:space="preserve"><value>已核准（無需簽核）。</value></data>
+  <data name="StagingSubmitted" xml:space="preserve"><value>已送出審核。</value></data>
+  <data name="StagingAutoApproved" xml:space="preserve"><value>已送審，全部步驟自動跳簽，單據已核准。</value></data>
+  <data name="StagingErrMustBePending" xml:space="preserve"><value>僅待審核狀態可撤回。</value></data>
+  <data name="StagingWithdrawFailed" xml:space="preserve"><value>撤回失敗，請確認您是否為申請人。</value></data>
+  <data name="StagingWithdrawn" xml:space="preserve"><value>已撤回，資料回到草稿狀態。</value></data>
+  <data name="StagingErrDraftToConfirm" xml:space="preserve"><value>僅草稿狀態可確認。</value></data>
+  <data name="StagingErrNeedApproval" xml:space="preserve"><value>請先完成簽核再確認單據。</value></data>
+  <data name="CloseErrNeedApproval" xml:space="preserve"><value>尚未核准，無法結案。</value></data>
+  <data name="ReopenErrNeedApproval" xml:space="preserve"><value>尚未核准，無法解除結案。</value></data>
+  <data name="CloseErrVoided" xml:space="preserve"><value>此單據已作廢，無法結案。</value></data>
+  <data name="StagingConfirmed" xml:space="preserve"><value>備料單已確認，庫存預留已建立。</value></data>
+  <data name="StagingVoided" xml:space="preserve"><value>備料單已作廢。</value></data>
+  <data name="StagingNotFound" xml:space="preserve"><value>找不到此備料單。</value></data>
+  <data name="StagingErrDeletePending" xml:space="preserve"><value>此資料正在審核中，無法刪除。請先撤回簽核申請。</value></data>
+  <data name="StagingErrDraftToDelete" xml:space="preserve"><value>僅草稿狀態可刪除。</value></data>
+  <data name="StagingDeleted" xml:space="preserve"><value>備料單已刪除。</value></data>
+  
+  <data name="NoVoidPermission" xml:space="preserve"><value>您沒有作廢權限。</value></data>
+  <data name="NoConfirmPermission" xml:space="preserve"><value>您沒有確認權限。</value></data>
+  <data name="Voided" xml:space="preserve"><value>已作廢。</value></data>
+  <data name="OutsourceVoidBlockedByPaidInvoice" xml:space="preserve"><value>本次收貨已產生應付發票且已有付款，無法作廢。請先沖銷付款。</value></data>
+  <data name="APPaymentConfirmed" xml:space="preserve"><value>付款已確認並入帳。</value></data>
+  <data name="APPaymentVoided" xml:space="preserve"><value>付款單已作廢並反沖。</value></data>
+  <data name="ARReceiptConfirmed" xml:space="preserve"><value>收款已確認並入帳。</value></data>
+  <data name="ARReceiptVoided" xml:space="preserve"><value>收款單已作廢並反沖。</value></data>
+  <data name="DispatchCannotAdjustStatus" xml:space="preserve"><value>此派工狀態無法調整，僅 Pending/Scheduled 可操作。</value></data>
+  <data name="MachineCodeRequired" xml:space="preserve"><value>機台代碼不可空白。</value></data>
+  <data name="ReassignMachineSuccess" xml:space="preserve"><value>換機台成功，時段已釋放，請重新執行排程。</value></data>
+  <data name="SplitMinTwo" xml:space="preserve"><value>至少需填寫兩筆拆分項目。</value></data>
+  <data name="SplitQtySumMismatch" xml:space="preserve"><value>各份數量加總須等於原派工數量。</value></data>
+  <data name="SplitQtyPositive" xml:space="preserve"><value>每份數量必須大於零。</value></data>
+  <data name="SplitSuccess" xml:space="preserve"><value>拆分成功（{0} 份），請重新執行排程。</value></data>
+  <data name="ToOutsourceSuccess" xml:space="preserve"><value>已轉為委外，機台時段釋放，請至採購模組建立委外採購單。</value></data>
+  <data name="CreateFailedDuplicate" xml:space="preserve"><value>建立失敗，此代碼可能已存在。</value></data>
+  <data name="DeleteFailedReferenced" xml:space="preserve"><value>刪除失敗，此資料可能已被其他資料參照。</value></data>
+  <data name="ProductInUseCannotDelete" xml:space="preserve"><value>無法刪除，此品號已用於途程主檔或仍有庫存餘額，請先清除相關資料後再試。</value></data>
+  <data name="CurrencyInUseCannotDelete" xml:space="preserve"><value>無法刪除，此幣別已設為本幣或已於單據中使用，請先變更相關設定後再試。</value></data>
+  <data name="DocTypeInUseCannotDelete" xml:space="preserve"><value>無法刪除，此單號設定已被使用（已產生過單號）。</value></data>
+  <data name="ToolingInUseCannotDelete" xml:space="preserve"><value>無法刪除，此模具已用於途程工序、換模設置、派工或生產工時，請先清除相關資料後再試。</value></data>
+  <data name="ContainerInUseCannotDelete" xml:space="preserve"><value>無法刪除，此容器已用於途程開工/完工容器設定或報工紀錄，請先清除相關資料後再試。</value></data>
+  <data name="WorkCenterInUseCannotDelete" xml:space="preserve"><value>無法刪除，此工作中心已用於途程工序、工單工序、機台異動、工作曆、計畫停機、部門成本或重工單，請先清除相關資料後再試。</value></data>
+  <data name="ShiftGroupInUseCannotDelete" xml:space="preserve"><value>無法刪除，此班制已設為工作中心預設班制或已用於工作曆，請先變更相關設定後再試。</value></data>
+  <data name="WarehouseInUseCannotDelete" xml:space="preserve"><value>無法刪除，此倉庫已設有儲位或已用於庫存移轉、進貨、出貨等單據，請先清除相關資料後再試。</value></data>
+  <data name="UomInUseCannotDelete" xml:space="preserve"><value>無法刪除，此計量單位已設為品號庫存單位，或已用於單位換算、途程用料，請先清除相關資料後再試。</value></data>
+  <data name="CompanyInUseCannotDelete" xml:space="preserve"><value>無法刪除，此往來廠商已用於採購、銷售、委外或應收應付等單據，請先清除相關資料後再試。</value></data>
+  <data name="TaxInUseCannotDelete" xml:space="preserve"><value>無法刪除，此稅別已設為往來廠商或銷售訂單預設稅別，或已用於採購/銷售/委外/應收應付單據明細，請先清除相關資料後再試。</value></data>
+  <data name="PendingApprovalCannotEdit" xml:space="preserve"><value>此資料正在審核中，無法編輯。</value></data>
+  <data name="SubmittedForApprovalCreate" xml:space="preserve"><value>資料已建立並送審，待主管核准後生效。</value></data>
+  <data name="SubmittedForApprovalUpdate" xml:space="preserve"><value>資料已更新並重新送審，待主管核准後生效。</value></data>
+  <data name="SystemTypeSemanticsLocked" xml:space="preserve"><value>系統內建異動類別的方向、類別與來源單別不可修改。</value></data>
+  <data name="SystemRecordCannotDelete" xml:space="preserve"><value>系統內建資料不可刪除。</value></data>
+  <data name="DraftOnlyCanEdit" xml:space="preserve"><value>僅草稿狀態可修改。</value></data>
+  <data name="DraftOnlyCanSubmit" xml:space="preserve"><value>僅草稿狀態可送審。</value></data>
+  <data name="DraftOnlyCanConfirmOut" xml:space="preserve"><value>僅草稿狀態可確認發出。</value></data>
+  <data name="ConfirmedOnlyCanWithdraw" xml:space="preserve"><value>僅已確認狀態可撤回。</value></data>
+  <data name="ConfirmedOnlyCanUnconfirm" xml:space="preserve"><value>僅已確認狀態可取消確認。</value></data>
+  <data name="ShipmentVoidReturnFirst" xml:space="preserve"><value>這張出貨已有銷退單 {0}，請先作廢銷退單。</value></data>
+  <data name="ShipmentVoidInvoiceFirst" xml:space="preserve"><value>這張出貨已開立應收發票 {0}，請先作廢發票（已收款要先沖銷收款）。</value></data>
+  <data name="ReceiptVoidReturnFirst" xml:space="preserve"><value>這張進貨已有進貨退出單 {0}，請先作廢退出單。</value></data>
+  <data name="ReceiptVoidInvoiceFirst" xml:space="preserve"><value>這張進貨已認列應付發票 {0}，請先作廢發票（已付款要先沖銷付款）。</value></data>
+  <data name="ReturnVoidNoteFirst" xml:space="preserve"><value>這張退貨已開立折讓單 {0}，請先作廢折讓單。</value></data>
+  <data name="SalesReturnVoidInvoiceLive" xml:space="preserve"><value>這張銷退已回沖應收發票 {0}，系統不會自動把金額補回去，因此不能作廢。若是退錯了，請另開一張出貨單把這批貨出回給客戶，系統會為它開立新的應收發票（銷退不會釋放訂單的已出量，訂單若已全數出貨，新出貨單請不要掛原訂單）。</value></data>
+  <data name="GoodsReturnVoidInvoiceLive" xml:space="preserve"><value>這張進貨退出已回沖應付發票 {0}，系統不會自動把金額補回去，因此不能作廢。若是退錯了，請另開一張進貨單把這批貨收回來，系統會為它認列新的應付（退出不會釋放採購單的已收量，採購單若已收滿，新進貨單請不要掛原採購單）。</value></data>
+  <data name="ShipmentUnconfirmInvoiceFirst" xml:space="preserve"><value>這張出貨確認時已開立應收發票 {0}，請先作廢發票再取消確認；重新確認時會依新內容另開發票。</value></data>
+  <data name="SlipClosedWoReturnJournal" xml:space="preserve"><value>工單 {0} 結案後退料 {1}（成本已算進成品，差額入製造成本差異）</value></data>
+  <data name="ReissueFromSource" xml:space="preserve"><value>依來源重開</value></data>
+  <data name="ConfirmReissueInvoice" xml:space="preserve"><value>確定依來源單重新開立一張發票？</value></data>
+  <data name="ReissueFailed" xml:space="preserve"><value>重新開立失敗</value></data>
+  <data name="InvoiceReissuedFmt" xml:space="preserve"><value>已重新開立發票 {0}</value></data>
+  <data name="PostedOnlyCanVoid" xml:space="preserve"><value>僅已過帳狀態可作廢。</value></data>
+  <data name="PostedOnlyCanVoidAndReopen" xml:space="preserve"><value>僅已過帳狀態可作廢並重新開立。</value></data>
+  <data name="InTransitOnlyCanReceive" xml:space="preserve"><value>僅在途狀態可確認收貨。</value></data>
+  <data name="InTransitOnlyCanWithdraw" xml:space="preserve"><value>僅在途狀態可撤回。</value></data>
+  <data name="SourcePlantOnlyCanSubmit" xml:space="preserve"><value>僅來源廠可送審。</value></data>
+  <data name="SourcePlantOnlyCanWithdraw" xml:space="preserve"><value>僅來源廠可撤回送審。</value></data>
+  <data name="SourcePlantOnlyCanConfirmOut" xml:space="preserve"><value>僅來源廠可確認發出。</value></data>
+  <data name="SourcePlantOnlyCanWithdrawOut" xml:space="preserve"><value>僅來源廠可撤回發出。</value></data>
+  <data name="SourcePlantOnlyCanDelete" xml:space="preserve"><value>僅來源廠可刪除此單據。</value></data>
+  <data name="DestPlantOnlyCanReceive" xml:space="preserve"><value>僅目的廠可確認收貨。</value></data>
+  <data name="DestPlantReceivedCannotWithdraw" xml:space="preserve"><value>目的廠已收貨，無法撤回。</value></data>
+  <data name="InvalidDestinationPlant" xml:space="preserve"><value>目的廠別不得為空或與來源廠相同。</value></data>
+  <data name="Posted" xml:space="preserve"><value>單據已過帳。</value></data>
+  <data name="PostedSimple" xml:space="preserve"><value>單據已過帳（簡化模式）。</value></data>
+  <data name="ConfirmedAwaitingWarehouse" xml:space="preserve"><value>單據已確認，等待倉庫作業。</value></data>
+  <data name="ConfirmedAwaitingPutaway" xml:space="preserve"><value>單據已確認，等待倉庫上架作業。</value></data>
+  <data name="ConfirmedAwaitingPickup" xml:space="preserve"><value>單據已確認，等待倉庫下架作業。</value></data>
+  <data name="ConfirmedAwaitingPick" xml:space="preserve"><value>單據已確認，等待倉庫作業領料。</value></data>
+  <data name="CrossPlantDispatched" xml:space="preserve"><value>跨廠調撥已發出，等待目的廠收貨。</value></data>
+  <data name="CrossPlantReceived" xml:space="preserve"><value>跨廠調撥已收貨並過帳。</value></data>
+  <data name="AllocationConfirmed" xml:space="preserve"><value>分攤已確認，存貨成本已更新。</value></data>
+  <data name="VoidedAndReversed" xml:space="preserve"><value>單據已作廢並完成沖銷。</value></data>
+  <data name="HasWarehouseOpsCannotDelete" xml:space="preserve"><value>含有已執行倉庫作業的明細，無法刪除。</value></data>
+  <data name="HasPostedLinesCannotDelete" xml:space="preserve"><value>含有已過帳明細，無法刪除。</value></data>
+  <data name="HasShipmentCannotDelete" xml:space="preserve"><value>已有出貨記錄，無法刪除。</value></data>
+  <data name="HasPutawayCannotDelete" xml:space="preserve"><value>已有上架作業，無法刪除。</value></data>
+  <data name="HasPutawayCannotUnconfirm" xml:space="preserve"><value>已有上架作業，無法取消確認。</value></data>
+  <data name="HasPickingCannotUnconfirm" xml:space="preserve"><value>已有下架作業，無法取消確認。</value></data>
+  <data name="HasReturnsCannotDelete" xml:space="preserve"><value>進貨單含有已執行退貨的明細，無法刪除。請先作廢相關退貨單。</value></data>
+  <data name="HasReceiptsCannotDelete" xml:space="preserve"><value>此採購單已有進貨記錄，無法刪除。請先刪除對應進貨單。</value></data>
+  <data name="WarehouseStartedCannotWithdraw" xml:space="preserve"><value>倉庫已開始作業，無法撤回。</value></data>
+  <data name="WarehouseStartedContactStaff" xml:space="preserve"><value>倉庫已開始作業，無法撤回，請聯繫倉庫人員。</value></data>
+  <data name="ConfirmedAllocationCannotDelete" xml:space="preserve"><value>已確認的分攤單無法刪除。</value></data>
+  <data name="AlreadyVoidedCannotConfirm" xml:space="preserve"><value>已作廢，無法確認。</value></data>
+  <data name="AlreadyPostedCannotRepost" xml:space="preserve"><value>已過帳，無法重複確認。</value></data>
+  <data name="AlreadyPostedNeedReverse" xml:space="preserve"><value>已過帳單據請先執行反沖。</value></data>
+  <data name="AddLineFirst" xml:space="preserve"><value>請先新增明細。</value></data>
+  <data name="NoLinesCannotConfirm" xml:space="preserve"><value>單據無明細，無法確認。</value></data>
+  <data name="SelectReceiptLineFirst" xml:space="preserve"><value>請至少選入一筆進貨明細。</value></data>
+  <data name="DocNotConfirmedCannotPutaway" xml:space="preserve"><value>單據非已確認狀態，無法上架。</value></data>
+  <data name="GoodsReceiptMustPutawayToQuarantineFirst" xml:space="preserve"><value>此明細尚未完成 IQC 進料檢驗，只能上架至待驗倉。</value></data>
+  <data name="DocNotConfirmedCannotPickup" xml:space="preserve"><value>單據非已確認狀態，無法下架。</value></data>
+  <data name="DocPendingApprovalWarehouse" xml:space="preserve"><value>單據未完成簽核。</value></data>
+  <data name="LocationNotExist" xml:space="preserve"><value>儲位不存在。</value></data>
+  <data name="LocationNotInWarehouse" xml:space="preserve"><value>儲位不存在或不屬於指定倉庫。</value></data>
+  <data name="LocationCodeRequired" xml:space="preserve"><value>儲位代碼不得為空。</value></data>
+  <data name="PutawayCompleted" xml:space="preserve"><value>上架完成。</value></data>
+  <data name="PickupCompleted" xml:space="preserve"><value>下架完成。</value></data>
+  <data name="PickQtyRequired" xml:space="preserve"><value>下架量必須大於 0。</value></data>
+  <data name="StocktakeNoLines" xml:space="preserve"><value>至少需一筆盤點明細。</value></data>
+  <data name="StocktakePickupNoLines" xml:space="preserve"><value>至少需一筆下架明細。</value></data>
+  <data name="QtyMustBePositive" xml:space="preserve"><value>數量必須大於 0。</value></data>
+  <data name="StocktakeNoDiff" xml:space="preserve"><value>盤點結果與系統一致，無差異。</value></data>
+  <data name="StocktakeDiffRecorded" xml:space="preserve"><value>盤點差異已記錄，請至桌機確認庫存調整單。</value></data>
+  <data name="AutoPostFailed" xml:space="preserve"><value>單據 {0} 自動過帳失敗：{1}</value></data>
+  <data name="ProductMustSelectSource" xml:space="preserve"><value>品號 {0} 必須選擇來源單據。</value></data>
+  <data name="LoanInboundUnitPriceRequired" xml:space="preserve"><value>品號 {0} 為借入異動，必須輸入借入單價——借入的料領去生產時要依借入成本計價，單價為 0 會讓工單料成本與成品單價一起偏低。</value></data>
+  <data name="ProductReverseQtyExceeds" xml:space="preserve"><value>品號 {0} 沖銷數量（{1}）超過來源明細剩餘可沖銷量（{2}）。</value></data>
+  <data name="InvalidTransactionTypeOutsource" xml:space="preserve"><value>無效的異動類別 {0}，委外發退料單僅接受 OO、OR。</value></data>
+  <data name="InvalidTransactionTypeRework" xml:space="preserve"><value>無效的異動類別 {0}，重工發退料單僅接受 RI、RR。</value></data>
+  <data name="ReworkMaterialUseWorkOrderSlip" xml:space="preserve"><value>工單 {0} 已存在：有開工單的重工請改用「工單發退料單」的重工發料／重工退料，才會回寫工單的已發／已退量並在完工時結算重工成本。這張單只用於沒有開工單的重工。</value></data>
+  <data name="OutsourcePONotFound" xml:space="preserve"><value>委外採購單 {0} 不存在。</value></data>
+  <data name="PutawayQtyExceeds" xml:space="preserve"><value>上架量超過待處理量（剩餘 {0}）。</value></data>
+  <data name="PickQtyExceeds" xml:space="preserve"><value>下架總量超過待處理量（剩餘 {0}）。</value></data>
+  <data name="TypeCodeNotSupportPutaway" xml:space="preserve"><value>TypeCode {0} 不支援入庫上架。</value></data>
+  <data name="TypeCodeNotSupportPickup" xml:space="preserve"><value>TypeCode {0} 不支援出庫下架。</value></data>
+  <data name="InventoryTypeCodeNotFound" xml:space="preserve"><value>找不到異動類別 {0}。</value></data>
+  <data name="LocationPickNotExist" xml:space="preserve"><value>儲位 {0} 不存在。</value></data>
+  <data name="LocationWarehouseMismatch" xml:space="preserve"><value>儲位所屬倉庫（{0}）與單據指定倉庫（{1}）不符。</value></data>
+  <data name="SalesRanking" xml:space="preserve"><value>銷售排名</value></data>
+  <data name="SalesTrend" xml:space="preserve"><value>銷售趨勢</value></data>
+  <data name="DeliveryRate" xml:space="preserve"><value>交期達成率</value></data>
+  <data name="ReturnRate" xml:space="preserve"><value>退貨率分析</value></data>
+  <data name="SalesForecast" xml:space="preserve"><value>銷售預測</value></data>
+  <data name="SupplierDeliveryRate" xml:space="preserve"><value>供應商交期達成率</value></data>
+  <data name="PurchaseAmount" xml:space="preserve"><value>採購金額比較</value></data>
+  <data name="PurchasePrice" xml:space="preserve"><value>採購價格比較</value></data>
+  <data name="OutsourceProgress" xml:space="preserve"><value>委外進度追蹤</value></data>
+  <data name="OutsourcePrice" xml:space="preserve"><value>委外價格分析</value></data>
+  <data name="InventoryValue" xml:space="preserve"><value>庫存價值分析</value></data>
+  <data name="InventoryTurnover" xml:space="preserve"><value>庫存周轉率</value></data>
+  <data name="StockVariance" xml:space="preserve"><value>盤差分析</value></data>
+  <data name="WipReport" xml:space="preserve"><value>在製品報表</value></data>
+  <data name="Utilization" xml:space="preserve"><value>工作中心稼動率</value></data>
+  <data name="ProductionEfficiency" xml:space="preserve"><value>生產效率分析</value></data>
+  <data name="MachineDowntime" xml:space="preserve"><value>機台停機分析</value></data>
+  <data name="MaterialSlipProgress" xml:space="preserve"><value>備料進度追蹤</value></data>
+  <data name="MrpAchievement" xml:space="preserve"><value>MRP 達成率</value></data>
+  <data name="BadDebtProvision" xml:space="preserve"><value>壞帳準備 ECL</value></data>
+  <data name="AllSuppliers" xml:space="preserve"><value>所有供應商</value></data>
+  <data name="AllCustomers" xml:space="preserve"><value>所有客戶</value></data>
+  <data name="CostFinalizePeriodRequired" xml:space="preserve"><value>請提供會計期間（YYYYMM）。</value></data>
+  <data name="CostFinalizeSuccess" xml:space="preserve"><value>已鎖定 {0} 筆工單成本為 Final。</value></data>
+  <data name="OrderChangeDecision" xml:space="preserve"><value>訂單變更決策</value></data>
+  <data name="DataAudit" xml:space="preserve"><value>資料稽核診斷</value></data>
+  <data name="FieldTelemetry" xml:space="preserve"><value>現場遙測</value></data>
+  <data name="DataAuditRunDone" xml:space="preserve"><value>稽核執行完成，共 {0} 筆異常</value></data>
+  <data name="DataRepairNothingSelected" xml:space="preserve"><value>請先勾選要修正的項目</value></data>
+  <data name="DataRepairDone" xml:space="preserve"><value>已修正 {0} 筆（{1} 筆重新計算後已一致、{2} 筆找不到單據）</value></data>
+  <data name="AdminManagement" xml:space="preserve"><value>系統安全管理</value></data>
+  <data name="TwoFactorAdmin" xml:space="preserve"><value>兩階段驗證重置</value></data>
+  <data name="OutsourceRework" xml:space="preserve"><value>委外重工單</value></data>
+  <data name="OutsourceReworkId" xml:space="preserve"><value>重工單號</value></data>
+  <data name="OriginalDispatch" xml:space="preserve"><value>原始委外派工</value></data>
+  <data name="SourceNcr" xml:space="preserve"><value>來源NCR</value></data>
+  <data name="ReworkOpo" xml:space="preserve"><value>重工委外採購單</value></data>
+  <data name="ReworkReason" xml:space="preserve"><value>重工原因</value></data>
+  <data name="ReworkQty" xml:space="preserve"><value>重工數量</value></data>
+  <data name="ReworkCost" xml:space="preserve"><value>重工成本</value></data>
+  <data name="ProcessingFee" xml:space="preserve"><value>重工加工費</value></data>
+  <data name="ReworkCostSection" xml:space="preserve"><value>成本／索賠（責任歸屬＋雙路徑）</value></data>
+  <data name="LiabilityParty" xml:space="preserve"><value>責任歸屬</value></data>
+  <data name="LiabilityVendor" xml:space="preserve"><value>廠商責任</value></data>
+  <data name="LiabilityUs" xml:space="preserve"><value>我方責任</value></data>
+  <data name="LiabilityShared" xml:space="preserve"><value>共同責任</value></data>
+  <data name="VendorLiablePct" xml:space="preserve"><value>廠商責任比例</value></data>
+  <data name="VendorChargebackAmt" xml:space="preserve"><value>向廠商扣款</value></data>
+  <data name="ReworkProcessingFee" xml:space="preserve"><value>應付重工加工費</value></data>
+  <data name="ReworkSend" xml:space="preserve"><value>送件</value></data>
+  <data name="ReworkReceive" xml:space="preserve"><value>收回</value></data>
+  <data name="ReworkSent" xml:space="preserve"><value>已送件至委外廠。</value></data>
+  <data name="ReworkReceived" xml:space="preserve"><value>重工品已收回。</value></data>
+  <data name="ReworkOnlyDraftCanSend" xml:space="preserve"><value>僅草稿可送件。</value></data>
+  <data name="ReworkOnlySentCanReceive" xml:space="preserve"><value>僅已送件可收回。</value></data>
+  <data name="ReworkReceivedCannotVoid" xml:space="preserve"><value>已收回或已作廢的重工單不可作廢。</value></data>
+  <data name="ReworkQtyMustBePositive" xml:space="preserve"><value>重工數量必須大於 0。</value></data>
+  <data name="VendorLiablePctRange" xml:space="preserve"><value>廠商責任比例須在 0–100 之間。</value></data>
+  <data name="ConfirmSendRework" xml:space="preserve"><value>確定送件至委外廠重工？</value></data>
+  <data name="ConfirmReceiveRework" xml:space="preserve"><value>確定重工品已收回？</value></data>
+  <data name="ConfirmVoidRework" xml:space="preserve"><value>確定作廢此重工單？</value></data>
+  <data name="DispatchNotFound" xml:space="preserve"><value>找不到派工單 {0}。</value></data>
+  <data name="NcrNotFound" xml:space="preserve"><value>找不到 NCR 單 {0}。</value></data>
+  <data name="OpoNotFound" xml:space="preserve"><value>找不到委外採購單 {0}。</value></data>
+  <data name="ReturnReworkExecuted" xml:space="preserve"><value>已建立委外重工單 {0}（草稿），請至委外重工單補登成本與責任資訊。</value></data>
+  <data name="ReturnReworkNeedsQty" xml:space="preserve"><value>NCR 數量須大於 0 才能執行退件重工。</value></data>
+  <data name="OpoSupplierMismatch" xml:space="preserve"><value>委外採購單 {0} 的供應商為 {1}，與本單供應商不一致。</value></data>
+  <data name="ProductNotInDispatch" xml:space="preserve"><value>品號 {0} 不在派工 {1} 的發料需求中。</value></data>
+  <data name="OutsourceIssueExceedsRequired" xml:space="preserve"><value>品號 {0} 本單發料量 {1} 超過剩餘可發量 {2}（需求量扣除他單已發）。</value></data>
+  <data name="Void" xml:space="preserve"><value>作廢</value></data>
+  <data name="All" xml:space="preserve"><value>全部</value></data>
+  <data name="CreatedAt" xml:space="preserve"><value>建立日期</value></data>
+  <data name="VendorEvaluation" xml:space="preserve"><value>供應商評分卡</value></data>
+  <data name="VendorEvalDuplicate" xml:space="preserve"><value>此廠商在該年度/季度已有評核，請編輯既有評核。</value></data>
+  <data name="VendorEvalFollowUpRequired" xml:space="preserve"><value>評核結果為「不合格」時必須填寫改善措施。</value></data>
+  <data name="VendorEvalNotEditable" xml:space="preserve"><value>此評核已送審或已核准，不可修改/刪除。請先撤回簽核申請。</value></data>
+  <data name="VendorEvalSelectSupplierFirst" xml:space="preserve"><value>請先選擇廠商。</value></data>
+  <data name="VendorEvalBasisFmt" xml:space="preserve"><value>期間進貨量 {0}／NCR 不良量 {1}；到料 {2} 筆／準時 {3} 筆（期間無資料＝滿分）</value></data>
+  <data name="ToolingPmAutoOrderNote" xml:space="preserve"><value>模具 {0} 累計打次達保養門檻，系統自動建立保養停機單</value></data>
+  <data name="MrpArchived" xml:space="preserve"><value>MRP 執行單 {0} 已封存，作廢 {1} 個未投產生產批；已投產部分維持原狀。</value></data>
+  <data name="MrpPurchaseVariance" xml:space="preserve"><value>MRP 採購對帳差異</value></data>
+  <data name="MrpVarianceDecision" xml:space="preserve"><value>MRP 對帳差異決策</value></data>
+  <data name="NoRowsSelected" xml:space="preserve"><value>請先勾選要處理的項目。</value></data>
+  <data name="VarianceNotClosable" xml:space="preserve"><value>此差異類型不可用結案處理</value></data>
+  <data name="VarianceLineMissing" xml:space="preserve"><value>找不到對應請購明細</value></data>
+  <data name="VarianceAlreadyOrdered" xml:space="preserve"><value>該明細已轉採購</value></data>
+  <data name="VariancePendingApproval" xml:space="preserve"><value>請購單簽核中，請先撤回</value></data>
+  <data name="VarianceResolvedByClose" xml:space="preserve"><value>由決策清單結案退場</value></data>
+  <data name="VarianceResolvedManually" xml:space="preserve"><value>人工確認已處理</value></data>
+  <data name="VarianceCloseResult" xml:space="preserve"><value>已結案 {0} 筆，略過 {1} 筆。</value></data>
+  <data name="VarianceAckResult" xml:space="preserve"><value>已標記 {0} 筆為已處理。</value></data>
+  <data name="IqcAlreadyDone" xml:space="preserve"><value>此進料明細已完成 IQC</value></data>
+  <data name="FpiAlreadyPassed" xml:space="preserve"><value>此派工已有通過的首件檢驗單，不需重複登錄。</value></data>
+  <data name="FpiPassed" xml:space="preserve"><value>首件檢查通過，派工已解鎖可開工。</value></data>
+  <data name="FpiFailed" xml:space="preserve"><value>首件檢查不通過，派工已暫停。請排除異常後重新登錄首件。</value></data>
+  <data name="IqcInvalidSampleQty" xml:space="preserve"><value>實際抽樣數必須大於 0</value></data>
+  <data name="IqcMissingReceipt" xml:space="preserve"><value>缺少進貨單號</value></data>
+  <data name="IqcFailQtyExceedsSample" xml:space="preserve"><value>不良數不得大於實際抽樣數</value></data>
+  <data name="APInvoiceStatusOpen" xml:space="preserve"><value>未付款</value></data>
+  <data name="APInvoiceStatusPartialPaid" xml:space="preserve"><value>部分付款</value></data>
+  <data name="APInvoiceStatusPaid" xml:space="preserve"><value>已付款</value></data>
+  <data name="APInvoiceStatusVoid" xml:space="preserve"><value>已作廢</value></data>
+  <data name="ARInvoiceStatusOpen" xml:space="preserve"><value>未收款</value></data>
+  <data name="ARInvoiceStatusPartialReceived" xml:space="preserve"><value>部分收款</value></data>
+  <data name="ARInvoiceStatusReceived" xml:space="preserve"><value>已收款</value></data>
+  <data name="ARInvoiceStatusVoid" xml:space="preserve"><value>已作廢</value></data>
+  <data name="APPaymentStatusDraft" xml:space="preserve"><value>草稿</value></data>
+  <data name="APPaymentStatusPending" xml:space="preserve"><value>待審核</value></data>
+  <data name="APPaymentStatusApproved" xml:space="preserve"><value>已審核</value></data>
+  <data name="APPaymentStatusPaid" xml:space="preserve"><value>已付款</value></data>
+  <data name="APPaymentStatusVoid" xml:space="preserve"><value>已作廢</value></data>
+  <data name="ARReceiptStatusDraft" xml:space="preserve"><value>草稿</value></data>
+  <data name="ARReceiptStatusPending" xml:space="preserve"><value>待審核</value></data>
+  <data name="ARReceiptStatusApproved" xml:space="preserve"><value>已審核</value></data>
+  <data name="ARReceiptStatusReceived" xml:space="preserve"><value>已收款</value></data>
+  <data name="ARReceiptStatusVoid" xml:space="preserve"><value>已作廢</value></data>
+  <data name="PaymentMethodCash" xml:space="preserve"><value>現金</value></data>
+  <data name="PaymentMethodWire" xml:space="preserve"><value>電匯</value></data>
+  <data name="PaymentMethodCheque" xml:space="preserve"><value>支票</value></data>
+  <data name="PaymentMethodBill" xml:space="preserve"><value>票據</value></data>
+  <data name="PeriodStatusOpen" xml:space="preserve"><value>開帳中</value></data>
+  <data name="PeriodStatusClosing" xml:space="preserve"><value>月結中</value></data>
+  <data name="PeriodStatusClosed" xml:space="preserve"><value>已關帳</value></data>
+  <data name="PeriodStatusReopened" xml:space="preserve"><value>重開帳</value></data>
+  <data name="JournalEntryTypeAutomatic" xml:space="preserve"><value>自動</value></data>
+  <data name="JournalEntryTypeManual" xml:space="preserve"><value>手動</value></data>
+  <data name="JournalEntryTypeAdjustment" xml:space="preserve"><value>調整</value></data>
+  <data name="ChecklistItemStatusPending" xml:space="preserve"><value>待執行</value></data>
+  <data name="ChecklistItemStatusInProgress" xml:space="preserve"><value>進行中</value></data>
+  <data name="ChecklistItemStatusCompleted" xml:space="preserve"><value>完成</value></data>
+  <data name="ChecklistItemStatusSkipped" xml:space="preserve"><value>略過</value></data>
+  <data name="SourceDocTypeAPInvoice" xml:space="preserve"><value>應付發票</value></data>
+  <data name="SourceDocTypeAPInvoiceReturn" xml:space="preserve"><value>應付發票退回</value></data>
+  <data name="SourceDocTypeAPPayment" xml:space="preserve"><value>付款單</value></data>
+  <data name="SourceDocTypeARReceipt" xml:space="preserve"><value>收款單</value></data>
+  <data name="SourceDocTypeWorkOrderCompletion" xml:space="preserve"><value>工單完工</value></data>
+  <data name="SourceDocTypeActualRateReest" xml:space="preserve"><value>實際費率重估</value></data>
+  <data name="SourceDocTypeLandedCostAllocation" xml:space="preserve"><value>進口費用分攤</value></data>
+  <data name="SourceDocTypeLandedCostAllocationVoid" xml:space="preserve"><value>進口費用分攤作廢</value></data>
+  <data name="SourceDocTypeInv" xml:space="preserve"><value>庫存異動</value></data>
+  <data name="SourceDocTypeManual" xml:space="preserve"><value>手動分錄</value></data>
+  <data name="AllSourceDocTypes" xml:space="preserve"><value>全部來源類型</value></data>
+  <data name="AllPeriods" xml:space="preserve"><value>全部期間</value></data>
+  <data name="SelectPeriod" xml:space="preserve"><value>請選擇期間</value></data>
+  <data name="SelectCurrency" xml:space="preserve"><value>請選擇幣別</value></data>
+  <data name="MonthEndSkipReason" xml:space="preserve"><value>略過</value></data>
+  <data name="FxRatesRequired" xml:space="preserve"><value>請輸入至少一個幣別匯率</value></data>
+  <data name="DeptCostRequired" xml:space="preserve"><value>請輸入至少一個工作中心的實際費用</value></data>
+  <data name="DocStatusDraft" xml:space="preserve"><value>草稿</value></data>
+  <data name="DocStatusConfirmed" xml:space="preserve"><value>已確認</value></data>
+  <data name="DocStatusInTransit" xml:space="preserve"><value>在途</value></data>
+  <data name="DocStatusPosted" xml:space="preserve"><value>已過帳</value></data>
+  <data name="DocStatusVoid" xml:space="preserve"><value>已作廢</value></data>
+  <data name="WorkOrderStatusPlanned" xml:space="preserve"><value>已規劃</value></data>
+  <data name="WorkOrderStatusReleased" xml:space="preserve"><value>已釋出</value></data>
+  <data name="WorkOrderStatusInProgress" xml:space="preserve"><value>生產中</value></data>
+  <data name="WorkOrderStatusCompleted" xml:space="preserve"><value>已完工</value></data>
+  <data name="WorkOrderStatusClosed" xml:space="preserve"><value>已結案</value></data>
+  <data name="WorkOrderStatusVoid" xml:space="preserve"><value>作廢</value></data>
+  <data name="DispatchStatusPending" xml:space="preserve"><value>未排程</value></data>
+  <data name="DispatchStatusScheduled" xml:space="preserve"><value>已排定</value></data>
+  <data name="DispatchStatusSetupInProgress" xml:space="preserve"><value>備料中</value></data>
+  <data name="DispatchStatusReadyToStart" xml:space="preserve"><value>備料完成</value></data>
+  <data name="DispatchStatusInProgress" xml:space="preserve"><value>生產中</value></data>
+  <data name="DispatchStatusClosed" xml:space="preserve"><value>已完工</value></data>
+  <data name="DispatchStatusOnHold" xml:space="preserve"><value>暫停</value></data>
+  <data name="DispatchStatusPendingFPI" xml:space="preserve"><value>待首件檢驗</value></data>
+  <data name="MaterialSlipStatusDraft" xml:space="preserve"><value>草稿</value></data>
+  <data name="MaterialSlipStatusPending" xml:space="preserve"><value>待審核</value></data>
+  <data name="MaterialSlipStatusApproved" xml:space="preserve"><value>已核准</value></data>
+  <data name="MaterialSlipStatusPicking" xml:space="preserve"><value>揀料中</value></data>
+  <data name="MaterialSlipStatusConfirmed" xml:space="preserve"><value>已確認</value></data>
+  <data name="MaterialSlipStatusPosted" xml:space="preserve"><value>已過帳</value></data>
+  <data name="MaterialSlipStatusClosed" xml:space="preserve"><value>已結案</value></data>
+  <data name="MaterialSlipStatusCancelled" xml:space="preserve"><value>已作廢</value></data>
+  <data name="CostStatusPreliminary" xml:space="preserve"><value>初步</value></data>
+  <data name="CostStatusFinal" xml:space="preserve"><value>最終</value></data>
+  <data name="WorkOrderTypeNormal" xml:space="preserve"><value>一般</value></data>
+  <data name="WorkOrderTypeRework" xml:space="preserve"><value>重工</value></data>
+  <data name="WorkOrderTypeOutsource" xml:space="preserve"><value>委外</value></data>
+  <data name="MachineStatusAvailable" xml:space="preserve"><value>正常</value></data>
+  <data name="MachineStatusStandby" xml:space="preserve"><value>待機</value></data>
+  <data name="MachineStatusExternalRepair" xml:space="preserve"><value>外修中</value></data>
+  <data name="MachineStatusBreakDown" xml:space="preserve"><value>故障停機</value></data>
+  <data name="MachineStatusModification" xml:space="preserve"><value>改良中</value></data>
+  <data name="MachineStatusLoaned" xml:space="preserve"><value>外借</value></data>
+  <data name="MachineStatusRetired" xml:space="preserve"><value>廢棄</value></data>
+  <data name="MachineStatusMaintenance" xml:space="preserve"><value>保養中</value></data>
+  <data name="MachineEventCI" xml:space="preserve"><value>恢復正常</value></data>
+  <data name="MachineEventII" xml:space="preserve"><value>設為待機</value></data>
+  <data name="MachineEventDI" xml:space="preserve"><value>故障停機</value></data>
+  <data name="MachineEventDO" xml:space="preserve"><value>故障排除</value></data>
+  <data name="MachineEventHI" xml:space="preserve"><value>開始保養</value></data>
+  <data name="MachineEventHO" xml:space="preserve"><value>保養完成</value></data>
+  <data name="MachineEventEO" xml:space="preserve"><value>進入改良</value></data>
+  <data name="MachineEventFO" xml:space="preserve"><value>外借出廠</value></data>
+  <data name="MachineEventFI" xml:space="preserve"><value>外借回廠</value></data>
+  <data name="MachineEventGO" xml:space="preserve"><value>除役廢棄</value></data>
+  <data name="MachineEventCO" xml:space="preserve"><value>送出外修</value></data>
+  <data name="OutsourceReworkStatusDraft" xml:space="preserve"><value>草稿</value></data>
+  <data name="OutsourceReworkStatusSent" xml:space="preserve"><value>已送件</value></data>
+  <data name="OutsourceReworkStatusReceived" xml:space="preserve"><value>已收回</value></data>
+  <data name="OutsourceReworkStatusVoid" xml:space="preserve"><value>已作廢</value></data>
+  <data name="NewARReceipt" xml:space="preserve"><value>新增收款單</value></data>
+  <data name="NewAPPayment" xml:space="preserve"><value>新增付款單</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="SavedQuery_NoUser" xml:space="preserve"><value>無法辨識目前的使用者，請重新登入後再試。</value></data>
+  <data name="SavedQuery_ParamsInvalid" xml:space="preserve"><value>查詢條件的格式無法解讀，請重新查詢一次再儲存。</value></data>
+  <data name="QaSaveQueryTurnGone" xml:space="preserve"><value>找不到那一次查詢（可能已逾保留期），請重新問一次再儲存。</value></data>
+  <data name="QaSaveQueryDroppedFmt" xml:space="preserve"><value>（{0} 這幾個條件報表畫面沒有對應欄位，沒有一起存進去，所以這張常用查詢的範圍比剛才那一題寬。）</value></data>
+  <data name="SavedQuery_MyQueries" xml:space="preserve"><value>我的常用查詢</value></data>
+  <data name="SavedQuery_SaveThis" xml:space="preserve"><value>儲存此查詢</value></data>
+  <data name="SavedQuery_Name" xml:space="preserve"><value>查詢名稱</value></data>
+  <data name="SavedQuery_NamePlaceholder" xml:space="preserve"><value>例如：上月銷售排行</value></data>
+  <data name="SavedQuery_Period" xml:space="preserve"><value>期間</value></data>
+  <data name="SavedQuery_PeriodHint" xml:space="preserve"><value>存的是相對期間，每次點開都會重新換算成當下的日期。</value></data>
+  <data name="SavedQuery_Loading" xml:space="preserve"><value>載入中…</value></data>
+  <data name="SavedQuery_Empty" xml:space="preserve"><value>尚未儲存任何常用查詢。</value></data>
+  <data name="SavedQuery_LoadFailed" xml:space="preserve"><value>載入失敗，請重試。</value></data>
+  <data name="SavedQuery_Saved" xml:space="preserve"><value>已儲存。</value></data>
+  <data name="SavedQuery_DeleteConfirm" xml:space="preserve"><value>確定要刪除這筆常用查詢嗎？</value></data>
+  <data name="SavedQuery_NoPermissionBadge" xml:space="preserve"><value>無權限</value></data>
+  <data name="SavedQuery_InvalidBadge" xml:space="preserve"><value>定義已失效</value></data>
+  <data name="SavedQuery_NameRequired" xml:space="preserve"><value>請輸入查詢名稱。</value></data>
+  <data name="SavedQuery_NameTooLong" xml:space="preserve"><value>查詢名稱過長（上限 100 字）。</value></data>
+  <data name="SavedQuery_PeriodRequired" xml:space="preserve"><value>此報表必須選擇期間。</value></data>
+  <data name="SavedQuery_Forbidden" xml:space="preserve"><value>您沒有此報表的權限。</value></data>
+  <data name="SavedQuery_NoFiscalPeriod" xml:space="preserve"><value>本廠尚未建立涵蓋該期間的會計期間，這張常用查詢目前跑不了。請先於「會計期間管理」建立期間。</value></data>
+  <data name="SavedQuery_UnknownTool" xml:space="preserve"><value>找不到對應的報表。</value></data>
+  <data name="SavedQuery_Invalid" xml:space="preserve"><value>定義已失效，請重新儲存。</value></data>
+  <data name="RelativePeriod_Today" xml:space="preserve"><value>今天</value></data>
+  <data name="RelativePeriod_Yesterday" xml:space="preserve"><value>昨天</value></data>
+  <data name="RelativePeriod_ThisWeek" xml:space="preserve"><value>本週</value></data>
+  <data name="RelativePeriod_LastWeek" xml:space="preserve"><value>上週</value></data>
+  <data name="RelativePeriod_ThisMonth" xml:space="preserve"><value>本月</value></data>
+  <data name="RelativePeriod_LastMonth" xml:space="preserve"><value>上月</value></data>
+  <data name="RelativePeriod_ThisQuarter" xml:space="preserve"><value>本季</value></data>
+  <data name="RelativePeriod_LastQuarter" xml:space="preserve"><value>上季</value></data>
+  <data name="RelativePeriod_ThisFiscalPeriod" xml:space="preserve"><value>本會計期間</value></data>
+  <data name="RelativePeriod_LastFiscalPeriod" xml:space="preserve"><value>上一會計期間</value></data>
+  <data name="RelativePeriod_ThisYear" xml:space="preserve"><value>今年</value></data>
+  <data name="RelativePeriod_LastYear" xml:space="preserve"><value>去年</value></data>
+  <data name="RelativePeriod_Last7Days" xml:space="preserve"><value>最近 7 天</value></data>
+  <data name="RelativePeriod_Last30Days" xml:space="preserve"><value>最近 30 天</value></data>
+  <data name="RelativePeriod_Last90Days" xml:space="preserve"><value>最近 90 天</value></data>
+  <data name="RelativePeriod_MonthToDate" xml:space="preserve"><value>本月至今</value></data>
+  <data name="RelativePeriod_QuarterToDate" xml:space="preserve"><value>本季至今</value></data>
+  <data name="RelativePeriod_YearToDate" xml:space="preserve"><value>今年至今</value></data>
+  <data name="ReportSchedule" xml:space="preserve"><value>報表排程</value></data>
+  <data name="ReportInbox" xml:space="preserve"><value>報表收件匣</value></data>
+  <data name="ReportRunHistory" xml:space="preserve"><value>排程執行紀錄</value></data>
+  <data name="QaExtract" xml:space="preserve"><value>規則說明擷取物</value></data>
+  <data name="QaManagement" xml:space="preserve"><value>手冊助理</value></data>
+  <data name="QaAssistant" xml:space="preserve"><value>手冊問答</value></data>
+  <data name="QaConfirmMonetary" xml:space="preserve"><value>這份查詢的結果含金額。系統同時有多套成本口徑（AVCO／標準成本／實際成本）並行，選錯時數字看起來仍然合理，因此執行前請先確認下列查詢條件。</value></data>
+  <data name="QaConfirmMultipleTools" xml:space="preserve"><value>這個問題可能對應到多個查詢。請選擇要執行的那一個，並確認查詢條件。</value></data>
+  <data name="QaConfirmExpired" xml:space="preserve"><value>這一輪確認已失效（可能已執行過或逾時），請重新提問。</value></data>
+  <data name="QaTooManyRounds" xml:space="preserve"><value>釐清的次數已達上限，請改用畫面查詢。</value></data>
+  <data name="QaEgressBlocked" xml:space="preserve"><value>本系統目前設定的推論服務不在信任範圍內，為避免營運資料離開本機，自然語言資料查詢已停用。手冊問答仍可使用；請洽系統管理員確認推論服務位址設定。</value></data>
+  <data name="QaInferenceUnavailable" xml:space="preserve"><value>助理暫時無法回答，請稍後再試；若持續發生請聯絡系統管理員。</value></data>
+  <data name="QaIndexOutOfDate" xml:space="preserve"><value>手冊索引需要更新，請聯絡系統管理員。</value></data>
+  <data name="QaParamsInvalid" xml:space="preserve"><value>無法依這個問題組出有效的查詢條件，請換個說法或直接使用報表畫面。</value></data>
+  <data name="QaNotReadyContactAdmin" xml:space="preserve"><value>請聯絡系統管理員。</value></data>
+  <data name="QuestionRequired" xml:space="preserve"><value>請先輸入問題。</value></data>
+  <data name="QuestionTooLongFmt" xml:space="preserve"><value>問題請控制在 {0} 字以內。</value></data>
+  <data name="RebuildDoneFmt" xml:space="preserve"><value>索引重建完成：重新解析 {0} 個檔案、寫入 {1} 個段落、補嵌入 {2} 個；尚待嵌入 {3} 個。</value></data>
+  <data name="RebuildEmbedFailed" xml:space="preserve"><value>詞彙索引已完成，但補嵌入失敗（語意檢索會停留在舊向量）：</value></data>
+  <data name="StreamIncomplete" xml:space="preserve"><value>回答在傳輸中途中斷，請重試。</value></data>
+  <data name="ConfirmRunNow" xml:space="preserve"><value>確定要立即執行這筆排程嗎？報表將於下一輪掃描（約一分鐘內）產生。</value></data>
+  <data name="DuplicateName" xml:space="preserve"><value>此名稱已存在，請使用不同名稱。</value></data>
+  <data name="ReportToolForbidden" xml:space="preserve"><value>您沒有執行此報表的權限。</value></data>
+  <data name="ReportScheduleQueued" xml:space="preserve"><value>已排入立即執行，報表產生後會出現在收件匣。</value></data>
+  <data name="ReportFileExpired" xml:space="preserve"><value>此報表檔案已超過保留期並被清除，請重新執行排程。</value></data>
+  <data name="PlantParamOverview" xml:space="preserve">
+    <value>各廠參數覆寫一覽</value>
+  </data>
+  <data name="ArNotReversedAfterSettlement" xml:space="preserve"><value>另有 {0} 未回沖應收：來源發票已收款，系統不自動改動已結清發票的金額。已自動產生折讓單草稿 {1}，請至「銷貨折讓單」確認後過帳。</value></data>
+  <data name="ApNotReversedAfterSettlement" xml:space="preserve"><value>另有 {0} 未回沖應付：來源發票已付款，系統不自動改動已結清發票的金額。已自動產生折讓單草稿 {1}，請至「進貨折讓單」確認後過帳。</value></data>
+  <data name="ARCreditNote" xml:space="preserve"><value>銷貨折讓單</value></data>
+  <data name="APDebitNote" xml:space="preserve"><value>進貨折讓單</value></data>
+  <data name="ARCreditNoteId" xml:space="preserve"><value>折讓單號</value></data>
+  <data name="APDebitNoteId" xml:space="preserve"><value>折讓單號</value></data>
+  <data name="NoteDate" xml:space="preserve"><value>折讓日期</value></data>
+  <data name="CreditNoteStatusDraft" xml:space="preserve"><value>草稿</value></data>
+  <data name="CreditNoteStatusPosted" xml:space="preserve"><value>已過帳</value></data>
+  <data name="CreditNoteStatusVoid" xml:space="preserve"><value>已作廢</value></data>
+  <data name="CreditNoteAutoGeneratedHint" xml:space="preserve"><value>折讓單由退貨過帳時自動產生草稿，金額取自退貨量與原發票單價，故不提供手動建立與修改；確認後才會沖抵原發票的未結餘額並產生分錄。</value></data>
+  <data name="ConfirmPostCreditNote" xml:space="preserve"><value>確定要確認這張折讓單？確認後會沖抵原發票未結餘額並產生分錄。</value></data>
+  <data name="ConfirmVoidCreditNote" xml:space="preserve"><value>確定要作廢這張折讓單？已過帳者會一併回沖分錄。</value></data>
+  <data name="PostFailed" xml:space="preserve"><value>過帳失敗</value></data>
+  <data name="Confirm" xml:space="preserve"><value>確認</value></data>
+  <data name="Print_LocalTotal" xml:space="preserve"><value>本幣合計</value></data>
+  <data name="Print_ProductName" xml:space="preserve"><value>品名</value></data>
+  <data name="Print_MaterialRequirements" xml:space="preserve"><value>需領料</value></data>
+  <data name="Print_ReturnedQty" xml:space="preserve"><value>已退量</value></data>
+  <data name="Print_ToIssueQty" xml:space="preserve"><value>待發量</value></data>
+  <data name="Print_IssueMethod" xml:space="preserve"><value>發料方式</value></data>
+  <data name="Print_IssueMethod_Push" xml:space="preserve"><value>發料</value></data>
+  <data name="Print_IssueMethod_Pull" xml:space="preserve"><value>領料</value></data>
+  <data name="Print_IssueMethod_Backflush" xml:space="preserve"><value>後沖</value></data>
+  <data name="Print_ChildWorkOrder" xml:space="preserve"><value>子工單</value></data>
+  <data name="Print_AccountCode" xml:space="preserve"><value>科目代碼</value></data>
+  <data name="Print_AccountName" xml:space="preserve"><value>科目名稱</value></data>
+  <data name="Print_ActualSampleQty" xml:space="preserve"><value>實抽數</value></data>
+  <data name="Print_AllocatedAmount" xml:space="preserve"><value>沖銷金額</value></data>
+  <data name="Print_AllocatedCost" xml:space="preserve"><value>分攤成本</value></data>
+  <data name="Print_AllocationBasis" xml:space="preserve"><value>分攤基準</value></data>
+  <data name="Print_Allocations" xml:space="preserve"><value>沖銷明細</value></data>
+  <data name="Print_Amount" xml:space="preserve"><value>金額</value></data>
+  <data name="Print_AmountLocal" xml:space="preserve"><value>本幣金額</value></data>
+  <data name="Print_ApprovalStatus" xml:space="preserve"><value>簽核狀態</value></data>
+  <data name="Print_ApprovedBy" xml:space="preserve"><value>核准人</value></data>
+  <data name="Print_ApprovedQty" xml:space="preserve"><value>核准量</value></data>
+  <data name="Print_BankAccount" xml:space="preserve"><value>銀行帳戶</value></data>
+  <data name="Print_Category" xml:space="preserve"><value>類別</value></data>
+  <data name="Print_ClosedBy" xml:space="preserve"><value>結案人</value></data>
+  <data name="Print_ConfirmedBy" xml:space="preserve"><value>確認人</value></data>
+  <data name="Print_ConfirmedQty" xml:space="preserve"><value>實發量</value></data>
+  <data name="Print_Conforming" xml:space="preserve"><value>合格</value></data>
+  <data name="Print_CorrectiveAction" xml:space="preserve"><value>矯正措施</value></data>
+  <data name="Print_CostType" xml:space="preserve"><value>費用類別</value></data>
+  <data name="Print_CountMode" xml:space="preserve"><value>盤點方式</value></data>
+  <data name="Print_CreatedAt" xml:space="preserve"><value>建立時間</value></data>
+  <data name="Print_CreatedBy" xml:space="preserve"><value>建立人</value></data>
+  <data name="Print_Credit" xml:space="preserve"><value>貸方</value></data>
+  <data name="Print_Currency" xml:space="preserve"><value>幣別</value></data>
+  <data name="Print_Customer" xml:space="preserve"><value>客戶</value></data>
+  <data name="Print_Debit" xml:space="preserve"><value>借方</value></data>
+  <data name="Print_DefectCode" xml:space="preserve"><value>不良代碼</value></data>
+  <data name="Print_Description" xml:space="preserve"><value>摘要</value></data>
+  <data name="Print_DispatchQty" xml:space="preserve"><value>派工數量</value></data>
+  <data name="Print_Disposition" xml:space="preserve"><value>處置方式</value></data>
+  <data name="Print_DocDate" xml:space="preserve"><value>單據日期</value></data>
+  <data name="Print_DocNo" xml:space="preserve"><value>單號</value></data>
+  <data name="Print_DueDate" xml:space="preserve"><value>到期日</value></data>
+  <data name="Print_EntryDate" xml:space="preserve"><value>傳票日期</value></data>
+  <data name="Print_ExchangeGainLoss" xml:space="preserve"><value>匯兌損益</value></data>
+  <data name="Print_ExchangeRate" xml:space="preserve"><value>匯率</value></data>
+  <data name="Print_ExecutedBy" xml:space="preserve"><value>執行人</value></data>
+  <data name="Print_ExpectedDate" xml:space="preserve"><value>預計交期</value></data>
+  <data name="Print_FailQty" xml:space="preserve"><value>不良數</value></data>
+  <data name="Print_FirstCountQty" xml:space="preserve"><value>初盤數量</value></data>
+  <data name="Print_From" xml:space="preserve"><value>出庫倉／儲位</value></data>
+  <data name="Print_FromPlant" xml:space="preserve"><value>出貨廠</value></data>
+  <data name="Print_FromWarehouse" xml:space="preserve"><value>出貨倉</value></data>
+  <data name="Print_GoodsReceipt" xml:space="preserve"><value>進貨單-項次</value></data>
+  <data name="Print_InspectedAt" xml:space="preserve"><value>檢驗時間</value></data>
+  <data name="Print_InspectionItem" xml:space="preserve"><value>檢驗項目</value></data>
+  <data name="Print_InspectionType" xml:space="preserve"><value>檢驗類別</value></data>
+  <data name="Print_Inspector" xml:space="preserve"><value>檢驗員</value></data>
+  <data name="Print_InvoiceDate" xml:space="preserve"><value>發票日期</value></data>
+  <data name="Print_InvoiceNo" xml:space="preserve"><value>發票單號</value></data>
+  <data name="Print_IssuedAt" xml:space="preserve"><value>發料時間</value></data>
+  <data name="Print_IssuedBy" xml:space="preserve"><value>發料人</value></data>
+  <data name="Print_IssuedQty" xml:space="preserve"><value>已發量</value></data>
+  <data name="Print_JournalType" xml:space="preserve"><value>傳票類別</value></data>
+  <data name="Print_Judgement" xml:space="preserve"><value>判定</value></data>
+  <data name="Print_LineNo" xml:space="preserve"><value>項次</value></data>
+  <data name="Print_LinkedDocs" xml:space="preserve"><value>處置單據</value></data>
+  <data name="Print_Location" xml:space="preserve"><value>儲位</value></data>
+  <data name="Print_LotNo" xml:space="preserve"><value>批號</value></data>
+  <data name="Print_LotSize" xml:space="preserve"><value>批量</value></data>
+  <data name="Print_LowerSpec" xml:space="preserve"><value>下限</value></data>
+  <data name="Print_Machine" xml:space="preserve"><value>機台</value></data>
+  <data name="Print_Materials" xml:space="preserve"><value>用料明細</value></data>
+  <data name="Print_MeasuredValue" xml:space="preserve"><value>實測值</value></data>
+  <data name="Print_NewUnitCost" xml:space="preserve"><value>新單位成本</value></data>
+  <data name="Print_No" xml:space="preserve"><value>否</value></data>
+  <data name="Print_NonConforming" xml:space="preserve"><value>不合格</value></data>
+  <data name="Print_Operation" xml:space="preserve"><value>工序</value></data>
+  <data name="Print_OperationSeq" xml:space="preserve"><value>工序</value></data>
+  <data name="Print_OrderDate" xml:space="preserve"><value>訂購日期</value></data>
+  <data name="Print_OriginalUnitCost" xml:space="preserve"><value>原單位成本</value></data>
+  <data name="Print_Outsource" xml:space="preserve"><value>委外</value></data>
+  <data name="Print_PaymentDate" xml:space="preserve"><value>付款日期</value></data>
+  <data name="Print_PaymentMethod" xml:space="preserve"><value>付款方式</value></data>
+  <data name="Print_Period" xml:space="preserve"><value>會計期間</value></data>
+  <data name="Print_PickedQty" xml:space="preserve"><value>已揀量</value></data>
+  <data name="Print_Product" xml:space="preserve"><value>產品</value></data>
+  <data name="Print_ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="Print_PurchaseAmount" xml:space="preserve"><value>進貨金額</value></data>
+  <data name="Print_Qty" xml:space="preserve"><value>數量</value></data>
+  <data name="Print_QtyDone" xml:space="preserve"><value>已完工數</value></data>
+  <data name="Print_QtyReceived" xml:space="preserve"><value>已收量</value></data>
+  <data name="Print_QtyShipped" xml:space="preserve"><value>已出量</value></data>
+  <data name="Print_ReceiptDate" xml:space="preserve"><value>收款日期</value></data>
+  <data name="Print_RecountQty" xml:space="preserve"><value>複盤數量</value></data>
+  <data name="Print_Reference" xml:space="preserve"><value>參考號碼</value></data>
+  <data name="Print_Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="Print_RequestedBy" xml:space="preserve"><value>申請人</value></data>
+  <data name="Print_RequestedQty" xml:space="preserve"><value>申請量</value></data>
+  <data name="Print_RequiredQty" xml:space="preserve"><value>需求量</value></data>
+  <data name="Print_RootCause" xml:space="preserve"><value>原因分析</value></data>
+  <data name="Print_SampleSize" xml:space="preserve"><value>抽樣數</value></data>
+  <data name="Print_ScheduledEnd" xml:space="preserve"><value>排程完工</value></data>
+  <data name="Print_ScheduledStart" xml:space="preserve"><value>排程開工</value></data>
+  <data name="Print_Seq" xml:space="preserve"><value>序</value></data>
+  <data name="Print_SnapshotAt" xml:space="preserve"><value>凍結時間</value></data>
+  <data name="Print_SourceDoc" xml:space="preserve"><value>來源單據</value></data>
+  <data name="Print_StagedBy" xml:space="preserve"><value>備料人</value></data>
+  <data name="Print_StagingLocation" xml:space="preserve"><value>備料區</value></data>
+  <data name="Print_Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="Print_Subtotal" xml:space="preserve"><value>未稅金額</value></data>
+  <data name="Print_Supplier" xml:space="preserve"><value>供應商</value></data>
+  <data name="Print_TargetValue" xml:space="preserve"><value>目標值</value></data>
+  <data name="Print_Tax" xml:space="preserve"><value>稅別</value></data>
+  <data name="Print_TaxAmount" xml:space="preserve"><value>稅額</value></data>
+  <data name="Print_Title_APDebitNote" xml:space="preserve"><value>進貨折讓單</value></data>
+  <data name="Print_Title_APInvoice" xml:space="preserve"><value>應付發票</value></data>
+  <data name="Print_Title_APPayment" xml:space="preserve"><value>付款單</value></data>
+  <data name="Print_Title_ARCreditNote" xml:space="preserve"><value>銷貨折讓單</value></data>
+  <data name="Print_Title_ARInvoice" xml:space="preserve"><value>應收發票</value></data>
+  <data name="Print_Title_ARReceipt" xml:space="preserve"><value>收款單</value></data>
+  <data name="Print_Title_CrossPlantTransfer" xml:space="preserve"><value>跨廠調撥單</value></data>
+  <data name="Print_Title_Dispatch" xml:space="preserve"><value>派工單</value></data>
+  <data name="Print_Title_InspectionOrder" xml:space="preserve"><value>檢驗單</value></data>
+  <data name="Print_Title_InventoryCount" xml:space="preserve"><value>盤點表</value></data>
+  <data name="Print_Title_JournalEntry" xml:space="preserve"><value>傳票</value></data>
+  <data name="Print_Title_LandedCostAllocation" xml:space="preserve"><value>到岸成本分攤單</value></data>
+  <data name="Print_Title_MaterialSlip" xml:space="preserve"><value>發退料單</value></data>
+  <data name="Print_Title_MaterialStaging" xml:space="preserve"><value>備料單</value></data>
+  <data name="Print_Title_Ncr" xml:space="preserve"><value>不合格品報告</value></data>
+  <data name="Print_Title_OutsourcePurchaseOrder" xml:space="preserve"><value>委外採購單</value></data>
+  <data name="Print_Title_OutsourceReceipt" xml:space="preserve"><value>委外收料單</value></data>
+  <data name="Print_Title_OutsourceRework" xml:space="preserve"><value>委外重工單</value></data>
+  <data name="Print_To" xml:space="preserve"><value>入庫倉／儲位</value></data>
+  <data name="Print_ToPlant" xml:space="preserve"><value>收貨廠</value></data>
+  <data name="Print_ToWarehouse" xml:space="preserve"><value>收貨倉</value></data>
+  <data name="Print_Tooling" xml:space="preserve"><value>模具</value></data>
+  <data name="Print_TotalAmount" xml:space="preserve"><value>含稅總額</value></data>
+  <data name="Print_TotalLandedCost" xml:space="preserve"><value>到岸成本總額</value></data>
+  <data name="Print_TransferDate" xml:space="preserve"><value>調撥日期</value></data>
+  <data name="Print_TxnType" xml:space="preserve"><value>異動類型</value></data>
+  <data name="Print_UnitPrice" xml:space="preserve"><value>單價</value></data>
+  <data name="Print_Uom" xml:space="preserve"><value>單位</value></data>
+  <data name="Print_UpperSpec" xml:space="preserve"><value>上限</value></data>
+  <data name="Print_Warehouse" xml:space="preserve"><value>倉庫</value></data>
+  <data name="Print_WorkCenter" xml:space="preserve"><value>工作中心</value></data>
+  <data name="Print_WorkOrder" xml:space="preserve"><value>工單</value></data>
+  <data name="Print_Yes" xml:space="preserve"><value>是</value></data>
+  <data name="DepartmentCode" xml:space="preserve"><value>責任部門</value></data>
+  <data name="RequestedBy" xml:space="preserve"><value>請購人</value></data>
+  <data name="DeliveryAddress" xml:space="preserve"><value>送貨地址</value></data>
+  <data name="ColQuality" xml:space="preserve"><value>品質</value></data>
+  <data name="ColDelivery" xml:space="preserve"><value>交期</value></data>
+  <data name="ColPrice" xml:space="preserve"><value>價格</value></data>
+  <data name="ColService" xml:space="preserve"><value>服務</value></data>
+  <data name="ColResult" xml:space="preserve"><value>結果</value></data>
+  <data name="ColPeriod" xml:space="preserve"><value>評核期間</value></data>
+  <data name="ColTotal" xml:space="preserve"><value>總分</value></data>
+  <data name="EvalResultPass" xml:space="preserve"><value>合格</value></data>
+  <data name="EvalResultConditional" xml:space="preserve"><value>有條件合格</value></data>
+  <data name="EvalResultFail" xml:space="preserve"><value>不合格</value></data>
+  <data name="FollowUpAction" xml:space="preserve"><value>改善措施</value></data>
+  <data name="RootCause" xml:space="preserve"><value>根本原因分析</value></data>
+  <data name="CorrectiveAction" xml:space="preserve"><value>矯正預防措施（8D）</value></data>
+  <data name="Disposition" xml:space="preserve"><value>處置方式</value></data>
+  <data name="LotNo" xml:space="preserve"><value>批號</value></data>
+  <data name="MobileApprovalConflict" xml:space="preserve"><value>這張單的狀態已經改變（可能已被撤回、已被其他人簽核，或簽核步驟已經推進），所以這次沒有簽成。清單已重新載入，請確認目前狀態。</value></data>
+  <data name="PlantContextChanged" xml:space="preserve"><value>這個畫面是在「{0}」廠開啟的，但你目前的作用廠別已經變成「{1}」（可能是在手機或另一個分頁切換過）。為避免資料被建到錯誤的廠別，這次沒有存檔。請切回「{0}」廠後再送出；若要改建在「{1}」廠，請重新整理頁面後重新填寫。</value></data>
+  <data name="PlantContextSwitchBackConfirm" xml:space="preserve"><value>要現在把廠別切回「{0}」，並照目前填寫的內容存檔嗎？
+（選「取消」則不存檔，面板內容保留。）</value></data>
+  <data name="PlantContextMissing" xml:space="preserve"><value>這個畫面缺少開啟時的廠別資訊（可能是系統更新前開啟的舊頁面），為避免存到錯誤的廠別，這次沒有存檔。請重新整理頁面後再送出。</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="Submit" xml:space="preserve"><value>送審</value></data>
+  <data name="View" xml:space="preserve"><value>檢視</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>移除此列</value></data>
+  <data name="PeriodRequired" xml:space="preserve"><value>這張報表需要指定查詢期間。</value></data>
+  <data name="Journal_AccountRequired" xml:space="preserve"><value>請選擇科目。</value></data>
+  <data name="Journal_AccountNotSelectable" xml:space="preserve"><value>此科目未開放手動選用。</value></data>
+  <data name="Journal_AmountNegative" xml:space="preserve"><value>金額不可為負數。</value></data>
+  <data name="Journal_AmountRequired" xml:space="preserve"><value>請填借方或貸方金額。</value></data>
+  <data name="Journal_BothSidesFilled" xml:space="preserve"><value>同一行不可同時填借方與貸方。</value></data>
+  <data name="Journal_TwoLinesRequired" xml:space="preserve"><value>分錄至少需要兩行（一借一貸）。</value></data>
+  <data name="Journal_Unbalanced" xml:space="preserve"><value>借貸不平衡，請確認借方合計等於貸方合計。</value></data>
+  <data name="Journal_Balanced" xml:space="preserve"><value>借貸平衡</value></data>
+  <data name="Journal_DiffLabel" xml:space="preserve"><value>差額</value></data>
+  <data name="NewManualJournal" xml:space="preserve"><value>手動傳票</value></data>
+  <data name="Journal_PasteResultFmt" xml:space="preserve"><value>已填入 {0} 行，略過 {1} 行（科目不存在或未開放手動選用）。</value></data>
+  <data name="TradeTerm" xml:space="preserve"><value>貿易條件</value></data>
+  <data name="ActivationDate" xml:space="preserve"><value>啟用日</value></data>
+  <data name="ApprovalLabelPrefix" xml:space="preserve"><value>簽核：</value></data>
+  <data name="Brand" xml:space="preserve"><value>品牌</value></data>
+  <data name="CalibrationCycleDays" xml:space="preserve"><value>校正週期（天）</value></data>
+  <data name="CalibrationInfo" xml:space="preserve"><value>校正資訊</value></data>
+  <data name="CalibrationMethod" xml:space="preserve"><value>校正方式</value></data>
+  <data name="ContactJobTitle" xml:space="preserve"><value>職稱</value></data>
+  <data name="ContactMobile" xml:space="preserve"><value>手機</value></data>
+  <data name="ContactName" xml:space="preserve"><value>姓名</value></data>
+  <data name="ContactPhone" xml:space="preserve"><value>電話</value></data>
+  <data name="Custodian" xml:space="preserve"><value>保管人</value></data>
+  <data name="DeactivationDate" xml:space="preserve"><value>停用日</value></data>
+  <data name="Department" xml:space="preserve"><value>部門</value></data>
+  <data name="DirectionInbound" xml:space="preserve"><value>+1 入庫</value></data>
+  <data name="DirectionOutbound" xml:space="preserve"><value>-1 出庫</value></data>
+  <data name="DocLabelPrefix" xml:space="preserve"><value>單據：</value></data>
+  <data name="InstrumentSpecs" xml:space="preserve"><value>儀器規格</value></data>
+  <data name="LastCalibrationDate" xml:space="preserve"><value>上次校正日</value></data>
+  <data name="Loading" xml:space="preserve"><value>載入中…</value></data>
+  <data name="Model" xml:space="preserve"><value>型號</value></data>
+  <data name="MonthShortNames" xml:space="preserve"><value>1月,2月,3月,4月,5月,6月,7月,8月,9月,10月,11月,12月</value></data>
+  <data name="NextCalibrationDate" xml:space="preserve"><value>下次校正日</value></data>
+  <data name="NoAvailableLines" xml:space="preserve"><value>查無可用明細</value></data>
+  <data name="NoContacts" xml:space="preserve"><value>尚無聯絡人</value></data>
+  <data name="NoMatchingRecords" xml:space="preserve"><value>查無符合條件的資料。</value></data>
+  <data name="PendingQty" xml:space="preserve"><value>待處理數量</value></data>
+  <data name="PiecesFmt" xml:space="preserve"><value>{0} 件</value></data>
+  <data name="Precision" xml:space="preserve"><value>精度</value></data>
+  <data name="QtyThisTime" xml:space="preserve"><value>本次數量</value></data>
+  <data name="RecordsCountFmt" xml:space="preserve"><value>{0} 筆</value></data>
+  <data name="SaveAndSubmit" xml:space="preserve"><value>儲存後送審</value></data>
+  <data name="SelectDepartmentFirst" xml:space="preserve"><value>請先選擇部門</value></data>
+  <data name="SelectPartyFirst" xml:space="preserve"><value>請先選擇對象代號</value></data>
+  <data name="SelectProductOption" xml:space="preserve"><value>-- 選擇品號 --</value></data>
+  <data name="SelectSupplierFirst" xml:space="preserve"><value>請先選擇供應商</value></data>
+  <data name="SelectWorkCenterFirst" xml:space="preserve"><value>請先選擇工作中心</value></data>
+  <data name="SerialAdd" xml:space="preserve"><value>新增序號</value></data>
+  <data name="SerialNo" xml:space="preserve"><value>序號</value></data>
+  <data name="ServerNoResponse" xml:space="preserve"><value>伺服器無回應</value></data>
+  <data name="ShiftAllDayNote" xml:space="preserve"><value>正班工時=24 且開班/收班留空，表示全天 24h 連續（四班兩輪）。</value></data>
+  <data name="ShiftAutoFromShift" xml:space="preserve"><value>由班別自動帶出</value></data>
+  <data name="ShiftAutoSumNet" xml:space="preserve"><value>由班別淨工時自動加總</value></data>
+  <data name="ShiftOvertimeHours" xml:space="preserve"><value>加班工時</value></data>
+  <data name="ShiftRegularHours" xml:space="preserve"><value>正班工時</value></data>
+  <data name="ShiftWorkEnd" xml:space="preserve"><value>收班時間</value></data>
+  <data name="ShiftWorkStart" xml:space="preserve"><value>開班時間</value></data>
+  <data name="Specification" xml:space="preserve"><value>規格</value></data>
+  <data name="Tolerance" xml:space="preserve"><value>公差</value></data>
+  <data name="Total" xml:space="preserve"><value>合計</value></data>
+  <data name="Unconfirm" xml:space="preserve"><value>撤回確認</value></data>
+  <data name="VoidReasonPrompt" xml:space="preserve"><value>請輸入作廢原因（選填）：</value></data>
+  <data name="WeekdayNamesMonFirst" xml:space="preserve"><value>週一,週二,週三,週四,週五,週六,週日</value></data>
+  <data name="WeekdayShortSunFirst" xml:space="preserve"><value>日,一,二,三,四,五,六</value></data>
+  <data name="WholeYear" xml:space="preserve"><value>全年</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>撤回</value></data>
+  <data name="YearMonthFmt" xml:space="preserve"><value>{0} 年 {1} 月</value></data>
+  <data name="ScreenHelpTitle" xml:space="preserve"><value>本畫面操作說明</value></data>
+  <data name="DocsHeader" xml:space="preserve"><value>系統文件</value></data>
+  <data name="DocsCenter" xml:space="preserve"><value>文件中心</value></data>
+  <data name="UserManualLink" xml:space="preserve"><value>系統使用手冊</value></data>
+  <data name="AdminManualLink" xml:space="preserve"><value>系統管理手冊</value></data>
+  <data name="MaintenanceManualLink" xml:space="preserve"><value>系統維護手冊</value></data>
+  <data name="GoLiveChecklistLink" xml:space="preserve"><value>上線設定清單</value></data>
+  <data name="BaseCurrencyInfoFmt" xml:space="preserve"><value>本幣：&lt;strong&gt;{0}&lt;/strong&gt;。以下匯率為「1 {0} = X 外幣」。如需變更，請至 {1} 修改 &lt;code&gt;base_currency&lt;/code&gt;。</value></data>
+  <data name="BaseCurrencyNotSetFmt" xml:space="preserve"><value>尚未設定本幣。匯率以本幣為基準（1 本幣 = X 外幣）。請至 {0} 新增 Key = &lt;code&gt;base_currency&lt;/code&gt;，Value = 本幣代號（如 &lt;code&gt;TWD&lt;/code&gt;）。</value></data>
+  <data name="LoanType_BR" xml:space="preserve"><value>借入退回</value></data>
+  <data name="LoanType_IB" xml:space="preserve"><value>借入</value></data>
+  <data name="LoanType_IL" xml:space="preserve"><value>借出</value></data>
+  <data name="LoanType_LR" xml:space="preserve"><value>借出退回</value></data>
+  <data name="SampleType_CI" xml:space="preserve"><value>客供進貨</value></data>
+  <data name="SampleType_CR" xml:space="preserve"><value>客供退回</value></data>
+  <data name="SampleType_SO" xml:space="preserve"><value>樣品出貨</value></data>
+  <data name="SampleType_SR" xml:space="preserve"><value>樣品退回</value></data>
+  <data name="SerialDeleteConfirmFmt" xml:space="preserve"><value>確定刪除序號「{0}」？</value></data>
+  <data name="SerialEditFmt" xml:space="preserve"><value>編輯序號 {0}</value></data>
+  <data name="StatusActive" xml:space="preserve"><value>啟用</value></data>
+  <data name="StatusInactive" xml:space="preserve"><value>停用</value></data>
+  <data name="SystemParamLink" xml:space="preserve"><value>系統參數</value></data>
+  <data name="YearFmt" xml:space="preserve"><value>{0} 年</value></data>
+  <data name="GanttOutsourceRow" xml:space="preserve"><value>委外</value></data>
+  <data name="GanttCapacityRowSuffix" xml:space="preserve"><value>産能</value></data>
+  <data name="SlipSourceLocationRequired" xml:space="preserve"><value>第 {0} 行未指定來源倉/儲位，請先選擇要從哪裡發料。</value></data>
+  <data name="SlipReturnLocationRequired" xml:space="preserve"><value>第 {0} 行未指定退回倉/儲位。</value></data>
+  <data name="SlipNotPickable" xml:space="preserve"><value>這張單目前的狀態不能揀料（領料單要先核准；已過帳或已取消的不能再處理）。</value></data>
+  <data name="SlipNothingPicked" xml:space="preserve"><value>沒有任何一行有數量，無法過帳。</value></data>
+  <data name="SlipRequisitionPullOnly" xml:space="preserve"><value>{0} 不是領料用料（發料或後沖由倉庫／系統處理），不能申請領料。</value></data>
+  <data name="SlipRequisitionExceedsRemaining" xml:space="preserve"><value>{0} 申請量超過此工單尚可領的 {1}（需求 − 已發 − 已申請未發）。</value></data>
+  <data name="SlipUomMustBeStock" xml:space="preserve"><value>{0} 的單位「{1}」不是庫存單位 {2}。發退料單一律以庫存單位計（工單用料、領退額度與過帳都以它為準），請改用 {2}。</value></data>
+  <data name="SlipSourceWorkOrderNotFound" xml:space="preserve"><value>來源工單「{0}」不存在，請確認來源單號。</value></data>
+  <data name="SlipProductNotInWorkOrder" xml:space="preserve"><value>{0} 不在工單 {1} 的廠內用料中（委外工序的料不能在廠內領退），不能領料或退料。</value></data>
+  <data name="SlipReturnExceedsIssued" xml:space="preserve"><value>{0} 退料量超過此工單已發未退的 {1}。</value></data>
+  <data name="ExchangeRateNotFound" xml:space="preserve"><value>找不到幣別 {0} 在 {1} 的匯率，請先維護匯率。</value></data>
+  <data name="OutsourcePoNotReceivable" xml:space="preserve"><value>這張委外採購單不是已確認狀態，不能收料。</value></data>
+  <data name="OutsourceReceiveLocationRequired" xml:space="preserve"><value>簡化模式下收料即入庫，每一行都要指定倉庫與儲位。</value></data>
+  <data name="OutsourcePoLineNotFound" xml:space="preserve"><value>委外採購單上找不到這一行。</value></data>
+  <data name="Journal_CostCenterInvalid" xml:space="preserve"><value>成本中心不是本廠的組織單位。</value></data>
+  <data name="Journal_ReversedFmt" xml:space="preserve"><value>已沖銷 {0}，沖銷傳票 {1}。</value></data>
+  <data name="SourceDocTypeManualReversal" xml:space="preserve"><value>手動傳票沖銷</value></data>
+  <data name="DispatchNotOnHold" xml:space="preserve"><value>此派工不是暫停狀態。</value></data>
+  <data name="DispatchResumeNeedsQuality" xml:space="preserve"><value>品質不合格造成的暫停，須由具檢驗單更新權限的人員恢復。</value></data>
+  <data name="DispatchResumeMachineDown" xml:space="preserve"><value>原機台仍停用中，不能恢復；請待機台恢復或改用換機續做。</value></data>
+  <data name="DispatchResumed" xml:space="preserve"><value>派工已恢復。</value></data>
+  <data name="DispatchSwitchSameMachine" xml:space="preserve"><value>請選擇不同於原機台的機台。</value></data>
+  <data name="DispatchSwitchMachineDown" xml:space="preserve"><value>選定的機台目前不可生產。</value></data>
+  <data name="DispatchSwitched" xml:space="preserve"><value>已改由派工 {0} 在機台 {1} 續做，待排程後換模開工。</value></data>
+  <data name="DispatchShortClosed" xml:space="preserve"><value>剩餘量已結案。</value></data>
+  <data name="DispatchStatusCancelled" xml:space="preserve"><value>已取消</value></data>
+  <data name="MachineHasOpenDispatchCannotDelete" xml:space="preserve"><value>機台 {0} 尚有未結束的派工，不可刪除。請先完成、換機或結案這些派工。</value></data>
+  <data name="ScheduleRunBusy" xml:space="preserve"><value>本廠另有一次排程正在執行，請稍後再試。</value></data>
+  <data name="ScheduleRunConflict" xml:space="preserve"><value>排程期間有派工被同時異動（例如報工），本次排程未寫入，請重新執行。</value></data>
+  <!-- 簽核畫面單據類型名稱（IApprovalDocumentTypeLabelContributor） -->
+  <data name="ApprovalDocType_PurchaseRequest" xml:space="preserve"><value>請購單</value></data>
+  <data name="ApprovalDocType_PurchaseOrder" xml:space="preserve"><value>採購單</value></data>
+  <data name="ApprovalDocType_GoodsReceipt" xml:space="preserve"><value>進貨單</value></data>
+  <data name="ApprovalDocType_GoodsReturn" xml:space="preserve"><value>進貨退出</value></data>
+  <data name="ApprovalDocType_OutsourceReceipt" xml:space="preserve"><value>委外收貨</value></data>
+  <data name="ApprovalDocType_VendorEvaluation" xml:space="preserve"><value>供應商評分卡</value></data>
+  <data name="ApprovalDocType_Company" xml:space="preserve"><value>廠商／客戶</value></data>
+  <data name="ApprovalDocType_Product" xml:space="preserve"><value>產品主檔</value></data>
+  <data name="ApprovalDocType_Tax" xml:space="preserve"><value>稅別</value></data>
+  <data name="ApprovalDocType_ScrapDoc" xml:space="preserve"><value>報廢單</value></data>
+  <data name="ApprovalDocType_LoanDoc" xml:space="preserve"><value>借入借出單</value></data>
+  <data name="ApprovalDocType_SampleDoc" xml:space="preserve"><value>樣品／客供單</value></data>
+  <data name="ApprovalDocType_StockAdjustment" xml:space="preserve"><value>庫存調整單</value></data>
+  <data name="ApprovalDocType_OutsourceMaterial" xml:space="preserve"><value>委外發退料單</value></data>
+  <data name="ApprovalDocType_ReworkMaterial" xml:space="preserve"><value>重工發退料單</value></data>
+  <data name="ApprovalDocType_StockTransfer" xml:space="preserve"><value>同廠調撥單</value></data>
+  <data name="ApprovalDocType_CrossPlantTransfer" xml:space="preserve"><value>跨廠調撥單</value></data>
+  <data name="ApprovalDocType_LandedCostAllocation" xml:space="preserve"><value>進料費用分攤</value></data>
+  <data name="ApprovalDocType_MaterialStagingOrder" xml:space="preserve"><value>備料單</value></data>
+  <data name="ApprovalDocType_SalesOrder" xml:space="preserve"><value>銷售訂單</value></data>
+  <data name="ApprovalDocType_GoodsShipment" xml:space="preserve"><value>出貨單</value></data>
+  <data name="ApprovalDocType_SalesReturn" xml:space="preserve"><value>銷退單</value></data>
+  <data name="ApprovalDocType_InternalOrder" xml:space="preserve"><value>內部訂單</value></data>
+  <data name="ApprovalDocType_WorkOrder" xml:space="preserve"><value>工單</value></data>
+  <data name="ApprovalDocType_NonConformanceReport" xml:space="preserve"><value>不合格品單（NCR）</value></data>
+  <data name="ApprovalDocType_APInvoice" xml:space="preserve"><value>應付帳款</value></data>
+  <data name="ApprovalDocType_ARInvoice" xml:space="preserve"><value>應收帳款</value></data>
+  <data name="ApprovalDocType_APPayment" xml:space="preserve"><value>付款作業</value></data>
+  <data name="ApprovalDocType_ARReceipt" xml:space="preserve"><value>收款作業</value></data>
+  <data name="ContainerUnit" xml:space="preserve"><value>箱子（容器個體）</value></data>
+  <data name="ContainerUnitCreatedFmt" xml:space="preserve"><value>已建立 {0} 個箱子：{1} ～ {2}</value></data>
+  <data name="ContainerUnitPackedFmt" xml:space="preserve"><value>已裝箱：箱號 {0}，批號 {1}（調撥單 {2}）</value></data>
+  <data name="ContainerUnitPackIncomplete" xml:space="preserve"><value>請指定箱號、品號與儲位</value></data>
+  <data name="ContainerUnitRecoveredFmt" xml:space="preserve"><value>已回收 {0} 個箱子</value></data>
+  <data name="ContainerUnitRecoverEmpty" xml:space="preserve"><value>請掃描或輸入要回收的箱號</value></data>
+  <data name="Mob_SubscriptionInvalid" xml:space="preserve"><value>推播訂閱或通知內容無效。</value></data>
+  <data name="Mob_SubscriptionLimit" xml:space="preserve"><value>已達裝置推播訂閱數量上限。</value></data>
+</root>

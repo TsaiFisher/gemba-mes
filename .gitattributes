@@ -1,0 +1,91 @@
+# ══════════════════════════════════════════════════════════
+# ProjectZ Git Merge 策略設定
+# 當執行 git merge upstream/main 時，標記為 merge=ours 的檔案
+# 若發生衝突，自動保留 ProjectZ（我方）版本。
+#
+# GitHub 更新流程：
+#   git fetch upstream
+#   git merge upstream/main
+#   # → 以下標記的衝突檔案自動保留 ProjectZ 版本
+#   # → 其餘衝突手動解決（見 .claude/LOCAL_RULES.md）
+# ══════════════════════════════════════════════════════════
+
+# ── 部署環境設定（各專案自己的，不從 Core 更新）─────────────
+README.md                                                   merge=ours
+DEVELOPMENT.md                                              merge=ours
+# ── 架構文件（ProjectZ 依企業實況校正狀態注記，Core 為通用版）──
+APPROVAL-WORKFLOW.md                                        merge=ours
+PRINT-ARCHITECTURE.md                                       merge=ours
+appsettings.json                                            merge=ours
+appsettings.Development.json                                merge=ours
+SmartFactory.MES.sln                                        merge=ours
+CHANGELOG.md                                                merge=ours
+
+# ── EF Core Snapshot（ProjectZ 含 BAS 表，保留自己版本）────────
+# Runtime 依 __EFMigrationsHistory 套用，不依 snapshot，故保留 ProjectZ 版本安全
+# Core 新增的 migration .cs 檔案 merge 進來後，dotnet run 自動套用
+Migrations/ApplicationDbContextModelSnapshot.cs             merge=ours
+
+# ── Approval 模組 URL 映射（Core 版本為空注解，ProjectZ 有完整映射）──
+Views/Approval/_DocDetailsUrls.cshtml                       merge=ours
+
+# ── 系統參數頁面模組擴充（Core 版本為空注解，ProjectZ 有財務設定）──
+Views/SystemParam/_SystemParamModuleExtensions.cshtml       merge=ours
+# ── 系統參數多語（ProjectZ 加入 BAS 模組的 key，Core 無此項目）──
+Resources/Views/SystemParam/Index.zh-TW.resx               merge=ours
+Resources/Views/SystemParam/Index.en-US.resx                merge=ours
+
+# ── ProjectZ 專屬規則與設定（Core 無此檔，merge=ours 保護）─────────
+.claude/README.md                                           merge=ours
+.claude/LOCAL_RULES.md                                      merge=ours
+.claude/settings.json                                       merge=ours
+.claude/hooks/projectz-reminder.json                        merge=ours
+.claude/commands/new-screen-projectz.md                     merge=ours
+.claude/commands/new-job.md                                 merge=ours
+.claude/commands/new-analytics.md                           merge=ours
+.claude/specifications/consistency-framework.md             merge=ours
+.claude/specifications/currency.md                          merge=ours
+.claude/specifications/inventory.md                         merge=ours
+.claude/specifications/inventory-advanced.md                merge=ours
+.claude/specifications/mfg-domain.md                        merge=ours
+.claude/specifications/mobile-pwa.md                        merge=ours
+.claude/specifications/ord-module.md                        merge=ours
+
+# ── ProjectZ 自有/已分歧檔案（保留我方版本，不吃 Core 對應更新）─────
+# CI 與 hook：ProjectZ 有自家流程（core-compat、授權閘門、邊界守門等）
+.github/workflows/ci.yml                                     merge=ours
+.github/workflows/validate-boundaries.yml                    merge=ours
+.githooks/pre-commit                                        merge=ours
+# .core-version：本 fork 自己的同步紀錄（LAST_SYNC/SHA 由 update-core.sh 回寫），
+# 語意上就是 per-fork 狀態，吃 Core 的值等於把自己的同步進度洗掉
+.core-version                                               merge=ours
+# scripts/check-snapshot-drift.sh **刻意不列入 merge=ours**（2026-08-22 決定）。
+# ProjectZ 版多了雙 DbContext 的 --context 檢查等修正，與 Core 永久分歧，
+# 看起來正是 merge=ours 的典型用途——但它同時登錄在 core-drift-baseline.txt，
+# 而 baseline 是**路徑白名單不是內容雜湊**：路徑一旦登錄，內容再怎麼變守門都不再吭聲。
+# 兩者疊在同一個路徑上的結果是 Core 改了它，merge 無聲丟掉、守門也不報——**雙重靜音**。
+# 寧可讓它衝突：衝突是唯一會強迫人看一眼的訊號，而 Core 這輩子只改過這支檔一次
+# （2974c60，就是建立它那次），所以這個代價幾乎不會發生。
+# 版面：ProjectZ _Layout 已因 CSP nonce 等分歧
+Pages/Shared/_Layout.cshtml                                 merge=ours
+# Mobile PWA：ProjectZ 已大幅客製，與 Core 範本分歧
+# （Core 端只有 7 個檔的骨架，ProjectZ 有 66 個；且 ProjectZ 全站走 i18n.js 的 t()，
+#  Core 沒有那支檔案，合回 Core 版本會把 t() 呼叫換成寫死的中文字串）
+wwwroot/mobile/home.html                                    merge=ours
+wwwroot/mobile/index.html                                   merge=ours
+wwwroot/mobile/css/mobile.css                               merge=ours
+wwwroot/mobile/js/api.js                                    merge=ours
+wwwroot/mobile/js/auth.js                                   merge=ours
+# Program.cs：ProjectZ 有 Cookie 強化／推播註冊／Mobile 模組種子等客製
+#   （通用資安修正：健檢防洩、AutoMigrate 閘門已上送 Core，見 SmartFactory.MES PR#6）
+Program.cs                                                  merge=ours
+# CLAUDE.md：ProjectZ superset，多 4 章專屬規範（CodeEntry 多語/UOM/Currency/查詢列控件）
+CLAUDE.md                                                   merge=ours
+
+# ── 注意：以下檔案「不」設 merge=ours，直接接受 Core 更新 ──────
+# .claude/commands/new-screen.md / new-report.md / xlsx.md / webapp-testing.md
+#                            → 基礎工具規格，與 Core 同步更新
+# Controllers/*.cs          → 與 Core 保持一致，接受 Core 更新
+# Views/Approval/PendingIndex.cshtml  → 與 Core 保持一致
+# Views/Approval/AllRequests.cshtml   → 與 Core 保持一致
+# Resources/SharedResource.*.resx    → Core 主導，ProjectZ 不修改

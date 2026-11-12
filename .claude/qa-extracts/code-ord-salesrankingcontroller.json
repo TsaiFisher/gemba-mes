@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/ORD/Controllers/SalesRankingController.cs",
+  "sourceHash": "ef544b15eb0e7969bc2c1de559827d1fa6d9d468e04726b3fc5b442606d4b2fb",
+  "entries": [
+    {
+      "slug": "code-ord-salesrankingcontroller-fd1d47e6",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 期間在本報表只是篩選，所以留白給預設近 30 天而不是擋下來",
+      "text": "報表期間篩選規則說明｜此報表的日期範圍僅用於過濾資料，而非計算的基礎分母，因此預設會顯示近 30 天的資料範圍，而不是強制限制在特定區間。",
+      "approved": false,
+      "sourceSectionHash": "3270efcab7c3ff9cfbe598fe12b4b57adad34e54688b9a4d2ef60683a53f99b7"
+    },
+    {
+      "slug": "code-ord-salesrankingcontroller-f855315a",
+      "lang": "zh",
+      "headingPath": "訂單出貨 › 這裡只負責把畫面的字串參數轉成強型別請求——字串日期不得滲入工具",
+      "text": "查詢參數轉換規則說明｜系統會將畫面傳入的字串格式日期，轉換成工具可以識別的強型別資料類型。如果沒有指定結束日期，則預設以當天作為截止日期。",
+      "approved": true,
+      "sourceSectionHash": "f781e3f0e1e8cd2c80067dbfd564a6a0aba6282b586515a80854356e094ea8fe"
+    }
+  ]
+}

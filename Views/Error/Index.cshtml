@@ -1,0 +1,48 @@
+@{
+    var statusCode   = (int)(ViewBag.StatusCode ?? 0);
+    var originalPath = (string)(ViewBag.OriginalPath ?? "");
+
+    string icon, title, message;
+
+    if (statusCode == 404)
+    {
+        icon    = "bi-signpost-2";
+        title   = Localizer["NotFoundTitle"].Value;
+        message = Localizer["NotFoundMessage"].Value;
+    }
+    else if (statusCode == 403)
+    {
+        icon    = "bi-shield-lock";
+        title   = Localizer["ForbiddenTitle"].Value;
+        message = Localizer["ForbiddenMessage"].Value;
+    }
+    else
+    {
+        icon    = "bi-exclamation-triangle";
+        title   = Localizer["ErrorTitle"].Value;
+        message = Localizer["ErrorMessage"].Value;
+    }
+
+    ViewData["Title"] = $"{statusCode} - {title}";
+}
+
+<div class="d-flex flex-column align-items-center justify-content-center py-5 text-center">
+    <i class="bi @icon text-secondary u-font-size-4rem"></i>
+    <h1 class="mt-3 display-6 fw-bold">@statusCode</h1>
+    <p class="fs-5 text-secondary mb-1">@title</p>
+    <p class="text-muted small mb-4">@message</p>
+    @if (!string.IsNullOrEmpty(originalPath))
+    {
+        <p class="text-muted small mb-3">
+            @Localizer["PathLabel"]<code>@originalPath</code>
+        </p>
+    }
+    <div class="d-flex gap-2">
+        <a href="/" class="btn btn-primary">
+            <i class="bi bi-house me-1"></i>@Localizer["BackHome"]
+        </a>
+        <button class="btn btn-outline-secondary" data-action="historyBack">
+            <i class="bi bi-arrow-left me-1"></i>@Localizer["GoBack"]
+        </button>
+    </div>
+</div>

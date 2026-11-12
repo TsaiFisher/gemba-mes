@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Completion Receipt — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>完工入庫 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link active"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-box-arrow-in-down-right me-2 text-primary"></i><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/ProductionCompletion &nbsp;|&nbsp; 成品繳庫與工單實際成本結轉</span><span lang="en">Route: /ProductionCompletion &nbsp;|&nbsp; Receiving finished goods into stock and carrying the work order's actual cost forward</span></div>
+    </div>
+
+    <p><span lang="zh">將已完成末道工序且通過 FQC 的產出繳入成品倉。過帳產生 INV 入庫異動與人工/製費吸收分錄，建立工單實際成本（初步），並於繳庫量達工單量時自動完工工單。重工工單繳庫可分良品（成品倉）、降等品（次品倉/調降成本）、報廢三路處理；重工工單的良品只以發進來的不良品原值入庫，重工多花的用料、人工、製費轉「5250 重工損失」（見<a href="work-order-variance.html#rework-cost">工單成本差異的「重工成本」</a>）。</span><span lang="en">Receives output that has finished the last operation and passed FQC into the finished goods warehouse. Posting creates the INV receipt movement together with the labour and overhead absorption entries, establishes the work order's actual cost (preliminary), and completes the work order automatically once the received quantity reaches the work order quantity. Rework work orders can be received down three routes: good pieces (finished goods warehouse), downgraded pieces (seconds warehouse, cost written down) and scrap. Good units from a rework order are received only at the original value of the defective items issued in; the extra material, labour and overhead spent on the rework go to "5250 Rework Loss" (see <a href="work-order-variance.html#rework-cost">Rework cost on the WO Cost Variance page</a>).</span></p>
+    <img class="screen-shot" src="img/production-completion.png" data-src-en="img/en/production-completion.png" alt="完工入庫畫面截圖" data-alt-en="Completion receipt screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">完工入庫畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Completion receipt screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">草稿 Draft</span><span lang="en">Draft</span></span></td><td><span lang="zh">已建立未生效，可自由編輯、刪除；需簽核者於此狀態送審。</span><span lang="en">Created but not yet effective; can be freely edited or deleted, and submitted for approval from this status.</span></td></tr><tr><td><span class='badge bg-info'><span lang="zh">待審核</span><span lang="en">Pending approval</span></span></td><td><span lang="zh">已送審等待簽核，不可編輯；可撤回改回草稿。</span><span lang="en">Submitted and waiting for approval; it cannot be edited, but it can be withdrawn back to draft.</span></td></tr><tr><td><span class='badge bg-primary'><span lang="zh">已確認 Confirmed</span><span lang="en">Confirmed</span></span></td><td><span lang="zh">簽核核准（或免簽核直接確認）後生效，等待後續作業/過帳。</span><span lang="en">Effective once approved (or confirmed directly when no approval is required), waiting for the next step or for posting.</span></td></tr><tr><td><span class='badge bg-success'><span lang="zh">已過帳 Posted</span><span lang="en">Posted</span></span></td><td><span lang="zh">庫存/帳務已入帳，單據不可再修改。</span><span lang="en">Stock and accounting have been posted; the document can no longer be changed.</span></td></tr><tr><td><span class='badge bg-danger'><span lang="zh">已作廢 Void</span><span lang="en">Void</span></span></td><td><span lang="zh">反向沖銷已過帳內容；作廢原因需留存，不可復原。</span><span lang="en">Reverses what was posted; the void reason is kept and the action cannot be undone.</span></td></tr></tbody>
+    </table>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">繳庫</span><span lang="en">Receive into stock</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」選擇工單，系統帶出可繳庫量（已完工 − 已繳庫 − 待檢）。</span><span lang="en">Click "Add" and choose a work order; the system fills in the quantity available to receive (completed − already received − awaiting inspection).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">輸入本次繳庫量與入庫倉/儲位後儲存、確認。</span><span lang="en">Enter the quantity to receive and the receiving warehouse and location, then save and confirm.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">確認過帳後庫存入帳；工單累計繳庫量達標即自動完工。</span><span lang="en">Once confirmed and posted the stock is booked in, and the work order completes automatically when the cumulative received quantity reaches the target.</span></div></div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh"><strong>整品委外工單不走完工入庫。</strong>它的成品由委外收貨入庫（成本＝加工費＋送出去的料），收回品合格入庫收滿後工單自動「入庫完成」；在這裡對它執行會被擋下，以免同一批貨入庫兩次。</span><span lang="en"><strong>Fully outsourced work orders do not go through production completion.</strong> Their finished goods are stocked by the outsource receipt (cost = processing fee + materials sent out), and the order becomes "Received into stock" automatically once the returned goods have passed and been stocked in full; running completion on it here is refused, so the same goods cannot be stocked twice.</span></div>
+    <div class="note-box"><i class="bi bi-calculator me-1"></i><span lang="zh"><strong>有工序委外的工單：</strong>委外收回時累計的委外成本（加工費＋被加工掉的料）在繳庫時併入成品單位成本，並記在工單實際成本的「實際委外成本」；它不進人工／製費吸收分錄（加工費在委外收貨時已入存貨）。</span><span lang="en"><strong>Work orders with an outsourced operation:</strong> the outsource cost accumulated at receipt (processing fee + materials consumed) is included in the finished goods' unit cost on receipt into stock and recorded as "Actual Outsource Cost" in the work order's actual cost; it is not part of the labour/overhead absorption entry (the fee was already posted to inventory at the outsource receipt).</span></div>
+    <div class="note-box"><i class="bi bi-lock me-1"></i><span lang="zh"><strong>完工產出保留給原訂單</strong>：MRP 展開的工單完工入庫時，產出會保留給來源訂單（半成品則保留給上階工單），最多保留到需求量，超出的部分是自由庫存。</span><span lang="en"><strong>Finished output is held for the original order</strong>: when a work order created by MRP is received into stock, its output is reserved for the order behind it (for a semi-finished item, for the parent work order), up to the demand quantity; anything above that is free stock.</span></div>
+
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">確認欄位</span><span lang="en">Confirmation fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">工單號</span><span lang="en">Work Order No</span></td><td><span lang="zh">要繳庫的工單，唯讀</span><span lang="en">Work order being received, read-only</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">完工入庫的成品，唯讀</span><span lang="en">Finished item being received, read-only</span></td></tr>
+        <tr><td><span lang="zh">完工數量</span><span lang="en">Completed quantity</span></td><td><span lang="zh">本次要繳庫的良品數量，唯讀（取自報工累計）</span><span lang="en">Good quantity being received this time, read-only (taken from the cumulative production reports)</span></td></tr>
+        <tr><td><span lang="zh">入庫倉庫</span><span lang="en">Warehouse</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">成品要入的倉庫</span><span lang="en">Warehouse the finished goods go into</span></td></tr>
+        <tr><td><span lang="zh">入庫儲位</span><span lang="en">Receipt location</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">成品要入的儲位；預設帶出該倉的預設儲位</span><span lang="en">Location the finished goods go into; the warehouse's default location is filled in</span></td></tr>
+        <tr><td><span lang="zh">批號</span><span lang="en">Lot</span></td><td><span lang="zh">批號管制品的批次；留空時系統依採番規則產生，效期依產品保存期限自動計算</span><span lang="en">Lot for lot-controlled items; left blank, the system generates it from the numbering rule and works out the expiry from the product's shelf life</span></td></tr>
+        <tr><td><span lang="zh">分箱入庫</span><span lang="en">Receive by box</span></td><td><span lang="zh">勾選後完工量依「每箱數量」拆成多箱入庫，<strong>一箱一個批號</strong>（見下方〈分箱入庫與箱標籤〉）；此時「批號」欄改作批號前綴</span><span lang="en">When ticked, the completed quantity is received as several boxes of the "quantity per box", <strong>one lot per box</strong> (see "Receiving by box and box labels" below); the "Lot" field then becomes the lot prefix</span></td></tr>
+        <tr><td><span lang="zh">容器</span><span lang="en">Container</span></td><td><span lang="zh">分箱時用的容器種類；預設帶出末道工序設定的「完工容器」。改選容器會把每箱數量換成該容器的最大容量。只印在箱標籤上，不影響庫存</span><span lang="en">Container type used for the boxes; is prefilled with the last operation's output container. Choosing another container replaces the quantity per box with that container's maximum capacity. It is only printed on the box labels and does not affect inventory</span></td></tr>
+        <tr><td><span lang="zh">每箱數量</span><span lang="en">Quantity per box</span></td><td><span class="badge bg-danger"><span lang="zh">分箱時必填</span><span lang="en">Required when boxing</span></span> <span lang="zh">每箱裝幾個（庫存單位）；預設為容器的最大容量。畫面即時顯示共幾箱、最後一箱裝多少</span><span lang="en">How many go into each box (stock unit); is prefilled with the container's maximum capacity. The screen shows straight away how many boxes there will be and how many the last box holds</span></td></tr>
+        <tr><td><span lang="zh">箱號（選填）</span><span lang="en">Box numbers (optional)</span></td><td><span lang="zh">要裝貨的<a href="../bas/container-unit.html">箱子</a>，一行一個、依箱序；可掃描或按「帶入空箱」。數量須等於箱數，每箱批號會綁到對應箱號</span><span lang="en">The <a href="../bas/container-unit.html">boxes</a> to fill, one per line in box order; scan them or click "Fill in empty boxes". The count must equal the number of boxes, and each box lot is linked to its box number</span></td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="boxing"><span lang="zh">分箱入庫與箱標籤</span><span lang="en">Receiving by box and box labels</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">在確認面板勾選「分箱入庫」，確認容器與每箱數量。</span><span lang="en">In the confirmation panel tick "Receive by box" and check the container and quantity per box.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">「批號」填批號前綴；留空時以工單號為前綴。每箱的批號＝前綴＋「-」＋箱序，例如 100 個、每箱 30：<code>前綴-01</code>～<code>前綴-03</code> 各 30、<code>前綴-04</code> 裝餘數 10。箱數達 100 箱以上時箱序補成三位（<code>-001</code>），讓批號照字串排序就是箱序。</span><span lang="en">Enter a lot prefix in "Lot"; if it is blank, the work order number is used. Each box's lot is the prefix + "-" + the box number. For example, 100 pieces at 30 per box give <code>PREFIX-01</code> to <code>PREFIX-03</code> with 30 each and <code>PREFIX-04</code> with the remaining 10. With 100 boxes or more the box number has three digits (<code>-001</code>), so sorting the lots as text keeps them in box order.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">（選填）箱子有貼固定 QR 標籤、會重複使用時，在「箱號」欄依序掃入要裝的<a href="../bas/container-unit.html">箱子</a>，一行一個；或按「帶入空箱」自動帶入該容器的空箱。箱號數量必須等於箱數，入庫時第 1 箱的批號綁到第 1 個箱號，依此類推。任何一個箱子不存在、已停用、容器不同或還裝著貨，整張就不入庫。留空＝不綁箱子。</span><span lang="en">(Optional) If your boxes carry fixed QR labels and are reused, scan the <a href="../bas/container-unit.html">boxes</a> to fill into the "Box numbers" field in order, one per line, or click "Fill in empty boxes" to fill in empty boxes of that container. The number of box numbers must equal the number of boxes; on receipt, box 1's lot is linked to the first box number, and so on. If any box does not exist, is inactive, belongs to another container type or still holds goods, nothing is received. Leave it blank to skip linking boxes.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">按「確認入庫」。<strong>有填箱號</strong>時，箱子身上已有固定 QR 標籤（在<a href="../bas/container-unit.html">箱子</a>畫面預先列印，不必等裝貨），掃它就會帶出這一箱目前的批號與數量，所以入庫後不再另印標籤。<strong>沒填箱號</strong>時，成功後面板會出現「列印箱標籤」，每箱一張，QR 碼內容就是該箱的批號——之後掃標籤，就等於輸入這一箱的批號。</span><span lang="en">Click "Confirm receipt". <strong>If you entered box numbers</strong>, each box already carries its fixed QR label (printed beforehand on the <a href="../bas/container-unit.html">Boxes</a> screen, no need to wait until it is filled); scanning it brings up the box's current lot and quantity, so no extra label is printed after receipt. <strong>If you did not enter box numbers</strong>, the panel shows "Print box labels" when it succeeds, one label per box; the QR code on each label is that box's lot, so scanning the label later is the same as entering that box's lot.</span></div></div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh"><strong>批號不可與既有批號重複。</strong>同一品號只要用過其中任何一個箱批號（含已出清、餘額為零的），整張就不入庫，請改用其他前綴再入一次——同品號同批號的庫存會合成一筆，那一箱就再也分不出來。一次最多 999 箱，超過通常是每箱數量打錯。</span><span lang="en"><strong>Box lots must not repeat an existing lot.</strong> If the item has ever used any of the box lots (including one that has since been cleared to zero), nothing is received; use another prefix and receive again. The same item and lot merge into one balance, so that box could no longer be told apart. At most 999 boxes can be received at once; more than that usually means the quantity per box was mistyped.</span></div>
+    <p class="text-muted small"><span lang="zh">分箱只改變「放在哪些批號」：每箱的單位成本相同，總入庫量與總成本和不分箱完全一樣。這是「一箱一個批號」的做法，一箱不能混裝不同品號或批號；箱子要重複使用時，用上面第 3 步把批號綁到<a href="../bas/container-unit.html">箱子</a>。</span><span lang="en">Boxing only changes which lots the goods are received under: every box has the same unit cost, and the total quantity and cost received are exactly the same as without boxing. This is the "one lot per box" approach, so a box cannot hold more than one item or lot; to reuse boxes, link the lots to <a href="../bas/container-unit.html">boxes</a> as in step 3 above.</span></p>
+    <p class="text-muted small"><span lang="zh">倒扣（Backflush）用料會在繳庫時依實際完工量自動扣帳，不需另開領料單；檢驗規範勾選「完工需 FQC」者須先通過完工檢驗才能繳庫。</span><span lang="en">Backflushed material is deducted automatically at completion, based on the quantity actually finished, with no separate issue slip; where the inspection rule has "FQC required on completion" ticked, the final inspection must be passed before stock can be received.</span></p>
+
+    <h3><span lang="zh">倒扣用料從哪個倉扣</span><span lang="en">Where backflushed material is deducted from</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">倒扣不經備料單，來源倉儲<strong>沒有任何欄位可以填</strong>，一律由系統決定。</span><span lang="en">Backflush does not go through a staging order, so <strong>there is no field anywhere to enter the source location</strong>; the system decides it.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">系統先取該料件所屬<strong>產品類別的預設倉庫與預設儲位</strong>（與進貨上架同一套慣例），並確認該倉儲在本廠可用。</span><span lang="en">It first takes the <strong>default warehouse and default location of the product category</strong> that the material belongs to (the same convention as receipt put-away) and checks that they are usable in the current plant.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">產品類別沒設、或只設了倉庫沒設儲位時，退回<strong>本次完工入庫所填的倉庫與儲位</strong>。</span><span lang="en">Where the product category has nothing set, or has a warehouse but no location, it falls back to <strong>the warehouse and location entered for this completion receipt</strong>.</span></div></div>
+    <p class="text-muted small"><span lang="zh"><strong>分倉配置務必先設好產品類別的預設倉儲</strong>（<a href="../bas/product-category.html">產品類別</a>）。原料與成品同倉時上述第 2、3 步結果相同，完全不會有感覺；一旦成品另設成品倉，成品儲位不會有原料庫存，倒扣就會因可用量不足被出庫驗證擋下——而倒扣與繳庫包在<strong>同一筆交易</strong>裡，結果是<strong>整張工單無法入庫</strong>，訊息看起來只是庫存不足，不會指向設定。</span><span lang="en"><strong>Set the product category defaults before you split warehouses</strong> (<a href="../bas/product-category.html">Product Category</a>). While raw material and finished goods share one warehouse, steps 2 and 3 give the same answer and nothing shows. Once finished goods get their own warehouse, the finished-goods location holds no raw material, so the backflush is rejected by the issue check for insufficient quantity — and because the backflush and the receipt sit in <strong>one transaction</strong>, <strong>the whole work order cannot be received</strong>, with a message that only says stock is short and never points at the setting.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="dispatch.html"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>、<a href="work-order-variance.html"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>、<a href="../bas/product-category.html"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">需 FQC 的品號未出具合格檢驗結果前無法繳庫（硬閘口）。繳庫過帳受會計期間鎖管制，已關帳期間會被擋下。</span><span lang="en"> An item that needs FQC cannot be received into stock until a passing inspection result exists (a hard gate). Posting the receipt is subject to the accounting period lock and is blocked in a closed period.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

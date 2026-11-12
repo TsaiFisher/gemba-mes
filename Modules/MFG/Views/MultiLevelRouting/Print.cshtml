@@ -1,0 +1,99 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.MFG.ViewModels
+@inject IViewLocalizer Localizer
+@model MultiLevelExplosionResult
+@{
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    ViewData["Title"] = Localizer["DocTitle"].Value;
+
+    var wcNames = ViewBag.WorkCenterNames as Dictionary<string, string> ?? new Dictionary<string, string>();
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string QtyFmt(string? uom)
+    {
+        var dp = (uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)) ? v : 4;
+        return dp <= 0 ? "N0" : $"N{dp}";
+    }
+    string WcLabel(string wcId) => wcNames.TryGetValue(wcId, out var n) ? $"{wcId} — {n}" : wcId;
+    string TimeUnitLabel(OperationTimeUnit u) => u switch
+    {
+        OperationTimeUnit.Second => Localizer["TimeUnitSecond"].Value,
+        OperationTimeUnit.Hour   => Localizer["TimeUnitHour"].Value,
+        _                        => Localizer["TimeUnitMinute"].Value,
+    };
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div class="print-title-block">
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["DocTitle"]</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-field-grid">
+        <div class="print-field-label">@Localizer["ProductCode"]</div>
+        <div class="print-field-value">@Model.RootProductCode — @Model.RootProductName</div>
+        <div class="print-field-label">@Localizer["QtyBasis"]</div>
+        <div class="print-field-value">@Localizer["RootQtyBasis"]</div>
+    </div>
+</div>
+
+@foreach (var node in Model.RoutingNodes)
+{
+    <div class="print-section">
+        <div class="print-section-title">
+            @Localizer["Level"] @node.Level ｜ @node.ProductCode — @node.ProductName
+            ｜ @Localizer["RoutingId"]：@node.RoutingId
+            @if (node.Level > 0)
+            {
+                <text>｜ @Localizer["RequiredQty"]：@node.RequiredQty.ToString(QtyFmt(node.UomCode))</text>
+            }
+        </div>
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th>@Localizer["OperationSeq"]</th>
+                    <th>@Localizer["OperationName"]</th>
+                    <th>@Localizer["WorkCenter"]</th>
+                    <th class="u-text-align-right">@Localizer["SetupTime"]</th>
+                    <th class="u-text-align-right">@Localizer["UnitTime"]</th>
+                    <th class="u-text-align-right">@Localizer["YieldRate"]</th>
+                    <th>@Localizer["IsOutsource"]</th>
+                    <th>@Localizer["OperationMaterials"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var op in node.Operations)
+                {
+                    <tr>
+                        <td>@op.OperationSeq</td>
+                        <td>@op.OperationName</td>
+                        <td>@WcLabel(op.WorkCenterId)</td>
+                        <td class="u-text-align-right">@op.SetupTime.ToString("N2") @TimeUnitLabel(op.SetupTimeUnit)</td>
+                        <td class="u-text-align-right">@op.UnitTime.ToString("N4") @TimeUnitLabel(op.TimeUnit)</td>
+                        <td class="u-text-align-right">@op.YieldRate.ToString("N2")</td>
+                        <td>@(op.IsOutsource ? Localizer["Outsource"].Value : "")</td>
+                        <td>
+                            @foreach (var b in op.Boms)
+                            {
+                                <div>
+                                    @b.ProductCode × @b.Quantity.ToString(QtyFmt(b.UomCode)) @b.UomCode
+                                    @if (b.ScrapRate > 0 || b.OffcutRate > 0)
+                                    {
+                                        <text>（</text>
+                                        if (b.ScrapRate > 0) { <text>@Localizer["ScrapRateAbbr"] +@(b.ScrapRate.ToString("N2"))%</text> }
+                                        if (b.ScrapRate > 0 && b.OffcutRate > 0) { <text>，</text> }
+                                        if (b.OffcutRate > 0) { <text>@Localizer["OffcutRateAbbr"] @(b.OffcutRate.ToString("N2"))%</text> }
+                                        <text>）</text>
+                                    }
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

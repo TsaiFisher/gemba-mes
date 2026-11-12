@@ -1,0 +1,238 @@
+{
+  "sourcePath": "Modules/INV/Services/InventoryPostingService.cs",
+  "sourceHash": "3ea045cabf3fbaaf3d641a8aac0cf0b14282d4291fab1cdef63864e4eba100d6",
+  "entries": [
+    {
+      "slug": "code-inv-inventorypostingservice-9e5f944f",
+      "lang": "zh",
+      "headingPath": "庫存管理 › ③-b 客供進貨／退回只能落在客供倉",
+      "text": "客供進貨必須進入特定倉庫｜當客戶提供的物料進來時，系統會強制要求這些物料只能存放在專門的客戶供料倉庫，不能放入一般倉庫。這是為了確保計算成本時，不會錯誤地將客戶的物料計入到自有物料的平均成本中，避免影響後續出貨的銷貨成本計算。",
+      "approved": true,
+      "sourceSectionHash": "4f400a96f44930acd10c3dee487f52afb8370e9ad0a91e3e332365e6b86460f5"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-5fb5b2db",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 併入既有存貨價值",
+      "text": "併入既有存貨價值規則說明｜此操作只會影響存貨的計價方式，不會產生額外的分錄金額。因為這筆錢本來就已經在存貨科目裡了，如果再借一次就會讓存貨的帳面金額看起來像是翻倍了。",
+      "approved": true,
+      "sourceSectionHash": "c1a438e0f402c77c542e77a928ff964f0bb8e5bb831b6a6b37327c9aa3416334"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-821ea2d7",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 客供料完全不計價：客戶的料沒有取得成本，兩種計價方式都跳過",
+      "text": "客戶自供物料不計價的規則說明｜當庫存系統處理來自客戶提供的物料時，因為這些物料沒有取得成本資訊，所以兩種計價方式都會跳過計算。此外，此類物料在計算平均成本或建立先進先出成本層級時，都不會納入相關資料，且單價預設為零。",
+      "approved": true,
+      "sourceSectionHash": "be6eeb481feeb8d17952b4ffa883d2d28890593eeecf313456eb0846859d4e60"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-9b679c32",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 扣成本層，數量加回來、成本層被扣光，庫存明細帳與成本帳從此分家，",
+      "text": "入庫無單價時的成本計算規則｜若在入庫時沒有帶上單價資訊，系統將無法執行後續的成本扣除動作，以避免對該筆入庫進行不正確的成本扣減，並維持庫存明細帳與成本帳的分離。",
+      "approved": false,
+      "sourceSectionHash": "cda7432befa1745110e6fdaf07d9572230bb51a472f4e84e64077318492a4a4a"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-78d76978",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 逐行累計本次過帳的分錄金額，最後彙總成一張分錄",
+      "text": "分錄金額彙總規則說明｜系統會將本次過帳的每一筆分錄金額逐行累計，最後再彙總成一張完整的分錄紀錄。",
+      "approved": true,
+      "sourceSectionHash": "0f3a1bf8240337c8855f21a401b853ba634352bb09bb1a4d237782500a391887"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-2ac5a92b",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 併入既有存貨價值委外收貨的在外原料",
+      "text": "存貨價值計算與會計分錄影響｜此功能只會改變存貨的計價方式，而不會產生新的帳務分錄金額，因為相關款項本來就已經包含在存貨科目內了。",
+      "approved": true,
+      "sourceSectionHash": "55d7100428bc2e64f02f3dcd507dfa8d2d3130fac1b0e8166371cb9cdb4b946f"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-45abc939",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 成本也要沖，不能只沖數量",
+      "text": "成本沖銷必須先於數量調整｜系統處理成本沖銷時，必須在進行數量更新之前完成。這是因為計算反向均價公式所使用的「舊量」，是尚未扣除本次沖銷量的原始庫存數量。",
+      "approved": true,
+      "sourceSectionHash": "30622c6ff389c7c9190603b46fc1bc5321161f111eff12a138be265a78c68c69"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-239cb7a3",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 作廢沖銷的成本腿",
+      "text": "成本沖銷的方向與計算依據｜沖銷時，如果原本是入庫的動作需要被沖銷，則方向為 -1；如果原本是出庫的動作需要被沖銷，則方向為 +1。在計算成本時，必須使用原始移動記錄所凍結的單價，因為若採用「現況重算」的方式，可能會導致與原始分錄不一致的尾差。",
+      "approved": true,
+      "sourceSectionHash": "5d859ea45d38e159bc9b80bde87c69f5114abe862da04928b4111cb9343335f8"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-8d300ee9",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 舊資料才會有沒帶成本的異動列",
+      "text": "成本異動的計算規則說明｜如果資料是舊的，可能會出現沒有帶成本的變動紀錄；在處理這些情況時，若該筆記錄本身就沒有貢獻任何價值，那麼沖銷動作也不應該改變其價值，這與目前過帳路徑要求必須有成本資訊的一致。",
+      "approved": true,
+      "sourceSectionHash": "6776322e71de8a62fd0d811757e5065413c33ba4e8610044907c49cf2ebeefc3"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-87ed5c64",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 移動平均：出庫本來就不動均價，還回去時以原凍結單價當入庫單價，",
+      "text": "移動平均成本計算的特殊規則｜當貨品從系統中移出後，其成本價格不會改變；若之後將該批貨物退回，則會以最初凍結時的單價作為入庫的單價。",
+      "approved": true,
+      "sourceSectionHash": "cd33ab9cb93919417b1d6fa7e51729653a5037070897cefaee9e853ad5c40eb6"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-24f36eb7",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 另建一層的話總量與總價值都會回到原點，所有既有稽核數量、借貸、",
+      "text": "作廢出庫時成本層的還原方式｜先進先出的品號在作廢出庫時，會把數量還回當初被扣減的那一層，而不是新建一層。另建一層雖然總量與總價值都回到原點，但最舊的那批貨會排到最後面，之後每一筆出庫的取價順序整個位移，而所有既有檢查都查不出異狀。",
+      "approved": true,
+      "sourceSectionHash": "544d82057c602e13acd8d3744b4575bbb5d457cd92ab0cb0d7abd5e8de4d357b"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-0946b436",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 找不到消耗紀錄的部分才退回舊行為",
+      "text": "退回舊行為的條件說明｜當系統找不到消耗紀錄時，會恢復到原先的處理方式，這樣做的目的是確保無論是歷史資料還是出庫流程有變動，作廢操作都能維持與修正前相同的結果。",
+      "approved": true,
+      "sourceSectionHash": "8f831eb207e16d83db6cda8804bb1037324a6bbcd74eb7c2fdd5c6dc7af35450"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-abecff0c",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 作廢沖銷總帳：把該單原本的自動分錄「借貸對調」寫一筆反向分錄",
+      "text": "沖銷總帳的自動分錄會寫一筆反向分錄｜當單據作廢後，系統會針對原本自動產生的分錄寫入一筆相反方向的分錄。此做法是為了確保在計算存貨滾動稽核時，能正確處理因作廢而產生的金額差異。",
+      "approved": true,
+      "sourceSectionHash": "dd4162211d515fb9156cf050d4b56064e678aba5cf59e12026eed1360f3cdcdb"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-bfcde303",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 回沖的是「原分錄 − 已沖銷」的**淨額**，不是原分錄的全額",
+      "text": "庫存回沖計算的基礎規則｜系統在進行回沖時，計算的數值是「原始分錄減去已經沖銷的部分」所得到的淨額，而不是使用原始分錄的全額。",
+      "approved": true,
+      "sourceSectionHash": "34b3b24c55cb8a9bbb7fc02e7c66cc36b23ffa3523d20294b2e819e06bd03a12"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-2592647b",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 庫存自動分錄的來源單別",
+      "text": "來源單別定義與區分｜此處設定了用於庫存自動分錄的來源單別代碼，並且將反向分錄使用一個獨立的單別來標記，目的是避免在後續作廢和對調流程中產生重複處理。",
+      "approved": true,
+      "sourceSectionHash": "14949b1bf9b921223495883c3772b97a46b5e0669f97e7253e47f557a1813046"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-4b743fb3",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 對方科目依「方向 × 業務類別」決定",
+      "text": "科目決定依借貸關係，非買賣交易｜當處理借入或歸還物料時，系統會根據其借貸的性質來決定應用的對方科目，而不是直接視為報廢損失或進貨暫估應付。",
+      "approved": true,
+      "sourceSectionHash": "ac6e867122b33312b942d220a02e30596e01d40de99935f50bfcba9eb2fd7e04"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-1a6f26f5",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 樣品出貨／退回：我們自己的料送給客戶＝推廣費用，不是報廢損失",
+      "text": "樣品出貨費用歸類規則｜系統會根據單據的類型代碼來判斷，如果該類型代碼是「SO」，則將相關費用視為樣品支出成本。",
+      "approved": true,
+      "sourceSectionHash": "9cd701d091398f386be3f16b4063e94bca4c68f5a2852b38b89f2e3ee895d306"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-1379d6da",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 盤盈／庫存調整增加：認其他收入",
+      "text": "盤盈的對方科目｜盤點盤盈與庫存調整增加，對方科目認列為其他收入。盤點多出來的貨沒有供應商、也不會有人來請款，若記進進貨暫估應付，負債裡就會長出一筆應付帳款端根本不知道、永遠沒人來沖的錢。",
+      "approved": true,
+      "sourceSectionHash": "31020c3adf44e815f9b94b3712a63ae727a63801f2444da51abd791b84908878"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-264d1a10",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 批號原樣帶到目的儲位",
+      "text": "批號處理規則說明｜當系統將貨物移動到目的儲位時，會沿用原有的批號；但如果是在指定撥入批號時，則會使用新的批號（例如裝箱或換箱），此時的成本仍會依循原有批號承接。若沒有提供任何批號資訊，則不追蹤批號。",
+      "approved": true,
+      "sourceSectionHash": "01413bde865267403130bd05c5030217b64e2e1f622e9bb3da96ce25474bc527"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-b38dead9",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 目的儲位必須補一層同單價的",
+      "text": "目的儲位必須補一層同單價的｜當將貨物移動到新的存放位置時，系統會確保在新的存放位置上增加一層與來源位置相同成本的記錄，以維持庫存成本追蹤的準確性。",
+      "approved": true,
+      "sourceSectionHash": "3f4b93aa2cdc15662a24b9ab6eb81485b25313802772d72d7322441399759fcd"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-ed4b2ec1",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 目的廠必須承接來源廠的單位成本",
+      "text": "成本計算依據與數量更新時機｜目的廠接收的單位成本必須來自來源廠，因為如果沒有將此成本傳遞，之後從該廠出貨時所計算的銷貨成本會是零，導致毛利虛增。此外，在更新庫存數量之前，必須先使用尚未加上本次入庫量的現有庫存量來重新計算移動平均成本，否則會錯誤地將本次入庫量計入舊有的庫存成本中，造成均價計算錯誤。",
+      "approved": true,
+      "sourceSectionHash": "faaa58c9dfa0097b39f92ffb941f6d535a63e2bfed65959030ac073fcba729ac"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-6e93d2b0",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 跨廠調撥的價值搬運分錄",
+      "text": "跨廠調撥分錄的會計科目規則｜進行跨廠調撥時，撥出款項會記為借方「廠際往來」，貸方「存貨」；而撥入款項則會記為借方「存貨」，貸方「廠際往來」。此功能僅用於跨廠之間的調撥作業。",
+      "approved": true,
+      "sourceSectionHash": "48f38454c40855c84cd1cc70be0a77fbc96d513f9f7bdb1c6743fec280276385"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-b1cf1727",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 期間鎖檢查的廠別取自異動本身",
+      "text": "期間鎖檢查依據異動紀錄的廠別｜系統會根據單據中每一筆異動記錄所包含的廠別進行檢查，而不是僅以單據的第一筆異動記錄來判斷，這樣可以確保即使同一張單據在不同異動中有混用廠別的情況，也能被正確地檢核到。",
+      "approved": true,
+      "sourceSectionHash": "454f59a4d4b6caaf2abbba26d65da46be5edafe898323d9e52c7c4cf8953ba2c"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-09b86c37",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 逐取**淨額**再沖，而不是逐筆反轉",
+      "text": "作廢沖銷以淨額計算｜作廢沖銷會逐一按廠別、品號、儲位、批號、單別與明細行分組取淨額再沖，而不是逐筆反向。作廢沖銷本身也是寫進同一張表的異動，逐筆反向會讓反覆確認與撤回時把先前的沖銷也一併反轉，庫存明細帳上因此長出使用者從沒做過的進出。淨額為零就什麼都不做。",
+      "approved": true,
+      "sourceSectionHash": "88814214a4c5a8a7c83adf837564dafc55f4c00299c0c3896b333f2585ebbe69"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-60c6d8f7",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 淨額的加權單價：同一張單反覆確認／撤回時，各圈的凍結成本未必相同",
+      "text": "加權單價計算依據不同時段成本｜當同一張單據在多次確認或撤回的過程中，各個成本層的凍結成本可能不一致，因此應以該筆資料的淨值除以淨數量來計算最符合原始分錄的加權單價。",
+      "approved": true,
+      "sourceSectionHash": "8b1308484df29d15fe624de53c8d6a0a486b6fcb13f5b9f2bb95a2ad5b807dde"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-4b54fce3",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 成本也要跟著回沖",
+      "text": "成本回沖機制需要同步調整，確保帳務紀錄一致性｜當進行「確認」後再「撤回」的操作時，系統必須同時修正成本層的記錄，否則來源廠的成本帳目將會與實際庫存數量產生不一致。",
+      "approved": true,
+      "sourceSectionHash": "ae166c52fbb5df4bdd5fcba8e131b0ded9ddf69822a4d3e0f3d25e158512c2cb"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-5b981299",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 沖銷分錄：庫存回沖了，總帳也要回沖，否則就是「只沖一半」",
+      "text": "庫存回沖需同步更新總帳科目｜當進行庫存的回沖作業時，必須同時將總帳的相關科目也一併回沖，否則系統只會完成一半的沖銷動作。",
+      "approved": true,
+      "sourceSectionHash": "9a577d2725f415e1385d9b8e675bab18387f8709ae16b7504f4c9a4571d29c5c"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-60693bc6",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 原本兩支調撥同廠 、跨廠",
+      "text": "調撥撥出的成本取法｜調撥撥出那一腳的成本依該品號的計價方式決定：移動平均取現行均價，先進先出則實際消耗成本層並取被消耗那些層的加權平均。口徑與一般出庫完全相同，差別只在調撥沒有單價可帶，必然走「取現況成本」這條路。",
+      "approved": true,
+      "sourceSectionHash": "5e21f2eceb0425486c2863f8b353500b3aecaa64ce728150e098c41b3617b2c6"
+    },
+    {
+      "slug": "code-inv-inventorypostingservice-2179b999",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 取「消耗層」而不是「全部層的平均」才是先進先出的語意",
+      "text": "庫存扣減遵循先進先出原則｜系統在計算消耗時，會直接扣除來源儲位層的數量，而不是使用所有相關層的平均值來進行計算。",
+      "approved": true,
+      "sourceSectionHash": "a98b257a3a577c6afcb54c5e3bff240b347a5b7637dcabd7b3cb1092ee31fe3f"
+    }
+  ]
+}

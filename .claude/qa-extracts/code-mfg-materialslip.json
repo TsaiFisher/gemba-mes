@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/MFG/Models/MaterialSlip.cs",
+  "sourceHash": "5880de6cb7527fba26d82860790c8ce02e2e5541ecc10b077f185c1406c55757",
+  "entries": [
+    {
+      "slug": "code-mfg-materialslip-c632de3c",
+      "lang": "zh",
+      "headingPath": "生產製造 › 統一發退料單主檔",
+      "text": "單據類型統一管理與區分｜此主檔取代了原有的四種不同類型的發退料單據，所有資料都集中在一個地方處理，並會根據所屬的業務類別來決定其作業流程。",
+      "approved": true,
+      "sourceSectionHash": "993889c2fd0a44ddff0211a030ba97e332d971e33e01864fbe0882bb1f47a226"
+    },
+    {
+      "slug": "code-mfg-materialslip-038697a3",
+      "lang": "zh",
+      "headingPath": "生產製造 › 樂觀並發控制",
+      "text": "樂觀並發控制的機制說明｜系統會使用一個特殊的欄位來確保在多個操作同時進行時，不會發生重複過帳導致庫存被扣除兩次的情況。當資料更新時，後續的操作如果發現該筆資料已經被修改，則會阻止這次的更新，使整個交易回滾。",
+      "approved": false,
+      "sourceSectionHash": "ae11d41aab3fbe3db1307822e4aaf7c437ab0b05ed708bf0c1d9c30ae22fd07d"
+    }
+  ]
+}

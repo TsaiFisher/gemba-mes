@@ -1,0 +1,6 @@
+@* 本模組原本沒有這個檔：tag helper 整個沒啟用，asp-action／asp-route 原樣輸出成 HTML 屬性，
+   資產負債表、損益表的「列印」「匯出 Excel」連結沒有 href，按了沒反應（2026-10-05 回報）；
+   同模組其他 6 張報表的 asp-* 也一樣是死的。守門：ViewImportsTagHelperGuardTests。 *@
+@using SmartFactory.MES.Models
+@using Microsoft.AspNetCore.Mvc.Localization
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

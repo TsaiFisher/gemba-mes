@@ -1,0 +1,110 @@
+{
+  "sourcePath": "Modules/PUR/Services/PurchaseService.cs",
+  "sourceHash": "ee0401c36e7ae636df154dec4d77fb42d90ca03ae5dafe15b8311c012c78c01d",
+  "entries": [
+    {
+      "slug": "code-pur-purchaseservice-b94bc418",
+      "lang": "zh",
+      "headingPath": "採購 › 依幣別小數位數對所有金額/單價欄位四捨五入",
+      "text": "匯率計算的金額會依照貨幣規則處理｜系統會根據所使用的貨幣，對所有涉及金額和單價的欄位進行四捨五入處理；如果沒有指定貨幣代碼，則回傳原始值。",
+      "approved": true,
+      "sourceSectionHash": "cba5944a1a064c2a56a8cab4991ab016b6a87d62ffebad006c6ac9de53b11a4b"
+    },
+    {
+      "slug": "code-pur-purchaseservice-181a6927",
+      "lang": "zh",
+      "headingPath": "採購 › 換算本位幣金額：外幣含稅總額 × 匯率，依本位幣小數位數四捨五入",
+      "text": "換算本位幣金額的規則｜外幣含稅總額乘以匯率後，會依本位幣的小數位數四捨五入。明細可以各自使用不同的幣別，但表頭的合計一律加總各明細的本位幣金額。",
+      "approved": true,
+      "sourceSectionHash": "c39ed2109c4da4aec22b5256fde134f999bf9c3e40ffa50c40632b945d66ddc2"
+    },
+    {
+      "slug": "code-pur-purchaseservice-41d0b212",
+      "lang": "zh",
+      "headingPath": "採購 › 後端權威解析 ：依 + 查 ≤ 最近一筆匯率",
+      "text": "匯率查詢規則說明｜系統會根據外幣代碼和單據日期，查找最近一筆的匯率紀錄；若找不到且該外幣代碼非空且不是本國貨幣，則會保留使用者輸入的原始值。",
+      "approved": true,
+      "sourceSectionHash": "f79e411fe5309077556ed795c49a96650db0c475ed6b9bbf56075719d1961e6b"
+    },
+    {
+      "slug": "code-pur-purchaseservice-924f9086",
+      "lang": "zh",
+      "headingPath": "採購 › 使用者看到資料已被其他人修改",
+      "text": "並發修改的版本檢查時機｜儲存單據時，資料版本的比對會在任何寫入動作之前完成。這樣真正的並發修改才擋得住：比對若放在存檔之後，資料早已落地、版本也換新，既攔不到兩個人同時修改，正常的修改反而每一次都會收到「已被他人修改」的提示。",
+      "approved": true,
+      "sourceSectionHash": "9b07e5a23c872bac4dc6b5f0ee1051bd979cb3c42403b04e2fb22e492e62ad16"
+    },
+    {
+      "slug": "code-pur-purchaseservice-a14a5129",
+      "lang": "zh",
+      "headingPath": "採購 › 目的倉別／儲位／批號原本兩條建行路徑都沒映射——表單收得到",
+      "text": "進貨明細必須指定目的倉儲｜進貨明細要填目的倉別與儲位，批號管控的品號還要填批號。少了倉別，檢驗合格放行會直接不執行，貨永遠留在待驗倉；而應付帳款的認列時機正是「進正常倉」，於是連帶也永遠不認列——整條進料鏈停在半路，而且沒有任何訊號。",
+      "approved": true,
+      "sourceSectionHash": "c6b86f1ab6e1b870081fe6fa29d5762ae386d533deacff463b179a53e25f448c"
+    },
+    {
+      "slug": "code-pur-purchaseservice-88f985a7",
+      "lang": "zh",
+      "headingPath": "採購 › 前端那一份可能是舊的：轉入請購單明細時帶的是請購當下記下的庫存單",
+      "text": "庫存單位以品號主檔為準｜明細的庫存單位會以品號主檔目前設定的單位為準，覆蓋掉使用者在前端輸入的值。只有當系統無法從主檔查到該品號時，才會沿用傳入的值。",
+      "approved": true,
+      "sourceSectionHash": "7503dadbd263dc4f3a85ae4166c1a1193c20f2666c05e0bbb1e85eb620896415"
+    },
+    {
+      "slug": "code-pur-purchaseservice-b2c6bda3",
+      "lang": "zh",
+      "headingPath": "採購 › 累加採購單明細的已進貨量",
+      "text": "採購單已進貨量的計算基準｜採購單明細的已進貨量，是以系統依品號主檔換算出的庫存基準單位數量累加，不採用畫面送出的數量。",
+      "approved": true,
+      "sourceSectionHash": "224391bd5e23d26ba37019f3e95e23c32b0b0fe40b5faeafc3b1834b118e0b71"
+    },
+    {
+      "slug": "code-pur-purchaseservice-4a7b0ac4",
+      "lang": "zh",
+      "headingPath": "採購 › ，舊寫法直接相加是把兩種單位混在一起算",
+      "text": "進貨數量不得超過採購訂購數量｜系統會檢查累計的進貨數量是否超過了原始採購單所訂購的數量。如果發現超額，則會進行限制。此規則是為了確保實際收到的進貨量不會超出原先在採購單上約定的購買數量。",
+      "approved": true,
+      "sourceSectionHash": "ad521985f8dee82f698c3f48cc07452b1478541c3e4d2382cec5d03f5f840e89"
+    },
+    {
+      "slug": "code-pur-purchaseservice-300af3d7",
+      "lang": "zh",
+      "headingPath": "採購 › 與在途量同步遞減",
+      "text": "在途到貨數量會自動調整備品庫存｜當物料到達時，系統會將先前為投產目的預留的庫存，轉換成實際入庫的可用庫存，並同步減少「在途量」的計算。",
+      "approved": true,
+      "sourceSectionHash": "9d90219884b6a8dfae7c88bae02de610d0b412cf4dbc53b57c225bdc15529d14"
+    },
+    {
+      "slug": "code-pur-purchaseservice-db9b4771",
+      "lang": "zh",
+      "headingPath": "採購 › 同單位時直接回傳，不繞換算——這是絕大多數情形，也避免無謂的捨入",
+      "text": "單價計算與數量轉換規則｜當進貨行的數量需要換算成採購行自身的單位時，如果兩個單位的單位是相同的，則直接回傳該數值，不進行任何換算，以避免產生不必要的捨入誤差。",
+      "approved": true,
+      "sourceSectionHash": "bbf7d00bda0f179c85af82859ed592ffd999b603eac6c0b99fc517eaad9a6393"
+    },
+    {
+      "slug": "code-pur-purchaseservice-68ee3e22",
+      "lang": "zh",
+      "headingPath": "採購 › 見上方新建路徑的說明：兩條路徑都要映射",
+      "text": "新建與編輯都會保存倉儲欄位｜進貨明細的目的倉別、儲位與批號，在新建與編輯兩條路徑上都會被寫入。只做其中一條的話，單據只要被編輯過一次就會把這些值洗掉。",
+      "approved": true,
+      "sourceSectionHash": "2d0bf8395afc5e69cb54974cf4fb01d07e6443458bad3e36d458ca226e520016"
+    },
+    {
+      "slug": "code-pur-purchaseservice-2b448449",
+      "lang": "zh",
+      "headingPath": "採購 › 凍結每一行的存貨計價基礎",
+      "text": "存貨計價基礎的凍結規則｜系統會針對每一行的存貨計價基礎進行凍結，此功能會在建立和修改時各處呼叫一次。",
+      "approved": true,
+      "sourceSectionHash": "86708e348642b642edbdb3add09b8c1ae3bbf11e72bbc8dfe89e2fbcd8be73fa"
+    },
+    {
+      "slug": "code-pur-purchaseservice-076c47a1",
+      "lang": "zh",
+      "headingPath": "採購 › 上限＝進貨量：退貨不得多於進來的",
+      "text": "退貨數量不能超過進貨量｜系統規定，退貨的總數量不得多於該筆單據已經收到的進貨總數量，否則會導致計算出的可退數量變成負數，且這會影響到應付帳款的沖銷金額。",
+      "approved": true,
+      "sourceSectionHash": "00c04687f60e188e5d1e15ef760f638230513a61f6ff361499f900f65ad94416"
+    }
+  ]
+}

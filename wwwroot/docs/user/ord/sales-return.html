@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Sales Return — ORD User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>銷退單 — ORD 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ORD 目錄</span><span lang="en">ORD Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ORD 畫面</span><span lang="en">ORD Screens</span></div>
+    <a href="sales-order.html" class="nav-link"><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></a>
+    <a href="goods-shipment.html" class="nav-link"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></a>
+    <a href="sales-return.html" class="nav-link active"><span lang="zh">銷退單</span><span lang="en">Sales Return</span></a>
+    <a href="internal-order.html" class="nav-link"><span lang="zh">內部訂單</span><span lang="en">Internal Order</span></a>
+    <a href="order-overdue.html" class="nav-link"><span lang="zh">訂單逾期跟催</span><span lang="en">Overdue Sales Orders</span></a>
+    <a href="sales-ranking.html" class="nav-link"><span lang="zh">銷售排名</span><span lang="en">Sales Ranking</span></a>
+    <a href="sales-trend.html" class="nav-link"><span lang="zh">銷售趨勢</span><span lang="en">Sales Trend</span></a>
+    <a href="delivery-rate.html" class="nav-link"><span lang="zh">交期達成率</span><span lang="en">Delivery Rate</span></a>
+    <a href="return-rate.html" class="nav-link"><span lang="zh">退貨率分析</span><span lang="en">Return Rate</span></a>
+    <a href="sales-forecast.html" class="nav-link"><span lang="zh">銷售預測</span><span lang="en">Sales Forecast</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-arrow-return-left me-2 text-primary"></i><span lang="zh">銷退單</span><span lang="en">Sales Return</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/SalesReturn &nbsp;|&nbsp; 銷售退回入庫與應收沖減</span><span lang="en">Route: /SalesReturn &nbsp;|&nbsp; Sales returns into stock and AR reduction</span></div>
+    </div>
+
+    <p><span lang="zh">處理客戶退貨：參照原出貨單建立銷退單，退貨入庫過帳並沖減應收金額。</span><span lang="en">Handles customer returns: a sales return is created against the original shipment, the goods are posted back into stock and the AR amount is reduced.</span></p>
+    <img class="screen-shot" src="img/sales-return.png" data-src-en="img/en/sales-return.png" alt="銷貨退回畫面截圖" data-alt-en="Sales return screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">銷貨退回畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Sales return screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">草稿 Draft</span><span lang="en">Draft</span></span></td><td><span lang="zh">已建立未生效，可自由編輯、刪除；需簽核者於此狀態送審。</span><span lang="en">Created but not yet effective; can be freely edited or deleted, and submitted for approval from this status.</span></td></tr><tr><td><span class='badge bg-info'><span lang="zh">待審核</span><span lang="en">Pending approval</span></span></td><td><span lang="zh">已送審等待簽核，不可編輯；可撤回改回草稿。</span><span lang="en">Submitted and waiting for approval; it cannot be edited, but it can be withdrawn back to draft.</span></td></tr><tr><td><span class='badge bg-primary'><span lang="zh">已確認 Confirmed</span><span lang="en">Confirmed</span></span></td><td><span lang="zh">簽核核准（或免簽核直接確認）後生效，等待後續作業/過帳。</span><span lang="en">Effective once approved (or confirmed directly when no approval is required), waiting for the next step or for posting.</span></td></tr><tr><td><span class='badge bg-success'><span lang="zh">已過帳 Posted</span><span lang="en">Posted</span></span></td><td><span lang="zh">庫存/帳務已入帳，單據不可再修改。</span><span lang="en">Stock and accounting have been posted; the document can no longer be changed.</span></td></tr><tr><td><span class='badge bg-danger'><span lang="zh">已作廢 Void</span><span lang="en">Void</span></span></td><td><span lang="zh">反向沖銷已過帳內容；作廢原因需留存，不可復原。</span><span lang="en">Reverses what was posted; the void reason is kept and the action cannot be undone.</span></td></tr></tbody>
+    </table>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">建立銷退單</span><span lang="en">Creating a sales return</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」開啟側欄，填寫銷退單表頭與明細行後儲存（草稿）。</span><span lang="en">Click "Add" to open the panel, fill in the sales return header and lines, then save (as a draft).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點「送審」進入簽核流程；核准後單據自動轉「已確認」。若免簽核，直接點「確認」。</span><span lang="en">Click "Submit" to start the approval flow; the document turns to "Confirmed" once approved. Where no approval is required, click "Confirm" directly.</span></div></div>
+    <h3><span lang="zh">後續作業</span><span lang="en">Follow-up actions</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">已確認/已過帳單據可點「列印」產生含 QR Code 的正式表單（新分頁開啟）。</span><span lang="en">Confirmed and posted documents can be printed with "Print", producing the official form with a QR code in a new tab.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">已過帳單據如需沖銷，點「作廢」並填寫原因；系統產生反向庫存/帳務異動。</span><span lang="en">To reverse a posted document, click "Void" and enter a reason; the system creates the reversing stock and accounting entries.</span></div></div>
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">銷退過帳時已回沖應收（未收款發票直接改小、已收款開折讓單），作廢銷退不會把這筆補回去，因此：有未作廢的折讓單要先作廢；來源出貨的應收發票還沒作廢時不允許作廢銷退——系統刻意不自動補回應收，更正一律由人開單處理：退錯了就另開一張出貨單把貨出回給客戶，會產生新的應收發票；銷退不會釋放訂單的已出量，訂單若已全數出貨，新出貨單不要掛原訂單。</span><span lang="en">Posting a sales return already reduced the receivable (an unpaid invoice is reduced directly; a paid one gets a credit note), and voiding the return does not add it back. So void any credit note first, and while the source shipment's AR invoice is still active the return cannot be voided — the system deliberately never adds the receivable back on its own, so corrections are always made with a document: if the return was a mistake, create a new shipment to send the goods back to the customer, which issues a new AR invoice; a return does not free up the order's shipped quantity, so if the order is fully shipped, do not link the new shipment to it.</span></div>
+
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">銷退入庫成本取原出貨明細「實際出庫成本」的加權平均（已作廢沖回的部分不計）。同一出貨行分批揀貨或取消確認後重出時，各批單價可能不同，系統取其平均，不取任一筆。</span><span lang="en">The cost of returned goods is the weighted average of what the original shipment line actually took out of stock (reversed portions excluded). When a shipment line was picked in batches or re-shipped after a cancellation, each batch may carry a different cost; the system uses their average rather than any single batch.</span></div>
+
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">表頭</span><span lang="en">Header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">銷退單號</span><span lang="en">Return No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">退貨日期</span><span lang="en">Return Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">客戶退回的日期；決定庫存回沖與沖銷收入的期間</span><span lang="en">Date the customer returned the goods; it determines the period of the stock reversal and the revenue reversal</span></td></tr>
+        <tr><td><span lang="zh">客戶</span><span lang="en">Customer</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">退貨客戶</span><span lang="en">Returning customer</span></td></tr>
+        <tr><td><span lang="zh">來源出貨單</span><span lang="en">Source Shipment</span></td><td><span lang="zh">被退貨的出貨單；選定後可帶出該單明細的可退量</span><span lang="en">Shipment being returned; selecting one brings in the returnable quantity of its lines</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">整張銷退單的補充說明</span><span lang="en">Notes for the whole sales return</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">明細</span><span lang="en">Lines</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">退回的料件</span><span lang="en">Item returned</span></td></tr>
+        <tr><td><span lang="zh">來源出貨單</span><span lang="en">Source Shipment</span></td><td><span lang="zh">該行對應的出貨單與行號，用於追溯原始交易與單價</span><span lang="en">Shipment and line this row belongs to, used to trace the original transaction and price</span></td></tr>
+        <tr><td><span lang="zh">退貨數量 / 單位</span><span lang="en">Return Qty / UOM</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">本次退回數量；不可大於該出貨行的可退量（已出量 － 已退量）。選了品號後，單位只列該品號的庫存單位與查得到換算的單位（預設庫存單位）；存檔時系統依品號主檔換算成庫存數量入帳，查不到換算的單位會擋下並說明。</span><span lang="en">Quantity returned this time; it cannot exceed the returnable quantity of the shipment line (shipped − already returned). Once a product is chosen, the unit list shows only its stock unit and the units that convert to it (stock unit preselected); on save the system converts to the stock quantity from the product master, and a unit with no conversion is rejected with an explanation.</span></td></tr>
+        <tr><td><span lang="zh">幣別</span><span lang="en">Currency</span></td><td><span lang="zh">該行的交易幣別；本幣金額依單據匯率換算而得</span><span lang="en">Transaction currency of the line; the local amount is converted with the document rate</span></td></tr>
+        <tr><td><span lang="zh">單價</span><span lang="en">Unit Price</span></td><td><span lang="zh">交易幣別的未稅單價，小數位數依幣別設定</span><span lang="en">Price before tax in the transaction currency; decimal places follow the currency setting</span></td></tr>
+        <tr><td><span lang="zh">稅別</span><span lang="en">Tax</span></td><td><span lang="zh">稅別代碼，決定稅率；改稅別會重算稅額</span><span lang="en">Tax code, which determines the rate; changing it recalculates the tax</span></td></tr>
+        <tr><td><span lang="zh">未稅金額</span><span lang="en">Line Amt</span></td><td><span lang="zh">數量 × 單價</span><span lang="en">Quantity × unit price</span></td></tr>
+        <tr><td><span lang="zh">稅額</span><span lang="en">Tax</span></td><td><span lang="zh">未稅金額 × 稅率</span><span lang="en">Amount before tax × tax rate</span></td></tr>
+        <tr><td><span lang="zh">含稅總額</span><span lang="en">Total</span></td><td><span lang="zh">未稅金額 ＋ 稅額，仍為</span><span lang="en">Amount before tax + tax, still in </span><b><span lang="zh">交易幣別</span><span lang="en">Currency</span></b></td></tr>
+        <tr><td><span lang="zh">本幣金額</span><span lang="en">Local Amount</span></td><td><span lang="zh">含稅總額換算為本位幣的金額（本幣＝外幣 × 匯率）；表頭合計與帳務入帳一律採本幣</span><span lang="en">The tax-inclusive total converted to local currency (local = foreign × rate); header totals and accounting entries always use local currency</span></td></tr>
+        <tr><td><span lang="zh">已上架量</span><span lang="en">Put-Away Qty</span></td><td><span lang="zh">倉庫作業實際收回上架的累計數量；全部上架完成後單據自動過帳</span><span lang="en">Cumulative quantity actually put away by warehouse operations; the document posts automatically once everything is put away</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">該明細行的個別說明（退貨原因等）</span><span lang="en">Notes for this individual line (return reason and so on)</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">若退回品需檢驗，檢驗規範勾選「銷退需 RQC」者會在確認時自動建立退貨檢驗單。</span><span lang="en">If returned goods need inspection, an inspection specification with "RQC required on sales return" checked creates the return inspection order automatically on confirmation.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="goods-shipment.html"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></a>、<a href="return-rate.html"><span lang="zh">退貨率分析</span><span lang="en">Return Rate</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

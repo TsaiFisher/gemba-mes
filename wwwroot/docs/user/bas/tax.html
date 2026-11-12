@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Tax — BAS User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>稅別 — BAS 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="tax.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">BAS 目錄</span><span lang="en">BAS Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">BAS 畫面</span><span lang="en">BAS Screens</span></div>
+    <a href="company.html" class="nav-link"><span lang="zh">公司/廠商主檔</span><span lang="en">Company / Vendor Master</span></a>
+    <a href="container.html" class="nav-link"><span lang="zh">容器主檔</span><span lang="en">Container Master</span></a>
+    <a href="container-unit.html" class="nav-link"><span lang="zh">箱子（容器個體）</span><span lang="en">Boxes (Container Units)</span></a>
+    <a href="currency.html" class="nav-link"><span lang="zh">幣別主檔</span><span lang="en">Currency Master</span></a>
+    <a href="doc-number-config.html" class="nav-link"><span lang="zh">單號設定</span><span lang="en">Doc Number Config</span></a>
+    <a href="inventory-transaction-type.html" class="nav-link"><span lang="zh">庫存異動類型</span><span lang="en">Inventory Transaction Type</span></a>
+    <a href="plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="product-category.html" class="nav-link"><span lang="zh">產品類別</span><span lang="en">Product Category</span></a>
+    <a href="product.html" class="nav-link"><span lang="zh">產品主檔</span><span lang="en">Product Master</span></a>
+    <a href="shift.html" class="nav-link"><span lang="zh">班別</span><span lang="en">Shift</span></a>
+    <a href="shift-group.html" class="nav-link"><span lang="zh">班別群組</span><span lang="en">Shift Group</span></a>
+    <a href="special-day.html" class="nav-link"><span lang="zh">特殊日</span><span lang="en">Special Day</span></a>
+    <a href="tax.html" class="nav-link active"><span lang="zh">稅別</span><span lang="en">Tax</span></a>
+    <a href="tooling.html" class="nav-link"><span lang="zh">模具</span><span lang="en">Tooling</span></a>
+    <a href="uom.html" class="nav-link"><span lang="zh">計量單位</span><span lang="en">Unit of Measure</span></a>
+    <a href="warehouse.html" class="nav-link"><span lang="zh">倉庫</span><span lang="en">Warehouse</span></a>
+    <a href="work-center.html" class="nav-link"><span lang="zh">工作中心</span><span lang="en">Work Center</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-percent me-2 text-primary"></i><span lang="zh">稅別</span><span lang="en">Tax</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/BAS/Tax &nbsp;|&nbsp; 稅率代碼與稅率維護</span><span lang="en">Route: /BAS/Tax &nbsp;|&nbsp; Tax codes and rates</span></div>
+    </div>
+    <p><span lang="zh">稅別定義系統中所有可使用的稅率代碼（如 TAX5 = 5%、ZERO = 0%、EXEMPT = 免稅）。採購單、銷售單等選擇稅別後，系統自動依稅率計算稅額。</span><span lang="en">Tax codes define every tax rate available in the system (TAX5 = 5%, ZERO = 0%, EXEMPT = tax exempt). Once a tax code is chosen on a purchase or sales document, the tax amount is calculated automatically from its rate.</span></p>
+    <img class="screen-shot" src="img/tax.png" data-src-en="img/en/tax.png" alt="稅別畫面截圖" data-alt-en="Tax screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">稅別畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Tax screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位名稱</span><span lang="en">Field</span></th><th class="u-width-12pct"><span lang="zh">必填</span><span lang="en">Required</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">稅別代碼</span><span lang="en">Tax Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">唯一識別碼（例：TAX5、ZERO、EXEMPT）</span><span lang="en">Unique code (e.g. TAX5, ZERO, EXEMPT)</span></td></tr>
+        <tr><td><span lang="zh">稅別名稱</span><span lang="en">Tax Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">完整名稱（例：應稅 5%、零稅率、免稅）</span><span lang="en">Full name (e.g. taxable 5%, zero-rated, exempt)</span></td></tr>
+        <tr><td><span lang="zh">稅率（%）</span><span lang="en">Tax Rate (%)</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span></td><td><span lang="zh">百分比數值（5% 填 5；零稅率填 0）</span><span lang="en">Percentage value (enter 5 for 5%; enter 0 for zero-rated)</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td></td><td><span lang="zh">補充說明（例：適用出口退稅）</span><span lang="en">Notes (e.g. applies to export tax refund)</span></td></tr>
+        <tr><td><span lang="zh">是否啟用</span><span lang="en">Active</span></td><td></td><td><span lang="zh">停用後不可在新單據中選取</span><span lang="en">Once inactive, cannot be selected on new documents</span></td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">進入「基本資料 &gt; 稅別」，點「新增」。</span><span lang="en">Go to "Basic Data &gt; Tax" and click "Add".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">填入稅別代碼、名稱、稅率（%），視需要填備註。</span><span lang="en">Enter the tax code, name and tax rate (%), plus a note if needed.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點「儲存」，稅別即可在採購/銷售單中選用。</span><span lang="en">Click "Save"; the tax code can now be selected on purchase and sales documents.</span></div></div>
+
+    <h2 id="changing-a-tax-rate"><i class="bi bi-pencil-square me-2 text-primary"></i><span lang="zh">修改稅率</span><span lang="en">Changing a tax rate</span></h2>
+    <p><span lang="zh">若政府調整稅率，建議做法如下：</span><span lang="en">If the government changes the tax rate, the recommended approach is:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">停用舊稅別（取消勾選「是否啟用」），保留歷史記錄。</span><span lang="en">Deactivate the old tax code (uncheck "Active") so the history is kept.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">新增一個新稅別代碼（例如 TAX8），填入新稅率後啟用。</span><span lang="en">Create a new tax code (e.g. TAX8), enter the new rate and activate it.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">更新公司主檔或供應商設定的預設稅別至新代碼。</span><span lang="en">Update the default tax code on company and supplier records to the new code.</span></div></div>
+
+    <div class="tip-box"><i class="bi bi-lightbulb-fill me-1 text-primary"></i>
+      <span lang="zh">建議建立：TAX5（應稅 5%）、ZERO（零稅率）、EXEMPT（免稅）三種基本稅別，涵蓋大多數採購/銷售情境。</span><span lang="en">Create the three basic tax codes — TAX5 (taxable 5%), ZERO (zero-rated) and EXEMPT — to cover most purchase and sales situations.</span>
+    </div>
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">稅別為全域設定（全公司共用），修改稅率或停用稅別前，請確認無進行中的單據仍在使用。</span><span lang="en"> Tax codes are global (shared company-wide). Before changing a rate or deactivating a code, make sure no open documents still use it.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

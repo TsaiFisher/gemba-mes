@@ -1,0 +1,128 @@
+@using SmartFactory.MES.Services
+@using SmartFactory.MES.Modules.BAS.Services
+@model List<SmartFactory.MES.Modules.PUR.ViewModels.PurchasePriceRowVm>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    var currencyDecimals = ViewBag.CurrencyDecimals as IReadOnlyDictionary<string, int>;
+    ViewData["Title"] = L["PageTitle"].Value;
+    bool searched       = ViewBag.Searched == true;
+    bool canPrint       = ViewBag.CanPrint == true;
+    var rows            = Model ?? new();
+    string curSupplier  = ViewBag.SearchSupplier as string ?? "";
+    string curProduct   = ViewBag.SearchProduct  as string ?? "";
+    var supplierOptions = ViewBag.SupplierOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var productOptions  = ViewBag.ProductOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-3">
+    <h4 class="mb-3">@L["PageTitle"]</h4>
+    @await Html.PartialAsync("_SavedQueries", "PurchasePrice")
+
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-2">
+                <label class="form-label">@L["FromDate"]</label>
+                <input type="date" name="fromDate" class="form-control" value="@ViewBag.FromDate" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">@L["ToDate"]</label>
+                <input type="date" name="toDate" class="form-control" value="@ViewBag.ToDate" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">@L["Product"]</label>
+                <select name="searchProduct" class="form-select form-select-sm select2-enable w-100"
+                        data-placeholder="@L["AllProducts"]" data-allow-clear="true">
+                    <option value=""></option>
+                    @foreach (var p in productOptions)
+                    {
+                        <option value="@p.ProductCode" selected="@(curProduct == (string)p.ProductCode)">@p.ProductCode — @p.ProductName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">@L["Supplier"]</label>
+                <select name="searchSupplier" class="form-select form-select-sm select2-enable w-100"
+                        data-placeholder="@L["AllSuppliers"]" data-allow-clear="true">
+                    <option value=""></option>
+                    @foreach (var s in supplierOptions)
+                    {
+                        <option value="@s.CompanyCode" selected="@(curSupplier == (string)s.CompanyCode)">@s.CompanyCode — @s.CompanyName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" name="searched" value="true" class="btn btn-primary w-100 px-4">
+                    <i class="bi bi-search"></i> @L["Search"]
+                </button>
+            </div>
+        </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @if (!searched)
+    {
+        <div class="alert alert-info">@L["SearchFirst"]</div>
+    }
+    else if (!rows.Any())
+    {
+        <div class="alert alert-warning">@L["NoData"]</div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <strong>@L["ResultTitle"]</strong>
+                <span class="text-muted ms-1">@rows.Count @L["Items"]</span>
+            </div>
+            @if (canPrint)
+            {
+                <a asp-action="Export"
+                   asp-route-fromDate="@ViewBag.FromDate" asp-route-toDate="@ViewBag.ToDate"
+                   asp-route-searchProduct="@ViewBag.SearchProduct" asp-route-searchSupplier="@ViewBag.SearchSupplier"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @L["ExportExcel"]
+                </a>
+            }
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["ProductCode"]</th>
+                        <th>@L["SupplierCode"]</th>
+                        <th>@L["ReceiptDate"]</th>
+                        <th>@L["GoodsReceiptId"]</th>
+                        <th class="text-end">@L["ActualUnitPrice"]</th>
+                        <th>@L["CurrencyCode"]</th>
+                        <th class="text-end">@L["StandardUnitPrice"]</th>
+                        <th class="text-end">@L["PriceDiff"]</th>
+                        <th class="text-end">@L["PriceDiffPct"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                    @foreach (var r in paged)
+                    {
+                        var diffClass = r.PriceDiff.HasValue
+                            ? (r.PriceDiff.Value > 0 ? "text-danger" : r.PriceDiff.Value < 0 ? "text-success" : "")
+                            : "";
+                        <tr>
+                            <td>@r.ProductCode</td>
+                            <td>@r.SupplierCode</td>
+                            <td>@r.ReceiptDate.ToString("yyyy-MM-dd")</td>
+                            <td>@r.GoodsReceiptId</td>
+                            <td class="text-end">@r.ActualUnitPrice.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, r.CurrencyCode))</td>
+                            <td>@r.CurrencyCode</td>
+                            <td class="text-end text-muted">@(r.StandardUnitPrice?.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, r.CurrencyCode)) ?? "-")</td>
+                            <td class="text-end @diffClass">@(r.PriceDiff?.ToString(CurrencyStepHelper.GetFormat(currencyDecimals, r.CurrencyCode)) ?? "-")</td>
+                            <td class="text-end @diffClass">@(r.PriceDiffPct.HasValue ? $"{r.PriceDiffPct:N1}%" : "-")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @await Html.PartialAsync("_Pagination", paged)
+    }
+</div>

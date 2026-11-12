@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Payments — FIN User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>付款作業 — FIN 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">FIN 目錄</span><span lang="en">FIN contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">FIN 畫面</span><span lang="en">FIN screens</span></div>
+    <a href="chart-of-account.html" class="nav-link"><span lang="zh">會計科目</span><span lang="en">Chart of Accounts</span></a>
+    <a href="ap-invoice.html" class="nav-link"><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></a>
+    <a href="ar-invoice.html" class="nav-link"><span lang="zh">應收帳款</span><span lang="en">AR Invoice</span></a>
+    <a href="ar-credit-note.html" class="nav-link"><span lang="zh">銷貨折讓單</span><span lang="en">Sales Credit Note</span></a>
+    <a href="ap-debit-note.html" class="nav-link"><span lang="zh">進貨折讓單</span><span lang="en">Purchase Debit Note</span></a>
+    <a href="ap-payment.html" class="nav-link active"><span lang="zh">付款作業</span><span lang="en">AP Payment</span></a>
+    <a href="ar-receipt.html" class="nav-link"><span lang="zh">收款作業</span><span lang="en">AR Receipt</span></a>
+    <a href="bank-account.html" class="nav-link"><span lang="zh">銀行帳戶</span><span lang="en">Bank Account</span></a>
+    <a href="ap-aging.html" class="nav-link"><span lang="zh">應付帳齡分析</span><span lang="en">AP Aging</span></a>
+    <a href="ar-aging.html" class="nav-link"><span lang="zh">應收帳齡分析</span><span lang="en">AR Aging</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-cash-coin me-2 text-primary"></i><span lang="zh">付款作業</span><span lang="en">AP Payment</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/APPayment &nbsp;|&nbsp; 付款單與應付發票核銷</span><span lang="en">Route: /APPayment &nbsp;|&nbsp; Payments allocated against AP invoices</span></div>
+    </div>
+
+    <p><span lang="zh">建立付款單選擇付款銀行帳戶與待付發票（可多張、部分金額核銷），確認後沖銷發票並扣減銀行餘額。外幣付款結算時自動認列已實現匯兌損益。</span><span lang="en">Create a payment and choose the bank account and the invoices to pay (several invoices and partial amounts are allowed); confirming it settles the invoices and reduces the bank balance. Realised exchange gains and losses on foreign currency payments are recognised automatically on settlement.</span></p>
+    <img class="screen-shot" src="img/ap-payment.png" data-src-en="img/en/ap-payment.png" alt="付款核銷畫面截圖" data-alt-en="Payment allocation screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">付款核銷畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Payment allocation screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">付款</span><span lang="en">Payment</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」選供應商與付款帳戶，帶出未結清發票。</span><span lang="en">Click "Add", choose the supplier and the paying account, and the open invoices are listed.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">分配各發票核銷金額（合計＝付款額），儲存送審/確認。</span><span lang="en">Allocate the amount across the invoices (the total must equal the payment), then save and submit or confirm.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">確認後發票轉部分/全額結清，銀行餘額同步扣減。</span><span lang="en">Confirming moves the invoice to partly or fully paid and reduces the bank balance at the same time.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">沖銷錯誤時作廢付款單，發票與餘額自動回沖。</span><span lang="en">If the allocation is wrong, void the payment and the invoice and the balance are reversed automatically.</span></div></div>
+    <h3 id="credit-balance"><span lang="zh">多付款的退回與抵用</span><span lang="en">Recovering or applying an overpayment</span></h3>
+    <p><span lang="zh">發票全額付清之後才開<a href="ap-debit-note.html">進貨折讓單</a>（例如退貨給供應商），我們就多付了錢：這張發票的「未結金額」會是<strong>負數</strong>，在挑發票清單與<a href="ap-aging.html">應付帳齡分析</a>都看得到。用同一張付款單處理，對這張發票填<strong>負數</strong>的核銷金額：</span><span lang="en">If a <a href="ap-debit-note.html">purchase debit note</a> is issued after an invoice has been paid in full (for example goods were returned to the supplier), we have overpaid: the invoice's "Outstanding" becomes <strong>negative</strong>, and it shows up both in the invoice list on this screen and in <a href="ap-aging.html">AP Aging</a>. Handle it with an ordinary payment by entering a <strong>negative</strong> allocation against that invoice:</span></p>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh"><strong>供應商退款：</strong>只對多付的那張發票填負數（例如 −105），「付款金額」會跟著變成 −105；選收到退款的銀行帳戶後儲存、確認。銀行餘額增加，總帳借 銀行存款、貸 應付帳款。</span><span lang="en"><strong>Supplier refunds us:</strong> enter a negative amount (for example −105) against the overpaid invoice only; "Payment Amount" follows to −105. Choose the bank account the refund arrives in, then save and confirm. The bank balance goes up, and the ledger is debited to Bank and credited to Accounts Payable.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh"><strong>抵用下一張發票：</strong>同一張付款單裡，新發票填正數、多付的發票填負數（例如 +1000 與 −105），「付款金額」就是實付的 895。</span><span lang="en"><strong>Apply it to another invoice:</strong> on the same payment, enter a positive amount against the new invoice and a negative amount against the overpaid one (for example +1000 and −105); "Payment Amount" is then the 895 actually paid.</span></div></div>
+    <img class="screen-shot" src="img/ap-payment-refund.png" data-src-en="img/en/ap-payment-refund.png" alt="對多付款發票填負數核銷的付款單截圖" data-alt-en="Payment with a negative allocation against an overpaid invoice" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">多付款發票的未結金額是負數，核銷金額填負數即為供應商退款</span><span lang="en">An overpaid invoice shows a negative outstanding amount; a negative allocation records the supplier's refund</span></div>
+    <div class="alert alert-info small"><span lang="zh">負數只能填在未結金額為負的發票上，而且不能超過多付的金額；對還沒付清的發票填負數會被擋下。作廢這張付款單會把發票恢復成多付的狀態。已作廢的發票不能再付款核銷。有多付退回的發票，要先作廢退回那張，才能作廢原付款。</span><span lang="en">A negative amount is only accepted on an invoice whose outstanding amount is negative, and it cannot exceed the overpayment; a negative amount on an invoice that is not yet fully paid is rejected. Voiding the payment puts the invoice back to its overpaid state. A voided invoice cannot be settled by a payment. If an invoice has a refund of an overpayment, void the refund before voiding the original payment.</span></div>
+    <h3 id="printing"><i class="bi bi-printer me-1"></i><span lang="zh">列印</span><span lang="en">Printing</span></h3>
+    <p><span lang="zh">清單每列的 <i class="bi bi-printer"></i> 按鈕（需有列印權限）在新分頁開啟含 QR Code 的列印單，可直接列印或另存 PDF。付款單列印含供應商名稱、付款方式、銀行帳戶、幣別與匯率、付款金額與本幣金額，並列出沖銷的發票。</span><span lang="en">The <i class="bi bi-printer"></i> button on each row of the list (print permission required) opens a printout with a QR code in a new tab, ready to print or save as PDF. The payment printout shows the supplier name, payment method, bank account, currency and exchange rate, amount and local amount, and lists the invoices it settles.</span></p>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">供應商</span><span lang="en">Supplier</span></td><td><span lang="zh">只看單一供應商的付款單；留空為全部</span><span lang="en">Payments for one supplier only; leave blank for all</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">依付款單狀態篩選（草稿／待簽核／已確認／已作廢）</span><span lang="en">Filters by payment status (draft / pending approval / confirmed / void)</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">付款單表頭</span><span lang="en">Payment header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">付款單號</span><span lang="en">Payment No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">供應商</span><span lang="en">Supplier</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">收款對象；選定後只帶出該供應商的未結清應付發票</span><span lang="en">The counterparty; once chosen, only that supplier's open AP invoices are listed</span></td></tr>
+        <tr><td><span lang="zh">付款日期</span><span lang="en">Payment Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">資金實際支付日，決定入帳期間與外幣結算匯率</span><span lang="en">Date the money actually went out, which decides the accounting period and the settlement rate for foreign currency</span></td></tr>
+        <tr><td><span lang="zh">付款方式</span><span lang="en">Payment method</span></td><td><span lang="zh">匯款、支票、現金等，由代碼維護提供</span><span lang="en">Transfer, cheque, cash and so on, supplied by code maintenance</span></td></tr>
+        <tr><td><span lang="zh">狀態</span><span lang="en">Status</span></td><td><span lang="zh">草稿／待簽核／已確認／已作廢；確認後才沖銷發票並扣減銀行餘額</span><span lang="en">Draft / pending approval / confirmed / void; the invoice is only settled and the bank balance reduced once it is confirmed</span></td></tr>
+        <tr><td><span lang="zh">金額(本幣)</span><span lang="en">Amount (Local)</span></td><td><span lang="zh">本次付款換算為本位幣的金額。「付款金額」會自動等於各核銷明細的合計，兩者不符的付款單存不進去；供應商退款時為負數</span><span lang="en">The payment converted to local currency. "Payment Amount" automatically equals the total of the allocation lines, and a payment where the two differ cannot be saved; it is negative when the supplier refunds us</span></td></tr>
+        <tr><td><span lang="zh">匯兌損益</span><span lang="en">Exchange Gain/Loss</span></td><td><span lang="zh">外幣付款時，發票入帳匯率與付款日匯率的差額，結算時自動認列為已實現匯兌損益</span><span lang="en">On a foreign currency payment, the difference between the rate the invoice was booked at and the rate on the payment date, recognised automatically as a realised exchange gain or loss on settlement</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">核銷明細</span><span lang="en">Allocation Details</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">發票號碼</span><span lang="en">Invoice No</span></td><td><span lang="zh">被本次付款沖銷的應付發票；可一次選取多張。清單列出還沒付清的發票，以及付清後才折讓而多付的發票</span><span lang="en">AP invoices settled by this payment; several can be chosen at once. The list shows invoices not yet fully paid, plus invoices overpaid because a debit note was issued after they were paid</span></td></tr>
+        <tr><td><span lang="zh">未結金額</span><span lang="en">Outstanding</span></td><td><span lang="zh">發票總額 − 已付 − 已折讓。負數代表我們多付</span><span lang="en">Invoice total − amount paid − amount debited. A negative figure means we have overpaid</span></td></tr>
+        <tr><td><span lang="zh">核銷金額</span><span lang="en">Alloc. Amount</span></td><td><span lang="zh">該張發票本次沖銷的金額，可小於發票餘額（部分核銷）；各行合計須等於付款金額。未結金額為負的發票填負數，用於<a href="#credit-balance">退回或抵用</a></span><span lang="en">Amount settled against this invoice, which may be less than the invoice balance (a partial allocation); the lines must add up to the payment amount. Enter a negative amount against an invoice with a negative outstanding amount to <a href="#credit-balance">recover or apply the overpayment</a></span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="ap-invoice.html"><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></a>、<a href="bank-account.html"><span lang="zh">銀行帳戶</span><span lang="en">Bank Account</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">同帳戶並發付款以樂觀鎖防護，遇衝突提示請重試；確認/沖銷受期間鎖管制。</span><span lang="en"> Concurrent payments from the same account are protected by optimistic locking and you are asked to retry on a conflict; confirming and settling are subject to the period lock.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

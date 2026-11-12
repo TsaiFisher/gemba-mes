@@ -1,0 +1,92 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@inject IViewLocalizer Localizer
+@model WorkOrder
+@{
+    var operations = ViewBag.Operations as IEnumerable<SmartFactory.MES.Modules.MFG.Controllers.ReworkOperationOption>
+                     ?? Enumerable.Empty<SmartFactory.MES.Modules.MFG.Controllers.ReworkOperationOption>();
+}
+
+<div class="p-3">
+    <dl class="row mb-3">
+        <dt class="col-sm-4">@Localizer["OriginalWorkOrder"]</dt>
+        <dd class="col-sm-8 font-monospace">@Model.WorkOrderId</dd>
+        <dt class="col-sm-4">@Localizer["ProductCode"]</dt>
+        <dd class="col-sm-8">@Model.ProductCode</dd>
+    </dl>
+
+    <div class="alert alert-warning small py-2">
+        <i class="bi bi-arrow-repeat me-1"></i>@Localizer["Note"]
+    </div>
+
+    <form id="panelForm" method="post" action="@Url.Action("CreateRework", new { id = Model.WorkOrderId })">
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            <label class="form-label fw-semibold">@Localizer["Quantity"] <span class="text-danger">*</span></label>
+            <input type="number" name="quantity" class="form-control" min="0.001" step="1"
+                   placeholder="@Localizer["QuantityPlaceholder"]" required />
+            <span class="text-danger small" data-valmsg-for="quantity" data-valmsg-replace="true"></span>
+        </div>
+        @if (operations.Any())
+        {
+            <div class="mb-3">
+                <label class="form-label fw-semibold">@Localizer["Operations"] <span class="text-danger">*</span></label>
+                <div class="form-text mt-0 mb-1">@Localizer["OperationsHint"]</div>
+                <table class="table table-sm align-middle mb-1" id="reworkOps">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-center"></th>
+                            <th>@Localizer["OperationSeq"]</th>
+                            <th>@Localizer["OperationName"]</th>
+                            <th>@Localizer["WorkCenter"]</th>
+                            <th class="text-end">@Localizer["MaterialCount"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var op in operations)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" class="form-check-input" name="operationSeqs" value="@op.OperationSeq"
+                                           id="rwOp@(op.OperationSeq)" checked />
+                                </td>
+                                <td><label for="rwOp@(op.OperationSeq)" class="mb-0">@op.OperationSeq</label></td>
+                                <td>@op.OperationName</td>
+                                <td>@op.WorkCenterId</td>
+                                <td class="text-end">@op.MaterialCount</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <span class="text-danger small" data-valmsg-for="operationSeqs" data-valmsg-replace="true"></span>
+            </div>
+        }
+        <div class="mb-3 form-check">
+            @* 已繳庫（結案）的工單，判退的不良品在庫存裡，預設勾；生產中判 NG 的不在帳上，預設不勾（§16.4b） *@
+            <input type="checkbox" class="form-check-input" name="includeDefective" value="true" id="rwIncludeDefective"
+                   checked="@(Model.Status == WorkOrderStatus.Closed)" />
+            <label class="form-check-label" for="rwIncludeDefective">@Localizer["IncludeDefective"]</label>
+            <div class="form-text mt-0">@Localizer["IncludeDefectiveHint"]</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">@Localizer["Remarks"]</label>
+            <input type="text" name="remarks" class="form-control"
+                   placeholder="@Localizer["RemarksPlaceholder"]" />
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+            <button type="submit" class="btn btn-warning" name="submit" value="rework">
+                <i class="bi bi-arrow-repeat me-1"></i>@Localizer["Submit"]
+            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+        </div>
+    </form>
+</div>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    document.getElementById('panelForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitPanel(this, this.querySelector('[type=submit]'));
+    });
+</script>

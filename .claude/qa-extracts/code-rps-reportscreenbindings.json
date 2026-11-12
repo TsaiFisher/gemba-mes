@@ -1,0 +1,78 @@
+{
+  "sourcePath": "Modules/RPS/Services/ReportScreenBindings.cs",
+  "sourceHash": "cc21d7343bb809598bf404206aa056e58563cb15678c80447c907d4ac322f988",
+  "entries": [
+    {
+      "slug": "code-rps-reportscreenbindings-58313e6d",
+      "lang": "zh",
+      "headingPath": "報表 › 一支報表工具對應到「哪個畫面、吃哪些查詢參數」",
+      "text": "報表工具對應畫面與查詢參數說明｜此工具在建立常用查詢時，會將自然語言查詢中的條件轉換為目標畫面的欄位名稱進行儲存；如果無法對應的條件存在，系統會自動忽略這些條件，但必須向使用者顯示哪些條件被忽略了。",
+      "approved": true,
+      "sourceSectionHash": "36e44a174f826086156b016d392ab0ec5a22a538c983a3202dbc88ccf8337817"
+    },
+    {
+      "slug": "code-rps-reportscreenbindings-587be119",
+      "lang": "zh",
+      "headingPath": "報表 › 畫面是否吃期間",
+      "text": "畫面是否需選擇期間｜系統只需要判斷使用者是否需要指定一個相對的期間範圍，不需要知道該期間是基於日期還是會計期間來決定此規則。",
+      "approved": true,
+      "sourceSectionHash": "1baf8619824d3eac98267db44600ed4602bc2a151e2459f1e910bb02c42b96d5"
+    },
+    {
+      "slug": "code-rps-reportscreenbindings-d558752c",
+      "lang": "zh",
+      "headingPath": "報表 › 畫面表達期間的形狀",
+      "text": "報表期間的呈現方式決定查詢參數｜此處設定了報告所涵蓋的時間範圍的格式。因為財報的計算週期是依據會計期間來定義，這個期間與日曆上的月份可能不同，所以系統必須使用代表期間代碼的方式來傳遞資訊，而不是直接將起訖日期轉換成標準的日期區間參數。",
+      "approved": true,
+      "sourceSectionHash": "d4e5966a92ce2e5b89aa9416a85580b1a86844f693d3752942c536fc0ee0fe68"
+    },
+    {
+      "slug": "code-rps-reportscreenbindings-e5862b33",
+      "lang": "zh",
+      "headingPath": "報表 › 採購金額分析那一類「選一個年度、看 12 個月」的畫面",
+      "text": "限制查詢期間為年度範圍｜此類分析功能僅提供選擇完整年度作為查詢區間，以避免使用者誤以為「上月」的篩選結果會顯示一整年資料。",
+      "approved": true,
+      "sourceSectionHash": "a5c20464492e5a0fa9df9c957b70c2801988500caff837a49f92de10e1d7dcc0"
+    },
+    {
+      "slug": "code-rps-reportscreenbindings-4bfef211",
+      "lang": "zh",
+      "headingPath": "報表 › 白名單容得下它們，是因為使用者在畫面上存查詢時可以指定",
+      "text": "篩選條件的呈現方式說明｜使用者可以在畫面介面上自行設定查詢的排序順序和每頁顯示的筆數。",
+      "approved": true,
+      "sourceSectionHash": "324d8979242253c7f3d6d7f7a3390c12f0e4b9008c52c619cf511651c14e6125"
+    },
+    {
+      "slug": "code-rps-reportscreenbindings-8ec3ead8",
+      "lang": "zh",
+      "headingPath": "報表 › 工具早就抽好了，但繫結一直停在首批六支，",
+      "text": "報表工具的顯示範圍限制｜系統在載入報表工具時，如果無法找到所有已建立的工具連結，則會導致部分介面元素（例如「我的常用查詢」）不會顯示出來。",
+      "approved": false,
+      "sourceSectionHash": "9b3fd5c7d5fa6d91f262f6aedc9ad20b4a4453388ee6fbe6fab0137b269f9939"
+    },
+    {
+      "slug": "code-rps-reportscreenbindings-e135ceb1",
+      "lang": "zh",
+      "headingPath": "報表 › 畫面自己的呈現選項仍可由使用者存",
+      "text": "報表選項仍可自行設定｜系統在顯示報告時，即使有預設的篩選條件，使用者仍然可以自行選擇或調整哪些維度來查看資料。",
+      "approved": true,
+      "sourceSectionHash": "ee8b6efc065bb9b0c32d692711fafcc9aadaf033f9d8839f859f265a6b0400aa"
+    },
+    {
+      "slug": "code-rps-reportscreenbindings-eb674ba3",
+      "lang": "zh",
+      "headingPath": "報表 › 2026-09-21 之前它們刻意不在此表，",
+      "text": "報表查詢依據會計期間而非日期｜此報表在查詢時，計算的期間是根據會計期間代碼來判定的，而不是直接使用日期範圍。因此，當您需要查詢特定時間區間時，請務必使用系統提供的「上一個會計期間」等相對期間選項，否則所顯示的廠別期間可能會與您預期的會計期間不同。",
+      "approved": true,
+      "sourceSectionHash": "02e23fea63d9f09c82a46881a119ba4c15e0526139a8d741a74bcf746ccef7b1"
+    },
+    {
+      "slug": "code-rps-reportscreenbindings-69bbf07f",
+      "lang": "zh",
+      "headingPath": "報表 › 試算表同樣吃會計期間區間",
+      "text": "報表資料範圍受限於會計期間｜試算表的資料範圍會依照設定的會計期間區間來計算。另外，顯示零餘額科目這個選項僅是介面上的呈現方式，不會影響到後續的參數傳遞。",
+      "approved": true,
+      "sourceSectionHash": "9e02941229769cc06b5bb91812646b447be4057fc7858fc84b69ccea09fd8381"
+    }
+  ]
+}

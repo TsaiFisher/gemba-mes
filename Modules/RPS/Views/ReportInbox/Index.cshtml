@@ -1,0 +1,156 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@inject SmartFactory.MES.Services.IDateTimeService DateTimeSvc
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.RPS.ViewModels.ReportInboxItemVm>
+
+@{
+    var plants = ViewBag.Plants as IReadOnlyDictionary<string, SmartFactory.MES.Modules.RPS.Services.ReportPlantInfo>
+                 ?? new Dictionary<string, SmartFactory.MES.Modules.RPS.Services.ReportPlantInfo>();
+    ViewData["Title"] = Localizer["PageTitle"];
+    bool hasSearched = ViewBag.Searched == true;
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.CurrentSort as string ?? "";
+        if (cur == col + "_asc") return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+
+    var fromDate = (ViewBag.FromDate as DateTime?)?.ToString("yyyy-MM-dd");
+    var toDate   = (ViewBag.ToDate as DateTime?)?.ToString("yyyy-MM-dd");
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-inbox-fill"></i> @Localizer["PageTitle"]</h1>
+    </div>
+
+    @* 檔案過了保留期被清掉是正常狀態（§7.5），下載端點會導回這裡並帶訊息。 *@
+    @if (TempData["ErrorMessage"] is string error)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>@error
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="alert alert-info small">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["HelpText"]
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+
+                <div class="col-12 col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["FromDate"]</label>
+                    <input type="date" name="fromDate" class="form-control form-control-sm" value="@fromDate" />
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["ToDate"]</label>
+                    <input type="date" name="toDate" class="form-control form-control-sm" value="@toDate" />
+                </div>
+
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.RunAtSort"
+                                   asp-route-fromDate="@fromDate" asp-route-toDate="@toDate"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["RunAt"] <i class="bi @sortIcon("runat")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["Name"]</th>
+                            <th>@Localizer["Plant"]</th>
+                            <th>@Localizer["ToolKey"]</th>
+                            <th>@Localizer["ResolvedRange"]</th>
+                            <th class="text-end">@Localizer["RowCount"]</th>
+                            <th>@Localizer["Language"]</th>
+                            <th class="text-end pe-4">@Localizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr><td colspan="8" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>@Localizer["NoData"]
+                            </td></tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="small">@DateTimeSvc.ToLocalTime(item.RunAt).ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td class="fw-medium">@item.Name</td>
+                                    <td class="small text-nowrap">
+                                        @(item.PlantId is not null && plants.TryGetValue(item.PlantId, out var plant) ? plant.Label : item.PlantId)
+                                    </td>
+                                    <td class="text-muted small">@L[item.ToolKey]</td>
+                                    <td class="small">
+                                        @* §5.2.1 規則 4：相對期間解算後的絕對區間要回顯，
+                                           否則使用者無從確認「上個月」是哪一段。 *@
+                                        @if (item.ResolvedFrom.HasValue && item.ResolvedTo.HasValue)
+                                        {
+                                            @($"{item.ResolvedFrom:yyyy-MM-dd} ~ {item.ResolvedTo:yyyy-MM-dd}")
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td class="text-end small">@item.RowCount.ToString("N0")</td>
+                                    <td class="small">
+                                        @if (string.IsNullOrEmpty(item.Language))
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-light text-dark border">@item.Language</span>
+                                        }
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        @* 下載走一般 GET 連結而非 AJAX：檔案要交給瀏覽器的下載器。
+                                           權限在端點內再檢查一次（§7.8 S5），不靠這顆按鈕存不存在。 *@
+                                        <a class="btn btn-sm btn-outline-primary"
+                                           asp-action="Download" asp-route-runId="@item.RunId">
+                                            <i class="bi bi-download me-1"></i>@Localizer["Download"]
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>

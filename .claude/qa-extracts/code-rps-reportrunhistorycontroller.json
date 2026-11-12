@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/RPS/Controllers/ReportRunHistoryController.cs",
+  "sourceHash": "9bdea605e7ab5acf5a0eb240ae4f9b260ffed2e9436ffa116cdaed7d0ac2275d",
+  "entries": [
+    {
+      "slug": "code-rps-reportrunhistorycontroller-a1fbf067",
+      "lang": "zh",
+      "headingPath": "報表 › 排程執行紀錄",
+      "text": "排程執行紀錄的用途與收件匣不同｜此頁面用來記錄哪些報表執行失敗或被跳過，目的是為了回答使用者「為什麼這個月沒有收到報表」的問題。",
+      "approved": true,
+      "sourceSectionHash": "080a21f3f89643723ccd9f6898697c21fa4ba2b56db3a10d8c907bd91cd4fbcf"
+    },
+    {
+      "slug": "code-rps-reportrunhistorycontroller-fe7df19f",
+      "lang": "zh",
+      "headingPath": "報表 › 所以這裡用 ——定義刪了仍要看得到那些歷史紀錄",
+      "text": "報表資料保留歷史記錄的規則｜系統在查詢時，即使某個定義已經被刪除，相關的歷史紀錄仍然可以被檢視到。",
+      "approved": true,
+      "sourceSectionHash": "f7c36864da744da7c9bcf4717e40ceed59a7e9b6a56fa7369b7460f8bff7de39"
+    },
+    {
+      "slug": "code-rps-reportrunhistorycontroller-87acb7ce",
+      "lang": "zh",
+      "headingPath": "報表 › 用「今天」篩，會查不到一小時前才產出的報表——而畫面上沒有任何訊",
+      "text": "日期範圍以各個廠別的當地時間午夜為準｜當使用者使用「今天」進行資料查詢時，系統篩選的起點是依據每個廠別各自的當地時間午夜計算，而非統一採用世界標準時間（UTC）的午夜。",
+      "approved": true,
+      "sourceSectionHash": "c07110287c745080dff4e370784d9bc1eacb374526fa9941d7346e5b178c97e2"
+    }
+  ]
+}

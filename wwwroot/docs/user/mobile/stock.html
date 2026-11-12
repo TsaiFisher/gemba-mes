@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Stock Query — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>庫存查詢 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link active"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/inv/stock.html &nbsp;|&nbsp; 現場即時查品號或儲位的庫存</span><span lang="en">Path: /mobile/inv/stock.html &nbsp;|&nbsp; Checking a product's or a location's stock on the spot</span></div>
+    </div>
+
+    <p><span lang="zh">唯讀查詢，不會改變任何庫存。兩種查法：依品號查（這個東西在哪裡）與依儲位查（這個位置有什麼）。</span><span lang="en">A read-only enquiry that changes nothing. Two ways to search: by product (where is this thing) and by location (what is in this place).</span></p>
+
+    <img class="screen-shot" src="img/stock.png" data-src-en="img/en/stock.png" alt="庫存查詢畫面截圖" data-alt-en="Stock query screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">庫存查詢畫面（依品號查，顯示總庫存與各儲位明細）</span><span lang="en">Stock query screen (by product, showing the total and the breakdown by location)</span></div>
+
+    <h2 id="modes"><i class="bi bi-toggles me-2 text-primary"></i><span lang="zh">兩種查法</span><span lang="en">The two modes</span></h2>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-20pct"><span lang="zh">模式</span><span lang="en">Mode</span></th><th><span lang="zh">輸入與結果</span><span lang="en">What you enter and what you get</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">依品號查</span><span lang="en">By Product</span></td><td><span lang="zh">輸入或掃描品號／條碼，結果顯示品號、品名、總庫存，以及「各儲位庫存」——同一個品號分散在哪些倉庫、儲位與批號。也可以掃<a href="../bas/container-unit.html">箱子</a>上的固定 QR（箱號）：結果改為這個箱子目前裝的品號、批號與所在儲位；空箱或不是箱號時照常當品號查。</span><span lang="en">Type or scan the product code or barcode. The result shows the code, the name, the total stock and a by-location breakdown of which warehouses, locations and lots hold it. You can also scan the fixed QR on a <a href="../bas/container-unit.html">box</a> (its box number): the result then shows the item, lot and location of what that box holds now; an empty box or a code that is not a box number is looked up as a product as usual.</span></td></tr>
+    <tr><td><span lang="zh">依儲位查</span><span lang="en">By Location</span></td><td><span lang="zh">輸入或掃描儲位代碼，結果顯示「各品項庫存」——這個儲位上放了哪些品號、各多少。</span><span lang="en">Type or scan the location code. The result shows a by-product breakdown of what is held at that location and how much of each.</span></td></tr>
+    </tbody>
+    </table>
+
+    <h2 id="steps"><i class="bi bi-list-ol me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點上方按鈕選擇<strong>「依品號查」</strong>或<strong>「依儲位查」</strong>，欄位標題會跟著改變。</span><span lang="en">Choose <strong>"By Product"</strong> or <strong>"By Location"</strong> with the buttons at the top; the field label changes with it.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">手動輸入，或點<strong>「點擊掃描」</strong>的區塊開相機掃條碼。</span><span lang="en">Type it in, or tap the <strong>"Tap to Scan"</strong> area to open the camera and scan a barcode.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">查詢後上方顯示<strong>「總庫存」</strong>與單位，下方逐列顯示明細，每列標示<strong>「倉庫：」</strong>與<strong>「批：」</strong>。</span><span lang="en">The <strong>"Total Stock"</strong> and its unit appear at the top and the detail lines below, each marked with <strong>"WH: "</strong>and <strong>"Lot: "</strong>.</span></div></div>
+
+    <p class="text-muted small"><span lang="zh">未輸入即查詢會提示<strong>「請輸入品號」</strong>或<strong>「請輸入儲位代碼」</strong>；查無資料則顯示<strong>「找不到庫存記錄」</strong>。</span><span lang="en">Searching with nothing entered warns <strong>"Enter product code"</strong> or <strong>"Enter location code"</strong>; when nothing is found it shows <strong>"No stock records found"</strong>.</span></p>
+
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">這裡看到的是各儲位在手量的即時值（預留不分儲位，不在這裡扣；全廠可用請看桌機「庫存餘額」上方的品號彙總）。要看異動歷程（誰在什麼時候動了什麼），請用桌機的「庫存異動明細」畫面。</span><span lang="en">What you see here is the live on-hand quantity per location (reservations are not per location and are not deducted here; for plant-wide availability see the product summary on the desktop Inventory Balance screen). For the history of who moved what and when, use the Stock Movements screen on the desktop.</span></div>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

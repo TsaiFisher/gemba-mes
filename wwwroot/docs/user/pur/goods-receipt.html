@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Goods Receipt — PUR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>進貨單 — PUR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">PUR 目錄</span><span lang="en">PUR Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">PUR 畫面</span><span lang="en">PUR Screens</span></div>
+    <a href="purchase-request.html" class="nav-link"><span lang="zh">請購單</span><span lang="en">Purchase requisition</span></a>
+    <a href="purchase-order.html" class="nav-link"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></a>
+    <a href="goods-receipt.html" class="nav-link active"><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></a>
+    <a href="goods-return.html" class="nav-link"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></a>
+    <a href="../osp/outsource-receipt.html" class="nav-link"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></a>
+    <a href="../osp/outsource-rework.html" class="nav-link"><span lang="zh">委外重工單</span><span lang="en">Outsource Rework</span></a>
+    <a href="vendor-price-list.html" class="nav-link"><span lang="zh">廠商單價目錄</span><span lang="en">Vendor Price List</span></a>
+    <a href="vendor-evaluation.html" class="nav-link"><span lang="zh">供應商評分卡</span><span lang="en">Vendor Evaluation</span></a>
+    <a href="purchase-overdue.html" class="nav-link"><span lang="zh">採購逾期跟催</span><span lang="en">Overdue Purchase Orders</span></a>
+    <a href="supplier-delivery-rate.html" class="nav-link"><span lang="zh">供應商交期達成率</span><span lang="en">Supplier Delivery Rate</span></a>
+    <a href="purchase-amount.html" class="nav-link"><span lang="zh">採購金額比較</span><span lang="en">Purchase Amount</span></a>
+    <a href="purchase-price.html" class="nav-link"><span lang="zh">採購價格比較</span><span lang="en">Purchase Price</span></a>
+    <a href="../osp/outsource-progress.html" class="nav-link"><span lang="zh">委外進度追蹤</span><span lang="en">Outsource Progress</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-box-arrow-in-down me-2 text-primary"></i><span lang="zh">進貨單</span><span lang="en">Goods Receipt</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/GoodsReceipt &nbsp;|&nbsp; 採購收貨入庫與 IQC 觸發</span><span lang="en">Route: /GoodsReceipt &nbsp;|&nbsp; Goods receipt into stock and IQC trigger</span></div>
+    </div>
+
+    <p><span lang="zh">依採購單收貨：建立進貨單帶出未收量，確認後由倉庫作業入庫過帳（IN），需 IQC 的品號會觸發進料檢驗，合格才入良品倉。進貨確認後自動產生應付發票（含稅）。</span><span lang="en">Receiving against a purchase order: a goods receipt brings in the open quantity, and once confirmed the warehouse posts it into stock (IN). Products requiring IQC trigger incoming inspection and only pass into the good-stock warehouse once approved. Confirming the receipt creates the AP invoice (tax inclusive) automatically.</span></p>
+    <img class="screen-shot" src="img/goods-receipt.png" data-src-en="img/en/goods-receipt.png" alt="進貨單畫面截圖" data-alt-en="Goods receipt screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">進貨單畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Goods receipt screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="status"><i class="bi bi-diagram-2 me-2 text-primary"></i><span lang="zh">單據狀態</span><span lang="en">Status</span></h2>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">狀態</span><span lang="en">Status</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody><tr><td><span class='badge bg-secondary'><span lang="zh">草稿 Draft</span><span lang="en">Draft</span></span></td><td><span lang="zh">已建立未生效，可自由編輯、刪除；需簽核者於此狀態送審。</span><span lang="en">Created but not yet effective; can be freely edited or deleted, and submitted for approval from this status.</span></td></tr><tr><td><span class='badge bg-info'><span lang="zh">待審核</span><span lang="en">Pending approval</span></span></td><td><span lang="zh">已送審等待簽核，不可編輯；可撤回改回草稿。</span><span lang="en">Submitted and waiting for approval; it cannot be edited, but it can be withdrawn back to draft.</span></td></tr><tr><td><span class='badge bg-primary'><span lang="zh">已確認 Confirmed</span><span lang="en">Confirmed</span></span></td><td><span lang="zh">簽核核准（或免簽核直接確認）後生效，等待後續作業/過帳。</span><span lang="en">Effective once approved (or confirmed directly when no approval is required), waiting for the next step or for posting.</span></td></tr><tr><td><span class='badge bg-success'><span lang="zh">已過帳 Posted</span><span lang="en">Posted</span></span></td><td><span lang="zh">庫存/帳務已入帳，單據不可再修改。</span><span lang="en">Stock and accounting have been posted; the document can no longer be changed.</span></td></tr><tr><td><span class='badge bg-danger'><span lang="zh">已作廢 Void</span><span lang="en">Void</span></span></td><td><span lang="zh">反向沖銷已過帳內容；作廢原因需留存，不可復原。</span><span lang="en">Reverses what was posted; the void reason is kept and the action cannot be undone.</span></td></tr></tbody>
+    </table>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">收貨</span><span lang="en">Receipt</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」選擇採購單，帶出未收明細，輸入本次收貨量。</span><span lang="en">Click "Add", pick the purchase order to bring in the open lines, and enter the quantity received this time.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">儲存後送審/確認；需 IQC 品號由品保於檢驗單處理，合格量入庫。</span><span lang="en">Save and then submit or confirm. Products requiring IQC are handled by QA on the inspection order, and the accepted quantity is put into stock.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">倉庫於「倉庫作業」完成上架過帳；全部上架後單據自動轉已過帳。</span><span lang="en">The warehouse posts the put-away under Warehouse Operations; the document turns to Posted once everything is put away.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">確認後系統自動產生 AP 發票，於財務模組核銷付款。</span><span lang="en">Once confirmed, the system creates the AP invoice, which is settled and paid in the finance module.</span></div></div>
+    <div class="note-box"><i class="bi bi-info-circle me-1"></i><span lang="zh">作廢進貨前，這張進貨的應付發票要先作廢（已付款要先沖銷付款）、引用它的進貨退出單也要先作廢；作廢只沖回庫存，不會連帶處理發票與退出。</span><span lang="en">Before voiding a goods receipt, void its AP invoice (reverse any payments first) and any purchase returns that reference it; voiding only reverses inventory, never the invoice or the returns.</span></div>
+
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">表頭</span><span lang="en">Header</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">進貨單號</span><span lang="en">GR No.</span></td><td><span lang="zh">系統採番，不可修改</span><span lang="en">Numbered by the system; not editable</span></td></tr>
+        <tr><td><span lang="zh">進貨日期</span><span lang="en">Receipt Date</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">實際收料日；決定庫存異動與應付認列的期間</span><span lang="en">Actual receipt date; it determines the period of the stock movement and the AP accrual</span></td></tr>
+        <tr><td><span lang="zh">供應商</span><span lang="en">Supplier</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">交貨的供應商</span><span lang="en">Delivering supplier</span></td></tr>
+        <tr><td><span lang="zh">來源單別 / 來源單號</span><span lang="en">Source doc type / Source doc No</span></td><td><span lang="zh">本次進貨依據的來源單據（採購單等）；選定後可用「匯入」帶出未到齊的明細</span><span lang="en">Source document of this receipt (a purchase order, for example); once chosen, "Import" pulls in the lines that are still open</span></td></tr>
+        <tr><td><span lang="zh">備註</span><span lang="en">Notes</span></td><td><span lang="zh">整張進貨單的補充說明</span><span lang="en">Notes for the whole goods receipt</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">明細</span><span lang="en">Lines</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">序號</span><span lang="en">Seq</span></td><td><span lang="zh">明細行序</span><span lang="en">Line seq</span></td></tr>
+        <tr><td><span lang="zh">採購參考</span><span lang="en">PO Ref</span></td><td><span lang="zh">該行對應的採購單與行號，進貨後回寫該採購行的已到量</span><span lang="en">Purchase order and line this row belongs to; the received quantity is written back to that order line</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">收到的料件</span><span lang="en">Item received</span></td></tr>
+        <tr><td><span lang="zh">進貨數量 / 單位</span><span lang="en">Receipt Qty / UOM</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">本次收料數量；不可大於該採購行的待處理數量。選了品號後，單位只列該品號可用的單位（庫存單位與查得到換算的單位，預設採購單位）。</span><span lang="en">Quantity received this time; it cannot exceed the open quantity of the order line. Once a product is chosen, the unit list shows only the units usable for it (its stock unit and units that convert to it; purchase unit preselected).</span></td></tr>
+        <tr><td><span lang="zh">幣別</span><span lang="en">Currency</span></td><td><span lang="zh">該行的交易幣別；本幣金額依單據匯率換算而得</span><span lang="en">Transaction currency of the line; the local amount is converted with the document rate</span></td></tr>
+        <tr><td><span lang="zh">單價</span><span lang="en">Unit Price</span></td><td><span lang="zh">交易幣別的未稅單價，小數位數依幣別設定</span><span lang="en">Price before tax in the transaction currency; decimal places follow the currency setting</span></td></tr>
+        <tr><td><span lang="zh">稅別</span><span lang="en">Tax</span></td><td><span lang="zh">稅別代碼，決定稅率；改稅別會重算稅額</span><span lang="en">Tax code, which determines the rate; changing it recalculates the tax</span></td></tr>
+        <tr><td><span lang="zh">未稅金額</span><span lang="en">Line Amt</span></td><td><span lang="zh">數量 × 單價</span><span lang="en">Quantity × unit price</span></td></tr>
+        <tr><td><span lang="zh">稅額</span><span lang="en">Tax</span></td><td><span lang="zh">未稅金額 × 稅率</span><span lang="en">Amount before tax × tax rate</span></td></tr>
+        <tr><td><span lang="zh">含稅總額</span><span lang="en">Total</span></td><td><span lang="zh">未稅金額 ＋ 稅額，仍為</span><span lang="en">Amount before tax + tax, still in </span><b><span lang="zh">交易幣別</span><span lang="en">Currency</span></b></td></tr>
+        <tr><td><span lang="zh">本幣金額</span><span lang="en">Local Amount</span></td><td><span lang="zh">含稅總額換算為本位幣的金額（本幣＝外幣 × 匯率）；表頭合計與帳務入帳一律採本幣</span><span lang="en">The tax-inclusive total converted to local currency (local = foreign × rate); header totals and accounting entries always use local currency</span></td></tr>
+      </tbody>
+    </table>
+    <p class="text-muted small"><span lang="zh">收料先入待驗倉，經 IQC 放行（或產品設為免驗）後才進正常倉；貨進正常倉時逐次累加認列應付帳款。</span><span lang="en">Received material goes into the quarantine warehouse first and only moves to a normal warehouse once IQC releases it (or the product is exempt from inspection); the AP is accrued incrementally as the goods enter the normal warehouse.</span></p>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="purchase-order.html"><span lang="zh">採購單</span><span lang="en">Purchase Order</span></a>、<a href="goods-return.html"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></a>、<a href="../fin/ap-invoice.html"><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></a>、<a href="../inv/warehouse-ops.html"><span lang="zh">倉庫作業</span><span lang="en">Warehouse Operations</span></a></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">注意：</span><span lang="en">Note:</span></strong><span lang="zh">過帳受會計期間鎖管制。退貨請走「進貨退出」，勿直接作廢已過帳進貨單。</span><span lang="en"> Posting is controlled by the accounting period lock. Use "Goods Return" to send material back; never void a posted goods receipt instead.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

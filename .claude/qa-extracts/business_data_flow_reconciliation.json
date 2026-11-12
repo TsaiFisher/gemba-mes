@@ -1,0 +1,139 @@
+{
+  "sourcePath": ".claude/specifications/business_data_flow_reconciliation.md",
+  "sourceHash": "22196c72984761219506000562594f91c579984b000d9937e5d6618d56d1bf81",
+  "entries": [
+    {
+      "slug": "business-data-flow-reconciliation-759a2bc2",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書",
+      "text": "業務流程資料流向與一致性檢查點｜本系統定義了採購付款、銷售收款以及自製與委外生產這三大核心業務的資料傳遞路徑，並在各個節點設置了資料一致性的檢核點，以確保不同業務環節間的資料能夠保持同步。此外，系統還會對外部企業資源規劃系統的憑證進行狀態的檢核，目的是為了防止系統運行過程中出現帳目與實際不符或資料斷層等異常情況。",
+      "approved": false
+    },
+    {
+      "slug": "business-data-flow-reconciliation-674ec394",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 1. 核心業務資料流與檢核節點 › 1.1 採購付款流程（P2P, Procure-to-Pay） › B. 檢核點與稽核規則",
+      "text": "採購收料與帳款結清規則｜每筆採購的品項，實際收到的數量不能超過採購單上規定的總數量。此外，在收到發票之前，系統計算出的暫估應付帳款餘額，必須等於所有已進貨但尚未核銷的金額。最後，一旦某張發票被標記為已結清，其累積沖銷的金額必須剛好等於該發票的總金額。",
+      "approved": false
+    },
+    {
+      "slug": "business-data-flow-reconciliation-c452064f",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 1. 核心業務資料流與檢核節點 › 1.2 銷售收款流程（O2C, Order-to-Cash） › B. 檢核點與稽核規則",
+      "text": "訂單出貨數量需符合預定承諾量｜出貨時，實際出庫的數量不能超過原始訂單上已經約定的總數量。出貨確認後才能產生應收帳款，開立發票的數量必須等於已完成的出貨數量。當庫存被扣減時，所記錄的庫存成本金額，必須與會計分錄中「銷貨成本」科目所記的借方金額完全一致。",
+      "approved": false
+    },
+    {
+      "slug": "business-data-flow-reconciliation-2a1b35f5",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 1. 核心業務資料流與檢核節點 › 1.3 生產與委外流程（Plan-to-Produce） › C. 檢核點與稽核規則",
+      "text": "生產結案需確認工單材料平衡｜期末的在製品數量，必須等於開頭的在製品數量加上本期投入的淨材料價值、本期報工的人工與製造成本，再減去本期完工入庫的成本和本期報廢的金額。委外原料餘量不得為負數系統計算的委外在外原料剩餘量，必須大於等於零；如果計算結果為負數，代表材料超產或發退料資料有錯誤。加工費核銷需與入庫成本一致所有需要結算的加工費用總額，必須和實際完工並入庫時記錄的加工費用相符。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-024746a1",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 2. 外部憑證對應與拋轉狀態（ERP Voucher Mapping Status）檢核機制",
+      "text": "資料流向說明：MES 與外部系統資料交換｜本系統與外部的企業資源規劃系統之間，資料是需要透過一個整合的流程進行傳輸和轉換的。這代表現場執行系統產生的資料，最終會被匯入到負責總帳或稅務申報的外部系統中處理。",
+      "approved": false
+    },
+    {
+      "slug": "business-data-flow-reconciliation-3c681d9e",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 2. 外部憑證對應與拋轉狀態（ERP Voucher Mapping Status）檢核機制 › 2.2 整合流程與檢核點（ERP Integration Checkpoints）",
+      "text": "拋轉範圍僅限發票類單據｜目前只有應付和應收的發票才能進行系統間的狀態追蹤，其他如庫存移動等交易類型無法參與此種拋轉狀態的檢核。MES端所有已確認且未被排除的財務或庫存交易，必須在設定的時間內成功傳輸到ERP並取得對應的單據編號；此外，傳輸成功的總金額也必須與ERP系統上的對應單據金額完全一致。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-f7aff109",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 3. 資料稽核診斷程式邏輯（DataAuditService）",
+      "text": "資料稽核的共通檢核原則說明｜所有進行資料查詢時，系統會根據指定的廠別來篩選單據，若未指定廠別，則會檢查全廠區的資料。此外，在計算數量和金額的差異時，系統會使用預設的容忍值進行判斷；同時，系統檢核的單據狀態會排除草稿或已作廢的紀錄，並且會排除所有作廢的發票。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-2239c97c",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 3. 資料稽核診斷程式邏輯（DataAuditService） › 3.1 採購超收稽核（`AuditPoOverReceiptAsync` → `PO_OVER_RECEIPT`）",
+      "text": "採購超收的數量限制規則｜每筆採購單據明細的有效收料總量（計算方式為實際收到的數量減去退回的數量）不能超過該單據規定的訂購數量。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-da3fe64b",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 3. 資料稽核診斷程式邏輯（DataAuditService） › 3.2 GR/IR 稽核（`AuditGrIrAsync` → `GRIR_OVER_INVOICE` / `GRIR_AGING`）",
+      "text": "數量判定異常規則｜當累積的非作廢發票數量超過了收料的總數量時，系統會判定為異常狀況。此檢查是基於數量的比較，而不是依據金額差異來判斷是否異常。掛帳超期追蹤規則如果收料已經超過 30 天的時間，但其暫估的總金額仍未被非作廢發票完全核銷完畢，系統會將該筆資料列入待處理的過期項目中進行追蹤。",
+      "approved": false
+    },
+    {
+      "slug": "business-data-flow-reconciliation-d4ecbb23",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 3. 資料稽核診斷程式邏輯（DataAuditService） › 3.4 傳票借貸平衡與重複立帳稽核（`AuditJournalBalanceAsync` / `AuditDuplicateJournalAsync`）",
+      "text": "傳票資料必須保持借貸平衡與唯一性｜每張傳票的總借方金額和總貸方金額，其差額不能超過系統設定的容忍範圍。此外，如果來源文件是付款、收款或工單完成等類型，同一來源文件的編號下，不允許產生多張自動生成的傳票，以避免重複記錄交易。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-5c0e1fe1",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 3. 資料稽核診斷程式邏輯（DataAuditService） › 3.5 ERP 拋轉滯留稽核（`AuditErpSyncLagAsync` → `ERP_SYNC_LAG`）",
+      "text": "拋轉單據滯留的異常判斷規則｜如果應付或應收發票建立後超過二十四小時，其狀態仍為待處理或失敗，系統會判定為異常，並會在描述中顯示重試次數和最後的錯誤訊息。此檢查範圍涵蓋了應付與應收發票，並且需要確認相關的憑證單據是否已連結到特定工廠的資料。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-748dab16",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 3. 資料稽核診斷程式邏輯（DataAuditService） › 3.6 庫存滾動平衡稽核（`AuditInventoryRollForwardAsync` → `INV_ROLLFORWARD`）【盲區補強】",
+      "text": "庫存移動與現有數量必須平衡｜所有計算的庫存變動量，當依據廠別、品號、儲位和批號進行彙總時，其結果必須等於系統記錄的實際持有數量；如果任一邊的變動紀錄存在但另一邊沒有對應的非零數值，則會被判定為異常。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-1d18623f",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 3. 資料稽核診斷程式邏輯（DataAuditService） › 3.7 銷售出貨稽核（`AuditSoOverShipmentAsync` / `AuditShipmentInvoiceGapAsync`）【盲區補強】",
+      "text": "銷售出貨與開票的資料一致性要求｜累計的出貨數量減去退回的數量，不能超過訂單明細所規定的原始訂購數量。此外，如果已確認或已結案的出貨單，其出貨日期超過一天，但尚未產生非作廢的應收帳款發票，系統會判定為異常狀況。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-8a6ebea0",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 3. 資料稽核診斷程式邏輯（DataAuditService） › 3.8 Backflush 後沖消耗核對（`AuditBackflushConsumptionAsync` → `BACKFLUSH_MISMATCH`）【P-5，2026-07-05】",
+      "text": "後沖消耗的差異判斷規則｜系統會比較實際記錄的材料消耗總量與根據完工比例計算出的標準消耗總量，如果兩者之間的差額超過了設定的數量容忍範圍，則會判定為異常。此檢核是針對已經結案（已入庫）的工單所進行的。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-48a9be7e",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 3. 資料稽核診斷程式邏輯（DataAuditService） › 3.9 反正規化欄位漂移稽核（`AuditPoReceivedQtyDriftAsync` / `AuditSoShippedQtyDriftAsync`）【P-6，2026-07-05】",
+      "text": "收貨與出貨數量需保持一致性｜採購訂單上的已收數量，應累加所有建立或修改時的紀錄，若刪除或作廢，則需要回沖；但退貨時不進行回沖。銷售訂單上的已出貨數量，應在儲存時累加（包含草稿），若修改、刪除或作廢，則需回沖；但銷退時不進行回沖。此外，系統會檢查採購訂單的收貨總量是否與所有未作廢的入庫明細彙總相符，以及銷售訂單的出貨總量是否與所有未作廢的出貨明細彙總相符。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-bbeb4f85",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 3. 資料稽核診斷程式邏輯（DataAuditService） › 3.10 WIP 期末快照一致性稽核（`AuditWipSnapshotConsistencyAsync`）【P-1 結構性守門，2026-07-05】",
+      "text": "快照一致性稽核規則說明｜只有在關帳前才會進行此類檢查，用於確認期間內完工的成本、是否有缺少當期的作業進度紀錄，以及快照資料是否過期或有負數值。此外，計算完工品單位成本時，會將所有材料成本彙總後沖料與實際發料成本納入考量，確保存貨計價不會低估。跨期的人工與製費結轉，則是以前期已凍結的數據加上本期的計算結果為準。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-b1bc7d2f",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 3. 資料稽核診斷程式邏輯（DataAuditService） › 3.11 逐工單成本回溯核對（`AuditWoCostJournalDriftAsync` → `WO_COST_JOURNAL_DRIFT`）【P-2 選項 A，2026-07-06】",
+      "text": "工單成本回溯的計算依據與範圍｜所有工單的成本資料都會進行核對，無論是初步或最終的記錄。材料成本會比對庫存異動子帳的淨成本，並納入生產物料的移動紀錄來進行抵減。人工和製費成本則會比對已分配到特定科目的淨額，這些來源包括工單完成時的吸收分錄以及期末重估調整的分錄。此外，所有相關的調整分錄都會以逐工單的方式記錄，並將工單號作為追蹤的參考依據。",
+      "approved": true
+    },
+    {
+      "slug": "business-data-flow-reconciliation-15a2922d",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 4. C# 資料一致性診斷服務（DataAuditService） › 4.1 期間鎖接入（關帳擋關）",
+      "text": "期間關帳前必須進行資料稽核檢查｜在將一個會計期間標記為已結算之前，系統會先執行一次全面的資料稽核檢查。如果這次的稽核發現任何異常問題，系統會立即停止關帳流程並拋出錯誤訊息，同時會告知使用者異常發生的筆數以及最早出現異常的明細資訊。只有在所有異常都得到處理完畢後，才能繼續完成該期間的結算作業。",
+      "approved": false
+    },
+    {
+      "slug": "business-data-flow-reconciliation-a76ab4f0",
+      "lang": "zh",
+      "headingPath": "SmartFactory MES 業務資料流與資料一致性檢核規格書 › 4. C# 資料一致性診斷服務（DataAuditService） › 4.2 每日排程與稽核儀表板（§9 P-8，2026-07-05）",
+      "text": "稽核結果會持續記錄與檢視｜系統會每天在伺服器當地時間的凌晨兩點，自動對全廠進行一次資料一致性檢查。每次執行都會記錄這次執行的資訊、耗時以及發現的異常數量，並且會詳細列出每一筆異常的明細。這些稽核紀錄和異常明細會保留九十天，超過這個期限的紀錄會在下次執行時被清除。使用者可以在專門的診斷畫面查看關鍵績效指標，了解近三十次異常發生的趨勢，並可以根據不同的稽核類型來篩選檢視詳細的異常明細。此外，該畫面的異常明細只會顯示目前所屬廠別或沒有指定廠別維度的異常紀錄。",
+      "approved": true
+    }
+  ]
+}

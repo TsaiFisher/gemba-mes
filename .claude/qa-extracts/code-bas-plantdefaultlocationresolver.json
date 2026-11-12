@@ -1,0 +1,30 @@
+{
+  "sourcePath": "Modules/BAS/Services/PlantDefaultLocationResolver.cs",
+  "sourceHash": "b5d332e7077202dedd2ea9a80834b9a9415f459756b640f300269b0f924f6204",
+  "entries": [
+    {
+      "slug": "code-bas-plantdefaultlocationresolver-1606ae29",
+      "lang": "zh",
+      "headingPath": "基本資料 › 把「倉庫／儲位預設值」收斂成目標廠別真正可用的值",
+      "text": "預設倉庫儲位需符合當前廠別限制｜系統會將「倉庫／儲位預設值」篩選成只能使用於目標廠別的有效值；若無法找到可用的預設值，則會顯示為未設定。",
+      "approved": true,
+      "sourceSectionHash": "2ed6f454dd1c668a13992aee559793e542f325baa39da3b47ba28bb6879a4167"
+    },
+    {
+      "slug": "code-bas-plantdefaultlocationresolver-eba9fded",
+      "lang": "zh",
+      "headingPath": "基本資料 › 某品號的「正常存放處」＝其產品類別的預設倉儲",
+      "text": "品號存放處的預設規則說明｜產品的正常存放地點，會以該產品類別所設定的預設倉儲為準。如果無法取得或找不到適當的存放地點，系統會將資訊退回給呼叫端處理。此外，計算存放地點時，倉庫和儲位必須成對存在，否則即使有設定了預設值，也等同於沒有設定。",
+      "approved": true,
+      "sourceSectionHash": "c5713d22dc6cf08b39cf2750a579b517e92becb229c47c4b2be595dbb435dd1a"
+    },
+    {
+      "slug": "code-bas-plantdefaultlocationresolver-0c02cd52",
+      "lang": "zh",
+      "headingPath": "基本資料 › 靠環境過濾會一筆都撈不到，於是每個預設值都被判成不可用",
+      "text": "預設倉儲以指定廠別驗證｜檢查倉庫與儲位在該廠能不能用時，一律以明確指定的廠別比對，不依賴當下的登入情境。這項檢查也會被沒有使用者情境的背景作業呼叫，那時若改用情境廠別會查不到任何一筆，於是把每個預設值都誤判成不可用。",
+      "approved": true,
+      "sourceSectionHash": "a76fb78a95402d919f14eb2a020bfb26df266585bdea0ca701bea94d293c90ea"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "sourcePath": "Modules/FIN/Models/APInvoice.cs",
+  "sourceHash": "f8d357ae4df509d03b19213ad21fb7b74b2dd19d26edc89ba38c7dc6939480d6",
+  "entries": [
+    {
+      "slug": "code-fin-apinvoice-183d9ec2",
+      "lang": "zh",
+      "headingPath": "財務會計 › 應付帳款發票主檔",
+      "text": "應付發票產生與資料限制｜此筆應付發票的建立，會自動在收貨確認或外包收貨確認後生成；也可以手動建立。系統會確保同一來源單據不會重複開立發票。",
+      "approved": true,
+      "sourceSectionHash": "6197cabdf28ec2f1c4efc326e40de581870aababeec679cce199946b991c9482"
+    },
+    {
+      "slug": "code-fin-apinvoice-850aeadb",
+      "lang": "zh",
+      "headingPath": "財務會計 › 樂觀並發權杖",
+      "text": "權杖機制確保資料一致性｜當兩筆付款單同時確認同一張發票時，系統會使用一個特殊的權杖來驗證。如果後續的更新操作發現這個權杖已經不符合預期，則會阻止該筆更新，以確保發票只被記錄一次付款。",
+      "approved": true,
+      "sourceSectionHash": "b92df10cfba0026b3172e8aac75bee80ce24868e9b46bc0b297c10dfeed86ccc"
+    }
+  ]
+}

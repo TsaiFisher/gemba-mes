@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Batch Release</value></data>
+  <data name="PageHint" xml:space="preserve"><value>Find production batches awaiting release; review per work-order recalculated quantity and material status, then release the whole batch.</value></data>
+  <data name="SearchLabel" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Batch ID / Product</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="BatchId" xml:space="preserve"><value>Batch ID</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="Quantity" xml:space="preserve"><value>Quantity</value></data>
+  <data name="PlannedWorkOrders" xml:space="preserve"><value>Releasable WOs</value></data>
+  <data name="Priority" xml:space="preserve"><value>Priority</value></data>
+  <data name="PredictedLate" xml:space="preserve"><value>Predicted Late</value></data>
+  <data name="PlannedEndDate" xml:space="preserve"><value>Due Date</value></data>
+  <data name="Actions" xml:space="preserve"><value>Actions</value></data>
+  <data name="Release" xml:space="preserve"><value>Release</value></data>
+  <data name="PanelTitle" xml:space="preserve"><value>Release Batch {0}</value></data>
+  <data name="NoData" xml:space="preserve"><value>No batches awaiting release</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>Enter criteria and click "Search"</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>Success</value></data>
+</root>

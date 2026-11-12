@@ -1,0 +1,147 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.MFG.Models
+@using SmartFactory.MES.Modules.BAS.Services
+@inject IViewLocalizer Localizer
+@model Dispatch
+
+@{
+    var openSession = ViewBag.OpenSession as ProductionSession;
+    var remaining   = Model.Quantity - Model.QtyDone;
+    var uomDecimals = ViewBag.UomDecimals as IReadOnlyDictionary<string, int>;
+    string? productUom = ViewBag.ProductUom as string;
+    var containers  = ViewBag.ContainerOptions as List<SmartFactory.MES.Modules.BAS.Models.Container>
+                      ?? new List<SmartFactory.MES.Modules.BAS.Models.Container>();
+    var defaultContainer = ViewBag.DefaultContainerCode as string;
+    var ngReasons   = ViewBag.NgReasonOptions as List<SmartFactory.MES.Services.CodeEntryOption>
+                      ?? new List<SmartFactory.MES.Services.CodeEntryOption>();
+    string QtyFmt(string? uom) => uomDecimals != null && !string.IsNullOrEmpty(uom) && uomDecimals.TryGetValue(uom, out var v)
+        ? (v <= 0 ? "N0" : $"N{v}") : "N4";
+}
+
+<div class="p-3">
+    <dl class="row mb-3">
+        <dt class="col-sm-4">@Localizer["DispatchId"]</dt>
+        <dd class="col-sm-8 font-monospace">@Model.DispatchId</dd>
+        <dt class="col-sm-4">@Localizer["WorkOrderId"]</dt>
+        <dd class="col-sm-8">@Model.WorkOrderId</dd>
+        <dt class="col-sm-4">@Localizer["Quantity"]</dt>
+        <dd class="col-sm-8">@Model.Quantity.ToString(QtyFmt(productUom))</dd>
+        <dt class="col-sm-4">@Localizer["QtyDone"]</dt>
+        <dd class="col-sm-8">@Model.QtyDone.ToString(QtyFmt(productUom))</dd>
+        <dt class="col-sm-4">@Localizer["Remaining"]</dt>
+        <dd class="col-sm-8 fw-bold text-primary">@remaining.ToString(QtyFmt(productUom))</dd>
+    </dl>
+
+    @if (ViewBag.ToolingPmDue == true)
+    {
+        <div class="alert alert-danger">
+            <i class="bi bi-tools me-1"></i>@Localizer["ToolingPmDueAlert", Model.ToolingCode ?? ""]
+        </div>
+    }
+
+    @if (openSession == null)
+    {
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle me-1"></i>@Localizer["NoOpenSession"]
+        </div>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+    }
+    else
+    {
+        <p class="small text-muted">@Localizer["Operator"]: @(ViewBag.OperatorName as string ?? "—")</p>
+
+        <form id="panelForm" method="post" action="@Url.Action("CreateReport", new { id = Model.DispatchId })">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="sessionId" value="@openSession.SessionId" />
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">@Localizer["QtyOk"] <span class="text-danger">*</span></label>
+                <input type="number" name="qtyOk" class="form-control" min="0" step="@UomStepHelper.GetStep(uomDecimals, productUom)"
+                       value="0" placeholder="@Localizer["QtyOkPlaceholder"]" required />
+                <span class="text-danger small" data-valmsg-for="qtyOk" data-valmsg-replace="true"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Localizer["QtyNg"]</label>
+                <input type="number" name="qtyNg" id="reportQtyNg" class="form-control" min="0" step="@UomStepHelper.GetStep(uomDecimals, productUom)"
+                       value="0" placeholder="@Localizer["QtyNgPlaceholder"]" />
+            </div>
+            @* 不良原因：填了不良數才顯示（後端也只在 qtyNg > 0 時寫入） *@
+            <div class="mb-3 d-none" id="ngReasonBlock">
+                <label class="form-label">@Localizer["NgReasonCode"]</label>
+                <select name="ngReasonCode" class="form-select">
+                    <option value="">--</option>
+                    @foreach (var r in ngReasons)
+                    {
+                        <option value="@r.Code">@r.Code — @r.DisplayName</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">@Localizer["ContainerCode"]</label>
+                <select name="containerCode" class="form-select">
+                    <option value="">--</option>
+                    @foreach (var c in containers)
+                    {
+                        <option value="@c.ContainerCode" selected="@(c.ContainerCode == defaultContainer)">@c.ContainerCode — @c.ContainerName</option>
+                    }
+                </select>
+                @if (!string.IsNullOrEmpty(defaultContainer))
+                {
+                    <div class="form-text">@Localizer["ContainerDefaultHint"]</div>
+                }
+                <span class="text-danger small" data-valmsg-for="containerCode" data-valmsg-replace="true"></span>
+            </div>
+            @* 箱號（§9.4 生產中容器）：掃箱子上的固定 QR，報工合格數就裝進這個箱子；容器種類以箱子為準 *@
+            <div class="mb-3">
+                <label class="form-label">@Localizer["ContainerUnitId"]</label>
+                <input type="text" name="containerUnitId" class="form-control font-monospace" maxlength="30"
+                       autocomplete="off" placeholder="@Localizer["ContainerUnitIdPlaceholder"]" />
+                <div class="form-text">@Localizer["ContainerUnitIdHint"]</div>
+                <span class="text-danger small" data-valmsg-for="containerUnitId" data-valmsg-replace="true"></span>
+            </div>
+
+            @* 報工＝繼續生產（批次轉移每轉一批報一次）；完工＝結束本次上工並結算工時。
+               兩顆按鈕以 formaction 指向不同 action，共用同一組欄位。 *@
+            <div class="d-flex gap-2 mt-3 flex-wrap">
+                <button type="submit" class="btn btn-primary" name="submit" value="report"
+                        formaction="@Url.Action("CreateReport", new { id = Model.DispatchId })">
+                    <i class="bi bi-clipboard-check me-1"></i>@Localizer["SubmitReport"]
+                </button>
+                <button type="submit" class="btn btn-success" name="submit" value="complete"
+                        formaction="@Url.Action("CompleteSession", new { id = Model.DispatchId })">
+                    <i class="bi bi-flag-fill me-1"></i>@Localizer["CompleteSession"]
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">@Localizer["Cancel"]</button>
+            </div>
+            <div class="form-text text-muted mt-2">@Localizer["ReportVsCompleteHint"]</div>
+        </form>
+    }
+</div>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    var form = document.getElementById('panelForm');
+    if (form) {
+        // 用 submitter 而非 querySelector('[type=submit]')：面板有「報工」與「完工」兩顆按鈕，
+        // 取第一顆會讓完工被送去報工的 action。formaction 也一併取自實際按下的那顆。
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var submitter = e.submitter || this.querySelector('[type=submit]');
+            // 共用 submitPanel 一律 fetch(form.action)，不理會 submitter 的 formaction，
+            // 所以要自己把按下那顆的 formaction 寫回 form.action，否則「完工」會被送去報工。
+            var target = submitter && submitter.getAttribute('formaction');
+            if (target) this.action = target;
+            submitPanel(this, submitter);
+        });
+    }
+
+    // 不良原因僅在填了不良數時才需要
+    var qtyNg = document.getElementById('reportQtyNg');
+    var ngBlock = document.getElementById('ngReasonBlock');
+    if (qtyNg && ngBlock) {
+        var syncNgReason = function () {
+            ngBlock.classList.toggle('d-none', !(parseFloat(qtyNg.value) > 0));
+        };
+        qtyNg.addEventListener('input', syncNgReason);
+        syncNgReason();
+    }
+</script>

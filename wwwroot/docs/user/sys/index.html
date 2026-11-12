@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="System Administration — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>系統管理 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">系統管理畫面</span><span lang="en">System Administration Screens</span></div>
+    <a href="user.html" class="nav-link"><span lang="zh">使用者管理</span><span lang="en">User Management</span></a>
+    <a href="role.html" class="nav-link"><span lang="zh">角色管理</span><span lang="en">Role Management</span></a>
+    <a href="organization.html" class="nav-link"><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></a>
+    <a href="plant.html" class="nav-link"><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></a>
+    <a href="permission.html" class="nav-link"><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></a>
+    <a href="mobile-permission.html" class="nav-link"><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></a>
+    <a href="audit-log.html" class="nav-link"><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></a>
+    <a href="two-factor-admin.html" class="nav-link"><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></a>
+    <a href="license.html" class="nav-link"><span lang="zh">授權狀態</span><span lang="en">License Status</span></a>
+    <a href="code-entry.html" class="nav-link"><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></a>
+    <a href="system-param.html" class="nav-link"><span lang="zh">系統參數</span><span lang="en">System Parameters</span></a>
+    <a href="../bas/plant-param-overview.html" class="nav-link"><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></a>
+    <a href="user-settings.html" class="nav-link"><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></a>
+    <a href="qa-assistant.html" class="nav-link"><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></a>
+    <div class="sidebar-heading"><span lang="zh">相關模組</span><span lang="en">Related modules</span></div>
+    <a href="../apr/index.html" class="nav-link"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a>
+    <a href="../bas/index.html" class="nav-link"><span lang="zh">基本資料（BAS）</span><span lang="en">Master Data (BAS)</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-shield-lock me-2 text-primary"></i><span lang="zh">系統管理</span><span lang="en">System Administration</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">使用者、角色、權限、組織與廠別等全公司共用的設定，由系統管理員統一維護</span><span lang="en">Company-wide settings — users, roles, permissions, organization and plants — maintained centrally by the system administrator</span></div>
+    </div>
+
+    <p><span lang="zh">系統管理的畫面決定</span><span lang="en">The system administration screens decide </span><b><span lang="zh">誰能用這套系統、能用到什麼程度</span><span lang="en">who may use the system and how far they may go</span></b><span lang="zh">。設定的先後順序是：</span><span lang="en">. The order to set things up in is: </span><b><span lang="zh">廠別 → 組織架構 → 角色 → 功能權限 → 使用者</span><span lang="en">plants, organization structure, roles, permissions, then users</span></b><span lang="zh">，倒過來做會卡住（例如角色還沒有權限，指派給人也看不到任何畫面）。</span><span lang="en">; doing it the other way round gets stuck — a role with no permissions shows the person nothing, however it is assigned.</span></p>
+
+    <div class="note-box"><i class="bi bi-shield-lock-fill me-1 text-warning"></i>
+      <strong><span lang="zh">部分畫面只限 Admin：</span><span lang="en">Some screens are for Admin only:</span></strong><span lang="zh">使用者、角色、組織架構、廠別、權限設定、手機權限、兩步驟驗證重置與授權狀態，只在目前身份為 Admin 時出現在選單、也才進得去（不由權限矩陣決定）。代碼維護、稽核紀錄與系統參數依權限矩陣的勾選。</span><span lang="en"> users, roles, organization, plants, permission settings, mobile permissions, two-step verification reset and license status appear in the menu and open only while your current role is Admin (the permission matrix does not decide them). Code maintenance, the audit log and system parameters follow the permission matrix.</span>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <a href="user.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="user-management" class="h6 fw-bold mt-0"><i class="bi bi-people me-2 text-primary"></i><span lang="zh">使用者管理</span><span lang="en">User Management</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">登入帳號、Email、語系，以及每個人被指派了哪些角色。</span><span lang="en">Sign-in accounts, e-mail, language, and which roles each person holds.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="role.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="role-management" class="h6 fw-bold mt-0"><i class="bi bi-person-badge me-2 text-primary"></i><span lang="zh">角色管理</span><span lang="en">Role Management</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">權限的載體：角色名稱、所屬組織單位、可用廠別與預設廠。</span><span lang="en">The carrier of permissions: the role name, its organization unit, the plants allowed and the default plant.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="organization.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="organization-structure" class="h6 fw-bold mt-0"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">組織架構</span><span lang="en">Organization Structure</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">部門樹、上下層關係與廠別繼承；主管簽核沿著它往上找人。</span><span lang="en">The department tree, its levels and plant inheritance; supervisor approval walks up it to find the approver.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="plant.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="plant-management" class="h6 fw-bold mt-0"><i class="bi bi-building me-2 text-primary"></i><span lang="zh">廠別管理</span><span lang="en">Plant Management</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">廠別代碼、預設語系與時區，以及單一廠的系統參數覆寫。</span><span lang="en">Plant codes, default language and time zone, and per-plant overrides of the system parameters.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="permission.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="permission-settings" class="h6 fw-bold mt-0"><i class="bi bi-key me-2 text-primary"></i><span lang="zh">功能權限設定</span><span lang="en">Permission Settings</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">以角色為單位的權限矩陣：讀取／新增／修改／刪除／列印。</span><span lang="en">The permission matrix, role by role: read, create, update, delete and print.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="mobile-permission.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="mobile-module-permissions" class="h6 fw-bold mt-0"><i class="bi bi-phone me-2 text-primary"></i><span lang="zh">手機模組權限</span><span lang="en">Mobile Module Permissions</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">手機端（PWA）現場作業的逐一動作授權，與桌面版權限各自獨立。</span><span lang="en">Action-by-action permissions for shop-floor work in the mobile app, independent of the desktop matrix.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="audit-log.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="audit-log" class="h6 fw-bold mt-0"><i class="bi bi-clock-history me-2 text-primary"></i><span lang="zh">稽核日誌</span><span lang="en">Audit Log</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">誰在什麼時候改了哪一筆資料，以及變更前後的內容。</span><span lang="en">Who changed which record and when, and what the values were before and after.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="two-factor-admin.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="two-factor-reset" class="h6 fw-bold mt-0"><i class="bi bi-shield-lock me-2 text-primary"></i><span lang="zh">兩階段驗證重置</span><span lang="en">Two-Factor Reset</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">使用者遺失驗證器時，由管理員重置其兩階段驗證。</span><span lang="en">Resetting two-factor authentication for a user who has lost their authenticator.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="license.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="license-status" class="h6 fw-bold mt-0"><i class="bi bi-patch-check me-2 text-primary"></i><span lang="zh">授權狀態</span><span lang="en">License Status</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">授權是否有效；申請、換發、匯入授權與每 90 天的授權確認（網址 <code>/License</code>）。</span><span lang="en">Whether the license is valid; applying for, renewing and importing a license, and the 90-day confirmation (address <code>/License</code>).</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="code-entry.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="code-maintenance" class="h6 fw-bold mt-0"><i class="bi bi-card-list me-2 text-primary"></i><span lang="zh">代碼維護</span><span lang="en">Code Maintenance</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">各主檔下拉選單的選項來源：收款方式、庫存模式、儲位類型等。</span><span lang="en">Where the options in master-data drop-downs come from: payment type, stock mode, location type and more.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="system-param.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="system-parameters" class="h6 fw-bold mt-0"><i class="bi bi-sliders me-2 text-primary"></i><span lang="zh">系統參數</span><span lang="en">System Parameters</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">庫存／製造簡化模式、預設計價方式、本位幣、供應商評分卡權重。</span><span lang="en">Simplified inventory and manufacturing modes, the default costing method, the local currency and the supplier scorecard weights.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="../bas/plant-param-overview.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="plant-parameter-overview" class="h6 fw-bold mt-0"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">各廠參數覆寫一覽</span><span lang="en">Plant Parameter Overview</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">唯讀：一次看完各廠改過哪些系統參數、哪些廠沿用全域值。</span><span lang="en">Read-only: see at a glance which plants override which system parameters and which follow the global value.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="user-settings.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="personal-settings" class="h6 fw-bold mt-0"><i class="bi bi-person-circle me-2 text-primary"></i><span lang="zh">個人設定</span><span lang="en">Personal Settings</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">每個人自己的畫面：切換目前廠別與身份、設定個人時區。</span><span lang="en">Each person's own screen: switch the current plant and role, and set a personal time zone.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6">
+        <a href="qa-assistant.html" class="text-decoration-none">
+          <div class="card card-screen h-100">
+            <div class="card-body">
+              <h2 id="ask-the-manual" class="h6 fw-bold mt-0"><i class="bi bi-chat-dots me-2 text-primary"></i><span lang="zh">手冊問答</span><span lang="en">Ask the Manual</span></h2>
+              <p class="small text-muted mb-0"><span lang="zh">用自己的話問使用手冊，並回頭查證答案所依據的段落。</span><span lang="en">Ask the user manual in your own words, then verify the answer against the passages it was based on.</span></p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="tip-box mt-4"><i class="bi bi-info-circle-fill me-1 text-primary"></i>
+      <span lang="zh">簽核相關的設定（簽核模板、作業類型簽核設定）另見</span><span lang="en">The approval settings — templates and document types — are covered separately under </span><a href="../apr/index.html"><span lang="zh">簽核管理（APR）</span><span lang="en">Approval Management (APR)</span></a><span lang="zh">。</span><span lang="en">.</span>
+    </div>
+  </main>
+</div>
+</body>
+</html>

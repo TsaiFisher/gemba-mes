@@ -1,0 +1,309 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.RPS.Models
+@inject IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@inject SmartFactory.MES.Services.IDateTimeService DateTimeSvc
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.RPS.Models.ReportDefinition>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    var canCreate = ViewBag.CanCreate as bool? ?? false;
+    var canUpdate = ViewBag.CanUpdate as bool? ?? false;
+    var canDelete = ViewBag.CanDelete as bool? ?? false;
+    bool hasSearched = ViewBag.Searched == true;
+
+    var toolOptions = (ViewBag.ToolOptions as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>();
+    var ownerNames = ViewBag.OwnerNames as IReadOnlyDictionary<string, string>
+                     ?? new Dictionary<string, string>();
+    var curTool = ViewBag.ToolKey as string;
+    var curPlant = ViewBag.PlantFilter as string;
+    var plants = ViewBag.Plants as IReadOnlyDictionary<string, SmartFactory.MES.Modules.RPS.Services.ReportPlantInfo>
+                 ?? new Dictionary<string, SmartFactory.MES.Modules.RPS.Services.ReportPlantInfo>();
+    var timeZones = ViewBag.TimeZones as IReadOnlyDictionary<int, string?> ?? new Dictionary<int, string?>();
+    const string allPlants = SmartFactory.MES.Modules.RPS.Controllers.ReportScheduleController.AllPlants;
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.CurrentSort as string ?? "";
+        if (cur == col + "_asc") return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-calendar-check"></i> @Localizer["PageTitle"]</h1>
+        @if (canCreate)
+        {
+            <button type="button" class="btn btn-primary"
+                    data-url="@Url.Action("Create", "ReportSchedule")"
+                    data-label="@Localizer["AddEntry"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus-lg"></i> @Localizer["AddEntry"]
+            </button>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+
+                <div class="col-12 col-md-4">
+                    <label class="form-label small fw-semibold">@Localizer["Name"]</label>
+                    <input type="text" name="searchTerm" class="form-control form-control-sm"
+                           placeholder="@Localizer["SearchPlaceholder"]" value="@ViewBag.SearchTerm" />
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <label class="form-label small fw-semibold">@Localizer["ToolKey"]</label>
+                    <select name="toolKey" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@Localizer["All"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var tool in toolOptions)
+                        {
+                            <option value="@tool.ToolKey" selected="@(curTool == (string)tool.ToolKey)">@tool.DisplayName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-2">
+                    <label class="form-label small fw-semibold">@Localizer["Plant"]</label>
+                    <select name="plantFilter" class="form-select form-select-sm">
+                        <option value="@allPlants" selected="@(curPlant == allPlants)">@Localizer["AllPlants"]</option>
+                        @foreach (var p in plants.Values)
+                        {
+                            <option value="@p.Id" selected="@(curPlant == p.Id)">@p.Label</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-auto">
+                    <div class="form-check mb-2">
+                        <input type="checkbox" name="activeOnly" value="true" class="form-check-input"
+                               id="activeOnly" checked="@(ViewBag.ActiveOnly as bool? ?? false)" />
+                        <label class="form-check-label small" for="activeOnly">@Localizer["ActiveOnly"]</label>
+                    </div>
+                </div>
+
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                </div>
+
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm" asp-route-toolKey="@curTool" asp-route-plantFilter="@curPlant"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["Name"] <i class="bi @sortIcon("name")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["Plant"]</th>
+                            <th>@Localizer["ToolKey"]</th>
+                            <th>@Localizer["Schedule"]</th>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.NextRunSort"
+                                   asp-route-searchTerm="@ViewBag.SearchTerm" asp-route-toolKey="@curTool" asp-route-plantFilter="@curPlant"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize"
+                                   asp-route-searched="true" class="text-decoration-none text-dark">
+                                    @Localizer["NextRunAt"] <i class="bi @sortIcon("next")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["Owner"]</th>
+                            <th>@Localizer["IsActive"]</th>
+                            <th class="text-end pe-4">@Localizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr><td colspan="8" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>@Localizer["NoData"]
+                            </td></tr>
+                        }
+                        else
+                        {
+                            foreach (var d in Model)
+                            {
+                                <tr>
+                                    <td class="fw-medium">@d.Name</td>
+                                    <td class="small text-nowrap">
+                                        @(d.PlantId is not null && plants.TryGetValue(d.PlantId, out var plant) ? plant.Label : d.PlantId)
+                                    </td>
+                                    <td class="text-muted small">@L[d.ToolKey]</td>
+                                    <td class="small">
+                                        @{
+                                            var kindLabel = d.ScheduleKind switch
+                                            {
+                                                ReportScheduleKind.Daily   => Localizer["ScheduleDaily"].Value,
+                                                ReportScheduleKind.Weekly  => Localizer["ScheduleWeekly"].Value,
+                                                ReportScheduleKind.Monthly => Localizer["ScheduleMonthly"].Value,
+                                                _ => "",
+                                            };
+                                        }
+                                        @kindLabel @($"{d.ScheduleHour ?? 0:00}:{d.ScheduleMinute ?? 0:00}")
+                                    </td>
+                                    <td class="small">
+                                        @* 依排程所屬時區顯示並標出時區：在 ADM 看 P2 的「每日 08:00」，
+                                           用看的人的時區會顯示成 20:00，看起來像設定錯了。 *@
+                                        @if (d.NextRunAt.HasValue)
+                                        {
+                                            var tz = timeZones.GetValueOrDefault(d.Id);
+                                            var local = SmartFactory.MES.Modules.RPS.Services.ReportPlantDisplay.ToScheduleLocal(d.NextRunAt.Value, tz);
+                                            @((local ?? DateTimeSvc.ToLocalTime(d.NextRunAt.Value)).ToString("yyyy-MM-dd HH:mm"))
+                                            if (local.HasValue)
+                                            {
+                                                <div class="text-muted small">@tz</div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @Localizer["NotScheduled"]
+                                        }
+                                    </td>
+                                    <td class="small">
+                                        @(ownerNames.TryGetValue(d.OwnerUserId, out var owner) ? owner : d.OwnerUserId)
+                                    </td>
+                                    <td>
+                                        @if (d.IsActive)
+                                        {
+                                            <span class="badge bg-success">@Localizer["Active"]</span>
+                                        }
+                                        else
+                                        {
+                                            @* 停用要看得見。§7.8 S2 因權限失效而停用時，
+                                               管理者必須能一眼看出「不是沒設定，是被停掉了」。 *@
+                                            <span class="badge bg-warning text-dark">@Localizer["Inactive"]</span>
+                                        }
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group">
+                                            @if (canUpdate)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                        data-url="@Url.Action("Edit", "ReportSchedule", new { id = d.Id })"
+                                                        data-label="@($"{Localizer["Edit"].Value}：{d.Name}")"
+                                                        data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        data-url="@Url.Action("RunNow", "ReportSchedule", new { id = d.Id })"
+                                                        data-action="runScheduleNow">
+                                                    <i class="bi bi-play-circle"></i> @Localizer["RunNow"]
+                                                </button>
+                                            }
+                                            @if (canDelete)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        data-url="@Url.Action("Delete", "ReportSchedule")"
+                                                        data-id="@d.Id"
+                                                        data-confirm="@string.Format(Localizer["ConfirmDeleteNamed"].Value, d.Name)"
+                                                        data-action="deleteItem"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel -->
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-520px-95vw" id="sidePanel" tabindex="-1"
+     aria-labelledby="sidePanelLabel">
+    <div class="offcanvas-header border-bottom bg-primary text-white py-3">
+        <h5 class="offcanvas-title mb-0" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast（_CrudPanelScripts 需要它，缺了 toastSuccess 會拋例外並連帶讓清單不刷新） -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i><span id="successToastMsg"></span></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    // 週期切換時只顯示該週期用得到的欄位。
+    // 顯示/隱藏一律 classList 切 u-display-none——用 style.display 會與該 class 的
+    // !important 打架，元素會永久隱藏（R14）。
+    window.onScheduleKindChange = function (e, el) {
+        var weekly  = document.getElementById('rowDayOfWeek');
+        var monthly = document.getElementById('rowDayOfMonth');
+        weekly.classList.toggle('u-display-none',  el.value !== 'Weekly');
+        monthly.classList.toggle('u-display-none', el.value !== 'Monthly');
+    };
+
+    // 期間欄位跟著所選報表出現或收起。判定來自工具自己宣告的 RequiresPeriod
+    // （印在 option 的 data-requires-period 上），不是這支 JS 自己維護一份名單——
+    // 維護兩份名單的結果一定是有一天對不上，而症狀是某張報表的排程存得下去卻跑不出來。
+    window.onReportToolChange = function (e, el) {
+        var row = document.getElementById('rowPeriod');
+        if (!row) return;
+
+        var opt = el.options[el.selectedIndex];
+        var needsPeriod = opt && opt.dataset.requiresPeriod === 'true';
+        row.classList.toggle('u-display-none', !needsPeriod);
+
+        // 收起來的時候把值清掉。留著的話使用者會存進一個他看不到、也不生效的期間，
+        // 而下次打開編輯時那個值會突然冒出來。
+        if (!needsPeriod) {
+            var sel = row.querySelector('select');
+            if (sel) sel.value = '';
+        }
+    };
+
+    window.runScheduleNow = function (e, el) {
+        if (!confirm(window.i18n.t('ConfirmRunNow'))) return false;
+
+        var body = new URLSearchParams({
+            __RequestVerificationToken:
+                document.querySelector('#__AjaxAntiForgery input[name="__RequestVerificationToken"]').value
+        });
+
+        fetch(el.dataset.url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+            body: body
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (result) {
+            if (result.success) { window.toastSuccess(result.message); }
+            else { alert(result.message || window.i18n.t('OperationFailed')); }
+        })
+        .catch(function () { alert(window.i18n.t('OperationFailed')); });
+
+        return false;
+    };
+</script>
+}

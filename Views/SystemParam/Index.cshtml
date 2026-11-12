@@ -1,0 +1,115 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Controllers.SystemParamViewModel
+@{
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+}
+
+<div class="container-fluid py-4 u-max-width-720px">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-sliders"></i> @Localizer["PageTitle"]</h1>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>@TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <form asp-action="Save" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <!-- 公司名稱 -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header fw-bold bg-light">
+                <i class="bi bi-building me-2"></i>@Localizer["CompanyName"]
+            </div>
+            <div class="card-body row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">@Localizer["CompanyNameZh"]</label>
+                    <input asp-for="CompanyNameZh" class="form-control" maxlength="100" placeholder="@Localizer["CompanyNameZhPlaceholder"]" />
+                    <span asp-validation-for="CompanyNameZh" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">@Localizer["CompanyNameEn"]</label>
+                    <input asp-for="CompanyNameEn" class="form-control" maxlength="100" placeholder="@Localizer["CompanyNameEnPlaceholder"]" />
+                    <span asp-validation-for="CompanyNameEn" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">@Localizer["CompanyShortZh"]</label>
+                    <input asp-for="CompanyShortZh" class="form-control" maxlength="30" placeholder="@Localizer["CompanyShortZhPlaceholder"]" />
+                    <div class="form-text">@Localizer["ShortNameHint"]</div>
+                    <span asp-validation-for="CompanyShortZh" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">@Localizer["CompanyShortEn"]</label>
+                    <input asp-for="CompanyShortEn" class="form-control" maxlength="30" placeholder="@Localizer["CompanyShortEnPlaceholder"]" />
+                    <span asp-validation-for="CompanyShortEn" class="text-danger small"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 公司 Logo -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header fw-bold bg-light">
+                <i class="bi bi-image me-2"></i>@Localizer["CompanyLogo"]
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model?.LogoPath))
+                {
+                    <div class="mb-3">
+                        <label class="form-label text-muted small">@Localizer["CurrentLogo"]</label>
+                        <div class="border rounded p-3 bg-light d-inline-block">
+                            <img class="u-max-height-80px u-max-width-300px" src="@Model.LogoPath" alt="Logo" />
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" asp-for="RemoveLogo" id="removeLogo" />
+                            <label class="form-check-label text-danger" for="removeLogo">@Localizer["RemoveLogo"]</label>
+                        </div>
+                    </div>
+                }
+                <input type="hidden" asp-for="LogoPath" />
+                <div>
+                    @{ var _logoKey = string.IsNullOrEmpty(Model?.LogoPath) ? "UploadLogo" : "ReplaceLogo"; }
+                    <label class="form-label">@Localizer[_logoKey]</label>
+                    <input type="file" asp-for="LogoFile" class="form-control" accept="image/*" id="logoFileInput" />
+                    <div class="form-text">@Localizer["LogoHint"]</div>
+                    <span asp-validation-for="LogoFile" class="text-danger small"></span>
+                </div>
+                <!-- 上傳預覽 -->
+                <div id="logoPreviewWrap" class="mt-3 u-display-none">
+                    <label class="form-label text-muted small">@Localizer["Preview"]</label>
+                    <div class="border rounded p-3 bg-light d-inline-block">
+                        <img class="u-max-height-80px u-max-width-300px" id="logoPreview" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_SystemParamModuleExtensions")
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save me-1"></i>@Localizer["Save"]
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary">@Localizer["Reset"]</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+document.getElementById('logoFileInput')?.addEventListener('change', function () {
+    const file = this.files[0];
+    if (!file) { document.getElementById('logoPreviewWrap').classList.add('u-display-none'); return; }
+    const reader = new FileReader();
+    reader.onload = e => {
+        document.getElementById('logoPreview').src = e.target.result;
+        document.getElementById('logoPreviewWrap').classList.remove('u-display-none');
+    };
+    reader.readAsDataURL(file);
+});
+</script>
+}

@@ -1,0 +1,100 @@
+@using SmartFactory.MES.Services
+@model List<SmartFactory.MES.Modules.MFG.ViewModels.ProductionEfficiencyRowVm>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    ViewData["Title"] = L["PageTitle"].Value;
+    bool searched          = ViewBag.Searched == true;
+    bool canPrint          = ViewBag.CanPrint == true;
+    var rows               = Model ?? new();
+    string curWorkCenter   = ViewBag.WorkCenterId as string ?? "";
+    var workCenterOptions  = ViewBag.WorkCenterOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-3">
+    <h4 class="mb-3">@L["PageTitle"]</h4>
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-2">
+                <label class="form-label">@L["FromDate"]</label>
+                <input type="date" name="fromDate" class="form-control" value="@ViewBag.FromDate" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">@L["ToDate"]</label>
+                <input type="date" name="toDate" class="form-control" value="@ViewBag.ToDate" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">@L["WorkCenter"]</label>
+                <select name="workCenterId" class="form-select form-select-sm">
+                    <option value="">@L["AllWorkCenters"]</option>
+                    @foreach (var wc in workCenterOptions)
+                    {
+                        <option value="@wc.WorkCenterCode" selected="@(curWorkCenter == (string)wc.WorkCenterCode)">@wc.WorkCenterCode — @wc.WorkCenterName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" name="searched" value="true" class="btn btn-primary w-100 px-4">
+                    <i class="bi bi-search"></i> @L["Search"]
+                </button>
+            </div>
+        </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @if (!searched)
+    {
+        <div class="alert alert-info">@L["SearchFirst"]</div>
+    }
+    else if (!rows.Any())
+    {
+        <div class="alert alert-warning">@L["NoData"]</div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>@L["ResultTitle"]</strong>
+            @if (canPrint)
+            {
+                <a asp-action="Export"
+                   asp-route-fromDate="@ViewBag.FromDate" asp-route-toDate="@ViewBag.ToDate"
+                   asp-route-workCenterId="@ViewBag.WorkCenterId"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @L["ExportExcel"]
+                </a>
+            }
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["WorkCenter"]</th>
+                        <th class="text-end">@L["DispatchCount"]</th>
+                        <th class="text-end">@L["StandardMinutes"]</th>
+                        <th class="text-end">@L["ActualMinutes"]</th>
+                        <th class="text-end">@L["EfficiencyRate"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                    @foreach (var r in paged)
+                    {
+                        <tr>
+                            <td>@r.WorkCenterId</td>
+                            <td class="text-end">@r.DispatchCount</td>
+                            <td class="text-end">@r.StandardMinutes.ToString("N0")</td>
+                            <td class="text-end">@r.ActualMinutes.ToString("N0")</td>
+                            <td class="text-end">
+                                <span class="badge @(r.EfficiencyRate >= 95 ? "bg-success" : r.EfficiencyRate >= 80 ? "bg-warning text-dark" : "bg-danger")">
+                                    @r.EfficiencyRate%
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @await Html.PartialAsync("_Pagination", paged)
+        <div class="text-muted small mt-1">@L["EfficiencyNote"]</div>
+    }
+</div>

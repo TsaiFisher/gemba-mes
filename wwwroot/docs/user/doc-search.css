@@ -1,0 +1,118 @@
+/* 使用手冊全文搜尋
+   ------------------------------------------------------------------
+   搜尋框由 doc-search.js 注入 navbar，樣式全部在這裡——CSP 的
+   style-src 'self' 不允許 inline style 屬性，而靜態頁拿不到 per-request nonce。
+
+   ⚠️ 本檔與 doc-search.js 的 class 必須一一對應：JS 動態建立的元素
+   不在任何 .html 裡，R38b（「用了 class 但這一頁的 stylesheet 沒定義它」）
+   靜態掃不到它們。改 class 名時兩邊要一起改——守門在 R39。 */
+
+.doc-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.doc-search-input {
+    width: 190px;
+    background: rgba(255, 255, 255, .12);
+    border-color: rgba(255, 255, 255, .25);
+    color: #fff;
+}
+
+.doc-search-input::placeholder { color: rgba(255, 255, 255, .6); }
+
+.doc-search-input:focus {
+    width: 260px;
+    background: #fff;
+    color: #212529;
+}
+
+/* 面板預設不顯示。用 class 切換而非 style.display——
+   以 style 覆蓋 class 的隱藏曾造成元素永久卡住（見手機版 IPQC 警告橫幅）。 */
+.doc-search-panel { display: none; }
+
+.doc-search.doc-search-open .doc-search-panel {
+    display: block;
+    position: absolute;
+    top: calc(100% + .35rem);
+    right: 0;
+    width: min(28rem, 90vw);
+    max-height: min(70vh, 30rem);
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: .375rem;
+    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .2);
+    z-index: 1080;   /* navbar 之上；手冊頁沒有其他浮層 */
+    text-align: left;
+}
+
+.doc-search-list {
+    list-style: none;
+    margin: 0;
+    padding: .25rem;
+}
+
+.doc-search-item { margin: 0; }
+
+.doc-search-link {
+    display: block;
+    padding: .45rem .6rem;
+    border-radius: .25rem;
+    color: #212529;
+    text-decoration: none;
+}
+
+.doc-search-link:hover,
+.doc-search-link.doc-search-active {
+    background: #e8f4fd;
+    color: #212529;
+}
+
+.doc-search-heading {
+    display: block;
+    font-size: .84rem;
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+.doc-search-snippet {
+    display: block;
+    font-size: .78rem;
+    color: #495057;
+    line-height: 1.45;
+    margin-top: .15rem;
+}
+
+.doc-search-message {
+    padding: .7rem .85rem;
+    font-size: .82rem;
+    color: #6c757d;
+}
+
+.doc-search-hit {
+    background: #fff3cd;
+    padding: 0 .1em;
+    border-radius: .15em;
+    color: inherit;
+}
+
+/* 窄螢幕（手冊的 mobile 章節常在手機上看）：navbar 的按鈕群已經很擠，
+   搜尋框縮短，面板改為幾乎滿版。 */
+@media (max-width: 575.98px) {
+    .doc-search-input { width: 96px; }
+    .doc-search-input:focus { width: 132px; }
+
+    /* 面板改為相對視窗定位。桌機版的 right: 0 是相對於搜尋框，
+       而搜尋框在 navbar 的最左邊——套在手機上，92vw 寬的面板會從搜尋框右緣
+       往左長出畫面外，左半截直接被裁掉（且沒有橫向捲軸可以救）。 */
+    .doc-search.doc-search-open .doc-search-panel {
+        position: fixed;
+        top: 56px;          /* navbar 高度，與 .u-height-56px 一致 */
+        left: 3vw;
+        right: 3vw;
+        width: auto;
+        max-height: 70vh;
+    }
+}

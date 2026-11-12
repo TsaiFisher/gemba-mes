@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="/mobile/manifest.json">
+    <link rel="apple-touch-icon" href="/mobile/icons/apple-touch-icon-180.png">
+    <title>SmartFactory MES</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+    <link rel="stylesheet" href="/mobile/css/index.css">
+</head>
+<body class="d-flex align-items-center justify-content-center min-vh-100">
+
+    <!-- 語言切換（右上角固定） -->
+    <button class="btn btn-outline-secondary btn-sm lang-btn" data-action="toggleLang"
+            data-lang-toggle data-i18n-title="common.lang_switch" title="Switch Language / 切換語言">EN</button>
+
+    <div class="container u-max-width-400px">
+        <div class="card shadow-lg login-card">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="login-logo"><i class="bi bi-factory"></i></div>
+                    <h4 class="fw-bold mt-2">SmartFactory MES</h4>
+                    <small class="text-muted" data-i18n="login.subtitle">製造執行系統</small>
+                </div>
+
+                <div id="step-credentials">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold" data-i18n="login.username">帳號</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                            <input type="text" id="username" class="form-control form-control-lg btn-mobile"
+                                   data-i18n-placeholder="login.username_ph"
+                                   placeholder="請輸入帳號" autocomplete="username">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold" data-i18n="login.password">密碼</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+                            <input type="password" id="password" class="form-control form-control-lg btn-mobile"
+                                   data-i18n-placeholder="login.password_ph"
+                                   placeholder="請輸入密碼" autocomplete="current-password">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-lg w-100 btn-mobile" data-action="login">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>
+                        <span data-i18n="login.btn">登入</span>
+                    </button>
+                </div>
+
+                <div id="step-2fa" class="d-none">
+                    <p class="text-muted small mb-3" data-i18n="login.2fa_desc">請輸入驗證器 App 顯示的 6 位數驗證碼</p>
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold" data-i18n="login.2fa_code">驗證碼</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-shield-lock"></i></span>
+                            <input type="text" id="twoFactorCode" class="form-control form-control-lg btn-mobile"
+                                   inputmode="numeric" autocomplete="one-time-code" maxlength="7"
+                                   data-i18n-placeholder="login.2fa_code_ph"
+                                   placeholder="請輸入驗證碼">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-lg w-100 btn-mobile mb-2" data-action="verifyTwoFactor">
+                        <i class="bi bi-check2-circle me-2"></i>
+                        <span data-i18n="login.2fa_btn">驗證</span>
+                    </button>
+                    <button class="btn btn-link w-100 btn-mobile" data-action="cancelTwoFactor">
+                        <span data-i18n="login.2fa_back">返回重新輸入帳密</span>
+                    </button>
+                </div>
+
+                <div id="error" class="text-danger mt-3 text-center d-none small"></div>
+            </div>
+        </div>
+        <div class="text-center mt-3 text-muted small">
+            &copy; SmartFactory MES
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="/mobile/js/telemetry.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/data-action.js"></script>
+    <script src="/mobile/js/i18n.js"></script>
+    <script src="/mobile/js/i18n.modules.js"></script>
+    <script src="/mobile/js/api.js"></script>
+    <script src="/mobile/js/auth.js"></script>
+    <script src="/mobile/index.page.js"></script>
+</body>
+</html>

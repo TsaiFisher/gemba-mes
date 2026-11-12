@@ -1,0 +1,108 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model IReadOnlyList<SmartFactory.MES.Modules.QCR.Services.IqcPendingLine>
+
+@{
+    var uomDecimals      = await Precision.UomDecimalsAsync();
+    ViewData["Title"] = Localizer["PageTitle"].Value;
+    bool canCreate = ViewBag.CanCreate == true;
+}
+
+<div class="container-fluid py-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h4 mb-0"><i class="bi bi-box-seam me-2"></i>@Localizer["PageTitle"]</h1>
+        <a asp-action="Index" asp-route-searched="true" asp-route-inspectionType="IQC"
+           class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-clipboard2-check"></i> @Localizer["BackToRecords"]
+        </a>
+    </div>
+
+    <div class="alert alert-light border small py-2">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["PendingHint"]
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">@Localizer["NoPending"]</div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>@Localizer["GoodsReceiptId"]</th>
+                                <th>@Localizer["LineNo"]</th>
+                                <th>@Localizer["ReceiptDate"]</th>
+                                <th>@Localizer["ProductCode"]</th>
+                                <th class="text-end">@Localizer["LotSize"]</th>
+                                <th>@Localizer["VerificationLevel"]</th>
+                                <th class="text-end">@Localizer["RecommendedSampleSize"]</th>
+                                <th>@Localizer["SamplingState"]</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var row in Model)
+                            {
+                                var formUrl = Url.Action("IqcForm", new { goodsReceiptId = row.GoodsReceiptId, lineNo = row.LineNo });
+                                <tr>
+                                    <td class="font-monospace small">@row.GoodsReceiptId
+                                        @if (row.SourceKind == SmartFactory.MES.Modules.QCR.Services.IqcSourceKinds.OutsourceReceipt)
+                                        {
+                                            <span class="badge bg-info text-dark ms-1">@Localizer["SourceOutsource"]</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">@row.LineNo</td>
+                                    <td class="small text-muted">@row.ReceiptDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@row.ProductCode</td>
+                                    <td class="text-end">@row.Qty.ToString(UomStepHelper.GetFormat(uomDecimals, @row.UomCode)) @row.UomCode</td>
+                                    <td><span class="badge bg-primary">VL-@row.VerificationLevel</span></td>
+                                    <td class="text-end">@row.RecommendedSampleSize</td>
+                                    <td class="small text-muted">@row.SamplingState</td>
+                                    <td class="text-end">
+                                        @if (canCreate)
+                                        {
+                                            <button class="btn btn-primary btn-sm py-0"
+                                                    data-url="@formUrl" data-label="@Localizer["InspectTitle"]"
+                                                    data-action="openPanel">
+                                                <i class="bi bi-pencil-square"></i> @Localizer["Inspect"]
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Side Panel offcanvas -->
+<div class="offcanvas offcanvas-end u-min-width-560px u-max-width-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="sidePanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["Saved"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

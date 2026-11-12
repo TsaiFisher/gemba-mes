@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="StockAdjustmentId" xml:space="preserve"><value>調整單號</value></data>
+  <data name="AdjustDate" xml:space="preserve"><value>調整日期</value></data>
+  <data name="DepartmentCode" xml:space="preserve"><value>責任部門</value></data>
+  <data name="AdjustReasonCode" xml:space="preserve"><value>調整原因</value></data>
+  <data name="SelectReason" xml:space="preserve"><value>選擇原因</value></data>
+  <data name="Remarks" xml:space="preserve"><value>備註</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="ApprovalStatus" xml:space="preserve"><value>簽核狀態</value></data>
+  <data name="LinesTitle" xml:space="preserve"><value>明細</value></data>
+  <data name="AddLine" xml:space="preserve"><value>新增行</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="SourceDoc" xml:space="preserve"><value>來源單號</value></data>
+  <data name="Direction" xml:space="preserve"><value>方向</value></data>
+  <data name="DirPositive" xml:space="preserve"><value>+1 盤盈</value></data>
+  <data name="DirNegative" xml:space="preserve"><value>-1 盤虧</value></data>
+  <data name="Qty" xml:space="preserve"><value>數量</value></data>
+  <data name="UomCode" xml:space="preserve"><value>單位</value></data>
+  <data name="UnitPrice" xml:space="preserve"><value>單價</value></data>
+  <data name="WhCode" xml:space="preserve"><value>倉庫</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>儲位</value></data>
+  <data name="QtyPutAway" xml:space="preserve"><value>已作業量</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Submit" xml:space="preserve"><value>送審</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>撤回</value></data>
+  <data name="Confirm" xml:space="preserve"><value>確認</value></data>
+  <data name="CancelConfirm" xml:space="preserve"><value>撤回確認</value></data>
+  <data name="Void" xml:space="preserve"><value>作廢</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="ConfirmSubmit" xml:space="preserve"><value>確定要送審嗎？</value></data>
+  <data name="ConfirmWithdraw" xml:space="preserve"><value>確定要撤回審核嗎？</value></data>
+  <data name="ConfirmConfirm" xml:space="preserve"><value>確定要確認此調整單嗎？</value></data>
+  <data name="ConfirmCancelConfirm" xml:space="preserve"><value>確定要撤回確認嗎？</value></data>
+  <data name="VoidReason" xml:space="preserve"><value>請輸入作廢原因（可留空）</value></data>
+  <data name="VoidAndReopen" xml:space="preserve"><value>作廢並重新開立</value></data>
+  <data name="SelectDepartment" xml:space="preserve"><value>選擇部門</value></data>
+  <data name="SelectProduct" xml:space="preserve"><value>選擇產品</value></data>
+  <data name="LookupSource" xml:space="preserve"><value>選擇來源</value></data>
+  <data name="LookupStock" xml:space="preserve"><value>選擇庫存</value></data>
+  <data name="RemoveLine" xml:space="preserve"><value>移除此列</value></data>
+  <data name="SelectProductFirst" xml:space="preserve"><value>請先選擇品號</value></data>
+  <data name="StockQtyLabel" xml:space="preserve"><value>庫存</value></data>
+</root>

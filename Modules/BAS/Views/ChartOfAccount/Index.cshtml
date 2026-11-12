@@ -1,0 +1,199 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.BAS.Models.ChartOfAccount>
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    var canCreate = ViewBag.CanCreate as bool? ?? false;
+    var canUpdate = ViewBag.CanUpdate as bool? ?? false;
+    var canDelete = ViewBag.CanDelete as bool? ?? false;
+    var canPrint  = ViewBag.CanPrint  as bool? ?? false;
+    var searched  = ViewBag.Searched  as bool? ?? false;
+    var searchType = ViewBag.SearchType as string;
+}
+
+<div class="container-fluid py-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0"><i class="bi bi-list-columns-reverse me-2"></i>@Localizer["PageTitle"]</h4>
+        <div class="d-flex gap-2">
+            @if (canPrint && searched && Model != null && Model.Any())
+            {
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-download me-1"></i>@Localizer["Export"]
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/ChartOfAccount/Export?format=xlsx&searchTerm=@ViewBag.SearchTerm&searchType=@searchType">Excel</a></li>
+                        <li><a class="dropdown-item" href="/ChartOfAccount/Export?format=csv&searchTerm=@ViewBag.SearchTerm&searchType=@searchType">CSV</a></li>
+                    </ul>
+                </div>
+            }
+            @if (canCreate)
+            {
+                <button class="btn btn-primary btn-sm" data-action="openPanel" data-url="/ChartOfAccount/Create" data-label="@Localizer["New"]">
+                    <i class="bi bi-plus-lg me-1"></i>@Localizer["New"]
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="alert alert-info py-2 small">
+        <i class="bi bi-info-circle me-1"></i>@Localizer["ScopeNotice"]
+    </div>
+
+    <form method="get" action="/ChartOfAccount">
+        <input type="hidden" name="searched" value="true" />
+        <div class="row g-2 mb-3">
+            <div class="col-12 col-md-4">
+                <input type="text" name="searchTerm" class="form-control form-control-sm"
+                       placeholder="@Localizer["SearchPlaceholder"]" value="@ViewBag.SearchTerm" />
+            </div>
+            <div class="col-12 col-md-3">
+                <select name="searchType" class="form-select form-select-sm">
+                    <option value="">@Localizer["AllTypes"]</option>
+                    @foreach (var t in Enum.GetValues<AccountType>())
+                    {
+                        @* 鍵先算好再查：R1 只認得直接寫字串常數的用法，串接寫法它只會擷取到
+                           半截的前綴並判為缺鍵。逐值的完整性改由
+                           ChartOfAccountTests.科目性質的顯示名稱在兩份resx都齊全 守住。 *@
+                        var tKey = "AccountType_" + t;
+                        <option value="@t" selected="@(searchType == t.ToString())">@Localizer[tKey]</option>
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary btn-sm px-4">
+                    <i class="bi bi-search me-1"></i>@Localizer["Search"]
+                </button>
+            </div>
+            @await Html.PartialAsync("_PageSizeSelect")
+        </div>
+    </form>
+
+    @if (!searched)
+    {
+        <div class="text-center text-muted py-5">
+            <i class="bi bi-search fs-1 d-block mb-2 opacity-25"></i>
+            @Localizer["PleaseSearch"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="text-center text-muted py-5">@Localizer["NoData"]</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-sm table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.CodeSort"
+                               asp-route-searchTerm="@ViewBag.SearchTerm" asp-route-searchType="@searchType" asp-route-searched="true"
+                               asp-route-pageSize="@ViewBag.CurrentPageSize" class="text-decoration-none text-dark">
+                                @Localizer["AccountCode"]
+                                @if (ViewBag.CurrentSort == "code_asc") { <i class="bi bi-caret-up-fill"></i> }
+                                else if (ViewBag.CurrentSort == "code_desc") { <i class="bi bi-caret-down-fill"></i> }
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.NameSort"
+                               asp-route-searchTerm="@ViewBag.SearchTerm" asp-route-searchType="@searchType" asp-route-searched="true"
+                               asp-route-pageSize="@ViewBag.CurrentPageSize" class="text-decoration-none text-dark">
+                                @Localizer["AccountName"]
+                                @if (ViewBag.CurrentSort == "name_asc") { <i class="bi bi-caret-up-fill"></i> }
+                                else if (ViewBag.CurrentSort == "name_desc") { <i class="bi bi-caret-down-fill"></i> }
+                            </a>
+                        </th>
+                        <th class="text-center">@Localizer["AccountType"]</th>
+                        <th class="text-center">@Localizer["IsSystem"]</th>
+                        <th class="text-center">@Localizer["AllowManualEntry"]</th>
+                        <th>@Localizer["Remarks"]</th>
+                        <th class="text-center">@Localizer["IsActive"]</th>
+                        @if (canUpdate || canDelete) { <th class="u-width-80px"></th> }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-semibold">@item.AccountCode</td>
+                            <td>@item.AccountName</td>
+                            <td class="text-center">
+                                @* 借方為正／貸方為正用兩種顏色區分：看報表時「這一段的正號是哪一邊」
+                                   是最常問的問題，寫在科目清單上比寫在說明裡有用。 *@
+                                @{ var itemTypeKey = "AccountType_" + item.AccountType; }
+                                <span class="badge @(item.AccountType.IsDebitNormal() ? "bg-warning text-dark" : "bg-info text-dark")">
+                                    @Localizer[itemTypeKey]
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                @if (item.IsSystem)
+                                {
+                                    <span class="badge bg-dark">@Localizer["IsSystem"]</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (item.AllowManualEntry)
+                                {
+                                    <i class="bi bi-check-lg text-success"></i>
+                                }
+                            </td>
+                            <td class="small text-muted">@item.Remarks</td>
+                            <td class="text-center">
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success">@Localizer["Active"]</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@Localizer["Inactive"]</span>
+                                }
+                            </td>
+                            @if (canUpdate || canDelete)
+                            {
+                                <td class="text-center">
+                                    @if (canUpdate)
+                                    {
+                                        <button class="btn btn-sm btn-link p-0 me-2"
+                                                data-action="openPanel" data-url="/ChartOfAccount/Edit/@item.AccountCode" data-label="@Localizer["Edit"]"
+                                                title="@Localizer["Edit"]"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                    }
+                                    @* 系統科目不顯示刪除鈕。後端一樣會擋，但「按了才被拒」是壞體驗。 *@
+                                    @if (canDelete && !item.IsSystem)
+                                    {
+                                        <button class="btn btn-sm btn-link p-0 text-danger"
+                                                data-action="deleteItem" data-url="/ChartOfAccount/Delete" data-id="@item.AccountCode" data-confirm="@Localizer["ConfirmDelete"]"
+                                                title="@Localizer["Delete"]"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<div class="offcanvas offcanvas-end u-width-500px" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel">@Localizer["PageTitle"]</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="sidePanelBody"></div>
+</div>
+
+<div id="successToast" class="toast align-items-center text-bg-success border-0 position-fixed bottom-0 end-0 m-3 u-z-index-9999" role="alert">
+    <div class="d-flex">
+        <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@Localizer["SaveSuccess"]</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+}

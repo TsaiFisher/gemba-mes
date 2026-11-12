@@ -1,0 +1,20 @@
+# R9 baseline — 含寫死小數 step 的「刻意保留」檔案清單（won't-fix），以「檔案路徑」為鍵。
+# 不在此清單的新違規檔會讓建置失敗。
+# 數量/金額/重量/容量欄位已全數改 step="any"（spinner ±1）；以下檔案的 step="0.x" 為
+# 值域 0–1 的比率/費率、或刻意小步進（加班半小時、工時）欄位 —— 套 "any"(±1) 反而錯，故保留。
+# 註：用檔案路徑（非 file:line）為鍵，與 R4b/R7 一致；行號會隨無關編輯漂移而使 baseline 失準。
+# 新增同類欄位請評估語意：若是「跟隨 UOM/幣別精度」的量值，一律 "any"，不要加進這裡。
+#
+# 稅率/費率（值域 0–1 或百分比，±1 會爆量）：Company TaxRate、Tax TaxRate、WorkCenter AdditionalRate
+# 匯率（買/賣匯率，需高精度小步進）：Currency Index
+# UOM 換算比例（分子/分母）：Uom Index
+# 工時/加班（刻意小步進）：ShiftGroup 半小時、WorkCalendar 0–24 小時
+Modules/BAS/Views/Company/_CompanyForm.cshtml
+Modules/FIN/Views/APPayment/_CreateForm.cshtml
+Modules/FIN/Views/ARReceipt/_CreateForm.cshtml
+Modules/BAS/Views/Currency/Index.cshtml
+Modules/BAS/Views/ShiftGroup/Index.cshtml
+Modules/BAS/Views/Tax/_TaxForm.cshtml
+Modules/BAS/Views/Uom/Index.cshtml
+Modules/BAS/Views/WorkCenter/_WorkCenterForm.cshtml
+Modules/MFG/Views/WorkCalendar/_Form.cshtml

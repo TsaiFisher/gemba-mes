@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Warehouse Operations</value></data>
+  <data name="InboundTab" xml:space="preserve"><value>Put-Away</value></data>
+  <data name="OutboundTab" xml:space="preserve"><value>Pick</value></data>
+  <data name="Search" xml:space="preserve"><value>Search</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Doc No or Product keyword</value></data>
+  <data name="Refresh" xml:space="preserve"><value>Refresh</value></data>
+  <data name="PendingList" xml:space="preserve"><value>Pending List</value></data>
+  <data name="PutAwayForm" xml:space="preserve"><value>Put-Away</value></data>
+  <data name="PickForm" xml:space="preserve"><value>Pick</value></data>
+  <data name="DocNo" xml:space="preserve"><value>Doc No</value></data>
+  <data name="LineNo" xml:space="preserve"><value>Line</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Product</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>Location</value></data>
+  <data name="WhCode" xml:space="preserve"><value>Warehouse</value></data>
+  <data name="LotNo" xml:space="preserve"><value>Lot No</value></data>
+  <data name="Qty" xml:space="preserve"><value>Qty</value></data>
+  <data name="Pending" xml:space="preserve"><value>Pending Qty</value></data>
+  <data name="AvailableStock" xml:space="preserve"><value>Stock by Location</value></data>
+  <data name="Available" xml:space="preserve"><value>On Hand</value></data>
+  <data name="PickQty" xml:space="preserve"><value>Pick Qty</value></data>
+  <data name="Total" xml:space="preserve"><value>Total</value></data>
+  <data name="ConfirmPutAway" xml:space="preserve"><value>Confirm Put-Away</value></data>
+  <data name="ConfirmPick" xml:space="preserve"><value>Confirm Pick</value></data>
+  <data name="NoData" xml:space="preserve"><value>No pending items</value></data>
+  <data name="NoStock" xml:space="preserve"><value>No available stock for this product</value></data>
+  <data name="SelectDoc" xml:space="preserve"><value>Please select a pending document first</value></data>
+  <data name="InvalidLocation" xml:space="preserve"><value>Location not found</value></data>
+  <data name="LoadFailed" xml:space="preserve"><value>Load failed</value></data>
+  <data name="PutAwayDone" xml:space="preserve"><value>Put-away completed</value></data>
+  <data name="PutAwayFailed" xml:space="preserve"><value>Put-away failed</value></data>
+  <data name="PickDone" xml:space="preserve"><value>Pick completed</value></data>
+  <data name="PickFailed" xml:space="preserve"><value>Pick failed</value></data>
+  <data name="PickQtyRequired" xml:space="preserve"><value>Please enter pick quantity</value></data>
+  <data name="ScanBoxPlaceholder" xml:space="preserve"><value>Scan a box number to issue the whole box</value></data>
+  <data name="BoxNotFound" xml:space="preserve"><value>{0} is not a box with stock in it</value></data>
+  <data name="BoxOtherProduct" xml:space="preserve"><value>Box {0} holds item {1}, not the item on this line</value></data>
+  <data name="BoxNoAvailable" xml:space="preserve"><value>Lot {1} in box {0} has no available quantity</value></data>
+  <data name="PutAwayBox" xml:space="preserve"><value>Fill box</value></data>
+  <data name="PutAwayBoxPlaceholder" xml:space="preserve"><value>Optional: scan an empty box to put this quantity in it (leave the lot blank to generate one)</value></data>
+</root>

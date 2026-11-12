@@ -1,0 +1,433 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Services
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Modules.BAS.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.BAS.Models.SpecialDay>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> SL
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
+    var canCreate = ViewBag.CanCreate as bool? ?? false;
+    var canUpdate = ViewBag.CanUpdate as bool? ?? false;
+    var canDelete = ViewBag.CanDelete as bool? ?? false;
+    bool hasSearched = ViewBag.Searched == true;
+    int currentYear  = (int)(ViewBag.CurrentYear ?? DateTime.Today.Year);
+    string viewMode  = ViewBag.ViewMode as string ?? "list";
+
+    Func<string, string> sortIcon = col => {
+        var cur = ViewBag.CurrentSort as string ?? "";
+        if (cur == col + "_asc") return "bi-sort-up";
+        if (cur == col + "_desc") return "bi-sort-down";
+        return "bi-arrow-down-up opacity-25";
+    };
+
+    var dayTypeBadge = (string t) => t switch {
+        "Holiday"      => "bg-danger",
+        "Overtime"     => "bg-warning text-dark",
+        "Compensation" => "bg-info text-dark",
+        _              => "bg-secondary"
+    };
+}
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-calendar-event"></i> @Localizer["PageTitle"]</h1>
+        @if (canCreate)
+        {
+            <button type="button" class="btn btn-primary"
+                    data-url="@Url.Action("Create", "SpecialDay")"
+                    data-label="@Localizer["AddEntry"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus-lg"></i> @Localizer["AddEntry"]
+            </button>
+        }
+    </div>
+
+    <!-- 查詢列 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-center">
+                <input type="hidden" name="searched" value="true" />
+                <input type="hidden" name="sortOrder" value="@ViewBag.CurrentSort" />
+                <div class="col-auto">
+                    <input type="number" name="year" class="form-control"
+                           value="@currentYear" min="2000" max="2099" />
+                </div>
+                <div class="col-auto">
+                    <select name="dayType" class="form-select">
+                        <option value="">@Localizer["AllTypes"]</option>
+                        <option value="Holiday" selected="@(ViewBag.DayType as string == "Holiday")">@Localizer["Holiday"]</option>
+                        <option value="Overtime" selected="@(ViewBag.DayType as string == "Overtime")">@Localizer["Overtime"]</option>
+                        <option value="Compensation" selected="@(ViewBag.DayType as string == "Compensation")">@Localizer["Compensation"]</option>
+                    </select>
+                </div>
+                <div class="col-auto d-flex gap-2">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@Localizer["Search"]</button>
+                    @if (ViewBag.CanPrint as bool? ?? false)
+                    {
+                        <div class="btn-group">
+                            <a asp-action="Export" asp-route-year="@currentYear"
+                               asp-route-dayType="@ViewBag.DayType" asp-route-format="xlsx"
+                               class="btn btn-outline-success">
+                                <i class="bi bi-file-earmark-excel"></i> @Localizer["ExportExcel"]
+                            </a>
+                            <button class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Export"
+                                       asp-route-year="@currentYear" asp-route-dayType="@ViewBag.DayType" asp-route-format="csv">
+                                    <i class="bi bi-filetype-csv me-2"></i>@Localizer["ExportCsv"]</a></li>
+                                <li><a class="dropdown-item" asp-action="Export"
+                                       asp-route-year="@currentYear" asp-route-dayType="@ViewBag.DayType" asp-route-format="json">
+                                    <i class="bi bi-filetype-json me-2"></i>@Localizer["ExportJson"]</a></li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+                @await Html.PartialAsync("_PageSizeSelect")
+                <!-- 列表 / 月曆 切換 -->
+                <div class="col-auto">
+                    <div class="btn-group" role="group">
+                        <a asp-action="Index" asp-route-searched="true" asp-route-year="@currentYear"
+                           asp-route-dayType="@ViewBag.DayType" asp-route-viewMode="list"
+                           class="btn btn-sm @(viewMode == "list" ? "btn-primary" : "btn-outline-secondary")">
+                            <i class="bi bi-list-ul"></i> @Localizer["ListView"]
+                        </a>
+                        <a asp-action="Index" asp-route-searched="true" asp-route-year="@currentYear"
+                           asp-route-dayType="@ViewBag.DayType" asp-route-viewMode="calendar"
+                           class="btn btn-sm @(viewMode == "calendar" ? "btn-primary" : "btn-outline-secondary")">
+                            <i class="bi bi-calendar3"></i> @Localizer["CalendarView"]
+                        </a>
+                        <a asp-action="Index" asp-route-year="@currentYear" asp-route-viewMode="year"
+                           asp-route-dayType="@ViewBag.DayType" asp-route-searched="true"
+                           class="btn btn-sm @(viewMode == "year" ? "btn-warning" : "btn-outline-warning")">
+                            <i class="bi bi-calendar3"></i> @SL["WholeYear"]
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-calendar3 fs-4 d-block mb-2"></i>@Localizer["SearchPrompt"]
+        </div>
+    }
+    else if (viewMode == "calendar")
+    {
+        <!-- 月曆視圖 -->
+        <div class="card shadow-sm">
+            <div class="card-body p-3">
+                <div id="calendarNav" class="d-flex justify-content-between align-items-center mb-3">
+                    <button class="btn btn-sm btn-outline-secondary" data-action="prevMonth">‹</button>
+                    <h5 class="mb-0" id="calendarTitle"></h5>
+                    <button class="btn btn-sm btn-outline-secondary" data-action="nextMonth">›</button>
+                </div>
+                <div id="calendarGrid"></div>
+            </div>
+        </div>
+    }
+    else if (viewMode == "year")
+    {
+        <!-- 全年視圖 -->
+        <div id="yearCalendarContainer">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a asp-action="Index" asp-route-year="@(currentYear-1)" asp-route-viewMode="year"
+                   asp-route-dayType="@ViewBag.DayType" asp-route-searched="true"
+                   class="btn btn-outline-secondary btn-sm"><i class="bi bi-chevron-left"></i> @(currentYear-1)</a>
+                <h4 class="mb-0">@string.Format(SL["YearFmt"].Value, currentYear)</h4>
+                <a asp-action="Index" asp-route-year="@(currentYear+1)" asp-route-viewMode="year"
+                   asp-route-dayType="@ViewBag.DayType" asp-route-searched="true"
+                   class="btn btn-outline-secondary btn-sm">@(currentYear+1) <i class="bi bi-chevron-right"></i></a>
+            </div>
+            <div class="row g-3" id="yearGrid">
+                <!-- rendered by JS -->
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- 列表視圖 -->
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.DateSort"
+                                   asp-route-year="@currentYear" asp-route-dayType="@ViewBag.DayType"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize" asp-route-searched="true"
+                                   class="text-decoration-none text-dark">
+                                    @Localizer["Date"] <i class="bi @sortIcon("date")"></i>
+                                </a>
+                            </th>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewBag.TypeSort"
+                                   asp-route-year="@currentYear" asp-route-dayType="@ViewBag.DayType"
+                                   asp-route-pageSize="@ViewBag.CurrentPageSize" asp-route-searched="true"
+                                   class="text-decoration-none text-dark">
+                                    @Localizer["DayType"] <i class="bi @sortIcon("type")"></i>
+                                </a>
+                            </th>
+                            <th>@Localizer["Description"]</th>
+                            <th>@Localizer["CompensatoryDayOfWeek"]</th>
+                            <th class="text-end pe-4">@Localizer["Actions"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr><td colspan="5" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-4 d-block mb-2"></i>@Localizer["NoData"]
+                            </td></tr>
+                        }
+                        else
+                        {
+                            var dowNames = new[] { "", Localizer["Mon"].Value, Localizer["Tue"].Value,
+                                Localizer["Wed"].Value, Localizer["Thu"].Value, Localizer["Fri"].Value,
+                                Localizer["Sat"].Value, Localizer["Sun"].Value };
+                            foreach (var s in Model)
+                            {
+                                <tr>
+                                    <td class="fw-medium">@s.Date.ToString("yyyy-MM-dd")</td>
+                                    <td><span class="badge @dayTypeBadge(s.DayType)">@Localizer[s.DayType]</span></td>
+                                    <td>@s.Description</td>
+                                    <td>@(s.CompensatoryDayOfWeek.HasValue ? dowNames[s.CompensatoryDayOfWeek.Value] : "—")</td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group">
+                                            @if (canUpdate)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                        data-url="@Url.Action("Edit", "SpecialDay", new { date = s.Date.ToString("yyyy-MM-dd") })"
+                                                        data-label="@($"{Localizer["Edit"].Value}：{s.Date}")"
+                                                        data-action="openPanel"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
+                                            }
+                                            @if (canDelete)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        data-url="@Url.Action("Delete", "SpecialDay", new { date = s.Date.ToString("yyyy-MM-dd") })"
+                                                        data-label="@s.Date.ToString("yyyy-MM-dd")"
+                                                        data-action="deleteItem"><i class="bi bi-trash"></i> @Localizer["Delete"]</button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+</div>
+
+<!-- Side Panel -->
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-480px-95vw" id="crudPanel" tabindex="-1"
+     aria-labelledby="crudPanelLabel">
+    <div class="offcanvas-header border-bottom bg-primary text-white py-3">
+        <h5 class="offcanvas-title mb-0" id="crudPanelTitle"></h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body" id="crudPanelBody"></div>
+</div>
+
+<!-- Success Toast -->
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i><span id="successToastMsg"></span></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+<form class="u-display-none" id="__AjaxAntiForgery">@Html.AntiForgeryToken()</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/module-validation.js" asp-append-version="true"></script>
+    @await Html.PartialAsync("_JsLocalization")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    // ── Side Panel ──
+    function openPanel(e, el) {
+        const url = el.dataset.url, title = el.dataset.label;
+        document.getElementById('crudPanelTitle').textContent = title;
+        const body = document.getElementById('crudPanelBody');
+        body.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary"></div></div>';
+        new bootstrap.Offcanvas(document.getElementById('crudPanel')).show();
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => r.text()).then(html => { body.innerHTML = DOMPurify.sanitize(html); bindPanelForms(); })
+            .catch(() => { body.innerHTML = '<div class="alert alert-danger m-3">' + @(Json.Serialize(SL["LoadFailed"].Value)) + '</div>'; });
+    }
+    function bindPanelForms() {
+        document.querySelectorAll('#crudPanelBody form[data-ajax="true"]').forEach(f =>
+            f.addEventListener('submit', e => { e.preventDefault(); submitPanel(f); }));
+        document.querySelectorAll('#crudPanelBody [data-dismiss-panel]').forEach(b =>
+            b.addEventListener('click', () => bootstrap.Offcanvas.getInstance(document.getElementById('crudPanel'))?.hide()));
+    }
+    function submitPanel(form) {
+        const btn = form.querySelector('[type="submit"]');
+        const orig = btn.innerHTML;
+        btn.disabled = true; btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>';
+        const fd = new FormData(form);
+        if (btn.name) fd.set(btn.name, btn.value);
+        fetch(form.action, { method: 'POST', body: fd, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(r => r.headers.get('Content-Type')?.includes('application/json')
+            ? r.json().then(d => ({ isJson: true, data: d }))
+            : r.text().then(h => ({ isJson: false, html: h })))
+        .then(result => {
+            if (result.isJson && result.data.success) {
+                bootstrap.Offcanvas.getInstance(document.getElementById('crudPanel')).hide();
+                document.getElementById('successToastMsg').textContent = result.data.message;
+                new bootstrap.Toast(document.getElementById('successToast')).show();
+                setTimeout(() => location.reload(), 1200);
+            } else if (result.isJson) {
+                btn.disabled = false; btn.innerHTML = orig; alert(result.data.message);
+            } else {
+                document.getElementById('crudPanelBody').innerHTML = DOMPurify.sanitize(result.html);
+                bindPanelForms();
+            }
+        }).catch(() => { btn.disabled = false; btn.innerHTML = orig; alert(window.i18n.t('SaveFailed')); });
+    }
+    function deleteItem(e, el) {
+        const url = el.dataset.url, name = el.dataset.label;
+        if (!confirm(window.i18n.t('ConfirmDelete').replace('{0}', name))) return;
+        const token = document.querySelector('#__AjaxAntiForgery input[name="__RequestVerificationToken"]').value;
+        fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+            body: '__RequestVerificationToken=' + encodeURIComponent(token) })
+        .then(r => r.json()).then(result => {
+            if (result.success) {
+                document.getElementById('successToastMsg').textContent = result.message;
+                new bootstrap.Toast(document.getElementById('successToast')).show();
+                setTimeout(() => location.reload(), 1200);
+            } else { alert(result.message || window.i18n.t('DeleteFailed')); }
+        }).catch(() => alert(window.i18n.t('DeleteFailed')));
+    }
+
+    // ── Calendar View ──
+    const _calendarMode = '@viewMode' === 'calendar';
+    const _calDataUrl   = '@Url.Action("CalendarData", "SpecialDay")';
+    let calYear = @currentYear, calMonth = new Date().getMonth() + 1;
+    const specialDays = {};
+
+    async function loadCalendar() {
+        const title = document.getElementById('calendarTitle');
+        if (!title) return;
+        title.textContent = @(Json.Serialize(SL["YearMonthFmt"].Value)).replace('{0}', calYear).replace('{1}', calMonth);
+        const r = await fetch(_calDataUrl + '?year=' + calYear + '&month=' + calMonth);
+        const days = await r.json();
+        days.forEach(d => { specialDays[d.date] = d; });
+        renderCalendar();
+    }
+
+    function renderCalendar() {
+        const grid = document.getElementById('calendarGrid');
+        if (!grid) return;
+        const firstDay = new Date(calYear, calMonth - 1, 1).getDay();
+        const daysInMonth = new Date(calYear, calMonth, 0).getDate();
+        const headers = @(Json.Serialize(SL["WeekdayShortSunFirst"].Value)).split(',');
+        const rows = [];
+        let cells = [];
+        // leading empty cells
+        Array.from({length: firstDay}).forEach(() => cells.push('<td></td>'));
+        let col = firstDay;
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateStr = calYear + '-' + String(calMonth).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+            const sd = specialDays[dateStr];
+            const dow = new Date(calYear, calMonth - 1, d).getDay();
+            let cls = (dow === 0 || dow === 6) ? 'table-secondary' : '';
+            if (sd) cls = sd.dayType === 'Holiday' ? 'table-danger' : sd.dayType === 'Overtime' ? 'table-warning' : 'table-info';
+            let cell = '<td class="' + cls + ' u-height-60px u-vertical-align-top u-padding-4px"><div class="fw-bold">' + d + '</div>';
+            if (sd) cell += '<div class="small text-truncate">' + (sd.description || sd.dayType) + '</div>';
+            cell += '</td>';
+            cells.push(cell);
+            col++;
+            if (col % 7 === 0 && d !== daysInMonth) { rows.push('<tr>' + cells.join('') + '</tr>'); cells = []; }
+        }
+        while (cells.length % 7 !== 0) cells.push('<td></td>');
+        rows.push('<tr>' + cells.join('') + '</tr>');
+        grid.innerHTML = '<table class="table table-bordered text-center mb-0"><thead><tr>' +
+            headers.map(h => '<th class="table-light">' + h + '</th>').join('') +
+            '</tr></thead><tbody>' + rows.join('') + '</tbody></table>';
+    }
+
+    function prevMonth() {
+        calMonth--; if (calMonth === 0) { calMonth = 12; calYear--; }
+        loadCalendar();
+    }
+    function nextMonth() {
+        calMonth++; if (calMonth === 13) { calMonth = 1; calYear++; }
+        loadCalendar();
+    }
+
+    if (_calendarMode) document.addEventListener('DOMContentLoaded', loadCalendar);
+
+    // ── Year View ──
+    const _calDataYearUrl = '@Url.Action("CalendarDataYear", "SpecialDay")';
+    const _isYearMode = '@viewMode' === 'year';
+
+    if (_isYearMode) document.addEventListener('DOMContentLoaded', loadYearCalendar);
+
+    async function loadYearCalendar() {
+        const r = await fetch(_calDataYearUrl + '?year=' + @currentYear);
+        const days = await r.json();
+        const dayMap = {};
+        days.forEach(d => { dayMap[d.date] = d; });
+        renderYearCalendar(dayMap);
+    }
+
+    function renderYearCalendar(dayMap) {
+        const grid = document.getElementById('yearGrid');
+        if (!grid) return;
+        const monthNames = @(Json.Serialize(SL["MonthShortNames"].Value)).split(',');
+        const year = @currentYear;
+        let html = '';
+        for (let m = 1; m <= 12; m++) {
+            html += renderMiniMonth(year, m, dayMap, monthNames[m-1]);
+        }
+        grid.innerHTML = html;
+    }
+
+    function renderMiniMonth(year, month, dayMap, monthName) {
+        const firstDay = new Date(year, month - 1, 1).getDay();
+        const daysInMonth = new Date(year, month, 0).getDate();
+        let cells = '';
+        @(Json.Serialize(SL["WeekdayShortSunFirst"].Value)).split(',').forEach(d => {
+            cells += `<div class="text-center small text-muted fw-bold u-font-size-0p7rem">${d}</div>`;
+        });
+        for (let i = 0; i < firstDay; i++) {
+            cells += `<div></div>`;
+        }
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateStr = `${year}-${String(month).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const sd = dayMap[dateStr];
+            const dow = new Date(year, month - 1, d).getDay();
+            let cls = 'text-center rounded small py-0 px-0 u-font-size-p75rem u-line-height-1p8';
+            if (sd) {
+                if (sd.dayType === 'Holiday')       { cls += ' bg-danger text-white'; }
+                else if (sd.dayType === 'Overtime')  { cls += ' bg-warning text-dark'; }
+                else                                 { cls += ' bg-info text-dark'; }
+                cls += ' u-cursor-pointer';
+            } else {
+                cls += ' u-cursor-default';
+                if (dow === 0 || dow === 6) { cls += ' text-danger opacity-75'; }
+            }
+            cells += `<div class="${cls}" title="${sd ? sd.name || sd.dayType : ''}">${d}</div>`;
+        }
+        return `
+      <div class="col-6 col-md-4 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-header py-1 text-center small fw-bold bg-light">${monthName}</div>
+          <div class="card-body p-2">
+            <div class="u-display-grid u-grid-template-columns-repeat-7-1fr u-gap-1px">
+              ${cells}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+</script>
+}

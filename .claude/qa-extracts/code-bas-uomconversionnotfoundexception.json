@@ -1,0 +1,14 @@
+{
+  "sourcePath": "Modules/BAS/Services/UomConversionNotFoundException.cs",
+  "sourceHash": "962de4f07b1297a9624b0a3f0d55a2cfdbbcdbe7d026c2db9f15b7bfcf84f905",
+  "entries": [
+    {
+      "slug": "code-bas-uomconversionnotfoundexception-82a27a81",
+      "lang": "zh",
+      "headingPath": "基本資料 › 兩個不同單位之間查不到任何換算比例時拋出",
+      "text": "單位間無法轉換比例時的處理規則｜當系統在兩個不同單位之間找不到任何換算比例時，會拋出一個專門的例外錯誤。這樣設計是為了確保呼叫這個功能的其他流程能夠正確地捕捉到這個特定的錯誤，避免將其與其他業務規則的錯誤一起忽略掉，從而讓使用者能明確知道轉換失敗的原因。",
+      "approved": true,
+      "sourceSectionHash": "41b289cf0e71d17c2a243b96b3141e4d87bc43425205f9924af34120b269de23"
+    }
+  ]
+}

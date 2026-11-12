@@ -1,0 +1,274 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@model SmartFactory.MES.Models.PaginatedList<SmartFactory.MES.Modules.PUR.Models.OutsourceRework>
+@using SmartFactory.MES.Models
+@using SmartFactory.MES.Modules.PUR.Models
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = L["OutsourceRework"];
+    bool canCreate  = ViewBag.CanCreate == true;
+    bool canUpdate  = ViewBag.CanUpdate == true;
+    bool canDelete  = ViewBag.CanDelete == true;
+    bool canPrint   = ViewBag.CanPrint  == true;
+    bool hasSearched = ViewBag.Searched as bool? ?? false;
+    int  curPageSize = ViewBag.CurrentPageSize as int? ?? 20;
+
+    var dispatchOptions = ViewBag.DispatchOptions as IList<string> ?? new List<string>();
+    var ncrOptions      = ViewBag.NcrOptions as IList<string> ?? new List<string>();
+    string? curDispatch = ViewBag.SearchDispatch as string;
+    string? curNcr      = ViewBag.SearchNcr as string;
+
+    string SortIcon(string f) {
+        var s = (string?)ViewBag.SortOrder ?? "";
+        return s == f + "_asc"  ? "bi-sort-up"
+             : s == f + "_desc" ? "bi-sort-down"
+             : "bi-arrow-down-up opacity-25";
+    }
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-arrow-repeat me-2"></i>@L["OutsourceRework"]</h1>
+        @if (canCreate) {
+            <button class="btn btn-primary"
+                    data-url="/OutsourceRework/Create" data-label="@L["Create"]"
+                    data-action="openPanel">
+                <i class="bi bi-plus-lg"></i> @L["Create"]
+            </button>
+        }
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-2 align-items-end">
+                <input type="hidden" name="searched" value="true" />
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@L["OriginalDispatch"]</label>
+                    <select name="searchDispatch" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@L["All"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var d in dispatchOptions)
+                        {
+                            <option value="@d" selected="@(curDispatch == d)">@d</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label small">@L["SourceNcr"]</label>
+                    <select name="searchNcr" class="form-select form-select-sm select2-enable w-100"
+                            data-placeholder="@L["All"]" data-allow-clear="true">
+                        <option value=""></option>
+                        @foreach (var n in ncrOptions)
+                        {
+                            <option value="@n" selected="@(curNcr == n)">@n</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 col-md-2">
+                    <label class="form-label small">@L["Status"]</label>
+                    <select name="searchStatus" class="form-select">
+                        <option value="">@L["All"]</option>
+                        @foreach (OutsourceReworkStatus s in Enum.GetValues<OutsourceReworkStatus>())
+                        {
+                            <option value="@s" selected="@(ViewBag.SearchStatus?.ToString() == s.ToString())">@PurEnumDisplay.Text(L, s)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search me-1"></i>@L["Search"]</button>
+                </div>
+                @if (canPrint)
+                {
+                    <div class="col-auto">
+                        <div class="btn-group">
+                            <a asp-action="Export" asp-route-searchDispatch="@ViewBag.SearchDispatch"
+                               asp-route-searchNcr="@ViewBag.SearchNcr" asp-route-searchStatus="@ViewBag.SearchStatus"
+                               asp-route-sortOrder="@ViewBag.SortOrder" asp-route-format="xlsx"
+                               class="btn btn-outline-secondary">
+                                <i class="bi bi-file-earmark-excel me-1"></i>@L["ExportExcel"]
+                            </a>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Export" asp-route-format="csv"
+                                       asp-route-searchDispatch="@ViewBag.SearchDispatch" asp-route-searchNcr="@ViewBag.SearchNcr"
+                                       asp-route-searchStatus="@ViewBag.SearchStatus">
+                                    <i class="bi bi-filetype-csv me-1"></i>@L["ExportCsv"]</a></li>
+                                <li><a class="dropdown-item" asp-action="Export" asp-route-format="json"
+                                       asp-route-searchDispatch="@ViewBag.SearchDispatch" asp-route-searchNcr="@ViewBag.SearchNcr"
+                                       asp-route-searchStatus="@ViewBag.SearchStatus">
+                                    <i class="bi bi-filetype-json me-1"></i>@L["ExportJson"]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+                @await Html.PartialAsync("_PageSizeSelect")
+            </form>
+        </div>
+    </div>
+
+    @if (!hasSearched)
+    {
+        <div class="alert alert-light border text-muted text-center py-4">
+            <i class="bi bi-search fs-4 d-block mb-2"></i>@L["SearchFirst"]
+        </div>
+    }
+    else if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">@L["NoData"]</div>
+    }
+    else
+    {
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["OutsourceReworkId"]</th>
+                        <th>@L["OriginalDispatch"]</th>
+                        <th>@L["SourceNcr"]</th>
+                        <th class="text-end">
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.QtySort" asp-route-searched="true"
+                               asp-route-searchDispatch="@ViewBag.SearchDispatch" asp-route-searchNcr="@ViewBag.SearchNcr"
+                               asp-route-searchStatus="@ViewBag.SearchStatus" asp-route-pageSize="@curPageSize"
+                               class="text-decoration-none text-dark">
+                                @L["ReworkQty"] <i class="bi @SortIcon("qty")"></i>
+                            </a>
+                        </th>
+                        <th>@L["LiabilityParty"]</th>
+                        <th class="text-end">@L["VendorChargebackAmt"]</th>
+                        <th class="text-end">@L["ReworkProcessingFee"]</th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewBag.DateSort" asp-route-searched="true"
+                               asp-route-searchDispatch="@ViewBag.SearchDispatch" asp-route-searchNcr="@ViewBag.SearchNcr"
+                               asp-route-searchStatus="@ViewBag.SearchStatus" asp-route-pageSize="@curPageSize"
+                               class="text-decoration-none text-dark">
+                                @L["CreatedAt"] <i class="bi @SortIcon("date")"></i>
+                            </a>
+                        </th>
+                        <th>@L["Status"]</th>
+                        <th>@L["Actions"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var r in Model)
+                {
+                    var liabilityText = r.LiabilityParty switch {
+                        ReworkLiabilityParty.Vendor => L["LiabilityVendor"],
+                        ReworkLiabilityParty.Us     => L["LiabilityUs"],
+                        _                           => L["LiabilityShared"]
+                    };
+                    var badge = r.Status switch {
+                        OutsourceReworkStatus.Draft    => "bg-secondary",
+                        OutsourceReworkStatus.Sent     => "bg-info text-dark",
+                        OutsourceReworkStatus.Received => "bg-success",
+                        OutsourceReworkStatus.Void     => "bg-danger",
+                        _                              => "bg-light text-dark"
+                    };
+                    <tr>
+                        <td><code>@r.OutsourceReworkId</code></td>
+                        <td class="text-muted small">@r.OriginalDispatchId</td>
+                        <td class="text-muted small">@r.SourceNcrId</td>
+                        <td class="text-end">@r.ReworkQty.ToString("N4")</td>
+                        <td>@liabilityText</td>
+                        <td class="text-end">@r.VendorChargebackAmt.ToString(moneyFmt)</td>
+                        <td class="text-end">@r.ReworkProcessingFee.ToString(moneyFmt)</td>
+                        <td>@DateTimeSvc.ToLocalTime(r.CreatedAt).ToString("yyyy-MM-dd")</td>
+                        <td><span class="badge @badge">@PurEnumDisplay.Text(L, r.Status)</span></td>
+                        <td>
+                            @await Html.PartialAsync("_PrintButton", Url.Action("Print", new { id = r.OutsourceReworkId }))
+                            <button class="btn btn-sm btn-outline-secondary me-1"
+                                    data-url="/OutsourceRework/Details/@r.OutsourceReworkId"
+                                    data-label="@r.OutsourceReworkId"
+                                    data-action="openPanel"><i class="bi bi-eye"></i> @L["View"]</button>
+                            @if (canUpdate && r.Status == OutsourceReworkStatus.Draft)
+                            {
+                                <button class="btn btn-sm btn-outline-primary me-1"
+                                        data-url="/OutsourceRework/Edit/@r.OutsourceReworkId"
+                                        data-label="@r.OutsourceReworkId"
+                                        data-action="openPanel"><i class="bi bi-pencil"></i> @L["Edit"]</button>
+                                <button class="btn btn-sm btn-outline-success me-1" data-action="sendDoc" data-id="@r.OutsourceReworkId" title="@L["ReworkSend"]"><i class="bi bi-send"></i> @L["ReworkSend"]</button>
+                            }
+                            @if (canUpdate && r.Status == OutsourceReworkStatus.Sent)
+                            {
+                                <button class="btn btn-sm btn-outline-primary me-1" data-action="receiveDoc" data-id="@r.OutsourceReworkId" title="@L["ReworkReceive"]"><i class="bi bi-box-arrow-in-down"></i> @L["ReworkReceive"]</button>
+                            }
+                            @if (canUpdate && (r.Status == OutsourceReworkStatus.Draft || r.Status == OutsourceReworkStatus.Sent))
+                            {
+                                <button class="btn btn-sm btn-outline-warning me-1" data-action="voidDoc" data-id="@r.OutsourceReworkId" title="@L["Void"]"><i class="bi bi-x-circle"></i> @L["Void"]</button>
+                            }
+                            @if (canDelete && r.Status == OutsourceReworkStatus.Draft)
+                            {
+                                <button class="btn btn-sm btn-outline-danger" data-action="deleteDoc" data-id="@r.OutsourceReworkId"><i class="bi bi-trash"></i> @L["Delete"]</button>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @await Html.PartialAsync("_Pagination", Model)
+    }
+
+</div>
+
+<div class="offcanvas offcanvas-end shadow-lg u-width-min-600px-95vw" tabindex="-1" id="sidePanel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="sidePanelLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0" id="sidePanelBody"></div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3 u-z-index-1100">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body"><i class="bi bi-check-circle me-2"></i>@L["SaveSuccess"]</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_CrudPanelScripts")
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+    function postAction(url, confirmMsg) {
+        if (confirmMsg && !confirm(confirmMsg)) return;
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+        fetch(url, { method: 'POST', headers: { 'RequestVerificationToken': token, 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(async r => {
+                const d = await r.json().catch(() => ({ success: false, message: window.i18n.t('OperationFailed') }));
+                if (d.success) { window.toastSuccess && window.toastSuccess(); setTimeout(() => location.reload(), 800); }
+                else alert(d.message || window.i18n.t('OperationFailed'));
+            }).catch(() => alert(window.i18n.t('OperationFailed')));
+    }
+
+    // data-action dispatcher 以 (event, el) 呼叫；單號自 el.dataset.id 取得。
+    function sendDoc(e, el)    { postAction(`/OutsourceRework/Send/${el.dataset.id}`,    window.i18n.t('ConfirmSendRework')); }
+    function receiveDoc(e, el) { postAction(`/OutsourceRework/Receive/${el.dataset.id}`, window.i18n.t('ConfirmReceiveRework')); }
+    function voidDoc(e, el)    { postAction(`/OutsourceRework/Void/${el.dataset.id}`,    window.i18n.t('ConfirmVoidRework')); }
+    function deleteDoc(e, el)  { postAction(`/OutsourceRework/Delete/${el.dataset.id}`,  window.i18n.t('ConfirmDeleteSimple')); }
+
+    // _Form 成本試算預覽：責任歸屬決定占比，扣款＝重工成本×廠商占比、加工費＝加工費×我方占比。
+    // 與 OutsourceReworkCostCalculator 對齊；實際儲存值仍由後端計算。
+    function reworkPreview() {
+        const party = document.getElementById('liabilitySelect')?.value;
+        const pctInput = document.getElementById('vendorPctInput');
+        if (!party || !pctInput) return;
+        const pct = party === 'Vendor' ? 100 : party === 'Us' ? 0 : (parseFloat(pctInput.value) || 0);
+        pctInput.readOnly = party !== 'Shared';
+        if (party !== 'Shared') pctInput.value = pct;
+        const cost = parseFloat(document.getElementById('reworkCostInput')?.value) || 0;
+        const fee  = parseFloat(document.getElementById('processingFeeInput')?.value) || 0;
+        document.getElementById('chargebackPreview').textContent =
+            (cost * pct / 100).toLocaleString('zh-TW', { minimumFractionDigits: 2 });
+        document.getElementById('feePreview').textContent =
+            (fee * (100 - pct) / 100).toLocaleString('zh-TW', { minimumFractionDigits: 2 });
+    }
+    function onLiabilityChange() { reworkPreview(); }
+</script>
+}

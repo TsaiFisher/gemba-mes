@@ -1,0 +1,74 @@
+@*
+    全站共用分頁列（摘要 + 頁碼切換）。
+
+    位置契約：一律緊接在清單 </table> 所在的卡片之後，摘要靠左、頁碼靠右。
+    每頁筆數下拉不在這裡——它是查詢條件的一部分，住在查詢表單內，見 _PageSizeSelect.cshtml。
+
+    ⚠️ 在這支出現之前，每個清單畫面各自複製一份約 50 行的分頁 markup。複製品會分頭長大：
+    下游部署專案（ProjectZ）累積到 86 份時，摘要措辭長出 zh 4 種 / en 9 種，
+    而且 `PageInfo` 這個 key 同時存在 2 參數（`第 {0} / {1} 頁`）與 3 參數
+    （`第 {0}/{1} 頁，共 {2} 筆`）兩種格式——複製貼上時會少印一個數字，
+    而且不會有任何錯誤訊息。措辭統一收在 SharedResource 的 PagerSummary 一個鍵。
+
+    用法：@await Html.PartialAsync("_Pagination", Model)   // Model 為 PaginatedList<T>
+*@
+@model dynamic
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.SharedResource> PagerL
+@{
+    if (Model == null) { return; }
+
+    int pageIndex  = (int)Model.PageIndex;
+    int totalPages = (int)Model.TotalPages;
+    int totalItems = (int)Model.TotalItems;
+
+    // 目前查詢條件全部保留，只換掉 pageNumber。不用 asp-route-* 逐個列舉的理由：
+    // 那需要每支畫面自己記得列出所有篩選欄位，漏一個就是「翻頁後篩選條件消失」。
+    var keptQuery = Context.Request.Query
+        .Where(q => !q.Key.Equals("pageNumber", StringComparison.OrdinalIgnoreCase))
+        .ToDictionary(q => q.Key, q => (string)q.Value!);
+
+    string PageUrl(int p)
+    {
+        var d = new Dictionary<string, string>(keptQuery) { ["pageNumber"] = p.ToString() };
+        return "?" + string.Join("&", d.Select(kv =>
+            Uri.EscapeDataString(kv.Key) + "=" + Uri.EscapeDataString(kv.Value)));
+    }
+
+    int startPage = Math.Max(1, pageIndex - 2);
+    int endPage   = Math.Min(totalPages, pageIndex + 2);
+}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3">
+    @* 摘要一律顯示，連只有一頁時也是——「共 N 筆」本身就是使用者要的資訊。 *@
+    <div class="text-muted small">
+        @string.Format(PagerL["PagerSummary"].Value, pageIndex, totalPages, totalItems)
+    </div>
+    @if (totalPages > 1)
+    {
+        <nav aria-label="@PagerL["PagerNav"]">
+            <ul class="pagination pagination-sm mb-0">
+                <li class="page-item @(pageIndex == 1 ? "disabled" : "")">
+                    <a class="page-link shadow-none" href="@PageUrl(1)"
+                       title="@PagerL["PagerFirst"]" aria-label="@PagerL["PagerFirst"]">&laquo;</a>
+                </li>
+                <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                    <a class="page-link shadow-none" href="@PageUrl(pageIndex - 1)"
+                       title="@PagerL["PagerPrevious"]" aria-label="@PagerL["PagerPrevious"]">&lsaquo;</a>
+                </li>
+                @for (int p = startPage; p <= endPage; p++)
+                {
+                    <li class="page-item @(p == pageIndex ? "active" : "")">
+                        <a class="page-link shadow-none" href="@PageUrl(p)">@p</a>
+                    </li>
+                }
+                <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                    <a class="page-link shadow-none" href="@PageUrl(pageIndex + 1)"
+                       title="@PagerL["PagerNext"]" aria-label="@PagerL["PagerNext"]">&rsaquo;</a>
+                </li>
+                <li class="page-item @(pageIndex == totalPages ? "disabled" : "")">
+                    <a class="page-link shadow-none" href="@PageUrl(totalPages)"
+                       title="@PagerL["PagerLast"]" aria-label="@PagerL["PagerLast"]">&raquo;</a>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>

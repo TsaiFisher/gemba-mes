@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/BAS/Controllers/ProductController.cs",
+  "sourceHash": "b625fbb314f6cba6bfdbe3a7b0ebe1718c478d58768ddf64e58a5172812ba647",
+  "entries": [
+    {
+      "slug": "code-bas-productcontroller-bae26b39",
+      "lang": "zh",
+      "headingPath": "基本資料 › 面板表單的 / 需要小數位對照",
+      "text": "小數位數需於表單上顯示｜系統會根據產品的單位，決定需要顯示的小數位數，以確保資料的準確對照。",
+      "approved": false,
+      "sourceSectionHash": "b7cba30b143734a112afe5e9a4ecff83bfa94b70542bae8882a34132406fe272"
+    },
+    {
+      "slug": "code-bas-productcontroller-730ff940",
+      "lang": "zh",
+      "headingPath": "基本資料 › ：預設途程必須是該品號的途程",
+      "text": "產品預設途程須與品號一致｜系統會檢查設定的預設生產流程，確保它只能使用與當前品號完全相同的流程。",
+      "approved": true,
+      "sourceSectionHash": "ad896454965f08207179c0723b8906a07cca250aee3e7fb9c6d0b5090ab3cc24"
+    },
+    {
+      "slug": "code-bas-productcontroller-9c68aa4e",
+      "lang": "zh",
+      "headingPath": "基本資料 › 產品類別與三個單位欄位必須存在且未停用",
+      "text": "產品類別與三個單位必須有效存在｜系統會檢查所填寫的產品類別和三個單位欄位是否都已設定且沒有被停用。如果填寫了已經停用或不存在的代碼，系統仍會讓資料通過驗證。但一旦使用了停用的單位來掛上品號，之後所有數量相關的數值都會自動退回預設值，不會顯示錯誤訊息。",
+      "approved": true,
+      "sourceSectionHash": "969f77e65744f78404488a3cc902810909befc27256604b6f0e45dd926de4a37"
+    },
+    {
+      "slug": "code-bas-productcontroller-7858d794",
+      "lang": "zh",
+      "headingPath": "基本資料 › 主動查核，避免品號刪除後留下孤兒資料",
+      "text": "品項關聯性檢查規則｜系統會檢查一個品項是否還被用在途程或庫存餘額的相關紀錄中，以防止直接刪除該品項造成資料不一致的情況。",
+      "approved": true,
+      "sourceSectionHash": "0820fee9c7ae96e3d3c662862aebe936f983ef50adc62a22584a747d356b757e"
+    }
+  ]
+}

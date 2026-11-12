@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="In-Process QC (IPQC) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>製程檢驗 IPQC — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link active"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clipboard2-pulse me-2 text-primary"></i><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/mfg/ipqc.html &nbsp;|&nbsp; 生產過程中的抽樣檢驗</span><span lang="en">Path: /mobile/mfg/ipqc.html &nbsp;|&nbsp; Sampling inspection while production is running</span></div>
+    </div>
+
+    <p><span lang="zh">列出生產中的派工，供品管於製程中抽驗。採 MIL-STD-1916 Ac=0：製程中發現任何不良品即觸發派工暫停。</span><span lang="en">Lists the dispatches in progress for QC to sample during the process. It uses MIL-STD-1916 with Ac=0: any defect found puts the dispatch on hold.</span></p>
+
+    <img class="screen-shot" src="img/ipqc.png" data-src-en="img/en/ipqc.png" alt="製程檢驗畫面截圖" data-alt-en="In-process QC screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">製程檢驗畫面（上方橫幅說明 Ac=0 規則）</span><span lang="en">In-process QC screen (the banner explains the Ac=0 rule)</span></div>
+
+    <h2 id="steps"><i class="bi bi-list-ol me-2 text-primary"></i><span lang="zh">操作步驟</span><span lang="en">Steps</span></h2>
+
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">用查詢列輸入工單或機台找到要抽驗的派工（選填）。</span><span lang="en">Find the dispatch to inspect by typing a work order or machine in the search bar (optional).</span></div></div>
+
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點<strong>「點擊開始 IPQC」</strong>進入量測頁。</span><span lang="en">Tap <strong>"Start IPQC"</strong> to open the measurement screen.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">選<strong>「驗證等級」</strong>，畫面即依批量算出<strong>「應抽 n」</strong>、<strong>「允收 Ac」</strong>與<strong>「拒收 Re」</strong>。</span><span lang="en">Choose the <strong>"VL"</strong> and the screen works out <strong>"Sample n"</strong>, <strong>"Accept Ac"</strong> and <strong>"Reject Re"</strong> from the lot size.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">在<strong>「量測項目」</strong>逐項填入量測值（畫面會顯示規格上下限）；沒有列出的項目可點<strong>「自訂項目」</strong>自行新增。</span><span lang="en">Enter each measured value under <strong>"Measurement Items"</strong> (the specification limits are shown); anything not listed can be added with <strong>"Add Item"</strong>.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">5</span><div><span lang="zh">在<strong>「Ac=0 整批計數」</strong>填<strong>「實際抽取數」</strong>與<strong>「整批不良數」</strong>，畫面下方即時顯示判定結果。</span><span lang="en">Under <strong>"Ac=0 Batch Count"</strong> fill in the <strong>"Actual Sample"</strong> and the <strong>"NG Qty"</strong>; the verdict updates immediately below.</span></div></div>
+
+    <div class="step-row"><span class="step-badge">6</span><div><span lang="zh">填寫備註（不良描述、改善措施）後點<strong>「送出 IPQC 結果」</strong>。</span><span lang="en">Add remarks (what the defect was, what was done about it) and tap <strong>"Submit IPQC"</strong>.</span></div></div>
+
+    <p class="text-muted small"><span lang="zh">實際抽取數必須大於 0，否則送出時會提示「抽樣數量必須大於 0」。畫面會標示建議的抽樣數（≥ 應抽 n）。</span><span lang="en">The actual sample quantity has to be greater than zero or submitting warns that it must be. The screen shows the recommended sample size (at least n).</span></p>
+
+    <h2 id="result"><i class="bi bi-check2-square me-2 text-primary"></i><span lang="zh">判定結果</span><span lang="en">The verdict</span></h2>
+
+    <table class="table table-sm field-table border">
+    <thead><tr><th class="u-width-20pct"><span lang="zh">結果</span><span lang="en">Result</span></th><th><span lang="zh">後續</span><span lang="en">What happens next</span></th></tr></thead>
+    <tbody>
+    <tr><td><span lang="zh">合格</span><span lang="en">Pass</span></td><td><span lang="zh">派工維持生產中，繼續生產。提示訊息為「IPQC 合格，繼續生產」。</span><span lang="en">The dispatch stays in progress and production continues. The message reads that IPQC passed.</span></td></tr>
+    <tr><td><span lang="zh">不合格</span><span lang="en">Fail</span></td><td><span lang="zh">整批拒批，派工自動轉為「暫停」，畫面會提示聯繫品管。暫停後現場無法再報工，須由品管處理後才能恢復。</span><span lang="en">The whole lot is rejected, the dispatch is put on hold automatically and the screen tells you to notify QC. While on hold the floor cannot report, and QC has to clear it first.</span></td></tr>
+    </tbody>
+    </table>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh">Ac=0 的意思是「允收數為零」——只要抽到一個不良品就是整批拒批，沒有「比例在多少以內可接受」這回事。</span><span lang="en">Ac=0 means the acceptance number is zero: one defect in the sample rejects the whole lot. There is no acceptable percentage.</span></div>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

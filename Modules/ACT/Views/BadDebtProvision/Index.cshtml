@@ -1,0 +1,120 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@using SmartFactory.MES.Services
+@model List<SmartFactory.MES.Modules.ACT.ViewModels.BadDebtRowVm>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+@{
+    var moneyFmt         = await Precision.BaseMoneyFormatAsync();
+    ViewData["Title"] = L["PageTitle"].Value;
+    bool searched        = ViewBag.Searched == true;
+    bool canPrint        = ViewBag.CanPrint == true;
+    var rows             = Model ?? new();
+    decimal totalProvision = rows.Sum(r => r.Provision);
+    decimal totalAmount    = rows.Sum(r => r.TotalAmount);
+    string curCustomer   = ViewBag.SearchCustomer as string ?? "";
+    var customerOptions  = ViewBag.CustomerOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+}
+
+<div class="container-fluid py-3">
+    <h4 class="mb-3">@L["PageTitle"]</h4>
+
+    <div class="alert alert-info small mb-3">
+        <i class="bi bi-info-circle me-1"></i>@L["DataNote"]
+    </div>
+
+    <form method="get" asp-action="Index" class="card card-body mb-3">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label">@L["AsOfDate"]</label>
+                <input type="date" name="asOfDate" class="form-control" value="@ViewBag.AsOfDate" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">@L["Customer"]</label>
+                <select name="searchCustomer" class="form-select form-select-sm select2-enable w-100"
+                        data-placeholder="@L["AllCustomers"]" data-allow-clear="true">
+                    <option value=""></option>
+                    @foreach (var c in customerOptions)
+                    {
+                        <option value="@c.CompanyCode" selected="@(curCustomer == (string)c.CompanyCode)">@c.CompanyCode — @c.CompanyName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" name="searched" value="true" class="btn btn-primary w-100 px-4">
+                    <i class="bi bi-search"></i> @L["Search"]
+                </button>
+            </div>
+        </div>
+    @await Html.PartialAsync("_PageSizeSelect")
+    </form>
+
+    @if (!searched)
+    {
+        <div class="alert alert-info">@L["SearchFirst"]</div>
+    }
+    else if (!rows.Any())
+    {
+        <div class="alert alert-warning">@L["NoData"]</div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+                <strong>@L["ResultTitle"]</strong>
+                <span class="ms-3 text-muted">@L["TotalAmount"]：<strong>@totalAmount.ToString(moneyFmt)</strong></span>
+                <span class="ms-3 text-muted">@L["TotalProvision"]：<strong class="text-danger">@totalProvision.ToString(moneyFmt)</strong></span>
+            </div>
+            @if (canPrint)
+            {
+                <a asp-action="Export"
+                   asp-route-asOfDate="@ViewBag.AsOfDate" asp-route-searchCustomer="@ViewBag.SearchCustomer"
+                   class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-file-earmark-excel"></i> @L["ExportExcel"]
+                </a>
+            }
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-hover table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>@L["CompanyCode"]</th>
+                        <th>@L["AgingBucket"]</th>
+                        <th class="text-end">@L["AgingDays"]</th>
+                        <th class="text-end">@L["TotalAmount"]</th>
+                        <th class="text-end">@L["LossRate"]</th>
+                        <th class="text-end">@L["Provision"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var paged = ReportPaging.Page(rows, ViewData, Context); }
+                    @foreach (var r in paged)
+                    {
+                        <tr>
+                            <td>@r.CompanyCode</td>
+                            <td>
+                                <span class="badge @(r.AgingDays > 180 ? "bg-danger" : r.AgingDays > 90 ? "bg-warning text-dark" : r.AgingDays > 60 ? "bg-info text-dark" : "bg-success")">
+                                    @r.AgingBucket
+                                </span>
+                            </td>
+                            <td class="text-end">@r.AgingDays</td>
+                            <td class="text-end">@r.TotalAmount.ToString(moneyFmt)</td>
+                            <td class="text-end">@((r.LossRate * 100).ToString("0.##"))%</td>
+                            <td class="text-end @(r.Provision > 0 ? "text-danger" : "")">
+                                @r.Provision.ToString(moneyFmt)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot class="table-secondary fw-bold">
+                    <tr>
+                        <td colspan="3">@L["Total"]</td>
+                        <td class="text-end">@totalAmount.ToString(moneyFmt)</td>
+                        <td></td>
+                        <td class="text-end text-danger">@totalProvision.ToString(moneyFmt)</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        @await Html.PartialAsync("_Pagination", paged)
+    }
+</div>

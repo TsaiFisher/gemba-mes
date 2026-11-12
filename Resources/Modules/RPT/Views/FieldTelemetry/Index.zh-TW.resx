@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>現場遙測</value></data>
+  <data name="MethodHint" xml:space="preserve"><value>手機每分鐘回報一次：頁面錯誤、各 API 的耗時與失敗、斷線多久、手機上還有多少資料沒送出。手機時鐘不可信，時間一律以伺服器收到為準；資料保留 30 天。</value></data>
+  <data name="Period" xml:space="preserve"><value>期間</value></data>
+  <data name="Last24h" xml:space="preserve"><value>最近 24 小時</value></data>
+  <data name="Last7d" xml:space="preserve"><value>最近 7 天</value></data>
+  <data name="Last30d" xml:space="preserve"><value>最近 30 天</value></data>
+  <data name="KpiErrors" xml:space="preserve"><value>頁面錯誤</value></data>
+  <data name="KpiSlow" xml:space="preserve"><value>API 超過 3 秒</value></data>
+  <data name="KpiSlowSub" xml:space="preserve"><value>{0} / {1} 次；連不上或失敗 {2} 次</value></data>
+  <data name="KpiOffline" xml:space="preserve"><value>斷線次數</value></data>
+  <data name="KpiOfflineSub" xml:space="preserve"><value>合計 {0} 分鐘</value></data>
+  <data name="KpiPending" xml:space="preserve"><value>有資料未送出的手機</value></data>
+  <data name="KpiPendingSub" xml:space="preserve"><value>期間內回報過的手機 {0} 支</value></data>
+  <data name="Devices" xml:space="preserve"><value>手機現況</value></data>
+  <data name="Device" xml:space="preserve"><value>手機</value></data>
+  <data name="User" xml:space="preserve"><value>使用者</value></data>
+  <data name="LastSeen" xml:space="preserve"><value>最後回報</value></data>
+  <data name="Pending" xml:space="preserve"><value>未送出</value></data>
+  <data name="OldestMin" xml:space="preserve"><value>最舊（分）</value></data>
+  <data name="Network" xml:space="preserve"><value>網路</value></data>
+  <data name="Version" xml:space="preserve"><value>版本</value></data>
+  <data name="TopErrors" xml:space="preserve"><value>頁面錯誤排行</value></data>
+  <data name="Message" xml:space="preserve"><value>訊息</value></data>
+  <data name="Page" xml:space="preserve"><value>頁面</value></data>
+  <data name="Count" xml:space="preserve"><value>次數</value></data>
+  <data name="DeviceCount" xml:space="preserve"><value>手機數</value></data>
+  <data name="NoErrors" xml:space="preserve"><value>期間內沒有頁面錯誤</value></data>
+  <data name="NoData" xml:space="preserve"><value>期間內沒有資料</value></data>
+  <data name="Endpoints" xml:space="preserve"><value>API 耗時與失敗</value></data>
+  <data name="Endpoint" xml:space="preserve"><value>API</value></data>
+  <data name="Calls" xml:space="preserve"><value>呼叫數</value></data>
+  <data name="AvgMs" xml:space="preserve"><value>平均（毫秒）</value></data>
+  <data name="MaxMs" xml:space="preserve"><value>最長（毫秒）</value></data>
+  <data name="Slow3To10" xml:space="preserve"><value>3～10 秒</value></data>
+  <data name="Over10s" xml:space="preserve"><value>10 秒以上</value></data>
+  <data name="Failures" xml:space="preserve"><value>連不上／失敗</value></data>
+  <data name="Recent" xml:space="preserve"><value>最近事件</value></data>
+  <data name="AllKinds" xml:space="preserve"><value>全部種類</value></data>
+  <data name="ReceivedAt" xml:space="preserve"><value>收到時間</value></data>
+  <data name="Kind" xml:space="preserve"><value>種類</value></data>
+  <data name="Detail" xml:space="preserve"><value>細節</value></data>
+  <data name="OfflineFmt" xml:space="preserve"><value>斷線 {0} 秒</value></data>
+  <data name="QueueFmt" xml:space="preserve"><value>未送出 {0} 筆，最舊等了 {1} 分鐘</value></data>
+  <data name="Kind_Error" xml:space="preserve"><value>頁面錯誤</value></data>
+  <data name="Kind_Rejection" xml:space="preserve"><value>未處理的錯誤</value></data>
+  <data name="Kind_ApiStats" xml:space="preserve"><value>API 統計</value></data>
+  <data name="Kind_Offline" xml:space="preserve"><value>斷線</value></data>
+  <data name="Kind_Queue" xml:space="preserve"><value>未送出佇列</value></data>
+  <data name="Apply" xml:space="preserve"><value>套用</value></data>
+  <data name="Conflicts" xml:space="preserve"><value>衝突</value></data>
+  <data name="ConflictsHint" xml:space="preserve"><value>回 409：別人同時改了同一張單、伺服器重試 3 次仍衝突。這筆沒存進去，手機佇列會再重送。</value></data>
+  <data name="KpiConflictSub" xml:space="preserve"><value>重試後仍衝突 {0} 次</value></data>
+</root>

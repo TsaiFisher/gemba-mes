@@ -1,0 +1,86 @@
+{
+  "sourcePath": "Services/IDocNumberService.cs",
+  "sourceHash": "c011e538d135318243e5710b7f20fad01c29ed2e77567fdad0a079fc5c4e2d20",
+  "entries": [
+    {
+      "slug": "code-core-idocnumberservice-8572ba37",
+      "lang": "zh",
+      "headingPath": "系統共用 › 產生下一個單號",
+      "text": "單號產生規則說明｜每個單據類型和每個廠別都會獨立地產生一個新的單號。",
+      "approved": true,
+      "sourceSectionHash": "88d1a8bfc1f3610183a4dbb691f2422690b438dc7792579fa46d32724fe6b84b"
+    },
+    {
+      "slug": "code-core-idocnumberservice-569dd87d",
+      "lang": "zh",
+      "headingPath": "系統共用 › 重置週期變更後的序號校準",
+      "text": "序號重置後需調整的規則說明｜變更了產生單據的週期後，系統會將該範圍內所有單據編號的起始序號，提升到該特定廠區歷史上最大的序號之後，以確保新產生的單據編號不會重複使用已發出的號碼。",
+      "approved": true,
+      "sourceSectionHash": "70e71c919b4f9792734bd368211a9902611b9731a9874c6e22f6a9d234b51d09"
+    },
+    {
+      "slug": "code-core-idocnumberservice-85aa761d",
+      "lang": "zh",
+      "headingPath": "系統共用 › 廠別解析，供畫面預覽使用：專屬規則優先、回退預設",
+      "text": "廠別解析規則說明｜系統會先檢查是否有專屬的規則來決定廠別，如果沒有找到專屬規則，則會依照預設的順序進行判斷；若所有規則都無法判定，則回傳空值。",
+      "approved": false,
+      "sourceSectionHash": "ef3a53b94dbe796d9eb69fdf9bb988b2a0290a25f1716cbf69387e100d953658"
+    },
+    {
+      "slug": "code-core-idocnumberservice-11435c9c",
+      "lang": "zh",
+      "headingPath": "系統共用 › 取號同時自我校準：起跳值取「同一業務日期下各種重置週期期別鍵」的",
+      "text": "取號時會自動校準序列號｜系統在取得新的單據編號時，會根據當天業務日期和不同的週期設定來決定起始的序號。如果過去的期別鍵有被修改過（例如從年級變為月級），雖然新建立的期別鍵會從 1 開始計算，但原有的單據日期區間不會改變，因此系統會檢查是否已經用過或重複了編號，並自動接續使用當天同一日期的其他相關期別所使用的序號，確保無論資料是透過何種方式修改或建立的，都能正確銜接編號。",
+      "approved": true,
+      "sourceSectionHash": "dbebf007cedd3fb2558c19208321b71e3365aa1fa028655599c155c1d459638a"
+    },
+    {
+      "slug": "code-core-idocnumberservice-96403f5d",
+      "lang": "zh",
+      "headingPath": "系統共用 › 共用預設規則的廠別共用同一條序號",
+      "text": "序號生成規則說明｜共用預設規則所設定的廠別會使用同一條連續編號，且這個編號在不同廠區間不會重複；而有專屬規則的廠別則會各自獨立起算新的編號。",
+      "approved": true,
+      "sourceSectionHash": "d0dcf14ba2f6d21ad814f6ac98e51e3944b234bcff17d52859c52a0c51ea9629"
+    },
+    {
+      "slug": "code-core-idocnumberservice-88fab178",
+      "lang": "zh",
+      "headingPath": "系統共用 › 廠別解析：專屬規則優先，回退預設",
+      "text": "廠別解析的優先順序｜系統會先看這個廠別有沒有專屬的編號規則，**被停用的專屬規則視同沒有設定**；沒有專屬規則時才回到預設規則。兩者都沒有，取號時會明確告知該廠別尚未設定編號規則。",
+      "approved": true,
+      "sourceSectionHash": "cafd6a4b3a046f3c0c6032ef80b28c4fa007f200325d83d73ed36fbeeb5c86a9"
+    },
+    {
+      "slug": "code-core-idocnumberservice-71815142",
+      "lang": "zh",
+      "headingPath": "系統共用 › 優先使用不變的",
+      "text": "取得範圍鍵值判斷規則｜系統會優先使用一個固定的範圍識別碼；如果這個範圍識別碼沒有設定（例如處理舊資料或測試物件），則會改用廠別的識別碼來維持相容性。",
+      "approved": true,
+      "sourceSectionHash": "7746054cbc678f987353b95fcfc27e6302cb94e49e9dd20c0ad5dc3ee2faf938"
+    },
+    {
+      "slug": "code-core-idocnumberservice-e86ca480",
+      "lang": "zh",
+      "headingPath": "系統共用 › 兩設定的編號規則指紋是否相同",
+      "text": "編號規則需區分不同廠別｜兩個不同的使用單位，如果它們的編號生成規則（包含前置碼、分隔符和日期格式）相同，則會產生相同的單據字串。因此，同一類型的單據，在不同廠別的設定中，其編號生成規則必須有所不同。",
+      "approved": true,
+      "sourceSectionHash": "e8fa83b84a333c41c5ca4830e074322b5eb21cdfe10c67b001266f84eafec51b"
+    },
+    {
+      "slug": "code-core-idocnumberservice-74d2838c",
+      "lang": "zh",
+      "headingPath": "系統共用 › 重置週期與日期格式的組合是否不會重發單號：",
+      "text": "單號重複發放的日期區分規則｜若進行序號重置，所使用的單號日期範圍必須足夠明確地將前後不同期間的資料區分開來，否則可能會導致相同的單號再次出現。月度重置時需要包含年和月資訊；年度重置時至少需要包含年份資訊；如果設定為永不重置，則沒有此限制。",
+      "approved": true,
+      "sourceSectionHash": "b6fae29f6a9c99a77a50f48c8a4250724d0b87d84955fc94f55b1a4428043788"
+    },
+    {
+      "slug": "code-core-idocnumberservice-e6f5a268",
+      "lang": "zh",
+      "headingPath": "系統共用 › 同一業務日期在各重置週期下的期別鍵",
+      "text": "同一業務日期的單號產生規則｜在同一個業務日期內，不同重置週期所產生的單據編號會共用相同的日期字串；當期別鍵更換時，這些舊的單號可能會被重新編號，因此取號起跳值必須採用所有相關鍵中最大的那個數值。",
+      "approved": true,
+      "sourceSectionHash": "15c32dee4815c44e67ad8889142a0f11ce4da246b93e528f3b5697afbdcd4d97"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = Model.IsChinese ? "隱私權政策" : "Privacy Policy";
+}
+<div class="container py-3 privacy-policy">
+    <h1 class="h3 mb-1">@ViewData["Title"]</h1>
+    <partial name="@(Model.IsChinese ? "_PrivacyContent.zh-TW" : "_PrivacyContent.en-US")" model="Model" />
+    @if (Model.ExtraPartial != null)
+    {
+        <partial name="@Model.ExtraPartial" model="Model" />
+    }
+    <partial name="@(Model.IsChinese ? "_PrivacyContact.zh-TW" : "_PrivacyContact.en-US")" model="Model" />
+</div>

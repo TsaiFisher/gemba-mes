@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>Field Telemetry</value></data>
+  <data name="MethodHint" xml:space="preserve"><value>Phones report once a minute: page errors, response times and failures per API, how long they were offline, and how much data is still waiting on the phone. Phone clocks are not trusted, so all times are when the server received the report; data is kept for 30 days.</value></data>
+  <data name="Period" xml:space="preserve"><value>Period</value></data>
+  <data name="Last24h" xml:space="preserve"><value>Last 24 hours</value></data>
+  <data name="Last7d" xml:space="preserve"><value>Last 7 days</value></data>
+  <data name="Last30d" xml:space="preserve"><value>Last 30 days</value></data>
+  <data name="KpiErrors" xml:space="preserve"><value>Page errors</value></data>
+  <data name="KpiSlow" xml:space="preserve"><value>API calls over 3 s</value></data>
+  <data name="KpiSlowSub" xml:space="preserve"><value>{0} of {1} calls; {2} unreachable or failed</value></data>
+  <data name="KpiOffline" xml:space="preserve"><value>Disconnections</value></data>
+  <data name="KpiOfflineSub" xml:space="preserve"><value>{0} minutes in total</value></data>
+  <data name="KpiPending" xml:space="preserve"><value>Phones with unsent data</value></data>
+  <data name="KpiPendingSub" xml:space="preserve"><value>{0} phones reported in this period</value></data>
+  <data name="Devices" xml:space="preserve"><value>Phones</value></data>
+  <data name="Device" xml:space="preserve"><value>Phone</value></data>
+  <data name="User" xml:space="preserve"><value>User</value></data>
+  <data name="LastSeen" xml:space="preserve"><value>Last report</value></data>
+  <data name="Pending" xml:space="preserve"><value>Unsent</value></data>
+  <data name="OldestMin" xml:space="preserve"><value>Oldest (min)</value></data>
+  <data name="Network" xml:space="preserve"><value>Network</value></data>
+  <data name="Version" xml:space="preserve"><value>Version</value></data>
+  <data name="TopErrors" xml:space="preserve"><value>Top page errors</value></data>
+  <data name="Message" xml:space="preserve"><value>Message</value></data>
+  <data name="Page" xml:space="preserve"><value>Page</value></data>
+  <data name="Count" xml:space="preserve"><value>Count</value></data>
+  <data name="DeviceCount" xml:space="preserve"><value>Phones</value></data>
+  <data name="NoErrors" xml:space="preserve"><value>No page errors in this period</value></data>
+  <data name="NoData" xml:space="preserve"><value>No data in this period</value></data>
+  <data name="Endpoints" xml:space="preserve"><value>API response times and failures</value></data>
+  <data name="Endpoint" xml:space="preserve"><value>API</value></data>
+  <data name="Calls" xml:space="preserve"><value>Calls</value></data>
+  <data name="AvgMs" xml:space="preserve"><value>Average (ms)</value></data>
+  <data name="MaxMs" xml:space="preserve"><value>Longest (ms)</value></data>
+  <data name="Slow3To10" xml:space="preserve"><value>3–10 s</value></data>
+  <data name="Over10s" xml:space="preserve"><value>Over 10 s</value></data>
+  <data name="Failures" xml:space="preserve"><value>Unreachable / failed</value></data>
+  <data name="Recent" xml:space="preserve"><value>Recent events</value></data>
+  <data name="AllKinds" xml:space="preserve"><value>All kinds</value></data>
+  <data name="ReceivedAt" xml:space="preserve"><value>Received</value></data>
+  <data name="Kind" xml:space="preserve"><value>Kind</value></data>
+  <data name="Detail" xml:space="preserve"><value>Details</value></data>
+  <data name="OfflineFmt" xml:space="preserve"><value>Offline for {0} s</value></data>
+  <data name="QueueFmt" xml:space="preserve"><value>{0} unsent, oldest waiting {1} min</value></data>
+  <data name="Kind_Error" xml:space="preserve"><value>Page error</value></data>
+  <data name="Kind_Rejection" xml:space="preserve"><value>Unhandled error</value></data>
+  <data name="Kind_ApiStats" xml:space="preserve"><value>API statistics</value></data>
+  <data name="Kind_Offline" xml:space="preserve"><value>Offline</value></data>
+  <data name="Kind_Queue" xml:space="preserve"><value>Unsent queue</value></data>
+  <data name="Apply" xml:space="preserve"><value>Apply</value></data>
+  <data name="Conflicts" xml:space="preserve"><value>Conflicts</value></data>
+  <data name="ConflictsHint" xml:space="preserve"><value>Returned 409: someone else changed the same document at the same moment and three server retries still conflicted. The entry was not saved; the phone queue resends it.</value></data>
+  <data name="KpiConflictSub" xml:space="preserve"><value>{0} still conflicting after retries</value></data>
+</root>

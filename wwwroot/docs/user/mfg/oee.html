@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="OEE Overall Equipment Effectiveness — MFG User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OEE 設備綜合效率 — MFG 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">MFG 目錄</span><span lang="en">MFG contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">MFG 畫面</span><span lang="en">MFG screens</span></div>
+    <a href="routing.html" class="nav-link"><span lang="zh">途程主檔</span><span lang="en">Routing Master</span></a>
+    <a href="multi-level-bom.html" class="nav-link"><span lang="zh">多階料表</span><span lang="en">Multi-Level BOM</span></a>
+    <a href="multi-level-routing.html" class="nav-link"><span lang="zh">多階途程</span><span lang="en">Multi-Level Routing</span></a>
+    <a href="work-calendar.html" class="nav-link"><span lang="zh">工作日曆</span><span lang="en">Work Calendar</span></a>
+    <a href="planned-downtime.html" class="nav-link"><span lang="zh">計劃停機</span><span lang="en">Planned Downtime</span></a>
+    <a href="mrp-run.html" class="nav-link"><span lang="zh">MRP 執行</span><span lang="en">MRP Run</span></a>
+    <a href="work-order.html" class="nav-link"><span lang="zh">工單查詢</span><span lang="en">Work Orders</span></a>
+    <a href="production-batch.html" class="nav-link"><span lang="zh">生產批查詢</span><span lang="en">Production Batches</span></a>
+    <a href="batch-release.html" class="nav-link"><span lang="zh">生產批投產</span><span lang="en">Batch Release</span></a>
+    <a href="../osp/outsource-purchase-order.html" class="nav-link"><span lang="zh">委外採購單</span><span lang="en">Outsource purchase order</span></a>
+    <a href="../osp/outsource-quotation.html" class="nav-link"><span lang="zh">委外報價主檔</span><span lang="en">Outsource Quotation</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="schedule-query.html" class="nav-link"><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></a>
+    <a href="preparation-board.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="line-status.html" class="nav-link"><span lang="zh">產線即時看板</span><span lang="en">Production Line Status</span></a>
+    <a href="dispatch.html" class="nav-link"><span lang="zh">派工作業</span><span lang="en">Dispatch Operations</span></a>
+    <a href="production-completion.html" class="nav-link"><span lang="zh">完工入庫</span><span lang="en">Production Putaway</span></a>
+    <a href="machine-status-order.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status Events</span></a>
+    <a href="material-slip.html" class="nav-link"><span lang="zh">發退料單</span><span lang="en">Material Slips</span></a>
+    <a href="work-order-material-status.html" class="nav-link"><span lang="zh">工單用料狀況</span><span lang="en">WO Material Status</span></a>
+    <a href="work-order-variance.html" class="nav-link"><span lang="zh">工單成本差異</span><span lang="en">WO Cost Variance</span></a>
+    <a href="order-change-decision.html" class="nav-link"><span lang="zh">訂單變更決策</span><span lang="en">Order Change Decision</span></a>
+    <a href="mrp-variance-decision.html" class="nav-link"><span lang="zh">MRP 對帳差異決策</span><span lang="en">MRP Variance Decisions</span></a>
+    <a href="work-order-progress.html" class="nav-link"><span lang="zh">工單進度報表</span><span lang="en">Work Order Progress</span></a>
+    <a href="defect-rate.html" class="nav-link"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a>
+    <a href="wip-report.html" class="nav-link"><span lang="zh">在製品報表</span><span lang="en">WIP Report</span></a>
+    <a href="utilization.html" class="nav-link"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>
+    <a href="production-efficiency.html" class="nav-link"><span lang="zh">生產效率分析</span><span lang="en">Production Efficiency</span></a>
+    <a href="oee.html" class="nav-link active"><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></a>
+    <a href="machine-downtime.html" class="nav-link"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>
+    <a href="material-slip-progress.html" class="nav-link"><span lang="zh">備料進度追蹤</span><span lang="en">Material Slip Progress</span></a>
+    <a href="mrp-achievement.html" class="nav-link"><span lang="zh">MRP 達成率</span><span lang="en">MRP attainment</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-speedometer me-2 text-primary"></i><span lang="zh">OEE 設備綜合效率</span><span lang="en">OEE overall equipment effectiveness</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/Oee &nbsp;|&nbsp; OEE ＝ 稼動率 × 產能效率 × 良率</span><span lang="en">Route: /Oee &nbsp;|&nbsp; OEE = Availability × Performance × Quality</span></div>
+    </div>
+
+    <p><span lang="zh">依國際慣例計算 OEE：稼動率（實際稼動/計畫時間，計畫時間取自工作日曆班別工時）× 產能效率（理想工時/稼動時間，理想工時＝產出 × 標準 UnitTime）× 良率（良品/總產出）。可依機台與期間檢視三因子拆解，找出損失最大來源。</span><span lang="en">Calculates OEE the standard way: Availability (actual run time / planned time, planned time taken from the work calendar shift hours) × Performance (ideal time / run time, where ideal time = output × standard UnitTime) × Quality (good pieces / total output). The three factors can be broken down by machine and period to find the biggest source of loss.</span></p>
+    <img class="screen-shot" src="img/oee.png" data-src-en="img/en/oee.png" alt="OEE 設備綜合效率畫面截圖" data-alt-en="OEE screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">OEE 設備綜合效率畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">OEE screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">附三因子拆解圖，滑鼠移入顯示各因子計算明細。</span><span lang="en">A breakdown chart of the three factors is included; hover to see how each one is calculated.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">機台</span><span lang="en">Machine</span></td><td><span lang="zh">只看單一機台；留空為全部機台</span><span lang="en">One machine only; leave blank for all machines</span></td></tr>
+        <tr><td><span lang="zh">起日 / 迄日</span><span lang="en">From / To</span></td><td><span lang="zh">納入統計的生產日期區間</span><span lang="en">Production date range included in the statistics</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">機台 / 品號</span><span lang="en">Machine / Item</span></td><td><span lang="zh">統計的設備與生產料件</span><span lang="en">Machine and produced item in the statistics</span></td></tr>
+        <tr><td><span lang="zh">計畫工時(分)</span><span lang="en">Planned (min)</span></td><td><span lang="zh">依工作日曆（正班＋加班）換算的計畫生產分鐘數，為可用率的分母</span><span lang="en">Planned production minutes from the work calendar (regular + overtime), the denominator of availability</span></td></tr>
+        <tr><td><span lang="zh">稼動工時(分)</span><span lang="en">Run (min)</span></td><td><span lang="zh">設備實際運轉加工的分鐘數</span><span lang="en">Minutes the machine was actually running</span></td></tr>
+        <tr><td><span lang="zh">理想工時(分)</span><span lang="en">Ideal (min)</span></td><td><span lang="zh">總產出 × 標準單位工時，即完全無損耗時應花的分鐘數</span><span lang="en">Total output × standard unit time, i.e. the minutes it would take with no loss at all</span></td></tr>
+        <tr><td><span lang="zh">總產出 / 良品</span><span lang="en">Total output / Good</span></td><td><span lang="zh">區間內的總生產數與其中的良品數</span><span lang="en">Total output in the period and the good pieces within it</span></td></tr>
+        <tr><td><span lang="zh">可用率</span><span lang="en">Availability</span></td><td><span lang="zh">稼動工時 ÷ 計畫工時，反映設備有多少計畫時間真正在運轉</span><span lang="en">Run hours ÷ planned hours, showing how much of the planned time the machine was really running</span></td></tr>
+        <tr><td><span lang="zh">表現性</span><span lang="en">Performance</span></td><td><span lang="zh">理想工時 ÷ 稼動工時，反映運轉期間的速度是否達標</span><span lang="en">Ideal hours ÷ run hours, showing whether the speed during running met the standard</span></td></tr>
+        <tr><td><span lang="zh">良率</span><span lang="en">Yield</span></td><td><span lang="zh">良品 ÷ 總產出，反映產出品質</span><span lang="en">Good pieces ÷ total output, a measure of output quality</span></td></tr>
+        <tr><td>OEE</td><td><span lang="zh">可用率 × 表現性 × 良率。各比率上限截頂為 100%，避免資料雜訊造成失真</span><span lang="en">Availability × Performance × Quality. Each ratio is capped at 100% so that noisy data does not distort the result</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="utilization.html"><span lang="zh">工作中心稼動率</span><span lang="en">Work center utilisation</span></a>、<a href="machine-downtime.html"><span lang="zh">機台停機分析</span><span lang="en">Machine Downtime</span></a>、<a href="defect-rate.html"><span lang="zh">不良率報表</span><span lang="en">Defect rate report</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

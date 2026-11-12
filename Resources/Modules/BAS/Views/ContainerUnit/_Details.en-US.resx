@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="ContainerUnitId" xml:space="preserve"><value>Box No.</value></data>
+  <data name="ContainerCode" xml:space="preserve"><value>Container Type</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="StatusEmpty" xml:space="preserve"><value>Empty</value></data>
+  <data name="StatusInUse" xml:space="preserve"><value>In use</value></data>
+  <data name="StatusInactive" xml:space="preserve"><value>Inactive</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>Item</value></data>
+  <data name="LotNo" xml:space="preserve"><value>Lot No.</value></data>
+  <data name="Qty" xml:space="preserve"><value>Qty</value></data>
+  <data name="PrintLabel" xml:space="preserve"><value>Print label</value></data>
+  <data name="ContentTitle" xml:space="preserve"><value>Current contents</value></data>
+  <data name="BoundDocNo" xml:space="preserve"><value>Filled by document</value></data>
+  <data name="LocationCode" xml:space="preserve"><value>Location</value></data>
+  <data name="SplitLocationsHint" xml:space="preserve"><value>This box's lot is in more than one location: part of the contents was taken out and moved elsewhere. Check the physical box.</value></data>
+  <data name="EmptyHint" xml:space="preserve"><value>Empty: ready to be filled. A box counts as empty automatically once its lot has been issued out (zero on hand).</value></data>
+  <data name="HistoryTitle" xml:space="preserve"><value>History (latest 50)</value></data>
+  <data name="OccurredAt" xml:space="preserve"><value>Time</value></data>
+  <data name="Action" xml:space="preserve"><value>Action</value></data>
+  <data name="DocNo" xml:space="preserve"><value>Document</value></data>
+  <data name="Action_Create" xml:space="preserve"><value>Created</value></data>
+  <data name="Action_Bind" xml:space="preserve"><value>Filled</value></data>
+  <data name="Action_Clear" xml:space="preserve"><value>Cleared</value></data>
+  <data name="Action_Deactivate" xml:space="preserve"><value>Deactivated</value></data>
+  <data name="Action_Activate" xml:space="preserve"><value>Activated</value></data>
+  <data name="Clear" xml:space="preserve"><value>Clear</value></data>
+  <data name="ConfirmClear" xml:space="preserve"><value>Clear this box? This only removes the link between the box and the lot; stock is not changed.</value></data>
+  <data name="Deactivate" xml:space="preserve"><value>Deactivate</value></data>
+  <data name="Activate" xml:space="preserve"><value>Activate</value></data>
+  <data name="ConfirmDeactivate" xml:space="preserve"><value>Deactivate this box? It can no longer be filled.</value></data>
+  <data name="ConfirmActivate" xml:space="preserve"><value>Reactivate this box?</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="StatusInWip" xml:space="preserve"><value>In process</value></data>
+  <data name="WorkOrderId" xml:space="preserve"><value>Work order</value></data>
+  <data name="OperationSeq" xml:space="preserve"><value>Operation</value></data>
+  <data name="WipQty" xml:space="preserve"><value>Quantity loaded</value></data>
+  <data name="WipHint" xml:space="preserve"><value>This is the quantity recorded when production was reported into the box (not inventory). The next operation takes the box over by scanning it when reporting; choosing it at completion receipt turns it into an in-stock lot; once the work order is closed or voided the box counts as empty.</value></data>
+  <data name="Action_WipLoad" xml:space="preserve"><value>Loaded at report</value></data>
+  <data name="StatusOffsite" xml:space="preserve"><value>Off-site</value></data>
+  <data name="OutDoc" xml:space="preserve"><value>Left with</value></data>
+  <data name="OutParty" xml:space="preserve"><value>Party</value></data>
+  <data name="OffsiteHint" xml:space="preserve"><value>All of this lot left the plant with the document above, so the box is not here. When the box comes back, click "Recover" (or scan a batch with "Recover" above the list) and it becomes empty again.</value></data>
+  <data name="Recover" xml:space="preserve"><value>Recover</value></data>
+  <data name="ConfirmRecover" xml:space="preserve"><value>Is the box back in the plant? Recovering makes it empty.</value></data>
+  <data name="Action_Recover" xml:space="preserve"><value>Recovered</value></data>
+  <data name="OutType_GS" xml:space="preserve"><value>Sales shipment</value></data>
+  <data name="OutType_SO" xml:space="preserve"><value>Sample shipment</value></data>
+  <data name="OutType_CR" xml:space="preserve"><value>Customer-supplied return</value></data>
+  <data name="OutType_IL" xml:space="preserve"><value>Loan out</value></data>
+  <data name="OutType_BR" xml:space="preserve"><value>Loan-in return</value></data>
+  <data name="OutType_PF" xml:space="preserve"><value>Purchase return</value></data>
+  <data name="OutType_OT" xml:space="preserve"><value>Outsource receipt return</value></data>
+  <data name="OutType_OO" xml:space="preserve"><value>Outsource issue</value></data>
+  <data name="OutType_NO" xml:space="preserve"><value>Internal order issue</value></data>
+  <data name="OutType_XP" xml:space="preserve"><value>Cross-plant transfer out</value></data>
+  <data name="Pack" xml:space="preserve"><value>Pack</value></data>
+</root>

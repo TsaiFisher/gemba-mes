@@ -1,0 +1,137 @@
+@model SmartFactory.MES.Modules.FIN.Models.ManualAPInvoiceViewModel
+@using SmartFactory.MES.Modules.BAS.Services
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+
+@{
+    var supplierOptions = ViewBag.SupplierOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var accountOptions  = ViewBag.AccountOptions  as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var taxOptions      = ViewBag.TaxOptions      as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var currencies      = ViewBag.Currencies      as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var baseCurrency    = ViewBag.BaseCurrency as string ?? "";
+    var currencyDecimals = ViewBag.CurrencyDecimals as IReadOnlyDictionary<string, int>;
+    var moneyStep = CurrencyStepHelper.GetStep(currencyDecimals, Model.CurrencyCode ?? baseCurrency);
+}
+
+<form id="manualApInvoiceForm" method="post" asp-action="CreateManual"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+
+    <div class="p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+        <div class="alert alert-warning py-2 small">
+            <i class="bi bi-exclamation-triangle me-1"></i>@L["ManualInvoiceScopeWarning"]
+        </div>
+
+        <div class="row g-3">
+            <div class="col-12 col-md-6">
+                <label asp-for="SupplierCode" class="form-label fw-semibold">@L["SupplierCode"] <span class="text-danger">*</span></label>
+                <select asp-for="SupplierCode" class="form-select select2-enable w-100">
+                    <option value=""></option>
+                    @foreach (var s in supplierOptions)
+                    {
+                        <option value="@s.CompanyCode">@s.CompanyCode — @s.CompanyName</option>
+                    }
+                </select>
+                <span asp-validation-for="SupplierCode" class="text-danger small"></span>
+            </div>
+            <div class="col-6 col-md-3">
+                <label asp-for="InvoiceDate" class="form-label fw-semibold">@L["InvoiceDate"] <span class="text-danger">*</span></label>
+                <input asp-for="InvoiceDate" type="date" class="form-control" />
+                <span asp-validation-for="InvoiceDate" class="text-danger small"></span>
+            </div>
+            <div class="col-6 col-md-3">
+                <label asp-for="DueDate" class="form-label fw-semibold">@L["DueDate"] <span class="text-danger">*</span></label>
+                <input asp-for="DueDate" type="date" class="form-control" />
+                <span asp-validation-for="DueDate" class="text-danger small"></span>
+            </div>
+            <div class="col-6 col-md-3">
+                <label asp-for="CurrencyCode" class="form-label fw-semibold">@L["CurrencyCode"]</label>
+                <select asp-for="CurrencyCode" class="form-select">
+                    @foreach (var c in currencies)
+                    {
+                        <option value="@c.CurrencyCode">@c.CurrencyCode</option>
+                    }
+                </select>
+                <span asp-validation-for="CurrencyCode" class="text-danger small"></span>
+            </div>
+            <div class="col-6 col-md-3">
+                <label asp-for="ExchangeRate" class="form-label fw-semibold">@L["ExchangeRate"]</label>
+                @* 留空＝依發票日自動查買入匯率；不預填數字，免得使用者以為那是查出來的值。 *@
+                <input asp-for="ExchangeRate" type="number" step="any" min="0" class="form-control"
+                       placeholder="@L["ExchangeRateAutoHint"]" value="" />
+                <span asp-validation-for="ExchangeRate" class="text-danger small"></span>
+            </div>
+            <div class="col-12 col-md-6">
+                <label asp-for="Remarks" class="form-label fw-semibold">@L["Remarks"]</label>
+                <input asp-for="Remarks" class="form-control" maxlength="500" />
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <hr class="my-3" />
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0">@L["InvoiceLines"] <span class="text-danger">*</span></h6>
+            <button type="button" class="btn btn-sm btn-outline-primary" data-action="addManualLine">
+                <i class="bi bi-plus-lg me-1"></i>@L["AddLine"]
+            </button>
+        </div>
+        <span asp-validation-for="Lines" class="text-danger small"></span>
+
+        <div class="table-responsive">
+            <table class="table table-sm align-middle" id="manualLineTable">
+                <thead class="table-light">
+                    <tr>
+                        <th class="u-width-200px">@L["ExpenseAccount"] <span class="text-danger">*</span></th>
+                        <th>@L["Description"]</th>
+                        <th class="u-width-80px">@L["Qty"]</th>
+                        <th class="u-width-120px">@L["UnitPrice"]</th>
+                        <th class="u-width-120px">@L["TaxCode"]</th>
+                        <th class="u-width-40px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Lines.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <select name="Lines[@i].AccountCode" class="form-select form-select-sm">
+                                    <option value=""></option>
+                                    @foreach (var a in accountOptions)
+                                    {
+                                        <option value="@a.AccountCode" selected="@(Model.Lines[i].AccountCode == (string)a.AccountCode)">@a.AccountCode — @a.AccountName</option>
+                                    }
+                                </select>
+                            </td>
+                            <td><input name="Lines[@i].Description" class="form-control form-control-sm" maxlength="500" value="@Model.Lines[i].Description" /></td>
+                            <td><input name="Lines[@i].Qty" type="number" step="any" min="0" class="form-control form-control-sm" value="@Model.Lines[i].Qty" /></td>
+                            <td><input name="Lines[@i].UnitPrice" type="number" step="@moneyStep" min="0" class="form-control form-control-sm" value="@Model.Lines[i].UnitPrice" /></td>
+                            <td>
+                                <select name="Lines[@i].TaxCode" class="form-select form-select-sm">
+                                    <option value=""></option>
+                                    @foreach (var t in taxOptions)
+                                    {
+                                        <option value="@t.TaxCode" selected="@(Model.Lines[i].TaxCode == (string)t.TaxCode)">@t.TaxCode (@t.TaxRate%)</option>
+                                    }
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-sm btn-link text-danger p-0" data-action="removeManualLine" title="@L["RemoveLine"]" aria-label="@L["RemoveLine"]">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-text">@L["ManualInvoiceAmountHint"]</div>
+    </div>
+
+    <div class="offcanvas-footer border-top p-3 d-flex gap-2">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>@L["Save"]</button>
+        <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="offcanvas">@L["Close"]</button>
+    </div>
+</form>

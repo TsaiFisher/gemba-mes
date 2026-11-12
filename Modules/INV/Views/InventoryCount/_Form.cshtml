@@ -1,0 +1,232 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SmartFactory.MES.Models
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Models.InventoryCountSheet
+
+@{
+    bool isNew      = string.IsNullOrEmpty(Model.SheetId);
+    bool isReadOnly = ViewBag.IsReadOnly == true;
+    bool canDelete  = !isNew && Model.SheetStatus == "Counting" && ViewBag.CanDelete == true;
+    bool canClose   = !isNew && Model.SheetStatus == "Counting" && ViewBag.CanUpdate == true;
+    bool canEdit    = isReadOnly && !isNew && Model.SheetStatus == "Counting" && ViewBag.CanUpdate == true;
+    var  whOptions  = ViewBag.WarehouseOptions as IEnumerable<dynamic>;
+    var  locOptions = ViewBag.LocationOptions as IEnumerable<dynamic>;
+    var  prodOptions = ViewBag.ProductOptions as IEnumerable<dynamic>;
+}
+
+<form id="sideForm" method="post"
+      action="@Url.Action(isNew ? "Create" : $"Edit/{Model.SheetId}")"
+      data-action-submit="@(isNew ? "submitInventoryCountCreate" : "submitPanel")">
+    @Html.AntiForgeryToken()
+    @if (!isNew) { <input type="hidden" name="id" value="@Model.SheetId" /> }
+
+    <div class="offcanvas-body">
+        @if (!isNew)
+        {
+            var statusBadge = Model.SheetStatus switch {
+                "Counting" => "bg-primary", "Closing" => "bg-warning text-dark",
+                "Closed"   => "bg-success", _         => "bg-dark"
+            };
+            <div class="mb-3 d-flex gap-2 align-items-center">
+                <span class="badge @statusBadge">@Localizer[Model.SheetStatus]</span>
+                @if (Model.ClosedAt.HasValue)
+                { <span class="text-muted small">@Localizer["Closed"]：@Model.ClosedAt.Value.ToString("yyyy-MM-dd")</span> }
+            </div>
+        }
+
+        <fieldset @(isReadOnly ? "disabled" : "")>
+            <!-- 盤點模式 -->
+            <div class="mb-3">
+                <label class="form-label small fw-semibold">@Localizer["CountMode"] <span class="text-danger">*</span></label>
+                <div class="d-flex gap-3">
+                    @foreach (var m in new[] { "WithSheet", "WithoutSheet" })
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" asp-for="CountMode"
+                                   value="@m" id="cm_@m" data-action-change="toggleRangeFields" />
+                            <label class="form-check-label" for="cm_@m">@Localizer[m]</label>
+                        </div>
+                    }
+                </div>
+                <span asp-validation-for="CountMode" class="text-danger small"></span>
+            </div>
+
+            <!-- 盤點範圍（WithSheet 才顯示） -->
+            <div id="rangeFields" class="@(Model.CountMode == "WithoutSheet" ? "d-none" : "")">
+                <h6 class="fw-semibold small text-muted mb-2">@Localizer["RangeSection"]</h6>
+                <div class="row g-2 mb-2">
+                    <div class="col-6">
+                        <label class="form-label small">@Localizer["WhFrom"]</label>
+                        <select asp-for="WhCodeFrom" class="form-select form-select-sm">
+                            <option value="">—</option>
+                            @if (whOptions != null)
+                            { @foreach (dynamic w in whOptions)
+                              { <option value="@w.WhCode" selected="@(Model.WhCodeFrom == w.WhCode)">@w.WhCode</option> }
+                            }
+                        </select>
+                        <span asp-validation-for="WhCodeFrom" class="text-danger small"></span>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">@Localizer["WhTo"]</label>
+                        <select asp-for="WhCodeTo" class="form-select form-select-sm">
+                            <option value="">—</option>
+                            @if (whOptions != null)
+                            { @foreach (dynamic w in whOptions)
+                              { <option value="@w.WhCode" selected="@(Model.WhCodeTo == w.WhCode)">@w.WhCode</option> }
+                            }
+                        </select>
+                        <span asp-validation-for="WhCodeTo" class="text-danger small"></span>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">@Localizer["LocFrom"]</label>
+                        <select asp-for="LocCodeFrom" class="form-select form-select-sm">
+                            <option value="">—</option>
+                            @if (locOptions != null)
+                            { @foreach (dynamic l in locOptions)
+                              { <option value="@l.LocationCode" selected="@(Model.LocCodeFrom == l.LocationCode)">@l.LocationCode — @l.LocationName</option> }
+                            }
+                        </select>
+                        <span asp-validation-for="LocCodeFrom" class="text-danger small"></span>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">@Localizer["LocTo"]</label>
+                        <select asp-for="LocCodeTo" class="form-select form-select-sm">
+                            <option value="">—</option>
+                            @if (locOptions != null)
+                            { @foreach (dynamic l in locOptions)
+                              { <option value="@l.LocationCode" selected="@(Model.LocCodeTo == l.LocationCode)">@l.LocationCode — @l.LocationName</option> }
+                            }
+                        </select>
+                        <span asp-validation-for="LocCodeTo" class="text-danger small"></span>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">@Localizer["ProdFrom"]</label>
+                        <select asp-for="ProdCodeFrom" class="form-select form-select-sm select2-enable w-100"
+                                data-placeholder="—" data-allow-clear="true">
+                            <option value=""></option>
+                            @if (prodOptions != null)
+                            { @foreach (dynamic p in prodOptions)
+                              { <option value="@p.ProductCode" selected="@(Model.ProdCodeFrom == p.ProductCode)">@p.ProductCode — @p.ProductName</option> }
+                            }
+                        </select>
+                        <span asp-validation-for="ProdCodeFrom" class="text-danger small"></span>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small">@Localizer["ProdTo"]</label>
+                        <select asp-for="ProdCodeTo" class="form-select form-select-sm select2-enable w-100"
+                                data-placeholder="—" data-allow-clear="true">
+                            <option value=""></option>
+                            @if (prodOptions != null)
+                            { @foreach (dynamic p in prodOptions)
+                              { <option value="@p.ProductCode" selected="@(Model.ProdCodeTo == p.ProductCode)">@p.ProductCode — @p.ProductName</option> }
+                            }
+                        </select>
+                        <span asp-validation-for="ProdCodeTo" class="text-danger small"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small">@Localizer["Remarks"]</label>
+                <input asp-for="Remarks" class="form-control form-control-sm" maxlength="500" />
+                <span asp-validation-for="Remarks" class="text-danger small"></span>
+            </div>
+        </fieldset>
+
+        <hr class="my-2" />
+
+        <div class="d-flex flex-wrap gap-2 justify-content-end">
+            @if (isReadOnly)
+            {
+                @if (canEdit)
+                {
+                    <a class="btn btn-outline-primary btn-sm"
+                       href="@Url.Action("Edit", new { id = Model.SheetId })"
+                       data-action="openPanel"
+                       data-url="@Url.Action("Edit", new { id = Model.SheetId })" data-label="@Model.SheetId">
+                        <i class="bi bi-pencil me-1"></i>@Localizer["Edit"]
+                    </a>
+                }
+                @if (canClose)
+                {
+                    <button type="button" class="btn btn-success btn-sm"
+                            data-action="closeSheet" data-id="@Model.SheetId">
+                        <i class="bi bi-check2-square me-1"></i>@Localizer["CloseBtn"]
+                    </button>
+                }
+                @if (canDelete)
+                {
+                    <button type="button" class="btn btn-outline-danger btn-sm"
+                            data-action="deleteItem"
+                            data-url="@Url.Action("DeleteConfirmed")" data-id="@Model.SheetId" data-confirm="@Localizer["DeleteConfirm"]">
+                        <i class="bi bi-trash me-1"></i>@Localizer["Delete"]
+                    </button>
+                }
+                <button type="button" class="btn btn-secondary btn-sm" data-action="closeSidePanel">@Localizer["Close"]</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-secondary btn-sm" data-action="closeSidePanel">@Localizer["Cancel"]</button>
+                <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-save me-1"></i>@Localizer["Save"]</button>
+            }
+        </div>
+    </div>
+</form>
+
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+if (window.jQuery) {
+    jQuery('.select2-enable').each(function () {
+        jQuery(this).select2({ theme: 'bootstrap-5', width: '100%', placeholder: jQuery(this).data('placeholder'), allowClear: Boolean(jQuery(this).data('allow-clear')) });
+    });
+}
+function toggleRangeFields() {
+    var mode = document.querySelector('input[name="CountMode"]:checked')?.value;
+    document.getElementById('rangeFields')?.classList.toggle('d-none', mode === 'WithoutSheet');
+}
+// Create 專用送出：Index 採「先查詢才顯示清單」設計（hasSearched 預設 false），
+// 通用 submitPanel 的 refreshList() 只會重新整理「當前網址」，若使用者尚未查詢過就直接建立，
+// reload 後仍停在未查詢的提示畫面 → 誤以為「儲存成功但查不到新增資料」。
+// 故新增時導向帶 searched=true 的 Index，確保新清冊必定可見。
+function submitInventoryCountCreate(e, el) {
+    var fd = new FormData(el);
+    fetch(el.action, {
+        method: 'POST', body: fd,
+        headers: { 'X-Requested-With': 'XMLHttpRequest', 'RequestVerificationToken': document.querySelector('[name="__RequestVerificationToken"]')?.value ?? '' }
+    }).then(function (r) { return r.text(); }).then(function (html) {
+        var trimmed = html.replace(/^\s+/, '');
+        if (trimmed.charAt(0) === '{') {
+            try {
+                var result = JSON.parse(trimmed);
+                if (result && typeof result.success !== 'undefined') {
+                    if (result.success) {
+                        window.toastSuccess();
+                        setTimeout(function () { window.location.href = '@Url.Action("Index", "InventoryCount", new { searched = true })'; }, 800);
+                    } else {
+                        alert(result.message || 'Error');
+                    }
+                    return;
+                }
+            } catch (err) { /* 非合法 JSON，視為驗證失敗的 partial HTML，fall through */ }
+        }
+        var body = document.getElementById('sidePanelBody');
+        body.innerHTML = trimmed;
+        body.scrollTop = 0;
+        window.execScripts(body);
+        window.armValidation(body);
+    }).catch(function (err) { console.error('submitInventoryCountCreate error:', err); });
+    return false;
+}
+function closeSheet(e, el) {
+    const id = el.dataset.id;
+    if (!confirm(window.i18n?.t('InventoryCountCloseConfirm') ?? 'Close this count sheet?')) return;
+    const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+    fetch('@Url.Action("Close")', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `id=${encodeURIComponent(id)}&__RequestVerificationToken=${encodeURIComponent(token)}`
+    }).then(r => r.json()).then(d => {
+        if (d.success) { window.toastSuccess?.(d.message); setTimeout(() => location.reload(), 900); }
+        else           { alert(d.message ?? (window.i18n?.t('OperationFailed') ?? 'Error')); }
+    });
+}
+</script>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Date" xml:space="preserve"><value>Date</value></data>
+  <data name="ShiftGroup" xml:space="preserve"><value>Shift Group</value></data>
+  <data name="SelectOptional" xml:space="preserve"><value>—— Please select (optional)</value></data>
+  <data name="WorkCenterOpt" xml:space="preserve"><value>Work Center (optional)</value></data>
+  <data name="AllPlantLayer" xml:space="preserve"><value>—— All-plant level</value></data>
+  <data name="MachineCodeOpt" xml:space="preserve"><value>Machine Code (optional)</value></data>
+  <data name="MachinePh" xml:space="preserve"><value>Blank = work-center level</value></data>
+  <data name="WorkStart" xml:space="preserve"><value>Start Time</value></data>
+  <data name="WorkStartHint" xml:space="preserve"><value>Blank = continuous 24h</value></data>
+  <data name="WorkEnd" xml:space="preserve"><value>End Time</value></data>
+  <data name="WorkEndHint" xml:space="preserve"><value>Earlier than start = crosses midnight</value></data>
+  <data name="RegHours" xml:space="preserve"><value>Regular Hours (hrs)</value></data>
+  <data name="OtHours" xml:space="preserve"><value>Overtime Hours (hrs)</value></data>
+  <data name="Note" xml:space="preserve"><value>Note</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+</root>

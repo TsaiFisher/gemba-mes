@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Finance (FIN) — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>財務管理（FIN）— SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">FIN 畫面</span><span lang="en">FIN screens</span></div>
+    <a href="chart-of-account.html" class="nav-link"><span lang="zh">會計科目</span><span lang="en">Chart of Accounts</span></a>
+    <a href="ap-invoice.html" class="nav-link"><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></a>
+    <a href="ar-invoice.html" class="nav-link"><span lang="zh">應收帳款</span><span lang="en">AR Invoice</span></a>
+    <a href="ar-credit-note.html" class="nav-link"><span lang="zh">銷貨折讓單</span><span lang="en">Sales Credit Note</span></a>
+    <a href="ap-debit-note.html" class="nav-link"><span lang="zh">進貨折讓單</span><span lang="en">Purchase Debit Note</span></a>
+    <a href="ap-payment.html" class="nav-link"><span lang="zh">付款作業</span><span lang="en">AP Payment</span></a>
+    <a href="ar-receipt.html" class="nav-link"><span lang="zh">收款作業</span><span lang="en">AR Receipt</span></a>
+    <a href="bank-account.html" class="nav-link"><span lang="zh">銀行帳戶</span><span lang="en">Bank Account</span></a>
+    <a href="ap-aging.html" class="nav-link"><span lang="zh">應付帳齡分析</span><span lang="en">AP Aging</span></a>
+    <a href="ar-aging.html" class="nav-link"><span lang="zh">應收帳齡分析</span><span lang="en">AR Aging</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-bank me-2 text-primary"></i><span lang="zh">財務管理（FIN）</span><span lang="en">Finance (FIN)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">應付/應收發票、付款/收款核銷、銀行帳戶與帳齡分析</span><span lang="en">AP and AR invoices, payment and receipt allocation, bank accounts and aging analysis</span></div>
+    </div>
+    <p><span lang="zh">FIN（Finance）模組管理收付款循環：進貨/委外收貨確認自動產生應付發票、出貨確認自動產生應收發票（亦可手開），付款/收款作業以核銷（Allocation）沖抵發票並即時更新銀行帳戶餘額。多幣別交易以交易日匯率入帳，結算時自動認列已實現匯兌損益（IAS 21）。帳齡分析協助掌握逾期應收/應付。</span><span lang="en">The FIN (Finance) module manages the payment and receipt cycle: confirming a goods or outsource receipt creates the AP invoice automatically, confirming a shipment creates the AR invoice (which can also be raised by hand), and payments and receipts allocate against the invoices and update the bank account balance immediately. Foreign currency transactions are booked at the transaction-date rate, and realised exchange gains and losses are recognised automatically on settlement (IAS 21). Aging analysis keeps overdue receivables and payables in view.</span></p>
+
+    <h2 id="core-flow"><i class="bi bi-signpost-2 me-2 text-primary"></i><span lang="zh">核心流程</span><span lang="en">Core flow</span></h2>
+    <div class="tip-box">
+      <span lang="zh">進貨/委外收貨 →</span><span lang="en">Goods or outsource receipt →</span> <strong><span lang="zh">應付發票</span><span lang="en">AP Invoice</span></strong> → <strong><span lang="zh">付款作業</span><span lang="en">AP Payment</span></strong><span lang="zh">（核銷）→ 銀行餘額更新</span><span lang="en"> (allocation) → bank balance updated</span><br>
+      <span lang="zh">出貨 →</span><span lang="en">Shipment →</span> <strong><span lang="zh">應收發票</span><span lang="en">AR invoice</span></strong> → <strong><span lang="zh">收款作業</span><span lang="en">AR Receipt</span></strong><span lang="zh">（核銷）→ 銀行餘額更新</span><span lang="en"> (allocation) → bank balance updated</span><br>
+      <span lang="zh">逾期監控：</span><span lang="en">Overdue monitoring: </span><strong><span lang="zh">應付/應收帳齡分析</span><span lang="en">AP / AR aging analysis</span></strong>
+    </div>
+    <h2 id="flow"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></h2>
+    <p class="small text-muted mb-2"><span lang="zh">依作業先後順序排列，點擊方塊可開啟該畫面的操作說明。</span><span lang="en">Arranged in the order the work is done; click a box to open the instructions for that screen. </span><strong><span lang="zh">虛線外框</span><span lang="en">A dashed outline</span></strong><span lang="zh">為其他模組的作業（以顏色區分模組）。</span><span lang="en"> marks a step in another module (colour-coded by module).</span></p>
+    <div class="flow">
+      <div class="flow-legend">
+        <span class="flow-legend-item m-fin"><i class="flow-dot"></i><span lang="zh">FIN 財務（本模組）</span><span lang="en">FIN Finance (this module)</span></span>
+        <span class="flow-legend-item m-pur"><i class="flow-dot"></i><span lang="zh">PUR 採購</span><span lang="en">PUR Purchasing</span></span>
+        <span class="flow-legend-item m-ord"><i class="flow-dot"></i><span lang="zh">ORD 訂單</span><span lang="en">ORD Orders</span></span>
+        <span class="flow-legend-item m-act"><i class="flow-dot"></i><span lang="zh">ACT 結帳</span><span lang="en">ACT Closing</span></span>
+        <span class="flow-legend-item m-bas"><i class="flow-dot"></i><span lang="zh">BAS 基本資料</span><span lang="en">BAS Master Data</span></span>
+        <span class="flow-legend-item m-osp"><i class="flow-dot"></i><span lang="zh">OSP 委外</span><span lang="en">OSP Outsource</span></span>
+        <span class="flow-legend-item"><i class="flow-dot flow-dot-ext"></i><span lang="zh">虛線＝其他模組作業</span><span lang="en">Dashed = a step in another module</span></span>
+      </div>
+
+      <div class="flow-row" id="flow-fin-payables-cycle">
+        <div class="flow-row-label"><span lang="zh">應付循環</span><span lang="en">The payables cycle</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-pur ext" href="../pur/goods-receipt.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">進貨單（貨進正常倉）</span><span lang="en">Goods receipt (stock into a normal warehouse)</span></span></a>
+          <span class="flow-plus">／</span>
+          <a class="flow-node m-osp ext" href="../osp/outsource-receipt.html"><span class="flow-mod">OSP</span><span class="flow-name"><span lang="zh">委外收貨</span><span lang="en">Outsource receipt</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="ap-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應付發票</span><span lang="en">AP Invoice</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="ap-payment.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">付款作業（核銷）</span><span lang="en">Payments (allocation)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="bank-account.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">銀行帳戶餘額</span><span lang="en">Bank account balance</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-fin-receivables-cycle">
+        <div class="flow-row-label"><span lang="zh">應收循環</span><span lang="en">The receivables cycle</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-ord ext" href="../ord/goods-shipment.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="ar-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應收發票</span><span lang="en">AR invoice</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="ar-receipt.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">收款作業（核銷）</span><span lang="en">Receipts (allocation)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="bank-account.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">銀行帳戶餘額</span><span lang="en">Bank account balance</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-fin-return-offset">
+        <div class="flow-row-label"><span lang="zh">退貨沖減</span><span lang="en">Return offset</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-pur ext" href="../pur/goods-return.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">進貨退出</span><span lang="en">Goods Return</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="ap-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應付沖減</span><span lang="en">AP offset</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-ord ext" href="../ord/sales-return.html"><span class="flow-mod">ORD</span><span class="flow-name"><span lang="zh">銷退單</span><span lang="en">Sales Return</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="ar-invoice.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應收沖減</span><span lang="en">AR offset</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-fin-overdue-monitoring">
+        <div class="flow-row-label"><span lang="zh">逾期監控</span><span lang="en">Overdue monitoring</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-fin" href="ap-aging.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應付帳齡分析</span><span lang="en">AP Aging</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-fin" href="ar-aging.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">應收帳齡分析</span><span lang="en">AR Aging</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act ext" href="../act/ecl.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">ECL 預期信用損失</span><span lang="en">ECL expected credit loss</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act ext" href="../act/bad-debt-provision.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">呆帳準備</span><span lang="en">Bad debt provision</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-fin-prerequisites">
+        <div class="flow-row-label"><span lang="zh">事前設定</span><span lang="en">Prerequisites</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-bas ext" href="../bas/currency.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">幣別與匯率</span><span lang="en">Currency and exchange rates</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-bas ext" href="../bas/tax.html"><span class="flow-mod">BAS</span><span class="flow-name"><span lang="zh">稅別</span><span lang="en">Tax</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-fin" href="bank-account.html"><span class="flow-mod">FIN</span><span class="flow-name"><span lang="zh">銀行帳戶</span><span lang="en">Bank Account</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-act ext" href="../act/accounting-period.html"><span class="flow-mod">ACT</span><span class="flow-name"><span lang="zh">會計期間（過帳閘口）</span><span lang="en">Accounting period (the posting gate)</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-foot">
+        <i class="bi bi-info-circle me-1"></i><span lang="zh">發票與收付款皆以交易日匯率換算本幣入帳，核銷結算時自動認列已實現匯兌損益（IAS 21）；
+        所有過帳受會計期間鎖管制，已關帳期間不可異動。</span><span lang="en">Invoices, payments and receipts are all booked in local currency at the transaction-date rate, and realised exchange gains and losses are recognised automatically on allocation (IAS 21);
+        every posting is subject to the accounting period lock and nothing can be changed in a closed period.</span>
+      </div>
+    </div>
+
+    <h2 id="screen-list"><i class="bi bi-grid me-2 text-primary"></i><span lang="zh">畫面清單</span><span lang="en">Screen list</span></h2>
+    <div class="row g-3">
+      <div class="col-md-6"><a href="chart-of-account.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-list-columns-reverse me-1 text-primary"></i><span lang="zh">會計科目</span><span lang="en">Chart of Accounts</span></h6>
+        <div class="text-muted small"><span lang="zh">全公司共用的科目主檔，決定傳票與財務報表的科目落點</span><span lang="en">The company-wide account master that decides where journal entries and financial statements land</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="ap-invoice.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-receipt me-1 text-primary"></i><span lang="zh">應付帳款</span><span lang="en">AP Invoice</span></h6>
+        <div class="text-muted small"><span lang="zh">應付發票管理（自動產生＋手開）</span><span lang="en">AP invoice management (automatic and manual)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="ar-invoice.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-receipt-cutoff me-1 text-primary"></i><span lang="zh">應收帳款</span><span lang="en">AR Invoice</span></h6>
+        <div class="text-muted small"><span lang="zh">應收發票管理（自動產生＋手開）</span><span lang="en">AR invoice management (automatic and manual)</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="ap-payment.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-cash-coin me-1 text-primary"></i><span lang="zh">付款作業</span><span lang="en">AP Payment</span></h6>
+        <div class="text-muted small"><span lang="zh">付款單與應付發票核銷</span><span lang="en">Payments allocated against AP invoices</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="ar-receipt.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-cash-stack me-1 text-primary"></i><span lang="zh">收款作業</span><span lang="en">AR Receipt</span></h6>
+        <div class="text-muted small"><span lang="zh">收款單與應收發票核銷</span><span lang="en">Receipts allocated against AR invoices</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="bank-account.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-bank2 me-1 text-primary"></i><span lang="zh">銀行帳戶</span><span lang="en">Bank Account</span></h6>
+        <div class="text-muted small"><span lang="zh">收付款帳戶與即時餘額</span><span lang="en">Payment and receipt accounts with live balances</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="ap-aging.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-calendar2-week me-1 text-primary"></i><span lang="zh">應付帳齡分析</span><span lang="en">AP Aging</span></h6>
+        <div class="text-muted small"><span lang="zh">應付未結清餘額帳齡分桶</span><span lang="en">Aging buckets of open payables</span></div></div></div></a></div>
+      <div class="col-md-6"><a href="ar-aging.html" class="text-decoration-none"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-calendar2-range me-1 text-primary"></i><span lang="zh">應收帳齡分析</span><span lang="en">AR Aging</span></h6>
+        <div class="text-muted small"><span lang="zh">應收未結清餘額帳齡分桶</span><span lang="en">Aging buckets of open receivables</span></div></div></div></a></div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

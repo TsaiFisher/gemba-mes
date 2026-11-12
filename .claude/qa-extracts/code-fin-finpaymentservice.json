@@ -1,0 +1,62 @@
+{
+  "sourcePath": "Modules/FIN/Services/FinPaymentService.cs",
+  "sourceHash": "11eca75e92e5daf44004ad490e9a8f80df89125ebe67aae4d50f014419b1a1af",
+  "entries": [
+    {
+      "slug": "code-fin-finpaymentservice-45bee946",
+      "lang": "zh",
+      "headingPath": "財務會計 › 取 0.001 而非金額容忍值 0.01",
+      "text": "核銷尾差判斷的精度設定｜系統在判斷是否可以結清時，會使用小數點後三位元的標準來判定差異，而不是使用預設的金額容忍值。這是為了確保結清的判定能夠達到一個較為精確的量級。",
+      "approved": true,
+      "sourceSectionHash": "cb0e0246610b1e30ace76a415b42a9bfc014cfc41dbd845f0edebb876356cd14"
+    },
+    {
+      "slug": "code-fin-finpaymentservice-17fa3dd5",
+      "lang": "zh",
+      "headingPath": "財務會計 › 期間鎖倉前置檢查",
+      "text": "期間鎖倉檢查依據廠別判斷｜系統會根據單據本身的廠別來進行檢查，而不是依照操作者當下所選擇的廠別。",
+      "approved": true,
+      "sourceSectionHash": "256dd00b48c1f8efa302717be4ec64919563466891185d3ec055672e80e47fcc"
+    },
+    {
+      "slug": "code-fin-finpaymentservice-09605c28",
+      "lang": "zh",
+      "headingPath": "財務會計 › 解析匯率：表單已由幣別維護預設帶入並允許使用者覆寫，故送入值優先",
+      "text": "匯率預設值與覆寫規則說明｜系統會先使用幣別維護的預設匯率，但使用者可以修改這個預設值。如果輸入的值大於零，則以使用者輸入的值為準；若輸入的值小於等於零，則會回退到查詢單據日期前最近一筆記錄的匯率，如果該紀錄也找不到，則預設使用 1。",
+      "approved": true,
+      "sourceSectionHash": "d502b0420384fd560dea74ddcfd5ef45d266b4e4e0bd4f9c9665a45a911c260d"
+    },
+    {
+      "slug": "code-fin-finpaymentservice-7d497037",
+      "lang": "zh",
+      "headingPath": "財務會計 › 作廢的可能是負核銷：回補後發票可能仍是收訖的",
+      "text": "作廢後的發票狀態判斷規則｜回補後，即使原先已作廢的發票，其狀態仍需依照確認時的判定標準來決定是否為已收訖。",
+      "approved": true,
+      "sourceSectionHash": "3e9f0b90a09818f8bfda788b5536337ed885ef6b3c5c4aaa70ad49768aa294c7"
+    },
+    {
+      "slug": "code-fin-finpaymentservice-effeabdc",
+      "lang": "zh",
+      "headingPath": "財務會計 › 收付款金額必須等於核銷合計",
+      "text": "金額必須等於核銷合計｜系統會檢查收付款的總金額是否與所有核銷項目的合計金額相等，如果不能相等，則無法完成分錄。",
+      "approved": true,
+      "sourceSectionHash": "0eb6044731692bf18f9a0a2808f27f432dd61e8f9551ad4b645feb77d8dc3cb6"
+    },
+    {
+      "slug": "code-fin-finpaymentservice-0354e136",
+      "lang": "zh",
+      "headingPath": "財務會計 › 核銷金額要落在 0 與該發票未結餘額之間：",
+      "text": "核銷金額的範圍限制說明｜核銷金額必須介於零和該發票尚未結餘的金額之間；如果應收或應付是正數，則填寫的正數代表實際收付的金額；若為負餘額（表示已完成收付後開立折讓），則只能填寫負數來用於退款或抵用。系統會阻止任何將正數填入負餘額欄位，或是將負數填入正餘額欄位的操作。",
+      "approved": true,
+      "sourceSectionHash": "ace2f9d70b5edee499a079afef07d2b03b82a2c5e498bbef71c29fae174d57c4"
+    },
+    {
+      "slug": "code-fin-finpaymentservice-4f95491d",
+      "lang": "zh",
+      "headingPath": "財務會計 › 付款／收款單作廢的總帳回沖",
+      "text": "總帳回沖的必要性與機制說明｜原先作廢單據僅處理了發票已核銷金額的回補、銀行帳戶餘額的回補以及將單據標記為作廢，但並未動到總帳。因此，會導致子帳記錄顯示款項尚未支付、負債仍存在，而總帳卻顯示款項已支付、負債已不存在，造成兩邊資料不一致。此回沖機制是透過「原分錄借貸對調」的方式產生新的分錄，並以特定的來源類別進行記錄，確保與其他作廢單據的紀錄口徑一致，同時避免觸發重複立帳稽核。",
+      "approved": true,
+      "sourceSectionHash": "650d40cea6884bb095436b70ac549a09ebf204d476d8193e8a5fb6317a01b7df"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="WO Material Issue/Return — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>工單發退料 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">手機版目錄</span><span lang="en">Mobile index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="index.html" class="nav-link"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link active"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-box-seam me-2 text-primary"></i><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路徑：/mobile/inv/issue.html &nbsp;|&nbsp; 倉庫依發退料單揀料出庫，或把現場退回的料收進儲位，一次完成過帳</span><span lang="en">Path: /mobile/inv/issue.html &nbsp;|&nbsp; The warehouse picks against material slips, or receives returned material into a location, and posts in one step</span></div>
+    </div>
+
+    <p><span lang="zh">從倉儲作業首頁的<strong>「工單發退料」</strong>進入。上方切換<strong>「發料」</strong>或<strong>「退料」</strong>。發料清單包含廠內發料、已核准的領料、委外發料與重工發料；退料清單包含現場建立的退料單。</span><span lang="en">Opened from <strong>"WO Material Issue/Return"</strong> on the warehouse home page. Switch between <strong>"Issue"</strong> and <strong>"Return"</strong> at the top. The issue list holds in-plant issues, approved requisitions, outsource issues and rework issues; the return list holds return slips raised on the shop floor.</span></p>
+    <p class="text-muted small"><i class="bi bi-123 me-1"></i><span lang="zh">倉儲作業首頁的「工單發退料」卡片會顯示待處理筆數（發 N・退 M），與點進去看到的清單一致。</span><span lang="en">The "Work-Order Issue / Return" card on the warehouse home page shows how many slips are waiting (Issue N · Return M), matching the list inside.</span></p>
+    <h2 id="issue"><i class="bi bi-box-arrow-up me-2 text-primary"></i><span lang="zh">發料</span><span lang="en">Issue</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點一張單據，畫面列出每一行的申請量，以及這個品號<strong>目前有庫存的儲位</strong>（倉庫／儲位、批號、在手量）。工單若已做過備料，備料儲位會標上<strong>「備料」</strong>並排第一。</span><span lang="en">Tap a slip. Each line shows the requested quantity and the <strong>locations that currently hold the product</strong> (warehouse / location, lot, on-hand quantity). If the work order has been staged, the staging location is marked <strong>"Staged"</strong> and listed first.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點選要揀料的儲位（已備料的品號預選備料儲位，並提示「請先從備料儲位領用」），需要時修改<strong>「實發」</strong>數量。備料儲位不夠這一行時，畫面自動拆成兩筆：備料儲位領可用量、不足的部分從下一個有庫存的儲位領；也可以按<strong>「從其他儲位補」</strong>自己加一筆、按 ✕ 移除。整箱領時在<strong>「整箱領：掃箱號」</strong>掃<a href="../bas/container-unit.html">箱子</a>，系統帶出箱子所在儲位與批號，數量為箱內量（不超過這一行還要領的量）。</span><span lang="en">Tap the location you are picking from (for staged items the staging location is preselected, with a reminder to take it from there first) and change the <strong>"Issued"</strong> quantity if needed. If the staging location does not hold enough for the line, it is split into two entries automatically: the available quantity from the staging location and the shortfall from the next location that has stock. You can also tap <strong>"Add another location"</strong> to add an entry yourself, or ✕ to remove one. To take a whole <a href="../bas/container-unit.html">box</a>, scan its number into <strong>"Whole box: scan box number"</strong>; the box's location and lot are filled in, and the quantity is what the box holds (no more than the line still needs).</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">點<strong>「確認發料並過帳」</strong>：揀料確認與過帳一次完成，庫存扣除、工單已發量累加、預留同步消耗。</span><span lang="en">Tap <strong>"Confirm issue &amp; post"</strong>: picking and posting happen together; stock is deducted, the work order's issued quantity goes up and its reservation is consumed.</span></div></div>
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">實發填 0 的行不會過帳（這次沒揀到）。整張都沒有數量時無法送出。</span><span lang="en">Lines with an issued quantity of 0 are not posted (not picked this time). A slip with no quantities cannot be submitted.</span></div>
+    <div class="note-box"><i class="bi bi-box-seam me-1 text-primary"></i><span lang="zh">已備料的料要<strong>先從備料儲位扣</strong>：這張工單在備料區還有的量，發料／領料一定要先從備料儲位領完；備料區不夠的部分才可以從其他儲位領。桌機存檔時、手機送出時與過帳時都會檢查，違反會擋下並說明該從哪個儲位領、要領多少。退料不受影響。</span><span lang="en">Staged material must be <strong>taken from the staging location first</strong>: whatever is still in the staging area for this work order has to be issued or requisitioned from the staging location; only the shortfall may come from other locations. This is checked when a desktop slip is saved, when the mobile slip is submitted and when it is posted; a violation is blocked with a message saying which location to use and how much. Returns are not affected.</span></div>
+    <h2 id="return"><i class="bi bi-box-arrow-in-down me-2 text-primary"></i><span lang="zh">退料</span><span lang="en">Return</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點一張退料單，在每一行掃描或輸入<strong>退回的儲位</strong>，確認<strong>「實收」</strong>數量。</span><span lang="en">Tap a return slip, scan or type the <strong>location it goes back into</strong> on each line, and check the <strong>"Received"</strong> quantity.</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">點<strong>「確認收料並過帳」</strong>：料件以當初發料成本入庫，工單已退量累加。</span><span lang="en">Tap <strong>"Confirm receipt &amp; post"</strong>: the material comes back in at its original issue cost and the work order's returned quantity goes up.</span></div></div>
+    <h2 id="offline"><i class="bi bi-wifi-off me-2 text-primary"></i><span lang="zh">斷線時</span><span lang="en">When the connection drops</span></h2>
+    <p><span lang="zh">待處理單據需要連線才載得出來。送出過帳時若剛好斷線，會先暫存在手機，恢復連線後自動過帳。伺服器在送達當下才檢查庫存與單據狀態，失敗的項目會留在首頁的待送出清單；暫存超過 30 分鐘會改為「待確認」。詳見<a href="index.html#offline">斷線保護</a>。</span><span lang="en">Pending slips need a connection to load. If the connection drops just as you post, the entry is saved on the phone and posted automatically once it returns. Stock and slip status are checked when it arrives; failures stay in the waiting list on the home page, and entries saved for more than 30 minutes become "Needs confirmation". See <a href="index.html#offline">Disconnection protection</a>.</span></p>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

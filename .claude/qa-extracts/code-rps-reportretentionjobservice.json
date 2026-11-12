@@ -1,0 +1,38 @@
+{
+  "sourcePath": "Modules/RPS/Services/ReportRetentionJobService.cs",
+  "sourceHash": "af6e9f770da71e2c5b9ed4a6acf2dc8c7174aec84ac76a0ea5fca4c5f8a47f0e",
+  "entries": [
+    {
+      "slug": "code-rps-reportretentionjobservice-43f45157",
+      "lang": "zh",
+      "headingPath": "報表 › 報表產出的保留期清理",
+      "text": "報表資料的清理時程與順序｜系統會依照固定的時間執行報表產出的保留期清理工作。此流程必須先刪除檔案，之後再清除相關紀錄，以避免在過程中失敗導致留下沒有任何指向的孤兒檔案。",
+      "approved": true,
+      "sourceSectionHash": "ce56b7ae33999cbe5e0a67b6c3c7d1e33f3f8be0716a31b538f109415505887a"
+    },
+    {
+      "slug": "code-rps-reportretentionjobservice-43558fd5",
+      "lang": "zh",
+      "headingPath": "報表 › 且註解同樣寫著「錯開 02:00 與 03:00」",
+      "text": "報表清理的執行時刻｜報表產出的保留期清理每天凌晨四點執行，時刻以排程時區計算，刻意錯開凌晨兩點的每日稽核與三點的稽核日誌清理。但它與密碼歷史清理同樣落在四點——兩支各自避開了前兩支，卻沒有避開彼此。",
+      "approved": true,
+      "sourceSectionHash": "bd78a52fa7e63ed81c742c3248b7b0baa7c5041d1b82f908287ae0fd7addd445"
+    },
+    {
+      "slug": "code-rps-reportretentionjobservice-5c54597f",
+      "lang": "zh",
+      "headingPath": "報表 › 刪檔失敗的紀錄**必須留下來**",
+      "text": "保留失敗記錄以供追蹤｜刪除操作失敗的紀錄必須被保留下來，因為這些紀錄是後續清理流程唯一能確認某個檔案曾經存在過的憑證。如果這些紀錄也被移除，該檔案將會從所有清單中消失，只剩下一份系統內部無法再被檢視的報表副本。",
+      "approved": true,
+      "sourceSectionHash": "2c7b4adc16f7cdbba3f5fcd39fae6b8fb4fa260125c325af03fe83f497953222"
+    },
+    {
+      "slug": "code-rps-reportretentionjobservice-effde89c",
+      "lang": "zh",
+      "headingPath": "報表 › 刪不掉單一檔案不該讓整輪清理中止——其餘檔案仍應清掉，",
+      "text": "資料清理不因單一檔案失敗而中止｜若有任何一個檔案無法成功刪除，系統仍會繼續嘗試清除其他所有可用的檔案。無法刪除的檔案記錄會被保留下來，以便在後續的處理流程中再次嘗試刪除。",
+      "approved": true,
+      "sourceSectionHash": "a7e92c52ff4e8dbafdd9f53b5bc94035bfb7f01990663081babdb366912381a9"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <data name="PageTitle"><value>排程查詢</value></data>
+  <data name="WorkCenter"><value>工作中心</value></data>
+  <data name="MachineCode"><value>機台</value></data>
+  <data name="WorkOrderId"><value>工單號</value></data>
+  <data name="BatchId"><value>生產批號</value></data>
+  <data name="SalesOrderId"><value>訂單號</value></data>
+  <data name="Status"><value>狀態</value></data>
+  <data name="SchedFrom"><value>排程開始（起）</value></data>
+  <data name="SchedTo"><value>排程開始（迄）</value></data>
+  <data name="Search"><value>查詢</value></data>
+  <data name="Clear"><value>清除</value></data>
+  <data name="All"><value>全部</value></data>
+  <data name="ProductCode"><value>料號</value></data>
+  <data name="Operation"><value>工序</value></data>
+  <data name="ScheduledStart"><value>計畫開始</value></data>
+  <data name="ScheduledEnd"><value>計畫結束</value></data>
+  <data name="Flags"><value>旗標</value></data>
+  <data name="NoData"><value>無符合條件的派工</value></data>
+  <data name="DetailsTitle"><value>派工詳情</value></data>
+  <data name="NotFound"><value>此派工已不存在</value></data>
+  <data name="LoadFailed"><value>載入失敗，請重試</value></data>
+  <data name="FlagLate"><value>預測延遲</value></data>
+  <data name="FlagMatRisk"><value>待料風險</value></data>
+  <data name="StatusPending"><value>待排程</value></data>
+  <data name="StatusScheduled"><value>已排程</value></data>
+  <data name="StatusSetupInProgress"><value>備料中</value></data>
+  <data name="StatusReadyToStart"><value>可開工</value></data>
+  <data name="StatusInProgress"><value>生產中</value></data>
+  <data name="StatusClosed"><value>已完工</value></data>
+  <data name="StatusOnHold"><value>暫停</value></data>
+  <data name="StatusPendingFPI"><value>待首件</value></data>
+  <data name="StatusCancelled" xml:space="preserve"><value>已取消</value></data>
+</root>

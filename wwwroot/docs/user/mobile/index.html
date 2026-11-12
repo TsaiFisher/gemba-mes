@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Mobile Guide — SmartFactory MES User Manual">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>手機版操作說明 — SmartFactory MES 使用手冊</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../flow.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">本模組</span><span lang="en">This module</span></div>
+    <a href="#flow" class="nav-link"><span lang="zh">作業流程圖</span><span lang="en">Process flow chart</span></a>
+    <div class="sidebar-heading"><span lang="zh">手機版</span><span lang="en">Mobile</span></div>
+    <a href="#overview" class="nav-link active"><span lang="zh">概覽</span><span lang="en">Overview</span></a>
+    <a href="#login" class="nav-link"><span lang="zh">登入（含兩階段驗證）</span><span lang="en">Logging in (with two-factor authentication)</span></a>
+    <a href="#modules" class="nav-link"><span lang="zh">功能模組</span><span lang="en">Modules</span></a>
+    <a href="#plant" class="nav-link"><span lang="zh">切換廠別</span><span lang="en">Switching plant</span></a>
+    <a href="#screens" class="nav-link"><span lang="zh">各畫面說明</span><span lang="en">Screen instructions</span></a>
+    <a href="#offline" class="nav-link"><span lang="zh">斷線保護</span><span lang="en">Disconnection protection</span></a>
+    <a href="#faq" class="nav-link"><span lang="zh">常見問題</span><span lang="en">FAQ</span></a>
+    <div class="sidebar-heading"><span lang="zh">簽核</span><span lang="en">Approvals</span></div>
+    <a href="approval.html" class="nav-link"><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></a>
+    <div class="sidebar-heading"><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></div>
+    <a href="dispatch-list.html" class="nav-link"><span lang="zh">投產報工</span><span lang="en">Production</span></a>
+    <a href="work-session.html" class="nav-link"><span lang="zh">開工作業</span><span lang="en">Production session</span></a>
+    <a href="production-report.html" class="nav-link"><span lang="zh">報工</span><span lang="en">Production report</span></a>
+    <a href="requisition.html" class="nav-link"><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></a>
+    <a href="schedule.html" class="nav-link"><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></a>
+    <a href="preparation.html" class="nav-link"><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></a>
+    <a href="fpi.html" class="nav-link"><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></a>
+    <a href="ipqc.html" class="nav-link"><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></a>
+    <a href="machine-status.html" class="nav-link"><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></a>
+    <div class="sidebar-heading"><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></div>
+    <a href="putaway.html" class="nav-link"><span lang="zh">入庫上架</span><span lang="en">Putaway</span></a>
+    <a href="pick.html" class="nav-link"><span lang="zh">出庫下架</span><span lang="en">Pick</span></a>
+    <a href="stockcount.html" class="nav-link"><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></a>
+    <a href="stock.html" class="nav-link"><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></a>
+    <a href="iqc.html" class="nav-link"><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></a>
+    <a href="issue.html" class="nav-link"><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></a>
+    <a href="staging.html" class="nav-link"><span lang="zh">備料作業</span><span lang="en">Material Staging</span></a>
+    <a href="outsource-receive.html" class="nav-link"><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h3 fw-bold mb-0"><i class="bi bi-phone me-2 text-primary"></i><span lang="zh">手機版操作說明（PWA）</span><span lang="en">Mobile guide (PWA)</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">適用對象：現場作業人員 &nbsp;|&nbsp; 最後更新：2026-09</span><span lang="en">For: shop-floor staff &nbsp;|&nbsp; Last updated: 2026-09</span></div>
+    </div>
+
+    <!-- 概覽 -->
+    <h2 id="overview"><i class="bi bi-info-circle me-2 text-primary"></i><span lang="zh">概覽</span><span lang="en">Overview</span></h2>
+    <p><span lang="zh">SmartFactory MES 提供以 PWA（Progressive Web App）形式運作的手機版介面，供現場人員以手機瀏覽器掃碼執行報工、檢驗、庫存等作業，與桌機版共用同一套帳號、權限與資料庫。首次使用可於手機瀏覽器開啟系統網址（由系統管理者提供）後，選擇「加入主畫面」安裝成類 App 圖示，方便日後直接點選開啟。</span><span lang="en">SmartFactory MES offers a mobile interface that runs as a PWA (progressive web app), so shop-floor staff can scan and carry out production reporting, inspection and inventory work in a phone browser, sharing the same accounts, permissions and database as the desktop version. The first time you use it, open the system URL (your administrator will give it to you) in your phone browser and choose "Add to Home Screen" to install it as an app-like icon you can tap in future.</span></p>
+
+    <!-- 作業流程圖 -->
+    <h2 id="flow"><i class="bi bi-diagram-3 me-2 text-primary"></i><span lang="zh">作業流程圖（手機 ↔ 桌機分工）</span><span lang="en">Process flow chart (what is done on mobile and what on the desktop)</span></h2>
+    <p class="small text-muted mb-2"><span lang="zh">依現場作業先後順序排列。</span><span lang="en">Arranged in the order the work is done on the floor. </span><strong><span lang="zh">實線</span><span lang="en">A solid line</span></strong><span lang="zh">為手機可執行的步驟，</span><span lang="en"> marks a step that can be done on a phone, </span><strong><span lang="zh">虛線外框</span><span lang="en">A dashed outline</span></strong><span lang="zh">為須於桌機完成的作業，顏色區分模組。每個節點都可點擊，開啟該畫面的操作說明。</span><span lang="en"> marks work that has to be done on the desktop, and the colours indicate the module. Every node can be clicked to open the instructions for that screen.</span></p>
+    <div class="flow">
+      <div class="flow-legend">
+        <span class="flow-legend-item m-mfg"><i class="flow-dot"></i><span lang="zh">MFG 生產現場</span><span lang="en">MFG shop floor</span></span>
+        <span class="flow-legend-item m-inv"><i class="flow-dot"></i><span lang="zh">INV 庫存作業</span><span lang="en">INV inventory operations</span></span>
+        <span class="flow-legend-item m-qcr"><i class="flow-dot"></i><span lang="zh">QCR 品質檢驗</span><span lang="en">QCR quality inspection</span></span>
+        <span class="flow-legend-item m-pur"><i class="flow-dot"></i><span lang="zh">PUR 採購</span><span lang="en">PUR Purchasing</span></span>
+        <span class="flow-legend-item"><i class="flow-dot flow-dot-ext"></i><span lang="zh">虛線＝桌機作業</span><span lang="en">Dashed = done on the desktop</span></span>
+      </div>
+
+      <div class="flow-row" id="flow-mobile-shop-floor">
+        <div class="flow-row-label"><span lang="zh">生產現場</span><span lang="en">Shop floor</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-sys" href="#login"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">登入（含 2FA）</span><span lang="en">Logging in (with 2FA)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg" href="dispatch-list.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">投產報工（選派工卡）</span><span lang="en">Production and reporting (choose a dispatch card)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg" href="work-session.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">備料準備／建立備料單</span><span lang="en">Staging / creating a staging order</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/material-staging.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">備料單鎖料揀料（桌機）</span><span lang="en">Staging order stock locking and picking (desktop)</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-mobile-start-to-finish">
+        <div class="flow-row-label"><span lang="zh">開工到完工</span><span lang="en">From start to finish</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-mfg" href="work-session.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">開工</span><span lang="en">Start work</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="fpi.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">FPI 首件檢驗</span><span lang="en">FPI first-piece inspection</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg" href="production-report.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">報工（可多次）</span><span lang="en">Reporting (as often as needed)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="ipqc.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">IPQC 製程檢驗</span><span lang="en">IPQC in-process inspection</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg" href="production-report.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">完工並報工</span><span lang="en">Finish and report</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-mfg ext" href="../mfg/production-completion.html"><span class="flow-mod">MFG</span><span class="flow-name"><span lang="zh">完工入庫（桌機）</span><span lang="en">Completion receipt (desktop)</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-mobile-inventory-operations">
+        <div class="flow-row-label"><span lang="zh">庫存作業</span><span lang="en">Inventory operations</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-pur ext" href="../pur/goods-receipt.html"><span class="flow-mod">PUR</span><span class="flow-name"><span lang="zh">進貨單（桌機）</span><span lang="en">Goods receipt (desktop)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-qcr" href="iqc.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">IQC 進料檢驗</span><span lang="en">IQC incoming inspection</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="putaway.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">進貨上架</span><span lang="en">Receipt put-away</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="pick.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">發料／出貨揀貨</span><span lang="en">Issue and shipment picking</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/warehouse-ops.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">倉庫作業（桌機同源）</span><span lang="en">Warehouse operations (same as the desktop)</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-row" id="flow-mobile-counting-and-enquiry">
+        <div class="flow-row-label"><span lang="zh">盤點與查詢</span><span lang="en">Counting and enquiry</span></div>
+        <div class="flow-steps">
+          <a class="flow-node m-inv ext" href="../inv/inventory-count.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">盤點單開立（桌機）</span><span lang="en">Raising a count sheet (desktop)</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv" href="stockcount.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">掃碼盤點輸入</span><span lang="en">Scan-and-count entry</span></span></a>
+          <i class="bi bi-arrow-right flow-arrow" aria-hidden="true"></i>
+          <a class="flow-node m-inv ext" href="../inv/stock-adjustment.html"><span class="flow-mod">INV</span><span class="flow-name"><span lang="zh">盤盈虧調整（桌機）</span><span lang="en">Count gain/loss adjustment (desktop)</span></span></a>
+          <span class="flow-plus">｜</span>
+          <a class="flow-node m-inv" href="stock.html"><span class="flow-mod"><span lang="zh">手機</span><span lang="en">Mobile</span></span><span class="flow-name"><span lang="zh">庫存餘量查詢</span><span lang="en">Stock balance enquiry</span></span></a>
+        </div>
+      </div>
+
+      <div class="flow-foot">
+        <i class="bi bi-info-circle me-1"></i><span lang="zh">手機各作業是否顯示，依角色的「手機權限維護」設定而定；手機版需要連線使用；送出時剛好斷線的報工、完工等會先暫存，恢復連線後自動送出且不重複計數（見「斷線保護」）。</span><span lang="en">Whether each mobile task appears depends on the role's mobile permission settings. The mobile app needs a connection; reports, completions and similar entries submitted at the moment the connection drops are saved and sent automatically when it returns, without double counting (see "Disconnection protection").</span>
+      </div>
+    </div>
+
+    <!-- 登入 -->
+    <h2 id="login"><i class="bi bi-box-arrow-in-right me-2 text-primary"></i><span lang="zh">登入（含兩階段驗證）</span><span lang="en">Logging in (with two-factor authentication)</span></h2>
+    <h3><span lang="zh">登入步驟</span><span lang="en">Logging in</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">開啟手機版網址，輸入帳號與密碼，點「登入」。</span><span lang="en">Open the mobile URL, enter your username and password and tap "Log in".</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">若該帳號</span><span lang="en">If the account </span><strong><span lang="zh">未啟用</span><span lang="en">Not enabled</span></strong><span lang="zh">兩階段驗證（2FA），驗證通過後直接進入功能首頁。</span><span lang="en"> two-factor authentication (2FA); once verified you go straight to the home page.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">若該帳號</span><span lang="en">If the account </span><strong><span lang="zh">已啟用</span><span lang="en">Enabled</span></strong> <span lang="zh">2FA（管理員角色為強制啟用），畫面會切換到「驗證碼」步驟：輸入 Authenticator App 顯示的 6 位數驗證碼，點「驗證」完成登入。</span><span lang="en">two-factor authentication (compulsory for administrator roles), the screen moves to the verification step: enter the 6-digit code from your authenticator app and tap "Verify" to finish logging in.</span></div></div>
+    <div class="step-row"><span class="step-badge">4</span><div><span lang="zh">驗證碼輸入錯誤或逾時，畫面會顯示錯誤訊息並停留在驗證碼步驟，可點「返回重新輸入帳密」重新開始。</span><span lang="en">If the code is wrong or has expired, an error message appears and the screen stays on the verification step; tap "Back to username and password" to start again.</span></div></div>
+    <img class="screen-shot" src="img/login.png" data-src-en="img/en/login.png" alt="手機版登入畫面截圖" data-alt-en="Mobile login screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">手機版登入畫面（示意）</span><span lang="en">Mobile login screen (illustrative)</span></div>
+    <div class="tip-box"><i class="bi bi-lightbulb me-1"></i><span lang="zh">手機版 2FA 的啟用/綁定與桌機版共用同一組設定（個人設定 &gt; 兩階段驗證），無需在手機另外設定；只要曾在任一裝置啟用，之後任何裝置登入都需要輸入驗證碼。</span><span lang="en">Enabling and registering 2FA on mobile uses the same setting as the desktop (My Settings &gt; Two-factor authentication), so there is nothing extra to set up on the phone; once it is enabled on any device, logging in from any device needs the code.</span></div>
+    <h3><span lang="zh">登出</span><span lang="en">Logout</span></h3>
+    <p><span lang="zh">點擊右上角的</span><span lang="en">Tap</span> <i class="bi bi-box-arrow-right"></i> <span lang="zh">「登出」即可登出。</span><span lang="en">"Log out" at the top right.</span></p>
+    <p class="text-muted small"><span lang="zh">各畫面頁首的按鈕都在圖示下方標有文字（返回、首頁、登出等）；查詢列旁的按鈕也在圖示旁標有「掃描」「搜尋」「重新整理」「清除」等文字（2026-10-19 起）。</span><span lang="en">Every header button carries a label under its icon (Back, Home, Log out and so on), and the buttons beside search fields are labelled "Scan", "Search", "Refresh", "Clear" and the like (from 2026-10-19).</span></p>
+
+    <!-- 功能模組 -->
+    <h2 id="modules"><i class="bi bi-grid me-2 text-primary"></i><span lang="zh">功能模組</span><span lang="en">Modules</span></h2>
+    <p><span lang="zh">登入後首頁以格狀選單顯示帳號有權限的功能模組，常見包含：</span><span lang="en">After logging in, the home page shows the modules the account has access to as a grid; the usual ones are:</span></p>
+    <img class="screen-shot" src="img/home.png" data-src-en="img/en/home.png" alt="手機版功能首頁截圖" data-alt-en="Mobile home screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">功能首頁（顯示的模組依帳號權限而定）</span><span lang="en">The home page (which modules appear depends on the account's permissions)</span></div>
+    <div class="row g-3 mb-2">
+      <div class="col-md-6"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-gear me-1 text-primary"></i><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></h6>
+        <div class="text-muted small"><span lang="zh">派工備料準備、開工/報工/完工、生產排程查詢、機台狀態、IPQC 製程檢驗、首件檢驗（FPI）。</span><span lang="en">Dispatch staging, starting/reporting/finishing, schedule enquiry, machine status, IPQC in-process inspection and first-piece inspection (FPI).</span></div></div></div></div>
+      <div class="col-md-6"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-boxes me-1 text-primary"></i><span lang="zh">庫存作業（INV）</span><span lang="en">Inventory operations (INV)</span></h6>
+        <div class="text-muted small"><span lang="zh">進貨上架、發料/出貨揀貨、庫存盤點、庫存餘量查詢、IQC 進料檢驗。</span><span lang="en">Receipt put-away, issue and shipment picking, stock counting, stock balance enquiry and IQC incoming inspection.</span></div></div></div></div>
+      <div class="col-md-6"><div class="card card-screen h-100 border">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-pen me-1 text-primary"></i><span lang="zh">待我簽核</span><span lang="en">My Approvals</span></h6>
+        <div class="text-muted small"><span lang="zh">查看輪到自己的單據並直接核准或駁回，圖示上的數字是待簽筆數。這一項<strong>不需要手機模組權限</strong>，與桌機「待我簽核」是同一份清單，詳見<a href="approval.html">待我簽核（手機）</a>。</span><span lang="en">Seeing the documents waiting for you and approving or rejecting them there and then; the number on the tile is how many are waiting. This one <strong>needs no mobile module permission</strong> and is the same list as the desktop's pending approvals — see <a href="approval.html">My Approvals (Mobile)</a>.</span></div></div></div></div>
+    </div>
+    <p class="text-muted small"><span lang="zh">實際顯示的模組依帳號角色權限而定；無任何手機模組權限時，首頁會顯示「尚未設定手機模組權限」提示，請洽系統管理員。</span><span lang="en">Which modules actually appear depends on the account's role permissions; with no mobile module permission at all, the home page shows "no mobile module permissions have been set" — ask your system administrator.</span></p>
+    <h3><span lang="zh">投產報工的作業功能捷徑</span><span lang="en">Shortcuts for production and reporting tasks</span></h3>
+    <p><span lang="zh">進入「投產報工」後，畫面上方的「作業功能」區以圖示加文字的按鈕列出可直接前往的作業：</span><span lang="en">Inside "Production and reporting", the "Tasks" area at the top of the screen lists the tasks you can go straight to as icon-and-text buttons: </span><strong><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></strong>、<strong><span lang="zh">首件檢查</span><span lang="en">First-piece inspection</span></strong>、<strong><span lang="zh">製程檢驗</span><span lang="en">In-process inspection</span></strong>、<strong><span lang="zh">機台狀態</span><span lang="en">Machine Status</span></strong><span lang="zh">；「生產排程」頁內另有</span><span lang="en">; the "Production schedule" page also has </span><strong><span lang="zh">排程查詢</span><span lang="en">Schedule Query</span></strong><span lang="zh">與</span><span lang="en"> and </span><strong><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></strong><span lang="zh">兩個按鈕。</span><span lang="en"> two buttons.</span></p>
+    <p><span lang="zh">捷徑依角色的手機作業權限顯示：未授權「檢驗（FPI/IPQC）」「機台狀態異動」「生產排程查看」的角色不會看到對應按鈕，全部未授權時整區隱藏。權限於</span><span lang="en">The shortcuts follow the role's mobile permissions: a role without "inspection (FPI/IPQC)", "machine status change" or "view production schedule" does not see the matching button, and the whole area is hidden when none is granted. Permissions are set under </span><strong><span lang="zh">手機權限維護</span><span lang="en">Mobile permission maintenance</span></strong><span lang="zh">畫面設定。</span><span lang="en"> screen.</span></p>
+    <p class="text-muted small"><span lang="zh">「開工／下工」與「報工」不在捷徑列——這兩項須針對特定派工執行，請由下方派工清單點選要作業的派工卡進入。</span><span lang="en">"Start / end work" and "Report" are not on the shortcut bar — they have to be done against a particular dispatch, so tap the dispatch card you want in the list below.</span></p>
+
+    <h3><span lang="zh">備料準備</span><span lang="en">Staging</span></h3>
+    <p><span lang="zh">點派工卡進入後，「備料準備」區列出本派工</span><span lang="en">Tap a dispatch card and the "Staging" area lists this dispatch's </span><strong><span lang="zh">尚未備妥的用料</span><span lang="en">Material not yet ready</span></strong><span lang="zh">與已開立的備料單狀態，可直接點「建立備料單」開出草稿單（備料倉取自工作中心的預設設定）。
+       確認鎖料與實際揀料移倉請由桌機的</span><span lang="en"> and the status of any staging order already raised; tapping "Create staging order" raises a draft (the staging warehouse comes from the work center default).
+       Confirming the stock lock and actually picking and moving it are done on the desktop under </span><a href="../inv/material-staging.html"><span lang="zh">備料單</span><span lang="en">Material Staging</span></a><span lang="zh">畫面完成。</span><span lang="en"> screen.</span></p>
+    <p><strong><span lang="zh">模具不需在此回報</span><span lang="en">tooling does not have to be reported here</span></strong><span lang="zh">——沿用排程時已指定的模具，打次統計與模具衝突偵測不受影響。機台準備（換模、換線）的工時另按「開始備料／備料完成」計時，工序未設準備工時者會顯示「免機台準備」，可直接開工。</span><span lang="en"> — the tooling assigned during scheduling is used, and shot counting and tooling conflict detection are unaffected. Machine setup (tooling or line changeover) is timed separately with "Start setup" and "Setup done"; operations with no setup time defined show "no machine setup" and can start straight away.</span></p>
+
+    <h3><span lang="zh">報工與完工的差別</span><span lang="en">The difference between reporting and finishing</span></h3>
+    <p><span lang="zh">生產中可</span><span lang="en">During production you can </span><strong><span lang="zh">多次報工</span><span lang="en">multiple production reports</span></strong><span lang="zh">（例如每完成一批轉移就回報一次），報工後</span><span lang="en"> (for example once per transfer batch); after reporting, </span><strong><span lang="zh">人仍在線上繼續生產</span><span lang="en">people stay online and keep producing</span></strong><span lang="zh">；
+       本次作業結束時改按「</span><span lang="en">;
+       at the end of the session tap " </span><strong><span lang="zh">完工並報工</span><span lang="en">Finish and report</span></strong><span lang="zh">」，可一併回報最後一批數量（不填即為純下工），系統關閉本次上工並結算工時。
+       尚未生產完可再次開工，形成下一輪循環；累計良品數達派工量時派工自動結案。</span><span lang="en"> ", where you can report the final quantity at the same time (leave it blank to just clock out); the system closes the session and settles the hours.
+       If production is not finished you can start again for another round; the dispatch closes automatically when the cumulative good quantity reaches the dispatched quantity.</span></p>
+    <div class="tip-box"><i class="bi bi-wifi-off me-1"></i><span lang="zh">報工與完工送出時若剛好斷線，會先暫存在手機，恢復連線後自動送出，重送也不會重複計數；記錄的是按下送出的時間，不是送達的時間。</span><span lang="en">If the connection drops just as you submit a report or completion, it is saved on the phone and sent automatically when the connection returns, and resending never double counts. The time recorded is when you tapped submit, not when it arrived.</span></div>
+
+    <!-- 切換廠別與推播通知 -->
+    <h2 id="plant"><i class="bi bi-building me-2 text-primary"></i><span lang="zh">切換廠別與推播通知</span><span lang="en">Switching plant and push notifications</span></h2>
+
+    <h3><span lang="zh">切換廠別</span><span lang="en">Switching plant</span></h3>
+    <p><span lang="zh">首頁上方顯示<strong>目前廠別</strong>，右側的<strong>「切換」</strong>可改成其他廠。清單內容依角色而定：角色有指派廠別時只列出可用的那幾個並標示<strong>「你的角色可使用以下廠別」</strong>；只被指派一個廠時顯示<strong>「你的角色只被指派這一個廠別」</strong>；未限制廠別的角色則可使用系統所有廠別。</span><span lang="en">The home page shows your <strong>current plant</strong> at the top, and <strong>"Switch"</strong> on the right changes it. What is listed depends on your role: a role with assigned plants sees only those, marked <strong>"Your role can use these plants"</strong>; a role with just one shows <strong>"Your role is assigned to this plant only"</strong>; a role with no restriction can use every plant in the system.</span></p>
+
+    <img class="screen-shot" src="img/plant-switch.png" data-src-en="img/en/plant-switch.png" alt="切換廠別面板截圖" data-alt-en="Switch plant panel screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">切換廠別面板（目前廠別標示「目前」，其餘為該角色可用的廠）</span><span lang="en">The switch plant panel (the current plant is marked "Current"; the others are the plants this role may use)</span></div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh"><strong>手機上還有暫存待送出的資料時不能切換廠別。</strong>畫面會顯示「還有 N 筆資料尚未同步，請先同步完成再切換廠別」——暫存的報工與盤點屬於<strong>原本那個廠</strong>，切完再送出會記到錯的廠去。請先恢復連線讓它們送完（或在待送出清單確認／捨棄），再切換。</span><span lang="en"><strong>You cannot switch while the phone still holds entries waiting to be sent.</strong> The screen says "N item(s) are still waiting to sync — finish syncing before switching plant": what is queued belongs to <strong>the plant you were in</strong>, and sending it after a switch would file it under the wrong one. Get back online and let them go through (or confirm / discard them in the waiting list), then switch.</span></div>
+
+    <p><span lang="zh">切換成功後<strong>整頁會自動重新載入</strong>，這是正常的：畫面上的派工與機台清單是切換前讀的，重新載入才會換成新廠別的資料。重新載入需要網路，所以切換廠別本來就得在連線狀態下進行。</span><span lang="en">After a successful switch <strong>the page reloads itself</strong>, which is expected: the dispatch and machine lists on screen were read before the switch, and reloading replaces them with the new plant's data. The reload needs a connection, so switching plant is an online-only action anyway.</span></p>
+
+    <p><span lang="zh"><strong>電腦與手機共用同一個作用廠別。</strong>在手機切換廠別後，電腦上切換前就開著的畫面若直接存檔，系統會擋下並提示「這個畫面是在某廠開啟的，但你目前的作用廠別已經變成另一廠」，<strong>這次不會存檔</strong>，以免單據存到錯的廠。填寫中的內容會留在畫面上，並詢問<strong>「要現在把廠別切回原本的廠，並照目前填寫的內容存檔嗎？」</strong>——選「確定」會切回畫面開啟時的廠別並直接存檔；選「取消」則不存檔，若要改建在新的廠別，請重新整理後重新填寫（重新整理會清掉面板內容）。系統更新後第一次送出舊頁面時，也可能看到「這個畫面缺少開啟時的廠別資訊」，同樣重新整理即可。</span><span lang="en"><strong>Your computer and phone share one active plant.</strong> If you switch plant on the phone, saving a screen that was already open on the computer before the switch is blocked with a message saying the screen was opened under one plant but your active plant is now another — <strong>nothing is saved</strong>, so the document cannot land in the wrong plant. What you typed stays on screen, and you are asked <strong>whether to switch back to the original plant and save what you filled in</strong> — OK switches back to the plant the screen was opened under and saves; Cancel leaves it unsaved. To create it in the new plant instead, refresh and fill it in again (refreshing clears the panel). Right after a system update, submitting a page opened before the update may likewise say the screen is missing its plant; refreshing fixes it.</span></p>
+
+    <p><span lang="zh"><strong>另一台裝置切換了廠別：</strong>手機首頁從背景切回來、或從其他頁面返回首頁時，會自動重新讀取目前的廠別與角色，不必手動重新整理。</span><span lang="en"><strong>Switched plant on another device:</strong> when you bring the home page back from the background, or return to it from another page, it re-reads your current plant and role automatically — no manual refresh needed.</span></p>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh"><strong>廠別顯示「已失效，請重新選擇」：</strong>管理員把你目前所在的廠別從角色移除了。首頁會自動打開切換廠別面板，選一個可用的廠即可恢復；在其他功能頁會看到「目前的廠別已失效…請回首頁重新選擇廠別」。</span><span lang="en"><strong>Plant shows "No longer available — choose again":</strong> an administrator removed your current plant from your role. The home page opens the switch plant panel by itself; pick an available plant to carry on. Other screens show "Your current plant is no longer available… Go back to Home and choose a plant again."</span></div>
+
+    <h3 id="role"><span lang="zh">切換角色</span><span lang="en">Switching role</span></h3>
+    <p><span lang="zh">廠別列下方是<strong>目前角色</strong>，按右側<strong>「切換」</strong>會列出你帳號所屬的所有角色，點選即可切換，規則與電腦上的切換角色相同。若新角色不包含目前的廠別，會自動改到該角色的預設廠別。切換後整頁會重新載入；與切換廠別一樣，手機上還有暫存待送出的資料時不能切換。</span><span lang="en">Below the plant row is your <strong>current role</strong>. <strong>"Switch"</strong> lists every role on your account; tap one to switch — the same rules as switching role on the computer. If the new role does not include your current plant, you are moved to that role's default plant. The page reloads afterwards, and as with switching plant, you cannot switch while entries are still waiting to be sent.</span></p>
+    <p><span lang="zh">若角色顯示「已失效，請重新選擇」，代表管理員已把你目前使用的角色移除，請在這裡選一個剩下的角色。</span><span lang="en">If the role shows "No longer available — choose again", an administrator removed the role you were using; choose one of the remaining roles here.</span></p>
+
+    <p class="text-muted small"><span lang="zh">簽核清單同樣只列目前廠別的單據。若在手機上找不到某張待簽的單，先確認廠別是否正確。</span><span lang="en">The approval list is also limited to the current plant. If a document you expect is missing on the phone, check which plant you are in first.</span></p>
+
+    <h3><span lang="zh">推播通知</span><span lang="en">Push notifications</span></h3>
+    <p><span lang="zh">首頁右上角的「推播通知」（鈴鐺）可訂閱／取消推播。首次訂閱時瀏覽器會要求通知權限，未允許則無法訂閱（畫面會提示「請允許通知權限才能訂閱推播」）。訂閱後鈴鐺變為實心，並多出一顆黃色鈴鐺的<strong>「測試推播」</strong>，按下後手機應立即收到一則測試通知，用來確認推播通道正常；平常不需要使用。</span><span lang="en">"Push notifications" (the bell) at the top right of the home page subscribes to or cancels push. The browser asks for notification permission the first time, and without it you cannot subscribe (the screen says "Allow notifications before subscribing to push"). Once subscribed the bell fills in and a yellow-bell <strong>"Test push"</strong> button appears; pressing it should deliver a test notification to the phone straight away, confirming the push channel works. You do not need it day to day.</span></p>
+    <p><span lang="zh">為了安全，系統只接受各大瀏覽器的正式推播服務（Google、Mozilla、Apple、Microsoft）；每個帳號最多可訂閱 10 台裝置（管理者可調整），超過時畫面會提示「已達裝置推播訂閱數量上限」，請先在不再使用的裝置上取消訂閱。</span><span lang="en">For security the system accepts only the browsers' official push services (Google, Mozilla, Apple, Microsoft). Each account can subscribe up to 10 devices (adjustable by an administrator); beyond that the screen says "The device subscription limit has been reached" — cancel the subscription on a device you no longer use first.</span></p>
+    <p><span lang="zh">有單據輪到你簽核時會收到推播，<strong>點通知會直接開到手機的「待我簽核」</strong>清單，不會把你帶到電腦版畫面。</span><span lang="en">You get a push when a document reaches you for approval, and <strong>tapping it opens the mobile "My Approvals" list</strong> rather than taking you to a desktop screen.</span></p>
+    <p class="text-muted small"><span lang="zh">推播需要瀏覽器支援並且 Service Worker 已就緒；不支援的瀏覽器會直接提示，不會靜靜失敗。</span><span lang="en">Push needs browser support and a ready service worker; an unsupported browser is told so rather than failing silently.</span></p>
+
+    <!-- 各畫面說明 -->
+    <h2 id="screens"><i class="bi bi-phone-flip me-2 text-primary"></i><span lang="zh">各畫面說明</span><span lang="en">Screen instructions</span></h2>
+    <p><span lang="zh">以下每個手機畫面各有一頁說明，含畫面截圖、操作步驟與注意事項。畫面是否顯示依角色的手機權限而定。</span><span lang="en">Each mobile screen below has its own page with a screenshot, the steps and the things to watch for. Whether a screen appears at all depends on the role's mobile permissions.</span></p>
+    <h3><span lang="zh">生產現場（MFG）</span><span lang="en">Shop floor (MFG)</span></h3>
+    <div class="row g-3 mb-2">
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="dispatch-list.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-gear-wide-connected me-1 text-primary"></i><span lang="zh">投產報工</span><span lang="en">Production</span></h6>
+        <div class="text-muted small"><span lang="zh">現場的 MFG 進入點：作業功能捷徑、機台與狀態篩選、派工清單。</span><span lang="en">The floor's entry point to MFG: the shortcut bar, the machine and status filters and the dispatch list.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="work-session.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-play-circle me-1 text-primary"></i><span lang="zh">開工作業</span><span lang="en">Production session</span></h6>
+        <div class="text-muted small"><span lang="zh">備料準備（建立備料單、開始／完成備料）與開工、下工。</span><span lang="en">Setup (raising a staging order, starting and finishing setup) and starting and ending work.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="production-report.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-clipboard-check me-1 text-primary"></i><span lang="zh">報工</span><span lang="en">Production report</span></h6>
+        <div class="text-muted small"><span lang="zh">回報合格與不良數量、不良原因、容器號；兩顆送出鈕的差別。</span><span lang="en">Reporting good and defective quantities, the defect reason and the container; and the difference between the two submit buttons.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="requisition.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box-arrow-in-right me-1 text-primary"></i><span lang="zh">領料／退料</span><span lang="en">Requisition / Return</span></h6>
+        <div class="text-muted small"><span lang="zh">從開工作業申請領料，或把用剩的料建退料單交回倉庫。</span><span lang="en">Request material from the production session, or raise a return slip for what is left.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="schedule.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-bar-chart-steps me-1 text-primary"></i><span lang="zh">生產排程</span><span lang="en">Production Schedule</span></h6>
+        <div class="text-muted small"><span lang="zh">依工作中心與機台分組的排程看板，含排程查詢的條件與上限。</span><span lang="en">The schedule board grouped by work center and machine, with the query criteria and its limit.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="preparation.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-list-check me-1 text-primary"></i><span lang="zh">生產準備看板</span><span lang="en">Preparation Board</span></h6>
+        <div class="text-muted small"><span lang="zh">開工前確認備料與模具：日期切換、備料狀態徽章與三種風險標示。</span><span lang="en">Checking material and tooling before work starts: the day switch, the staging badges and the three risk markers.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="fpi.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-clipboard2-check me-1 text-primary"></i><span lang="zh">首件檢查 FPI</span><span lang="en">First Article (FPI)</span></h6>
+        <div class="text-muted small"><span lang="zh">備料完成後、開工前的首件驗證；合格才放行開工。</span><span lang="en">First-piece verification after setup and before work starts; only a pass releases the dispatch.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="ipqc.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-clipboard2-pulse me-1 text-primary"></i><span lang="zh">製程檢驗 IPQC</span><span lang="en">In-Process QC (IPQC)</span></h6>
+        <div class="text-muted small"><span lang="zh">生產中的抽樣檢驗；MIL-STD-1916 Ac=0，不合格即暫停派工。</span><span lang="en">Sampling inspection during production; MIL-STD-1916 Ac=0, and a failure puts the dispatch on hold.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="machine-status.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-cpu me-1 text-primary"></i><span lang="zh">機台狀態異動</span><span lang="en">Machine Status</span></h6>
+        <div class="text-muted small"><span lang="zh">掃碼回報故障、保養、待機等狀態；各狀態可執行的事件與對派工的影響。</span><span lang="en">Scanning to report breakdowns, maintenance and standby; which events each status allows and what they do to dispatches.</span></div></div></a></div>
+    </div>
+    <h3><span lang="zh">倉儲作業（INV）</span><span lang="en">Warehouse (INV)</span></h3>
+    <p><span lang="zh">倉儲作業首頁以「待入庫／待出庫」兩個數字開場，下方卡片即以下各畫面的入口。</span><span lang="en">The warehouse operations home page opens with the pending inbound and outbound counts, and the cards below it lead to the screens that follow.</span></p>
+    <img class="screen-shot" src="img/inv-list.png" data-src-en="img/en/inv-list.png" alt="倉儲作業首頁截圖" data-alt-en="Warehouse operations home screen screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">倉儲作業首頁（卡片上的數字為待處理筆數）</span><span lang="en">The warehouse operations home page (the number on each card is how many are waiting)</span></div>
+    <div class="row g-3 mb-2">
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="putaway.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box-arrow-in-down me-1 text-primary"></i><span lang="zh">入庫上架</span><span lang="en">Putaway</span></h6>
+        <div class="text-muted small"><span lang="zh">選待入庫單據 → 指定目的儲位與數量；可分多次上架到不同儲位。</span><span lang="en">Choose an inbound document, then give the target location and quantity; one line can go to several locations.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="pick.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box-arrow-up me-1 text-primary"></i><span lang="zh">出庫下架</span><span lang="en">Pick</span></h6>
+        <div class="text-muted small"><span lang="zh">選待出庫單據 → 依可用庫存決定來源儲位與數量。</span><span lang="en">Choose an outbound document, then use the available stock to decide the source location and quantity.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="stockcount.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-clipboard2-check me-1 text-primary"></i><span lang="zh">庫存盤點</span><span lang="en">Stock Count</span></h6>
+        <div class="text-muted small"><span lang="zh">依清冊盤點、自由盤點、複盤三種模式與各自的使用時機。</span><span lang="en">Counting by sheet, free counting and recounting, and when to use each.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="stock.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-search me-1 text-primary"></i><span lang="zh">庫存查詢</span><span lang="en">Stock Query</span></h6>
+        <div class="text-muted small"><span lang="zh">依品號查（東西在哪裡）或依儲位查（這裡有什麼）。</span><span lang="en">By product (where is this thing) or by location (what is in this place).</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="iqc.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-shield-check me-1 text-primary"></i><span lang="zh">進料檢驗 IQC</span><span lang="en">Incoming Inspection (IQC)</span></h6>
+        <div class="text-muted small"><span lang="zh">供應商來料抽驗；驗證等級怎麼選、拒批之後怎麼走。</span><span lang="en">Sampling incoming supplier material: choosing the verification level and what happens after a rejection.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="issue.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-box-seam me-1 text-primary"></i><span lang="zh">工單發退料</span><span lang="en">WO Material Issue/Return</span></h6>
+        <div class="text-muted small"><span lang="zh">依發退料單從有庫存的儲位揀料，或把退回的料收進儲位，一次完成過帳。</span><span lang="en">Pick slips from locations that hold stock, or receive returned material into a location, posting in one step.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="staging.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-diagram-3 me-1 text-primary"></i><span lang="zh">備料作業</span><span lang="en">Material Staging</span></h6>
+        <div class="text-muted small"><span lang="zh">確認備料單鎖定庫存，再把料移入備料倉。</span><span lang="en">Confirm staging orders to reserve stock, then move material into the staging area.</span></div></div></a></div>
+      <div class="col-md-6"><a class="card card-screen h-100 border text-decoration-none text-body" href="outsource-receive.html">
+        <div class="card-body py-3"><h6 class="fw-bold mb-1"><i class="bi bi-truck me-1 text-primary"></i><span lang="zh">委外收料</span><span lang="en">Outsource Receiving</span></h6>
+        <div class="text-muted small"><span lang="zh">依委外採購單收回加工品；確認後到入庫上架。</span><span lang="en">Receive processed goods against the outsourcing PO; put them away once confirmed.</span></div></div></a></div>
+    </div>
+
+    <!-- 斷線保護 -->
+    <h2 id="offline"><i class="bi bi-cloud-upload me-2 text-primary"></i><span lang="zh">斷線保護</span><span lang="en">Disconnection protection</span></h2>
+    <p><span lang="zh"><strong>手機版需要連線才能使用，不是離線作業。</strong>派工、庫存、待檢單等畫面資料一律即時向伺服器讀取；連不上時畫面會顯示<strong>「需要連線」</strong>，不會拿舊資料頂替——舊資料可能早已不同（派工被調整、別人已補登），看了反而誤事。</span><span lang="en"><strong>The mobile app needs a connection; it is not an offline app.</strong> Dispatches, stock, inspection orders and other screen data are always read live from the server. When the server cannot be reached the screen says <strong>"Connection required"</strong> instead of showing old data, which may already be wrong (a dispatch rescheduled, someone else having entered it).</span></p>
+    <p><span lang="zh">斷線保護只處理一種狀況：<strong>按下送出的那一刻剛好斷線</strong>（廠區 Wi-Fi 短暫中斷、伺服器重新啟動中）。這時下列作業會先暫存在手機上，恢復連線後自動送出，每分鐘也會自動再試一次；每筆都帶唯一識別碼，重送不會重複計數：</span><span lang="en">Disconnection protection covers one situation only: <strong>the connection drops at the moment you tap submit</strong> (a brief Wi-Fi outage on the floor, the server restarting). The following entries are then saved on the phone and sent automatically when the connection returns, with another automatic attempt every minute; each carries a unique identifier, so resending never double counts:</span></p>
+    <ul>
+      <li><span lang="zh">報工、完工並報工、下工、機台狀態異動（最優先送出）</span><span lang="en">Production reports, finish-and-report, clocking out, machine status changes (sent first)</span></li>
+      <li><span lang="zh">入庫上架、出庫下架、盤點（初盤／複盤）</span><span lang="en">Put-away, picking, stock counts (first count / recount)</span></li>
+      <li><span lang="zh">工單發退料過帳、備料移入、領料／退料申請</span><span lang="en">Work-order issue/return posting, staging, requisition / return requests</span></li>
+    </ul>
+    <p><span lang="zh"><strong>訊號很弱時也一樣</strong>：按下送出後 <strong>20 秒</strong>都沒有回應，畫面不會一直轉圈，會改成「已暫存，連線後自動送出」。伺服器若其實已經收到並處理好了，之後的重送也只會拿回同一份結果，不會多算一筆——所以看到「已暫存」時<strong>不要再按一次</strong>。</span><span lang="en"><strong>The same applies when the signal is very weak</strong>: if there is no response within <strong>20 seconds</strong> of tapping submit, the screen stops spinning and shows "saved, will be sent when connected". If the server had in fact already received and processed it, the resend just gets the same result back and nothing is counted twice — so when you see "saved", <strong>do not tap submit again</strong>.</span></p>
+    <p><span lang="zh"><strong>同一條線很多人同時報工時</strong>（例如換班），系統會自動重試，很少再出現「資料已被其他人修改」。若仍出現，表示這一筆<strong>沒有</strong>存進去，再按一次送出即可，不會重複計數。</span><span lang="en"><strong>When many people on the same line report at once</strong> (at a shift change, for example), the system retries automatically, so "the data was changed by someone else" now rarely appears. If it still does, that entry was <strong>not</strong> saved — just tap submit again; it will not be counted twice.</span></p>
+    <p><span lang="zh"><strong>記錄的是按下送出的時間，不是送達的時間。</strong>例如 10:00 按下工、10:20 才恢復連線，下工時間仍記 10:00，工時與停機時間不會被拉長。</span><span lang="en"><strong>The time recorded is when you tapped submit, not when it arrived.</strong> For example, if you clock out at 10:00 and the connection only comes back at 10:20, the clock-out is still recorded at 10:00, so hours and downtime are not stretched.</span></p>
+    <div class="note-box"><i class="bi bi-exclamation-triangle me-1"></i><span lang="zh"><strong>暫存超過 30 分鐘就不再自動送出</strong>，改為「待確認」：在首頁左下角的待送出清單看過內容，仍正確就按<strong>「確認送出」</strong>；若已在桌機補登過，請按<strong>「捨棄」</strong>，否則會重複。超過 24 小時的資料伺服器不再接受，請改在桌機補登後捨棄。</span><span lang="en"><strong>Entries saved for more than 30 minutes are no longer sent automatically</strong> and become "Needs confirmation": check them in the waiting list (floating button at the bottom left of the home page) and tap <strong>"Confirm &amp; send"</strong> if they are still correct; if you have already entered them on the desktop, tap <strong>"Discard"</strong> so they are not duplicated. The server no longer accepts entries older than 24 hours — enter those on the desktop and discard them.</span></div>
+    <p><span lang="zh">只能在連線時做的作業（不會暫存）：<strong>簽核、上工、首件檢驗、製程檢驗、進料檢驗、委外收料</strong>。</span><span lang="en">Actions that work only while connected (never saved for later): <strong>approvals, clocking in, first-piece inspection, in-process inspection, incoming inspection, outsource receiving</strong>.</span></p>
+    <p><span lang="zh">待送出清單的按鈕：「立即同步」馬上送出；送出失敗的項目可「重試失敗項」或逐筆「重試」；「清除已送出」清掉已成功的紀錄。</span><span lang="en">Buttons in the waiting list: "Sync now" sends immediately; failed items can be retried with "Retry failed items" or one by one with "Retry"; "Clear sent" removes the ones that went through.</span></p>
+    <ul>
+      <li><span lang="zh"><strong>不會替別人送出</strong>：暫存的每一筆都記著是誰按的送出。換別人登入時，那幾筆會標示「請由原操作者登入後再同步」，等原操作者登入才送出。</span><span lang="en"><strong>Never sent on someone else's behalf</strong>: each held item remembers who pressed Submit. If someone else signs in, those items are marked "sign in as the original user to sync it" and wait until that person signs in.</span></li>
+      <li><span lang="zh"><strong>登出前確認</strong>：還有未送出的暫存時按登出，會先詢問；確定登出後資料仍留在這台手機，下次原操作者登入時送出。</span><span lang="en"><strong>Sign-out check</strong>: signing out while held items are still unsent asks for confirmation first; the items stay on this phone and are sent the next time the original user signs in.</span></li>
+    </ul>
+
+    <!-- FAQ -->
+    <h2 id="faq"><i class="bi bi-patch-question me-2 text-primary"></i><span lang="zh">常見問題</span><span lang="en">FAQ</span></h2>
+    <dl>
+      <dt><span lang="zh">Q：輸入帳密後又跳回帳密輸入畫面，沒有任何錯誤訊息？</span><span lang="en">Q: After I enter my username and password it just goes back to the login screen, with no error message. Why?</span></dt>
+      <dd class="mb-2"><span lang="zh">A：請確認帳號是否已啟用兩階段驗證——啟用後登入需先完成驗證碼步驟才算完成，並非登入失敗。若輸入畫面持續跳回且有看到錯誤提示，才代表帳號或密碼錯誤。</span><span lang="en">A: Check whether two-factor authentication is enabled on the account — once it is, logging in is not complete until the verification step is done, and this is not a failure. Only if the screen keeps returning and shows an error message is the username or password actually wrong.</span></dd>
+      <dt><span lang="zh">Q：換了新手機，Authenticator App 裡的驗證碼跟原本不同，無法登入？</span><span lang="en">Q: I have a new phone and the code in my authenticator app is different, so I cannot log in. What now?</span></dt>
+      <dd class="mb-2"><span lang="zh">A：代表原本綁定的驗證器已遺失，請洽系統管理員協助重置該帳號的兩階段驗證，重置後需重新掃描 QR Code 綁定。</span><span lang="en">A: This means the authenticator you registered has been lost. Ask your system administrator to reset two-factor authentication for the account; you will then have to scan the QR code again to register.</span></dd>
+      <dt><span lang="zh">Q：手機版首頁顯示「尚未設定手機模組權限」？</span><span lang="en">Q: The mobile home page says "no mobile module permissions have been set". Why?</span></dt>
+      <dd class="mb-2"><span lang="zh">A：帳號權限未開放任何手機作業模組，請洽系統管理員於角色權限中開通。</span><span lang="en">A: The account has not been given access to any mobile module. Ask your system administrator to enable it in the role permissions.</span></dd>
+      <dt><span lang="zh">Q：待送出清單的項目一直顯示失敗？</span><span lang="en">Q: Items in the waiting list keep showing as failed. What should I do?</span></dt>
+      <dd class="mb-2"><span lang="zh">A：先看紅字原因。若是伺服器拒收（例如派工已結案、數量超過派工量），重試也不會過，請在桌機確認後補登，再按「捨棄」；若只是當時連不上，確認網路恢復後點「重試失敗項」。仍無法判斷請截圖錯誤訊息回報系統管理員。</span><span lang="en">A: Read the red message first. If the server rejected it (for example the dispatch is already closed, or the quantity exceeds the dispatch), retrying will not help — check on the desktop, enter it there, then tap "Discard". If it simply could not connect at the time, make sure the connection is back and tap "Retry failed items". If you cannot tell, take a screenshot of the error message and send it to your system administrator.</span></dd>
+    </dl>
+
+    <hr class="mt-4" />
+    <div class="text-muted small text-end"><span lang="zh">SmartFactory MES 系統使用手冊 &nbsp;|&nbsp; 如需協助請聯繫系統管理者</span><span lang="en">SmartFactory MES User Manual &nbsp;|&nbsp; Contact your system administrator if you need help</span></div>
+  </main>
+</div>
+</body>
+</html>

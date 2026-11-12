@@ -1,0 +1,251 @@
+{
+  "sourcePath": "APPROVAL-WORKFLOW.md",
+  "sourceHash": "0bd35cbe2528fa3a73d3dbed7685cc584817a441f80ff0b9a3469adf0f3ea997",
+  "entries": [
+    {
+      "slug": "approval-workflow-820be671",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow)",
+      "text": "自動指定主管規則說明｜系統會根據組織結構，自動找出提交單據的直屬主管作為審核人。如果有多位直屬主管，則會選擇其中使用者名稱在字典序上最小的那一位擔任審核人。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-aae51d3e",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 1. 模組概述",
+      "text": "簽核機制與流程控制說明｜若某項作業不需要經過審核，只需儲存即可直接完成；但如果該作業需要審核，則必須先將資料儲存為草稿，之後才需由建立者手動送出，才能依據設定的步驟逐步完成所有簽核。此外，同一類型的作業在不同廠別之間，可能會套用不同的審核規則或流程模板。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-99e0de0b",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 1. 模組概述 › 功能架構",
+      "text": "流程結構與權限控制說明｜系統的作業流程會分為三個階段：首先是管理員設定層，用來定義簽核的標準模板和哪些作業類型需要經過審核；接著是作業執行層，使用者在操作時會經歷儲存草稿、送審、待審核等狀態轉換；最後是簽核執行層，系統會引導使用者依序進行審核，直到完成或決定退回。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-2cfc5b6c",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 2. 核心資料模型 › 2.1 DocumentApprovalConfig — 作業類型簽核設定",
+      "text": "作業類型簽核的設定規則｜每個廠別和每種作業類型只能有一組簽核設定。如果需要審核，則必須指定一個簽核模板；否則，資料儲存後即視為完成流程。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-e68e19e8",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 2. 核心資料模型 › 2.2 ApprovalTemplate — 簽核模板",
+      "text": "簽核流程的適用範圍限制說明｜此簽核流程的設定是與特定廠區綁定的，因此如果要在不同廠區使用相同的審核流程，必須為每個廠區分別建立一套獨立的流程設定。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-abb420a3",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 2. 核心資料模型 › 2.3 ApprovalStep — 簽核步驟",
+      "text": "簽核步驟的指定方式｜每個簽核步驟只能指定一位直屬主管、一個特定角色或一位特定使用者進行審核，不支援一次同時要求多個不同條件的人員共同或任選其中一人完成簽核。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-80ae6e10",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 2. 核心資料模型 › 2.4 ApprovalRequest — 簽核申請單",
+      "text": "流程紀錄與歷史追蹤機制｜每次有人送審的申請都會建立一筆記錄來追蹤整個流程的進度。如果這個申請被撤回、拒絕或退回後重新送審，系統會建立一個新的申請單記錄，而舊的記錄則會永久保留下來作為歷史資料供查閱。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-849754be",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 2. 核心資料模型 › 2.4-A ApprovalStatus（申請單 / 歷程層級）",
+      "text": "狀態定義與流程規則｜申請單和審核紀錄的狀態，會以數字來代表。當申請單剛建立時，其初始狀態是待審核；若經過一次或最後一步的核准，則狀態為已核准；如果被拒絕，整筆申請單就會永久終止；如果建立者主動撤回，狀態也會改變；此外，如果審核者退回要求修改，代表該申請單需要重新修改後再送審。",
+      "approved": false
+    },
+    {
+      "slug": "approval-workflow-21150e65",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 2. 核心資料模型 › 2.5 DocumentApprovalStatus（文件層級）",
+      "text": "文件審核狀態判斷規則｜文件的審核狀態會用一個數值來記錄，這個狀態決定了文件目前是否可以被編輯或用於後續的作業。當文件是草稿時，是可以修改和送審的；如果已經送審但還沒人審核到結果，則不能再修改。一旦被正式核准，就無法再進行任何修改；若被拒絕，雖然狀態會改變，但申請人仍可以編輯並重新送審。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-2f10063d",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 2. 核心資料模型 › 2.6 ApprovalLog — 簽核歷程",
+      "text": "簽核歷程紀錄的建立與查閱規則｜每當發生任何簽核動作，例如核准、退回、拒絕、撤回或重新指派時，系統都會新增一筆完整的操作記錄。這些記錄會以廠別來區分，確保所有相關人員都能查看跨組織的審核歷史，而不會因為人員異動或角色變更而被清除。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-02d53958",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 3. 文件狀態流程 › 各狀態下的操作限制",
+      "text": "狀態變更後的文件操作權限限制｜在草稿狀態下，建立者可以編輯、刪除和送審。當文件進入待審核狀態時，建立者不能直接修改，但可以撤回。若文件已獲批准或被駁回，其可編輯性與可送審的權限會依據不同的業務規則來決定。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-303a02c6",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 4. 管理員設定步驟 › 步驟一：建立簽核模板",
+      "text": "簽核流程設定規則說明｜此簽核流程的順序是透過調整各個審核步驟的排列次數來決定的，使用者必須依照這個既定的順序完成所有必要的審核環節。每個審核步驟都需要指定負責審核的人員類型，該人員可能是申請人的直屬主管、系統中定義的角色群組，或是特定的單一帳號。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-82de912a",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 4. 管理員設定步驟 › 步驟二：設定作業類型簽核規則",
+      "text": "作業類型簽核規則的設定限制｜每種工作類型的資料，在同一個廠別內只能設定一次相關的審核規則。此外，一旦為某個工作類型設定了對應的代碼，這個代碼就不能再更改了。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-8598d588",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 5. 自訂作業畫面整合 › 5.6 審核結果回寫（Approved / Rejected）",
+      "text": "審核結果如何反映到文件上｜當審核人完成了對某筆資料的簽核動作後，系統會自動將此審核狀態回傳並更新到相關的業務文件上，讓所有人都知道這份文件的最新審核進度。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-764e9e2c",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 5. 自訂作業畫面整合 › 5.6 審核結果回寫（Approved / Rejected） › 中央同步機制（v1.2）",
+      "text": "審核結果回寫的處理順序與方式｜系統會先依照文件類型，檢查是否有特定模組為此流程特別註冊了同步處理的方式；如果沒有找到專門的處理方式，則會依循核心系統內建的預設規則來進行判斷。若以上兩種機制都無法對應到當前的文件類型，系統將不會執行任何動作。",
+      "approved": false
+    },
+    {
+      "slug": "approval-workflow-e3d9ccbf",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 6. 簽核操作說明 › 6.1 簽核人：待我簽核",
+      "text": "待我簽核的條件判斷規則｜系統會根據目前流程步驟的指定方式和是否已指派特定人員來決定您能否看到這份待審核的單據。如果該步驟有明確指派了負責人，則只會顯示給被指派的人看；否則，系統會依據角色或使用者身分進行比對判斷。若流程設計為需要主管簽核且尚未指派特定人員時，則不會出現在待審清單中。您在審核時可選擇核准推進到下一步、退回讓申請人修改，或是直接拒絕終止整個申請流程。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-a8558d48",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 6. 簽核操作說明 › 6.2 管理員：所有簽核記錄",
+      "text": "查看所有簽核記錄與流程｜使用者可以根據不同的狀態或作業類型來篩選和檢視所有的簽核紀錄，並且可以看到完整的簽核歷程。此外，對於目前處於「待審核」狀態的申請單，管理員有權利重新指派負責審核的人員。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-13f68daf",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 7. 組織異動處理",
+      "text": "直屬主管審核人自動判定規則｜當送件需要由直屬主管審核時，系統會根據申請人的職位和部門結構，依循特定的順序來判斷應由哪一位主管進行審核。如果這個自動判定的過程中任何一步找不到對應的資訊，則不會自動填寫審核人，屆時需由管理員手動介入指派審核人。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-f5af87ee",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 7. 組織異動處理 › 問題場景",
+      "text": "流程變更時的權責人處理｜當負責審核某個流程步驟的人員職位發生變動時，原先被指定為該步驟審核人的人員將無法在待審閱清單中看到相關申請單。同時，新接任此職務的人員若尚未登入系統，也可能不知道有需要他們進行簽核的案件存在。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-803ce50f",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 7. 組織異動處理 › 各簽核者類型的影響",
+      "text": "簽核者權限變更的影響範圍｜指定使用者如果離職或調動了工作崗位，會導致沒有人可以負責進行簽核。這時需要由管理人員手動重新指派新的簽核人來處理。此外，當直屬主管發生異動時，即使系統已經自動計算出新的主管，若有正在等待審批的申請單，仍需由相關人員介入，將簽核人重新指定一次。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-71549866",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 7. 組織異動處理 › 重新指派步驟",
+      "text": "流程變更與權責人更新規則｜當需要更改某筆申請單的審核負責人時，系統會將新的審核負責人設定為該單據的最新審核人，此動作會覆蓋原有的所有審核人資訊，並且所有的指派變動都會被完整記錄在審核歷程中供查閱。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-5ab3c14e",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 8. 服務介面參考 › 8.1 IApprovalService — 主流程",
+      "text": "簽核流程的關鍵操作規則｜當完成簽核動作後，最終的審批狀態（已核准、已拒絕或需修改）會自動回寫到原始的業務文件上。",
+      "approved": false
+    },
+    {
+      "slug": "approval-workflow-1d137f4c",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 9. 權限設定",
+      "text": "簽核記錄的查看權限限制｜只有系統管理員和部門主管才能看到所有的簽核紀錄；其他使用者只能看到需要由自己進行簽核的項目。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-8abf4220",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 10. 限制與後續規劃 › 10.1 v1.2 為止已知限制",
+      "text": "簽核流程的限制與注意事項｜目前系統無法支援多人同時或依條件進行簽核，若需要此功能，則必須將其拆分成連續的幾個審核步驟來處理。此外，當管理員操作時，需手動確認沒有正在進行的申請單，以避免資料引用上的問題。另外，本系統在處理多個使用者同時修改資料時，採用最後寫入成功者為準的機制。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-ff284959",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 10. 限制與後續規劃 › 10.2 Roadmap",
+      "text": "版本標籤說明：系統目前已上線的功能範圍｜系統目前的版本編號涵蓋 v1.0 到 v1.2 為已經實作並經過測試的版本。下方顯示的任何功能群組佔位標籤，代表這些功能尚未排定正式的時間表，也尚未獲得業務負責人的核准。",
+      "approved": false
+    },
+    {
+      "slug": "approval-workflow-3df4a4bc",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 10. 限制與後續規劃 › 10.2 Roadmap › 已完成",
+      "text": "流程限制與自動解析規則｜主管的核准權限會根據組織單位的層級關係進行自動判斷。此外，當某筆申請紀錄被刪除時，系統也會執行取消相關的核准動作。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-df96e20f",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 10. 限制與後續規劃 › 10.2 Roadmap › 規劃中（待正式排程）",
+      "text": "流程規劃：多人與條件分歧的規則｜目前系統尚未實作多個簽核人需要全部同意或任一人通過的機制，也無法根據單據金額是否大於一千元或是單據類型是否為「IJ」等特定條件來決定不同的審批路徑。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-5460af1a",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 11. 並發控制與冪等性 › 11.1 v1.0 並發行為",
+      "text": "並發操作會以最後寫入為準｜當多位合格簽核者同時進行核准，系統會建立兩筆紀錄，最終儲存的狀態和目前步驟將由最後完成寫入的操作決定。若在某個申請單上，有人在執行核准的同時，另一個人點擊了撤回，則較晚完成寫入的那一個操作（無論是核准還是撤回）會成為最終狀態，且兩筆紀錄都會保留下來。此外，如果管理員正在重新指派簽核人時，前一位被指派的簽核人也同時進行了核准動作，系統可能會導致目前負責審核的人和申請單的狀態出現不一致的情況，但所有操作的記錄都會完整保存。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-1b36dcb7",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 11. 並發控制與冪等性 › 11.2 冪等性說明",
+      "text": "冪等性與重複操作的限制｜提交或處理核准單時，如果重複執行相同的動作，系統會產生多筆申請紀錄。此外，對於已經完成審批（已核准、已駁回、已撤回或退回修改）的申請單，再次嘗試處理將不會有任何效果；但若在等待審批狀態下同時進行兩次操作，可能會導致記錄重複寫入日誌。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-548bbd7a",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 11. 並發控制與冪等性 › 11.3 建議",
+      "text": "並發處理與資料一致性控制｜當業務情境對資料的變動非常敏感，例如涉及金額較大的採購單時，系統會限制使用者重複提交相同的申請動作，以確保資料的一致性和正確性。",
+      "approved": false
+    },
+    {
+      "slug": "approval-workflow-46b6a39f",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 12. 稽核與資料保護 › 12.1 ApprovalLog 設計意圖",
+      "text": "稽核紀錄的查詢範圍與保護機制｜所有有權限查看簽核歷程的使用者，都能看到該廠別內所有的簽核流程記錄。這些歷史紀錄不會因為建立這筆紀錄的人員離職或角色被移除而消失，並且在查詢時仍會依照廠別進行篩選，確保資料不洩漏到其他廠別。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-60e63c01",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 12. 稽核與資料保護 › 12.2 ApprovalRequest 階層權限影響",
+      "text": "權限決定誰能看到待審單據｜只有擁有「申請者組織路徑前綴覆蓋者」權限的人員，才能在等待審核的清單中看到這份申請單。",
+      "approved": false
+    },
+    {
+      "slug": "approval-workflow-62f494b9",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 12. 稽核與資料保護 › 12.3 保留與刪除",
+      "text": "資料保留與可刪除的紀錄範圍｜所有已提交的核准申請記錄會永久保留下來，即使使用者將其撤回，系統也不會進行刪除。此外，所有的核准流程紀錄也會永久保存，且無法透過任何介面來刪除這些歷史紀錄。只有核准流程的範本和相關的配置資料可以被移除。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-45e976fa",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 12. 稽核與資料保護 › 12.4 個資合規（GDPR-like）注意事項",
+      "text": "資料保護與離職人員權限管理｜系統會保留過去的簽核紀錄，即使相關使用者帳號已經離開公司或被移除，這些紀錄中仍會包含執行簽核時的個人識別資訊。這確保了歷史業務流程的完整性，讓稽核人員可以追溯到誰在什麼時間點進行了審批作業。",
+      "approved": true
+    },
+    {
+      "slug": "approval-workflow-03891c64",
+      "lang": "zh",
+      "headingPath": "簽核流程模組 (Approval Workflow) › 附錄 A：文件狀態流程 ASCII 備援",
+      "text": "文件狀態的轉換規則說明｜當系統判定不需要經過核准時，資料會直接完成；若需要核准，則儲存後會進入待審核狀態。在待審核狀態下，可以選擇讓流程繼續、退回修改或直接拒絕。如果流程有下一步，則回到待審核狀態；若沒有下一步，則視為全部通過並完成。此外，只有處於待審核狀態的資料，建立者才能進行撤回操作。",
+      "approved": true
+    }
+  ]
+}

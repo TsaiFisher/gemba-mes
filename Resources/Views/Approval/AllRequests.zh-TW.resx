@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PageTitle" xml:space="preserve"><value>所有簽核記錄</value></data>
+  <data name="PendingApprovals" xml:space="preserve"><value>待我簽核</value></data>
+  <data name="AllStatus" xml:space="preserve"><value>全部狀態</value></data>
+  <data name="StatusPending" xml:space="preserve"><value>待簽核</value></data>
+  <data name="StatusApproved" xml:space="preserve"><value>已核准</value></data>
+  <data name="StatusRejected" xml:space="preserve"><value>已拒絕</value></data>
+  <data name="DocumentType" xml:space="preserve"><value>單據類型</value></data>
+  <data name="DocumentTypeFilter" xml:space="preserve"><value>單據類型篩選</value></data>
+  <data name="DocumentId" xml:space="preserve"><value>單據編號</value></data>
+  <data name="CurrentStep" xml:space="preserve"><value>目前步驟</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="Filter" xml:space="preserve"><value>篩選</value></data>
+  <data name="ClearFilter" xml:space="preserve"><value>清除</value></data>
+  <data name="History" xml:space="preserve"><value>歷程</value></data>
+  <data name="StatusWithdrawn" xml:space="preserve"><value>已撤回</value></data>
+  <data name="StepLabel" xml:space="preserve"><value>第 {0} 步</value></data>
+  <data name="ReassignApprover" xml:space="preserve"><value>重新指派簽核人</value></data>
+  <data name="ReassignLabel" xml:space="preserve"><value>指派簽核人</value></data>
+  <data name="PerPage" xml:space="preserve"><value>筆</value></data>
+  <data name="Requester" xml:space="preserve"><value>申請人</value></data>
+  <data name="SubmittedAt" xml:space="preserve"><value>送審時間</value></data>
+  <data name="StatusReturned" xml:space="preserve"><value>退回修改</value></data>
+  <data name="Unassigned" xml:space="preserve"><value>未指派簽核人</value></data>
+  <data name="UnassignedHint" xml:space="preserve"><value>主管解析失敗，此單不會出現在任何人的待簽清單，請重新指派簽核人</value></data>
+  <data name="UnassignedOnly" xml:space="preserve"><value>僅看未指派</value></data>
+</root>

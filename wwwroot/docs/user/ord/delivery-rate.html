@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Delivery Rate — ORD User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>交期達成率 — ORD 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">ORD 目錄</span><span lang="en">ORD Index</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">ORD 畫面</span><span lang="en">ORD Screens</span></div>
+    <a href="sales-order.html" class="nav-link"><span lang="zh">銷售訂單</span><span lang="en">Sales Order</span></a>
+    <a href="goods-shipment.html" class="nav-link"><span lang="zh">出貨單</span><span lang="en">Goods Shipment</span></a>
+    <a href="sales-return.html" class="nav-link"><span lang="zh">銷退單</span><span lang="en">Sales Return</span></a>
+    <a href="internal-order.html" class="nav-link"><span lang="zh">內部訂單</span><span lang="en">Internal Order</span></a>
+    <a href="order-overdue.html" class="nav-link"><span lang="zh">訂單逾期跟催</span><span lang="en">Overdue Sales Orders</span></a>
+    <a href="sales-ranking.html" class="nav-link"><span lang="zh">銷售排名</span><span lang="en">Sales Ranking</span></a>
+    <a href="sales-trend.html" class="nav-link"><span lang="zh">銷售趨勢</span><span lang="en">Sales Trend</span></a>
+    <a href="delivery-rate.html" class="nav-link active"><span lang="zh">交期達成率</span><span lang="en">Delivery Rate</span></a>
+    <a href="return-rate.html" class="nav-link"><span lang="zh">退貨率分析</span><span lang="en">Return Rate</span></a>
+    <a href="sales-forecast.html" class="nav-link"><span lang="zh">銷售預測</span><span lang="en">Sales Forecast</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-truck-check me-2 text-primary"></i><span lang="zh">交期達成率</span><span lang="en">Delivery Rate</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/DeliveryRate &nbsp;|&nbsp; 訂單準時出貨率統計</span><span lang="en">Route: /DeliveryRate &nbsp;|&nbsp; On-time shipment statistics per order</span></div>
+    </div>
+
+    <p><span lang="zh">統計訂單的準時出貨達成率，依客戶分組。</span><span lang="en">Measures the on-time shipment rate of sales orders, grouped by customer.</span></p>
+
+    <div class="note-box"><i class="bi bi-info-circle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">母體是「這段期間該出的單」，不是「這段期間出掉的貨」：</span><span lang="en">The population is what was due to ship in the period, not what actually shipped in it:</span></strong><span lang="zh">查詢區間比對的是<b>預交日</b>，每一行訂單明細只計一次，三種結果：</span><span lang="en"> the date range is matched against the <b>promised date</b>, and each order line is counted exactly once, with three possible outcomes:</span>
+      <ul class="mb-0 mt-2">
+        <li><span lang="zh"><b>已出清</b>——以<b>出齊那一天</b>比對預交日，當天出算準時。分批出貨時看的是最後一批，不是第一批。</span><span lang="en"><b>Fully shipped</b> — the date the <b>last</b> shipment completed the line is compared with the promised date; shipping on the day itself counts as on time. With split shipments it is the last batch that matters, not the first.</span></li>
+        <li><span lang="zh"><b>已過預交日仍未出清</b>——<b>算遲交</b>。</span><span lang="en"><b>Past the promised date and still not complete</b> — counted as <b>late</b>.</span></li>
+        <li><span lang="zh"><b>尚未到期</b>——不列入。</span><span lang="en"><b>Not yet due</b> — excluded.</span></li>
+      </ul>
+    </div>
+
+    <div class="note-box"><i class="bi bi-exclamation-triangle-fill me-1 text-warning"></i>
+      <strong><span lang="zh">2026-09-21 口徑變更，歷史數字多半會下降：</span><span lang="en">The basis changed on 2026-09-21 and most historical figures fall:</span></strong><span lang="zh">舊口徑的母體只有<b>已經出掉的貨</b>，於是「已經過了預交日、貨還沒出」的訂單根本不在分母裡——「訂單逾期跟催」列得出來的單，這張表看不到。新口徑把那些單算進來。另外兩件事也一併修正：對不到訂單明細的孤兒出貨列不再計入分母（過去它們讓準時＋逾期 ≠ 總數），而「預交日在期間內、實際在期間後才出」的單過去兩邊都落不到而靜默消失，現在會出現在預交日所在的期間。</span><span lang="en"> The old population contained only goods <b>already shipped</b>, so an order past its promised date but not yet shipped was absent from the denominator — the very lines the Overdue Sales Orders report lists were invisible here. The new basis counts them. Two other things are fixed at the same time: orphan shipment lines that match no order line no longer enter the denominator (they used to make on-time plus late fail to add up to the total), and a line promised inside the period but shipped after it used to fall through both periods and disappear; it now appears in the period its promised date belongs to.</span>
+    </div>
+    <img class="screen-shot" src="img/delivery-rate.png" data-src-en="img/en/delivery-rate.png" alt="交期達成率畫面截圖" data-alt-en="Delivery rate screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">交期達成率畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Delivery rate screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">預交日（起 / 迄）</span><span lang="en">Promised date (from / to)</span></td><td><span lang="zh">納入統計的<b>預交日</b>區間——決定「哪些訂單明細該在這段期間出」，與實際何時出貨無關。留白時預設近 30 天</span><span lang="en">The range of <b>promised dates</b> included, which decides which order lines were due to ship in the period regardless of when they actually shipped. Left blank, it defaults to the last 30 days</span></td></tr>
+        <tr><td><span lang="zh">客戶代號</span><span lang="en">Customer</span></td><td><span lang="zh">只看單一客戶；留空為全部</span><span lang="en">Limits the view to one customer; leave blank for all</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">報表欄位</span><span lang="en">Report fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">客戶代號</span><span lang="en">Customer</span></td><td><span lang="zh">統計對象</span><span lang="en">Group by</span></td></tr>
+        <tr><td><span lang="zh">應出明細數</span><span lang="en">Due Lines</span></td><td><span lang="zh">預交日落在區間內、該客戶的訂單明細行數，為達成率的分母。準時＋逾期恆等於本欄</span><span lang="en">Number of order lines for the customer whose promised date falls in the period; the denominator of the rate. On-time plus late always equals this figure</span></td></tr>
+        <tr><td><span lang="zh">準時筆數</span><span lang="en">On-Time</span></td><td><span lang="zh">已出清且出齊日未晚於預交日的筆數</span><span lang="en">Number of lines shipped in full no later than the promised date</span></td></tr>
+        <tr><td><span lang="zh">逾期筆數</span><span lang="en">Late</span></td><td><span lang="zh">出齊日晚於預交日，<b>或已過預交日仍未出清</b>的筆數</span><span lang="en">Number of lines completed after the promised date, <b>or past the promised date and still not shipped in full</b></span></td></tr>
+        <tr><td><span lang="zh">達成率%</span><span lang="en">Attainment %</span></td><td><span lang="zh">準時筆數 ÷ 應出明細數，即對該客戶的交期履約表現</span><span lang="en">On-time lines ÷ due lines, i.e. delivery performance for that customer</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="order-overdue.html"><span lang="zh">訂單逾期跟催</span><span lang="en">Overdue Sales Orders</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

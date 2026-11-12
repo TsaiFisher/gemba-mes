@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="/mobile/manifest.json">
+    <link rel="apple-touch-icon" href="/mobile/icons/apple-touch-icon-180.png">
+    <title data-i18n="machine.page_title">機台狀態異動</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/mobile/css/mobile.css">
+    <link rel="stylesheet" href="/mobile/css/mfg-machine-status.css">
+</head>
+<body class="bg-light">
+
+<!-- 頂部導覽列 -->
+<nav class="navbar navbar-dark bg-primary mobile-navbar px-3">
+    <button type="button" data-action="historyBack" data-fallback="/mobile/mfg/list.html"
+            class="btn btn-link text-white p-0 me-2" data-i18n-title="common.back_prev" title="返回">
+        <i class="bi bi-arrow-left fs-5"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.back_prev">返回</span>
+    </button>
+    <span class="navbar-brand fw-bold mb-0 h1 flex-grow-1">
+        <i class="bi bi-cpu me-2"></i>
+        <span data-i18n="machine.title">機台狀態異動</span>
+    </span>
+    <a href="/mobile/home.html" class="btn btn-outline-light btn-sm me-1" data-i18n-title="common.back" title="回首頁"><i class="bi bi-house-door"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="nav.home">首頁</span></a>
+    <button class="btn btn-outline-light btn-sm me-1" data-action="toggleLang" data-lang-toggle title="Language">EN</button>
+            <button class="btn btn-outline-light btn-sm" data-action="logout" data-i18n-title="common.logout" title="登出">
+        <i class="bi bi-box-arrow-right"></i><span class="d-block lh-1 u-font-size-p65rem" data-i18n="common.logout">登出</span>
+    </button>
+</nav>
+
+<div class="container-fluid py-3 px-3">
+
+    <!-- 步驟一：掃描機台 -->
+    <div id="scanSection">
+        <div class="card shadow-sm mb-3">
+            <div class="card-body py-3 text-center">
+                <i class="bi bi-upc-scan display-4 text-primary mb-2 d-block"></i>
+                <p class="fw-semibold mb-3" data-i18n="machine.scan_ph">掃描機台 QR Code 或手動輸入機台代碼</p>
+                <div class="input-group mb-3">
+                    <input type="text" id="machineCodeInput" class="form-control form-control-lg btn-mobile"
+                           data-i18n-placeholder="machine.code" placeholder="機台代碼" autocomplete="off">
+                    <button class="btn btn-outline-secondary" data-action="openScanner" data-i18n-title="common.search" title="掃描">
+                        <i class="bi bi-upc-scan"></i><span class="ms-1" data-i18n="common.scan">掃描</span>
+                    </button>
+                </div>
+                <button class="btn btn-primary btn-lg w-100 action-btn" data-action="loadMachine">
+                    <i class="bi bi-search me-2"></i>
+                    <span data-i18n="common.search">查詢機台</span>
+                </button>
+            </div>
+        </div>
+        <div id="reader" class="mb-3 u-display-none"></div>
+    </div>
+
+    <!-- 步驟二：顯示狀態 + 選擇事件 -->
+    <div id="detailSection">
+
+        <!-- 機台資訊卡 -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-body py-2 px-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <div>
+                        <span class="fw-bold" id="machineName">—</span>
+                        <span class="text-muted small ms-2" id="machineCode">—</span>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary" data-action="resetScan">
+                        <i class="bi bi-arrow-repeat"></i>
+                        <span data-i18n="common.refresh">重新掃描</span>
+                    </button>
+                </div>
+                <div class="mb-1 small text-muted">
+                    <span data-i18n="machine.work_center">工作中心</span>：<span id="workCenter">—</span>
+                </div>
+                <div>
+                    <span class="machine-status-badge" id="statusBadge">—</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 可執行的事件按鈕 -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-white py-2">
+                <span class="fw-semibold small" data-i18n="machine.event">選擇異動類型</span>
+            </div>
+            <div class="card-body py-2 px-3">
+                <div id="eventButtons" class="d-grid gap-2"></div>
+                <div id="noEvents" class="text-muted small text-center py-3 d-none">
+                    <span data-i18n="machine.no_events">目前狀態無可執行異動</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 確認表單（選擇事件後展開） -->
+        <div id="confirmForm" class="card shadow-sm mb-3 u-display-none">
+            <div class="card-header bg-white py-2">
+                <span class="fw-semibold small" id="selectedEventLabel" data-i18n="machine.confirm_title">確認異動</span>
+            </div>
+            <div class="card-body py-3">
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold" data-i18n="machine.note">備註（選填）</label>
+                    <textarea id="eventNote" class="form-control btn-mobile u-font-size-16px" rows="2"
+                              data-i18n-placeholder="machine.note" placeholder="輸入備註說明…"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold" data-i18n="machine.source_doc">來源單號（選填）</label>
+                    <input type="text" id="sourceDocId" class="form-control btn-mobile"
+                           data-i18n-placeholder="machine.source_doc_ph" placeholder="相關維修單/保養單號">
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-success btn-lg action-btn" id="btnConfirm" data-action="submitEvent">
+                        <i class="bi bi-check-circle me-2"></i>
+                        <span data-i18n="machine.submit">確認送出</span>
+                    </button>
+                    <button class="btn btn-outline-secondary action-btn" data-action="cancelEvent">
+                        <span data-i18n="common.cancel">取消</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 受影響派工 Toast（額外提示） -->
+<div id="affectModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning py-2">
+                <h6 class="modal-title"><i class="bi bi-exclamation-triangle me-1"></i>
+                    <span id="affectTitle" data-i18n="machine.affected">派工受影響</span>
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="affectBody"></div>
+            <div class="modal-footer py-2">
+                <button class="btn btn-primary" data-bs-dismiss="modal" data-action="resetScan" data-i18n="common.ok">確定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 掃描 Modal -->
+<div class="modal fade" id="scannerModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header py-2">
+                <h6 class="modal-title" data-i18n="machine.scan_ph">掃描機台 QR Code</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-0"><div id="scanReader"></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast 容器 -->
+<div id="toast-container"></div>
+
+<script src="/mobile/js/telemetry.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/data-action.js"></script>
+<script src="/mobile/js/nav.js"></script>
+<script src="/mobile/js/libs/html5-qrcode.min.js"></script>
+<script src="/mobile/js/i18n.js"></script>
+<script src="/mobile/js/i18n.modules.js"></script>
+    <script src="/mobile/js/api.js"></script>
+<script src="/mobile/js/auth.js"></script>
+<script src="/mobile/js/scanner.js"></script>
+<script src="/mobile/js/offline-queue.js"></script>
+<script src="/mobile/mfg/machine-status.page.js"></script>
+</body>
+</html>

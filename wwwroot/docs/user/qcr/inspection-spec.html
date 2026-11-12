@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-doc-lang="zh" data-title-en="Inspection Spec — QCR User Guide">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>檢驗規範 — QCR 使用說明</title>
+<link rel="stylesheet" href="../../../lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="screen.page.css">
+    <link rel="stylesheet" href="../doc-i18n.css">
+    <script src="../doc-i18n.js"></script>
+    <link rel="stylesheet" href="../doc-search.css">
+    <script src="../doc-search.js" defer></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3 u-height-56px">
+  <span class="navbar-brand fw-bold fs-6"><i class="bi bi-book me-2"></i><span lang="zh">SmartFactory MES — 使用手冊</span><span lang="en">SmartFactory MES — User Manual</span></span>
+  <div class="d-flex gap-2">
+    <button type="button" id="docLangToggle" class="btn btn-sm btn-outline-light"><span lang="zh">English</span><span lang="en">中文</span></button>
+    <a href="index.html" class="btn btn-sm btn-outline-light"><span lang="zh">QCR 目錄</span><span lang="en">QCR contents</span></a>
+    <a href="../index.html" class="btn btn-sm btn-outline-light"><span lang="zh">使用手冊首頁</span><span lang="en">User manual home</span></a>
+    <a href="/" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i><span lang="zh">返回系統</span><span lang="en">Back to the system</span></a>
+  </div>
+</nav>
+<div class="d-flex">
+  <nav class="sidebar">
+    <div class="sidebar-heading"><span lang="zh">QCR 畫面</span><span lang="en">QCR screens</span></div>
+    <a href="defect-code.html" class="nav-link"><span lang="zh">不良項目代碼</span><span lang="en">Defect Codes</span></a>
+    <a href="inspection-spec.html" class="nav-link active"><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></a>
+    <a href="inspection-order.html" class="nav-link"><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></a>
+    <a href="ncr.html" class="nav-link"><span lang="zh">不合格品單（NCR）</span><span lang="en">Non-Conformance Reports</span></a>
+    <a href="instrument.html" class="nav-link"><span lang="zh">檢驗儀器</span><span lang="en">Inspection Instruments</span></a>
+    <a href="spc-analysis.html" class="nav-link"><span lang="zh">SPC 製程能力分析</span><span lang="en">SPC Process Capability</span></a>
+  </nav>
+  <main class="content">
+    <div class="doc-header">
+      <h1 class="h4 fw-bold mb-0"><i class="bi bi-clipboard2-pulse me-2 text-primary"></i><span lang="zh">檢驗規範</span><span lang="en">Inspection Specs</span></h1>
+      <div class="text-muted small mt-1"><span lang="zh">路由：/InspectionSpec &nbsp;|&nbsp; 品號檢驗項目/規格上下限定義</span><span lang="en">Route: /InspectionSpec &nbsp;|&nbsp; Defining inspection items and specification limits per item</span></div>
+    </div>
+
+    <p><span lang="zh">定義各品號的檢驗項目（量測值型/判定型）、規格中心值與上下限、使用儀器與抽樣要求。檢驗單依規範自動產生檢驗項目，量測值並供 SPC 分析。</span><span lang="en">Defines the inspection items for each product (variable or attribute), the target value and specification limits, the instrument to use and the sampling requirement. Inspection orders take their items from the spec, and the measured values feed SPC analysis.</span></p>
+    <img class="screen-shot" src="img/inspection-spec.png" data-src-en="img/en/inspection-spec.png" alt="檢驗規範畫面截圖" data-alt-en="Inspection spec screenshot" loading="lazy">
+    <div class="screen-shot-caption"><span lang="zh">檢驗規範畫面截圖（示意，實際欄位/資料依權限與查詢條件而異）</span><span lang="en">Inspection spec screenshot (illustrative; actual fields and data vary by permission and query criteria)</span></div>
+
+    <h2 id="search"><i class="bi bi-search me-2 text-primary"></i><span lang="zh">查詢</span><span lang="en">Search</span></h2>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">查詢列輸入條件後點「查詢」；欄位標題可點擊排序，清單下方有分頁導航。</span><span lang="en">Enter your criteria on the query bar and click "Search"; column headers can be clicked to sort, and the paging controls sit below the list.</span></div></div>
+    <h2 id="process"><i class="bi bi-list-check me-2 text-primary"></i><span lang="zh">作業流程</span><span lang="en">Process</span></h2>
+    <h3><span lang="zh">建立規範</span><span lang="en">Create spec</span></h3>
+    <div class="step-row"><span class="step-badge">1</span><div><span lang="zh">點「新增」選品號與檢驗階段（IQC/IPQC/FQC）。</span><span lang="en">Click "Add" and choose the item and the inspection stage (IQC / IPQC / FQC).</span></div></div>
+    <div class="step-row"><span class="step-badge">2</span><div><span lang="zh">逐項加入檢驗項目：名稱、型態（量測/判定）、規格上下限、單位與儀器。</span><span lang="en">Add the inspection items one by one: name, type (variable or attribute), specification limits, unit and instrument.</span></div></div>
+    <div class="step-row"><span class="step-badge">3</span><div><span lang="zh">儲存後新檢驗單即依此產生項目。</span><span lang="en">Once saved, new inspection orders take their items from it.</span></div></div>
+        <h2 id="field-reference"><i class="bi bi-table me-2 text-primary"></i><span lang="zh">欄位說明</span><span lang="en">Field reference</span></h2>
+    <h3><span lang="zh">查詢條件</span><span lang="en">Query criteria</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-20pct"><span lang="zh">條件</span><span lang="en">Condition</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">查詢</span><span lang="en">Search</span></td><td><span lang="zh">規範代碼或名稱的模糊比對</span><span lang="en">Partial match on the spec code or name</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">基本欄位</span><span lang="en">Basic fields</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">規範代碼</span><span lang="en">Spec Code</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">唯一識別，建立後不可修改</span><span lang="en">Unique identifier; cannot be changed after creation</span></td></tr>
+        <tr><td><span lang="zh">規範名稱</span><span lang="en">Spec Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">此檢驗規範的用途說明</span><span lang="en">Description of what the inspection spec is for</span></td></tr>
+        <tr><td><span lang="zh">品號</span><span lang="en">Item</span></td><td><span lang="zh">適用的料件；留空表示全品號通用</span><span lang="en">Item it applies to; leave blank to apply to all items</span></td></tr>
+        <tr><td><span lang="zh">供應商</span><span lang="en">Supplier</span></td><td><span lang="zh">適用的供應商（IQC 使用）；留空表示全供應商通用</span><span lang="en">Supplier it applies to (used by IQC); leave blank to apply to all suppliers</span></td></tr>
+        <tr><td><span lang="zh">抽樣類型</span><span lang="en">Sampling Type</span></td><td><span lang="zh">計數型（Attribute，判定合格／不合格）或計量型（Variable，量測數值）</span><span lang="en">Attribute (judged pass or fail) or variable (a measured value)</span></td></tr>
+        <tr><td><span lang="zh">觸發模式</span><span lang="en">Trigger mode</span></td><td><span lang="zh">Always 每次都檢／Periodic 定期抽驗（另設間隔小時數）／OnDemand 需要時才開單。IPQC 使用</span><span lang="en">Always (inspect every time) / Periodic (sample at a set interval in hours) / OnDemand (raise an order only when needed). IPQC uses</span></td></tr>
+        <tr><td><span lang="zh">完工需 FQC</span><span lang="en">FQC required on completion</span></td><td><span lang="zh">勾選後工單完工入庫前必須先通過完工檢驗，未通過不得繳庫</span><span lang="en">When ticked, a work order must pass final inspection before it can be received into stock</span></td></tr>
+        <tr><td><span lang="zh">銷退需 RQC</span><span lang="en">RQC required on sales return</span></td><td><span lang="zh">勾選後銷貨退回確認時自動建立退貨檢驗單</span><span lang="en">When ticked, confirming a sales return automatically creates a return inspection order</span></td></tr>
+        <tr><td><span lang="zh">啟用</span><span lang="en">Active</span></td><td><span lang="zh">停用後不再套用此規範</span><span lang="en">Once inactive, the spec no longer applies</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">抽樣切換規則（MIL-STD-1916）</span><span lang="en">Sampling switching rules (MIL-STD-1916)</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">正常抽樣 VL</span><span lang="en">Normal sampling VL</span></td><td><span lang="zh">一般狀態使用的驗證等級（預設 VL-IV）</span><span lang="en">Verification level used in the normal state (VL-IV by default)</span></td></tr>
+        <tr><td><span lang="zh">加嚴抽樣 VL</span><span lang="en">Tightened sampling VL</span></td><td><span lang="zh">出現不合格後改用的較嚴等級（預設 VL-VI）</span><span lang="en">The tighter level used after a failure (VL-VI by default)</span></td></tr>
+        <tr><td><span lang="zh">減量抽樣 VL</span><span lang="en">Reduced sampling VL</span></td><td><span lang="zh">連續合格後可放寬的等級（預設 VL-II）</span><span lang="en">The looser level allowed after consecutive acceptances (VL-II by default)</span></td></tr>
+        <tr><td><span lang="zh">轉減量所需連續合格批數</span><span lang="en">Consecutive accepted lots needed to move to reduced</span></td><td><span lang="zh">在「正常」狀態連續合格達此批數即降為「減量」（預設 5）</span><span lang="en">This many consecutive accepted lots in the normal state drops it to reduced (5 by default)</span></td></tr>
+        <tr><td><span lang="zh">恢復正常所需連續合格批數</span><span lang="en">Consecutive accepted lots needed to return to normal</span></td><td><span lang="zh">在「加嚴」狀態連續合格達此批數即回到「正常」（預設 3）</span><span lang="en">This many consecutive accepted lots in the tightened state returns it to normal (3 by default)</span></td></tr>
+        <tr><td><span lang="zh">啟用跳批 / 跳批頻率 / 進入跳批批數</span><span lang="en">Skip-lot enabled / Skip frequency / Lots to enter skip-lot</span></td><td><span lang="zh">選配的 Skip-Lot 機制：須先在「減量」狀態連續合格達指定批數才進入跳批，之後每 N 批才實際抽驗 1 批</span><span lang="en">An optional skip-lot scheme: the required number of consecutive accepted lots has to be reached in the reduced state before skip-lot starts, after which only 1 lot in every N is actually inspected</span></td></tr>
+      </tbody>
+    </table>
+    <h3><span lang="zh">量測項目</span><span lang="en">Measurement item</span></h3>
+    <table class="table table-sm field-table border">
+      <thead><tr><th class="u-width-28pct"><span lang="zh">欄位</span><span lang="en">Field</span></th><th><span lang="zh">說明</span><span lang="en">Guide</span></th></tr></thead>
+      <tbody>
+        <tr><td><span lang="zh">項目名稱</span><span lang="en">Item Name</span></td><td><span class="badge bg-danger"><span lang="zh">必填</span><span lang="en">Required</span></span> <span lang="zh">要量測的品質特性（如外徑、厚度）</span><span lang="en">The quality characteristic to measure (outside diameter, thickness …)</span></td></tr>
+        <tr><td><span lang="zh">單位</span><span lang="en">UOM</span></td><td><span lang="zh">量測值的計量單位</span><span lang="en">Unit of measure of the value</span></td></tr>
+        <tr><td>LSL / Target / USL</td><td><span lang="zh">規格下限、目標值、規格上限。計量型抽樣以此判定合格，並作為 SPC 製程能力（Cp／Cpk）的計算基準</span><span lang="en">Lower limit, target and upper limit. Variable sampling judges acceptance against them, and they are the basis of the SPC capability calculation (Cp / Cpk)</span></td></tr>
+        <tr><td><span lang="zh">儀器1 / 儀器2 / 儀器3</span><span lang="en">Instrument 1 / Instrument 2 / Instrument 3</span></td><td><span lang="zh">可用於此項目的量測儀器；未在校正效期內的儀器不應使用</span><span lang="en">Instruments that can be used for this item; an instrument outside its calibration period should not be used</span></td></tr>
+      </tbody>
+    </table>
+
+<h2 id="related-screens"><i class="bi bi-link-45deg me-2 text-primary"></i><span lang="zh">相關畫面</span><span lang="en">Related screens</span></h2>
+    <p><a href="inspection-order.html"><span lang="zh">檢驗單查詢</span><span lang="en">Inspection Orders</span></a>、<a href="spc-analysis.html"><span lang="zh">SPC 製程能力分析</span><span lang="en">SPC Process Capability</span></a></p>
+
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+﻿# R19 baseline — 既有違規清單。
+# controller 會加整表 ModelState 錯誤（AddModelError("", …)）的面板表單，必須有
+# asp-validation-summary="ModelOnly"，否則那些訊息渲染不到任何地方，
+# 使用者看到的是「按了存檔沒反應」。
+# 目前零違規；不在此清單的新違規會讓建置失敗。

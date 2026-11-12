@@ -1,0 +1,45 @@
+@page
+@using SmartFactory.MES.Services
+@inject ISystemParamService SystemParamSvc
+@model SmartFactory.MES.Areas.Identity.Pages.Account.LoginModel
+@{
+    var isEn = System.Globalization.CultureInfo.CurrentUICulture.Name.StartsWith("en");
+    ViewData["Title"] = isEn ? "Log in" : "登入";
+    var companyName = await SystemParamSvc.GetCompanyNameAsync(isEn);
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <section>
+            <form id="account" method="post">
+                <p class="text-center text-muted mb-1 small">@companyName</p>
+                <h2 class="text-center">@(isEn ? "Log in" : "系統登入")</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="username" />
+                    <label asp-for="Input.Email" class="form-label">@(isEn ? "Account" : "帳號")</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Input.Password" class="form-label">@(isEn ? "Password" : "密碼")</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="checkbox mb-3">
+                    <label asp-for="Input.RememberMe" class="form-label">
+                        <input class="form-check-input" asp-for="Input.RememberMe" />
+                        @(isEn ? "Remember me?" : "記住我？")
+                    </label>
+                </div>
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">@(isEn ? "Log in" : "登入")</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,134 @@
+{
+  "sourcePath": "Modules/INV/Controllers/WarehouseApiController.Fulfillment.cs",
+  "sourceHash": "00a03f789cd0a8eedff3f4cd9072f942339e235c0f965ab1703e98a2f8710954",
+  "entries": [
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-61e28d80",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 裝入箱子：這次上架的量放進這個空箱，箱子綁到批號",
+      "text": "箱子與批號的綁定規則說明｜本次上架的數量會被放入一個空箱中，並且這個箱子會與特定的批號進行關聯。如果沒有填寫批號，系統會自動生成一個批號；若使用者手動輸入批號，則必須是本廠此品號尚未使用的批號。",
+      "approved": true,
+      "sourceSectionHash": "7b4d66930ef8744438c618864f8a4bc39752373bae47ae671d533546592a8da6"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-bb94204f",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 離線佇列的重送去重",
+      "text": "重傳處理機制與去重規則｜系統會檢查是否已經為某個來源識別碼進行過處理，如果已處理過，則直接回傳既有結果。",
+      "approved": true,
+      "sourceSectionHash": "c49056da9d49652a57ae91288130d241cffe4652f29a3111eee3d6f7d1396a1a"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-2eb3d5cf",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 通過後才放行至單據記錄的一般倉別",
+      "text": "品質隔離的庫存只能在待驗區存放｜如果某個產品明細還沒有通過初檢驗（IQC），它只能被上架到「待驗」的倉庫類型。只有通過了初檢驗後，才能將其放行至一般使用的倉庫記錄中，這樣可以防止收貨流程繞過檢驗直接使用庫存。",
+      "approved": true,
+      "sourceSectionHash": "b0846a54d58f5760198c6333f1509af4074cbd374b8c44229ae2aeda333280f4"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-00ef7345",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 存貨計價一律以採購單價為基礎",
+      "text": "庫存計價以採購單價為基礎｜系統計算的存貨成本會直接採用採購單價作為基礎；收貨時若有價格調整，產生的差額將會記錄在應付帳款端，不會回沖到存貨數量上。",
+      "approved": true,
+      "sourceSectionHash": "5e7b50d9862434dae0f24747bc2d655d7c6369acfc12e5675a57260cda4c4636"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-a0c3c202",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 尚未放行前允許暫存待驗倉，不受單據記錄的一般倉別限制",
+      "text": "庫存移動的倉庫限制規則｜在資料尚未正式放行前，系統允許暫存待驗的倉庫，此時不會受到單據記錄一般倉庫別的限制；只有當資料進入正常倉庫時，才會進行倉庫別的比對。",
+      "approved": true,
+      "sourceSectionHash": "6415dd5665604b820c9e51c144ef434a4012a03efd418d28b20aa2f118f8ef2e"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-4dee11db",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 貨實際進正常倉→ 就這批上架量認列應付免驗品直放的認列點",
+      "text": "上架認列的數量計算規則｜此批次上架的數量，其應付（免驗品直放）的認列點，僅在貨物實際進入正常倉庫時才會進行認列。如果該批次不是免驗品且走的是待驗倉，則不會在此處進行認列，而必須等到檢驗合格並放行後才能由相關服務進行認列。",
+      "approved": true,
+      "sourceSectionHash": "c1a9b258dbe51bd7edc3185ecebf75c52cb5348f97e733765234caceb84d62a9"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-8b3c3059",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 委外超耗扣款：借 2152 進貨暫估應付／貸 1401 存貨",
+      "text": "委外超耗扣款科目設定說明｜當處理委外超耗扣款時，應將金額記入存貨科目，而不是進料差異科目。這樣做是為了確保報廢的物料實體消失後，向廠商求償的款項能正確地用應付帳款來抵銷，避免使損益科目產生不必要的收益，並讓相關的成本結餘留在存貨科目中。",
+      "approved": true,
+      "sourceSectionHash": "dd3c278eea1ed520d5df65c84cd3d36dbaf41ddd519c09c4cca1390cbe521984"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-a160eff7",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 完整模式下架＝貨實際退出正常倉 → 就這批下架量負向回沖來源進貨",
+      "text": "庫存下架與來源進貨的關聯性｜當以完整模式進行下架時，實際從正常倉退出的數量會對應到該批次下架量，並以此比例回沖至來源進貨單應付。此時，下架量的單位是庫存單位，需要依照明細中「退回數量」與「庫存數量」的比例來換算成進貨單位（若比例為 1:1，則數值不變）。",
+      "approved": true,
+      "sourceSectionHash": "b8f8f037b440861885ab7f5522f26bd5fc95e336814ff923ddf603fad122d315"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-76f3267b",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 入庫成本取原出貨異動實際扣掉的單位成本，不是銷退單上的售價",
+      "text": "單價計算依據為實際出貨成本｜系統在計算入庫成本時，會使用原先出貨時的單位成本來扣除，而不是直接採用銷退單上的售價。這樣做是為了避免將存貨科目和庫存明細帳都錯誤地記錄成售價，以免污染移動平均成本，影響後續所有出貨的成本計算。",
+      "approved": true,
+      "sourceSectionHash": "3c137eddcde5be31d049969e3679c6878797ae51f43b438f53c1642e43f5117c"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-ce36612c",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 成本基礎已是本幣，故匯率固定 1",
+      "text": "匯率固定為本幣的單價｜系統計算成本時，因為基礎貨幣已經是當地的貨幣，所以會將匯率固定為 1 來進行計算。",
+      "approved": true,
+      "sourceSectionHash": "a697698b3178947ae06de6164707f81b4dd495cf140c8e6c1bde956c1ab1c8a1"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-d0841224",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 完整模式上架＝退回貨實際入正常倉 → 就這批上架量負向回沖來源出",
+      "text": "庫存上架與退貨沖銷的計算規則｜實際入正常倉的數量，會根據出貨單應收的比例來換算成銷售單位當量進行負向回沖。",
+      "approved": true,
+      "sourceSectionHash": "084b60e96e706448572c8dcf8cdaf4a7aacbec6b7f8563d845cab0535b40a4ea"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-04744127",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 本次上架要併入單位成本、但不再產生分錄的既有存貨價值",
+      "text": "併入成本計算規則說明｜本次上架時，會將既有的存貨價值以本幣方式併入單位成本中。若分批進行上架，則會根據實際的數量比例來攤分該筆併入金額。",
+      "approved": true,
+      "sourceSectionHash": "757a9e5404d8033e36902423928d4ce51adb375f36cbaafd4117603671e64684"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-7f1ecc97",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 把「未回沖缺口」接在成功訊息後面",
+      "text": "顯示未結清的缺口資訊｜當系統處理成功後，如果存在尚未回沖的缺口，會額外在成功的訊息後面提示使用者有此缺口。若不存在缺口或系統回應非成功狀態，則不會顯示任何額外的缺口提醒。",
+      "approved": true,
+      "sourceSectionHash": "fdf3040b2186dfe605325b044e4fd6bdc497aa5f182534f9a36f15f20fc7b6de"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-50b4148d",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 裝入箱子：交易前先驗完空箱、啟用",
+      "text": "庫存盤點的單箱與批次限制｜在進行裝入箱子操作前，系統會先驗證空箱和啟用狀態，並且要求每個批號必須是新的。此外，一個箱內的所有數量總和，必須等於該箱所包含的單一批號的數量。",
+      "approved": true,
+      "sourceSectionHash": "d4447be0d73efa0718f3acbe139532e9079afafbfe9fa144f45a1721d5373b97"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-c52f54f4",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 過帳路徑內含日記帳自身 ，須以顯式交易包住單筆上架過帳與後續存檔",
+      "text": "資料儲存需成批處理｜系統在進行單筆的庫存上架過帳時，必須將此操作和之後所有的資料儲存動作，都包含在一個顯式的交易範圍內來完成。",
+      "approved": true,
+      "sourceSectionHash": "dd5d2c4aae928284ba36831963c1cdd67ce211fd818d4b576f765c2a8ae9a489"
+    },
+    {
+      "slug": "code-inv-warehouseapicontroller-fulfillment-493e99eb",
+      "lang": "zh",
+      "headingPath": "庫存管理 › 後續存檔，避免迴圈中途失敗造成部分儲位已過帳、其餘未過帳的不一致",
+      "text": "資料處理需完整交易以確保一致性｜所有儲位的過帳動作必須包含在一個完整的交易範圍內，這樣才能避免在處理過程中如果發生失敗，導致部分儲位已經完成過帳而其他儲位卻沒有過帳的資料不一致情況。",
+      "approved": true,
+      "sourceSectionHash": "de65ad99f4ec8297d4b9ca4a315a26d34c6ae14f40f97c2292420a6174295762"
+    }
+  ]
+}

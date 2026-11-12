@@ -1,0 +1,77 @@
+@model SmartFactory.MES.Modules.PUR.Models.VendorEvaluation
+@using SmartFactory.MES.Modules.PUR.Models
+@using SmartFactory.MES.Modules.PUR.Services
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SmartFactory.MES.ProjectZSharedResource> L
+@{
+    Layout = "~/Views/Shared/_PrintLayoutZ.cshtml";
+    var userNames = ViewBag.UserNames as Dictionary<string, string> ?? new Dictionary<string, string>();
+    string UserDisplay(string? id) => id != null && userNames.TryGetValue(id, out var n) ? n : (id ?? "");
+    var weights = ViewBag.Weights as SrmWeights ?? SrmWeights.Default;
+    ViewData["Title"] = Localizer["DocTitle"].Value;
+    string period = Model.EvaluationQuarter.HasValue
+        ? $"{Model.EvaluationYear} Q{Model.EvaluationQuarter}"
+        : $"{Model.EvaluationYear} {Localizer["Annual"].Value}";
+}
+
+<div class="print-header">
+    <div class="print-qr">@Html.Raw(ViewBag.QrSvg)</div>
+    <div class="print-title-block">
+        <div class="print-title">SmartFactory MES</div>
+        <div class="print-subtitle">@Localizer["DocTitle"]</div>
+        <div class="print-doc-number">@Localizer["Period"]：@period ／ @Localizer["EvalDate"]：@Model.EvaluationDate.ToString("yyyy-MM-dd")</div>
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-section-title">@L["Print_BasicInfo"]</div>
+    <div class="print-field-grid">
+        <div class="print-field-label">@Localizer["Supplier"]</div>
+        <div class="print-field-value">@Model.SupplierCode @Model.Supplier?.CompanyName</div>
+        <div class="print-field-label">@Localizer["Evaluator"]</div>
+        <div class="print-field-value">@UserDisplay(Model.Evaluator)</div>
+        <div class="print-field-label">@Localizer["Result"]</div>
+        <div class="print-field-value">@Localizer[$"EvalResult{Model.ResultStatus}"]</div>
+        <div class="print-field-label">@Localizer["ApprovalStatus"]</div>
+        <div class="print-field-value">@DocStatusLabels.Label(Model.ApprovalStatus)</div>
+        @if (!string.IsNullOrEmpty(Model.Remarks))
+        {
+            <div class="print-field-label">@Localizer["Remarks"]</div>
+            <div class="print-field-value">@Model.Remarks</div>
+        }
+    </div>
+</div>
+
+<div class="print-section">
+    <div class="print-section-title">@Localizer["Scores"]</div>
+    <table class="print-table">
+        <thead>
+            <tr>
+                <th>@Localizer["ScoreItem"]</th>
+                <th>@Localizer["Weight"]</th>
+                <th>@Localizer["Score"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @* 列印本是對外文件，更不能讓佔位的 100 看起來像評價 *@
+            <tr><td>@Localizer["Quality"]</td><td>@weights.Quality</td><td>@(Model.QualityHasData ? Model.QualityScore.ToString("N2") : Localizer["ScoreNoData"].Value)</td></tr>
+            <tr><td>@Localizer["Delivery"]</td><td>@weights.Delivery</td><td>@(Model.DeliveryHasData ? Model.DeliveryScore.ToString("N2") : Localizer["ScoreNoData"].Value)</td></tr>
+            <tr><td>@Localizer["Price"]</td><td>@weights.Price</td><td>@Model.PriceScore.ToString("N2")</td></tr>
+            <tr><td>@Localizer["Service"]</td><td>@weights.Service</td><td>@Model.ServiceScore.ToString("N2")</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="print-section text-end">
+    <strong>@L["Print_Total"]：@Model.TotalScore.ToString("N2")</strong>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.FollowUpAction))
+{
+    <div class="print-section">
+        <div class="print-section-title">@Localizer["FollowUpAction"]</div>
+        <div>@Model.FollowUpAction</div>
+    </div>
+}
+
+@await Html.PartialAsync("_PrintBase")

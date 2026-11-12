@@ -1,0 +1,5 @@
+﻿# R20 baseline — 既有違規清單。
+# Controller 不得以表單帶回的 ApprovalStatus 做狀態守衛判斷（那是使用者可改的 hidden 欄位），
+# 應改用 _context.LoadApprovalStatusAsync<Entity>(vm.XxxId) 從資料庫讀。
+# 目前零違規：13 支 controller（PUR 3／ORD 1／INV 9）已於本次全數改為讀 DB。
+# 目前零違規；不在此清單的新違規會讓建置失敗。

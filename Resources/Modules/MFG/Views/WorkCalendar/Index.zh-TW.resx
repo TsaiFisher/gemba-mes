@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="PageTitle" xml:space="preserve"><value>工作日曆</value></data>
+  <data name="BatchGenerate" xml:space="preserve"><value>批次產生</value></data>
+  <data name="AddEntry" xml:space="preserve"><value>新增工作日曆</value></data>
+  <data name="Add" xml:space="preserve"><value>新增</value></data>
+  <data name="Search" xml:space="preserve"><value>查詢</value></data>
+  <data name="FromDate" xml:space="preserve"><value>開始日期</value></data>
+  <data name="ToDate" xml:space="preserve"><value>結束日期</value></data>
+  <data name="WorkCenter" xml:space="preserve"><value>工作中心</value></data>
+  <data name="AllWorkCenters" xml:space="preserve"><value>所有工作中心</value></data>
+  <data name="WorkCenterAllPh" xml:space="preserve"><value>全部（留空）</value></data>
+  <data name="ColDate" xml:space="preserve"><value>日期</value></data>
+  <data name="ColShift" xml:space="preserve"><value>班制</value></data>
+  <data name="ColWorkCenter" xml:space="preserve"><value>工作中心</value></data>
+  <data name="ColMachine" xml:space="preserve"><value>機台代碼</value></data>
+  <data name="ColStart" xml:space="preserve"><value>開班</value></data>
+  <data name="ColEnd" xml:space="preserve"><value>收班</value></data>
+  <data name="ColRegHours" xml:space="preserve"><value>正班工時</value></data>
+  <data name="ColOtHours" xml:space="preserve"><value>加班工時</value></data>
+  <data name="ColNote" xml:space="preserve"><value>備註</value></data>
+  <data name="ColActions" xml:space="preserve"><value>操作</value></data>
+  <data name="AllPlant" xml:space="preserve"><value>全廠</value></data>
+  <data name="EditTitle" xml:space="preserve"><value>編輯工作日曆</value></data>
+  <data name="NoData" xml:space="preserve"><value>查無資料</value></data>
+  <data name="SearchPrompt" xml:space="preserve"><value>請輸入條件後按「查詢」</value></data>
+  <data name="Prev" xml:space="preserve"><value>上一頁</value></data>
+  <data name="BatchModalTitle" xml:space="preserve"><value>批次產生工作日曆</value></data>
+  <data name="Year" xml:space="preserve"><value>年度</value></data>
+  <data name="Month" xml:space="preserve"><value>月份（選填，空白=整年）</value></data>
+  <data name="MonthAll" xml:space="preserve"><value>—— 整年</value></data>
+  <data name="MonthFmt" xml:space="preserve"><value>{0} 月</value></data>
+  <data name="ShiftGroup" xml:space="preserve"><value>班制代號</value></data>
+  <data name="BatchShiftDefaultOpt" xml:space="preserve"><value>（採用預設班制）</value></data>
+  <data name="BatchShiftDefaultHint" xml:space="preserve"><value>未指定時：有選工作中心→採該中心預設班制；否則→採本廠預設班制。</value></data>
+  <data name="BatchOverwrite" xml:space="preserve"><value>重產即覆蓋既有資料</value></data>
+  <data name="BatchOverwriteHint" xml:space="preserve"><value>勾選後，會先刪除所選範圍（廠/工作中心/機台＋年月）內既有工作日曆再重建；不勾則略過已存在日期。</value></data>
+  <data name="SelectPlaceholder" xml:space="preserve"><value>—— 請選擇</value></data>
+  <data name="WorkCenterOpt" xml:space="preserve"><value>工作中心（選填，空白=全廠）</value></data>
+  <data name="AllPlantOpt" xml:space="preserve"><value>—— 全廠層</value></data>
+  <data name="MachineCode" xml:space="preserve"><value>機台代碼（選填）</value></data>
+  <data name="MachinePh" xml:space="preserve"><value>空值=工作中心層</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="RunGenerate" xml:space="preserve"><value>執行產生</value></data>
+  <data name="SaveSuccess" xml:space="preserve"><value>操作成功</value></data>
+  <data name="JsYearRequired" xml:space="preserve"><value>請輸入年度。</value></data>
+  <data name="JsShiftRequired" xml:space="preserve"><value>請選擇班制代號。</value></data>
+  <data name="JsProcessing" xml:space="preserve"><value>處理中…</value></data>
+  <data name="JsRunFailed" xml:space="preserve"><value>執行失敗，請重試。</value></data>
+  <data name="JsRunGenerate" xml:space="preserve"><value>執行產生</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+</root>

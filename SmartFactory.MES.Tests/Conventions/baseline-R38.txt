@@ -1,0 +1,9 @@
+# R38 baseline — 樣式不得靜默不套用（(a) .cshtml 的 inline style、(b) 未定義的 u- class）。
+# 刻意是空的（零容忍）：這條規則是在把既有違規全部修掉之後才建立的——
+#   (a) 11 處 inline style：RPS/_SavedQueries 1、INV/InventoryAging 4、
+#       RPT/ContributionMargin 1、RPT/MarginAnalysis 4、BAS/_DocNumberConfigForm 1
+#       （其中 2 處是動態百分比，改走 site.js 的 data-pct-width，不是改成 class）
+#   (b) 3 個未定義 class：u-max-height-180px（走 Core-first 補進 csp-utilities.css）、
+#       docs/user/mobile/approval.html 的 u-width-25pct 與 u-width-30pct
+#       （後者在別支 css 裡有定義，但那一頁沒載入它——逐頁判定才看得見）
+# 任何新增違規都會讓建置失敗。

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true"><xsd:complexType><xsd:choice maxOccurs="unbounded">
+      <xsd:element name="data"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" /><xsd:attribute ref="xml:space" /></xsd:complexType></xsd:element>
+      <xsd:element name="resheader"><xsd:complexType><xsd:sequence>
+        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+      </xsd:sequence><xsd:attribute name="name" type="xsd:string" use="required" /></xsd:complexType></xsd:element>
+    </xsd:choice></xsd:complexType></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="DocTitle" xml:space="preserve"><value>工單</value></data>
+  <data name="DocNo" xml:space="preserve"><value>工單號</value></data>
+  <data name="ProductCode" xml:space="preserve"><value>品號</value></data>
+  <data name="Quantity" xml:space="preserve"><value>數量</value></data>
+  <data name="RoutingId" xml:space="preserve"><value>途程</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="PlannedStart" xml:space="preserve"><value>計畫開工</value></data>
+  <data name="PlannedEnd" xml:space="preserve"><value>計畫完工</value></data>
+  <data name="ParentWorkOrder" xml:space="preserve"><value>母工單</value></data>
+  <data name="ReworkFrom" xml:space="preserve"><value>重工來源工單</value></data>
+  <data name="CreatedAt" xml:space="preserve"><value>建立時間</value></data>
+  <data name="OpSeq" xml:space="preserve"><value>工序</value></data>
+  <data name="OperationName" xml:space="preserve"><value>工序名稱</value></data>
+  <data name="WorkCenter" xml:space="preserve"><value>工作中心</value></data>
+  <data name="SetupTime" xml:space="preserve"><value>整備工時</value></data>
+  <data name="UnitTime" xml:space="preserve"><value>單件工時</value></data>
+  <data name="TimeSec" xml:space="preserve"><value>秒</value></data>
+  <data name="TimeMin" xml:space="preserve"><value>分</value></data>
+  <data name="TimeHour" xml:space="preserve"><value>時</value></data>
+  <data name="BatchQty" xml:space="preserve"><value>批量</value></data>
+</root>

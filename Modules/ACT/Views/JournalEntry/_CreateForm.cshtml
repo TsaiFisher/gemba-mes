@@ -1,0 +1,355 @@
+@using SmartFactory.MES.Modules.BAS.Services
+@using SmartFactory.MES.Modules.ACT.ViewModels
+@inject SmartFactory.MES.Modules.BAS.Services.IDisplayPrecision Precision
+@inject IViewLocalizer Localizer
+@model SmartFactory.MES.Modules.ACT.ViewModels.ManualJournalViewModel
+
+@{
+    @* 本位幣小數位數由格式字串反推（"N2" → 2）：IDisplayPrecision 只給格式，
+       而這裡要的是 input 的 value 格式化位數。 *@
+    var moneyFmt = await Precision.BaseMoneyFormatAsync();
+    int baseDp   = int.TryParse(moneyFmt.AsSpan(1), out var dp) ? dp : 2;
+    var accounts = ViewBag.AccountOptions as IEnumerable<dynamic> ?? Enumerable.Empty<dynamic>();
+    var manualMap = ViewBag.AccountManualMap as IDictionary<string, bool> ?? new Dictionary<string, bool>();
+    // 成本中心＝本廠組織單位（存 Id、顯示名稱；2026-10-05 由手填改下拉）
+    var costCenters = ViewBag.CostCenterOptions as List<(string Id, string Label)> ?? new();
+}
+
+<form id="manualJournalForm" method="post" asp-action="Create"
+      data-action-submit="submitPanel">
+    @Html.AntiForgeryToken()
+
+    <div class="p-3">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3 @(ViewContext.ModelState.ErrorCount > 0 ? "" : "d-none")"></div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-12 col-md-4">
+                <label asp-for="EntryDate" class="form-label fw-semibold">
+                    @Localizer["EntryDate"] <span class="text-danger">*</span>
+                </label>
+                <input asp-for="EntryDate" type="date" class="form-control" />
+                <span asp-validation-for="EntryDate" class="text-danger small"></span>
+                <div class="form-text">@Localizer["EntryDateHint"]</div>
+            </div>
+            <div class="col-12 col-md-8">
+                <label asp-for="Description" class="form-label fw-semibold">@Localizer["Description"]</label>
+                <input asp-for="Description" class="form-control" maxlength="200" />
+                <span asp-validation-for="Description" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>@Localizer["Lines"]</strong>
+            <div class="d-flex gap-2">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-action="jeTogglePaste">
+                    <i class="bi bi-clipboard-plus me-1"></i>@Localizer["PasteLines"]
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-sm" data-action="jeAddLine">
+                    <i class="bi bi-plus-lg me-1"></i>@Localizer["AddLine"]
+                </button>
+            </div>
+        </div>
+        @* 2026-10-19 驗收 C-2：限制只寫在貼上框裡，要先點開才看得到，也沒說原因 *@
+        <div class="form-text mt-0 mb-2" id="jeManualAccountNote">
+            <i class="bi bi-info-circle me-1"></i>@Localizer["ManualAccountNote"]
+        </div>
+
+        @* 期初餘額就是一張多行的手動傳票——年中上線要打的是幾十個科目，
+           一行一行按「新增行」不是可行的做法。解析純在前端做，送出後仍走
+           同一套伺服端驗證（可手動選用、一行一邊、借貸平衡、期間鎖）。 *@
+        <div id="jePasteBox" class="card card-body bg-light py-2 mb-2 d-none">
+            <label class="form-label small fw-semibold mb-1">@Localizer["PasteLines"]</label>
+            <textarea id="jePasteText" class="form-control form-control-sm" rows="6"
+                      placeholder="@Localizer["PastePlaceholder"]"></textarea>
+            <div class="form-text">@Localizer["PasteHint"]</div>
+            <div class="d-flex gap-2 mt-2">
+                <button type="button" class="btn btn-primary btn-sm" data-action="jeApplyPaste">
+                    <i class="bi bi-check-lg me-1"></i>@Localizer["PasteApply"]
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-action="jeTogglePaste">
+                    @Localizer["Cancel"]
+                </button>
+            </div>
+            @* 訊息以 data-* 交給腳本：本檔腳本不得有中文字面（Cx7）。 *@
+            <div id="jePasteMsg" class="small mt-1"
+                 data-filled="@Localizer.GetString("PasteFilledFmt").Value"
+                 data-not-found="@Localizer.GetString("PasteNotFoundFmt").Value"
+                 data-not-manual="@Localizer.GetString("PasteNotManualFmt").Value"
+                 data-no-code="@Localizer.GetString("PasteNoCodeFmt").Value"
+                 data-accounts="@System.Text.Json.JsonSerializer.Serialize(manualMap)"></div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered align-middle" id="jeLines">
+                <thead class="table-light">
+                    <tr>
+                        <th class="u-width-30pct">@Localizer["AccountCode"] <span class="text-danger">*</span></th>
+                        <th class="u-width-12pct text-end">@Localizer["Debit"]</th>
+                        <th class="u-width-12pct text-end">@Localizer["Credit"]</th>
+                        <th class="u-width-12pct">@Localizer["CostCenter"]</th>
+                        <th>@Localizer["LineDescription"]</th>
+                        <th class="u-width-80px"></th>
+                    </tr>
+                </thead>
+                <tbody id="jeLinesBody">
+                    @for (int i = 0; i < Model!.Lines.Count; i++)
+                    {
+                        var line = Model.Lines[i];
+                        <tr>
+                            <td>
+                                <select name="Lines[@i].AccountCode" class="form-select form-select-sm select2-enable w-100"
+                                        data-placeholder="@Localizer["AccountCode"]">
+                                    <option value=""></option>
+                                    @foreach (var a in accounts)
+                                    {
+                                        <option value="@a.AccountCode" selected="@(line.AccountCode == (string)a.AccountCode)">@a.AccountCode — @a.AccountName</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="@Model.Lines[i].AccountCode" class="text-danger small"></span>
+                            </td>
+                            <td>
+                                @* step 一律 any（R9）：精度由伺服端的本位幣四捨五入把關，
+                                   寫死小數 step 會讓上下鍵每按一次只動 0.01。 *@
+                                <input name="Lines[@i].Debit" type="number" step="any" min="0"
+                                       class="form-control form-control-sm text-end je-debit"
+                                       data-action-input="jeRecalc"
+                                       value="@(line.Debit == 0m ? "" : line.Debit.ToString("F" + baseDp))" />
+                                <span asp-validation-for="@Model.Lines[i].Debit" class="text-danger small"></span>
+                            </td>
+                            <td>
+                                <input name="Lines[@i].Credit" type="number" step="any" min="0"
+                                       class="form-control form-control-sm text-end je-credit"
+                                       data-action-input="jeRecalc"
+                                       value="@(line.Credit == 0m ? "" : line.Credit.ToString("F" + baseDp))" />
+                                <span asp-validation-for="@Model.Lines[i].Credit" class="text-danger small"></span>
+                            </td>
+                            <td>
+                                <select name="Lines[@i].CostCenter" class="form-select form-select-sm">
+                                    <option value=""></option>
+                                    @foreach (var cc in costCenters)
+                                    {
+                                        <option value="@cc.Id" selected="@(line.CostCenter == cc.Id)">@cc.Label</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="@Model.Lines[i].CostCenter" class="text-danger small"></span>
+                            </td>
+                            <td>
+                                <input name="Lines[@i].Description" class="form-control form-control-sm"
+                                       maxlength="200" value="@line.Description" />
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-sm btn-link text-danger p-0"
+                                        data-action="jeRemoveLine" title="@Localizer["RemoveLine"]">
+                                    <i class="bi bi-trash"></i> @Localizer["RemoveLine"]
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                @* 新增行的範本。原本是複製第一列——於是最後一列不能刪（刪了就沒有東西可複製），
+                   「輸入中的分錄最後一行刪不掉」（2026-10-05 回報）。範本獨立後任何一列都能刪。 *@
+                <template id="jeLineTemplate">
+                    <tr>
+                        <td>
+                            <select name="Lines[__i__].AccountCode" class="form-select form-select-sm select2-enable w-100"
+                                    data-placeholder="@Localizer["AccountCode"]">
+                                <option value=""></option>
+                                @foreach (var a in accounts)
+                                {
+                                    <option value="@a.AccountCode">@a.AccountCode — @a.AccountName</option>
+                                }
+                            </select>
+                        </td>
+                        <td><input name="Lines[__i__].Debit" type="number" step="any" min="0" class="form-control form-control-sm text-end je-debit" data-action-input="jeRecalc" /></td>
+                        <td><input name="Lines[__i__].Credit" type="number" step="any" min="0" class="form-control form-control-sm text-end je-credit" data-action-input="jeRecalc" /></td>
+                        <td>
+                            <select name="Lines[__i__].CostCenter" class="form-select form-select-sm">
+                                <option value=""></option>
+                                @foreach (var cc in costCenters)
+                                {
+                                    <option value="@cc.Id">@cc.Label</option>
+                                }
+                            </select>
+                        </td>
+                        <td><input name="Lines[__i__].Description" class="form-control form-control-sm" maxlength="200" /></td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-sm btn-link text-danger p-0"
+                                    data-action="jeRemoveLine" title="@Localizer["RemoveLine"]">
+                                <i class="bi bi-trash"></i> @Localizer["RemoveLine"]
+                            </button>
+                        </td>
+                    </tr>
+                </template>
+                <tfoot class="table-secondary fw-bold text-nowrap">
+                    <tr>
+                        <td class="text-end">@Localizer["Total"]</td>
+                        <td class="text-end" id="jeTotalDebit">0</td>
+                        <td class="text-end" id="jeTotalCredit">0</td>
+                        <td colspan="3">
+                            <span id="jeBalanceMsg" class="small"></span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="alert alert-info py-2 mb-0 small">
+            <i class="bi bi-info-circle me-1"></i>@Localizer["ManualJournalNotice"]
+        </div>
+    </div>
+
+    <div class="offcanvas-footer border-top p-3 d-flex gap-2">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>@Localizer["Save"]</button>
+        <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="offcanvas">@Localizer["Close"]</button>
+    </div>
+</form>
+
+@* inline script 走 CSP nonce（面板載入時由 crud-panel.js 的 execScripts 重建並補 nonce）。
+   字串一律 window.i18n.t：本檔內不得出現任何中文字面（R4b／Cx7）。 *@
+<script nonce="@(Context.Items[SmartFactory.MES.Middleware.CspNonceMiddleware.ItemKey] as string)">
+(function () {
+    var baseDp = @baseDp;
+
+    function rows() {
+        return Array.prototype.slice.call(document.querySelectorAll('#jeLinesBody tr'));
+    }
+
+    function num(el) {
+        var v = parseFloat(el && el.value);
+        return isNaN(v) ? 0 : v;
+    }
+
+    // 合計只是體驗，不是閘門——真正擋下不平衡分錄的是 JournalEntryService。
+    window.jeRecalc = function () {
+        var d = 0, c = 0;
+        rows().forEach(function (tr) {
+            d += num(tr.querySelector('.je-debit'));
+            c += num(tr.querySelector('.je-credit'));
+        });
+        var dEl = document.getElementById('jeTotalDebit');
+        var cEl = document.getElementById('jeTotalCredit');
+        var mEl = document.getElementById('jeBalanceMsg');
+        if (dEl) dEl.textContent = d.toFixed(baseDp);
+        if (cEl) cEl.textContent = c.toFixed(baseDp);
+        if (!mEl) return;
+        var diff = +(d - c).toFixed(baseDp);
+        if (diff === 0 && d > 0) {
+            mEl.className = 'small text-success';
+            mEl.textContent = window.i18n.t('Journal_Balanced');
+        } else if (d === 0 && c === 0) {
+            mEl.className = 'small text-muted';
+            mEl.textContent = '';
+        } else {
+            mEl.className = 'small text-danger';
+            mEl.textContent = window.i18n.t('Journal_DiffLabel') + ' ' + diff.toFixed(baseDp);
+        }
+    };
+
+    // 重新編號：name 的索引必須連續，否則模型繫結會在第一個缺口就停住，
+    // 後面的行整批收不到——而且不會有任何錯誤訊息。
+    function reindex() {
+        rows().forEach(function (tr, i) {
+            tr.querySelectorAll('[name]').forEach(function (el) {
+                el.name = el.name.replace(/Lines\[(\d+|__i__)\]/, 'Lines[' + i + ']');
+            });
+        });
+    }
+
+    function newRow() {
+        var tpl = document.getElementById('jeLineTemplate');
+        return tpl ? tpl.content.firstElementChild.cloneNode(true) : null;
+    }
+
+    window.jeAddLine = function () {
+        var body = document.getElementById('jeLinesBody');
+        var tr = newRow();
+        if (!body || !tr) return false;
+        body.appendChild(tr);
+        reindex();
+        // 動態插入的 input 必須重新註冊 unobtrusive 驗證，否則只剩伺服端兜底（R6c）
+        if (window.armValidation) window.armValidation(tr.closest('form'));
+        window.jeRecalc();
+        return false;
+    };
+
+    window.jeTogglePaste = function () {
+        var box = document.getElementById('jePasteBox');
+        if (box) box.classList.toggle('d-none');
+        return false;
+    };
+
+    // 解析「科目代碼 <分隔> 借方 <分隔> 貸方 <分隔> 摘要」。分隔符接受 tab 或逗號，
+    // 因為來源多半是從 Excel 複製（tab）或 CSV 貼上（逗號）。
+    // 金額允許帶千分位逗號——但那會與逗號分隔衝突，所以有千分位時只能用 tab 分隔，
+    // 這個限制寫在畫面的提示文字裡，不靠使用者猜。
+    window.jeApplyPaste = function () {
+        var ta  = document.getElementById('jePasteText');
+        var msg = document.getElementById('jePasteMsg');
+        var body = document.getElementById('jeLinesBody');
+        if (!ta || !body || !msg) return false;
+
+        // 只去掉行尾空白：行首的 tab 代表「第一格（科目）是空的」，trim 掉的話金額會被當成科目代碼
+        var lines = ta.value.split(/\r?\n/).map(function (t) { return t.replace(/\s+$/, ''); })
+                        .filter(function (t) { return t.trim().length > 0; });
+        if (lines.length === 0) return false;
+
+        var accounts = {};
+        try { accounts = JSON.parse(msg.dataset.accounts || '{}'); } catch (e) { }
+
+        // 從 Excel 複製科目欄常會連名稱一起帶（「1101 現金」「1101 — 現金」）：整格對不到時取第一段
+        function resolveCode(raw) {
+            var c = (raw || '').replace(/^\uFEFF/, '').replace(/^"|"$/g, '').trim();
+            if (!c || accounts.hasOwnProperty(c)) return c;
+            // 只以空白或破折號（—）切：代碼本身常含連字號（E2E-6101、1101-01），不能拿 - 當分隔
+            var head = c.split(/\s+|\u2014/)[0];
+            return accounts.hasOwnProperty(head) ? head : c;
+        }
+
+        var added = 0, notFound = [], notManual = [], noCode = 0;
+        lines.forEach(function (text) {
+            var parts = text.indexOf('\t') >= 0 ? text.split('\t') : text.split(',');
+            var code = resolveCode(parts[0]);
+            if (!code) { noCode++; return; }
+            if (!accounts.hasOwnProperty(code)) { notFound.push(code); return; }
+            if (!accounts[code]) { notManual.push(code); return; }
+
+            var tr = newRow();
+            if (!tr) return;
+            var sel = tr.querySelector('select');
+            if (sel) sel.value = code;
+            var d = tr.querySelector('.je-debit');
+            var c = tr.querySelector('.je-credit');
+            var n = tr.querySelector('[name$=".Description"]');
+            if (d) d.value = (parts[1] || '').trim().replace(/,/g, '');
+            if (c) c.value = (parts[2] || '').trim().replace(/,/g, '');
+            if (n) n.value = (parts[3] || '').trim();
+            body.appendChild(tr);
+            added++;
+        });
+
+        reindex();
+        if (window.armValidation) window.armValidation(body.closest('form'));
+        window.jeRecalc();
+
+        var out = [msg.dataset.filled.replace('{0}', added)];
+        if (notFound.length)  out.push(msg.dataset.notFound.replace('{0}', notFound.join(', ')));
+        if (notManual.length) out.push(msg.dataset.notManual.replace('{0}', notManual.join(', ')));
+        if (noCode)           out.push(msg.dataset.noCode.replace('{0}', noCode));
+        msg.className = (notFound.length || notManual.length || noCode) ? 'small mt-1 text-danger' : 'small mt-1 text-success';
+        msg.textContent = out.join(' ');
+        // 有略過的行時保留原文，讓人改完再貼一次；全部成功才清掉
+        if (!notFound.length && !notManual.length && !noCode) ta.value = '';
+        return false;
+    };
+
+    window.jeRemoveLine = function (e, el) {
+        var tr = el.closest('tr');
+        if (tr) tr.remove();
+        reindex();
+        window.jeRecalc();
+        return false;
+    };
+
+    window.jeRecalc();
+})();
+</script>
