@@ -268,7 +268,7 @@ dotnet test SmartFactory.MES.IntegrationTests/SmartFactory.MES.IntegrationTests.
 ```bash
 # 安裝系統相依套件 (需要 sudo 權限)
 cd ~/SmartFactory.MES/
-sudo /home/dev/.dotnet/tools/playwright install-deps
+sudo "$HOME/.dotnet/tools/playwright" install-deps
 
 # 安裝瀏覽器
 ~/.dotnet/tools/playwright install
@@ -576,11 +576,11 @@ cloudflared tunnel --url http://localhost:5110
 
 #### 3.6. Windows／IIS 部署測試
 
-把應用程式發布到 Windows 的 IIS（例如筆電 FISHER）有三個好處：手機不必再繞通道、
+把應用程式發布到 Windows 的 IIS（例如測試筆電）有三個好處：手機不必再繞通道、
 `localhost` 同時連得到 WSL 裡的 PostgreSQL 與 Ollama、並且驗證到正式環境常見的 IIS 託管路徑。
 **指紋不再是阻礙**（見 §3.5 的更正框）。
 
-> ✅ **2026-09-25 已在筆電 FISHER 實作完成。**
+> ✅ **2026-09-25 已在測試筆電實作完成。**
 > **逐步操作手冊：[`deploy/iis-deployment.md`](deploy/iis-deployment.md)**
 > （含實測數值、現有站台盤點、憑證與授權的完整指令、疑難排解對照表）
 > **建置腳本：[`deploy/iis-setup.ps1`](deploy/iis-setup.ps1)**

@@ -38,6 +38,8 @@ namespace SmartFactory.MES.IntegrationTests
             Assert.DoesNotContain("'unsafe-inline'", Directive(csp, "style-src"));
             Assert.Contains("object-src  'none'", csp.Replace(";", ""));
             Assert.Contains("frame-ancestors 'self'", csp);
+            // form-action 不會回退到 default-src：沒寫就等於不限制表單送往哪裡
+            Assert.Contains("form-action 'self'", csp);
         }
 
         [Fact]

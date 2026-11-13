@@ -21,7 +21,7 @@ param(
     [string]$KeysDir   = 'C:\inetpub\SmartFactoryMES-keys',
     [string]$AnchorDir = 'C:\ProgramData\SmartFactory',
     [int]   $HttpPort  = 5110,
-    # 7054 而非 443：443 通常已被別的站台佔用（FISHER 上是舊版 Web Forms 的 ProjectZ）
+    # 7054 而非 443：443 通常已被別的站台佔用（測試筆電上是舊版 Web Forms 的 ProjectZ）
     [int]   $HttpsPort = 7054,
     [string]$PfxPass   = 'changeit'
 )

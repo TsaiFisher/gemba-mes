@@ -146,7 +146,7 @@ public class LicenseStatusPageTests(LicenseStatusPageFactory factory) : IClassFi
     public async Task English_UI_HasNoMissingKeys()
     {
         var (_, html) = await Get("/License", "Admin", "en-US");
-        Assert.Contains("License status", html);
+        Assert.Contains("License Status", html);
         Assert.Contains("Read-only", html);
         Assert.DoesNotContain("State_ReadOnly", html);
         Assert.DoesNotContain("Banner_ReadOnly", html);

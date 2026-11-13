@@ -316,6 +316,8 @@ foreach (var module in appModules)
 
 // H1：反向代理標頭必須在 HTTPS 重導/驗證之前套用，使後續管線看到正確的 scheme 與 client IP。
 app.UseForwardedHeaders();
+// 所有 cookie 在 HTTPS 下補 Secure（防偽、TempData、語系）；必須在 UseForwardedHeaders 之後（Core #76）
+app.UseMesSecureCookies();
 
 // L2（security-assessment-and-plan.md）：生產環境未處理例外導向友善錯誤頁（不洩漏堆疊）。
 if (!app.Environment.IsDevelopment())
@@ -364,6 +366,8 @@ app.Use(async (context, next) =>
         "font-src    'self' data:; "                            +
         "connect-src 'self'; "                                  +
         "frame-ancestors 'self'; "                              +
+        // form-action 不回退到 default-src：不寫就等於不限制表單送往哪裡（Core #76）
+        "form-action 'self'; "                                  +
         "base-uri    'self'; "                                  +
         "object-src  'none'";
     await next();

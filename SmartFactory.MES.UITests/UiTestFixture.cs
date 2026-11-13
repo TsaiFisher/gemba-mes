@@ -197,7 +197,9 @@ namespace SmartFactory.MES.UITests
 
         private static string TraceFileName(string displayName)
         {
-            var invalid = Path.GetInvalidFileNameChars();
+            // Path.GetInvalidFileNameChars() 在 Linux 只有 '\0' 與 '/'，而 actions/upload-artifact 另外拒收
+            // " : < > | * ? \r \n——參數化測試的名稱帶雙引號（culture: "en-US"），整批 trace 因此上傳失敗。
+            var invalid = Path.GetInvalidFileNameChars().Concat("\":<>|*?\\").ToHashSet();
             var safe = new string(displayName.Select(c => invalid.Contains(c) || char.IsWhiteSpace(c) ? '_' : c).ToArray());
             if (safe.Length > 150) safe = safe[..150];
             return $"{DateTime.Now:HHmmss}-{safe}.zip";
