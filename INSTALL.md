@@ -245,6 +245,19 @@ ASPNETCORE_ENVIRONMENT=Development dotnet run --no-launch-profile --urls http://
   只備份資料庫的話，機器重灌後系統起不來。
 - **不要用 `ASPNETCORE_ENVIRONMENT=Development` 跑正式環境**——
   它會開啟詳細錯誤頁與開發用的寬鬆設定。
+- **管理員帳號**：`admin`／`Dev12345` 只在開發模式自動建立，正式環境不會有。
+  第一位管理員請在發布目錄、以執行服務的同一個帳號與環境變數執行：
+
+  ```bash
+  dotnet SmartFactory.MES.dll admin-recover <帳號>
+  ```
+
+  指令會印出一組只顯示一次的臨時密碼；登入後系統要求立即變更，並綁定兩階段驗證。
+  做完就結束、不會啟動網站，服務執行中也可以另外執行。
+  - 帳號、角色、權限設定等畫面只有管理員進得去，請**固定保留兩位以上的管理員**，
+    並另備一個密封保管密碼與救援碼的緊急帳號（做法見使用手冊「系統管理 → 使用者管理」）。
+  - 管理員全部進不來時（忘記密碼、遺失驗證器、被取消角色），對既有帳號執行同一個指令即可救回：
+    它會重設密碼、解除鎖定、重置兩階段驗證、補回 Admin 角色，並在稽核日誌留下紀錄。
 - **防火牆放行**：系統每天讀一次 `raw.githubusercontent.com`（`TsaiFisher/smartfactory-licensing` 的終止聲明，
   只讀不送資料）；申請授權與虛擬機／容器每 90 天的確認，由管理員的**瀏覽器**連
   `license.gemba-mes.workers.dev`，伺服器本身不必對它放行。會送出什麼見 [LICENSING.md](LICENSING.md)。

@@ -10,6 +10,8 @@
 #   mes rollback            穩定版退回上一個發布
 #   mes logs [n]            穩定版最近 n 行日誌（預設 80）
 #   mes list                列出保留中的發布
+#   mes admin-recover <帳號> 救回管理員（重設密碼、解除鎖定、重置兩階段驗證、補回 Admin 角色）；
+#                           帳號不存在就建立成管理員。服務執行中也可以跑，會印出只顯示一次的臨時密碼
 #
 # 兩種模式共用 5110/7054 與 ProjectZ 資料庫，所以一次只能跑一種（同時跑會重複執行每日排程）。
 set -euo pipefail
@@ -230,6 +232,16 @@ cmd_logs() {
   journalctl --user -u "$SVC" -n 20 --no-pager 2>/dev/null || true
 }
 
+cmd_admin_recover() {   # 以穩定版的程式與設定執行 admin-recover（見 Services/AdminRecovery.cs）
+  [ -n "${1:-}" ] || die "用法：mes admin-recover <帳號>"
+  [ -f "$CURRENT/SmartFactory.MES.dll" ] || die "找不到穩定版（先 mes publish）"
+  # 環境要和 mes-stable.service 相同才連得到同一個資料庫；啟動過程的日誌濾掉，只留指令自己的輸出
+  ( cd "$CURRENT" && ASPNETCORE_ENVIRONMENT=Development DOTNET_NOLOGO=1 \
+      dotnet SmartFactory.MES.dll admin-recover "$1" 2>&1 ) \
+    | { grep -E '管理員帳號|臨時密碼|請立即登入|執行失敗|用法|admin-recover|Administrator|Temporary|Sign in|Failed|Usage' || true; }
+  return "${PIPESTATUS[0]}"
+}
+
 cmd_list() {
   local cur; cur=$(readlink -f "$CURRENT" 2>/dev/null || true)
   { ls -1dt "$RELEASES"/*/ 2>/dev/null || true; } | sed 's:/$::' | while read -r d; do
@@ -246,6 +258,7 @@ case "${1:-status}" in
   rollback) cmd_rollback ;;
   logs)     shift; cmd_logs "$@" ;;
   list)     cmd_list ;;
-  -h|--help|help) sed -n '2,15p' "$0" ;;
+  admin-recover) shift; cmd_admin_recover "$@" ;;
+  -h|--help|help) sed -n '2,17p' "$0" ;;
   *) die "未知指令 $1（mes help 看用法）" ;;
 esac

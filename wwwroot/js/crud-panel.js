@@ -150,31 +150,9 @@
         toast().show();
     }
 
-    // 被 StalePlantContextFilter 擋下（畫面開在 A 廠、送出時已在 B 廠）時，讓使用者一鍵切回 A 廠
-    // 並照原內容再送一次。原本只能照訊息重新整理——面板關閉、填的內容全部消失（2026-11-11 驗收 C3）。
-    // 只切回「畫面開啟時的那個廠」：資料會落在使用者填表時看到的廠別，不會被改建到別廠。
-    // 只重送一次（retried）：切回失敗或又被擋，就顯示訊息停下，不會無限重試。
-    function offerSwitchBack(form, submitter, result, retried) {
-        if (retried || result.code !== 'PLANT_CONTEXT_CHANGED' || !result.renderedPlant) return false;
-        if (!confirm((result.message || '') + '\n\n' + t('PlantContextSwitchBackConfirm', result.renderedPlant))) return true;
-        var body = new URLSearchParams();
-        body.set('plantId', result.renderedPlant);
-        body.set('__RequestVerificationToken', token());
-        fetch('/UserSettings/SwitchPlant', {
-            method: 'POST', body: body,
-            headers: { 'X-Requested-With': 'XMLHttpRequest', 'RequestVerificationToken': token() }
-        })
-            .then(function () { submitPanel(form, submitter, true); })
-            .catch(function (err) {
-                console.error('switch plant back failed:', err);
-                alert(result.message || t('OperationFailed'));
-            });
-        return true;
-    }
-
-    function submitPanel(form, submitter, retried) {
-        // dispatcher 以 (event, element) 呼叫時第三個參數不是 true，一律當成第一次送出
-        retried = retried === true;
+    // 跨廠擋下（409 PLANT_CONTEXT_CHANGED）時「切回原廠別並照原內容存檔」由 plant-context.js 的
+    // fetch 包裝統一處理（基本資料畫面有自己的 submitPanel，放在這裡只有一半畫面套得到）。
+    function submitPanel(form, submitter) {
         var fd = new FormData(form);
         if (submitter?.name) fd.set(submitter.name, submitter.value);
         fetch(form.action, {
@@ -213,7 +191,7 @@
                             if (result.success) {
                                 toastSuccess();
                                 refreshList();
-                            } else if (!offerSwitchBack(form, submitter, result, retried)) {
+                            } else {
                                 alert(result.message || t('OperationFailed'));
                             }
                             return;

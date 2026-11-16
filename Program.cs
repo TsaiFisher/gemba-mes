@@ -523,8 +523,16 @@ if (builder.Configuration.GetValue("Database:AutoMigrate", true))
         db.Database.Migrate();
 }
 
+// ── 伺服器指令 admin-recover <帳號>：建立第一位管理員／救回管理員（見 AdminRecovery）──
+// 排在 migration 之後（全新資料庫要先有資料表）、啟動網站之前：做完就結束，不接受連線。
+if (AdminRecovery.IsRequested(args))
+{
+    Environment.ExitCode = await AdminRecovery.RunAsync(app.Services, args, Console.Out);
+    return;
+}
+
 // C1 + L4：開發用 admin 帳號 — 僅在 Development 環境建立
-//   正式部署請改用獨立的 admin seeding 腳本或環境變數，避免「已知帳密」風險。
+//   正式部署請用上面的 admin-recover 建立第一位管理員，避免「已知帳密」風險。
 if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();

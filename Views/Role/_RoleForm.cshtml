@@ -24,7 +24,13 @@
 
         <div class="mb-3">
             <label asp-for="Name" class="form-label fw-bold">@Localizer["RoleNameZh"] <span class="text-danger">*</span></label>
-            <input asp-for="Name" class="form-control" placeholder="@Localizer["RoleNameZhPlaceholder"]" />
+            @* Admin 角色不可改名：「只限系統管理員」認的是名稱 Admin，一改名所有管理員當場失去管理權限 *@
+            <input asp-for="Name" class="form-control" placeholder="@Localizer["RoleNameZhPlaceholder"]"
+                   readonly="@(Model.Name == SmartFactory.MES.Services.AdminAccess.RoleName ? "readonly" : null)" />
+            @if (Model.Name == SmartFactory.MES.Services.AdminAccess.RoleName)
+            {
+                <div class="form-text">@Localizer["AdminRoleNameLocked"]</div>
+            }
             <span asp-validation-for="Name" class="text-danger small"></span>
         </div>
 

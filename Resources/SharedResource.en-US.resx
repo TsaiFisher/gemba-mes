@@ -476,4 +476,18 @@
   <data name="Msg_LicenseOnlineCheckEnabled" xml:space="preserve"><value>Online license check is on. Confirm again before the confirmation expires, or the system turns read-only.</value></data>
   <data name="Msg_LicenseOnlineCheckDisabled" xml:space="preserve"><value>Online license check is off; offline verification only.</value></data>
   <data name="ApprovalDocType_CodeEntry" xml:space="preserve"><value>Code Maintenance</value></data>
+  <data name="Msg_LastAdmin_CannotRemoveRole" xml:space="preserve"><value>This is the only account in the Admin role, so its Admin role cannot be removed. Add another account to the Admin role first.</value></data>
+  <data name="Msg_LastAdmin_CannotDelete" xml:space="preserve"><value>This is the only account in the Admin role, so it cannot be deleted. Add another account to the Admin role first.</value></data>
+  <data name="Msg_AdminRole_CannotRename" xml:space="preserve"><value>The Admin role cannot be renamed: the system identifies administrators by this name, and renaming it would remove administrative access from every administrator.</value></data>
+  <data name="Msg_AdminRole_CannotDelete" xml:space="preserve"><value>The Admin role cannot be deleted.</value></data>
+  <data name="AdminRecover_Usage" xml:space="preserve"><value>Usage: dotnet SmartFactory.MES.dll admin-recover &lt;username&gt;
+  Account does not exist: creates it and adds it to the Admin role (first administrator on a new installation).
+  Account exists: resets the password, clears the lockout, resets two-factor authentication, restores the Admin role and makes it the active role.</value></data>
+  <data name="AdminRecover_Created" xml:space="preserve"><value>Administrator account "{0}" created.</value></data>
+  <data name="AdminRecover_Recovered" xml:space="preserve"><value>Administrator account "{0}" recovered: password reset, lockout cleared, two-factor authentication reset, Admin role restored.</value></data>
+  <data name="AdminRecover_Password" xml:space="preserve"><value>Temporary password (shown only once): {0}</value></data>
+  <data name="AdminRecover_Next" xml:space="preserve"><value>Sign in now: you will be asked to change the password and, if two-factor authentication is enforced for administrators, to enroll an authenticator again.</value></data>
+  <data name="AdminRecover_Failed" xml:space="preserve"><value>Failed: {0}</value></data>
+  <data name="AdminRecover_AuditCreated" xml:space="preserve"><value>Administrator account "{0}" created by the admin-recover server command</value></data>
+  <data name="AdminRecover_AuditRecovered" xml:space="preserve"><value>Administrator account "{0}" recovered by the admin-recover server command (password reset, lockout cleared, two-factor authentication reset, Admin role restored)</value></data>
 </root>

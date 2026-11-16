@@ -476,4 +476,18 @@
   <data name="Msg_LicenseOnlineCheckEnabled" xml:space="preserve"><value>已啟用線上授權確認。請在確認到期前再次確認，否則系統會轉為唯讀。</value></data>
   <data name="Msg_LicenseOnlineCheckDisabled" xml:space="preserve"><value>已停用線上授權確認，改回僅離線驗證。</value></data>
   <data name="ApprovalDocType_CodeEntry" xml:space="preserve"><value>代碼維護</value></data>
+  <data name="Msg_LastAdmin_CannotRemoveRole" xml:space="preserve"><value>這是唯一屬於 Admin 角色的帳號，不能取消它的 Admin 角色。請先讓另一個帳號加入 Admin 角色。</value></data>
+  <data name="Msg_LastAdmin_CannotDelete" xml:space="preserve"><value>這是唯一屬於 Admin 角色的帳號，不能刪除。請先讓另一個帳號加入 Admin 角色。</value></data>
+  <data name="Msg_AdminRole_CannotRename" xml:space="preserve"><value>Admin 角色的名稱不可變更：系統以這個名稱判斷系統管理員，改名後所有管理員都會失去管理權限。</value></data>
+  <data name="Msg_AdminRole_CannotDelete" xml:space="preserve"><value>Admin 角色不可刪除。</value></data>
+  <data name="AdminRecover_Usage" xml:space="preserve"><value>用法：dotnet SmartFactory.MES.dll admin-recover &lt;帳號&gt;
+  帳號不存在：建立並加入 Admin 角色（首次安裝建立第一位管理員）。
+  帳號已存在：重設密碼、解除鎖定、重置兩步驟驗證、補回 Admin 角色並設為作用中角色。</value></data>
+  <data name="AdminRecover_Created" xml:space="preserve"><value>已建立管理員帳號「{0}」。</value></data>
+  <data name="AdminRecover_Recovered" xml:space="preserve"><value>已救回管理員帳號「{0}」：密碼已重設、鎖定已解除、兩階段驗證已重置、已屬於 Admin 角色。</value></data>
+  <data name="AdminRecover_Password" xml:space="preserve"><value>臨時密碼（只顯示這一次）：{0}</value></data>
+  <data name="AdminRecover_Next" xml:space="preserve"><value>請立即登入：系統會要求變更密碼；若有啟用管理員強制兩階段驗證，接著會要求重新綁定驗證器。</value></data>
+  <data name="AdminRecover_Failed" xml:space="preserve"><value>執行失敗：{0}</value></data>
+  <data name="AdminRecover_AuditCreated" xml:space="preserve"><value>由伺服器指令 admin-recover 建立管理員帳號「{0}」</value></data>
+  <data name="AdminRecover_AuditRecovered" xml:space="preserve"><value>由伺服器指令 admin-recover 救回管理員帳號「{0}」（重設密碼、解除鎖定、重置兩階段驗證、補回 Admin 角色）</value></data>
 </root>

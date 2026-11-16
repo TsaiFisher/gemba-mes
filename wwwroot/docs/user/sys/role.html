@@ -109,6 +109,10 @@
       <strong><span lang="zh">刪除會連帶清掉權限設定：</span><span lang="en">Deleting also clears the permission settings:</span></strong><span lang="zh">通過檢查後，系統會一併刪除這個角色的</span><span lang="en"> once the checks pass, the system also deletes this role's </span><b><span lang="zh">功能權限矩陣</span><span lang="en">permission matrix</span></b><span lang="zh">，並把「目前作用中角色正好是它」的使用者清空。刪掉後再建同名角色，權限要重新勾一次。</span><span lang="en">, and clears it for users who currently have it in effect. If you recreate a role with the same name afterwards, its permissions have to be ticked again.</span>
     </div>
 
+    <div class="note-box"><i class="bi bi-shield-exclamation me-1 text-warning"></i>
+      <strong><span lang="zh">Admin 角色不可改名、不可刪除：</span><span lang="en">The Admin role cannot be renamed or deleted:</span></strong><span lang="zh">系統以角色名稱「Admin」判斷誰是系統管理員，一改名所有管理員都會當場失去使用者、角色、權限設定等畫面的權限，所以編輯 Admin 角色時名稱欄是唯讀的。英文介面顯示的名稱可用英文名稱欄調整；廠別指派與組織單位也仍可調整。</span><span lang="en"> the system recognises administrators by the role name "Admin"; renaming it would at once remove every administrator's access to users, roles, permission settings and the like, so the name box is read-only when editing the Admin role. The name shown in the English interface can be changed in the English name box; plant assignment and the organization unit can still be changed as well.</span>
+    </div>
+
     <h2 id="export"><i class="bi bi-download me-2 text-primary"></i><span lang="zh">匯出</span><span lang="en">Export</span></h2>
     <p><span lang="zh">查詢結果可匯出 Excel（.xlsx）、CSV 或 JSON，內容為角色名稱、英文名稱與所屬組織單位。</span><span lang="en">The results can be exported as Excel (.xlsx), CSV or JSON, containing the role name, its English name and its organization unit.</span></p>
   </main>

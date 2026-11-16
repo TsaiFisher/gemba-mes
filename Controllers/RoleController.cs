@@ -175,6 +175,14 @@ namespace SmartFactory.MES.Controllers
             {
                 var role = await _roleManager.FindByIdAsync(id);
                 if (role == null) return NotFound();
+                // Admin 角色不可改名：「只限系統管理員」認的是角色名稱 Admin（AdminAccess），
+                // 一改名所有管理員當場失去帳號／角色／權限設定的權限。英文介面的顯示名稱仍可用英文名稱欄調整。
+                if (role.Name == AdminAccess.RoleName && updatedRole.Name != AdminAccess.RoleName)
+                {
+                    var msg = CoreText.Get("Msg_AdminRole_CannotRename");
+                    if (IsAjax) return Json(new { success = false, message = msg });
+                    return StatusCode(400);
+                }
                 role.Name = updatedRole.Name;
                 role.NameEn = updatedRole.NameEn;
                 role.OrganizationUnitId = updatedRole.OrganizationUnitId;
@@ -229,6 +237,14 @@ namespace SmartFactory.MES.Controllers
             }
 
             var trustedId = role.Id;
+
+            // Admin 角色不可刪除（沒有任何成員時「使用中檢查」擋不到）：刪掉後沒有人能再成為管理員
+            if (role.Name == AdminAccess.RoleName)
+            {
+                var msg = CoreText.Get("Msg_AdminRole_CannotDelete");
+                if (IsAjax) return Json(new { success = false, message = msg });
+                return StatusCode(400);
+            }
 
             // ── 使用中檢查 ──
             var reasons = new List<string>();

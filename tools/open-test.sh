@@ -70,7 +70,8 @@ echo
 echo "── 2. 建立 Cloudflare Tunnel ───────────────────"
 pkill -f "cloudflared tunnel --url http://localhost:$PORT" 2>/dev/null
 : > "$CF_LOG"
-setsid nohup "$CLOUDFLARED" tunnel --url "http://localhost:$PORT" > "$CF_LOG" 2>&1 < /dev/null &
+# --protocol http2：預設 QUIC（UDP）在 WSL NAT 下會「no recent network activity」斷線，快速通道只有一條連線，一斷手機就是 Error 1033（2026-11-15 實測）
+setsid nohup "$CLOUDFLARED" tunnel --url "http://localhost:$PORT" --protocol http2 > "$CF_LOG" 2>&1 < /dev/null &
 
 echo -n "   等待網址"
 for _ in $(seq 1 40); do

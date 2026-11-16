@@ -111,6 +111,13 @@
         <div class="row g-3" id="moduleGrid">
             <!-- 由 JS 動態填入 -->
         </div>
+        <!-- 廠別失效時功能格是空的（伺服器 403），在這裡說明並提供切換入口 -->
+        <div id="plantInvalidState" class="text-center text-muted py-5 d-none">
+            <i class="bi bi-exclamation-triangle fs-1 d-block mb-2 text-warning"></i>
+            <span data-i18n="home.plant_invalid_grid">目前的廠別已失效，請先選擇廠別，作業功能才會出現</span><br>
+            <button type="button" class="btn btn-sm btn-outline-primary mt-3" data-action="openPlantSwitch"
+                    data-i18n="home.plant_switch_title">切換廠別</button>
+        </div>
         <div id="emptyState" class="text-center text-muted py-5 d-none">
             <i class="bi bi-lock fs-1 d-block mb-2"></i>
             <span data-i18n="home.no_perm">目前帳號尚未設定手機模組權限</span><br>

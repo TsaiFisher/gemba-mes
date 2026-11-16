@@ -36,6 +36,22 @@ public static class AdminAccess
         IsActiveAdminAsync(http.RequestServices.GetRequiredService<IUserContext>(),
             http.RequestServices.GetRequiredService<ApplicationDbContext>(), http.RequestAborted);
 
+    /// <summary>
+    /// 除了 <paramref name="userId"/> 以外，還有幾個帳號屬於 Admin 角色。
+    ///
+    /// <para>「最後一位管理員」保護用：回 0 表示這個帳號是唯一的管理員，取消它的 Admin 角色或刪除它，
+    /// 帳號、角色、權限設定就再也沒有人進得去（這些畫面只限作用中角色為 Admin），只能到伺服器上執行
+    /// <c>admin-recover</c>（見 <see cref="AdminRecovery"/>）。</para>
+    ///
+    /// <para>只算「屬於 Admin 角色的帳號數」，分辨不出帳號還在但人已離職、或驗證器已遺失；
+    /// 擋的是手滑，不能取代「至少兩位管理員」的管理程序（SECURITY-OPERATIONS §9.6.2）。</para>
+    /// </summary>
+    public static Task<int> CountOtherAdminsAsync(ApplicationDbContext db, string userId, CancellationToken ct = default) =>
+        (from ur in db.UserRoles
+         join r in db.Roles on ur.RoleId equals r.Id
+         where r.Name == RoleName && ur.UserId != userId
+         select ur.UserId).Distinct().CountAsync(ct);
+
     /// <summary>選單項目是否只限特定角色（目前只用於 Admin）。</summary>
     public static bool IsRoleRestricted(MenuItem item) => item.Roles.Count > 0;
 }

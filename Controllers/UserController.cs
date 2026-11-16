@@ -179,6 +179,17 @@ namespace SmartFactory.MES.Controllers
             var user = await _userManager.FindByIdAsync(id);
             if (user == null) return NotFound();
 
+            // 最後一位管理員保護：取消唯一一位管理員的 Admin 角色後，帳號／角色／權限設定再也沒人進得去
+            selectedRoles ??= Array.Empty<string>();
+            if (!selectedRoles.Contains(AdminAccess.RoleName)
+                && await _userManager.IsInRoleAsync(user, AdminAccess.RoleName)
+                && await AdminAccess.CountOtherAdminsAsync(_context, user.Id) == 0)
+            {
+                var msg = CoreText.Get("Msg_LastAdmin_CannotRemoveRole");
+                if (IsAjax) return Json(new { success = false, message = msg });
+                ModelState.AddModelError(string.Empty, msg);
+            }
+
             if (ModelState.IsValid)
             {
                 user.UserName   = updatedUser.UserName;
@@ -190,7 +201,6 @@ namespace SmartFactory.MES.Controllers
                 if (result.Succeeded)
                 {
                     var currentRoles = await _userManager.GetRolesAsync(user);
-                    selectedRoles ??= Array.Empty<string>();
                     await _userManager.AddToRolesAsync(user, selectedRoles.Except(currentRoles));
                     await _userManager.RemoveFromRolesAsync(user, currentRoles.Except(selectedRoles));
                     await RealignActiveRoleAsync(user, selectedRoles);
@@ -225,6 +235,36 @@ namespace SmartFactory.MES.Controllers
             await _userManager.UpdateAsync(user);
         }
 
+        /// <summary>
+        /// 重設密碼的確認面板。
+        /// <para>2026-11-16 以前系統沒有任何「替別人重設密碼」的功能：使用者忘記密碼，只能刪掉帳號重建
+        ///（簽核中的帳號還刪不掉）。</para>
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> ResetPassword(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) return NotFound();
+            return PartialView("_ResetPassword", user);
+        }
+
+        /// <summary>
+        /// 產生一次性臨時密碼並顯示在面板上（只顯示這一次）。下次登入強制變更、同時解除鎖定；
+        /// 不動兩階段驗證（那是「兩階段驗證重置」的事）。回傳的是 HTML 面板而不是 JSON：
+        /// 臨時密碼要留在畫面上讓管理員抄寫，不能用幾秒就消失的提示訊息帶。
+        /// </summary>
+        [HttpPost, ActionName("ResetPassword"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPasswordConfirmed(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) return NotFound();
+
+            var (result, password) = await AdminRecovery.ResetCredentialsAsync(_userManager, user);
+            ViewBag.TemporaryPassword = password;
+            ViewBag.Errors = result.Errors.Select(e => e.Description).ToList();
+            return PartialView("_ResetPassword", user);
+        }
+
         [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
@@ -233,6 +273,15 @@ namespace SmartFactory.MES.Controllers
             {
                 if (IsAjax) return Json(new { success = false, message = CoreText.Get("Msg_UserNotFound") });
                 return NotFound();
+            }
+
+            // 最後一位管理員保護（理由同 Edit）
+            if (await _userManager.IsInRoleAsync(user, AdminAccess.RoleName)
+                && await AdminAccess.CountOtherAdminsAsync(_context, user.Id) == 0)
+            {
+                var msg = CoreText.Get("Msg_LastAdmin_CannotDelete");
+                if (IsAjax) return Json(new { success = false, message = msg });
+                return StatusCode(400);
             }
 
             // ── 使用中檢查 ──

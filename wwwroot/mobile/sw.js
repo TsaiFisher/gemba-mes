@@ -110,7 +110,8 @@
 // v47：2026-11-06 清單搜尋後點選選錯筆（inv/pick、putaway、iqc、mfg/fpi、ipqc 的 data-idx 改用完整清單位置）。
 // v48：2026-11-09 盤點送出最後一張清冊後不再跳「無進行中的盤點清冊」警告（inv/stockcount）。
 // v49：2026-11-12 筆電驗收修正：廠別失效提示並開切換面板、回到前景重抓廠別、待同步時間依語言、手機切換角色（home.html／home.page.js／js/api.js／i18n.modules.js）。
-const CACHE_NAME = 'mes-mobile-v49';
+// v50：2026-11-15 筆電重測：廠別失效時首頁說明並提供切換鈕、回到首頁即更新待同步清單（home.html／home.page.js／i18n.modules.js）。
+const CACHE_NAME = 'mes-mobile-v50';
 
 // ⚠️ 只剩殼層這一個快取。若日後再新增 cache，**一定要同時加進 activate 的保留清單**——
 //    activate 的清理是「保留清單以外一律刪」，看不到的快取名就等於沒被保留，

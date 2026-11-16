@@ -77,6 +77,66 @@ namespace SmartFactory.MES.Tests
             _mockUserManager.Verify(m => m.UpdateAsync(user), Times.Once);
         }
 
+        // ── 最後一位管理員保護（2026-11-16）──────────────────────────────────────────
+        // 帳號／角色／權限設定只限作用中角色為 Admin；唯一的管理員被取消角色或刪除後沒有人進得去。
+
+        [Fact]
+        public async Task Edit_Post_唯一的管理員不能被取消Admin角色()
+        {
+            var user = new ApplicationUser { Id = "U1", UserName = "dev", ActiveRoleId = "1" };
+            SetupEdit(user, currentRoles: new List<string> { "Admin" });
+            _mockUserManager.Setup(m => m.IsInRoleAsync(user, "Admin")).ReturnsAsync(true);
+            _controller.ControllerContext.HttpContext.Request.Headers["X-Requested-With"] = "XMLHttpRequest";
+
+            var result = await _controller.Edit("U1", new ApplicationUser { Id = "U1", UserName = "dev" }, new[] { "Operator" });
+
+            var json = System.Text.Json.JsonSerializer.Serialize(Assert.IsType<JsonResult>(result).Value);
+            Assert.Contains("\"success\":false", json);
+            _mockUserManager.Verify(m => m.UpdateAsync(It.IsAny<ApplicationUser>()), Times.Never);
+            _mockUserManager.Verify(m => m.RemoveFromRolesAsync(It.IsAny<ApplicationUser>(), It.IsAny<IEnumerable<string>>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task Edit_Post_還有其他管理員時可以取消Admin角色()
+        {
+            var user = new ApplicationUser { Id = "U1", UserName = "dev", ActiveRoleId = "1" };
+            SetupEdit(user, currentRoles: new List<string> { "Admin" });
+            _mockUserManager.Setup(m => m.IsInRoleAsync(user, "Admin")).ReturnsAsync(true);
+            _mockRoleManager.Setup(m => m.FindByIdAsync("1")).ReturnsAsync(new ApplicationRole { Id = "1", Name = "Admin" });
+            _mockRoleManager.Setup(m => m.FindByNameAsync("Operator")).ReturnsAsync(new ApplicationRole { Id = "3", Name = "Operator" });
+            await SeedAnotherAdminAsync();
+
+            await _controller.Edit("U1", new ApplicationUser { Id = "U1", UserName = "dev" }, new[] { "Operator" });
+
+            _mockUserManager.Verify(m => m.RemoveFromRolesAsync(user, It.IsAny<IEnumerable<string>>()), Times.Once);
+        }
+
+        [Theory]
+        [InlineData(false, false)]   // 唯一的管理員：擋
+        [InlineData(true,  true)]    // 還有別人：照刪
+        public async Task Delete_唯一的管理員不能被刪除(bool anotherAdmin, bool expectDeleted)
+        {
+            var user = new ApplicationUser { Id = "U1", UserName = "dev" };
+            _mockUserManager.Setup(m => m.FindByIdAsync("U1")).ReturnsAsync(user);
+            _mockUserManager.Setup(m => m.IsInRoleAsync(user, "Admin")).ReturnsAsync(true);
+            _mockUserManager.Setup(m => m.DeleteAsync(user)).ReturnsAsync(IdentityResult.Success);
+            if (anotherAdmin) await SeedAnotherAdminAsync();
+
+            await _controller.DeleteConfirmed("U1");
+
+            _mockUserManager.Verify(m => m.DeleteAsync(user), expectDeleted ? Times.Once : Times.Never);
+        }
+
+        private async Task SeedAnotherAdminAsync()
+        {
+            // TestBase 可能已種了 Id="1" 的角色；要的是「有一個名為 Admin 的角色、U2 屬於它」
+            var role = await _context.Roles.FindAsync("1");
+            if (role == null) _context.Roles.Add(new ApplicationRole { Id = "1", Name = "Admin", NormalizedName = "ADMIN" });
+            else role.Name = "Admin";
+            _context.UserRoles.Add(new IdentityUserRole<string> { UserId = "U2", RoleId = "1" });
+            await _context.SaveChangesAsync();
+        }
+
         private void SetupEdit(ApplicationUser user, List<string> currentRoles)
         {
             _mockUserManager.Setup(m => m.FindByIdAsync(user.Id)).ReturnsAsync(user);

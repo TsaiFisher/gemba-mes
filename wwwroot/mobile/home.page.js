@@ -29,13 +29,18 @@
             // `modules.length === 0` 那一行會把後面的程式碼整段跳過，而「沒有手機模組權限」
             // 的人（純辦公室的簽核者、只來簽核的主管）正是最需要這兩項資訊的一群。
             // 兩者都**刻意不 await**：它們不該擋住模組格的渲染。
-            refreshPlantName();
+            const plantCheck = refreshPlantName();
             refreshRoleName();
             refreshApprovalBadge();
 
             // 模組載入：不依賴 SW，立即執行
             const data = await apiGet('/api/mobile/modules');
-            if (!data) return;
+            if (!data) {
+                // 廠別失效時伺服器回 403，功能格整片空白、看不出原因（2026-11-15 重測 A4）：
+                // 改顯示說明與「切換廠別」按鈕。
+                if (await plantCheck) document.getElementById('plantInvalidState').classList.remove('d-none');
+                return;
+            }
 
             const grid    = document.getElementById('moduleGrid');
             const modules = data.modules || [];
@@ -85,7 +90,7 @@
             if (!el) return;
 
             const data = await apiGet('/api/mobile/plants/current');
-            if (!data) return;   // apiCall 已處理錯誤（含 Toast）
+            if (!data) return false;   // apiCall 已處理錯誤（含 Toast）
 
             // 中英名稱由伺服端一起給，這裡依 getLang() 取用（CodeEntry 慣例）。
             const zh   = getLang() === 'zh-TW';
@@ -104,6 +109,7 @@
                 _plantInvalidPrompted = true;
                 openPlantSwitch();
             }
+            return !!data.invalid;
 
             // 這裡**刻意不寫回 sessionStorage.plantId**：requireAuth() 每頁進來都已經
             // 從 /api/mobile/auth/me 把它寫過一次了。同一個欄位兩個寫入者就是漂移的種子。
@@ -291,6 +297,10 @@
         // 也重跑 requireAuth()：它會把 sessionStorage 的 plantId 換成伺服器現值，
         // 離線佇列同步前比對「排入時的廠別」用的就是這個值；首頁本身沒有會送出的表單，換掉不會誤放行舊廠資料。
         async function refreshAccountContext() {
+            // 待同步清單是本機資料，離線也要更新：在機台狀態頁暫存一筆後按返回，首頁是 bfcache 還原的舊畫面，
+            // 原本要手動重新整理才看得到那一筆（2026-11-15 重測 C3 備註）。
+            await refreshOfflineBadge();
+            if (document.getElementById('offlinePanel')?.classList.contains('show')) await renderQueueList();
             if (!navigator.onLine) return;
             if (!await requireAuth()) return;
             refreshPlantName();

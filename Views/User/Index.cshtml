@@ -165,6 +165,11 @@
                                                 <button type="button" class="btn btn-sm btn-outline-secondary"
                                                         data-action="openPanel" data-url="@Url.Action("Edit", "User", new { id = user.Id })" data-label="@Localizer["Edit"] @user.UserName"><i class="bi bi-pencil"></i> @Localizer["Edit"]</button>
                                             }
+                                            @if (canUpdate)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-outline-warning"
+                                                        data-action="openPanel" data-url="@Url.Action("ResetPassword", "User", new { id = user.Id })" data-label="@Localizer["ResetPassword"] @user.UserName"><i class="bi bi-key"></i> @Localizer["ResetPassword"]</button>
+                                            }
                                             @if (canDelete)
                                             {
                                                 <button type="button" class="btn btn-sm btn-outline-danger"
